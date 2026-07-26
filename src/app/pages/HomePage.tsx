@@ -1,4 +1,4 @@
-// Homepage - Rohamaa Campaign Home Page - Unified Design
+// Homepage - rbdcye Campaign Home Page - Unified Design
 import { motion } from "framer-motion";
 import { Heart } from 'lucide-react';
 import { useState } from "react";

@@ -57,10 +57,10 @@ export default function AboutPage() {
 
   const handleSocialClick = (platform: string) => {
     const urls: Record<string, string> = {
-      facebook: 'https://facebook.com/rohamaa',
-      twitter: 'https://twitter.com/rohamaa',
-      instagram: 'https://instagram.com/rohamaa',
-      youtube: 'https://youtube.com/@rohamaa',
+      facebook: 'https://facebook.com/rbdcye',
+      twitter: 'https://twitter.com/rbdcye',
+      instagram: 'https://instagram.com/rbdcye',
+      youtube: 'https://youtube.com/@rbdcye',
     };
     window.open(urls[platform] || '/contact', '_blank');
   };

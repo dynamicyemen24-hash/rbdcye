@@ -35,7 +35,7 @@ export function useDataLoader<T>(
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const cacheKey = `rohamaa_data_${dependencies.join('_')}`;
+  const cacheKey = `rbdcye_data_${dependencies.join('_')}`;
 
   // تحميل البيانات من التخزين المؤقت
   const loadFromCache = useCallback(() => {

@@ -62,7 +62,7 @@ export default function LoginPage() {
                 required
                 className="w-full pr-10 pl-4 py-3 border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)]"
                 style={{ fontSize: "0.9rem" }}
-                placeholder="admin@rohamaa.org"
+                placeholder="admin@rbdcye.org"
               />
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function LoginPage() {
             بيانات تجريبية:
           </p>
           <p className="text-[var(--muted-foreground)] mt-1" style={{ fontSize: "0.75rem" }}>
-            admin@rohamaa.org / admin123
+            admin@rbdcye.org / admin123
           </p>
         </div>
       </div>

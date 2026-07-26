@@ -44,7 +44,7 @@ export default function SettingsPage() {
             <input
               id="email"
               type="email"
-              defaultValue="info@rohamaa.org"
+              defaultValue="info@rbdcye.org"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>

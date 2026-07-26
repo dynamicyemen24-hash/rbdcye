@@ -83,7 +83,7 @@ export function Logo({ size = "md", variant = "navbar", onClick }: LogoProps) {
           className={`${variants.subTextColor} ${variants.subTextSize} leading-none mt-0.5`}
           style={{ fontFamily: "Cairo, sans-serif", fontWeight: 400 }}
         >
-          Rohamaa Foundation
+          rbdcye Foundation
         </div>
       </div>
     </motion.button>

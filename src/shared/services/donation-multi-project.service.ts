@@ -102,7 +102,7 @@ const ORGANIZATION_INFO = {
   licenseNumber: 'LIC-2024-CF-789',
   address: 'مسقط، سلطنة عمان',
   phone: '+968-777888194',
-  email: 'info@rohamaa.org',
+  email: 'info@rbdcye.org',
 };
 
 function generateReceiptNumber(): string {

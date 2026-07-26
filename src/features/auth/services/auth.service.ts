@@ -101,7 +101,7 @@ const session = {
 const ENV_USERS: User[] = [
   {
     id: '1',
-    email: import.meta.env.VITE_ADMIN_EMAIL || 'admin@rohamaa.org',
+    email: import.meta.env.VITE_ADMIN_EMAIL || 'admin@rbdcye.org',
     name: 'مدير النظام',
     role: 'ADMIN',
     permissions: [
@@ -212,7 +212,7 @@ export const authService = {
     await delay(500);
 
     // Demo mode - validate against environment variables
-    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'admin@rohamaa.org';
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'admin@rbdcye.org';
     const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
     
     if (sanitizedEmail === adminEmail.toLowerCase()) {

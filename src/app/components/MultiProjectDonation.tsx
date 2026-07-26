@@ -743,7 +743,7 @@ export default function MultiProjectDonation() {
             <div className="flex gap-3">
               <motion.button
                 onClick={() => {
-                  const text = `تبرعت بمبلغ ${receipt.totalAmount.toLocaleString('ar-SA')} ريال لـ ${receipt.allocations.filter(a => a.amount > 0).length} مشاريع عبر @rohamaa.org`;
+                  const text = `تبرعت بمبلغ ${receipt.totalAmount.toLocaleString('ar-SA')} ريال لـ ${receipt.allocations.filter(a => a.amount > 0).length} مشاريع عبر @rbdcye.org`;
                   if (navigator.share) {
                     navigator.share({ title: 'تبرعي لرحماء بينهم', text, url: window.location.href }).catch(() => {});
                   } else {

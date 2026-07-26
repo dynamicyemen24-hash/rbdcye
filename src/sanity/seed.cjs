@@ -274,7 +274,7 @@ async function seed() {
     const user1 = await client.create({
       _type: 'user',
       name: 'أحمد المدير',
-      email: 'admin@rohamaa.org',
+      email: 'admin@rbdcye.org',
       role: 'ADMIN',
       status: 'active',
       lastLogin: new Date().toISOString(),
@@ -326,23 +326,23 @@ async function seed() {
         {
           _type: 'object',
           platform: 'facebook',
-          url: 'https://facebook.com/rohamaa',
+          url: 'https://facebook.com/rbdcye',
         },
         {
           _type: 'object',
           platform: 'twitter',
-          url: 'https://twitter.com/rohamaa',
+          url: 'https://twitter.com/rbdcye',
         },
         {
           _type: 'object',
           platform: 'youtube',
-          url: 'https://youtube.com/rohamaa',
+          url: 'https://youtube.com/rbdcye',
         },
       ],
       contactInfo: {
         phone: '777123456',
         whatsapp: '967777123456',
-        email: 'info@rohamaa.org',
+        email: 'info@rbdcye.org',
         address: 'صنعاء، اليمن',
       },
     });

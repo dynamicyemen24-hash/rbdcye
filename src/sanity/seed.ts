@@ -1,5 +1,5 @@
 /**
- * Sanity Seed Data - Rohamaa Website
+ * Sanity Seed Data - rbdcye Website
  * Creates initial content for the CMS
  * 
  * Usage: npx tsx src/sanity/seed.ts
@@ -43,19 +43,19 @@ async function seed() {
       heroVideoLoop: true,
       youtubeChannelUrl: 'https://www.youtube.com/@RahmaaBenahum',
       socialLinks: [
-        { platform: 'facebook', url: 'https://facebook.com/rohamaa' },
-        { platform: 'twitter', url: 'https://twitter.com/rohamaa' },
-        { platform: 'instagram', url: 'https://instagram.com/rohamaa' },
+        { platform: 'facebook', url: 'https://facebook.com/rbdcye' },
+        { platform: 'twitter', url: 'https://twitter.com/rbdcye' },
+        { platform: 'instagram', url: 'https://instagram.com/rbdcye' },
         { platform: 'youtube', url: 'https://youtube.com/@RahmaaBenahum' },
         { platform: 'whatsapp', url: 'https://wa.me/967777777777' },
-        { platform: 'telegram', url: 'https://t.me/rohamaa' },
+        { platform: 'telegram', url: 'https://t.me/rbdcye' },
       ],
       contactInfo: {
         phone: '+967 1 234 567',
         phoneSecondary: '+967 777 777 777',
         whatsapp: '+967777777777',
-        email: 'info@rohamaa.org',
-        emailInfo: 'donations@rohamaa.org',
+        email: 'info@rbdcye.org',
+        emailInfo: 'donations@rbdcye.org',
         address: 'صنعاء - اليمن',
         workingHours: 'السبت - الخميس: 8:00 ص - 4:00 م',
       },
@@ -360,7 +360,7 @@ async function seed() {
       { question: 'كيف يمكنني التطوع مع المؤسسة؟', answer: 'يمكنك التسجيل في قسم التطوع عبر موقعنا، وسيتواصل معك فريق التطوع لتحديد المجال المناسب لمهاراتك.', category: 'volunteering', order: 3 },
       { question: 'ما هي مجالات عمل المؤسسة؟', answer: 'تعمل المؤسسة في مجالات الإغاثة الطارئة، التعليم، التنمية المستدامة، التدريب المهني، وتمكين المرأة.', category: 'general', order: 4 },
       { question: 'هل يمكنني تخصيص تبرعي لمشروع معين؟', answer: 'نعم، يمكنك اختيار المشروع الذي ترغب في دعمه من قائمة المشاريع المتاحة على موقعنا.', category: 'donations', order: 5 },
-      { question: 'كيف يمكنني التواصل مع المؤسسة؟', answer: 'يمكنك التواصل عبر البريد الإلكتروني info@rohamaa.org أو عبر الهاتف +967 1 234 567 أو عبر واتساب.', category: 'general', order: 6 },
+      { question: 'كيف يمكنني التواصل مع المؤسسة؟', answer: 'يمكنك التواصل عبر البريد الإلكتروني info@rbdcye.org أو عبر الهاتف +967 1 234 567 أو عبر واتساب.', category: 'general', order: 6 },
     ];
 
     for (const faq of faqs) {

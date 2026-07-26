@@ -148,7 +148,7 @@ export async function exportToJSON(options: ExportOptions): Promise<string> {
         metadata: {
           exportedAt: new Date().toISOString(),
           totalItems: data.length,
-          source: 'Rohamaa Platform',
+          source: 'rbdcye Platform',
           entity,
         },
         data,

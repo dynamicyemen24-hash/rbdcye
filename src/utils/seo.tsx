@@ -29,7 +29,7 @@ export function getOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "مؤسسة رحماء بينهم الخيرية",
-    alternateName: "Rohamaa Foundation",
+    alternateName: "rbdcye Foundation",
     url: "https://rbdcye.org",
     logo: "https://rbdcye.org/logo.png",
     description:
@@ -40,9 +40,9 @@ export function getOrganizationSchema() {
       addressCountry: "YE",
     },
     sameAs: [
-      "https://facebook.com/rohamaa",
-      "https://twitter.com/rohamaa",
-      "https://youtube.com/@rohamaa",
+      "https://facebook.com/rbdcye",
+      "https://twitter.com/rbdcye",
+      "https://youtube.com/@rbdcye",
     ],
   };
 }
@@ -67,7 +67,7 @@ export function getBreadcrumbSchema(items: { label: string; href?: string }[]) {
  * Generate comprehensive SEO head tags
  */
 export function generateSeoMeta({
-  title = "مؤسسة رحماء بينهم الخيرية | Rohamaa Foundation",
+  title = "مؤسسة رحماء بينهم الخيرية | rbdcye Foundation",
   description = "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.",
   ogImage = "https://rbdcye.org/og-default.jpg",
   ogTitle,

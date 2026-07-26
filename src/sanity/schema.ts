@@ -1,5 +1,5 @@
 /**
- * Sanity Schema Types for Rohamaa Website
+ * Sanity Schema Types for rbdcye Website
  * Headless CMS Integration - Ready for Production
  */
 

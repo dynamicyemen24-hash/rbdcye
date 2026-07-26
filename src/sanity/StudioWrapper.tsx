@@ -40,7 +40,7 @@ export function SanityStudioWrapper() {
           <h2 className="text-red-600 font-bold mb-2">خطأ في التحميل</h2>
           <p className="text-muted-foreground mb-4">{error}</p>
           <a 
-            href="https://rohamaa.sanity.studio" 
+            href="https://rbdcye.sanity.studio" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block bg-brand-green text-white px-4 py-2 rounded-lg"
@@ -61,7 +61,7 @@ export function SanityStudioWrapper() {
           اضغط على الزر للذهاب إلى لوحة التحكم في Sanity
         </p>
         <a 
-          href="https://rohamaa.sanity.studio" 
+          href="https://rbdcye.sanity.studio" 
           target="_blank" 
           rel="noopener noreferrer"
           className="inline-block bg-brand-green text-white px-4 py-2 rounded-lg"

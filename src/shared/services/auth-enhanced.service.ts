@@ -410,7 +410,7 @@ class EnhancedAuthService {
   // المستخدمون المحليون (للاختبار)
   private getMockUser(email: string, password: string): AuthenticatedUser | null {
     const MOCK_USERS: Record<string, { name: string; role: AuthenticatedUser['role']; permissions: any[]; password: string }> = {
-      'admin@rohamaa.org': {
+      'admin@rbdcye.org': {
         name: 'مدير النظام',
         role: 'ADMIN',
         password: 'admin123',
@@ -426,20 +426,20 @@ class EnhancedAuthService {
           { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
         ],
       },
-      'editor@rohamaa.org': {
+      'editor@rbdcye.org': {
         name: 'أحمد المحرر',
         role: 'EDITOR',
-        password: 'rohamaa123',
+        password: 'rbdcye123',
         permissions: [
           { resource: 'news', actions: ['create', 'read', 'update', 'publish'] },
           { resource: 'stories', actions: ['create', 'read', 'update'] },
           { resource: 'media', actions: ['create', 'read'] },
         ],
       },
-      'manager@rohamaa.org': {
+      'manager@rbdcye.org': {
         name: 'فاطمة المديرة',
         role: 'MANAGER',
-        password: 'rohamaa123',
+        password: 'rbdcye123',
         permissions: [
           { resource: 'news', actions: ['create', 'read', 'update', 'approve'] },
           { resource: 'projects', actions: ['create', 'read', 'update'] },
@@ -447,10 +447,10 @@ class EnhancedAuthService {
           { resource: 'stories', actions: ['read', 'approve'] },
         ],
       },
-      'viewer@rohamaa.org': {
+      'viewer@rbdcye.org': {
         name: 'خالد المشاهد',
         role: 'VIEWER',
-        password: 'rohamaa123',
+        password: 'rbdcye123',
         permissions: [
           { resource: 'news', actions: ['read'] },
           { resource: 'projects', actions: ['read'] },
@@ -462,7 +462,7 @@ class EnhancedAuthService {
     const mock = MOCK_USERS[email];
     if (mock && password === mock.password) {
       return {
-        id: email === 'admin@rohamaa.org' ? '1' : email === 'editor@rohamaa.org' ? '2' : email === 'manager@rohamaa.org' ? '3' : '4',
+        id: email === 'admin@rbdcye.org' ? '1' : email === 'editor@rbdcye.org' ? '2' : email === 'manager@rbdcye.org' ? '3' : '4',
         email,
         name: mock.name,
         role: mock.role,

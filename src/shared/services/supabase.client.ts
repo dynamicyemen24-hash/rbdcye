@@ -20,7 +20,7 @@ if (hasSupabaseConfig) {
       },
       global: {
         headers: {
-          'x-application-name': 'rohamaa-website',
+          'x-application-name': 'rbdcye-website',
         },
       },
     });
@@ -33,7 +33,7 @@ export const supabase = supabaseInstance;
 
 // IndexedDB Fallback Class
 class IndexedDBFallback {
-  private dbName = 'RohamaaDB';
+  private dbName = 'rbdcyeDB';
   private version = 2;
 
   async openDB(): Promise<IDBDatabase> {

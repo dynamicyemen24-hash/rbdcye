@@ -55,8 +55,8 @@ export const translations = {
     contact: 'Contact Us',
     
     // Hero
-    hero_title: 'Rohamaa... Enduring Impact, Building Futures',
-    hero_subtitle: 'Rohamaa Foundation - Leading humanitarian and developmental organization in Yemen',
+    hero_title: 'rbdcye... Enduring Impact, Building Futures',
+    hero_subtitle: 'rbdcye Foundation - Leading humanitarian and developmental organization in Yemen',
     donate_now: 'Donate Now',
     quick_donate: 'Quick Donate',
     watch_story: 'Watch Our Story',
@@ -84,13 +84,13 @@ export const translations = {
 
 // Get stored language
 export function getStoredLanguage(): LanguageCode {
-  const savedLang = localStorage.getItem('rohamaa-language') as LanguageCode;
+  const savedLang = localStorage.getItem('rbdcye-language') as LanguageCode;
   return savedLang && savedLang in LANGUAGES ? savedLang : 'ar';
 }
 
 // Set language
 export function setStoredLanguage(lang: LanguageCode): void {
-  localStorage.setItem('rohamaa-language', lang);
+  localStorage.setItem('rbdcye-language', lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = LANGUAGES[lang].dir;
 }

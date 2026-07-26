@@ -4,7 +4,7 @@ export const CSP_DIRECTIVES = {
   styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
   fontSrc: ["'self'", "https://fonts.gstatic.com"],
   imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://via.placeholder.com"],
-  connectSrc: ["'self'", "https://api.rohamaa.org"],
+  connectSrc: ["'self'", "https://api.rbdcye.org"],
   frameSrc: ["'none'"],
   objectSrc: ["'none'"],
   upgradeInsecureRequests: [],

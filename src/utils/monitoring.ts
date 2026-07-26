@@ -16,7 +16,7 @@ interface LogEntry {
 }
 
 class Logger {
-  private static LOG_PREFIX = '[Rohamaa]';
+  private static LOG_PREFIX = '[rbdcye]';
   private static STORAGE_KEY = 'app_logs';
   private static MAX_LOGS = 100;
 

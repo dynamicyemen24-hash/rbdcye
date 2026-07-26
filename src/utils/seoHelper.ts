@@ -17,7 +17,7 @@ export const seoConfig = {
     title: data.title || 'Rahmaa Baynahum',
     description: data.description || 'منصة الخير والإحسان - مؤسسة رحماء بينهم الخيرية',
     image: data.image || '/images/default-og.jpg',
-    url: data.url || 'https://rohamaa.org',
+    url: data.url || 'https://rbdcye.org',
   }),
   
   // هيكلة البيانات JSON-LD
@@ -28,12 +28,12 @@ export const seoConfig = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: data.name || 'Rahmaa Baynahum',
-    url: data.url || 'https://rohamaa.org',
+    url: data.url || 'https://rbdcye.org',
     logo: '/images/logo.png',
     sameAs: [
-      'https://facebook.com/rohamaa',
-      'https://twitter.com/rohamaa',
-      'https://youtube.com/rohamaa',
+      'https://facebook.com/rbdcye',
+      'https://twitter.com/rbdcye',
+      'https://youtube.com/rbdcye',
     ],
   }),
 };
@@ -46,17 +46,17 @@ export function generateOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'NGO',
     name: 'مؤسسة رحماء بينهم',
-    alternateName: 'Rohamaa Foundation',
-    url: 'https://rohamaa.org',
-    logo: 'https://rohamaa.org/favicon.svg',
+    alternateName: 'rbdcye Foundation',
+    url: 'https://rbdcye.org',
+    logo: 'https://rbdcye.org/favicon.svg',
     description: 'منظمة إنسانية تنموية تعمل على تخفيف معاناة الإنسان وتحقيق التنمية المستدامة',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'YE'
     },
     sameAs: [
-      'https://facebook.com/rohamaa',
-      'https://twitter.com/rohamaa'
+      'https://facebook.com/rbdcye',
+      'https://twitter.com/rbdcye'
     ]
   };
 }

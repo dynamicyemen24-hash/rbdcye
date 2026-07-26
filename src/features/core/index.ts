@@ -26,7 +26,7 @@ export async function initializeCoreServices(): Promise<void> {
         description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري، تهدف لخدمة المتبرعين والمستفيدين',
         type: 'organization',
         image: '/og-image.png',
-        url: 'https://rohamaa.org',
+        url: 'https://rbdcye.org',
       });
     }
 
