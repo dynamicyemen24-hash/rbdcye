@@ -20,7 +20,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "البريد الإلكتروني",
-    lines: ["info@rohamaa.org", "support@rohamaa.org"],
+    lines: ["info@rbdcye.org", "support@rbdcye.org"],
     color: "var(--brand-green)",
   },
   {

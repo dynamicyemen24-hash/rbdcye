@@ -77,7 +77,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
                   رحماء بينهم
                 </div>
                 <div className="text-white/50" style={{ fontSize: "0.65rem" }}>
-                  Rohamaa Foundation
+                  rbdcye.org
                 </div>
               </div>
             </button>
@@ -105,7 +105,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
               {[
                 { icon: MapPin, text: "صنعاء، اليمن" },
                 { icon: Phone, text: "+٩٦٧ ١ ٢٣٤ ٥٦٧٨" },
-                { icon: Mail, text: "info@rohamaa.org" },
+                { icon: Mail, text: "info@rbdcye.org" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 text-white/60">
                   <Icon className="w-3.5 h-3.5 flex-shrink-0 text-[var(--brand-gold)]" />
