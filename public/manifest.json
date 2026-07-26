@@ -69,7 +69,7 @@
   "related_applications": [
     {
       "platform": "webapp",
-      "url": "https://rohamaa.org/manifest.json"
+      "url": "https://rbdcye.org/manifest.json"
     }
   ],
   "prefer_related_applications": false,
@@ -82,7 +82,7 @@
   },
   "protocol_handlers": [
     {
-      "protocol": "web+rohamaa",
+      "protocol": "web+rbdcye",
       "url": "/?action=%s"
     }
   ]
