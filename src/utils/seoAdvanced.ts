@@ -195,19 +195,19 @@ class SEOManager {
       '@type': 'Organization',
       name: 'مؤسسة رحماء بينهم',
       description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري',
-      url: 'https://rohamaa.org',
-      logo: 'https://rohamaa.org/logo.png',
-      email: 'info@rohamaa.org',
-      telephone: '+968-777888194',
+      url: 'https://rbdcye.org',
+      logo: 'https://rbdcye.org/logo.png',
+      email: 'info@rbdcye.org',
+      telephone: '+967-777888194',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'سلطنة عمان',
-        addressCountry: 'OM',
+        addressLocality: 'اليمن',
+        addressCountry: 'YE',
       },
       sameAs: [
-        'https://twitter.com/rohamaa',
-        'https://facebook.com/rohamaa',
-        'https://instagram.com/rohamaa',
+        'https://twitter.com/rbdcye',
+        'https://facebook.com/rbdcye',
+        'https://instagram.com/rbdcye',
       ],
     };
   }
@@ -218,12 +218,12 @@ class SEOManager {
       '@type': 'WebSite',
       name: 'رحماء بينهم',
       description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري',
-      url: 'https://rohamaa.org',
+      url: 'https://rbdcye.org',
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://rohamaa.org/search?q={search_term_string}',
+          urlTemplate: 'https://rbdcye.org/search?q={search_term_string}',
         },
         'query-input': 'required name=search_term_string',
       },
@@ -248,7 +248,7 @@ class SEOManager {
         name: 'مؤسسة رحماء بينهم',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://rohamaa.org/logo.png',
+          url: 'https://rbdcye.org/logo.png',
         },
       },
     };
@@ -293,6 +293,6 @@ export function useSEO(data: SEOData) {
 }
 
 // Constants
-export const SITE_URL = 'https://rohamaa.org';
+export const SITE_URL = 'https://rbdcye.org';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 export const ORGANIZATION_NAME = 'مؤسسة رحماء بينهم';
