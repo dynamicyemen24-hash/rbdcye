@@ -331,11 +331,27 @@
 }
 
 .stat-card--blue .stat-value {
-  color: #3B82F6;
+  color: var(--brand-green-light);
 }
 
 .stat-card--purple .stat-value {
-  color: #8B5CF6;
+  color: var(--brand-gold);
+}
+
+.stat-card--green {
+  border-top: 3px solid var(--brand-green);
+}
+
+.stat-card--gold {
+  border-top: 3px solid var(--brand-gold);
+}
+
+.stat-card--blue {
+  border-top: 3px solid var(--brand-green-light);
+}
+
+.stat-card--purple {
+  border-top: 3px solid var(--brand-gold);
 }
 
 /* ============================================================
@@ -736,6 +752,27 @@
    ============================================================ */
 .section-bg-gradient {
   background: linear-gradient(180deg, var(--secondary), var(--background));
+}
+
+/* ============================================================
+   Flexbox Utility Classes
+   ============================================================ */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-wrap-gap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
 }
 
 /* ============================================================
