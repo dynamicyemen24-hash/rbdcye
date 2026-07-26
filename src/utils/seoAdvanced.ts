@@ -16,6 +16,7 @@ interface SEOData {
   };
   section?: string;
   tags?: string[];
+  noindex?: boolean;
 }
 
 interface OrganizationSchema {
@@ -116,6 +117,13 @@ class SEOManager {
   private applyToDOM(data: SEOData) {
     // Update title
     document.title = data.title;
+
+    // robots
+    if (data.noindex) {
+      this.setMeta('robots', 'noindex, nofollow');
+    } else {
+      this.setMeta('robots', 'index, follow');
+    }
 
     // Update meta tags
     this.setMeta('description', data.description);

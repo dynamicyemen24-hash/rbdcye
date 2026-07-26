@@ -1,10 +1,14 @@
 /* ============================================================
+   Component Styles - Enhanced & Unified
+   ============================================================ */
+
+/* ============================================================
    Card Component Styles
    ============================================================ */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-2xl);
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -97,11 +101,11 @@
   .sm\:hidden {
     display: none;
   }
-  
+
   .sm\:block {
     display: block;
   }
-  
+
   .sm\:flex {
     display: flex;
   }
@@ -111,7 +115,7 @@
   .md\:hidden {
     display: none;
   }
-  
+
   .md\:block {
     display: block;
   }
@@ -121,7 +125,7 @@
   .lg\:hidden {
     display: none;
   }
-  
+
   .lg\:block {
     display: block;
   }
@@ -142,19 +146,19 @@
   .no-print {
     display: none !important;
   }
-  
+
   .print-break-inside-avoid {
     break-inside: avoid;
   }
-  
+
   .print-page-break-after {
     page-break-after: always;
   }
-  
+
   /* Ensure colors print correctly */
   body {
     -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 
@@ -176,8 +180,226 @@
   .card {
     border-width: 2px;
   }
-  
+
   .btn-primary {
     border: 2px solid var(--foreground);
   }
+}
+
+/* ============================================================
+   Enhanced Component Utilities
+   ============================================================ */
+
+/* Section title - unified pattern */
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.section-title .highlight {
+  color: var(--brand-green);
+}
+
+.section-title .highlight-gold {
+  color: var(--brand-gold);
+}
+
+/* Section badge - unified pattern */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  background: var(--brand-green-pale);
+  color: var(--brand-green);
+  border: 1px solid var(--brand-green) / 0.15;
+}
+
+.section-badge--gold {
+  background: var(--brand-gold-pale);
+  color: var(--brand-gold);
+  border-color: var(--brand-gold) / 0.15;
+}
+
+/* Section subtitle */
+.section-subtitle {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--muted-foreground);
+  max-width: 42rem;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Section divider */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--brand-green), transparent);
+  border-radius: 9999px;
+  margin: 1.5rem auto 0;
+}
+
+/* Hero badge - for hero section trust badges */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Decorative orb - for background decoration */
+.decorative-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.decorative-orb--green {
+  background: radial-gradient(circle, var(--brand-green) 0%, transparent 70%);
+}
+
+.decorative-orb--gold {
+  background: radial-gradient(circle, var(--brand-gold) 0%, transparent 70%);
+}
+
+/* Content container - max width centered */
+.content-container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .content-container {
+    padding: 0 var(--space-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-container {
+    padding: 0 var(--space-xl);
+  }
+}
+
+/* ============================================================
+   Button Enhancement
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+  border-radius: var(--radius-xl);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+.btn-md {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+}
+
+/* ============================================================
+   Icon Button
+   ============================================================ */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.icon-btn:hover {
+  background: var(--muted);
+}
+
+/* ============================================================
+   Text Utilities
+   ============================================================ */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   Overflow Utilities
+   ============================================================ */
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Aspect Ratio Utilities
+   ============================================================ */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+/* ============================================================
+   Backdrop Blur Utilities
+   ============================================================ */
+.backdrop-blur {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.backdrop-blur-xl {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }

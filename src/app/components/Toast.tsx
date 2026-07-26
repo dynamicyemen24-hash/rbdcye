@@ -159,7 +159,14 @@ export function useConfirm() {
 
   const ConfirmDialogComponent = state ? (
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={state.onCancel} />
+      <div 
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer" 
+        onClick={state.onCancel}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') state.onCancel(); }}
+        aria-label="إلغاء"
+      />
       <div className="relative bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl" style={{ direction: "rtl" }}>
         <div className="text-center mb-5">
           <div className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3 ${

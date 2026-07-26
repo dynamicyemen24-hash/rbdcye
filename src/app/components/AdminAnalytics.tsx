@@ -1,5 +1,5 @@
 // Admin Analytics Component - Professional Website Activity Analytics
-import { Activity, Users, Eye, TrendingUp, Globe, Clock, BarChart3, PieChart, Calendar, MousePointer, RefreshCw } from "lucide-react";
+import { Users, Eye, TrendingUp, Globe, Clock, BarChart3, PieChart, Calendar, MousePointer, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { dataService } from "@/shared/services/data.service";
@@ -127,7 +127,7 @@ export function AdminAnalytics() {
           <h3 className="text-[var(--foreground)] mb-4" style={{ fontSize: "0.9rem", fontWeight: 700 }}>أهم الصفحات زيارة</h3>
           <div className="space-y-3">
             {analytics.topPages.map((page, i) => (
-              <div key={i} className="flex items-center justify-between">
+                <div key={page.path} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[var(--brand-green-pale)] flex items-center justify-center text-[var(--brand-green)]" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
                     {i + 1}
@@ -149,8 +149,8 @@ export function AdminAnalytics() {
         <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
           <h3 className="text-[var(--foreground)] mb-4" style={{ fontSize: "0.9rem", fontWeight: 700 }}>مصادر الزيارات</h3>
           <div className="space-y-3">
-            {analytics.trafficSources.map((source, i) => (
-              <div key={i}>
+              {analytics.trafficSources.map((source) => (
+                <div key={source.source}>
                 <div className="flex items-center justify-between mb-1">
                   <span style={{ fontSize: "0.82rem" }}>{source.source}</span>
                   <span style={{ fontSize: "0.8rem", fontWeight: 600 }}>{source.percentage}%</span>
@@ -167,11 +167,11 @@ export function AdminAnalytics() {
         <div className="bg-white rounded-xl p-5 border border-[var(--border)] lg:col-span-2">
           <h3 className="text-[var(--foreground)] mb-4" style={{ fontSize: "0.9rem", fontWeight: 700 }}>الإحصائيات اليومية (30 يوم)</h3>
           <div className="h-48 flex items-end justify-between gap-1 px-2">
-            {analytics.dailyStats.slice(0, 15).map((stat, i) => {
+                    {analytics.dailyStats.slice(0, 15).map((stat) => {
               const max = Math.max(...analytics.dailyStats.map(s => s.views));
               const height = (stat.views / max) * 100;
               return (
-                <div key={i} className="flex flex-col items-center flex-1 max-w-12">
+                  <div key={stat.date} className="flex flex-col items-center flex-1 max-w-12">
                   <div className="relative w-full">
                     <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-[var(--muted-foreground)]" style={{ fontSize: "0.6rem" }}>
                       {stat.views}
@@ -195,8 +195,8 @@ export function AdminAnalytics() {
                   const total = analytics.deviceStats.reduce((sum, d) => sum + d.percentage, 0);
                   const offset = analytics.deviceStats.slice(0, i).reduce((sum, d) => sum + (d.percentage / total) * 100, 0);
                   return (
-                    <circle
-                      key={i}
+                  <circle
+                      key={device.device}
                       cx="64"
                       cy="64"
                       r="28"
@@ -211,8 +211,8 @@ export function AdminAnalytics() {
               </svg>
             </div>
             <div className="mr-4 space-y-2">
-              {analytics.deviceStats.map((device, i) => (
-                <div key={i} className="flex items-center gap-2">
+                {analytics.deviceStats.map((device) => (
+                  <div key={device.device} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: device.color }} />
                   <span style={{ fontSize: "0.78rem" }}>{device.device} ({device.percentage}%)</span>
                 </div>

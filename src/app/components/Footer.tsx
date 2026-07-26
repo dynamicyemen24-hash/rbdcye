@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, AlertCircle, CreditCard } from "lucide-react";
+import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, Award, ExternalLink } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const footerLinks = {
@@ -23,16 +23,9 @@ const footerLinks = {
   ],
   "الموارد": [
     { label: "الأخبار", href: "news" },
-    { label: "قصص النجاح", href: "success" },
     { label: "التقارير والإصدارات", href: "reports" },
     { label: "معرض الوسائط", href: "media" },
     { label: "تواصل معنا", href: "contact" },
-  ],
-  "روابط سريعة": [
-    { label: "التطوع", href: "volunteer" },
-    { label: "الوقف الخيري", href: "endowment" },
-    { label: "معرض الوسائط", href: "media" },
-    { label: "التقارير", href: "reports" },
   ],
 };
 
@@ -72,11 +65,11 @@ export function Footer({ setCurrentPage }: FooterProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <button onClick={() => setCurrentPage("home")} className="flex items-center gap-3 mb-5">
-              <div className="w-11 h-11 rounded-full bg-[var(--brand-gold)] flex items-center justify-center">
+            <button onClick={() => setCurrentPage("home")} className="flex items-center gap-3 mb-5 group">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[var(--brand-gold)] to-amber-600 flex items-center justify-center shadow-lg shadow-[var(--brand-gold)]/20 group-hover:scale-105 transition-transform">
                 <Heart className="w-5 h-5 text-white" fill="white" />
               </div>
               <div className="text-right">
@@ -91,6 +84,23 @@ export function Footer({ setCurrentPage }: FooterProps) {
             <p className="text-white/65 mb-6" style={{ fontSize: "0.82rem", lineHeight: "1.8" }}>
               مؤسسة إنسانية تنموية تعمل على تخفيف معاناة الإنسان وبناء مجتمعات مستدامة، منذ عام ١٤٣٠هـ.
             </p>
+            
+            {/* License Badges */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                <Award className="w-3.5 h-3.5 text-[var(--brand-gold)]" />
+                <span className="text-white/70 text-[0.65rem]">ترخيص 2024/YEM/001</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-white/70 text-[0.65rem]">معتمد من وزارة التعاون</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                <CheckCircle className="w-3.5 h-3.5 text-blue-400" />
+                <span className="text-white/70 text-[0.65rem]">مؤسسة خيرية مرخصة</span>
+              </div>
+            </div>
+
             <div className="space-y-2.5">
               {[
                 { icon: MapPin, text: "صنعاء، اليمن" },
@@ -107,7 +117,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
           {/* Link Columns */}
           {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section} className="lg:col-span-1">
+            <div key={section}>
               <h4
                 className="text-white mb-4 border-r-2 border-[var(--brand-gold)] pr-3"
                 style={{ fontSize: "0.88rem", fontWeight: 700 }}
@@ -119,10 +129,11 @@ export function Footer({ setCurrentPage }: FooterProps) {
                   <li key={link.label}>
                     <button
                       onClick={() => setCurrentPage(link.href)}
-                      className="text-white/55 hover:text-[var(--brand-gold-light)] transition-colors"
+                      className="group text-white/55 hover:text-[var(--brand-gold-light)] transition-colors flex items-center gap-1.5"
                       style={{ fontSize: "0.78rem" }}
                     >
                       {link.label}
+                      <ExternalLink className="w-2.5 h-2.5 opacity-0 -mr-1 group-hover:opacity-100 transition-opacity" />
                     </button>
                   </li>
                 ))}
@@ -168,36 +179,49 @@ export function Footer({ setCurrentPage }: FooterProps) {
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
           <div className="text-white/40 text-center sm:text-right" style={{ fontSize: "0.75rem" }}>
-            © ٢٠٢٥ مؤسسة رحماء بينهم. جميع الحقوق محفوظة.
+            © ٢٠٢٦ مؤسسة رحماء بينهم. جميع الحقوق محفوظة.
           </div>
-<div className="flex items-center gap-4">
-             {/* License Numbers */}
-             <div className="text-white/40 text-xs">
-               <span>رخصة جمع التبرعات: 2024/YEM/001</span>
-               <span className="mx-2">|</span>
-               <span>مؤسسة معتمدة من وزارة التعاون والتنمية</span>
-             </div>
-             
-             {/* Payment Gateways Icons */}
-             <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10">
-               <div className="flex items-center gap-1" title="Stripe - مؤمون">
-                 <div className="w-6 h-6 rounded bg-blue-500 flex items-center justify-center">
-                   <CreditCard className="w-3 h-3 text-white" />
-                 </div>
-               </div>
-               <div className="flex items-center gap-1" title="مدى - مؤمن">
-                 <div className="w-6 h-6 rounded bg-green-500 flex items-center justify-center">
-                   <CreditCard className="w-3 h-3 text-white" />
-                 </div>
-               </div>
-               <div className="flex items-center gap-1" title="SSL - مشفر">
-                 <Shield className="w-3 h-3 text-[var(--brand-gold)]" />
-               </div>
-               <span className="text-white/60 text-xs font-medium">آمن</span>
-             </div>
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            {/* Payment Gateways Icons */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+              <div className="flex items-center gap-1" title="Visa - مدعوم">
+                <div className="w-7 h-5 rounded bg-blue-600 flex items-center justify-center text-[0.45rem] text-white font-bold">V</div>
+              </div>
+              <div className="flex items-center gap-1" title="Mastercard - مدعوم">
+                <div className="w-7 h-5 rounded bg-orange-500 flex items-center justify-center text-[0.45rem] text-white font-bold">MC</div>
+              </div>
+              <div className="flex items-center gap-1" title="مدى - مدعوم">
+                <div className="w-7 h-5 rounded bg-green-600 flex items-center justify-center text-[0.45rem] text-white font-bold">M</div>
+              </div>
+              <div className="flex items-center gap-1" title="Stripe - مدعوم">
+                <div className="w-7 h-5 rounded bg-indigo-600 flex items-center justify-center">
+                  <CreditCard className="w-3 h-3 text-white" />
+                </div>
+              </div>
+              <div className="w-px h-4 bg-white/10 mx-1" />
+              <div title="SSL مشفر">
+                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+              </div>
+              <span className="text-white/60 text-[0.6rem] font-medium">SSL آمن</span>
+            </div>
+
+            {/* Policy Links */}
+            <div className="flex items-center gap-3 text-white/40">
+              <button onClick={() => handlePolicyClick('privacy')} className="hover:text-white/60 transition-colors text-[0.7rem] flex items-center gap-1">
+                <Shield className="w-3 h-3" />
+                سياسة الخصوصية
+              </button>
+              <span className="text-white/10">|</span>
+              <button onClick={() => handlePolicyClick('terms')} className="hover:text-white/60 transition-colors text-[0.7rem] flex items-center gap-1">
+                <FileText className="w-3 h-3" />
+                الشروط والأحكام
+              </button>
+            </div>
+
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-[var(--brand-gold)] flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-[var(--brand-gold)] flex items-center justify-center transition-all hover:scale-110"
+              title="العودة للأعلى"
             >
               <ArrowUp className="w-4 h-4 text-white" />
             </button>

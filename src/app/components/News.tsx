@@ -364,7 +364,7 @@ const BreakingNewsTicker = memo(({ items }: { items: NewsItem[] }) => {
   if (items.length === 0) return null;
 
   return (
-    <div className="bg-gradient-to-r from-[#10B981] to-[#059669] text-white py-2.5 overflow-hidden shadow-lg border-b-4 border-[#047857]">
+    <div className="bg-[var(--brand-green)] text-white py-2.5 overflow-hidden shadow-lg border-b-4 border-[var(--brand-green-dark)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="flex-shrink-0 flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
@@ -455,7 +455,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
       onClick={onClick}
     >
       {item.isFallback && (
-        <div className="absolute top-2 left-2 z-20 bg-[#10B981] text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
+        <div className="absolute top-2 left-2 z-20 bg-[var(--success)] text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
           <Sparkles className="w-3 h-3" />
           مستوحى من رسالتنا
         </div>
@@ -501,7 +501,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
       </div>
 
       <div className="p-5">
-        <h3 className="text-lg font-bold text-[var(--foreground)] line-clamp-2 group-hover:text-[#10B981] transition-colors">
+        <h3 className="text-lg font-bold text-[var(--foreground)] line-clamp-2 group-hover:text-[var(--success)] transition-colors">
           {item.title}
         </h3>
 
@@ -544,7 +544,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
               whileTap={{ scale: 0.9 }}
               onClick={handleLike}
               className={`flex items-center gap-1 text-xs transition-colors ${
-                isLiked ? 'text-[#10B981]' : 'text-[var(--muted-foreground)]'
+                isLiked ? 'text-[var(--success)]' : 'text-[var(--muted-foreground)]'
               }`}
             >
               <Heart className={`w-4 h-4 ${isLiked ? 'fill-[#10B981]' : ''}`} />
@@ -691,17 +691,17 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
           <div className="flex flex-col items-center justify-center space-y-8">
             <div className="relative">
-              <div className="absolute inset-0 bg-[#10B981] rounded-full blur-2xl opacity-20 animate-pulse" />
+              <div className="absolute inset-0 bg-[var(--success)] rounded-full blur-2xl opacity-20 animate-pulse" />
               <div className="relative flex items-center justify-center">
-                <Loader2 className="w-16 h-16 animate-spin text-[#10B981]" />
-                <div className="absolute inset-0 animate-ping rounded-full border-2 border-[#10B981]/20" />
+                <Loader2 className="w-16 h-16 animate-spin text-[var(--success)]" />
+                <div className="absolute inset-0 animate-ping rounded-full border-2 border-[var(--success)]/20" />
               </div>
             </div>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div 
                   key={i} 
-                  className="w-2 h-2 bg-[#10B981] rounded-full animate-bounce" 
+                  className="w-2 h-2 bg-[var(--success)] rounded-full animate-bounce" 
                   style={{ animationDelay: `${i * 0.1}s` }}
                 />
               ))}
@@ -728,14 +728,14 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-3 bg-[#10B981]/10 px-6 py-2 rounded-full mb-4">
-            <Heart className="w-5 h-5 text-[#10B981]" />
-            <span className="text-[#10B981] font-semibold">مؤسسة رحماء بينهم الخيرية</span>
+            <div className="inline-flex items-center gap-3 bg-[var(--success)]/10 px-6 py-2 rounded-full mb-4">
+            <Heart className="w-5 h-5 text-[var(--success)]" />
+            <span className="text-[var(--success)] font-semibold">مؤسسة رحماء بينهم الخيرية</span>
           </div>
           
           <h1 className="text-3xl md:text-5xl font-bold text-[var(--foreground)] mb-3">
             {showInspirational ? 'رسائلنا الملهمة' : 'أخبار المؤسسة'}
-            <span className="text-[#10B981] block md:inline"> {showInspirational ? 'ورؤانا' : 'وفعالياتها'}</span>
+            <span className="text-[var(--success)] block md:inline"> {showInspirational ? 'ورؤانا' : 'وفعالياتها'}</span>
           </h1>
           
           <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -760,21 +760,21 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
         >
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
-            <div className="text-[#10B981] text-2xl font-bold">{items.length}</div>
+            <div className="text-[var(--success)] text-2xl font-bold">{items.length}</div>
             <div className="text-[var(--muted-foreground)] text-sm">
               {showInspirational ? 'رسائل ملهمة' : 'إجمالي الأخبار'}
             </div>
           </div>
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
-            <div className="text-[#10B981] text-2xl font-bold">{totalBeneficiaries.toLocaleString()}</div>
+            <div className="text-[var(--success)] text-2xl font-bold">{totalBeneficiaries.toLocaleString()}</div>
             <div className="text-[var(--muted-foreground)] text-sm">إجمالي المستفيدين</div>
           </div>
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
-            <div className="text-[#10B981] text-2xl font-bold">{categories.length - 1}</div>
+            <div className="text-[var(--success)] text-2xl font-bold">{categories.length - 1}</div>
             <div className="text-[var(--muted-foreground)] text-sm">التصنيفات</div>
           </div>
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
-            <div className="text-[#10B981] text-2xl font-bold">
+            <div className="text-[var(--success)] text-2xl font-bold">
               {items.reduce((acc, item) => acc + (item.views || 0), 0).toLocaleString()}
             </div>
             <div className="text-[var(--muted-foreground)] text-sm">إجمالي المشاهدات</div>
@@ -825,7 +825,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'grid' ? 'bg-white shadow-sm text-[#10B981]' : 'text-[var(--muted-foreground)]'
+                    viewMode === 'grid' ? 'bg-white shadow-sm text-[var(--success)]' : 'text-[var(--muted-foreground)]'
                   }`}
                 >
                   <Grid className="w-4 h-4" />
@@ -833,7 +833,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
                 <button
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'list' ? 'bg-white shadow-sm text-[#10B981]' : 'text-[var(--muted-foreground)]'
+                    viewMode === 'list' ? 'bg-white shadow-sm text-[var(--success)]' : 'text-[var(--muted-foreground)]'
                   }`}
                 >
                   <List className="w-4 h-4" />

@@ -25,6 +25,15 @@
 			},
 			"ForEach-Object": true,
 			"Test-Path": true
-		}
+		},
+		"cSpell.words": [
+			"cmdk",
+			"groq",
+			"lightningcss",
+			"msvc",
+			"إنسانية",
+			"تنموية",
+			"خيرية"
+		]
 	}
 }

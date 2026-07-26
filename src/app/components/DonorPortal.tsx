@@ -231,7 +231,7 @@ export default function DonorPortal() {
           <div className="animate-pulse space-y-6">
             <div className="h-24 bg-white/60 rounded-3xl" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[1, 2, 3].map(i => <div key={i} className="h-40 bg-white/60 rounded-3xl" />)}
+              {[1, 2, 3].map(i => <div key={`portal-skeleton-${i}`} className="h-40 bg-white/60 rounded-3xl" />)}
             </div>
             <div className="h-96 bg-white/60 rounded-3xl" />
           </div>
@@ -358,7 +358,7 @@ export default function DonorPortal() {
             { label: 'إعدادات', icon: Settings, action: () => setActiveTab('settings'), color: '#D97706' },
           ].map((item, i) => (
             <motion.button
-              key={i}
+              key={item.label}
               onClick={() => typeof item.action === 'function' ? item.action() : window.location.href = item.action}
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.97 }}
@@ -428,7 +428,7 @@ export default function DonorPortal() {
                     { name: 'كسوة الشتاء 2025', progress: 65, raised: 65000, target: 100000, daysLeft: 15 },
                     { name: 'وقف التعليم', progress: 40, raised: 400000, target: 1000000, daysLeft: 45 },
                   ].map((campaign, i) => (
-                    <div key={i} className="p-4 bg-gradient-to-l from-emerald-50 to-white rounded-xl border border-emerald-100">
+                    <div key={campaign.name} className="p-4 bg-gradient-to-l from-emerald-50 to-white rounded-xl border border-emerald-100">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-gray-800">{campaign.name}</h4>
                         <span className="text-xs text-gray-500">{campaign.daysLeft} يوم متبقي</span>
@@ -529,8 +529,8 @@ export default function DonorPortal() {
                           </div>
                           {donation.impact && (
                             <div className="flex flex-wrap gap-2 mt-2">
-                              {donation.impact.map((imp, idx) => (
-                                <span key={idx} className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded-lg flex items-center gap-1">
+                               {donation.impact.map((imp, idx) => (
+                                 <span key={imp.metric} className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded-lg flex items-center gap-1">
                                   <CheckCircle className="w-3 h-3" />
                                   {imp.metric}: {imp.value}
                                 </span>
@@ -578,13 +578,13 @@ export default function DonorPortal() {
             <motion.div key="impact" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
               {/* Impact Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {[
-                  { label: 'المستفيدون', value: stats.totalBeneficiaries.toLocaleString(), icon: Users, color: '#059669' },
-                  { label: 'الأسر المستفيدة', value: '472', icon: Users, color: '#2563EB' },
-                  { label: 'المشاريع المنجزة', value: '8', icon: Target, color: '#7C3AED' },
-                  { label: 'ساعات التطوع', value: '1,240', icon: Clock, color: '#D97706' },
-                ].map((stat, i) => (
-                  <div key={i} className="bg-white rounded-2xl p-4 shadow-lg border border-gray-100 text-center">
+                 {[
+                   { label: 'المستفيدون', value: stats.totalBeneficiaries.toLocaleString(), icon: Users, color: '#059669' },
+                   { label: 'الأسر المستفيدة', value: '472', icon: Users, color: '#2563EB' },
+                   { label: 'المشاريع المنجزة', value: '8', icon: Target, color: '#7C3AED' },
+                   { label: 'ساعات التطوع', value: '1,240', icon: Clock, color: '#D97706' },
+                 ].map((stat) => (
+                   <div key={stat.label} className="bg-white rounded-2xl p-4 shadow-lg border border-gray-100 text-center">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ background: `${stat.color}15` }}>
                       <stat.icon className="w-5 h-5" style={{ color: stat.color }} />
                     </div>

@@ -23,7 +23,7 @@ export function NewsListSkeleton({ count = 3 }: { count?: number }) {
   return (
     <div className="space-y-4">
       {Array.from({ length: count }).map((_, i) => (
-        <NewsListItemSkeleton key={i} />
+          <NewsListItemSkeleton key={`news-list-item-${i}`} />
       ))}
     </div>
   );
@@ -47,7 +47,7 @@ export function PartnerSkeleton({ count = 6 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="bg-white rounded-xl p-6 border border-[var(--border)] flex items-center justify-center">
+        <div key={`partner-${i}`} className="bg-white rounded-xl p-6 border border-[var(--border)] flex items-center justify-center">
           <div className="w-16 h-16 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg animate-pulse" />
         </div>
       ))}
@@ -60,7 +60,7 @@ export function StatsSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)]">
+        <div key={`stat-card-${i}`} className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)]">
           <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-16 mb-2 animate-pulse" />
           <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded w-20 animate-pulse" />
         </div>
@@ -92,15 +92,15 @@ export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; column
       <div className="border-b border-[var(--border)]">
         <div className="grid gap-4 p-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
           {Array.from({ length: columns }).map((_, i) => (
-            <div key={i} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
+            <div key={`table-header-${i}`} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
           ))}
         </div>
       </div>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={rowIndex} className="border-b border-[var(--border)] last:border-0">
+        <div key={`table-row-${rowIndex}`} className="border-b border-[var(--border)] last:border-0">
           <div className="grid gap-4 p-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
             {Array.from({ length: columns }).map((_, colIndex) => (
-              <div key={colIndex} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
+               <div key={`table-cell-${colIndex}`} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
             ))}
           </div>
         </div>

@@ -2,6 +2,10 @@
 
 :root {
   --font-size: 16px;
+
+  /* ============================================================
+     Core Color Palette - Refined for Premium Quality
+     ============================================================ */
   --background: #FAFAF7;
   --foreground: #1C1C2E;
   --card: #FFFFFF;
@@ -25,12 +29,28 @@
   --font-weight-medium: 600;
   --font-weight-normal: 400;
   --ring: #1A5C48;
-  --chart-1: #1A5C48;
-  --chart-2: #C8861E;
-  --chart-3: #2E7D6B;
-  --chart-4: #E8A83A;
-  --chart-5: #4AA88E;
+
+   /* Chart colors */
+   --chart-1: #1A5C48;
+   --chart-2: #C8861E;
+   --chart-3: #2E7D6B;
+   --chart-4: #E8A83A;
+   --chart-5: #4AA88E;
+
+   /* Semantic success/accent tokens */
+   --success: #10B981;
+   --success-dark: #059669;
+
+  /* Border radius system */
   --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  /* Sidebar */
   --sidebar: #F0EAD6;
   --sidebar-foreground: #1C1C2E;
   --sidebar-primary: #1A5C48;
@@ -40,52 +60,92 @@
   --sidebar-border: rgba(28, 28, 46, 0.1);
   --sidebar-ring: #1A5C48;
 
-  /* Brand-specific tokens */
+  /* ============================================================
+     Brand Tokens - The Heart of the Design System
+     ============================================================ */
   --brand-green: #1A5C48;
   --brand-green-light: #2E7D6B;
+  --brand-green-dark: #0F3D2E;
   --brand-green-pale: #E8F2EF;
   --brand-gold: #C8861E;
   --brand-gold-light: #E8A83A;
   --brand-gold-pale: #FDF4E3;
   --brand-parchment: #F5F0E4;
   --brand-ink: #1C1C2E;
+  --brand-ink-light: #3A3A5C;
 
-  /* Enhanced shadows */
-  --shadow-sm: 0 1px 2px rgba(28, 28, 46, 0.06);
-  --shadow-md: 0 4px 12px rgba(28, 28, 46, 0.08);
-  --shadow-lg: 0 8px 30px rgba(28, 28, 46, 0.12);
-  --shadow-xl: 0 20px 60px rgba(28, 28, 46, 0.15);
+  /* ============================================================
+     Enhanced Shadows - Layered for Depth
+     ============================================================ */
+  --shadow-xs: 0 1px 2px rgba(28, 28, 46, 0.04);
+  --shadow-sm: 0 1px 3px rgba(28, 28, 46, 0.06), 0 1px 2px rgba(28, 28, 46, 0.04);
+  --shadow-md: 0 4px 6px rgba(28, 28, 46, 0.08), 0 2px 4px rgba(28, 28, 46, 0.06);
+  --shadow-lg: 0 8px 25px rgba(28, 28, 46, 0.10), 0 4px 12px rgba(28, 28, 46, 0.08);
+  --shadow-xl: 0 20px 40px rgba(28, 28, 46, 0.12), 0 8px 24px rgba(28, 28, 46, 0.10);
+  --shadow-2xl: 0 30px 60px rgba(28, 28, 46, 0.15), 0 12px 30px rgba(28, 28, 46, 0.12);
+  --shadow-inner: inset 0 2px 4px rgba(28, 28, 46, 0.04);
   --shadow-glow: 0 0 20px rgba(26, 92, 72, 0.15);
-  --shadow-gold: 0 0 20px rgba(200, 134, 30, 0.15);
+  --shadow-glow-gold: 0 0 20px rgba(200, 134, 30, 0.15);
+  --shadow-glow-strong: 0 0 35px rgba(26, 92, 72, 0.20);
+  --shadow-glow-gold-strong: 0 0 35px rgba(200, 134, 30, 0.20);
 
-  /* Spacing system */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
+  /* ============================================================
+     Spacing System - 4px Grid
+     ============================================================ */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
 
   /* Container widths */
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1280px;
+  --container-2xl: 1440px;
+
+  /* ============================================================
+     Section Background System - Alternating Pattern
+     ============================================================ */
+  --section-bg-primary: var(--background);
+  --section-bg-secondary: var(--secondary);
+  --section-bg-accent: var(--brand-green-pale);
+  --section-border: var(--border);
+  --section-divider: rgba(28, 28, 46, 0.06);
+
+  /* ============================================================
+     Gradient Presets - For Premium Visuals
+     ============================================================ */
+  --gradient-brand: linear-gradient(135deg, var(--brand-green), var(--brand-green-light));
+  --gradient-gold: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
+  --gradient-brand-gold: linear-gradient(135deg, var(--brand-green), var(--brand-gold));
+  --gradient-brand-to-gold: linear-gradient(90deg, var(--brand-green), var(--brand-gold));
+  --gradient-text-green: linear-gradient(135deg, var(--brand-green), var(--brand-green-light));
+  --gradient-text-gold: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
+  --gradient-subtle-green: linear-gradient(180deg, var(--brand-green-pale) 0%, transparent 100%);
+  --gradient-overlay-dark: linear-gradient(180deg, rgba(26, 92, 72, 0.85) 0%, rgba(26, 92, 72, 0.4) 100%);
 }
 
+/* ============================================================
+   Dark Mode - Refined Palette
+   ============================================================ */
 .dark {
-  --background: #111118;
+  --background: #0A0F15;
   --foreground: #F5F0E4;
-  --card: #1A1A24;
+  --card: #141A22;
   --card-foreground: #F5F0E4;
-  --popover: #1A1A24;
+  --popover: #141A22;
   --popover-foreground: #F5F0E4;
   --primary: #2E7D6B;
   --primary-foreground: #FFFFFF;
-  --secondary: #252532;
+  --secondary: #1E2A20;
   --secondary-foreground: #F5F0E4;
-  --muted: #252532;
+  --muted: #1E2A20;
   --muted-foreground: #9A9AAD;
   --accent: #E8A83A;
   --accent-foreground: #111118;
@@ -101,20 +161,30 @@
   --chart-3: #4AA88E;
   --chart-4: #C8861E;
   --chart-5: #1A5C48;
-  --sidebar: #1A1A24;
+  --sidebar: #141A22;
   --sidebar-foreground: #F5F0E4;
   --sidebar-primary: #2E7D6B;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #252532;
+  --sidebar-accent: #1E2A20;
   --sidebar-accent-foreground: #F5F0E4;
   --sidebar-border: rgba(245, 240, 228, 0.1);
   --sidebar-ring: #2E7D6B;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-2xl: 0 30px 60px rgba(0, 0, 0, 0.5), 0 12px 30px rgba(0, 0, 0, 0.4);
+  --brand-green-pale: #0F3D2E;
+  --brand-gold-pale: #2D1F0A;
+  --section-bg-primary: var(--background);
+  --section-bg-secondary: var(--secondary);
+  --section-divider: rgba(245, 240, 228, 0.06);
 }
 
+/* ============================================================
+   Tailwind Theme Integration
+   ============================================================ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -146,6 +216,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -156,6 +228,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ============================================================
+   Base Styles - Global Typography & Layout
+   ============================================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -176,7 +251,7 @@
     scroll-behavior: smooth;
   }
 
-  /* Responsive typography */
+  /* Responsive typography with fluid scaling */
   h1 {
     font-size: clamp(1.8rem, 5vw, 3.2rem);
     font-weight: 800;
@@ -285,6 +360,11 @@
   .pattern-bg {
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231A5C48' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
+
+  /* Enhanced Islamic geometric pattern - gold variant */
+  .pattern-bg-gold {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8861E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
 }
 
 /* ============================================================
@@ -363,8 +443,16 @@
 }
 
 .dark .glass {
-  background: rgba(26, 26, 36, 0.8);
+  background: rgba(20, 26, 34, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glass effect - dark variant for light backgrounds */
+.glass-dark {
+  background: rgba(26, 92, 72, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 92, 72, 0.3);
 }
 
 /* Card hover effect */
@@ -392,7 +480,9 @@
   background-clip: text;
 }
 
-/* Button variants */
+/* ============================================================
+   Button Variants - Premium Quality
+   ============================================================ */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -401,11 +491,12 @@
   padding: 0.75rem 1.5rem;
   background: var(--brand-green);
   color: white;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
@@ -427,7 +518,7 @@
   background: transparent;
   color: var(--brand-green);
   border: 2px solid var(--brand-green);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -447,20 +538,21 @@
   padding: 0.75rem 1.5rem;
   background: var(--brand-gold);
   color: white;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
+  box-shadow: var(--shadow-gold);
 }
 
 .btn-gold:hover {
   background: var(--brand-gold-light);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-glow-gold);
 }
 
-/* Section spacing */
+/* Section spacing - unified system */
 .section-padding {
   padding: var(--space-3xl) var(--space-md);
 }

@@ -402,7 +402,7 @@ interface IMediator {
 }
 
 class Mediator implements IMediator {
-  private handlers: Map<string, Function[]> = new Map();
+  private handlers: Map<string, Array<(message: any) => Promise<any>>> = new Map();
 
   register<T>(messageType: string, handler: (message: T) => Promise<any>) {
     if (!this.handlers.has(messageType)) {

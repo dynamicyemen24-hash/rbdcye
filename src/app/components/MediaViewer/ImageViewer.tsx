@@ -333,7 +333,6 @@ export const ImageViewer = memo(
         container.removeEventListener('touchend', handleTouchEnd);
         container.removeEventListener('touchcancel', handleTouchEnd);
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.zoom, state.panX, state.panY]);
 
     // ---- حساب أنماط الصورة ----

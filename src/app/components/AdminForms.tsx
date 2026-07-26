@@ -197,12 +197,16 @@ export function FormModal({ isOpen, onClose, title, children, size = "md" }: For
       role="dialog"
       aria-modal="true"
       aria-labelledby="form-modal-title"
-      onKeyDown={(e) => {
-        if (e.key === "Escape") onClose();
-      }}
     >
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <button type="button" aria-label="إغلاق" className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <button
+        type="button"
+        aria-label="إغلاق"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") onClose();
+        }}
+      />
       <div
         className={`relative bg-white rounded-2xl p-6 w-full ${widthMap[size]} shadow-2xl max-h-[90vh] overflow-y-auto`}
         style={{ direction: "rtl" }}

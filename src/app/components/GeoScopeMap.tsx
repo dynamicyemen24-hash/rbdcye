@@ -1,13 +1,24 @@
 // GeoScopeMap - Interactive geographic map showing project reach
 import { Map, Navigation, Satellite, Grid3x3 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface GeoScopeMapProps {
   setCurrentPage?: (page: string) => void;
 }
 
+interface Governorate {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  projects: number;
+  beneficiaries: number;
+  color: string;
+}
+
 // Yemen governorates with project data
-const YEMEN_GOVERNORATES = [
+const YEMEN_GOVERNORATES: Governorate[] = [
   { id: "sanaa", name: "صنعاء", lat: 15.3694, lng: 44.1917, projects: 8, beneficiaries: 12500, color: "var(--brand-green)" },
   { id: "taiz", name: "تعز", lat: 13.7833, lng: 44.1333, projects: 6, beneficiaries: 8200, color: "var(--brand-gold)" },
   { id: "hodeidah", name: "الحديدة", lat: 15.3433, lng: 43.2333, projects: 5, beneficiaries: 6800, color: "#2563EB" },
@@ -18,7 +29,7 @@ const YEMEN_GOVERNORATES = [
   { id: "hadramawt", name: "حضرموت", lat: 15.4000, lng: 48.3667, projects: 4, beneficiaries: 5400, color: "#8B5CF6" },
   { id: "adDalis", name: "الضالع", lat: 14.6667, lng: 47.3333, projects: 2, beneficiaries: 1500, color: "#06B6D4" },
   { id: "lahij", name: "لحج", lat: 13.2000, lng: 44.8000, projects: 3, beneficiaries: 2200, color: "#EC4899" },
-  { id: "mahrah", name: "المحويت", lat: 16.7333, lng: 52.6667, projects: 2, beneficiaries: 2800, color: "#84CC16" },
+  { id: "mahrah", name: "المحويت", lat: 16.7333, lng: 52.6667, projects: 20, beneficiaries: 20000, color: "#FFD700" },
   { id: "rijal", name: "ريمة", lat: 17.5167, lng: 43.5667, projects: 1, beneficiaries: 900, color: "#F97316" },
 ];
 

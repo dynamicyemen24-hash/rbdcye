@@ -646,7 +646,7 @@ function DashboardOverview({ onNavigate }: { onNavigate: (id: string) => void })
                   const maxAmount = Math.max(...charts.donationsOverYear.map((x: any) => x.amount), 1);
                   const width = (d.amount / maxAmount) * 100;
                   return (
-                    <div key={i} className="flex items-center gap-2">
+                    <div key={d.month} className="flex items-center gap-2">
                       <span style={{ fontSize: "0.7rem", fontWeight: 600, minWidth: "40px", color: "var(--muted-foreground)" }}>{d.month}</span>
                       <div className="flex-1 h-5 bg-[var(--muted)] rounded-full overflow-hidden">
                         <div className="h-full rounded-full bg-[var(--brand-green)] transition-all" style={{ width: `${width}%` }} />
@@ -667,7 +667,7 @@ function DashboardOverview({ onNavigate }: { onNavigate: (id: string) => void })
                   const percentage = totalProjects > 0 ? (p.count / totalProjects) * 100 : 0;
                   const colors = ['var(--brand-green)', 'var(--brand-gold)', '#2563EB', '#7C3AED', '#E74C3C', '#6B7280'];
                   return (
-                    <div key={i} className="flex items-center gap-2">
+                    <div key={p.category} className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: colors[i % colors.length] }} />
                       <span style={{ fontSize: "0.78rem", fontWeight: 600, flex: 1 }}>{p.category}</span>
                       <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--muted-foreground)" }}>{p.count}</span>

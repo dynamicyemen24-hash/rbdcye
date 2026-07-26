@@ -1,4 +1,4 @@
-import { Heart, ChevronLeft, Play, ArrowDown, Pause, Volume2, VolumeX, Target, Gift, Award, Sparkles } from "lucide-react";
+import { Heart, ChevronLeft, Play, Pause, Volume2, VolumeX, Sparkles, Users, Star, Handshake, Shield, ArrowDown } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -9,434 +9,391 @@ interface HeroProps {
   readonly setCurrentPage: (page: string) => void;
 }
 
-// Visitor behavior types for personalized content
-type VisitorType = 'donor' | 'partner' | 'beneficiary' | 'general';
-
 // ============================================================
-// Quranic Verses & Prophetic Hadiths for animation
+// Enriched Islamic Texts
 // ============================================================
-const QURAN_VERSES = [
-  {
-    arabic: "مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنۢبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ",
-    surah: "البقرة: ٢٦١",
-    translation: "مثل الذين ينفقون أموالهم في سبيل الله كمثل حبة أنبتت سبع سنابل في كل سنبلة مائة حبة",
-    theme: "الإنفاق",
-  },
-  {
-    arabic: "إِنَّ الْمُصَّدِّقِينَ وَالْمُصَّدِّقَاتِ وَأَقْرَضُوا اللَّهَ قَرْضًا حَسَنًا يُضَاعَفُ لَهُمْ وَلَهُمْ أَجْرٌ كَرِيمٌ",
-    surah: "الحديد: ١٨",
-    translation: "إن المصدقين والمصدقات وأقرضوا الله قرضا حسنا يضاعف لهم ولهم أجر كريم",
-    theme: "التصدق",
-  },
-  {
-    arabic: "وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا",
-    surah: "المائدة: ٣٢",
-    translation: "ومن أحياها فكأنما أحيا الناس جميعا",
-    theme: "الإحياء",
-  },
-];
-
-const PROPHETIC_HADITHS = [
-  {
-    arabic: "مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا، نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ",
-    narrator: "مسلم",
-    theme: "التنفيس",
-  },
-  {
-    arabic: "الصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ",
-    narrator: "الترمذي",
-    theme: "الصدقة",
-  },
-];
-
-// Combine verses and hadiths for the rotation
 const ISLAMIC_TEXTS = [
-  ...QURAN_VERSES.map(v => ({ type: 'ayah' as const, ...v })),
-  ...PROPHETIC_HADITHS.map(h => ({ type: 'hadith' as const, ...h })),
+  {
+    type: 'ayah' as const,
+    arabic: "مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنۢبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ",
+    reference: "البقرة: ٢٦١",
+    theme: "الإنفاق",
+    cta: "اجعل أجرك يتضاعف",
+  },
+  {
+    type: 'ayah' as const,
+    arabic: "إِنَّ الْمُصَّدِّقِينَ وَالْمُصَّدِّقَاتِ وَأَقْرَضُوا اللَّهَ قَرْضًا حَسَنًا يُضَاعَفُ لَهُمْ وَلَهُمْ أَجْرٌ كَرِيمٌ",
+    reference: "الحديد: ١٨",
+    theme: "التصدق",
+    cta: "اقرض الله قرضاً حسناً",
+  },
+  {
+    type: 'hadith' as const,
+    arabic: "مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا، نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ",
+    reference: "رواه مسلم",
+    theme: "التنفيس",
+    cta: "فرّج كربة محتاج",
+  },
+  {
+    type: 'hadith' as const,
+    arabic: "الصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ",
+    reference: "رواه الترمذي",
+    theme: "الصدقة",
+    cta: "تصدق يسترك الله",
+  },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
-  },
-};
-
-const statVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { delay: 0.8 + i * 0.15, duration: 0.5, ease: "easeOut" as const },
-  }),
-};
-
 // ============================================================
-// Islamic Text Carousel Component
-// ============================================================
-interface QuranAyah {
-  type: 'ayah';
-  arabic: string;
-  surah: string;
-  translation: string;
-  theme: string;
-}
-
-interface PropheticHadith {
-  type: 'hadith';
-  arabic: string;
-  narrator: string;
-  translation?: string;
-  theme: string;
-}
-
-type IslamicText = QuranAyah | PropheticHadith;
-
-function IslamicTextCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % ISLAMIC_TEXTS.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  const current = ISLAMIC_TEXTS[currentIndex] as IslamicText;
-  const surah = (current as QuranAyah).surah;
-  const narrator = (current as PropheticHadith).narrator;
-  const translation = (current as QuranAyah).translation;
-
-  return (
-    <div
-      className="absolute inset-0 z-10 flex items-end pb-28 md:pb-32"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="relative"
-          >
-            {/* Decorative line */}
-            <div className="absolute -top-4 right-0 w-16 h-0.5 bg-[var(--brand-gold)]/60 rounded-full" />
-            <div className="absolute -top-4 right-20 w-8 h-0.5 bg-[var(--brand-gold)]/30 rounded-full" />
-
-            {/* Type badge */}
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-3 py-1 rounded-full bg-[var(--brand-gold)]/20 backdrop-blur-sm border border-[var(--brand-gold)]/30 text-[var(--brand-gold-light)] text-xs font-semibold">
-                {current.type === 'ayah' ? 'آية قرآنية' : 'حديث نبوي'}
-              </span>
-              <span className="text-white/50 text-xs">
-                {current.type === 'ayah' ? surah : `رواه ${narrator}`}
-              </span>
-              {isPaused && (
-                <button
-                  onClick={() => setIsPaused(false)}
-                  className="p-1 rounded-full bg-white/10 hover:bg-white/20 transition-all"
-                  title="استئناف"
-                >
-                  <Play className="w-3 h-3 text-white" fill="white" />
-                </button>
-              )}
-            </div>
-
-            {/* Arabic Text */}
-            <p
-              className="text-white leading-relaxed mb-2 font-arabic"
-              style={{
-                fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
-                fontWeight: 600,
-                textShadow: "0 2px 10px rgba(0,0,0,0.3)",
-                lineHeight: 1.9,
-                fontFamily: "'Noto Naskh Arabic', 'Traditional Arabic', serif",
-              }}
-            >
-              {current.arabic}
-            </p>
-
-            {/* Translation */}
-            <p className="text-white/60 text-sm leading-relaxed">
-              {translation || current.theme}
-            </p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// Video Background Component
+// Video Background
 // ============================================================
 function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+  const controlsTimer = useRef<ReturnType<typeof setTimeout>>();
+  const playAttempted = useRef(false);
 
-  // Video controls
   const toggleMute = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+      setIsMuted(!videoRef.current.muted);
     }
-  }, [isMuted]);
-
-  const handleVideoError = () => {
-    setVideoError(true);
-  };
+  }, []);
 
   const togglePlay = useCallback(() => {
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play().catch(() => {});
-      }
+      if (isPlaying) videoRef.current.pause();
+      else videoRef.current.play().catch(() => setVideoError(true));
       setIsPlaying(!isPlaying);
     }
   }, [isPlaying]);
 
+  const handleMouseMove = useCallback(() => {
+    setShowControls(true);
+    clearTimeout(controlsTimer.current);
+    controlsTimer.current = setTimeout(() => setShowControls(false), 3000);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || playAttempted.current) return;
+    playAttempted.current = true;
+
+    const attemptPlay = () => {
+      video.play().then(() => { setVideoLoading(false); setIsPlaying(true); })
+        .catch(() => { setVideoLoading(false); setIsPlaying(false); });
+    };
+    attemptPlay();
+
+    const handleInteraction = () => { if (video.paused) attemptPlay(); };
+    document.addEventListener('click', handleInteraction, { once: true });
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+    };
+  }, []);
+
+  useEffect(() => () => clearTimeout(controlsTimer.current), []);
+
   if (videoError) {
     return (
-      // Animated gradient fallback - elegant without video
       <div className="absolute inset-0">
-        <div
-          className="w-full h-full"
-          style={{
-            background: "linear-gradient(135deg, #0a2e1f 0%, #1A5C48 30%, #0d3b2a 60%, #0a2e1f 100%)",
-            backgroundSize: '400% 400%',
-            animation: 'gradientShift 20s ease infinite',
-          }}
-        />
-        {/* Islamic pattern overlay */}
-        <div className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(255,215,0,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,215,0,0.05) 0%, transparent 50%)',
-          }}
-        />
+        <div className="w-full h-full" style={{
+          background: "linear-gradient(135deg, #0a2e1f 0%, var(--brand-green) 30%, #0d3b2a 60%, #0a2e1f 100%)",
+          backgroundSize: '400% 400%', animation: 'gradientShift 20s ease infinite',
+        }} />
+        <div className="absolute inset-0 opacity-5 pattern-bg" />
       </div>
     );
   }
 
-  // Video control buttons
-  const PlayButton = (
-    <button
-      onClick={togglePlay}
-      className="absolute bottom-4 right-4 z-20 p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all text-white/70 hover:text-white"
-      title={isPlaying ? 'إيقاف الفيديو' : 'تشغيل الفيديو'}
-      aria-label={isPlaying ? 'إيقاف الفيديو' : 'تشغيل الفيديو'}
-    >
-      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-    </button>
-  );
-
-  const MuteButton = (
-    <button 
-      onClick={toggleMute} 
-      className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all text-white/70 hover:text-white" 
-      title={isMuted ? 'تشغيل الصوت' : 'كتم الصوت'}
-      aria-label={isMuted ? 'تشغيل الصوت' : 'كتم الصوت'}
-    >
-      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-    </button>
-  );
-
   return (
-    <div className="absolute inset-0">
-      {/* Video element */}
+    <div className="absolute inset-0" onMouseMove={handleMouseMove} onMouseEnter={() => setShowControls(true)}>
+      {videoLoading && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#0a2e1f]">
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-[var(--brand-gold)]/30 border-t-[var(--brand-gold)] rounded-full animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Heart className="w-6 h-6 text-[var(--brand-gold-light)]" />
+            </div>
+          </div>
+        </div>
+      )}
+
       <video
-        ref={videoRef}
-        loop
-        muted={isMuted}
-        playsInline
-        preload="metadata"
+        ref={videoRef} loop muted={isMuted} playsInline autoPlay preload="auto"
         poster="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&h=900&q=80"
-        className="w-full h-full object-cover"
-        onError={handleVideoError}
+        className={`w-full h-full object-cover transition-opacity duration-700 ${videoLoading ? 'opacity-0' : 'opacity-100'}`}
+        onError={() => { setVideoError(true); setVideoLoading(false); }}
+        onCanPlay={() => setVideoLoading(false)}
+        onPlaying={() => setVideoLoading(false)}
         aria-label="فيديو خلفية تعريفي لمؤسسة رحماء بينهم"
       >
-        <source src="/videos/hero-bg.mp4" type="video/mp4" />
-        <track kind="captions" src="" label="Arabic" srcLang="ar" />
+        <source src="/videos/hero-background.mp4" type="video/mp4" />
+        <track kind="captions" src="" label="العربية" srcLang="ar" />
       </video>
 
-      {/* Dark gradient overlays for readability */}
-      <div className="absolute inset-0 bg-gradient-to-l from-[var(--brand-green)]/92 via-[var(--brand-green)]/75 to-[var(--brand-ink)]/60" />
-      <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-black/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+      {/* Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--brand-ink)]/80 via-[var(--brand-green)]/70 to-[var(--brand-green)]/80" />
+      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
       {/* Video controls */}
-      {PlayButton}
-      {MuteButton}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : 20 }}
+        transition={{ duration: 0.3 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 px-4 py-2 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10"
+      >
+        <button onClick={togglePlay} className="p-2 rounded-full hover:bg-white/15 transition-all text-white/80 hover:text-white" aria-label={isPlaying ? 'إيقاف' : 'تشغيل'}>
+          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+        </button>
+        <div className="w-32 h-1 rounded-full bg-white/20 overflow-hidden cursor-pointer">
+          <div className="w-full h-full rounded-full bg-gradient-to-l from-[var(--brand-gold)] to-[var(--brand-gold-light)]" />
+        </div>
+        <button onClick={toggleMute} className="p-2 rounded-full hover:bg-white/15 transition-all text-white/80 hover:text-white" aria-label={isMuted ? 'تشغيل الصوت' : 'كتم الصوت'}>
+          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+      </motion.div>
 
-      <style>{`
-        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-      `}</style>
+      <style>{`@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }`}</style>
     </div>
   );
 }
 
 // ============================================================
-// Main Hero Component
+// Main Hero
 // ============================================================
 export function Hero({ setCurrentPage }: HeroProps) {
-  const [metrics, setMetrics] = useState<{
-    totalBeneficiaries?: number;
-    activeProjects?: number;
-    totalPartners?: number;
-  } | null>(null);
-  const [contentSource, setContentSource] = useState<'sanity' | 'static'>('static');
-  const [showDevBadge, setShowDevBadge] = useState(false);
+  const [metrics, setMetrics] = useState<{ totalBeneficiaries?: number; activeProjects?: number; totalPartners?: number } | null>(null);
+  const [verseIndex, setVerseIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const metricsFetched = useRef(false);
 
   useEffect(() => {
     if (metricsFetched.current) return;
     metricsFetched.current = true;
-    
-    if (import.meta.env?.DEV) {
-      setShowDevBadge(true);
-    }
-    
-    const fallback = {
-      totalBeneficiaries: SEED_IMPACT.beneficiaries,
-      activeProjects: SEED_IMPACT.projects,
-      totalPartners: SEED_IMPACT.partners,
-    };
-
-    // Load metrics asynchronously - graceful fallback
+    const fallback = { totalBeneficiaries: SEED_IMPACT.beneficiaries, activeProjects: SEED_IMPACT.projects, totalPartners: SEED_IMPACT.partners };
     contentBridge.getContent<any>('impact')
       .then(result => {
         const data = result.data[0];
-        if (result.isDynamic && data) {
-          setMetrics({
-            totalBeneficiaries: data?.totalBeneficiaries || data?.beneficiaries || fallback.totalBeneficiaries,
-            activeProjects: data?.activeProjects || data?.projects || fallback.activeProjects,
-            totalPartners: data?.totalPartners || data?.partners || fallback.totalPartners,
-          });
-          setContentSource('sanity');
-        } else {
-          setMetrics(fallback);
-          setContentSource('static');
-        }
+        setMetrics(data ? {
+          totalBeneficiaries: data?.totalBeneficiaries || data?.beneficiaries || fallback.totalBeneficiaries,
+          activeProjects: data?.activeProjects || data?.projects || fallback.activeProjects,
+          totalPartners: data?.totalPartners || data?.partners || fallback.totalPartners,
+        } : fallback);
       })
-      .catch(() => {
-        // Silent fallback on error
-        setMetrics(fallback);
-        setContentSource('static');
-      });
+      .catch(() => setMetrics(fallback));
   }, []);
 
-  const formatStat = (value: number | undefined) =>
-    typeof value === "number" ? `+${value.toLocaleString("ar-SA")}` : "...";
+  // Islamic text carousel - separate from main content layout
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => setVerseIndex(prev => (prev + 1) % ISLAMIC_TEXTS.length), 7000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
-  const DevBadge = showDevBadge ? (
-    <div className="fixed top-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-      <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-        <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-      </div>
-    </div>
-  ) : null;
-
-  const stats = [
-    { value: formatStat(metrics?.totalBeneficiaries), label: "مستفيد" },
-    { value: formatStat(metrics?.activeProjects), label: "مشروع" },
-    { value: formatStat(metrics?.totalPartners), label: "شريك" },
-  ];
+  const current = ISLAMIC_TEXTS[verseIndex];
+  const formatStat = (value: number | undefined) => typeof value === "number" ? `+${value.toLocaleString("ar-SA")}` : "...";
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden" style={{ direction: "rtl" }}>
-      {DevBadge}
-      
       <VideoBackground />
-      <IslamicTextCarousel />
 
-      <div className="relative z-20 w-full">
-        <motion.div className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-48 md:pb-56"
-          variants={containerVariants} initial="hidden" animate="visible">
-          <motion.div className="max-w-3xl" variants={itemVariants}>
-            <motion.div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full px-4 py-1.5 mb-8" variants={itemVariants}>
-              <span className="w-2 h-2 rounded-full bg-[var(--brand-gold)] animate-pulse" />
-              <span className="text-white/90" style={{ fontSize: "0.8rem" }}>
-                منذ عام ١٤٣٠هـ، نحقّق الأثر ونوصل الدعم لكل محتاج
-              </span>
-            </motion.div>
-
-            <motion.h1 className="text-white mb-6 leading-tight"
-              style={{ fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)" }} variants={itemVariants}>
-              رحماء بينهم...{' '}
-              <span className="text-[var(--brand-gold-light)]">أثرٌ يدوم</span>{' '}
-              مستقبلٌ{' '}
-              <span className="relative inline-block mr-2">
-                يُبنى
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--brand-gold)] rounded-full" />
-              </span>
-            </motion.h1>
-
-            <motion.p className="text-white/85 mb-10 max-w-2xl"
-              style={{ fontSize: "clamp(0.95rem, 2vw, 1.1rem)", lineHeight: "1.8" }} variants={itemVariants}>
-              مؤسسة رحماء بينهم منظمة إنسانية تنموية رائدة، تعمل على تخفيف معاناة 
-              الأسرة وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.
-            </motion.p>
-
-            <motion.div className="flex flex-wrap items-center gap-4" variants={itemVariants}>
-              <button onClick={() => setCurrentPage("donate")}
-                className="flex items-center gap-2.5 px-7 py-3.5 bg-[var(--brand-gold)] text-white rounded-xl hover:bg-[var(--brand-gold-light)] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-                style={{ fontSize: "1rem", fontWeight: 700 }}>
-                <Heart className="w-5 h-5" fill="white" />
-                تبرع الآن
-              </button>
-              <button onClick={() => setCurrentPage("programs")}
-                className="flex items-center gap-2 px-7 py-3.5 bg-white/15 backdrop-blur-sm text-white border border-white/30 rounded-xl hover:bg-white/25 transition-all"
-                style={{ fontSize: "1rem" }}>
-                تعرف على برامجنا
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button onClick={() => setCurrentPage("success")}
-                className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
-                style={{ fontSize: "0.9rem" }}>
-                <span className="w-10 h-10 rounded-full border-2 border-white/40 flex items-center justify-center hover:border-white/70 transition-colors">
-                  <Play className="w-4 h-4 mr-0.5" fill="white" />
-                </span>
-                شاهد قصتنا
-              </button>
-            </motion.div>
-
-            <motion.div className="mt-16 grid grid-cols-3 gap-6 max-w-lg" variants={itemVariants}>
-              {stats.map((stat, i) => (
-                <motion.div key={stat.label} className="text-center" custom={i}
-                  variants={statVariants} initial="hidden" animate="visible">
-                  <div className="text-[var(--brand-gold-light)] mb-1" style={{ fontSize: "1.6rem", fontWeight: 800 }}>
-                    {stat.value}
+      {/* Main content row: headline + cta on left, verse on right */}
+      <div className="relative z-20 w-full py-28 md:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            
+            {/* ───── Left Column: Headline + CTAs ───── */}
+            <div className="lg:col-span-7">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {/* Trust badge */}
+                <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white/50 bg-[var(--brand-green)] flex items-center justify-center">
+                        <Heart className="w-3 h-3 text-white" fill="white" />
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-white/70" style={{ fontSize: "0.75rem" }}>{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </motion.div>
+                  <span className="text-white/90 text-sm font-medium">
+                    أكثر من <strong className="text-[var(--brand-gold-light)]">١٢,٠٠٠</strong> مستفيد يثقون بنا
+                  </span>
+                </div>
+
+                {/* Headline */}
+                <h1 className="text-white mb-4" style={{ fontWeight: 800, fontSize: "clamp(2.2rem, 5.5vw, 4rem)", lineHeight: 1.15 }}>
+                  رحماء بينهم...{' '}
+                  <span className="text-[var(--brand-gold-light)]">أثرٌ يدوم</span>
+                  <br />
+                  مستقبلٌ{' '}
+                  <span className="relative inline-block">
+                    يُبنى
+                    <span className="absolute bottom-1 left-0 right-0 h-1 bg-[var(--brand-gold)] rounded-full opacity-60" />
+                  </span>
+                </h1>
+
+                {/* Subtitle */}
+                <p className="text-white/85 mb-8 max-w-xl" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.9 }}>
+                  مؤسسة إنسانية تنموية رائدة تعمل على تخفيف معاناة الأسرة اليمنية
+                  وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتمكين.
+                </p>
+
+                {/* CTA buttons */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <motion.button
+                    onClick={() => setCurrentPage("donate")}
+                    className="flex items-center gap-2.5 px-8 py-3.5 bg-[var(--brand-gold)] text-white rounded-xl font-bold shadow-lg shadow-[var(--brand-gold)]/25 hover:shadow-xl hover:shadow-[var(--brand-gold)]/35 hover:-translate-y-0.5 transition-all"
+                    style={{ fontSize: "1.05rem" }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <Heart className="w-5 h-5" fill="white" />
+                    تبرع الآن
+                  </motion.button>
+
+                  <motion.button
+                    onClick={() => setCurrentPage("programs")}
+                    className="flex items-center gap-2 px-7 py-3.5 bg-white/15 backdrop-blur-sm text-white border border-white/30 rounded-xl hover:bg-white/25 transition-all"
+                    style={{ fontSize: "1rem" }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Play className="w-4 h-4" />
+                    برامجنا
+                  </motion.button>
+
+                  <button onClick={() => setCurrentPage("success")} className="flex items-center gap-2 text-white/70 hover:text-white transition-colors px-2" style={{ fontSize: "0.9rem" }}>
+                    <span className="w-10 h-10 rounded-full border-2 border-white/30 flex items-center justify-center hover:border-white/60 transition-all">
+                      <ChevronLeft className="w-4 h-4" />
+                    </span>
+                    قصص النجاح
+                  </button>
+                </div>
+
+                {/* Stats row */}
+                <div className="mt-10 grid grid-cols-3 gap-4 max-w-sm">
+                  {[
+                    { value: formatStat(metrics?.totalBeneficiaries), label: "مستفيد", icon: Users },
+                    { value: formatStat(metrics?.activeProjects), label: "مشروع", icon: Star },
+                    { value: formatStat(metrics?.totalPartners), label: "شريك", icon: Heart },
+                  ].map((stat, i) => {
+                    const Icon = stat.icon;
+                    return (
+                      <motion.div
+                        key={stat.label}
+                        className="text-center p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 + i * 0.15, duration: 0.5 }}
+                      >
+                        <Icon className="w-5 h-5 mx-auto mb-1.5 text-[var(--brand-gold-light)]/80" />
+                        <div className="text-[var(--brand-gold-light)]" style={{ fontSize: "1.5rem", fontWeight: 800 }}>{stat.value}</div>
+                        <div className="text-white/60 text-xs">{stat.label}</div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ───── Right Column: Islamic Verse Card ───── */}
+            <div className="lg:col-span-5 hidden lg:block">
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                <div className="relative rounded-2xl p-6 md:p-8 overflow-hidden" style={{
+                  background: "rgba(255,255,255,0.08)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                }}>
+                  {/* Glow */}
+                  <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-20" style={{ background: "radial-gradient(circle, var(--brand-gold), transparent 70%)" }} />
+
+                  {/* Badge */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-[var(--brand-gold)]/20 backdrop-blur-md border border-[var(--brand-gold)]/30 text-[var(--brand-gold-light)] text-xs font-semibold flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3" />
+                      {current.type === 'ayah' ? 'آية قرآنية' : 'حديث نبوي'}
+                    </span>
+                    <span className="text-white/50 text-xs">{current.reference}</span>
+                    <button
+                      onClick={() => setIsPaused(!isPaused)}
+                      className="mr-auto p-1 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+                      title={isPaused ? 'استئناف' : 'إيقاف'}
+                    >
+                      {isPaused ? <Play className="w-3 h-3 text-white" fill="white" /> : <Pause className="w-3 h-3 text-white" />}
+                    </button>
+                  </div>
+
+                  {/* Arabic text */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={verseIndex}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <p className="text-white leading-relaxed" style={{
+                        fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)",
+                        fontWeight: 600,
+                        textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                        lineHeight: 2,
+                        fontFamily: "'Noto Naskh Arabic', 'Traditional Arabic', serif",
+                      }}>
+                        {current.arabic}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* CTA */}
+                  <motion.button
+                    onClick={() => setCurrentPage("donate")}
+                    className="inline-flex items-center gap-2 px-4 py-2 mt-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm hover:bg-white/20 transition-all"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Heart className="w-3.5 h-3.5" fill="white" />
+                    {current.cta}
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </motion.button>
+
+                  {/* Dots */}
+                  <div className="flex gap-2 mt-4" dir="ltr">
+                    {ISLAMIC_TEXTS.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setVerseIndex(i)}
+                        className={`h-1.5 rounded-full transition-all duration-500 ${i === verseIndex ? 'w-8 bg-[var(--brand-gold)]' : 'w-1.5 bg-white/30 hover:bg-white/50'}`}
+                        aria-label={`النص ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-white/60 animate-bounce">
-        <span style={{ fontSize: "0.7rem" }}>اكتشف أكثر</span>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-white/50 animate-bounce">
+        <span style={{ fontSize: "0.65rem" }}>اكتشف أكثر</span>
         <ArrowDown className="w-4 h-4" />
       </div>
     </section>

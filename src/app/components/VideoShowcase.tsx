@@ -109,7 +109,7 @@ const ProfessionalVideoPlayer = memo(({
     }
   };
 
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleProgressClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     if (videoRef.current) {
@@ -136,13 +136,16 @@ const ProfessionalVideoPlayer = memo(({
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ backgroundColor: 'rgba(0,0,0,0.92)' }}
-      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={video.title}
     >
       <div 
         className={`relative rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 ${getPlayerSizeClasses()}`}
         style={{ backgroundColor: '#0A1A0F' }}
         onClick={(e) => e.stopPropagation()}
         onMouseMove={handleMouseMove}
+        role="presentation"
       >
         {/* رأس المشغل */}
         <div className="absolute top-0 left-0 right-0 z-20 p-4 bg-gradient-to-b from-black/80 to-transparent">
@@ -162,7 +165,7 @@ const ProfessionalVideoPlayer = memo(({
               <button onClick={onYoutubeClick} className="p-2 rounded-full hover:bg-white/20" title="قناة اليوتيوب">
                 <Youtube className="w-6 h-6 text-red-500" />
               </button>
-              <button onClick={onClose} className="p-2 rounded-full hover:bg-white/20">
+              <button onClick={onClose} className="p-2 rounded-full hover:bg-white/20" aria-label="إغلاق">
                 <X className="w-6 h-6 text-white" />
               </button>
             </div>
@@ -198,25 +201,26 @@ const ProfessionalVideoPlayer = memo(({
                 exit={{ opacity: 0 }}
                 className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90"
               >
-                <div 
-                  className="w-full h-2 bg-white/20 rounded-full cursor-pointer mb-3" 
+                <button
+                  className="w-full h-2 bg-white/20 rounded-full mb-3 relative overflow-hidden"
                   onClick={handleProgressClick}
+                  aria-label="شريط التقدم"
                 >
-                  <div className="h-full rounded-full" style={{ width: `${progress}%`, backgroundColor: '#10B981' }} />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="p-2 rounded-lg hover:bg-white/20">
-                      {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
-                    </button>
-                    <button onClick={() => setIsMuted(!isMuted)} className="p-2 rounded-lg hover:bg-white/20">
-                      {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
-                    </button>
-                    <div className="text-white/70 text-sm">
-                      {videoRef.current ? formatTime(videoRef.current.currentTime) : '0:00'} / {video.duration}
+                  <div className="h-full rounded-full absolute top-0 left-0" style={{ width: `${progress}%`, backgroundColor: '#10B981' }} />
+                </button>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => setIsPlaying(!isPlaying)} className="p-2 rounded-lg hover:bg-white/20" aria-label={isPlaying ? 'إيقاف' : 'تشغيل'}>
+                        {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white" />}
+                      </button>
+                      <button onClick={() => setIsMuted(!isMuted)} className="p-2 rounded-lg hover:bg-white/20" aria-label={isMuted ? 'تشغيل الصوت' : 'كتم الصوت'}>
+                        {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
+                      </button>
+                      <div className="text-white/70 text-sm">
+                        {videoRef.current ? formatTime(videoRef.current.currentTime) : '0:00'} / {video.duration}
+                      </div>
                     </div>
-                  </div>
                   
                   <div className="relative">
                     <button onClick={() => setShowSpeed(!showSpeed)} className="p-2 rounded-lg text-white/70 text-xs font-bold">

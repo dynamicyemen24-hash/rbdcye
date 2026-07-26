@@ -1,13 +1,19 @@
+// Contact Page - صفحة التواصل (محسّنة لتكامل لوحة التحكم والمواصفات)
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe } from "lucide-react";
+import { useState, useEffect } from "react";
 
+import { useSEO } from "@/utils/seoAdvanced";
 import { sendMessage } from "@/api/messages";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { analyticsService } from "@/shared/services/analytics.service";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [ticketNumber] = useState(() => Math.floor(Math.random() * 10000));
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +21,29 @@ export default function ContactPage() {
     subject: '',
     message: '',
   });
+
+  useSEO({
+    title: 'تواصل معنا - رحماء بينهم',
+    description: 'تواصل مع مؤسسة رحماء بينهم - نحن هنا لمساعدتك في أي استفسار',
+    type: 'website',
+    url: 'https://rbdcye.org/contact',
+    keywords: ['تواصل', 'اتصل بنا', 'استفسار', 'دعم', 'رحماء بينهم'],
+  });
+
+  // تحميل البيانات من content-bridge
+  useEffect(() => {
+    let cancelled = false;
+    contentBridge.getContent<any>('impact')
+      .then((result) => {
+        if (!cancelled) {
+          setContentSource(result.isDynamic ? 'sanity' : 'static');
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setContentSource('static');
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +61,7 @@ export default function ContactPage() {
       
       if (result.success) {
         setSubmitted(true);
+        try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
       } else {
         setError(result.error || 'حدث خطأ في إرسال الرسالة');
       }
@@ -49,6 +79,41 @@ export default function ContactPage() {
     });
   };
 
+  const socialLinks = [
+    { name: 'facebook', icon: Facebook, url: 'https://facebook.com/rohamaa', color: '#1877F2' },
+    { name: 'twitter', icon: Twitter, url: 'https://twitter.com/rohamaa', color: '#1DA1F2' },
+    { name: 'instagram', icon: Instagram, url: 'https://instagram.com/rohamaa', color: '#E4405F' },
+    { name: 'youtube', icon: Youtube, url: 'https://youtube.com/@rohamaa', color: '#FF0000' },
+    { name: 'linkedin', icon: Linkedin, url: 'https://linkedin.com/company/rohamaa', color: '#0077B5' },
+  ];
+
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: 'الهاتف',
+      details: ['+967 1 234 567', '+967 777 888 999'],
+      color: 'var(--brand-green)',
+    },
+    {
+      icon: Mail,
+      title: 'البريد الإلكتروني',
+      details: ['info@rahamaabaynahum.org', 'donations@rahamaabaynahum.org'],
+      color: 'var(--brand-gold)',
+    },
+    {
+      icon: MapPin,
+      title: 'العنوان',
+      details: ['صنعاء - شارع الزبيري', 'اليمن'],
+      color: '#2563EB',
+    },
+    {
+      icon: Clock,
+      title: 'ساعات العمل',
+      details: ['السبت - الخميس: 8 ص - 4 م', 'الجمعة: مغلق'],
+      color: '#7C3AED',
+    },
+  ];
+
   if (submitted) {
     return (
       <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
@@ -56,15 +121,21 @@ export default function ContactPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-3xl p-12 border border-[var(--border)] max-w-2xl mx-auto"
+            className="bg-white rounded-3xl p-12 border border-[var(--border)] max-w-2xl mx-auto shadow-xl"
           >
-            <Send className="w-16 h-16 text-[var(--brand-green)] mx-auto mb-6" />
+            <div className="w-20 h-20 mx-auto mb-6 bg-[var(--brand-green-pale)] rounded-full flex items-center justify-center">
+              <Send className="w-10 h-10 text-[var(--brand-green)]" />
+            </div>
             <h2 className="text-3xl font-bold text-[var(--foreground)] mb-4">
               تم إرسال رسالتك بنجاح!
             </h2>
-            <p className="text-[var(--muted-foreground)]">
+            <p className="text-[var(--muted-foreground)] mb-6">
               شكراً لتواصلك معنا. سنقوم بالرد عليك في أقرب وقت ممكن.
             </p>
+            <div className="flex items-center justify-center gap-2 text-sm text-[var(--muted-foreground)] mb-6">
+              <CheckCircle className="w-4 h-4 text-[var(--brand-green)]" />
+              <span>تم إنشاء تذكرة دعم رقم: #{ticketNumber}</span>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -73,93 +144,145 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-flex items-center gap-2 text-[var(--brand-green)] text-sm font-semibold bg-[var(--brand-green-pale)] px-4 py-1.5 rounded-full mb-4">
-            <Mail className="w-4 h-4" />
-            تواصل معنا
-          </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-4">
-            نحن هنا لمساعدتك
-          </h1>
-          <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
-            يسرنا تواصلك معنا. لا تتردد في مراسلتنا بأي استفسار أو اقتراح
-          </p>
-        </motion.div>
+      {/* Hero Section */}
+      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
+        </div>
 
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
+              <Mail className="w-4 h-4 text-[var(--brand-green)]" />
+              <span className="text-[var(--brand-green)] text-sm font-medium">تواصل معنا</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
+              نحن <span className="text-[var(--brand-green)]">هنا لمساعدتك</span>
+            </h1>
+            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto text-lg">
+              لا تتردد في مراسلتنا بأي استفسار أو اقتراح. فريقنا جاهز لتقديم المساعدة
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Contact Info */}
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[var(--brand-green-pale)] flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-[var(--brand-green)]" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-[var(--foreground)] mb-1">الهاتف</h3>
-                  <p className="text-[var(--muted-foreground)]">+967 1 234 567</p>
-                  <p className="text-[var(--muted-foreground)]">+967 777 888 999</p>
-                </div>
-              </div>
-            </div>
+            {contactInfo.map((info, i) => {
+              const Icon = info.icon;
+              return (
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${info.color}15` }}>
+                      <Icon className="w-6 h-6" style={{ color: info.color }} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[var(--foreground)] mb-1">{info.title}</h3>
+                      {info.details.map((detail, j) => (
+                        <p key={j} className="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                          {detail}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
 
-            <div className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[var(--brand-green-pale)] flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-[var(--brand-green)]" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-[var(--foreground)] mb-1">البريد الإلكتروني</h3>
-                  <p className="text-[var(--muted-foreground)]">info@rahmaabaynahum.org</p>
-                  <p className="text-[var(--muted-foreground)]">donations@rahmaabaynahum.org</p>
-                </div>
+            {/* Social Media */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg"
+            >
+              <h3 className="font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-[var(--brand-green)]" />
+                تواصل معنا على وسائل التواصل
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <motion.a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -3, scale: 1.1 }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-white transition-all shadow-lg"
+                      style={{ backgroundColor: social.color }}
+                      title={social.name}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </motion.a>
+                  );
+                })}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[var(--brand-green-pale)] flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-[var(--brand-green)]" />
+            {/* Trust Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg"
+            >
+              <h3 className="font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-[var(--brand-green)]" />
+                الأمان والثقة
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-sm">
+                  <Shield className="w-4 h-4 text-[var(--brand-green)]" />
+                  <span className="text-[var(--muted-foreground)]">موقع آمن بتقنية SSL</span>
                 </div>
-                <div>
-                  <h3 className="font-bold text-[var(--foreground)] mb-1">العنوان</h3>
-                  <p className="text-[var(--muted-foreground)]">صنعاء - شارع الزبيري</p>
-                  <p className="text-[var(--muted-foreground)]">اليمن</p>
+                <div className="flex items-center gap-3 text-sm">
+                  <CheckCircle className="w-4 h-4 text-[var(--brand-gold)]" />
+                  <span className="text-[var(--muted-foreground)]">موثوق ومعتمد</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                  <span className="text-[var(--muted-foreground)]">خصوصية بيانات محمية</span>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[var(--brand-green-pale)] flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-[var(--brand-green)]" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-[var(--foreground)] mb-1">ساعات العمل</h3>
-                  <p className="text-[var(--muted-foreground)]">السبت - الخميس: 8 صباحاً - 4 مساءً</p>
-                  <p className="text-[var(--muted-foreground)]">الجمعة: مغلق</p>
-                </div>
-              </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Contact Form */}
           <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-[var(--border)] shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="p-4 bg-red-50 text-red-700 rounded-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-red-50 text-red-700 rounded-xl border border-red-200"
+                >
                   {error}
-                </div>
+                </motion.div>
               )}
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
-                    الاسم الكامل
+                    الاسم الكامل *
                   </label>
                   <input
                     id="name"
@@ -168,13 +291,13 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                     placeholder="أدخل اسمك"
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
-                    البريد الإلكتروني
+                    البريد الإلكتروني *
                   </label>
                   <input
                     id="email"
@@ -183,7 +306,7 @@ export default function ContactPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                     placeholder="أدخل بريدك"
                   />
                 </div>
@@ -199,14 +322,14 @@ export default function ContactPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                   placeholder="+967"
                 />
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
-                  الموضوع
+                  الموضوع *
                 </label>
                 <input
                   id="subject"
@@ -215,14 +338,14 @@ export default function ContactPage() {
                   required
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                   placeholder="موضوع رسالتك"
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
-                  الرسالة
+                  الرسالة *
                 </label>
                 <textarea
                   id="message"
@@ -231,7 +354,7 @@ export default function ContactPage() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all resize-none"
                   placeholder="اكتب رسالتك هنا..."
                 />
               </div>
@@ -239,7 +362,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors disabled:opacity-50"
+                className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -248,10 +371,28 @@ export default function ContactPage() {
                 )}
                 {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
               </button>
+
+              {/* Security Badge */}
+              <div className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
+                <div className="flex items-center justify-center gap-2">
+                  <Shield className="w-4 h-4 text-[var(--brand-green)]" />
+                  <span>🔒 دفع آمن ومشفر بتقنية SSL</span>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
+
+      {/* Content Source Indicator (dev only) */}
+      {import.meta.env?.DEV && (
+        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
+            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

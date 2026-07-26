@@ -1,4 +1,4 @@
-// About Page - من نحن - النسخة الاحترافية الفائقة
+// About Page - من نحن - الهوية الموحدة
 import { motion } from 'framer-motion';
 import { 
   Users, Award, Globe, Heart, Target, BookOpen, HandHeart, 
@@ -23,7 +23,7 @@ export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  // Pre-generated particle data (static values for consistent rendering)
+  // Pre-generated particle data
   const particleData = useMemo(() => Array.from({ length: 30 }, (_, i) => ({
     id: i,
     x: ((i * 37) % 1000),
@@ -32,16 +32,12 @@ export default function AboutPage() {
     delay: (i % 5) * 0.5,
   })), []);
 
-  // النصوص المحفوظة كما هي
   const aboutText = "حملة \"رحماء بينهم\" الخيرية؛ حملة دعوية، إنسانية، وتنموية انطلقت عام 2014م استجابةً للأزمة اليمنية ومعاناة المواطن الإنسانية. ومنذ انطلاقها، تسعى الحملة – بدعم أهل الخير – إلى صون حياة الإنسان وإغاثته عبر برامج علمية وإغاثية متنوعة، مستهدفةً المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، انطلقاً من واجبها الشرعي والإنساني.";
 
-  const supervisorMessage = `إنه لمن دواعي سرورنا اليوم وبعد ما يقارب عشرة أعوام من العطاء المستمر والجهود الدؤوبة، وبما يتوافق مع رؤيتنا وأهدافنا، يطيب لنا أن نقف شاكرين لله تعالى، وممتنين لكل صاحب يد سخية وجهد مبارك رسمنا سويا بصمات شريفة وأثرا حميدا، مما جعل حملة رحماء بينهم تحقق نجاحات مبهرة في مجالات متنوعة على مساحات واسعة، عبر ما يزيد عقد من الزمن.
+  const supervisorMessage = `إنه لمن دواعي سرورنا اليوم وبعد ما يقارب عشرة أعوام من العطاء المستمر والجهود الدؤوبة، وبما يتوافق مع رؤيتنا وأهدافنا، يطيب لنا أن نقف شاكرين لله تعالى، وممتنين لكل صاحب يد سخية وجهد مبارك رسمنا سويا بصمات شريفة وأثرا حميدا، مما جعل حملة رحماء بينهم تحقق نجاحات مبهرة في مجالات متنوعة على مساحات واسعة، عبر ما يزيد عقد من الزمن.\n\nفشكرًا لكل داعمٍ ومحسن، وشكرًا لكل عاملٍ وداعية، وشكرًا لكل من جعل العطاء هويته ورسالة حياته.`;
 
-فشكرًا لكل داعمٍ ومحسن، وشكرًا لكل عاملٍ وداعية، وشكرًا لكل من جعل العطاء هويته ورسالة حياته.`;
+  const partnersText = `"إلى أولئك الأخفياء الأتقياء الأصفياء، والذين ما كان لنا أن نحقق شيئاً من مشاريعنا، مؤمنين أن ما تعلّم متعلّم ولا حفظ حافظ ولا طعِم جائع ولا ارتوى ظامئ ولا اكتسى عارٍ ولا ارتسمت على محيّا حزين بسمة وكُفّت عنه دمعة إلا بفضل الله ثم بفضل الراغبين فيما عند الكريم، مَن يرون أن إصلاح المسلمين والإحسان إليهم مطلباً ربانياً ومسؤولية مجتمعية واجباً قيمياً وأخلاقياً."`;
 
-  const partnersText = `"إلى أولئك الأخفياء الأتقياء الأصفياء، والذين ما كان لنا أن نحقق شيئاً من مشاريعنا، مؤمنين أن ما تعلّم متعلّم ولا حفظ حافظ ولا طعِم جائع ولا ارتوى ظامئ ولا اكتسى عارٍ ولا ارتسمت على محيّا حزين بسمة وكُفّت عنه دمعة إلا بفضل الله ثم بفضل الراغبين فيما عند الكريم، مَن يرون أن إصلاح المسلمين والإحسان إليهم مطلباً ربانياً ومسؤولية مجتمعية وواجباً قيمياً وأخلاقياً."`;
-
-  // المؤشرات الإحصائية
   const stats = [
     { label: 'سنوات العطاء', value: '10+', icon: Clock },
     { label: 'مشروع منفذ', value: '500+', icon: Target },
@@ -49,7 +45,6 @@ export default function AboutPage() {
     { label: 'متطوع', value: '200+', icon: HandHeart },
   ];
 
-  // أقسام الصفحة للتنقل السريع
   const sections = [
     { id: 'hero', label: 'الرئيسية' },
     { id: 'definition', label: 'تعريف' },
@@ -77,18 +72,22 @@ export default function AboutPage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-[var(--secondary)] pt-20" dir="rtl">
       
+      {/* ============================================ */}
       {/* Hero Section */}
+      {/* ============================================ */}
       <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/20 via-[#10B981]/5 to-[var(--secondary)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-green)]/20 via-[var(--brand-green)]/5 to-[var(--secondary)]" />
         
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
-            className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#10B981] rounded-full blur-3xl opacity-10"
+            className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
+            style={{ background: `radial-gradient(circle, var(--brand-green), transparent 70%)` }}
             animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
             transition={{ duration: 20, repeat: -1 }}
           />
           <motion.div 
-            className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[#10B981] rounded-full blur-3xl opacity-10"
+            className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-10"
+            style={{ background: `radial-gradient(circle, var(--brand-green), transparent 70%)` }}
             animate={{ scale: [1, 1.3, 1], rotate: [0, -90, 0] }}
             transition={{ duration: 25, repeat: -1 }}
           />
@@ -96,22 +95,11 @@ export default function AboutPage() {
            {particleData.map((particle) => (
               <motion.div
                 key={particle.id}
-                className="absolute w-1.5 h-1.5 bg-[#10B981]/30 rounded-full"
-                initial={{ 
-                  x: particle.x,
-                  y: particle.y,
-                  scale: 0
-                }}
-                animate={{ 
-                  y: [null, -200],
-                  scale: [0, 1, 0],
-                  opacity: [0, 0.8, 0]
-                }}
-                transition={{ 
-                  duration: particle.duration,
-                  repeat: -1,
-                  delay: particle.delay
-                }}
+                className="absolute w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: `rgba(26, 92, 72, 0.3)` }}
+                initial={{ x: particle.x, y: particle.y, scale: 0 }}
+                animate={{ y: [0, -200], scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
+                transition={{ duration: particle.duration, repeat: -1, delay: particle.delay }}
               />
             ))}
         </div>
@@ -124,61 +112,63 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-center"
             >
+              {/* Badge */}
               <motion.div 
-                className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[#10B981]/20 px-5 py-2 rounded-full mb-8 shadow-lg"
+                className="badge badge--ghost inline-flex mb-8 shadow-lg"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <Heart className="w-4 h-4 text-[#10B981] animate-pulse" />
-                <span className="text-[#10B981] text-sm font-medium">مؤسسة رحماء بينهم الخيرية</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                <span className="text-[#10B981] text-sm">منذ 2014</span>
+                <Heart className="w-4 h-4 text-[var(--brand-gold-light)] animate-pulse" />
+                <span>مؤسسة رحماء بينهم الخيرية</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-gold-light)]" />
+                <span>منذ 2014</span>
               </motion.div>
 
+              {/* Title */}
               <motion.h1 
                 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 leading-[1.1]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
-                <span className="text-[var(--foreground)]">من</span>
-                <span className="text-[#10B981] bg-gradient-to-r from-[#10B981] to-[#059669] bg-clip-text text-transparent"> نحن</span>
+                <span className="text-[var(--foreground)]">من</span>{" "}
+                <span className="text-gradient-green">نحن</span>
               </motion.h1>
 
-              <motion.div 
-                className="w-32 h-1.5 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mb-8 rounded-full"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-              />
+              <div className="gradient-divider mx-auto mb-8" />
 
+              {/* Subtitle */}
               <motion.p 
-                className="text-2xl md:text-4xl text-[var(--muted-foreground)] font-light leading-relaxed"
+                className="text-2xl md:text-4xl font-light leading-relaxed"
+                style={{ color: 'var(--muted-foreground)' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
                 رحماء بينهم
-                <span className="text-[#10B981] font-semibold block md:inline"> - تضامن إنساني وتنموي متكامل</span>
+                <span className="text-[var(--brand-green)] font-semibold block md:inline"> - تضامن إنساني وتنموي متكامل</span>
               </motion.p>
 
+              {/* Stats grid */}
               <motion.div 
                 className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
               >
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-[var(--border)] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                {stats.map((stat) => (
+                   <motion.div
+                     key={stat.label}
+                    className="stat-card hover-lift"
                     whileHover={{ scale: 1.05 }}
                   >
-                    <stat.icon className="w-6 h-6 text-[#10B981] mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-                    <div className="text-2xl font-bold text-[var(--foreground)]">{stat.value}</div>
-                    <div className="text-xs text-[var(--muted-foreground)]">{stat.label}</div>
+                    <div className="icon-box icon-box--green w-12 h-12 mx-auto mb-3">
+                      <stat.icon className="w-6 h-6" />
+                    </div>
+                    <div className="stat-value" style={{ color: 'var(--brand-green)' }}>{stat.value}</div>
+                    <div className="stat-label">{stat.label}</div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -187,61 +177,62 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ============================================ */}
       {/* تعريف بالحملة */}
-      <section id="definition" className="relative py-24 bg-white">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#10B981]/30 to-transparent" />
+      {/* ============================================ */}
+      <section id="definition" className="section bg-white">
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(26,92,72,0.3), transparent)' }} />
         
-        <div className="container mx-auto px-4">
+        <div className="section-container">
           <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-16"
+              className="section-header"
             >
-              <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+              <span className="badge badge--green">
                 <Gem className="w-4 h-4" />
                 نبذة عنا
               </span>
-              <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)]">
-                تعريف <span className="text-[#10B981]">بالحملة</span>
+              <h2>
+                تعريف <span className="highlight">بالحملة</span>
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mt-6" />
+              <div className="divider" />
             </motion.div>
 
              <div className="relative">
-                {/* خلفية مزخرفة */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-[#10B981]/5 via-transparent to-[#10B981]/5 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-4 rounded-3xl blur-2xl" style={{ background: 'linear-gradient(135deg, rgba(26,92,72,0.05), transparent, rgba(26,92,72,0.05))' }} />
                 
                 <motion.div 
-                  className="relative bg-white rounded-3xl p-8 md:p-12 border border-[var(--border)] shadow-2xl overflow-hidden"
+                  className="card card--xl relative overflow-hidden"
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  whileHover={{ boxShadow: '0 25px 50px -12px rgba(16, 185, 129, 0.25)' }}
+                  whileHover={{ boxShadow: '0 25px 50px -12px rgba(26, 92, 72, 0.25)' }}
                 >
-                  {/* زخارف */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#10B981]/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#10B981]/[0.02] rounded-full" />
+                  {/* Decorative circles */}
+                  <div className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                  <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full" style={{ background: 'rgba(26,92,72,0.02)' }} />
 
                   <div className="relative z-10">
-                    <Quote className="w-12 h-12 text-[#10B981]/20 mb-6" />
+                    <Quote className="w-12 h-12 mb-6" style={{ color: 'rgba(26,92,72,0.2)' }} />
                     
-                    <p className="text-xl md:text-2xl leading-[1.8] text-[var(--foreground)] font-light">
+                    <p className="text-xl md:text-2xl leading-[1.8] font-light" style={{ color: 'var(--foreground)' }}>
                       {aboutText}
                     </p>
 
-                    <div className="mt-8 flex flex-wrap items-center gap-6 pt-6 border-t border-[var(--border)]">
+                    <div className="mt-8 flex flex-wrap items-center gap-6 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
                       {[
                         { icon: Calendar, label: 'انطلقت 2014م' },
                         { icon: Target, label: 'برامج متنوعة' },
                         { icon: Globe, label: 'تغطية واسعة' },
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-                          <item.icon className="w-4 h-4 text-[#10B981]" />
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center gap-2 text-sm" style={{ color: 'var(--muted-foreground)' }}>
+                          <item.icon className="w-4 h-4" style={{ color: 'var(--brand-green)' }} />
                           <span>{item.label}</span>
                         </div>
                       ))}
@@ -254,48 +245,50 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================ */}
-        {/* كلمة المشرف العام - بتأثير سينمائي */}
+        {/* كلمة المشرف العام */}
         {/* ============================================ */}
-        <section id="supervisor" className="relative py-24 overflow-hidden">
+        <section id="supervisor" className="section-secondary relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#10B981]/5 via-[#10B981]/10 to-[#10B981]/5" />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
             <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#10B981]/5 rounded-full blur-3xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl"
+              style={{ background: 'rgba(26,92,72,0.05)' }}
               animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
               transition={{ duration: 30, repeat: -1 }}
             />
           </div>
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="section-container relative z-10">
             <div className="max-w-5xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-16"
+                className="section-header"
               >
-                <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+                <span className="badge badge--gold">
                   <Crown className="w-4 h-4" />
                   كلمة القيادة
                 </span>
-                <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)]">
-                  كلمة <span className="text-[#10B981]">المشرف العام</span>
+                <h2>
+                  كلمة <span className="highlight-gold">المشرف العام</span>
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mt-6" />
+                <div className="divider" />
               </motion.div>
 
               <motion.div 
-                className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border-r-8 border-[#10B981] overflow-hidden"
+                className="card card--xl relative overflow-hidden"
+                style={{ borderRight: '8px solid var(--brand-green)' }}
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                whileHover={{ boxShadow: '0 30px 60px -20px rgba(16, 185, 129, 0.3)' }}
+                whileHover={{ boxShadow: '0 30px 60px -20px rgba(26, 92, 72, 0.3)' }}
               >
-                {/* خلفية زخرفية */}
-                <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#10B981]/5 rounded-full" />
-                <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-[#10B981]/5 rounded-full" />
+                {/* Decorative bg */}
+                <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full" style={{ background: 'rgba(26,92,72,0.05)' }} />
                 
                 <div className="relative z-10">
                   <motion.div
@@ -305,14 +298,15 @@ export default function AboutPage() {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mb-6"
                   >
-                    <Quote className="w-12 h-12 text-[#10B981]/20" />
-                    <div className="w-16 h-1 bg-[#10B981]/30 rounded-full mt-2" />
+                    <Quote className="w-12 h-12" style={{ color: 'rgba(26,92,72,0.2)' }} />
+                    <div className="w-16 h-1 mt-2 rounded-full" style={{ background: 'rgba(26,92,72,0.3)' }} />
                   </motion.div>
-                  
-                  {supervisorMessage.split('\n\n').map((paragraph, index) => (
-                    <motion.p 
-                      key={index} 
-                      className={`text-xl md:text-2xl leading-[1.8] text-[var(--foreground)] font-light ${index > 0 ? 'mt-6' : ''}`}
+                   
+                   {supervisorMessage.split('\n\n').map((paragraph, index) => (
+                     <motion.p 
+                       key={`paragraph-${index}`} 
+                      className={`text-xl md:text-2xl leading-[1.8] font-light ${index > 0 ? 'mt-6' : ''}`}
+                      style={{ color: 'var(--foreground)' }}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
@@ -321,24 +315,25 @@ export default function AboutPage() {
                       {paragraph}
                     </motion.p>
                   ))}
-                  
+                   
                   <motion.div 
-                    className="mt-8 pt-6 border-t border-[var(--border)] flex flex-wrap items-center gap-6"
+                    className="mt-8 pt-6 flex flex-wrap items-center gap-6"
+                    style={{ borderTop: '1px solid var(--border)' }}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.8 }}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-[#10B981]/10 flex items-center justify-center">
-                        <Users className="w-8 h-8 text-[#10B981]" />
+                      <div className="icon-box icon-box--green w-16 h-16 rounded-full">
+                        <Users className="w-8 h-8" />
                       </div>
                       <div>
-                        <p className="font-bold text-xl text-[var(--foreground)]">المشرف العام</p>
-                        <p className="text-[var(--muted-foreground)]">حملة رحماء بينهم</p>
+                        <p className="font-bold text-xl" style={{ color: 'var(--foreground)' }}>المشرف العام</p>
+                        <p style={{ color: 'var(--muted-foreground)' }}>حملة رحماء بينهم</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-[#10B981]">
+                    <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--brand-green)' }}>
                       <BadgeCheck className="w-5 h-5" />
                       <span>عقد من العطاء</span>
                     </div>
@@ -350,26 +345,26 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================ */}
-        {/* الهوية التنموية - بتصميم ثلاثي الأبعاد */}
+        {/* الهوية التنموية */}
         {/* ============================================ */}
-        <section id="identity" className="relative py-24 bg-white">
-          <div className="container mx-auto px-4">
+        <section id="identity" className="section bg-white">
+          <div className="section-container">
             <div className="max-w-5xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-16"
+                className="section-header"
               >
-                <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+                <span className="badge badge--green">
                   <Layers className="w-4 h-4" />
                   هوية
                 </span>
-                <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)]">
-                  هويتنا <span className="text-[#10B981]">التنموية</span>
+                <h2>
+                  هويتنا <span className="highlight">التنموية</span>
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mt-6" />
+                <div className="divider" />
               </motion.div>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -379,16 +374,16 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 }}
+                  className="card card--xl hover-lift relative overflow-hidden group"
                   whileHover={{ y: -8 }}
-                  className="group relative bg-gradient-to-br from-white to-[#10B981]/5 rounded-3xl p-8 border border-[var(--border)] shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/0 via-[#10B981]/5 to-[#10B981]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)' }} />
                   <div className="relative z-10">
-                    <div className="w-20 h-20 rounded-2xl bg-[#10B981]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-[#10B981]/20">
-                      <Globe className="w-10 h-10 text-[#10B981]" />
+                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
+                      <Globe className="w-10 h-10" />
                     </div>
-                    <h3 className="text-2xl font-bold text-[var(--foreground)] mb-3">رؤيتنا</h3>
-                    <p className="text-lg text-[var(--muted-foreground)] leading-relaxed">
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>رؤيتنا</h3>
+                    <p className="text-lg leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
                       الريادة والشمولية في المجال الدعوي والإنساني والتنموي.
                     </p>
                   </div>
@@ -400,16 +395,16 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
+                  className="card card--xl hover-lift relative overflow-hidden group"
                   whileHover={{ y: -8 }}
-                  className="group relative bg-gradient-to-br from-white to-[#10B981]/5 rounded-3xl p-8 border border-[var(--border)] shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#10B981]/0 via-[#10B981]/5 to-[#10B981]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)' }} />
                   <div className="relative z-10">
-                    <div className="w-20 h-20 rounded-2xl bg-[#10B981]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-[#10B981]/20">
-                      <Heart className="w-10 h-10 text-[#10B981]" />
+                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
+                      <Heart className="w-10 h-10" />
                     </div>
-                    <h3 className="text-2xl font-bold text-[var(--foreground)] mb-3">رسالتنا</h3>
-                    <p className="text-lg text-[var(--muted-foreground)] leading-relaxed">
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>رسالتنا</h3>
+                    <p className="text-lg leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
                       الإسهام في إصلاح المجتمع روحاً وسلوكاً، ومد يد العون لتوفير حياة كريمة يعيشها، 
                       بالشراكة مع المهتمين والخيرين في الداخل والخارج.
                     </p>
@@ -417,7 +412,7 @@ export default function AboutPage() {
                 </motion.div>
               </div>
 
-              {/* القيم - بتصميم شبكي متقدم */}
+              {/* القيم */}
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -426,33 +421,33 @@ export default function AboutPage() {
                 className="mt-16"
               >
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-14 h-14 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
-                    <Award className="w-7 h-7 text-[#10B981]" />
+                  <div className="icon-box icon-box--green w-14 h-14 rounded-xl">
+                    <Award className="w-7 h-7" />
                   </div>
-                  <h3 className="text-3xl font-bold text-[var(--foreground)]">قيمنا الناظمة</h3>
+                  <h3 className="text-3xl font-bold" style={{ color: 'var(--foreground)' }}>قيمنا الناظمة</h3>
                 </div>
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                   {[
                     { icon: Star, label: 'الإخلاص', color: '#F59E0B', desc: 'نية صادقة' },
                     { icon: Shield, label: 'الشفافية', color: '#3B82F6', desc: 'وضوح تام' },
-                    { icon: Award, label: 'الإتقان', color: '#10B981', desc: 'إتقان العمل' },
+                    { icon: Award, label: 'الإتقان', color: 'var(--brand-green)', desc: 'إتقان العمل' },
                     { icon: Users, label: 'المسؤولية', color: '#8B5CF6', desc: 'تحمل المسؤولية' },
                     { icon: Sparkles, label: 'المبادرة', color: '#F97316', desc: 'روح المبادرة' },
                   ].map((value) => (
                     <motion.div
                       key={value.label}
                       whileHover={{ y: -8, scale: 1.02 }}
-                      className="group bg-white rounded-2xl p-6 text-center border border-[var(--border)] shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                      className="stat-card group cursor-pointer"
                     >
                       <div 
-                        className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3 transition-all duration-300 group-hover:scale-110"
-                        style={{ backgroundColor: `${value.color}15` }}
+                        className="icon-box w-14 h-14 rounded-full mx-auto mb-3 group-hover:scale-110 transition-all duration-300"
+                        style={{ backgroundColor: `${value.color}15`, color: value.color }}
                       >
-                        <value.icon className="w-7 h-7" style={{ color: value.color }} />
+                        <value.icon className="w-7 h-7" />
                       </div>
-                      <p className="font-bold text-[var(--foreground)]">{value.label}</p>
-                      <p className="text-xs text-[var(--muted-foreground)] mt-1">{value.desc}</p>
+                      <p className="font-bold" style={{ color: 'var(--foreground)' }}>{value.label}</p>
+                      <p className="stat-label mt-1">{value.desc}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -462,28 +457,28 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================ */}
-        {/* أهدافنا - تصميم تفاعلي */}
+        {/* أهدافنا */}
         {/* ============================================ */}
-        <section id="goals" className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#10B981]/5 via-[#10B981]/10 to-[#10B981]/5" />
+        <section id="goals" className="section-secondary relative overflow-hidden">
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
           
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="section-container relative z-10">
             <div className="max-w-5xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-16"
+                className="section-header"
               >
-                <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+                <span className="badge badge--green">
                   <Target className="w-4 h-4" />
                   طموحاتنا
                 </span>
-                <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)]">
-                  أهدافنا <span className="text-[#10B981]">وطموحاتنا</span>
+                <h2>
+                  أهدافنا <span className="highlight">وطموحاتنا</span>
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mt-6" />
+                <div className="divider" />
               </motion.div>
 
               <div className="space-y-4">
@@ -492,29 +487,29 @@ export default function AboutPage() {
                   'إحياء دور المسجد في التربية والإصلاح، وإبرار رسالة العلم، والمحافظة على أوقات المسلم',
                   'الإسهام في توفير حياة كريمة لشريحة المستفيدين وصيانتهم من مذلة السؤال',
                   'تحقيق الاكتفاء التنموي الذاتي لضمان بقاء المشاريع وديمومة أدائها',
-                ].map((goal, index) => (
-                  <motion.div
-                    key={index}
+                 ].map((goal, index) => (
+                   <motion.div
+                     key={`goal-${index}`}
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="card hover-lift flex items-start gap-6 cursor-pointer group"
                     whileHover={{ x: 10 }}
-                    className="group flex items-start gap-6 p-6 bg-white rounded-2xl border border-[var(--border)] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
                   >
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-[#10B981] text-white flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#10B981]/20">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg" style={{ background: 'var(--brand-green)', color: 'white', boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
                         {index + 1}
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-lg text-[var(--foreground)] leading-relaxed">{goal}</p>
+                      <p className="text-lg leading-relaxed" style={{ color: 'var(--foreground)' }}>{goal}</p>
                       <div className="mt-2 flex items-center gap-2">
-                        <div className="w-16 h-0.5 bg-[#10B981]/30 rounded-full" />
-                        <span className="text-xs text-[#10B981]">هدف استراتيجي</span>
+                        <div className="w-16 h-0.5 rounded-full" style={{ background: 'rgba(26,92,72,0.3)' }} />
+                        <span className="text-xs" style={{ color: 'var(--brand-green)' }}>هدف استراتيجي</span>
                       </div>
                     </div>
-                    <CheckCircle2 className="w-5 h-5 text-[#10B981]/30 group-hover:text-[#10B981] transition-colors flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 flex-shrink-0 transition-colors" style={{ color: 'rgba(26,92,72,0.3)' }} />
                   </motion.div>
                 ))}
               </div>
@@ -523,126 +518,86 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================ */}
-        {/* الفئات المستهدفة - تصميم بطاقات متقدم */}
+        {/* الفئات المستهدفة */}
         {/* ============================================ */}
-        <section id="beneficiaries" className="relative py-24 bg-white">
-          <div className="container mx-auto px-4">
+        <section id="beneficiaries" className="section bg-white">
+          <div className="section-container">
             <div className="max-w-5xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-16"
+                className="section-header"
               >
-                <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+                <span className="badge badge--green">
                   <Users className="w-4 h-4" />
                   من نستهدف
                 </span>
-                <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)]">
-                  الفئات <span className="text-[#10B981]">المستهدفة</span>
+                <h2>
+                  الفئات <span className="highlight">المستهدفة</span>
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mt-6" />
+                <div className="divider" />
               </motion.div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
-                  { 
-                    icon: Heart, 
-                    title: 'الأيتام والأرامل والأسر المتعففة', 
-                    desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين',
-                    color: 'rose',
-                    count: '2,500+'
-                  },
-                  { 
-                    icon: HandHeart, 
-                    title: 'المحتاجون والنازحون', 
-                    desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين',
-                    color: 'amber',
-                    count: '10,000+'
-                  },
-                  { 
-                    icon: BookOpen, 
-                    title: 'طلاب وحفظة القرآن والمعلمون', 
-                    desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية',
-                    color: 'blue',
-                    count: '1,200+'
-                  },
-                  { 
-                    icon: Compass, 
-                    title: 'سكان المناطق النائية والجافة', 
-                    desc: 'مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن',
-                    color: 'emerald',
-                    count: '5,000+'
-                  },
-                  { 
-                    icon: TrendingUp, 
-                    title: 'الأسر الباحثة عن الدخل', 
-                    desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحول إلى أسر منتجة',
-                    color: 'purple',
-                    count: '800+'
-                  },
-                ].map((group, index) => {
-                  const colors = {
-                    rose: { bg: 'bg-rose-50', text: 'text-rose-600', border: 'border-rose-200', light: 'bg-rose-100' },
-                    amber: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-200', light: 'bg-amber-100' },
-                    blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200', light: 'bg-blue-100' },
-                    emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-200', light: 'bg-emerald-100' },
-                    purple: { bg: 'bg-purple-50', text: 'text-purple-600', border: 'border-purple-200', light: 'bg-purple-100' },
-                  };
-                  const c = colors[group.color as keyof typeof colors];
-
-                  return (
+                  { icon: Heart, title: 'الأيتام والأرامل والأسر المتعففة', desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين', color: '#F43F5E', count: '2,500+' },
+                  { icon: HandHeart, title: 'المحتاجون والنازحون', desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين', color: '#F59E0B', count: '10,000+' },
+                  { icon: BookOpen, title: 'طلاب وحفظة القرآن والمعلمون', desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية', color: '#3B82F6', count: '1,200+' },
+                  { icon: Compass, title: 'سكان المناطق النائية والجافة', desc: 'مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن', color: 'var(--brand-green)', count: '5,000+' },
+                  { icon: TrendingUp, title: 'الأسر الباحثة عن الدخل', desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحول إلى أسر منتجة', color: '#8B5CF6', count: '800+' },
+                 ].map((group, index) => (
                     <motion.div
-                      key={index}
+                      key={group.title}
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: index * 0.08 }}
+                      className="card hover-lift relative overflow-hidden group cursor-pointer"
                       whileHover={{ y: -6, scale: 1.01 }}
-                      className={`group relative bg-white rounded-3xl p-6 border ${c.border} shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden`}
                     >
-                      <div className={`absolute inset-0 ${c.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ backgroundColor: `${group.color}08` }} />
                       <div className="relative z-10 flex items-start gap-5">
-                        <div className={`w-16 h-16 rounded-2xl ${c.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                          <group.icon className={`w-8 h-8 ${c.text}`} />
+                        <div className="icon-box w-16 h-16 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: `${group.color}15`, color: group.color }}>
+                          <group.icon className="w-8 h-8" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-start justify-between">
-                            <h3 className="text-xl font-bold text-[var(--foreground)] mb-1">{group.title}</h3>
-                            <span className={`text-xs font-bold ${c.text} ${c.bg} px-2 py-0.5 rounded-full`}>
+                            <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>{group.title}</h3>
+                            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: `${group.color}15`, color: group.color }}>
                               {group.count}
                             </span>
                           </div>
-                          <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{group.desc}</p>
+                          <p className="text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>{group.desc}</p>
                           <div className="mt-3 flex items-center gap-2">
-                            <div className={`w-12 h-1 ${c.bg} rounded-full`} />
-                            <span className="text-xs text-[var(--muted-foreground)]">فئة مستهدفة</span>
+                            <div className="w-12 h-1 rounded-full" style={{ backgroundColor: `${group.color}20` }} />
+                            <span className="text-xs" style={{ color: 'var(--muted-foreground)' }}>فئة مستهدفة</span>
                           </div>
                         </div>
                       </div>
                     </motion.div>
-                  );
-                })}
+                  ))}
               </div>
             </div>
           </div>
         </section>
 
         {/* ============================================ */}
-        {/* شركاء النجاح - تصميم ملهم */}
+        {/* شركاء النجاح */}
         {/* ============================================ */}
-        <section id="partners" className="relative py-24 overflow-hidden">
+        <section id="partners" className="section-secondary relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#10B981]/5 via-[#10B981]/10 to-[#10B981]/5" />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
             <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#10B981]/5 rounded-full blur-3xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
+              style={{ background: 'rgba(26,92,72,0.05)' }}
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 15, repeat: Infinity }}
             />
           </div>
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="section-container relative z-10">
             <div className="max-w-4xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -652,32 +607,32 @@ export default function AboutPage() {
                 className="text-center"
               >
                 <motion.div 
-                  className="w-24 h-24 rounded-full bg-[#10B981]/10 flex items-center justify-center mx-auto mb-6"
+                  className="icon-box icon-box--green w-24 h-24 rounded-full mx-auto mb-6"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 1 }}
                 >
-                  <Users className="w-12 h-12 text-[#10B981]" />
+                  <Users className="w-12 h-12" />
                 </motion.div>
                 
-                <span className="inline-flex items-center gap-2 text-[#10B981] text-sm font-semibold bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
+                <span className="badge badge--gold">
                   <GitCommit className="w-4 h-4" />
                   شراكات مستدامة
                 </span>
 
-                <h2 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
-                  شركاء <span className="text-[#10B981]">النجاح</span>
+                <h2 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
+                  شركاء <span className="text-[var(--brand-green)]">النجاح</span>
                 </h2>
                 
-                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#10B981] to-transparent mx-auto mb-8" />
+                <div className="gradient-divider mx-auto mb-8" />
 
                 <motion.div 
-                  className="relative bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-[var(--border)] overflow-hidden"
-                  whileHover={{ boxShadow: '0 30px 60px -20px rgba(16, 185, 129, 0.25)' }}
+                  className="card card--xl relative overflow-hidden"
+                  whileHover={{ boxShadow: '0 30px 60px -20px rgba(26, 92, 72, 0.25)' }}
                 >
-                  {/* زخارف */}
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#10B981]/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#10B981]/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-                  
+                  {/* Decorative bg */}
+                  <div className="absolute top-0 right-0 w-48 h-48 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                   
                   <div className="relative z-10">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
@@ -685,15 +640,16 @@ export default function AboutPage() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 }}
                     >
-                      <Quote className="w-14 h-14 text-[#10B981]/10 mx-auto mb-6" />
+                      <Quote className="w-14 h-14 mx-auto mb-6" style={{ color: 'rgba(26,92,72,0.1)' }} />
                     </motion.div>
                     
-                    <p className="text-xl md:text-2xl leading-[1.8] text-[var(--foreground)] font-light">
+                    <p className="text-xl md:text-2xl leading-[1.8] font-light" style={{ color: 'var(--foreground)' }}>
                       {partnersText}
                     </p>
 
                     <motion.div 
-                      className="mt-8 pt-6 border-t border-[var(--border)] flex flex-wrap justify-center gap-8"
+                      className="mt-8 pt-6 flex flex-wrap justify-center gap-8"
+                      style={{ borderTop: '1px solid var(--border)' }}
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
@@ -703,9 +659,9 @@ export default function AboutPage() {
                         { icon: Heart, label: 'شركاء النجاح' },
                         { icon: Star, label: 'داعمون أوفياء' },
                         { icon: Target, label: 'صناع الأثر' },
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-center gap-2 text-[var(--muted-foreground)]">
-                          <div className="w-2 h-2 rounded-full bg-[#10B981]" />
+                       ].map((item) => (
+                         <div key={item.label} className="flex items-center gap-2" style={{ color: 'var(--muted-foreground)' }}>
+                          <div className="w-2 h-2 rounded-full" style={{ background: 'var(--brand-green)' }} />
                           <span>{item.label}</span>
                         </div>
                       ))}
@@ -718,39 +674,39 @@ export default function AboutPage() {
         </section>
 
         {/* ============================================ */}
-        {/* Footer - متقدم */}
+        {/* Footer */}
         {/* ============================================ */}
-        <footer className="relative bg-[var(--foreground)] text-white overflow-hidden">
+        <footer className="relative overflow-hidden" style={{ background: 'var(--foreground)', color: 'white' }}>
           <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(26,92,72,0.1)' }} />
+            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(26,92,72,0.1)' }} />
           </div>
 
-          <div className="relative z-10 container mx-auto px-4 py-16">
+          <div className="relative z-10 section-container py-16">
             <div className="max-w-5xl mx-auto">
               <div className="grid md:grid-cols-4 gap-8 text-center md:text-right">
                 <div>
                   <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-                    <Heart className="w-6 h-6 text-[#10B981]" />
+                    <Heart className="w-6 h-6" style={{ color: 'var(--brand-green)' }} />
                     <span className="font-bold text-lg">رحماء بينهم</span>
                   </div>
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
                     حملة خيرية دعوية إنسانية تنموية
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold mb-3">روابط سريعة</h4>
-                  <ul className="space-y-2 text-white/60 text-sm">
-                    <li><button onClick={() => handleQuickLink('about')} className="hover:text-[#10B981] transition-colors">من نحن</button></li>
-                    <li><button onClick={() => handleQuickLink('programs')} className="hover:text-[#10B981] transition-colors">برامجنا</button></li>
-                    <li><button onClick={() => handleQuickLink('contact')} className="hover:text-[#10B981] transition-colors">تواصل معنا</button></li>
+                  <ul className="space-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    <li><button onClick={() => handleQuickLink('about')} className="hover:text-[var(--brand-green)] transition-colors">من نحن</button></li>
+                    <li><button onClick={() => handleQuickLink('programs')} className="hover:text-[var(--brand-green)] transition-colors">برامجنا</button></li>
+                    <li><button onClick={() => handleQuickLink('contact')} className="hover:text-[var(--brand-green)] transition-colors">تواصل معنا</button></li>
                   </ul>
                 </div>
 
                 <div>
                   <h4 className="font-semibold mb-3">تواصل</h4>
-                  <ul className="space-y-2 text-white/60 text-sm">
+                  <ul className="space-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
                     <li className="flex items-center justify-center md:justify-start gap-2">
                       <Phone className="w-4 h-4" /> +967 123 456 789
                     </li>
@@ -768,12 +724,13 @@ export default function AboutPage() {
                       { Icon: Twitter, platform: 'twitter' },
                       { Icon: Instagram, platform: 'instagram' },
                       { Icon: Youtube, platform: 'youtube' }
-                    ].map(({ Icon, platform }, i) => (
-                      <motion.button
-                        key={i}
+                     ].map(({ Icon, platform }) => (
+                       <motion.button
+                         key={platform}
                         onClick={() => handleSocialClick(platform)}
                         whileHover={{ y: -3 }}
-                        className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#10B981] transition-colors"
+                        className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-[var(--brand-green)]"
+                        style={{ background: 'rgba(255,255,255,0.1)' }}
                       >
                         <Icon className="w-5 h-5" />
                       </motion.button>
@@ -782,7 +739,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="mt-12 pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+              <div className="mt-12 pt-8 text-center text-sm" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}>
                 <p>{new Date().getFullYear()} © جميع الحقوق محفوظة - حملة رحماء بينهم الخيرية</p>
                 <p className="mt-1 text-xs">رحماء بينهم - تضامن إنساني وتنموي متكامل منذ 2014</p>
               </div>
