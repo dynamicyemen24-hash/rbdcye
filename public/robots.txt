@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rohamaa.org/sitemap.xml
+Sitemap: https://rbdcye.org/sitemap.xml
