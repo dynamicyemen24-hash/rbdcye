@@ -80,11 +80,11 @@ export default function ContactPage() {
   };
 
   const socialLinks = [
-    { name: 'facebook', icon: Facebook, url: 'https://facebook.com/rohamaa', color: '#1877F2' },
-    { name: 'twitter', icon: Twitter, url: 'https://twitter.com/rohamaa', color: '#1DA1F2' },
-    { name: 'instagram', icon: Instagram, url: 'https://instagram.com/rohamaa', color: '#E4405F' },
-    { name: 'youtube', icon: Youtube, url: 'https://youtube.com/@rohamaa', color: '#FF0000' },
-    { name: 'linkedin', icon: Linkedin, url: 'https://linkedin.com/company/rohamaa', color: '#0077B5' },
+    { name: 'facebook', icon: Facebook, url: 'https://facebook.com/rbdcye', color: '#1877F2' },
+    { name: 'twitter', icon: Twitter, url: 'https://twitter.com/rbdcye', color: '#1DA1F2' },
+    { name: 'instagram', icon: Instagram, url: 'https://instagram.com/rbdcye', color: '#E4405F' },
+    { name: 'youtube', icon: Youtube, url: 'https://youtube.com/@rbdcye', color: '#FF0000' },
+    { name: 'linkedin', icon: Linkedin, url: 'https://linkedin.com/company/rbdcye', color: '#0077B5' },
   ];
 
   const contactInfo = [
@@ -97,7 +97,7 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: 'البريد الإلكتروني',
-      details: ['info@rahamaabaynahum.org', 'donations@rahamaabaynahum.org'],
+      details: ['info@rbdcye.org', 'donations@rbdcye.org'],
       color: 'var(--brand-gold)',
     },
     {
