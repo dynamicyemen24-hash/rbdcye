@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, Award, ExternalLink } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const footerLinks = {

@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { useSEO } from "@/utils/seoAdvanced";
-import { intakeService } from "@/shared/services/intake.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
+import { intakeService } from "@/shared/services/intake.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 // مجالات التطوع حسب الدليل التشغيلي
 const VOLUNTEER_FIELDS = [

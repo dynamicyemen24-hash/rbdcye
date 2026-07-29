@@ -11,8 +11,8 @@ import { News } from '@/app/components/News';
 import { Partners } from '@/app/components/Partners';
 import { Programs } from '@/app/components/Programs';
 import { QuickDonation } from '@/app/components/QuickDonation';
-import { ZakatCalculator } from '@/app/components/ZakatCalculator';
 import { SuccessStories } from '@/app/components/SuccessStories';
+import { ZakatCalculator } from '@/app/components/ZakatCalculator';
 import { useSEO } from '@/utils/seoAdvanced';
 
 interface HomePageProps {

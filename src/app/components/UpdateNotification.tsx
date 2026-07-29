@@ -1,6 +1,6 @@
 // Update Notification - PWA update notification
-import { useState, useEffect } from 'react';
 import { RefreshCw, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function UpdateNotification() {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);

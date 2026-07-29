@@ -1,10 +1,10 @@
 // Quick Donation Component - Interactive Impact Calculator with Inline Payment
-import { Heart, Package, CreditCard, Smartphone, Banknote, Users, Droplets, GraduationCap } from "lucide-react";
 import { motion } from "framer-motion";
+import { Heart, Package, CreditCard, Smartphone, Banknote, Users, Droplets, GraduationCap } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import { paymentGateway, BANK_ACCOUNTS } from "@/shared/services/payment-gateway.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 interface QuickDonationProps {
   readonly onClose?: () => void;

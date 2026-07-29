@@ -5,7 +5,9 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { NewsTicker } from "./components/NewsTicker";
 import { PageProgress } from "./components/PageProgress";
+import { InstallPrompt } from "./components/PWA/InstallPrompt";
 import { StepScroll } from "./components/StepScroll";
 import { UpdateNotification } from "./components/UpdateNotification";
 
@@ -28,6 +30,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ defaul
 const EndowmentPage = lazy(() => import("./pages/EndowmentPage").then(m => ({ default: m.default })));
 const LoginPage = lazy(() => import("./pages/index").then(m => ({ default: m.LoginPage })));
 const DonorPortalPage = lazy(() => import("./pages/DonorPortalPage").then(m => ({ default: m.default })));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then(m => ({ default: m.default })));
 
 // Memoized Page Loader
 const PageLoader = memo(function PageLoader() {
@@ -63,9 +66,11 @@ const AppContent = memo(function AppContent() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      <NewsTicker />
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <UpdateNotification />
       <PageProgress />
+      <InstallPrompt />
       
       <StepScroll />
       
@@ -89,14 +94,7 @@ const AppContent = memo(function AppContent() {
           <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
           <Route path="/donor" element={<PageWrapper><DonorPortalPage /></PageWrapper>} />
           <Route path="/admin/*" element={<PageWrapper><AdminPage /></PageWrapper>} />
-          <Route path="*" element={
-            <div className="min-h-screen flex items-center justify-center pt-20">
-              <div className="text-center">
-                <h1 className="text-6xl font-bold text-[var(--brand-green)] mb-4">404</h1>
-                <p className="text-[var(--muted-foreground)]">الصفحة غير موجودة</p>
-              </div>
-            </div>
-          } />
+          <Route path="*" element={<PageWrapper><NotFoundPage /></PageWrapper>} />
         </Routes>
       </main>
       

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Home, ArrowRight, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+
 import { useSEO } from "@/utils/seoAdvanced";
 
 export default function NotFoundPage() {

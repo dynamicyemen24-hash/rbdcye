@@ -49,37 +49,10 @@ class TestRunner {
 
   suite(name: string, fn: () => void) {
     const suite: TestSuite = { name, tests: [] };
+    this.suites.push(suite);
     
-    const test = (testName: string, testFn: () => Promise<void> | void, options?: Partial<TestCase>) => {
-      suite.tests.push({
-        name: testName,
-        fn: testFn,
-        timeout: options?.timeout || 5000,
-        skip: options?.skip || false,
-        only: options?.only || false,
-      });
-    };
-
-    const beforeAll = (fn: () => Promise<void> | void) => {
-      suite.beforeAll = fn;
-    };
-
-    const afterAll = (fn: () => Promise<void> | void) => {
-      suite.afterAll = fn;
-    };
-
-    const beforeEach = (fn: () => Promise<void> | void) => {
-      suite.beforeEach = fn;
-    };
-
-    const afterEach = (fn: () => Promise<void> | void) => {
-      suite.afterEach = fn;
-    };
-
     // Execute
     fn();
-
-    this.suites.push(suite);
   }
 
   async run() {

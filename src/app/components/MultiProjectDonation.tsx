@@ -13,8 +13,8 @@ import {
   Stethoscope, TreePine, Star, Gift, Loader2,
 } from 'lucide-react';
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { useAuth } from '@/features/auth/contexts/AuthContext';
 
+import { useAuth } from '@/features/auth/contexts/AuthContext';
 import {
   multiProjectDonationService,
   type MultiProjectDonationRequest,

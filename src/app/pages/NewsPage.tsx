@@ -8,11 +8,11 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Skeleton, CardSkeleton } from "@/app/components/Skeleton";
-import { useSEO } from "@/utils/seoAdvanced";
 import { SEED_NEWS_ITEMS, NEWS_CATEGORIES } from "@/content/website";
-import { sanityService } from "@/shared/services/sanity.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { analyticsService } from "@/shared/services/analytics.service";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { sanityService } from "@/shared/services/sanity.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 function NewsLoadingSkeleton() {
   return (

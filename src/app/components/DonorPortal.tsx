@@ -8,6 +8,7 @@ import {
   Sun, Moon, Printer, Upload, CreditCard, Banknote, QrCode,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, memo, useMemo } from 'react';
+
 import { useAuth } from '@/features/auth/contexts/AuthContext';
 
 // ============================================================

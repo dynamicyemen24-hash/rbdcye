@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { Heart, Shield, BarChart3, History, Gift } from 'lucide-react';
 import { useEffect } from 'react';
 
-import { useSEO } from '@/utils/seoAdvanced';
 import DonorPortal from '@/app/components/DonorPortal';
 import { analyticsService } from '@/shared/services/analytics.service';
 import { contentBridge } from '@/shared/services/content-bridge.service';
+import { useSEO } from '@/utils/seoAdvanced';
 
 export default function DonorPortalPage() {
   useSEO({

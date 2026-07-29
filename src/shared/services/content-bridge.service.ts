@@ -3,8 +3,9 @@
 // Abstracts content source (Sanity CMS or static fallback)
 // so the UI layer never knows or exposes the origin.
 // ============================================================
-import { sanityService } from "./sanity.service";
 import { SEED_IMPACT } from "@/content/website";
+
+import { sanityService } from "./sanity.service";
 
 type ImpactMetrics = {
   totalBeneficiaries?: number;

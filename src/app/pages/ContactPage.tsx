@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import { sendMessage } from "@/api/messages";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { analyticsService } from "@/shared/services/analytics.service";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);

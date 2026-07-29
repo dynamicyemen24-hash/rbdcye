@@ -1,6 +1,5 @@
 // Zakat Calculator - Enterprise Grade - Unified Design System
 // حاسبة الزكاة الذكية - مطابقة للمواصفات
-import { motion, AnimatePresence } from "motion/react";
 import {
   Calculator,
   Coins,
@@ -19,6 +18,7 @@ import {
   X,
   Mail,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 

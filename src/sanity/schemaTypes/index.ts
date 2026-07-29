@@ -2,21 +2,23 @@
  * Central Schema Registry
  * يجمع جميع أنواع المحتوى من الملفات المعيارية
  */
-import { dashboard } from "../schema";
-import { siteSettings } from "../schema";
-import { successStory } from "../schema";
-import { partner } from "../schema";
-import { media } from "../schema";
-import { report } from "../schema";
-import { contactRequest } from "../schema";
-import { volunteer } from "../schema";
-import { user } from "../schema";
-import { donation } from "../schema";
-import { subscriber } from "../schema";
-import { video } from "../schema";
-import { event } from "../schema";
-import { testimonial } from "../schema";
-import { faq } from "../schema";
+import {
+  dashboard,
+  siteSettings,
+  successStory,
+  partner,
+  media,
+  report,
+  contactRequest,
+  volunteer,
+  user,
+  donation,
+  subscriber,
+  video,
+  event,
+  testimonial,
+  faq,
+} from "../schema";
 
 import { newsArticle } from "./documents/news";
 import { project } from "./documents/project";

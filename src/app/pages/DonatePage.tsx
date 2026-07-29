@@ -6,7 +6,7 @@ import {
   Globe, BarChart3, HandHeart,
 } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { analyticsService } from '@/shared/services/analytics.service';
 import { contentBridge } from '@/shared/services/content-bridge.service';
@@ -28,6 +28,7 @@ const IMPACT_ITEMS = [
 
 export default function DonatePage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedAmount, setSelectedAmount] = useState(100);
   const [customAmount, setCustomAmount] = useState('');
   const [selectedProject, setSelectedProject] = useState('general');
@@ -41,6 +42,14 @@ export default function DonatePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+
+  // Prefill Zakat amount if passed via location state
+  useEffect(() => {
+    if (location.state?.zakatAmount) {
+      setSelectedProject('zakat');
+      setCustomAmount(String(location.state.zakatAmount));
+    }
+  }, [location.state]);
 
   useSEO({
     title: 'تبرع الآن - رحماء بينهم',

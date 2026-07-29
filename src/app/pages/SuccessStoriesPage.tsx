@@ -8,10 +8,10 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import { SEED_SUCCESS_STORIES } from "@/content/website";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { analyticsService } from "@/shared/services/analytics.service";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 interface Story {
   id: string;

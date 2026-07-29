@@ -8,11 +8,10 @@ import { useEffect, useState } from 'react';
 export function SanityStudioWrapper() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [Studio, setStudio] = useState<any>(null);
 
   useEffect(() => {
     // تحميل Sanity Studio ديناميكياً
-    import('sanity').then(({ defineConfig }) => {
+    import('sanity').then(() => {
       // Studio will be loaded dynamically
       setLoading(false);
     }).catch((err) => {

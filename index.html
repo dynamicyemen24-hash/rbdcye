@@ -4,36 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1A5C48" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="رحماء بينهم" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="رحماء بينهم" />
     <meta name="msapplication-TileColor" content="#1A5C48" />
     <meta name="msapplication-tap-highlight" content="no" />
 
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
+
     <!-- SEO Meta -->
-    <title>مؤسسة رحماء بينهم الخيرية | Rohamaa Foundation</title>
+    <title>مؤسسة رحماء بينهم الخيرية | rbdcye.org</title>
     <meta name="description" content="منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية." />
-    <meta name="keywords" content="رحماء بينهم, مؤسسة خيرية, اليمن, إغاثة, تعليم, تنمية, تبرع, تطوع, Rohamaa, charity, Yemen" />
+    <meta name="keywords" content="رحماء بينهم, مؤسسة خيرية, اليمن, إغاثة, تعليم, تنمية, تبرع, تطوع, rbdcye, charity, Yemen" />
     <link rel="canonical" href="https://rbdcye.org" />
 
     <!-- Open Graph -->
     <meta property="og:locale" content="ar_YE" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="رحماء بينهم" />
-    <meta property="og:title" content=" رحماء بينهم  | Rohamaa Foundation" />
-    <meta property="og:description" content="حملة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة." />
-    <meta property="og:image" content="/og-default.jpg" />
+    <meta property="og:title" content="مؤسسة رحماء بينهم الخيرية | rbdcye.org" />
+    <meta property="og:description" content="منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة." />
+    <meta property="og:image" content="https://rbdcye.org/og-default.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="مؤسسة رحماء بينهم الخيرية" />
     <meta property="og:url" content="https://rbdcye.org" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="مؤسسة رحماء بينهم الخيرية | Rohamaa Foundation" />
+    <meta name="twitter:site" content="@rbdcye" />
+    <meta name="twitter:title" content="مؤسسة رحماء بينهم الخيرية | rbdcye.org" />
     <meta name="twitter:description" content="منظمة إنسانية تنموية رائدة في اليمن." />
-    <meta name="twitter:image" content="/og-default.jpg" />
+    <meta name="twitter:image" content="https://rbdcye.org/og-default.jpg" />
+    <meta name="twitter:image:alt" content="مؤسسة رحماء بينهم الخيرية" />
 
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -43,33 +53,122 @@
     <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#1A5C48" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Preconnect to critical origins -->
-    <link rel="preconnect" href="https://cdn.sanity.io" />
-    <link rel="preconnect" href="https://xd0ohyiz.apicdn.sanity.io" />
+    <!-- Preconnect & Preload critical origins -->
+    <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.sanity.io" />
     <link rel="dns-prefetch" href="https://xd0ohyiz.apicdn.sanity.io" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts with display swap -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data: Organization -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://rbdcye.org/#organization",
         "name": "مؤسسة رحماء بينهم الخيرية",
         "alternateName": "rbdcye.org",
         "url": "https://rbdcye.org",
-        "logo": "https://rbdcye.org/logo.png",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rbdcye.org/logo.png",
+          "width": 512,
+          "height": 512
+        },
         "description": "منظمة إنسانية تنموية رائدة في اليمن",
         "foundingDate": "2009",
-        "address": { "@type": "PostalAddress", "addressCountry": "YE" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "YE",
+          "addressLocality": "صنعاء"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+967-777888194",
+          "contactType": "customer service",
+          "email": "info@rbdcye.org"
+        },
         "sameAs": [
           "https://facebook.com/rbdcye",
           "https://twitter.com/rbdcye",
-          "https://youtube.com/@rbdcye"
+          "https://youtube.com/@rbdcye",
+          "https://instagram.com/rbdcye"
+        ]
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: WebSite -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://rbdcye.org/#website",
+        "url": "https://rbdcye.org",
+        "name": "رحماء بينهم",
+        "description": "منصة رقمية متكاملة لإدارة العمل الإنساني والخيري",
+        "publisher": { "@id": "https://rbdcye.org/#organization" },
+        "inLanguage": "ar",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://rbdcye.org/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "@id": "https://rbdcye.org/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://rbdcye.org/" },
+          { "@type": "ListItem", "position": 2, "name": "برامجنا", "item": "https://rbdcye.org/programs" },
+          { "@type": "ListItem", "position": 3, "name": "مشاريعنا", "item": "https://rbdcye.org/projects" },
+          { "@type": "ListItem", "position": 4, "name": "تبرع الآن", "item": "https://rbdcye.org/donate" },
+          { "@type": "ListItem", "position": 5, "name": "تواصل معنا", "item": "https://rbdcye.org/contact" }
+        ]
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": "https://rbdcye.org/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "كيف يمكنني التبرع؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "يمكنك التبرع عبر موقعنا الإلكتروني rbdcye.org/donate أو عبر التحويل البنكي المباشر."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل تبرعاتي آمنة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم، جميع التبرعات مشفرة بتقنية SSL 256-bit ومتوافقة مع معايير PCI DSS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "كيف أتواصل مع المؤسسة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "يمكنك التواصل عبر البريد الإلكتروني info@rbdcye.org أو عبر الهاتف +967-777888194."
+            }
+          }
         ]
       }
     </script>

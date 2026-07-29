@@ -6,10 +6,10 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import { SEED_MEDIA } from "@/content/website";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { analyticsService } from "@/shared/services/analytics.service";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 interface MediaItem {
   id: string;

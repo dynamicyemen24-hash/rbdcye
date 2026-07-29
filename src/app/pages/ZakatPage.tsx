@@ -4,9 +4,9 @@ import { Calculator, DollarSign, Gem, Calendar, Bell, CheckCircle, ArrowLeft, Ar
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useSEO } from '@/utils/seoAdvanced';
-import { contentBridge } from '@/shared/services/content-bridge.service';
 import { analyticsService } from '@/shared/services/analytics.service';
+import { contentBridge } from '@/shared/services/content-bridge.service';
+import { useSEO } from '@/utils/seoAdvanced';
 
 type ZakatType = 'money' | 'gold' | 'fitr';
 

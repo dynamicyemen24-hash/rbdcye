@@ -1,7 +1,7 @@
 // GeoScopeMap - Interactive geographic map showing project reach
+import { motion } from "framer-motion";
 import { Map, Navigation, Satellite, Grid3x3 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 interface GeoScopeMapProps {
   setCurrentPage?: (page: string) => void;

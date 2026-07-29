@@ -8,10 +8,10 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import { SEED_PROJECTS, SEED_IMPACT } from "@/content/website";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { analyticsService } from "@/shared/services/analytics.service";
+import { contentBridge } from "@/shared/services/content-bridge.service";
+import { useSEO } from "@/utils/seoAdvanced";
 
 // 7 مسارات البرامج من المواصفات
 const PROGRAM_PATHS = [
