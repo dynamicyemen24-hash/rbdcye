@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/npm/package.json",
-  "name": "rohamaa-website",
+  "name": "rbdcye",
   "private": true,
   "version": "2.0.0",
   "type": "module",
@@ -10,10 +10,10 @@
   "homepage": "https://rbdcye.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dynamicyemen24-hash/Rohamaa-website.git"
+    "url": "https://github.com/dynamicyemen24-hash/rbdcye.git"
   },
   "bugs": {
-    "url": "https://github.com/dynamicyemen24-hash/Rohamaa-website/issues"
+    "url": "https://github.com/dynamicyemen24-hash/rbdcye/issues"
   },
   "keywords": [
     "rohamaa",
