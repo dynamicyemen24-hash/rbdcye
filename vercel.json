@@ -85,7 +85,7 @@
   ],
   "env": {
     "VITE_SANITY_PROJECT_ID": "v212wi4if2y5sbvsz3fy1qy3",
-    "VITE_SANITY_DATASET": "@vite_sanity_dataset",
+    "VITE_SANITY_DATASET": "production",
     "VITE_SANITY_API_VERSION": "@vite_sanity_api_version",
     "VITE_SUPABASE_URL": "@vite_supabase_url",
     "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key",
