@@ -38,7 +38,7 @@ if (typeof window !== 'undefined') {
     try {
       const cspMeta = document.createElement('meta');
       cspMeta.httpEquiv = 'Content-Security-Policy';
-      cspMeta.content = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://*.unsplash.com https://cdn.sanity.io; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://*.supabase.co https://*.sanity.io; frame-src 'self' https://*.sanity.io; media-src 'self' https://*.sanity.io; worker-src 'self' blob:";
+      cspMeta.content = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io https://js.stripe.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://*.unsplash.com https://cdn.sanity.io; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://api.stripe.com; frame-src 'self' https://*.sanity.io https://js.stripe.com https://hooks.stripe.com; media-src 'self' https://*.sanity.io; worker-src 'self' blob:; base-uri 'self'; form-action 'self'";
       document.head.appendChild(cspMeta);
     } catch {
       // Silently fail - security meta tags are non-critical

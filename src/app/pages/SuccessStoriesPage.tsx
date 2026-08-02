@@ -3,11 +3,13 @@ import { motion } from "framer-motion";
 import {
   Star, Heart, Quote, Users, BookOpen, Droplets,
   ArrowLeft, Sparkles, Award, Calendar, MapPin,
-  Play, ExternalLink, Filter,
+  Play, ExternalLink, Filter, BarChart3, TrendingUp,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PageHeader } from "@/app/components/PageHeader";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_SUCCESS_STORIES } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
@@ -82,30 +84,28 @@ export default function SuccessStoriesPage() {
     return stories.filter(s => s.category === activeCategory);
   }, [stories, activeCategory]);
 
+  const storiesCount = useMemo(() => stories.length, [stories]);
+
   return (
-    <div className="min-h-screen pt-20" dir="rtl">
-      {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full mb-6 shadow-lg border border-[var(--brand-green)]/20">
-              <Award className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">قصص نجاح حقيقية</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">قصص </span>
-              <span className="text-[var(--brand-green)]">النجاح</span>
-            </h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              اقرأ قصص المستفيدين الذين غيرتهم برامجنا إلى الأفضل
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Award}
+        badge="قصص نجاح حقيقية"
+        title="قصص النجاح"
+        subtitle="اقرأ قصص المستفيدين الذين غيرتهم برامجنا إلى الأفضل"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'قصة نجاح', value: storiesCount, icon: BarChart3, color: 'green' },
+            { label: 'مشروع', value: '50+', icon: TrendingUp, color: 'gold' },
+            { label: 'مستفيد', value: '50K+', icon: Users, color: 'blue' },
+            { label: 'تقييم', value: '4.9/5', icon: Star, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Category Filter */}
       <section className="py-6 bg-white border-b border-[var(--border)]">

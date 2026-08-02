@@ -8,6 +8,8 @@ import {
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { PageHeader } from '@/app/components/PageHeader';
+import { StatsGrid } from '@/app/components/StatsGrid';
 import { analyticsService } from '@/shared/services/analytics.service';
 import { contentBridge } from '@/shared/services/content-bridge.service';
 import { multiProjectDonationService } from '@/shared/services/donation-multi-project.service';
@@ -197,54 +199,25 @@ export default function DonatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <Heart className="w-4 h-4 text-[var(--brand-green)]" fill="currentColor" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">التبرع</span>
-            </div>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
-              تبرع <span className="text-[var(--brand-green)]">الآن</span>
-            </h1>
-            <p className="text-xl text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              ساهم في إحداث فرق حقيقي في حياة المحتاجين عبر تبرعك الصدقة
-            </p>
-
-            {/* Impact Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8">
-              {impactStats.map((stat, i) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + i * 0.1 }}
-                    className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]"
-                  >
-                    <Icon className={`w-6 h-6 mx-auto mb-1 ${stat.color}`} />
-                    <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
-                    <div className="text-xs text-[var(--muted-foreground)]">{stat.label}</div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Heart}
+        badge="التبرع"
+        title="تبرع الآن"
+        subtitle="ساهم في إحداث فرق حقيقي في حياة المحتاجين عبر تبرعك الصدقة"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'green' },
+            { label: 'دولة نشطة', value: '5+', icon: Globe, color: 'blue' },
+            { label: 'متطوع', value: '200+', icon: Users, color: 'purple' },
+            { label: 'مستفيد', value: '50K+', icon: Heart, color: 'gold' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Impact Calculator Section */}
       <section className="py-16 bg-white">

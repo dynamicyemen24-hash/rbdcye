@@ -1,9 +1,11 @@
 // Contact Page - صفحة التواصل (محسّنة لتكامل لوحة التحكم والمواصفات)
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe, Users, BarChart3, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { sendMessage } from "@/api/messages";
+import { PageHeader } from "@/app/components/PageHeader";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
 import { useSEO } from "@/utils/seoAdvanced";
@@ -143,34 +145,25 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <Mail className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">تواصل معنا</span>
-            </div>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
-              نحن <span className="text-[var(--brand-green)]">هنا لمساعدتك</span>
-            </h1>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto text-lg">
-              لا تتردد في مراسلتنا بأي استفسار أو اقتراح. فريقنا جاهز لتقديم المساعدة
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Mail}
+        badge="تواصل معنا"
+        title="نحن هنا لمساعدتك"
+        subtitle="لا تتردد في مراسلتنا بأي استفسار أو اقتراح. فريقنا جاهز لتقديم المساعدة"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'متطوع', value: '200+', icon: Users, color: 'green' },
+            { label: 'مشروع', value: '50+', icon: BarChart3, color: 'gold' },
+            { label: 'دولة', value: '5+', icon: Globe, color: 'blue' },
+            { label: 'مستفيد', value: '50K+', icon: Heart, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">

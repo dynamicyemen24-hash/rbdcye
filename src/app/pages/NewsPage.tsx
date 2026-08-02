@@ -2,12 +2,14 @@
 import { motion } from "framer-motion";
 import {
   Newspaper, FolderOpen, Calendar, User, Tag, Search,
-  Filter, TrendingUp, Eye, ArrowLeft, Clock, Globe,
+  Filter, TrendingUp, Eye, ArrowLeft, Clock, Globe, BarChart3,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PageHeader } from "@/app/components/PageHeader";
 import { Skeleton, CardSkeleton } from "@/app/components/Skeleton";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_NEWS_ITEMS, NEWS_CATEGORIES } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
@@ -145,58 +147,25 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="min-h-screen pt-20" dir="rtl">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <Newspaper className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">الأخبار والفعاليات</span>
-            </div>
-
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">آخر </span>
-              <span className="text-[var(--brand-green)]">الأخبار</span>
-            </h1>
-
-            <p className="text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto leading-relaxed mb-8">
-              تابع أخبار مؤسسة رحماء بينهم والفعاليات القادمة، وتعرف على أحدث الإنجازات والمبادرات
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-2xl font-bold text-[var(--brand-green)]">{news.length}</div>
-                <div className="text-xs text-[var(--muted-foreground)]">خبر منشور</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-2xl font-bold text-[var(--brand-gold)]">{featuredNews.length}</div>
-                <div className="text-xs text-[var(--muted-foreground)]">أخبار مميزة</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-2xl font-bold text-[var(--brand-green)]">{NEWS_CATEGORIES.length - 1}</div>
-                <div className="text-xs text-[var(--muted-foreground)]">فئة</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-2xl font-bold text-[var(--brand-gold)]">
-                  {news.reduce((sum, n) => sum + (n.views || 0), 0).toLocaleString('ar-SA')}
-                </div>
-                <div className="text-xs text-[var(--muted-foreground)]">مشاهدة</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Newspaper}
+        badge="الأخبار والفعاليات"
+        title="آخر الأخبار"
+        subtitle="تابع أخبار مؤسسة رحماء بينهم والفعاليات القادمة، وتعرف على أحدث الإنجازات والمبادرات"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'خبر منشور', value: news.length, icon: BarChart3, color: 'green' },
+            { label: 'أخبار مميزة', value: featuredNews.length, icon: TrendingUp, color: 'gold' },
+            { label: 'فئة', value: NEWS_CATEGORIES.length - 1, icon: Tag, color: 'blue' },
+            { label: 'مشاهدة', value: news.reduce((sum, n) => sum + (n.views || 0), 0).toLocaleString('ar-SA'), icon: Eye, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Category Filter */}
       <section className="py-6 bg-white border-b border-[var(--border)]">

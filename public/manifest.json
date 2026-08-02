@@ -43,28 +43,28 @@
       "short_name": "تبرع",
       "description": "ساهم في دعم المشاريع الخيرية",
       "url": "/donate",
-      "icons": [{ "src": "/icons/donate-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
     },
     {
       "name": "حاسبة الزكاة",
       "short_name": "الزكاة",
       "description": "احسب زكاتك بسهولة",
       "url": "/zakat",
-      "icons": [{ "src": "/icons/zakat-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
     },
     {
       "name": "برامجنا",
       "short_name": "البرامج",
       "description": "استعرض برامجنا ومشاريعنا",
       "url": "/programs",
-      "icons": [{ "src": "/icons/programs-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
     },
     {
       "name": "قصص النجاح",
       "short_name": "القصص",
       "description": "قصص نجاح المستفيدين",
       "url": "/transparency",
-      "icons": [{ "src": "/icons/stories-192x192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
     }
   ],
   "related_applications": [

@@ -6,11 +6,13 @@ import {
   TrendingUp, Clock, BadgeCheck,
   Mail, Phone, Facebook, Twitter, Instagram, Youtube,
   Calendar, CheckCircle2,
-  GitCommit, Gem, Crown, Layers
+  GitCommit, Gem, Crown, Layers, BarChart3
 } from 'lucide-react';
 import { useRef, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { PageHeader } from '@/app/components/PageHeader';
+import { StatsGrid } from '@/app/components/StatsGrid';
 import { useSEO } from '@/utils/seoAdvanced';
 
 export default function AboutPage() {
@@ -70,115 +72,30 @@ export default function AboutPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[var(--secondary)] pt-20" dir="rtl">
+    <div ref={containerRef} className="min-h-screen bg-[var(--background)]" dir="rtl">
       
-      {/* ============================================ */}
-      {/* Hero Section */}
-      {/* ============================================ */}
-      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-green)]/20 via-[var(--brand-green)]/5 to-[var(--secondary)]" />
-        
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div 
-            className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
-            style={{ background: `radial-gradient(circle, var(--brand-green), transparent 70%)` }}
-            animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-            transition={{ duration: 20, repeat: -1 }}
-          />
-          <motion.div 
-            className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-3xl opacity-10"
-            style={{ background: `radial-gradient(circle, var(--brand-green), transparent 70%)` }}
-            animate={{ scale: [1, 1.3, 1], rotate: [0, -90, 0] }}
-            transition={{ duration: 25, repeat: -1 }}
-          />
-          
-           {particleData.map((particle) => (
-              <motion.div
-                key={particle.id}
-                className="absolute w-1.5 h-1.5 rounded-full"
-                style={{ backgroundColor: `rgba(26, 92, 72, 0.3)` }}
-                initial={{ x: particle.x, y: particle.y, scale: 0 }}
-                animate={{ y: [0, -200], scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
-                transition={{ duration: particle.duration, repeat: -1, delay: particle.delay }}
-              />
-            ))}
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-center"
-            >
-              {/* Badge */}
-              <motion.div 
-                className="badge badge--ghost inline-flex mb-8 shadow-lg"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Heart className="w-4 h-4 text-[var(--brand-gold-light)] animate-pulse" />
-                <span>مؤسسة رحماء بينهم الخيرية</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-gold-light)]" />
-                <span>منذ 2014</span>
-              </motion.div>
-
-              {/* Title */}
-              <motion.h1 
-                className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 leading-[1.1]"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
-                <span className="text-[var(--foreground)]">من</span>{" "}
-                <span className="text-gradient-green">نحن</span>
-              </motion.h1>
-
-              <div className="gradient-divider mx-auto mb-8" />
-
-              {/* Subtitle */}
-              <motion.p 
-                className="text-2xl md:text-4xl font-light leading-relaxed"
-                style={{ color: 'var(--muted-foreground)' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                رحماء بينهم
-                <span className="text-[var(--brand-green)] font-semibold block md:inline"> - تضامن إنساني وتنموي متكامل</span>
-              </motion.p>
-
-              {/* Stats grid */}
-              <motion.div 
-                className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-              >
-                {stats.map((stat) => (
-                   <motion.div
-                     key={stat.label}
-                    className="stat-card hover-lift"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className="icon-box icon-box--green w-12 h-12 mx-auto mb-3">
-                      <stat.icon className="w-6 h-6" />
-                    </div>
-                    <div className="stat-value" style={{ color: 'var(--brand-green)' }}>{stat.value}</div>
-                    <div className="stat-label">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Heart}
+        badge="مؤسسة رحماء بينهم الخيرية"
+        title="من نحن"
+        subtitle="حملة رحماء بينهم الخيرية - تضامن إنساني وتنموي متكامل منذ 2014م"
+        align="right"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'سنوات العطاء', value: '10+', icon: Clock, color: 'green' },
+            { label: 'مشروع منفذ', value: '500+', icon: Target, color: 'gold' },
+            { label: 'مستفيد', value: '50K+', icon: Users, color: 'blue' },
+            { label: 'متطوع', value: '200+', icon: HandHeart, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* ============================================ */}
-      {/* تعريف بالحملة */}
+      {/* تعريف بالحمعرة */}
       {/* ============================================ */}
       <section id="definition" className="section bg-white">
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(26,92,72,0.3), transparent)' }} />

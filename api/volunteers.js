@@ -6,25 +6,38 @@ const ALLOWED_ORIGINS = process.env.CORS_ORIGIN?.split(',') || ['http://localhos
 export default async function handler(req, res) {
   // CORS headers
   const origin = req.headers.origin;
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-Token');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
 
   try {
     const { name, email, phone, skills, availability, message } = req.body;
 
-    if (!name || !email) {
+    // Sanitize inputs
+    const sanitizedName = String(name || '').trim().slice(0, 100);
+    const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+    const sanitizedPhone = String(phone || '').replace(/[^\d+]/g, '').slice(0, 20);
+    const sanitizedSkills = String(skills || '').trim().slice(0, 500);
+    const sanitizedAvailability = String(availability || '').trim().slice(0, 200);
+    const sanitizedMessage = String(message || '').trim().slice(0, 2000);
+
+    if (!sanitizedName || !sanitizedEmail) {
       return res.status(400).json({ error: 'الاسم والبريد الإلكتروني مطلوبان' });
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
       return res.status(400).json({ error: 'البريد الإلكتروني غير صالح' });
     }
 
@@ -33,7 +46,7 @@ export default async function handler(req, res) {
       `INSERT INTO volunteers (name, email, phone, skills, availability, message, status, applied_at) 
        VALUES ($1, $2, $3, $4, $5, $6, 'pending', NOW()) 
        RETURNING id, status, applied_at`,
-      [name, email, phone || null, skills || null, availability || null, message || null]
+      [sanitizedName, sanitizedEmail, sanitizedPhone || null, sanitizedSkills || null, sanitizedAvailability || null, sanitizedMessage || null]
     );
 
     // Return success without exposing all data

@@ -257,8 +257,8 @@ async function run() {
   await client.query(`
     INSERT INTO dashboard_users (email, full_name, role, status)
     VALUES
-      ('admin@rohamaa.org', 'مدير النظام', 'admin', 'active'),
-      ('editor@rohamaa.org', 'محرر المحتوى', 'editor', 'active')
+      ('admin@rbdcye.org', 'مدير النظام', 'admin', 'active'),
+      ('editor@rbdcye.org', 'محرر المحتوى', 'editor', 'active')
     ON CONFLICT DO NOTHING;
   `);
 

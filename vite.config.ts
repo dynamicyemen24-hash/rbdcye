@@ -16,7 +16,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'مؤسسة رحماء بينهم الخيرية',
         short_name: 'رحماء بينهم',
@@ -31,14 +31,15 @@ export default defineConfig({
         dir: 'rtl',
         icons: [
           {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
+            src: '/icons/icon-144x144.png.svg',
+            sizes: '144x144',
+            type: 'image/svg+xml',
+            purpose: 'any'
           },
           {
-            src: '/pwa-512x512.png',
+            src: '/icons/icon-144x144.png.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any maskable'
           }
         ],
@@ -47,12 +48,22 @@ export default defineConfig({
           {
             name: 'تبرع سريع',
             url: '/donate',
-            icons: [{ src: '/icons/donate-96.png', sizes: '96x96' }]
+            icons: [{ src: '/icons/icon-144x144.png.svg', sizes: '144x144' }]
           },
           {
             name: 'آخر الأخبار',
             url: '/news',
-            icons: [{ src: '/icons/news-96.png', sizes: '96x96' }]
+            icons: [{ src: '/icons/icon-144x144.png.svg', sizes: '144x144' }]
+          },
+          {
+            name: 'حاسبة الزكاة',
+            url: '/zakat',
+            icons: [{ src: '/icons/icon-144x144.png.svg', sizes: '144x144' }]
+          },
+          {
+            name: 'قصص النجاح',
+            url: '/transparency',
+            icons: [{ src: '/icons/icon-144x144.png.svg', sizes: '144x144' }]
           }
         ]
       },

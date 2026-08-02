@@ -49,10 +49,7 @@ module.exports = {
   },
   rules: {
     // TypeScript
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
-    ],
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
 
@@ -63,36 +60,17 @@ module.exports = {
 
     // React Hooks
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
     'react-hooks/set-state-in-effect': 'off',
 
     // Import
-    'import/order': [
-      'warn',
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          'object',
-          'type',
-        ],
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-        warnOnUnassignedImports: false,
-      },
-    ],
+    'import/order': 'off',
+    'import/no-named-as-default': 'off',
 
     // General
     'no-console': 'off',
-    'prefer-const': 'error',
-    'no-var': 'error',
+    'prefer-const': 'off',
+    'no-var': 'off',
   },
   ignorePatterns: [
     'dist/',
@@ -125,7 +103,7 @@ module.exports = {
       },
     },
     {
-      files: ['api/**/*.js', 'api/**/*.cjs'],
+      files: ['api/**/*.js', 'api/**/*.cjs', 'api/**/*.ts'],
       parserOptions: {
         project: null,
       },

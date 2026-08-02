@@ -3,11 +3,13 @@ import { motion } from "framer-motion";
 import {
   Handshake, Award, Users, Star, Shield, Target,
   Globe, ArrowLeft, Heart, Briefcase, Building2,
-  Mail, Phone, ExternalLink,
+  Mail, Phone, ExternalLink, BarChart3, TrendingUp,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PageHeader } from "@/app/components/PageHeader";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_PARTNERS, SEED_IMPACT } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
@@ -65,53 +67,25 @@ export default function PartnersPage() {
     : partners.filter(p => p.type === activeType);
 
   return (
-    <div className="min-h-screen pt-20" dir="rtl">
-      {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full mb-6 shadow-lg border border-[var(--brand-green)]/20">
-              <Handshake className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">شركاؤنا الاستراتيجيون</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">شركاؤ </span>
-              <span className="text-[var(--brand-green)]">النجاح</span>
-            </h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              نثمن تعاوننا مع المؤسسات والشركاء الذين يشاركونا رؤية بناء مجتمع مستدام
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="py-8 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-[var(--brand-green)]">{partners.length}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">شريك نشط</div>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-[var(--brand-gold)]">{SEED_IMPACT.partners}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">إجمالي الشركاء</div>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-blue-600">{SEED_IMPACT.beneficiaries.toLocaleString('ar-SA')}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">مستفيد</div>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-purple-600">{SEED_IMPACT.projects}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">مشروع</div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Handshake}
+        badge="شركاؤنا الاستراتيجيون"
+        title="شركاء النجاح"
+        subtitle="نثمن تعاوننا مع المؤسسات والشركاء الذين يشاركونا رؤية بناء مجتمع مستدام"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'شريك نشط', value: partners.length, icon: BarChart3, color: 'green' },
+            { label: 'إجمالي الشركاء', value: SEED_IMPACT.partners, icon: Users, color: 'gold' },
+            { label: 'مستفيد', value: SEED_IMPACT.beneficiaries.toLocaleString('ar-SA'), icon: TrendingUp, color: 'blue' },
+            { label: 'مشروع', value: SEED_IMPACT.projects, icon: Target, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Type Filter */}
       <section className="py-6 bg-white border-b border-[var(--border)]">

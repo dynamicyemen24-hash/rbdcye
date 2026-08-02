@@ -11,7 +11,7 @@ export const validateEmail = (email: string): boolean => {
 };
 
 export const validatePhone = (phone: string): boolean => {
-  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  const cleaned = phone.replace(/[\s\-()]/g, '');
   return /^(\+?\d{1,4})?[0-9]{7,10}$/.test(cleaned);
 };
 

@@ -3,8 +3,9 @@
  * اختبارات آليّة لحاسبة الزكاة والمدخلات
  */
 
-import { describe, it, expect, runTests } from '../testingFramework';
 import { validateEmail, validatePhone, formatCurrency } from '@/shared/utils/validation';
+
+import { describe, it, expect, runTests } from '../testingFramework';
 
 const GOLD_PRICE_PER_GRAM = 30; // 30 OMR
 const GOLD_NISAB_GRAMS = 85;

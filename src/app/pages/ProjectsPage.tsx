@@ -8,6 +8,8 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PageHeader } from "@/app/components/PageHeader";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_PROJECTS } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentBridge } from "@/shared/services/content-bridge.service";
@@ -158,49 +160,41 @@ export default function ProjectsPage() {
     projects.filter(p => p.status === 'active').length, [projects]);
 
   return (
-    <div className="min-h-screen pt-20" dir="rtl">
-      {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full mb-6 shadow-lg border border-[var(--brand-green)]/20">
-              <Target className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">مشاريعنا الخيرية</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">مشاريعنا </span>
-              <span className="text-[var(--brand-green)]">من أجلكم</span>
-            </h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              نعمل على تنفيذ مشاريع نوعية في مختلف المجالات الإنسانية والتنموية
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={Target}
+        badge="مشاريعنا الخيرية"
+        title="مشاريعنا من أجلكم"
+        subtitle="نعمل على تنفيذ مشاريع نوعية في مختلف المجالات الإنسانية والتنموية"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'green' },
+            { label: 'قيد التنفيذ', value: activeProjects, icon: Target, color: 'gold' },
+            { label: 'مستفيد', value: totalBeneficiaries.toLocaleString('ar-SA'), icon: Users, color: 'blue' },
+            { label: 'فئة', value: CATEGORIES.length - 1, icon: TrendingUp, color: 'purple' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
-      {/* Quick Stats */}
-      <section className="py-8 bg-white border-b border-[var(--border)]">
+      {/* Quick Stats Bar - Secondary */}
+      <section className="py-6 bg-white border-b border-[var(--border)]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-[var(--brand-green)]">{projects.length}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">مشروع نشط</div>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[var(--brand-green)]" />
+              <span className="text-[var(--muted-foreground)]">إجمالي المشاريع: <strong className="text-[var(--foreground)]">{projects.length}</strong></span>
             </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-[var(--brand-gold)]">{activeProjects}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">قيد التنفيذ</div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[var(--brand-gold)]" />
+              <span className="text-[var(--muted-foreground)]">النشطة: <strong className="text-[var(--foreground)]">{activeProjects}</strong></span>
             </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-blue-600">{totalBeneficiaries.toLocaleString('ar-SA')}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">مستفيد</div>
-            </div>
-            <div className="text-center p-4 rounded-xl bg-[var(--secondary)]">
-              <div className="text-2xl font-bold text-purple-600">{CATEGORIES.length - 1}</div>
-              <div className="text-sm text-[var(--muted-foreground)]">فئة</div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              <span className="text-[var(--muted-foreground)]">المستفيدون: <strong className="text-[var(--foreground)]">{totalBeneficiaries.toLocaleString('ar-SA')}</strong></span>
             </div>
           </div>
         </div>

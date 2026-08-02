@@ -1,0 +1,14 @@
+name = "rbdcye"
+compatibility_date = "2026-07-26"
+pages_build_output_dir = "dist"
+
+[observability]
+enabled = true
+
+[vars]
+VITE_APP_NAME = "منصة رحماء بينهم"
+VITE_SANITY_PROJECT_ID = "xd0ohyiz"
+VITE_SANITY_DATASET = "production"
+VITE_SANITY_API_VERSION = "2026-01-01"
+VITE_APP_URL = "https://rbdcye.org"
+CORS_ORIGIN = "https://rbdcye.org,https://www.rbdcye.org,http://localhost:5173"

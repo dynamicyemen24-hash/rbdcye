@@ -1,5 +1,5 @@
-# مؤسسة رحماء بينهم
-## منصة رقمية متكاملة لإدارة العمل الإنساني والخيري
+# منصة رحماء بينهم الرقمية
+## منصة خيرية إنسانية تنموية متكاملة
 
 ---
 
@@ -36,15 +36,15 @@
 ### أمان عالي
 - حماية متقدمة للبيانات والتشفير
 - صلاحيات وصول مختلفة للموظفين
-- نظام مصادقة آمن مع JWT + refresh token
+- نظام مصادقة آمن
 - نسخ احتياطية دورية
-- تنشيط Service Worker للتخزين المؤقت الذكي
+- Service Worker للتخزين المؤقت الذكي
 - تشغيل بدون اتصال (PWA)
 
 ### أداء موثوق
-- سرعة عالية في التحميل (< 3 ثوانٍ)
+- سرعة عالية في التحميل
 - عمل مستقر على مدار الساعة
-- تخزين مؤقت ذكي مع Service Worker
+- تخزين مؤقت ذكي
 - دعم العمل بدون اتصال
 - lazy loading للصفحات والأصول
 - Code splitting محسّن
@@ -57,17 +57,16 @@
 ### البيانات التقنية
 | البند | التفاصيل |
 |-------|---------|
-| لغة البرمجة | React 18 + TypeScript 5 |
+| لغة البرمجة | React 19 + TypeScript 5 |
 | التصميم | Tailwind CSS 4 + MUI 7 |
-| إدارة الحالة | React Context + CQRS |
+| إدارة الحالة | React Context + Custom Hooks |
 | قاعدة البيانات | Supabase / PostgreSQL |
 | CMS | Sanity.io (Headless CMS) |
-| الاستضافة | Vercel (سحابية عالية الموثوقية) |
+| الاستضافة | Cloudflare Pages |
 | الشهادة الأمنية | HTTPS / SSL تلقائي |
 | Service Worker | متقدم مع استراتيجيات تخزين مؤقت |
-| Authentication | JWT مع refresh token |
 | CI/CD | GitHub Actions |
-| الحزم | pnpm (workspace monorepo) |
+| الحزم | pnpm |
 
 ## 📊 البنية التحتية
 
@@ -75,9 +74,8 @@
 - ✅ Security Headers (CSP, X-Frame-Options, HSTS)
 - ✅ Content Security Policy
 - ✅ XSS Protection
-- ✅ CSRF-ready architecture
+- ✅ CSRF Protection
 - ✅ TypeScript strict mode
-- ✅ Token expiration handling
 - ✅ Secure session management
 
 ### المراقبة والقياس
@@ -119,10 +117,10 @@ pnpm validate    # تشغيل جميع الفحوصات
 
 ## 🌐 النشر
 
-### Vercel (مستضاف حالياً)
+### Cloudflare Pages (الإنتاج)
 ```bash
 # النشر المباشر
-vercel --prod
+npx wrangler pages deploy dist --project-name=rbdcye
 ```
 
 ### GitHub Actions (CI/CD)
@@ -130,7 +128,7 @@ vercel --prod
 - **Unit Tests**: اختبارات الوحدة
 - **Security Audit**: فحص أمني
 - **Build**: بناء الإنتاج
-- **Deploy**: نشر تلقائي إلى Vercel
+- **Deploy**: نشر تلقائي إلى Cloudflare Pages
 
 ## 📁 هيكل المشروع
 
@@ -152,18 +150,13 @@ src/
 - [وثيقة المواصفات الرئيسية](./docs/وثيقة_المواصفات_الرئيسية.md)
 - [توثيق API](./docs/API_DOCUMENTATION.md)
 - [معمارية CMS](./docs/CMS_ARCHITECTURE.md)
-- [تقرير جاهزية الإنتاج](./PRODUCTION_READINESS_REPORT.md)
 
 ## 📞 الدعم الفني
 
 ### للاستفسارات والدعم الفني:
-**شركة ديناميك لخدمات البرمجيات**
+📧 **البريد الإلكتروني:** info@rbcdye.org
 
-📱 **الهاتف:** 777888194
-
-📧 **البريد الإلكتروني:** info@rohamaa.org
-
-🌐 **الموقع:** https://rohamaa.org
+🌐 **الموقع:** https://rbcdye.org
 
 ---
 
@@ -183,7 +176,7 @@ src/
 
 ✅ **Sanity CMS** متكامل مع Studio
 
-✅ **موقع الإنتاج:** https://rohamaa.org
+✅ **موقع الإنتاج:** https://rbcdye.org
 
 ---
 
@@ -214,5 +207,4 @@ src/
 
 © 2024-2026 مؤسسة رحماء بينهم - جميع الحقوق محفوظة
 
-تم التطوير بواسطة **شركة ديناميك لخدمات البرمجيات**  
-هاتف: **777888194**
+تم التطوير بواسطة **شركة ديناميك لخدمات البرمجيات**

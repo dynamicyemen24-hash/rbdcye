@@ -1,8 +1,10 @@
 // Volunteer Page - صفحة التطوع (محسّنة لتكامل لوحة التحكم والمواصفات)
 import { motion } from "framer-motion";
-import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target } from "lucide-react";
+import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target, BarChart3, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
+import { PageHeader } from "@/app/components/PageHeader";
+import { StatsGrid } from "@/app/components/StatsGrid";
 import { contentBridge } from "@/shared/services/content-bridge.service";
 import { intakeService } from "@/shared/services/intake.service";
 import { useSEO } from "@/utils/seoAdvanced";
@@ -127,54 +129,25 @@ export default function VolunteerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <HandHelping className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">التطوع</span>
-            </div>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
-              تطوع مع <span className="text-[var(--brand-green)]">رحماء بينهم</span>
-            </h1>
-            <p className="text-xl text-[var(--muted-foreground)] max-w-2xl mx-auto mb-8">
-              انضم إلى فريق متطوعينا وكن جزءاً من التغيير الإيجابي في المجتمع
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              {VOLUNTEER_STATS.map((stat, i) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + i * 0.1 }}
-                    className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]"
-                  >
-                    <Icon className={`w-6 h-6 mx-auto mb-1 ${stat.color}`} />
-                    <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
-                    <div className="text-xs text-[var(--muted-foreground)]">{stat.label}</div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={HandHelping}
+        badge="التطوع"
+        title="تطوع مع رحماء بينهم"
+        subtitle="انضم إلى فريق متطوعينا وكن جزءاً من التغيير الإيجابي في المجتمع"
+      >
+        <StatsGrid
+          stats={[
+            { label: 'متطوع نشط', value: '200+', icon: Users, color: 'green' },
+            { label: 'ميدان', value: '8', icon: Globe, color: 'blue' },
+            { label: 'ساعات تطوع', value: '10,000+', icon: Award, color: 'purple' },
+            { label: 'مشروع مدعوم', value: '50+', icon: Target, color: 'gold' },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Volunteer Fields */}
       <section className="py-16 bg-white">

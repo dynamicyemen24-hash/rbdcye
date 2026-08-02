@@ -75,8 +75,24 @@ async function createAdminNotification(donation) {
 async function createDonation(req, res) {
   const { donor, email, phone, amount, currency, project, method, type, notes, anonymous } = req.body;
 
-  if (!donor || !email || !amount) {
+  // Sanitize inputs
+  const sanitizedDonor = String(donor || '').trim().slice(0, 100);
+  const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+  const sanitizedPhone = String(phone || '').replace(/[^\d+]/g, '').slice(0, 20);
+  const sanitizedAmount = Math.max(0.01, parseFloat(amount) || 0);
+  const sanitizedCurrency = String(currency || 'YER').toUpperCase().slice(0, 10);
+  const sanitizedProject = String(project || '').trim().slice(0, 100);
+  const sanitizedMethod = String(method || '').trim().slice(0, 50);
+  const sanitizedType = String(type || 'once').slice(0, 20);
+  const sanitizedNotes = String(notes || '').trim().slice(0, 2000);
+
+  if (!sanitizedDonor || !sanitizedEmail || !sanitizedAmount) {
     return res.status(400).json({ error: 'donor, email, and amount are required' });
+  }
+
+  // Validate email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
+    return res.status(400).json({ error: 'البريد الإلكتروني غير صالح' });
   }
 
   // Insert donation
@@ -84,7 +100,7 @@ async function createDonation(req, res) {
     `INSERT INTO donations (donor, email, phone, amount, currency, project, method, type, status, notes, anonymous) 
      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending', $9, $10) 
      RETURNING *`,
-    [donor, email, phone, amount, currency || 'YER', project, method, type || 'once', notes, anonymous || false]
+    [sanitizedDonor, sanitizedEmail, sanitizedPhone || null, sanitizedAmount, sanitizedCurrency, sanitizedProject, sanitizedMethod, sanitizedType, sanitizedNotes, anonymous === true]
   );
 
   const donation = donationResult.rows[0];
@@ -249,12 +265,23 @@ function methodNotAllowed(res) {
  * Main handler function
  */
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
+  // CORS with restricted origins
+  const origin = req.headers.origin;
+  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,https://rohamaa.org,https://rbdcye.org').split(',');
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
 
   try {

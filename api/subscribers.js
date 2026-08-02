@@ -6,21 +6,32 @@ const ALLOWED_ORIGINS = process.env.CORS_ORIGIN?.split(',') || ['http://localhos
 export default async function handler(req, res) {
   // CORS headers
   const origin = req.headers.origin;
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-Token');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
 
   try {
     const { email, name, phone, country } = req.body;
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    // Sanitize inputs
+    const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+    const sanitizedName = String(name || '').trim().slice(0, 100);
+    const sanitizedPhone = String(phone || '').replace(/[^\d+]/g, '').slice(0, 20);
+    const sanitizedCountry = String(country || '').trim().slice(0, 100);
+
+    if (!sanitizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
       return res.status(400).json({ error: 'البريد الإلكتروني مطلوب ويجب أن يكون صالحاً' });
     }
 
@@ -35,7 +46,7 @@ export default async function handler(req, res) {
          status = 'active',
          unsubscribed_at = NULL
        RETURNING *`,
-      [email, name || null, phone || null, country || null]
+       [sanitizedEmail, sanitizedName || null, sanitizedPhone || null, sanitizedCountry || null]
     );
 
     // Return success without exposing sensitive data
