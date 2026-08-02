@@ -66,5 +66,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ce1007ca229319e79c9305f0b954536a
-          command: pages deploy ./dist --project-name=rbdcye --branch=main
+          command: pages project upload ./dist --project-name=rbdcye
           workingDirectory: ./
