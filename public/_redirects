@@ -1,2 +1,8 @@
-# Cloudflare Pages SPA Client-Side Routing
-/*   /index.html   200
+# SPA Fallback - All routes to index.html
+/*    /index.html   200
+
+# Redirect old domain to new
+# https://rohamaa.org/*  https://rbdcye.org/:splat  301
+
+# API routes
+/api/*  /api/:splat  200

@@ -57,8 +57,20 @@
     <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://xd0ohyiz.apicdn.sanity.io" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.sanity.io" />
     <link rel="dns-prefetch" href="https://xd0ohyiz.apicdn.sanity.io" />
+    <link rel="dns-prefetch" href="https://js.stripe.com" />
+
+    <!-- Critical CSS: Prevent FOUC -->
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      html{font-family:'Cairo',sans-serif;background:#FAFAF7}
+      #root{min-height:100vh}
+      .app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1A5C48 0%,#0D3D2E 100%);color:#fff;font-size:1.5rem}
+      .app-loader::after{content:'';width:40px;height:40px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
+      @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
 
     <!-- Fonts with display swap -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -174,7 +186,15 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="app-loader" aria-label="جاري التحميل"></div>
+    </div>
+    <noscript>
+      <div style="text-align:center;padding:2rem;font-family:sans-serif">
+        <h1>منصة رحماء بينهم</h1>
+        <p>هذا الموقع يتطلب تفعيل JavaScript للعمل بشكل صحيح.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

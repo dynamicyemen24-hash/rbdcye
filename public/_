@@ -1,0 +1,62 @@
+# Security Headers for all routes
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(self), usb=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://cdn.sanity.io https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob: https://images.unsplash.com https://cdn.sanity.io; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self';
+
+# Static assets - Long cache (1 year)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JS and CSS files
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images
+/*.png
+  Cache-Control: public, max-age=2592000
+/*.jpg
+  Cache-Control: public, max-age=2592000
+/*.jpeg
+  Cache-Control: public, max-age=2592000
+/*.webp
+  Cache-Control: public, max-age=2592000
+/*.svg
+  Cache-Control: public, max-age=2592000
+
+# Fonts
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Service Worker - No cache
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker: script
+/workbox-*.js
+  Cache-Control: no-cache
+
+# HTML - Short cache
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Manifest
+/manifest.json
+  Cache-Control: public, max-age=86400
+
+# API routes - No cache
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  Access-Control-Allow-Origin: https://rbdcye.org
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-CSRF-Token, X-Fingerprint, X-Requested-With
+  Access-Control-Allow-Credentials: true
