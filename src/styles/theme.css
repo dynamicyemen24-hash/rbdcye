@@ -4,42 +4,42 @@
   --font-size: 16px;
 
   /* ============================================================
-     Core Color Palette - Refined for Premium Quality
+     Core Color Palette - Premium Humanitarian Design System
      ============================================================ */
-  --background: #FAFAF7;
-  --foreground: #1C1C2E;
+  --background: #F8F5EC;
+  --foreground: #17202A;
   --card: #FFFFFF;
-  --card-foreground: #1C1C2E;
+  --card-foreground: #17202A;
   --popover: #FFFFFF;
-  --popover-foreground: #1C1C2E;
-  --primary: #1A5C48;
+  --popover-foreground: #17202A;
+  --primary: #075E54;
   --primary-foreground: #FFFFFF;
   --secondary: #F0EAD6;
-  --secondary-foreground: #1C1C2E;
+  --secondary-foreground: #17202A;
   --muted: #EDE8DC;
   --muted-foreground: #6B6878;
-  --accent: #C8861E;
+  --accent: #D9A441;
   --accent-foreground: #FFFFFF;
   --destructive: #C0392B;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(28, 28, 46, 0.12);
+  --border: rgba(23, 32, 42, 0.12);
   --input: transparent;
   --input-background: #F4F1E8;
   --switch-background: #C0BEB4;
   --font-weight-medium: 600;
   --font-weight-normal: 400;
-  --ring: #1A5C48;
+  --ring: #075E54;
 
    /* Chart colors */
-   --chart-1: #1A5C48;
-   --chart-2: #C8861E;
-   --chart-3: #2E7D6B;
-   --chart-4: #E8A83A;
+   --chart-1: #075E54;
+   --chart-2: #D9A441;
+   --chart-3: #0A7A6E;
+   --chart-4: #E8B85A;
    --chart-5: #4AA88E;
 
    /* Semantic success/accent tokens */
-   --success: #10B981;
-   --success-dark: #059669;
+   --success: #075E54;
+   --success-dark: #054A42;
 
   /* Border radius system */
   --radius: 0.5rem;
@@ -52,42 +52,42 @@
 
   /* Sidebar */
   --sidebar: #F0EAD6;
-  --sidebar-foreground: #1C1C2E;
-  --sidebar-primary: #1A5C48;
+  --sidebar-foreground: #17202A;
+  --sidebar-primary: #075E54;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #EDE8DC;
-  --sidebar-accent-foreground: #1C1C2E;
-  --sidebar-border: rgba(28, 28, 46, 0.1);
-  --sidebar-ring: #1A5C48;
+  --sidebar-accent-foreground: #17202A;
+  --sidebar-border: rgba(23, 32, 42, 0.1);
+  --sidebar-ring: #075E54;
 
   /* ============================================================
      Brand Tokens - The Heart of the Design System
      ============================================================ */
-  --brand-green: #1A5C48;
-  --brand-green-light: #2E7D6B;
-  --brand-green-dark: #0F3D2E;
+  --brand-green: #075E54;
+  --brand-green-light: #0A7A6E;
+  --brand-green-dark: #054A42;
   --brand-green-pale: #E8F2EF;
-  --brand-gold: #C8861E;
-  --brand-gold-light: #E8A83A;
+  --brand-gold: #D9A441;
+  --brand-gold-light: #E8B85A;
   --brand-gold-pale: #FDF4E3;
   --brand-parchment: #F5F0E4;
-  --brand-ink: #1C1C2E;
+  --brand-ink: #17202A;
   --brand-ink-light: #3A3A5C;
 
   /* ============================================================
      Enhanced Shadows - Layered for Depth
      ============================================================ */
-  --shadow-xs: 0 1px 2px rgba(28, 28, 46, 0.04);
-  --shadow-sm: 0 1px 3px rgba(28, 28, 46, 0.06), 0 1px 2px rgba(28, 28, 46, 0.04);
-  --shadow-md: 0 4px 6px rgba(28, 28, 46, 0.08), 0 2px 4px rgba(28, 28, 46, 0.06);
-  --shadow-lg: 0 8px 25px rgba(28, 28, 46, 0.10), 0 4px 12px rgba(28, 28, 46, 0.08);
-  --shadow-xl: 0 20px 40px rgba(28, 28, 46, 0.12), 0 8px 24px rgba(28, 28, 46, 0.10);
-  --shadow-2xl: 0 30px 60px rgba(28, 28, 46, 0.15), 0 12px 30px rgba(28, 28, 46, 0.12);
-  --shadow-inner: inset 0 2px 4px rgba(28, 28, 46, 0.04);
-  --shadow-glow: 0 0 20px rgba(26, 92, 72, 0.15);
-  --shadow-glow-gold: 0 0 20px rgba(200, 134, 30, 0.15);
-  --shadow-glow-strong: 0 0 35px rgba(26, 92, 72, 0.20);
-  --shadow-glow-gold-strong: 0 0 35px rgba(200, 134, 30, 0.20);
+  --shadow-xs: 0 1px 2px rgba(23, 32, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(23, 32, 42, 0.06), 0 1px 2px rgba(23, 32, 42, 0.04);
+  --shadow-md: 0 4px 6px rgba(23, 32, 42, 0.08), 0 2px 4px rgba(23, 32, 42, 0.06);
+  --shadow-lg: 0 8px 25px rgba(23, 32, 42, 0.10), 0 4px 12px rgba(23, 32, 42, 0.08);
+  --shadow-xl: 0 20px 40px rgba(23, 32, 42, 0.12), 0 8px 24px rgba(23, 32, 42, 0.10);
+  --shadow-2xl: 0 30px 60px rgba(23, 32, 42, 0.15), 0 12px 30px rgba(23, 32, 42, 0.12);
+  --shadow-inner: inset 0 2px 4px rgba(23, 32, 42, 0.04);
+  --shadow-glow: 0 0 20px rgba(7, 94, 84, 0.15);
+  --shadow-glow-gold: 0 0 20px rgba(217, 164, 65, 0.15);
+  --shadow-glow-strong: 0 0 35px rgba(7, 94, 84, 0.20);
+  --shadow-glow-gold-strong: 0 0 35px rgba(217, 164, 65, 0.20);
 
   /* ============================================================
      Spacing System - 4px Grid
@@ -116,7 +116,7 @@
   --section-bg-secondary: var(--secondary);
   --section-bg-accent: var(--brand-green-pale);
   --section-border: var(--border);
-  --section-divider: rgba(28, 28, 46, 0.06);
+  --section-divider: rgba(23, 32, 42, 0.06);
 
   /* ============================================================
      Gradient Presets - For Premium Visuals
@@ -128,7 +128,7 @@
   --gradient-text-green: linear-gradient(135deg, var(--brand-green), var(--brand-green-light));
   --gradient-text-gold: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
   --gradient-subtle-green: linear-gradient(180deg, var(--brand-green-pale) 0%, transparent 100%);
-  --gradient-overlay-dark: linear-gradient(180deg, rgba(26, 92, 72, 0.85) 0%, rgba(26, 92, 72, 0.4) 100%);
+  --gradient-overlay-dark: linear-gradient(180deg, rgba(7, 94, 84, 0.85) 0%, rgba(7, 94, 84, 0.4) 100%);
 }
 
 /* ============================================================
