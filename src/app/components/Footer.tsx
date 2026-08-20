@@ -1,4 +1,4 @@
-import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, Award, ExternalLink } from "lucide-react";
+import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -85,19 +85,15 @@ export function Footer({ setCurrentPage }: FooterProps) {
               مؤسسة إنسانية تنموية تعمل على تخفيف معاناة الإنسان وبناء مجتمعات مستدامة، منذ عام ١٤٣٠هـ.
             </p>
             
-            {/* License Badges */}
+            {/* Trust Badges */}
             <div className="flex flex-wrap gap-2 mb-6">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                <Award className="w-3.5 h-3.5 text-[var(--brand-gold)]" />
-                <span className="text-white/70 text-[0.65rem]">ترخيص 2024/YEM/001</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                 <Shield className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-white/70 text-[0.65rem]">معتمد من وزارة التعاون</span>
+                <span className="text-white/70 text-[0.65rem]">عمل إنساني موثوق وشفاف</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                 <CheckCircle className="w-3.5 h-3.5 text-blue-400" />
-                <span className="text-white/70 text-[0.65rem]">مؤسسة خيرية مرخصة</span>
+                <span className="text-white/70 text-[0.65rem]">تنمية مستدامة باليمن</span>
               </div>
             </div>
 

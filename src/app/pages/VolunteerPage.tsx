@@ -1,4 +1,4 @@
-// Volunteer Page - صفحة التطوع (محسّنة لتكامل لوحة التحكم والمواصفات)
+// Volunteer Page - صفحة التطوع
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target, BarChart3, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -113,7 +113,7 @@ export default function VolunteerPage() {
                 <span className="font-bold text-[var(--brand-green)]">🔒 آمن وموثوق</span>
               </div>
               <p className="text-sm text-[var(--muted-foreground)]">
-                سيظهر طلبك في لوحة التحكم للمراجعة. سنتواصل معك قريباً عبر البريد الإلكتروني.
+                سيظهر طلبك للمراجعة. سنتواصل معك قريباً عبر البريد الإلكتروني.
               </p>
             </div>
             <button

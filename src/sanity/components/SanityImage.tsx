@@ -52,7 +52,7 @@ export function SanityImage({
       style={{
         width: "100%",
         aspectRatio: `${width} / ${imgHeight}`,
-        background: lqipBlur || "#1A5C48",
+        background: lqipBlur || "#0F4C3A",
       }}
     >
       {/* LQIP Placeholder */}

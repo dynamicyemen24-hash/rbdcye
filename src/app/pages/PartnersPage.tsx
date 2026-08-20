@@ -1,4 +1,4 @@
-// Partners Page - صفحة الشركاء (محسّنة بدمج SEED_PARTNERS)
+// Partners Page - صفحة الشركاء
 import { motion } from "framer-motion";
 import {
   Handshake, Award, Users, Star, Shield, Target,

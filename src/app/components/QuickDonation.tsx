@@ -255,7 +255,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
 
         {/* Amount Selection */}
         <div className="mb-6" role="group" aria-label="قيمة التبرع">
-          <span className="block text-lg font-semibold mb-3">قيمة التبرع (ر.ع)</span>
+          <span className="block text-lg font-semibold mb-3">قيمة التبرع (ر.ي)</span>
           <div className="grid grid-cols-4 gap-2 mb-3">
             {presetAmounts.map((preset) => (
               <button
@@ -364,7 +364,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
           ) : (
             <>
               <Heart className="w-6 h-6" fill="white" />
-              تبرع الآن - {amount} ر.ع
+              تبرع الآن - {amount} ر.ي
             </>
           )}
         </motion.button>

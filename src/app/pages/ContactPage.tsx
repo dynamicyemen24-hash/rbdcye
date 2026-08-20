@@ -1,4 +1,4 @@
-// Contact Page - صفحة التواصل (محسّنة لتكامل لوحة التحكم والمواصفات)
+// Contact Page - صفحة التواصل
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe, Users, BarChart3, Heart } from "lucide-react";
 import { useState, useEffect } from "react";

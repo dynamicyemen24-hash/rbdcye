@@ -1,4 +1,4 @@
-// News Page - صفحة الأخبار (محسّنة لتكامل لوحة التحكم والمواصفات)
+// News Page - صفحة الأخبار
 import { motion } from "framer-motion";
 import {
   Newspaper, FolderOpen, Calendar, User, Tag, Search,

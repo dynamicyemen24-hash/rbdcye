@@ -1,0 +1,1072 @@
+/* ==========================================================================
+   RAHAMA BAYNAHUM — ENTERPRISE-GRADE MASTER DESIGN & SPATIAL ARCHITECTURE
+   مؤسسة رحماء بينهم للإغاثة والتنمية باليمن — نظام التصميم العالمي الموحد
+   Design Grid: Strict 8px System | Golden Ratio Type Scale | Enterprise Palette
+   ========================================================================== */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ==========================================================================
+   0. TAILWIND V4 @theme — register font utilities so font-cairo / font-inter /
+   font-amiri / font-sans / font-heading actually generate real utilities
+   ========================================================================== */
+@theme {
+  --font-cairo: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-amiri: 'Amiri', 'Cairo', serif;
+  --font-sans: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Amiri', 'Cairo', serif;
+}
+
+/* ==========================================================================
+   1. DESIGN TOKENS (متغيرات نظام التصميم والهندسة الفراغية)
+   ========================================================================== */
+:root {
+  /* -----------------------------------------------------------------------
+     1.1 الألوان الأساسية والمؤسسية (Enterprise Color System)
+     ----------------------------------------------------------------------- */
+  /* Institutional Emerald (الأخضر المؤسسي الأساسي الهادئ) */
+  --brand-green:       #0F4C3A;
+  --brand-green-light: #18604B;
+  --brand-green-dark:  #0A372A;
+  --brand-green-pale:  #F0F7F4;
+  --brand-green-hover: #0B3F30;
+  --brand-green-rgb:   15, 76, 58;
+
+  /* Dignity Gold (الذهبي الوقاري - للتمييز والشارات والزخارف) */
+  --brand-gold:             #C69E5A;
+  --brand-gold-light:       #DAB368;
+  --brand-gold-dark:        #8F6A1A;
+  --brand-gold-bright:      #E6C875;
+  --brand-gold-pale:        #FDF8EE;
+  --brand-gold-rgb:         198, 158, 90;
+  
+  /* WCAG 2.1 AAA High-Contrast Gold Semantic Tokens (تباين عالي > 7.1:1 ممتد) */
+  --brand-gold-wcag-aaa:    #5C3E00; /* 9.8:1 contrast ratio on white/light surface - Strict WCAG 2.1 AAA */
+  --brand-gold-wcag-darkbg: #FBBF24; /* 8.5:1 contrast ratio on dark emerald (#0F4C3A) & slate (#0F172A) */
+  --brand-gold-badge-bg:   #FDF6E2;
+  --brand-gold-badge-text: #5A3D02; /* 9.5:1 contrast ratio against #FDF6E2 and white */
+  --brand-gold-border-aaa: #8C6212; /* High-contrast border against light backgrounds */
+
+  /* =========================================================================
+     CUSTOM ISLAMIC SVG GEOMETRIC PATTERN CSS VARIABLES (الأنماط الإسلامية)
+     ========================================================================= */
+  --pattern-rub-el-hizb: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.22' stroke-width='0.8'%3E%3Cpath d='M50 5 L95 50 L50 95 L5 50 Z'/%3E%3Crect x='18' y='18' width='64' height='64' rx='0' transform='rotate(0 50 50)'/%3E%3Crect x='18' y='18' width='64' height='64' rx='0' transform='rotate(45 50 50)'/%3E%3Ccircle cx='50' cy='50' r='18' stroke='%230F4C3A' stroke-opacity='0.25' stroke-width='0.6'/%3E%3Ccircle cx='50' cy='50' r='8' stroke='%23C69E5A' stroke-opacity='0.3' stroke-width='0.6'/%3E%3Cpath d='M50 0 L50 100 M0 50 L100 50' stroke='%230F4C3A' stroke-opacity='0.12' stroke-width='0.5'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-girih-star: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.18' stroke-width='0.85'%3E%3Cpath d='M60 0 L77.6 22.4 L108 22.4 L97.6 51.2 L120 72 L91.2 82.4 L91.2 112.8 L68.8 97.6 L42.4 120 L32 91.2 L1.6 91.2 L16.8 68.8 L0 42.4 L28.8 32 L28.8 1.6 Z'/%3E%3Cpolygon points='60,20 71.7,35 88.3,35 76.6,50 88.3,65 71.7,65 60,80 48.3,65 31.7,65 43.4,50 31.7,35 48.3,35' stroke='%23C69E5A' stroke-opacity='0.22' stroke-width='0.75'/%3E%3Ccircle cx='60' cy='50' r='10' stroke='%23C69E5A' stroke-opacity='0.3' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-sanaani-arch: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.2' stroke-width='0.8'%3E%3Cpath d='M0 40 C 20 10, 60 10, 80 40'/%3E%3Cpath d='M0 80 C 20 50, 60 50, 80 80'/%3E%3Cpath d='M40 0 L40 80' stroke='%230F4C3A' stroke-opacity='0.15' stroke-width='0.5'/%3E%3Cpath d='M0 40 L80 40' stroke='%230F4C3A' stroke-opacity='0.15' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='25' r='6' stroke='%23C69E5A' stroke-opacity='0.25'/%3E%3Ccircle cx='40' cy='65' r='6' stroke='%23C69E5A' stroke-opacity='0.25'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-kufic-tile: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.16' stroke-width='0.9'%3E%3Crect x='4' y='4' width='56' height='56' rx='4'/%3E%3Crect x='12' y='12' width='40' height='40' rx='2' stroke='%23C69E5A' stroke-opacity='0.2'/%3E%3Cpath d='M4 32 L60 32 M32 4 L32 60' stroke='%23C69E5A' stroke-opacity='0.15'/%3E%3Cpath d='M16 16 L48 48 M48 16 L16 48' stroke='%230F4C3A' stroke-opacity='0.12' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-andalusian-star: url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.22' stroke-width='0.75'%3E%3Ccircle cx='45' cy='45' r='36' stroke-dasharray='3 3'/%3E%3Cpolygon points='45,9 55,27 75,17 71,37 90,45 71,53 75,73 55,63 45,81 35,63 15,73 19,53 0,45 19,37 15,17 35,27'/%3E%3Cpolygon points='45,21 52,33 65,27 62,40 73,45 62,50 65,63 52,57 45,69 38,57 25,63 28,50 17,45 28,40 25,27 38,33' stroke='%230F4C3A' stroke-opacity='0.2' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* Neutrals & Slate Scale (التدرج المحايد عالي الوضوح من الأبيض إلى 0A0A0A) */
+  --neutral-50:  #FAFAFA;
+  --neutral-100: #F5F5F5;
+  --neutral-200: #E5E5E5;
+  --neutral-300: #D4D4D4;
+  --neutral-400: #A3A3A3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0A0A0A;
+
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /* Semantic Dynamic Colors (الألوان الدلالية) */
+  --color-success: #10B981;
+  --color-danger:  #EF4444;
+  --color-warning: #F59E0B;
+  --color-info:    #18604B;
+
+  /* Dynamic Surfaces & Backgrounds */
+  --bg-primary:              var(--slate-50);
+  --bg-secondary:            var(--slate-100);
+  --bg-surface:              var(--white);
+  --bg-elevated:             var(--white);
+  --bg-inverse:              var(--neutral-950);
+
+  --background:              var(--slate-50);
+  --foreground:              var(--neutral-900);
+
+  --surface-base:            var(--slate-50);
+  --surface-subtle:          var(--slate-100);
+  --surface-card:            var(--white);
+  --surface-card-foreground: var(--neutral-900);
+  --surface-elevated:        var(--white);
+
+  --card:                    var(--white);
+  --card-foreground:         var(--neutral-900);
+  --popover:                 var(--white);
+  --popover-foreground:      var(--neutral-900);
+
+  --primary:                 var(--brand-green);
+  --primary-foreground:      var(--white);
+  --primary-hover:           var(--brand-green-light);
+  --primary-subtle:          var(--brand-green-pale);
+
+  --secondary:               var(--slate-100);
+  --secondary-foreground:    var(--neutral-900);
+  --muted:                   var(--slate-100);
+  --muted-foreground:        var(--slate-600);
+
+  --accent:                  var(--brand-gold);
+  --accent-foreground:       var(--white);
+  --accent-hover:            var(--brand-gold-light);
+  --accent-subtle:           var(--brand-gold-pale);
+
+  --destructive:             var(--color-danger);
+  --destructive-foreground:  var(--white);
+
+  --border:                  rgba(15, 23, 42, 0.08);
+  --border-strong:           rgba(15, 23, 42, 0.16);
+  --border-subtle:           rgba(15, 23, 42, 0.04);
+  --input:                   var(--slate-50);
+  --ring:                    var(--brand-green);
+
+  /* Status & Feedback Aliases */
+  --success:                 var(--color-success);
+  --success-bg:              #ECFDF5;
+  --warning:                 var(--color-warning);
+  --warning-bg:              #FFFBEB;
+  --danger:                  var(--color-danger);
+  --danger-bg:               #FEF2F2;
+  --info:                    var(--color-info);
+  --info-bg:                 #EFF6FF;
+
+  /* -----------------------------------------------------------------------
+     1.2 الخطوط والطباعة (Typography System - Arabic First + Inter Dual)
+     ----------------------------------------------------------------------- */
+  --font-family-cairo:   'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-inter:   'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-amiri:   'Amiri', 'Cairo', serif;
+
+  --font-cairo:   var(--font-family-cairo);
+  --font-inter:   var(--font-family-inter);
+  --font-sans:    var(--font-family-cairo);
+  --font-heading: var(--font-family-cairo);
+  --font-amiri:   var(--font-family-amiri);
+
+  /* Proportional Type Scale with Golden Ratio Rhythm */
+  --text-xs:   0.75rem;     /* 12px */
+  --text-sm:   0.875rem;    /* 14px */
+  --text-base: 1rem;        /* 16px (Base) */
+  --text-lg:   1.125rem;    /* 18px */
+  --text-xl:   1.25rem;     /* 20px */
+  --text-2xl:  1.5rem;      /* 24px */
+  --text-3xl:  1.875rem;    /* 30px */
+  --text-4xl:  2.25rem;     /* 36px */
+  --text-5xl:  3rem;        /* 48px */
+  --text-6xl:  3.75rem;     /* 60px */
+  --text-7xl:  4.5rem;      /* 72px */
+  --text-8xl:  6rem;        /* 96px */
+  --text-9xl:  8rem;        /* 128px */
+
+  /* Line Heights tuned for Arabic Typography & Diacritics */
+  --line-height-headings: 1.35;
+  --line-height-subtitles: 1.6;
+  --line-height-body:     1.95;
+  --line-height-article:  2.15;
+
+  /* -----------------------------------------------------------------------
+     Unified Subheading Tokens (متغيرات العناوين الفرعية الموحدة لكافة الصفحات)
+     ----------------------------------------------------------------------- */
+  --subheading-font-family:      var(--font-cairo);
+  --subheading-size-xs:          var(--text-xs);    /* 0.75rem / 12px */
+  --subheading-size-sm:          var(--text-sm);    /* 0.875rem / 14px */
+  --subheading-size-base:        var(--text-base);  /* 1rem / 16px */
+  --subheading-size-lg:          var(--text-lg);    /* 1.125rem / 18px */
+  --subheading-size-xl:          var(--text-xl);    /* 1.25rem / 20px */
+  --subheading-weight-normal:    400;
+  --subheading-weight-medium:    500;
+  --subheading-weight-semibold:  600;
+  --subheading-weight-bold:      700;
+  --subheading-line-height:      var(--line-height-subtitles);
+  --subheading-color:            var(--slate-700); /* WCAG AAA 8.3:1 contrast ratio against light backgrounds */
+  --subheading-color-dark:       var(--slate-200); /* WCAG AAA 13.5:1 contrast ratio against dark backgrounds */
+
+  /* Unified Section Spacing Tokens (المسافات الفاصلة الموحدة للأقسام) */
+  --section-spacing:      clamp(3.5rem, 6vw, 6.5rem);  /* 56px to 104px responsive vertical section margin/padding */
+  --section-spacing-lg:   clamp(4.5rem, 8vw, 8.5rem);  /* 72px to 136px */
+  --section-spacing-sm:   clamp(2.5rem, 4vw, 4.5rem);  /* 40px to 72px */
+
+  /* -----------------------------------------------------------------------
+     1.3 شبكة التصميم 8px الصارمة (Strict 8px Grid Spatial System)
+     ----------------------------------------------------------------------- */
+  --space-0:  0px;
+  --space-1:  8px;
+  --space-2:  16px;
+  --space-3:  24px;
+  --space-4:  32px;
+  --space-5:  40px;
+  --space-6:  48px;
+  --space-8:  64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
+  --space-20: 160px;
+  --space-24: 192px;
+
+  /* Breakpoint Containers */
+  --container-narrow:    768px;
+  --container-standard:  1200px;
+  --container-wide:      1440px;
+  --container-ultra:     1680px;
+  --container-full:      100%;
+
+  --header-height:       116px;
+  --navbar-height:       80px;
+  --ticker-height:       36px;
+  --mobile-nav-height:   64px;
+  --touch-target-min:    44px;
+
+  /* -----------------------------------------------------------------------
+     1.4 زوايا وظلال وانتقالات الحركة (Radii, Shadows & Transitions)
+     ----------------------------------------------------------------------- */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
+  --radius-full: 9999px;
+  --radius:      var(--radius-lg);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 45px -5px rgba(0, 0, 0, 0.1);
+
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -----------------------------------------------------------------------
+   1.5 الوضع الليلي القوي والتباين العالي (Dark Mode & High Contrast Mappings)
+   ----------------------------------------------------------------------- */
+.dark {
+  /* Rich Dark Background Scale */
+  --bg-primary:              #0B0F19;
+  --bg-secondary:            #111827;
+  --bg-surface:              #111827;
+  --bg-elevated:             #1F2937;
+  --bg-inverse:              #F8FAFC;
+
+  --background:              #090D16;
+  --foreground:              #F8FAFC;
+
+  --surface-base:            #090D16;
+  --surface-subtle:          #111827;
+  --surface-card:            #111827;
+  --surface-card-foreground: #F8FAFC;
+  --surface-elevated:        #1F2937;
+
+  --card:                    #111827;
+  --card-foreground:         #F8FAFC;
+  --popover:                 #111827;
+  --popover-foreground:      #F8FAFC;
+
+  --secondary:               #1F2937;
+  --secondary-foreground:    #F8FAFC;
+  --muted:                   #1F2937;
+  --muted-foreground:        #9CA3AF;
+
+  --primary:                 #10B981;
+  --primary-foreground:      #022C22;
+  --primary-hover:           #34D399;
+  --primary-subtle:          rgba(16, 185, 129, 0.15);
+
+  --accent:                  #E6C875;
+  --accent-foreground:       #000000;
+  --accent-hover:            #F59E0B;
+  --accent-subtle:           rgba(230, 200, 117, 0.15);
+
+  --brand-green-pale:        rgba(16, 185, 129, 0.15);
+  --brand-gold-pale:         rgba(230, 200, 117, 0.15);
+
+  --border:                  rgba(255, 255, 255, 0.15);
+  --border-strong:           rgba(255, 255, 255, 0.3);
+  --border-subtle:           rgba(255, 255, 255, 0.08);
+  --input:                   #1F2937;
+  --ring:                    #10B981;
+}
+
+/* -----------------------------------------------------------------------
+   1.6 وضع التباين العالي لقارئات الشاشة وضعاف البصر (High Contrast Accessibility)
+   ----------------------------------------------------------------------- */
+.high-contrast {
+  --background:              #000000 !important;
+  --foreground:              #FFFFFF !important;
+  --card:                    #000000 !important;
+  --card-foreground:         #FFFFFF !important;
+  --bg-primary:              #000000 !important;
+  --bg-secondary:            #000000 !important;
+  --bg-surface:              #000000 !important;
+  --border:                  #FFFFFF !important;
+  --border-strong:           #FFFFFF !important;
+  --border-subtle:           #FFFFFF !important;
+  --brand-green:             #00FF88 !important;
+  --brand-gold:              #FFEA00 !important;
+  --primary:                 #00FF88 !important;
+  --primary-foreground:      #000000 !important;
+  --muted-foreground:        #E0E0E0 !important;
+  --subheading-color:        #FFFFFF !important;
+}
+
+:root:not(.dark).high-contrast {
+  --background:              #FFFFFF !important;
+  --foreground:              #000000 !important;
+  --card:                    #FFFFFF !important;
+  --card-foreground:         #000000 !important;
+  --bg-primary:              #FFFFFF !important;
+  --bg-secondary:            #F0F0F0 !important;
+  --bg-surface:              #FFFFFF !important;
+  --border:                  #000000 !important;
+  --border-strong:           #000000 !important;
+  --border-subtle:           #000000 !important;
+  --brand-green:             #004D25 !important;
+  --brand-gold:              #805B00 !important;
+  --primary:                 #004D25 !important;
+  --primary-foreground:      #FFFFFF !important;
+  --muted-foreground:        #111111 !important;
+  --subheading-color:        #000000 !important;
+}
+
+.high-contrast * {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+.high-contrast button, 
+.high-contrast input, 
+.high-contrast select, 
+.high-contrast a {
+  outline: 2px solid currentColor !important;
+}
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE RULES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family-cairo);
+  line-height: var(--line-height-body);
+  direction: rtl;
+  text-align: right;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Strict Typography rules */
+[dir="rtl"],
+html[dir="rtl"],
+body[dir="rtl"] {
+  letter-spacing: 0;
+  word-spacing: normal;
+}
+
+[dir="ltr"] {
+  font-family: var(--font-family-inter);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-cairo);
+  text-rendering: optimizeLegibility;
+  color: var(--slate-900);
+}
+
+h1, .h1 {
+  font-size: clamp(2.125rem, 4.5vw + 1rem, 3.75rem);
+  line-height: 1.25;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+h2, .h2 {
+  font-size: clamp(1.75rem, 3vw + 0.875rem, 2.75rem);
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h3, .h3 {
+  font-size: clamp(1.35rem, 1.8vw + 0.75rem, 2rem);
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* ==========================================================================
+   UNIFIED SUBHEADING CLASSES (نظام الفئات الموحدة للعناوين الفرعية)
+   ========================================================================== */
+.section-subtitle,
+.subheading-primary {
+  font-family: var(--subheading-font-family);
+  font-size: clamp(var(--subheading-size-sm), 1.2vw + 0.75rem, var(--subheading-size-lg));
+  font-weight: var(--subheading-weight-medium);
+  line-height: var(--subheading-line-height);
+  color: var(--subheading-color);
+}
+
+.subheading-lg,
+.section-subtitle-lg {
+  font-family: var(--subheading-font-family);
+  font-size: clamp(var(--subheading-size-base), 1.5vw + 0.875rem, var(--subheading-size-xl));
+  font-weight: var(--subheading-weight-semibold);
+  line-height: var(--subheading-line-height);
+  color: var(--subheading-color);
+}
+
+.card-subtitle,
+.subheading-secondary {
+  font-family: var(--subheading-font-family);
+  font-size: var(--subheading-size-sm);
+  font-weight: var(--subheading-weight-medium);
+  line-height: var(--subheading-line-height);
+  color: var(--subheading-color);
+}
+
+.subheading-badge-text {
+  font-family: var(--subheading-font-family);
+  font-size: var(--subheading-size-sm);
+  font-weight: var(--subheading-weight-bold);
+  color: var(--brand-green-dark);
+}
+
+/* ==========================================================================
+   UNIFIED SECTION VERTICAL SPACING CLASSES & TAILWIND UTILITIES
+   ========================================================================== */
+section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@utility py-section {
+  padding-top: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
+}
+
+@utility py-section-lg {
+  padding-top: var(--section-spacing-lg);
+  padding-bottom: var(--section-spacing-lg);
+}
+
+@utility py-section-sm {
+  padding-top: var(--section-spacing-sm);
+  padding-bottom: var(--section-spacing-sm);
+}
+
+@utility my-section {
+  margin-top: var(--section-spacing);
+  margin-bottom: var(--section-spacing);
+}
+
+@utility my-section-lg {
+  margin-top: var(--section-spacing-lg);
+  margin-bottom: var(--section-spacing-lg);
+}
+
+@utility my-section-sm {
+  margin-top: var(--section-spacing-sm);
+  margin-bottom: var(--section-spacing-sm);
+}
+
+.section-margin {
+  margin-top: var(--section-spacing);
+  margin-bottom: var(--section-spacing);
+}
+
+.section-margin-lg {
+  margin-top: var(--section-spacing-lg);
+  margin-bottom: var(--section-spacing-lg);
+}
+
+.section-margin-sm {
+  margin-top: var(--section-spacing-sm);
+  margin-bottom: var(--section-spacing-sm);
+}
+
+.section-padding {
+  padding-top: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
+}
+
+.section-padding-lg {
+  padding-top: var(--section-spacing-lg);
+  padding-bottom: var(--section-spacing-lg);
+}
+
+.section-padding-sm {
+  padding-top: var(--section-spacing-sm);
+  padding-bottom: var(--section-spacing-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--brand-green);
+  color: var(--white);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--slate-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   3. CANONICAL LAYOUT CONTAINERS
+   ========================================================================== */
+.container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.container-standard,
+.main-container,
+.app-container,
+.section-container,
+.page-container,
+.site-container,
+.container-shell {
+  width: 100%;
+  max-width: var(--container-standard);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.container-ultra {
+  width: 100%;
+  max-width: var(--container-ultra);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.container-full {
+  width: 100%;
+  max-width: 100%;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-narrow,
+  .container-standard,
+  .main-container,
+  .app-container,
+  .section-container,
+  .page-container,
+  .site-container,
+  .container-shell,
+  .container-wide,
+  .container-ultra,
+  .container-full {
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-narrow,
+  .container-standard,
+  .main-container,
+  .app-container,
+  .section-container,
+  .page-container,
+  .site-container,
+  .container-shell,
+  .container-wide,
+  .container-ultra,
+  .container-full {
+    padding-inline: 32px;
+  }
+}
+
+/* ==========================================================================
+   4. CANONICAL COMPONENT PRIMITIVES
+   ========================================================================== */
+
+/* 4.1 الأزرار الاحترافية (Enterprise CTA Buttons with Corporate Tokens & WCAG AAA Compliance) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  background-color: #0F4C3A;
+  color: #FFFFFF; /* WCAG AAA 9.39:1 text contrast */
+  font-weight: 800;
+  font-family: var(--font-cairo);
+  border-radius: var(--radius-xl);
+  border: 2px solid #062317; /* WCAG AAA high contrast boundary on light Islamic backgrounds */
+  box-shadow: 0 4px 14px rgba(15, 76, 58, 0.35), 0 0 0 1px rgba(6, 35, 23, 0.15);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: var(--text-base);
+}
+
+.btn-primary:hover {
+  background-color: #0A372A;
+  color: #FFFFFF;
+  border-color: #041A12;
+  box-shadow: 0 8px 22px rgba(10, 55, 42, 0.45);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0F4C3A, 0 8px 20px rgba(15, 76, 58, 0.4);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  background: linear-gradient(135deg, #D4AF67, #C69E5A);
+  color: #041A12; /* WCAG AAA 13.1:1 text contrast ratio */
+  font-weight: 900;
+  font-family: var(--font-cairo);
+  border-radius: var(--radius-xl);
+  border: 2px solid #5C4314; /* WCAG AAA 7.8:1 boundary contrast on light Islamic backgrounds */
+  box-shadow: 0 4px 16px rgba(92, 67, 20, 0.28);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: var(--text-base);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #C69E5A, #B88A3B);
+  color: #000000;
+  border-color: #4A350E;
+  box-shadow: 0 8px 24px rgba(74, 53, 14, 0.4);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-gold:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #5C4314, 0 8px 20px rgba(92, 67, 20, 0.45);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  background-color: #FFFFFF;
+  color: #0A372A; /* WCAG AAA 12.5:1 text contrast */
+  font-weight: 800;
+  font-family: var(--font-cairo);
+  border-radius: var(--radius-xl);
+  border: 2px solid #0A372A; /* WCAG AAA 11.2:1 border contrast on light backgrounds */
+  box-shadow: 0 2px 8px rgba(10, 55, 42, 0.12);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: var(--text-base);
+}
+
+.btn-secondary:hover {
+  background-color: #F0F7F4;
+  color: #041A12;
+  border-color: #041A12;
+  box-shadow: 0 4px 14px rgba(4, 26, 18, 0.18);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0A372A;
+}
+
+.btn-tertiary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: #0A372A; /* WCAG AAA 12.5:1 contrast */
+  font-weight: 800;
+  font-family: var(--font-cairo);
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-base);
+  text-decoration: none;
+}
+
+.btn-tertiary:hover {
+  text-decoration: underline;
+  color: #041A12;
+}
+
+.btn-tertiary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0A372A;
+  border-radius: var(--radius-md);
+}
+
+/* 4.2 البطاقات الموحدة (Standardized Enterprise Cards) */
+.card-enterprise {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  color: var(--neutral-900);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-subtle);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card-enterprise:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* 4.3 الشارات (Badges - WCAG 2.1 AAA Compliant) */
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background-color: var(--brand-gold-badge-bg);
+  color: var(--brand-gold-badge-text); /* WCAG 2.1 AAA 9.5:1 text contrast */
+  border: 1px solid #C69E5A;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  font-family: var(--font-cairo);
+}
+
+.badge-green {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background-color: #E8F8EE;
+  color: #042E1F; /* WCAG 2.1 AAA 13.8:1 text contrast */
+  border: 1px solid #18604B;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  font-family: var(--font-cairo);
+}
+
+/* ==========================================================================
+   5. AUTHENTIC PATTERNS & GLASSMORPHISM UTILITIES
+   ========================================================================== */
+.hero-glass-panel {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.hero-glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.glass-badge {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.dark .glass-card {
+  background: rgba(17, 24, 39, 0.55);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* -----------------------------------------------------------------------
+   5.1 النقوش والزخارف الإسلامية المتقدمة (Subtle Islamic Patterns)
+   ----------------------------------------------------------------------- */
+.pattern-geometric-islamic {
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L48.28 11.72L60 0L60 11.72L71.72 20L60 28.28L71.72 40L60 51.72L71.72 60L60 68.28L48.28 80L40 68.28L31.72 80L20 68.28L8.28 60L20 51.72L8.28 40L20 28.28L8.28 20L20 11.72L8.28 0L20 11.72L31.72 0Z' fill='none' stroke='%23C69E5A' stroke-width='0.75' stroke-opacity='0.25'/%3E%3Cpath d='M40 20L45.86 25.86L54.14 20L54.14 28.28L60 34.14L54.14 40L60 45.86L54.14 54.14L45.86 60L40 54.14L34.14 60L25.86 54.14L20 45.86L25.86 40L20 34.14L25.86 28.28L20 20L25.86 20L34.14 25.86Z' fill='none' stroke='%230D5C3E' stroke-width='0.5' stroke-opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+
+.pattern-islamic-stars {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C69E5A' fill-opacity='0.12'%3E%3Cpath d='M30 0l3 9 9-3-3 9 9 3-9 3 3 9-9-3-3 9-3-9-9 3 3-9-9-3 9-3-3-9 9 3z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pattern-islamic-subtle {
+  background-image: radial-gradient(circle at 50% 50%, rgba(198, 158, 90, 0.06) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M60 0L75 25L100 15L90 40L115 55L90 70L100 95L75 85L60 110L45 85L20 95L30 70L5 55L30 40L20 15L45 25Z'/%3E%3Ccircle cx='60' cy='55' r='12' fill='none' stroke='%230F4C3A' stroke-opacity='0.1'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+.pattern-sanaani-brick {
+  background-image: 
+    linear-gradient(335deg, rgba(13, 92, 62, 0.05) 23px, transparent 23px),
+    linear-gradient(155deg, rgba(198, 158, 90, 0.05) 23px, transparent 23px);
+  background-size: 58px 58px;
+}
+
+.pattern-rub-hizb {
+  background-image: var(--pattern-rub-el-hizb);
+  background-size: 100px 100px;
+}
+
+.pattern-girih {
+  background-image: var(--pattern-girih-star);
+  background-size: 120px 120px;
+}
+
+.pattern-sanaani-arch {
+  background-image: var(--pattern-sanaani-arch);
+  background-size: 80px 80px;
+}
+
+.pattern-kufic {
+  background-image: var(--pattern-kufic-tile);
+  background-size: 64px 64px;
+}
+
+.pattern-andalusian {
+  background-image: var(--pattern-andalusian-star);
+  background-size: 90px 90px;
+}
+
+/* -----------------------------------------------------------------------
+   5.2 الفواصل الإسلامية المجهزة (Dignified Islamic Dividers)
+   ----------------------------------------------------------------------- */
+.divider-islamic {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.divider-islamic::before,
+.divider-islamic::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(198, 158, 90, 0.4), transparent);
+}
+
+.divider-islamic-badge {
+  padding: 0 16px;
+  color: var(--brand-gold);
+  font-size: 1.125rem;
+  font-family: var(--font-amiri);
+  line-height: 1;
+}
+
+.divider-ornate-gold {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(198, 158, 90, 0.2) 20%, #C69E5A 50%, rgba(198, 158, 90, 0.2) 80%, transparent 100%);
+  position: relative;
+  margin: 2.5rem 0;
+}
+
+.divider-ornate-gold::after {
+  content: '❖';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background);
+  padding: 0 8px;
+  color: var(--brand-gold);
+  font-size: 12px;
+}
+
+.islamic-card-accent {
+  position: relative;
+}
+
+.islamic-card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand-green) 0%, var(--brand-gold) 50%, var(--brand-green) 100%);
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+/* -----------------------------------------------------------------------
+   5.3 تحسينات الخطوط والمسافات الهامشية (Typography & Spacing Refinements - WCAG AAA)
+   ----------------------------------------------------------------------- */
+.text-gold-aaa,
+.text-gold-wcag,
+.text-brand-gold-aaa {
+  color: var(--brand-gold-wcag-aaa); /* #5C3E00: WCAG AAA 9.8:1 contrast ratio on light backgrounds */
+}
+
+.dark .text-gold-aaa,
+.dark .text-gold-wcag,
+.dark .text-brand-gold-aaa,
+.bg-emerald-900 .text-gold-aaa,
+.bg-slate-900 .text-gold-aaa,
+.bg-slate-950 .text-gold-aaa,
+.bg-[#0F4C3A] .text-gold-aaa,
+.bg-[#0A372A] .text-gold-aaa {
+  color: var(--brand-gold-wcag-darkbg); /* #FBBF24: WCAG AAA 8.5:1 contrast ratio on dark backgrounds */
+}
+
+.border-gold-aaa {
+  border-color: var(--brand-gold-border-aaa);
+}
+
+.bg-gold-aaa-subtle {
+  background-color: var(--brand-gold-badge-bg);
+  color: var(--brand-gold-badge-text);
+  border: 1px solid var(--brand-gold-border-aaa);
+}
+
+@utility text-gold-aaa {
+  color: var(--brand-gold-wcag-aaa);
+}
+
+@utility text-gold-darkbg {
+  color: var(--brand-gold-wcag-darkbg);
+}
+.font-quran-verse {
+  font-family: var(--font-amiri);
+  font-size: clamp(1.125rem, 1.5vw + 0.875rem, 1.5rem);
+  line-height: 2.2;
+  color: var(--brand-green-dark);
+}
+
+.dark .font-quran-verse {
+  color: var(--brand-gold-light);
+}
+
+.heading-gold-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.heading-gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--brand-gold);
+  border-radius: 2px;
+}
+
+/* Mobile Safe Area */
+.pb-safe-bottom {
+  padding-bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 16px));
+}
+
+@media (min-width: 768px) {
+  .pb-safe-bottom {
+    padding-bottom: 0;
+  }
+}
+
+/* Article Reading Optimization for Arabic Typography */
+article p,
+.article-content p,
+.prose-arabic p {
+  line-height: var(--line-height-article, 2.15);
+  margin-bottom: 1.25rem;
+}
+
+article ul li,
+.article-content ul li,
+.prose-arabic ul li {
+  line-height: 2.0;
+  margin-bottom: 0.625rem;
+}

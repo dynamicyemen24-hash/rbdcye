@@ -1,4 +1,4 @@
-// Donor Portal Page - صفحة بوابة المتبرع (محسّنة بدمج DonorPortal المتكامل)
+// Donor Portal Page - صفحة حساب المتبرع
 import { motion } from 'framer-motion';
 import { Heart, Shield, BarChart3, History, Gift } from 'lucide-react';
 import { useEffect } from 'react';

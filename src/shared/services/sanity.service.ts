@@ -157,4 +157,32 @@ export const sanityService = {
       return [];
     }
   },
+
+  searchContent: async (query: string) => {
+    try {
+      const q = query.trim();
+      if (!q) return null;
+      const [projects, news, successStories, programs] = await Promise.all([
+        client.fetch(
+          `*[_type == "project" && (title match $q || description match $q)] | order(orderRank) { _id, title, slug, excerpt, image, sector, coverImage }[0...6]`,
+          { q: `*${q}*` }
+        ),
+        client.fetch(
+          `*[_type == "news" && (title match $q || summary match $q)] | order(publishDate desc) { _id, title, slug, summary, image, coverImage, publishDate }[0...6]`,
+          { q: `*${q}*` }
+        ),
+        client.fetch(
+          `*[_type == "successStory" && (title match $q || summary match $q)] | order(publishDate desc) { _id, title, slug, summary, image, coverImage, publishDate }[0...6]`,
+          { q: `*${q}*` }
+        ),
+        client.fetch(
+          `*[_type == "program" && (title match $q || description match $q)] | order(orderRank) { _id, title, slug, excerpt, image, coverImage }[0...6]`,
+          { q: `*${q}*` }
+        ),
+      ]);
+      return { projects, news, successStories, programs };
+    } catch {
+      return null;
+    }
+  },
 };

@@ -65,3 +65,14 @@ tmp/
 # Agent/tool artifacts
 .agents/
 .vercel
+# Stray debug/helper artifacts
+bun.lock
+check_errors.js
+get_runtime_errors.cjs
+hero_temp.txt
+new_hero.txt
+replace_export.sh
+replace_hero.sh
+repo.json
+metadata.json
+package-lock.json

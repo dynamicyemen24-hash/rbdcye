@@ -1,11 +1,11 @@
 {
   "name": "مؤسسة رحماء بينهم الخيرية",
   "short_name": "رحماء بينهم",
-  "description": "منصة خيرية شاملة للتبرع والتطوع والعمل الإنساني",
+  "description": "الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FAFAF7",
-  "theme_color": "#1A5C48",
+  "theme_color": "#0F4C3A",
   "display_override": ["window-controls-overlay", "minimal-ui"],
   "orientation": "any",
   "dir": "rtl",

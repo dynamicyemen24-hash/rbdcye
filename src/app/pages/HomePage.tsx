@@ -21,11 +21,11 @@ interface HomePageProps {
 
 export default function HomePage({ setCurrentPage = () => {} }: HomePageProps) {
   useSEO({
-    title: 'رحماء بينهم - منصة إغاثة وتنمية',
-    description: 'حملة رحماء بينهم الخيرية - تضامن إنساني وتنموي متكامل',
+    title: 'مؤسسة رحماء بينهم - إغاثة وتنمية مستدامة باليمن',
+    description: 'مؤسسة رحماء بينهم للإغاثة والتنمية - عمل إنساني تنموي متكامل باليمن',
     type: 'website',
     url: 'https://rbdcye.org',
-    keywords: ['إغاثة', 'تنمية', 'عمل خيري', 'مساعدات إنسانية', ' Yemen', 'اليمن'],
+    keywords: ['إغاثة', 'تنمية', 'عمل خيري', 'مساعدات إنسانية', 'Yemen', 'اليمن'],
     image: 'https://rbdcye.org/og-image.png',
     author: {
       name: 'فريق رحماء بينهم',

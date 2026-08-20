@@ -88,7 +88,7 @@ useEffect(() => {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, #0a2e1f 0%, #1A5C48 30%, #0d3b2a 60%, #0a2e1f 100%)',
+            background: 'linear-gradient(135deg, #0a2e1f 0%, #0F4C3A 30%, #0d3b2a 60%, #0a2e1f 100%)',
             backgroundSize: '400% 400%',
           }}
         >

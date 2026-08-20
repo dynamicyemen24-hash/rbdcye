@@ -194,7 +194,7 @@ class SEOManager {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'مؤسسة رحماء بينهم',
-      description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري',
+      description: 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
       url: 'https://rbdcye.org',
       logo: 'https://rbdcye.org/logo.png',
       email: 'info@rbdcye.org',
@@ -217,7 +217,7 @@ class SEOManager {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'رحماء بينهم',
-      description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري',
+      description: 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
       url: 'https://rbdcye.org',
       potentialAction: {
         '@type': 'SearchAction',

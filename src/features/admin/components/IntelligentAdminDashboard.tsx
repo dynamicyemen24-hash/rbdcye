@@ -195,7 +195,7 @@ const UserBehaviorAnalytics = () => {
     { name: 'أخرى', visits: 520, percentage: 4 },
   ], []);
 
-  const COLORS = ['#1A5C48', '#10B981', '#059669', '#34D399', '#6EE7B7', '#A7F3D0'];
+  const COLORS = ['#0F4C3A', '#10B981', '#059669', '#34D399', '#6EE7B7', '#A7F3D0'];
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

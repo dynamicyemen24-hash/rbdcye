@@ -1,4 +1,4 @@
-// Programs Page - صفحة البرامج والمشاريع (محسّنة لتكامل لوحة التحكم والمواصفات)
+// Programs Page - صفحة البرامج والمشاريع
 import { motion } from "framer-motion";
 import {
   BookOpen, Heart, Droplet, GraduationCap, Globe, Users,
@@ -142,7 +142,7 @@ export default function ProgramsPage() {
          icon={GraduationCap}
          badge="برامجنا"
          title="برامجنا ومشاريعنا"
-         subtitle="نطمح لتغطية جميع احتياجات المجتمع عبر 7 مسارات متكاملة تشمل الدعوة، الرعاية الاجتماعية، الأمن الغذائي، والتموين المستدام"
+         subtitle="نطمح لتغطية جميع احتياجات المجتمع عبر 7 مسارات متكاملة تشمل الدعوة، الرعاية الاجتماعية، الأمن الغذائي، والتنمية المستدامة"
        >
          <StatsGrid
            stats={[

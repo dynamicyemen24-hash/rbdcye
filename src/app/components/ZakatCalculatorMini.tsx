@@ -21,12 +21,12 @@ interface ZakatResult {
 
 // Zakat rules database
 const ZAKAT_RULES: Record<ZakatType, { nisab: number; rate: number; unit: string }> = {
-  money: { nisab: 2550, rate: 0.025, unit: "ر.ع" },
+  money: { nisab: 2550, rate: 0.025, unit: "ر.ي" },
   gold: { nisab: 85, rate: 0.025, unit: "جرام" },
   silver: { nisab: 520, rate: 0.025, unit: "جرام" },
   livestock: { nisab: 30, rate: 0.005, unit: "رأس" },
-  trade: { nisab: 2550, rate: 0.025, unit: "ر.ع" },
-  fitr: { nisab: 2.5, rate: 1, unit: "ر.ع للفرد" },
+  trade: { nisab: 2550, rate: 0.025, unit: "ر.ي" },
+  fitr: { nisab: 2.5, rate: 1, unit: "ر.ي للفرد" },
 };
 
 const ZAKAT_DESCRIPTIONS: Record<ZakatType, string> = {
@@ -208,7 +208,7 @@ export function ZakatCalculatorMini({ onDonateClick, onHide, embedded = false }:
                   <>
                     <p className="text-lg text-gray-600 mb-2">الزكاة المستحقة</p>
                     <p className="text-5xl font-bold text-[var(--brand-green)]">
-                      {result.amount.toLocaleString()} <span className="text-2xl">ر.ع</span>
+                      {result.amount.toLocaleString()} <span className="text-2xl">ر.ي</span>
                     </p>
                     <div className="flex items-center justify-center gap-2 mt-2">
                       <Shield className="w-4 h-4 text-[var(--brand-gold)]" />

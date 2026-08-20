@@ -62,7 +62,7 @@ const App = lazy(() => import("./app/App"));
 // Loading state messages
 // ============================================================
 const LOADING_MESSAGES = [
-  { text: 'جاري تحميل المنصة...', weight: 1 },
+  { text: 'جاري تحميل الموقع...', weight: 1 },
   { text: 'تهيئة النظام الأساسي', weight: 2 },
   { text: 'تحميل المحتوى', weight: 2 },
   { text: 'تجهيز الواجهة', weight: 1 },

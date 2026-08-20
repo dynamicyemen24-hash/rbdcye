@@ -22,8 +22,8 @@ export async function initializeCoreServices(): Promise<void> {
     // Initialize SEO manager
     if (typeof window !== 'undefined') {
       seoManager.update({
-        title: 'مؤسسة رحماء بينهم - منصة العمل الإنساني',
-        description: 'منصة رقمية متكاملة لإدارة العمل الإنساني والخيري، تهدف لخدمة المتبرعين والمستفيدين',
+        title: 'مؤسسة رحماء بينهم للإغاثة والتنمية',
+        description: 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
         type: 'organization',
         image: '/og-image.png',
         url: 'https://rbdcye.org',

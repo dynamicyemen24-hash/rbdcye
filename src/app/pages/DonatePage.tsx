@@ -1,4 +1,4 @@
-// Donate Page - صفحة التبرع (محسّنة لتكامل لوحة التحكم والمواصفات)
+// Donate Page - صفحة التبرع
 import { motion } from "framer-motion";
 import {
   Heart, CreditCard, Wallet, Building2, CheckCircle, Shield,
@@ -126,7 +126,7 @@ export default function DonatePage() {
           ? [{ projectId: selectedProject, projectName: selectedProjectData.name, amount: actualAmount, isCustom: false }]
           : [{ projectId: 'general', projectName: 'تبرع عام', amount: actualAmount, isCustom: true }],
         totalAmount: actualAmount,
-        currency: 'SAR',
+        currency: 'YER',
         paymentMethod: paymentMethod === 'apple' || paymentMethod === 'google' ? 'card' : paymentMethod,
         paymentType: 'once',
         isAnonymous: !donorInfo.name,
@@ -164,7 +164,7 @@ export default function DonatePage() {
               شكراً لك على تبرعك!
             </h1>
             <p className="text-[var(--muted-foreground)] text-lg mb-8">
-              تم استلام تبرعك بنجاح بقيمة {actualAmount} ر.ع.
+              تم استلام تبرعك بنجاح بقيمة {actualAmount} ر.ي.
               نسأل الله أن يتقبل منا ومنكم، وأن يجعله في ميزان حسناتكم.
             </p>
 
@@ -251,7 +251,7 @@ export default function DonatePage() {
                 className="bg-white rounded-2xl p-4 border border-[var(--border)] shadow-lg text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="font-bold text-[var(--brand-green)] mb-1">{item.amount} ر.ع</div>
+                <div className="font-bold text-[var(--brand-green)] mb-1">{item.amount} ر.ي</div>
                 <div className="text-xs text-[var(--muted-foreground)]">{item.label}</div>
               </motion.div>
             ))}
@@ -294,7 +294,7 @@ export default function DonatePage() {
 
                 {/* Amount Selection */}
                 <div className="mb-8">
-                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4" id="amount-selection-group">قيمة التبرع (ر.ع)</div>
+                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4" id="amount-selection-group">قيمة التبرع (ر.ي)</div>
                   <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-4">
                     {presetAmounts.map((amount) => (
                       <button
@@ -389,7 +389,7 @@ export default function DonatePage() {
                 <div className="bg-gradient-to-r from-[var(--brand-green)]/10 to-[var(--brand-green)]/5 p-6 rounded-xl mb-8">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-[var(--muted-foreground)]">المبلغ:</span>
-                    <span className="text-2xl font-bold text-[var(--foreground)]">{actualAmount || selectedAmount} ر.ع</span>
+                    <span className="text-2xl font-bold text-[var(--foreground)]">{actualAmount || selectedAmount} ر.ي</span>
                   </div>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-[var(--muted-foreground)]">المشروع:</span>
@@ -412,7 +412,7 @@ export default function DonatePage() {
                   className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50"
                 >
                   <Heart className="w-6 h-6" fill="white" />
-                  {isSubmitting ? 'جاري المعالجة...' : `تبرع الآن - ${actualAmount || selectedAmount} ر.ع`}
+                  {isSubmitting ? 'جاري المعالجة...' : `تبرع الآن - ${actualAmount || selectedAmount} ر.ي`}
                 </button>
 
                 {/* Security Badge */}

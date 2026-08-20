@@ -1,4 +1,4 @@
-// Projects Page - صفحة المشاريع (محسّنة بدمج البيانات ولوحة التحكم)
+// Projects Page - صفحة المشاريع
 import { motion } from "framer-motion";
 import {
   Target, MapPin, Users, Calendar, ArrowLeft,

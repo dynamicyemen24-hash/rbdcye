@@ -1,4 +1,4 @@
-// Media Page - معرض الوسائط (محسّن بدمج SEED_MEDIA)
+// Media Page - معرض الوسائط
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Image, Play, Grid3X3, List, Search, Camera, Video, FileImage, Eye,

@@ -15,7 +15,7 @@ export const seoConfig = {
     url?: string;
   } = {}) => ({
     title: data.title || 'Rahmaa Baynahum',
-    description: data.description || 'منصة الخير والإحسان - مؤسسة رحماء بينهم الخيرية',
+    description: data.description || 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
     image: data.image || '/images/default-og.jpg',
     url: data.url || 'https://rbdcye.org',
   }),

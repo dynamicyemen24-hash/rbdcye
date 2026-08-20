@@ -1,4 +1,4 @@
-// Zakat Calculator Page - حاسبة الزكاة الشرعية (محسّنة لتكامل لوحة التحكم والمواصفات)
+// Zakat Calculator Page - حاسبة الزكاة الشرعية
 import { motion } from "framer-motion";
 import { Calculator, DollarSign, Gem, Calendar, Bell, CheckCircle, ArrowLeft, ArrowRight, Shield, Heart, TrendingUp } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
@@ -142,7 +142,7 @@ export default function ZakatPage() {
                 <div className="text-blue-600 flex justify-center mb-1">
                   <Calculator className="w-6 h-6" />
                 </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">{NISAB.money.toLocaleString('ar-SA')} ر.ع</div>
+                <div className="text-2xl font-bold text-[var(--foreground)]">{NISAB.money.toLocaleString('ar-SA')} ر.ي</div>
                 <div className="text-xs text-[var(--muted-foreground)]">نصاب المال</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
@@ -194,7 +194,7 @@ export default function ZakatPage() {
 
                 <div className="mb-6">
                   <label htmlFor="cashAmount" className="block text-lg font-semibold text-[var(--foreground)] mb-2">
-                    إجمالي المبلغ المملوك (ر.ع)
+                    إجمالي المبلغ المملوك (ر.ي)
                   </label>
                   <div className="relative">
                     <input
@@ -205,13 +205,13 @@ export default function ZakatPage() {
                       className="w-full p-4 pr-12 border-2 border-[var(--border)] rounded-xl text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                       placeholder="أدخل المبلغ"
                     />
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]">ر.ع</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]">ر.ي</span>
                   </div>
                 </div>
 
                 <div className="bg-[var(--brand-green-pale)] p-4 rounded-xl mb-6">
                   <p className="text-sm text-[var(--muted-foreground)]">
-                    نصاب الزكاة: {NISAB.money.toLocaleString('ar-SA')} ر.ع (ما يعادل 85 جرام ذهب)
+                    نصاب الزكاة: {NISAB.money.toLocaleString('ar-SA')} ر.ي (ما يعادل 85 جرام ذهب)
                   </p>
                 </div>
 
@@ -257,7 +257,7 @@ export default function ZakatPage() {
 
                 <div className="bg-[var(--brand-green-pale)] p-4 rounded-xl mb-6">
                   <p className="text-sm text-[var(--muted-foreground)]">
-                    نصاب الذهب: {NISAB.gold} جرام (سعر الجرام ~ {GOLD_PRICE_PER_GRAM} ر.ع)
+                    نصاب الذهب: {NISAB.gold} جرام (سعر الجرام ~ {GOLD_PRICE_PER_GRAM} ر.ي)
                   </p>
                 </div>
 
@@ -277,7 +277,7 @@ export default function ZakatPage() {
                 <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">زكاة الفطر</h2>
                 <div className="bg-gradient-to-r from-[var(--brand-green)]/10 to-[var(--brand-green)]/5 p-6 rounded-xl mb-6">
                   <p className="text-lg text-[var(--foreground)]">
-                    <strong>مقدار زكاة الفطر:</strong> {NISAB.fitr} ر.ع للشخص الواحد
+                    <strong>مقدار زكاة الفطر:</strong> {NISAB.fitr} ر.ي للشخص الواحد
                   </p>
                   <p className="text-sm text-[var(--muted-foreground)] mt-2">
                     تُقدر بقيمة 2.5 كيلو جرام من القمح أو ما يعادله من الأرز/التمر
