@@ -2,7 +2,7 @@
 import { motion } from "motion/react";
 import {
   Heart, CreditCard, Wallet, Building2, CheckCircle, Shield,
-  TrendingUp, Users, Globe, BarChart3, HandHeart, Clock, Lock,
+  TrendingUp, Globe, BarChart3, HandHeart, Lock,
   RefreshCw, Shirt, Package, Truck, ShoppingBag, Coins,
   Calendar, Repeat, ChevronDown,
 } from 'lucide-react';
@@ -60,9 +60,9 @@ interface ImpactItem {
 }
 
 const IMPACT_ITEMS_YER: ImpactItem[] = [
-  { amountInYER: 5000, label: 'وجبة غذاء لعائلة لأسبوع', icon: '🍚', description: 'خبز وبروتين و Basics' },
-  { amountInYER: 10000, label: 'مياه نظيفة لعشر عائلات', icon: '💧', description: 'أبار تدوم لأشهر' },
-  { amountInYER: 25000, label: ' Supplies تعليمية لطالب', icon: '📚', description: 'كتب وأدوات مدرسية' },
+  { amountInYER: 5000, label: 'وجبة غذاء لعائلة لأسبوع', icon: '🍚', description: 'خبز وبروتين ومواد غذائية أساسية' },
+  { amountInYER: 10000, label: 'مياه نظيفة لعشر عائلات', icon: '💧', description: 'آبار تدوم لأشهر' },
+  { amountInYER: 25000, label: 'مستلزمات تعليمية لطالب', icon: '📚', description: 'كتب وأدوات مدرسية' },
   { amountInYER: 50000, label: 'دفء شتاء لعائلة', icon: '🧥', description: 'بطانيات وسخانات' },
   { amountInYER: 100000, label: 'سكن مؤقت لشهر', icon: '🏠', description: 'إيجار لعائلة نازحة' },
   { amountInYER: 250000, label: 'حفر بئر مياه', icon: '🌊', description: 'يسقي قرية بأكملها' },
@@ -74,10 +74,10 @@ const IMPACT_ITEMS_YER: ImpactItem[] = [
 const IN_KIND_CATEGORIES = [
   { id: 'clothing', name: 'الملابس', icon: Shirt, description: 'ملابس شتوية وصيفية نظيفة', accepted: 'كل الأحجام — نظيفة فقط' },
   { id: 'food', name: 'المواد الغذائية', icon: Package, description: 'أرز وسكر وزيت وتمور', accepted: 'مواد غير فاسدة — تأكد من تاريخ الصلاحية' },
-  { id: 'blankets', name: 'البطانيات والأغطية', icon: ShoppingBag, description: 'بطانيات شتوية وMattresses', accepted: 'جديدة أو نظيفة جداً' },
-  { id: 'medical', name: 'المساعدات الطبية', icon: Heart, description: 'أدوية أساسية ومستلزمات إسعاف', accepted: 'أدويةsealed — غير منتهية الصلاحية' },
+  { id: 'blankets', name: 'البطانيات والأغطية', icon: ShoppingBag, description: 'بطانيات شتوية ومراتب', accepted: 'جديدة أو نظيفة جداً' },
+  { id: 'medical', name: 'المساعدات الطبية', icon: Heart, description: 'أدوية أساسية ومستلزمات إسعاف', accepted: 'أدوية مغلقة وغير منتهية الصلاحية' },
   { id: 'stationery', name: 'اللوازم المدرسية', icon: Package, description: 'دفاتر وأقلام وحقائب', accepted: 'جديدة فقط' },
-  { id: 'other', name: 'مواد أخرى', icon: Truck, description: 'تواصل معنا لconfirm الم pledges', accepted: 'يرجى التواصل مسبقاً' },
+  { id: 'other', name: 'مواد أخرى', icon: Truck, description: 'تواصل معنا لتأكيد التبرعات العينية', accepted: 'يرجى التواصل مسبقاً' },
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -85,7 +85,7 @@ const IN_KIND_CATEGORIES = [
 // ═══════════════════════════════════════════════════════
 const RECURRING_OPTIONS = [
   { id: 'once', label: 'مرة واحدة', icon: Heart, description: 'تبرع لمرة واحدة' },
-  { id: 'monthly', label: 'شهري', icon: Calendar, description: 'يُ deducted كل شهر' },
+  { id: 'monthly', label: 'شهري', icon: Calendar, description: 'يُخصم تلقائيًا كل شهر' },
   { id: 'yearly', label: 'سنوي', icon: Repeat, description: 'تبرع سنوي' },
 ];
 
@@ -105,6 +105,7 @@ export default function DonatePage() {
   const [inKindDetails, setInKindDetails] = useState('');
   const [donorInfo, setDonorInfo] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [showCurrencyConverter, setShowCurrencyConverter] = useState(false);
   const [converterAmount, setConverterAmount] = useState('100');
@@ -157,16 +158,16 @@ export default function DonatePage() {
     { id: 'medical', name: 'المساعدات الطبية', icon: Heart, color: 'from-red-500 to-rose-500' },
   ];
 
-  const paymentMethods = [
+  const paymentMethods = useMemo(() => [
     { id: 'card', name: 'بطاقة ائتمان', icon: CreditCard, currencies: ['YER', 'SAR', 'USD', 'AED', 'EUR', 'GBP'] },
     { id: 'apple', name: 'Apple Pay', icon: Wallet, currencies: ['SAR', 'USD', 'AED', 'EUR', 'GBP'] },
     { id: 'google', name: 'Google Pay', icon: Wallet, currencies: ['SAR', 'USD', 'AED', 'EUR', 'GBP'] },
     { id: 'bank', name: 'تحويل بنكي', icon: Building2, currencies: Object.keys(CURRENCIES) },
-  ];
+  ], []);
 
   const availablePaymentMethods = useMemo(() => {
     return paymentMethods.filter(m => m.currencies.includes(selectedCurrency));
-  }, [selectedCurrency]);
+  }, [paymentMethods, selectedCurrency]);
 
   useEffect(() => {
     if (!availablePaymentMethods.find(m => m.id === paymentMethod)) {
@@ -191,6 +192,15 @@ export default function DonatePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
+    if (donationType === 'monetary' && (!Number.isFinite(actualAmount) || actualAmount <= 0)) {
+      setSubmitError('يرجى إدخال مبلغ تبرع صالح قبل المتابعة.');
+      return;
+    }
+    if (donationType === 'inkind' && selectedInKind.length === 0) {
+      setSubmitError('يرجى اختيار فئة واحدة على الأقل من التبرع العيني.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       const selectedProjectData = projects.find(p => p.id === selectedProject);
@@ -213,12 +223,12 @@ export default function DonatePage() {
         agreeToTerms: true,
         agreeToContact: !!donorInfo.email,
         metadata: { source: 'web', donationType, currency: selectedCurrency },
-      } as any);
+      } as Parameters<typeof multiProjectDonationService.processDonation>[0]);
 
       try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
       setIsSuccess(true);
     } catch {
-      alert('حدث خطأ أثناء المعالجة. يرجى المحاولة مرة أخرى.');
+      setSubmitError('تعذر إتمام الطلب حاليًا. تحقق من الاتصال ثم حاول مرة أخرى، أو تواصل مع فريق رحماء بينهم.');
     } finally {
       setIsSubmitting(false);
     }
@@ -300,9 +310,9 @@ export default function DonatePage() {
             >
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
                 <div>
-                  <label className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">من</label>
+                  <label htmlFor="converter-from" className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">من</label>
                   <div className="flex gap-2">
-                    <select value={converterFrom} onChange={e => setConverterFrom(e.target.value)}
+                    <select id="converter-from" value={converterFrom} onChange={e => setConverterFrom(e.target.value)}
                       className="flex-1 p-3 rounded-xl border-2 border-[var(--border)] text-sm font-semibold">
                       {Object.values(CURRENCIES).map(c => (
                         <option key={c.code} value={c.code}>{c.flag} {c.code} — {c.name}</option>
@@ -316,9 +326,9 @@ export default function DonatePage() {
                   <RefreshCw className="w-5 h-5 text-[var(--brand-green)] rotate-90" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">إلى</label>
+                  <label htmlFor="converter-to" className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">إلى</label>
                   <div className="flex gap-2">
-                    <select value={converterTo} onChange={e => setConverterTo(e.target.value)}
+                    <select id="converter-to" value={converterTo} onChange={e => setConverterTo(e.target.value)}
                       className="flex-1 p-3 rounded-xl border-2 border-[var(--border)] text-sm font-semibold">
                       {Object.values(CURRENCIES).map(c => (
                         <option key={c.code} value={c.code}>{c.flag} {c.code} — {c.name}</option>
@@ -635,6 +645,7 @@ export default function DonatePage() {
                 </div>
 
                 {/* زر الإرسال */}
+                {submitError && <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{submitError}</div>}
                 <button type="submit" disabled={isSubmitting}
                   className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50">
                   <Heart className="w-6 h-6" fill="white" />

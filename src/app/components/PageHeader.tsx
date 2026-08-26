@@ -26,7 +26,8 @@ export function PageHeader({
   const isCenter = align === 'center';
   
   return (
-    <section className="relative py-20 overflow-hidden" style={{
+        <section className="relative overflow-hidden bg-[#F7F8F5] py-14 sm:py-20" aria-labelledby="page-header-title" style={{
+
       background: 'linear-gradient(180deg, rgba(26, 92, 72, 0.06) 0%, rgba(255, 255, 255, 1) 100%)',
     }}>
       {/* Decorative background elements */}
@@ -88,10 +89,13 @@ export function PageHeader({
           </div>
 
           {/* Title with consistent typography */}
-          <h1
-            className="mb-6"
+                    <h1
+            id="page-header-title"
+            className="mb-6 max-w-3xl"
+
             style={{
-              fontSize: 'var(--fs-h1)',
+                            fontSize: 'clamp(2.15rem, 5vw, var(--fs-h1))',
+
               fontWeight: 800,
               lineHeight: 'var(--lh-heading)',
               color: 'var(--foreground)',
@@ -101,7 +105,7 @@ export function PageHeader({
             {title}
           </h1>
 
-          <IslamicDivider tone="gold" className="mb-6" />
+          <IslamicDivider tone="gold" className={`mb-6 ${isCenter ? '' : 'mr-0'}`} />
 
           {/* Subtitle with consistent styling */}
           <p 
