@@ -4,7 +4,8 @@ import {
   Heart, History, MapPin, FileText, Settings, Bell, Download, Share2,
   Calendar, Users, DollarSign, CheckCircle, Clock, Award,
   BarChart3, Target, Sparkles,
-  Printer, CreditCard, QrCode, ExternalLink, User,
+    Printer, CreditCard, QrCode, ExternalLink, User, type LucideIcon,
+
 } from 'lucide-react';
 import { useState, useEffect, useCallback, memo, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -133,7 +134,8 @@ const StatusBadge = memo(function StatusBadge({ status }: { status: string }) {
 });
 
 const StatCard = memo(function StatCard({ icon: Icon, label, value, trend, color, onClick }: {
-  icon: any; label: string; value: string | number; trend?: string; color: string; onClick?: () => void;
+    icon: LucideIcon; label: string; value: string | number; trend?: string; color: string; onClick?: () => void;
+
 }) {
   const Wrapper = onClick ? 'button' : 'div' as const;
   return (
@@ -158,7 +160,8 @@ const StatCard = memo(function StatCard({ icon: Icon, label, value, trend, color
 });
 
 const TabButton = memo(function TabButton({ id: _id, label, icon: Icon, active, onClick }: {
-  id: string; label: string; icon: any; active: boolean; onClick: () => void;
+    id: string; label: string; icon: LucideIcon; active: boolean; onClick: () => void;
+
 }) {
   return (
     <motion.button
@@ -395,7 +398,7 @@ export default function DonorPortal() {
             { id: 'settings', label: 'الإعدادات', icon: Settings },
             { id: 'notifications', label: 'الإشعارات', icon: Bell },
           ].map(tab => (
-            <TabButton key={tab.id} {...tab} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id as any)} />
+            <TabButton key={tab.id} {...tab} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id as PortalTab)} />
           ))}
         </div>
 
@@ -701,7 +704,7 @@ export default function DonorPortal() {
                         <input
                           id={item.key}
                           type="checkbox"
-                          defaultChecked={(preferences as any)[item.key]}
+                          defaultChecked={Boolean(preferences[item.key as keyof DonorPreferences])}
                           onChange={(e) => setPreferences({ ...preferences, [item.key]: e.target.checked })}
                           className="sr-only peer"
                         />

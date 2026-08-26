@@ -44,6 +44,7 @@ export default function ZakatPage() {
   const [liabilities, setLiabilities] = useState(0);
   const [goldPrice, setGoldPrice] = useState(25000);
   const [goldWeight, setGoldWeight] = useState(0);
+  const [silverPrice, setSilverPrice] = useState(350);
   const [silverWeight, setSilverWeight] = useState(0);
   const [fitrPeople, setFitrPeople] = useState(1);
   const [fitrValue, setFitrValue] = useState(1500);
@@ -63,10 +64,10 @@ export default function ZakatPage() {
 
   const calculation = useMemo(() => {
     if (mode === "money") return { base: moneyNet, threshold: moneyNisab, eligible: hasHawl && moneyNet >= moneyNisab, unit: "ر.ي" };
-    if (mode === "gold") return { base: goldWeight, threshold: GOLD_NISAB_GRAMS, eligible: hasHawl && goldWeight >= GOLD_NISAB_GRAMS, unit: "غرام" };
-    if (mode === "silver") return { base: silverWeight, threshold: SILVER_NISAB_GRAMS, eligible: hasHawl && silverWeight >= SILVER_NISAB_GRAMS, unit: "غرام" };
+    if (mode === "gold") return { base: goldWeight * goldPrice, threshold: GOLD_NISAB_GRAMS * goldPrice, eligible: hasHawl && goldWeight >= GOLD_NISAB_GRAMS, unit: "ر.ي" };
+    if (mode === "silver") return { base: silverWeight * silverPrice, threshold: SILVER_NISAB_GRAMS * silverPrice, eligible: hasHawl && silverWeight >= SILVER_NISAB_GRAMS, unit: "ر.ي" };
     return { base: fitrPeople * fitrValue, threshold: fitrValue, eligible: fitrPeople > 0 && fitrValue > 0, unit: "ر.ي" };
-  }, [mode, moneyNet, moneyNisab, goldWeight, silverWeight, fitrPeople, fitrValue, hasHawl]);
+  }, [mode, moneyNet, moneyNisab, goldWeight, goldPrice, silverWeight, silverPrice, fitrPeople, fitrValue, hasHawl]);
 
   const calculate = () => {
     const amount = mode === "fitr" ? fitrPeople * fitrValue : calculation.eligible ? calculation.base * ZAKAT_RATE : 0;
@@ -82,7 +83,7 @@ export default function ZakatPage() {
   };
 
   const reset = () => {
-    setCash(0); setReceivables(0); setLiabilities(0); setGoldWeight(0); setSilverWeight(0); setFitrPeople(1); setResult(null); setSaved(false);
+    setCash(0); setReceivables(0); setLiabilities(0); setGoldWeight(0); setSilverWeight(0); setGoldPrice(25000); setSilverPrice(350); setFitrPeople(1); setResult(null); setSaved(false);
   };
 
   return (
@@ -106,7 +107,7 @@ export default function ZakatPage() {
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             {mode === "money" && <><Field label="النقد والمدخرات" suffix="ر.ي" value={cash} onChange={setCash} /><Field label="الذمم المرجوّة" suffix="ر.ي" value={receivables} onChange={setReceivables} /><Field label="الالتزامات الحالّة" suffix="ر.ي" value={liabilities} onChange={setLiabilities} /><Field label="سعر غرام الذهب المرجعي" suffix="ر.ي" value={goldPrice} onChange={setGoldPrice} /></>}
             {mode === "gold" && <><Field label="الوزن الخالص أو المكافئ الخالص" suffix="غرام" value={goldWeight} onChange={setGoldWeight} /><Field label="سعر غرام الذهب المرجعي" suffix="ر.ي" value={goldPrice} onChange={setGoldPrice} /></>}
-            {mode === "silver" && <Field label="وزن الفضة المملوك" suffix="غرام" value={silverWeight} onChange={setSilverWeight} />}
+            {mode === "silver" && <><Field label="وزن الفضة المملوك" suffix="غرام" value={silverWeight} onChange={setSilverWeight} /><Field label="سعر غرام الفضة المرجعي" suffix="ر.ي" value={silverPrice} onChange={setSilverPrice} /></>}
             {mode === "fitr" && <><Field label="عدد الأشخاص" suffix="شخص" value={fitrPeople} onChange={setFitrPeople} min={1} /><Field label="قيمة زكاة الفطر للشخص" suffix="ر.ي" value={fitrValue} onChange={setFitrValue} /></>}
           </div>
 
