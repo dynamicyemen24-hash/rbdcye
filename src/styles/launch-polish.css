@@ -1,13 +1,23 @@
 /* Launch polish: small, safe defaults shared by the public experience. */
 html {
+  min-width: 320px;
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
+  min-width: 320px;
   background: #f7f8f5;
   font-synthesis: none;
+  overflow-x: hidden;
+}
+
+p,
+a,
+button,
+label {
+  overflow-wrap: anywhere;
 }
 
 img,
@@ -28,6 +38,14 @@ select {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  transition: transform 160ms ease-out;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 ::selection {
@@ -57,6 +75,6 @@ a {
 
 @media (max-width: 640px) {
   body {
-    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }

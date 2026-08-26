@@ -219,13 +219,15 @@
   margin-bottom: 1rem;
   background: var(--brand-green-pale);
   color: var(--brand-green);
-  border: 1px solid var(--brand-green) / 0.15;
+    border: 1px solid rgba(15, 76, 58, 0.15);
+
 }
 
 .section-badge--gold {
   background: var(--brand-gold-pale);
   color: var(--brand-gold);
-  border-color: var(--brand-gold) / 0.15;
+    border-color: rgba(198, 158, 90, 0.15);
+
 }
 
 /* Section subtitle */
