@@ -1,13 +1,14 @@
 // Reports Page - التقارير السنوية والإصدارات
 import { motion } from "motion/react";
 import {
-  FileText, Download, Calendar, Eye, Search, 
-  Filter, BookOpen, TrendingUp, Users, Award,
-  ArrowLeft, BarChart3, PieChart, FileBarChart
+    FileText, Download, Calendar, Search,
+  FileBarChart
+
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PageHeader } from "@/app/components/PageHeader";
 import { useSEO } from "@/utils/seoAdvanced";
 
 const REPORTS = [
@@ -21,7 +22,9 @@ const REPORTS = [
     category: "مالي",
     description: "التقرير المالي والإداري السنوي للعام 2025",
     highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
-    color: "emerald",
+        color: "emerald",
+    available: false,
+
   },
   {
     id: 2,
@@ -33,7 +36,9 @@ const REPORTS = [
     category: "مالي",
     description: "التقرير المالي والإداري السنوي للعام 2024",
     highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
-    color: "blue",
+        color: "blue",
+    available: false,
+
   },
   {
     id: 3,
@@ -45,7 +50,9 @@ const REPORTS = [
     category: "أثر",
     description: "تقرير قياس أثر البرامج والمشاريع للربع الأول",
     highlights: ["3,500 مستفيد", "8 مشاريع", "698K$ ميزانية"],
-    color: "amber",
+        color: "amber",
+    available: false,
+
   },
   {
     id: 4,
@@ -57,7 +64,9 @@ const REPORTS = [
     category: "حوكمة",
     description: "تقرير الشفافية والحوكمة ومكافحة الفساد",
     highlights: ["تدقيق خارجي", "نسبة 96%", "امتثال كامل"],
-    color: "purple",
+        color: "purple",
+    available: false,
+
   },
   {
     id: 5,
@@ -69,7 +78,9 @@ const REPORTS = [
     category: "إعلامي",
     description: "النشرة الشهرية لأخبار وفعالياتنا",
     highlights: ["أخبار", "قصص نجاح", "فعاليات قادمة"],
-    color: "rose",
+        color: "rose",
+    available: false,
+
   },
   {
     id: 6,
@@ -81,7 +92,9 @@ const REPORTS = [
     category: "برامج",
     description: "تقرير متخصص عن برامج التعليم وتحفيظ القرآن",
     highlights: ["1,200 طالب", "50 حلقة", "15 مسجد"],
-    color: "cyan",
+        color: "cyan",
+    available: false,
+
   },
 ];
 
@@ -114,29 +127,13 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20" dir="rtl">
-      {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <FileText className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">التقارير والإصدارات</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">التقارير </span>
-              <span className="text-[var(--brand-green)]">والإصدارات</span>
-            </h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              جميع تقاريرنا المالية والإدارية والفنية متاحة للتحميل
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      <PageHeader
+        icon={FileText}
+        badge="التقارير والإصدارات"
+        title="التقارير والشفافية"
+        subtitle="نضع بين أيديكم تقارير المؤسسة وإصداراتها الدورية لمتابعة البرامج والحوكمة والأثر بوضوح ومسؤولية."
+      />
 
       {/* Filters */}
       <section className="py-6 bg-white border-b border-[var(--border)]">
@@ -224,10 +221,17 @@ export default function ReportsPage() {
                       <span>{report.pages} صفحة</span>
                       <span>{report.size}</span>
                     </div>
-                    <button onClick={() => alert('سيتم إضافة رابط التحميل قريباً')} className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
+                                        <button
+                      type="button"
+                      disabled={!report.available}
+                      onClick={() => navigate('/messages')}
+                      className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] transition-colors disabled:cursor-not-allowed disabled:text-[var(--muted-foreground)]"
+                      title={report.available ? 'تحميل التقرير' : 'اطلب نسخة من فريق المؤسسة'}
+                    >
                       <Download className="w-4 h-4" />
-                      تحميل
+                      {report.available ? 'تحميل' : 'اطلب نسخة'}
                     </button>
+
                   </div>
                 </div>
               </motion.div>
