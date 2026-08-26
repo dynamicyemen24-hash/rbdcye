@@ -3,14 +3,16 @@ import { motion } from "motion/react";
 import {
   BookOpen, Heart, Droplet, GraduationCap, Globe, Users,
   ArrowRight, Calendar, Target, TrendingUp, MapPin,
-  Shield, Award, CheckCircle, BarChart3,
+    Award, CheckCircle, BarChart3,
+
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
-import { SEED_PROJECTS, SEED_IMPACT } from "@/content/website";
+import { SEED_PROJECTS } from "@/content/website";
+
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
@@ -87,8 +89,7 @@ const PATH_COLORS: Record<string, string> = {
 
 export default function ProgramsPage() {
   const navigate = useNavigate();
-  const [activePath, setActivePath] = useState<string | null>(null);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [, setActivePath] = useState<string | null>(null);
 
   useSEO({
     title: 'برامجنا - رحماء بينهم',
@@ -102,15 +103,13 @@ export default function ProgramsPage() {
   useEffect(() => {
     let cancelled = false;
     contentManager.getImpact()
-      .then((result: any) => {
+            .then((_result: { source?: string }) => {
         if (!cancelled) {
-          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
           try { analyticsService.generateProjectReport(); } catch { /* non-critical */ }
         }
       })
-      .catch(() => {
-        if (!cancelled) setContentSource('static');
-      });
+      .catch(() => undefined);
+
     return () => { cancelled = true; };
   }, []);
 
@@ -126,8 +125,7 @@ export default function ProgramsPage() {
   const activeProjects = useMemo(() =>
     programs.filter(p => p.status === 'active').length, [programs]);
 
-  const completedProjects = useMemo(() =>
-    programs.filter(p => p.status === 'completed').length, [programs]);
+  
 
   const totalBudget = useMemo(() =>
     programs.reduce((sum, p) => {
@@ -181,7 +179,7 @@ export default function ProgramsPage() {
             {PROGRAM_PATHS.map((path, i) => {
               const Icon = path.icon;
               const gradient = PATH_COLORS[path.color];
-              const isHovered = activePath === path.id;
+              
 
               return (
                 <motion.div
@@ -190,9 +188,21 @@ export default function ProgramsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
+                                    role="button"
+                  tabIndex={0}
                   onMouseEnter={() => setActivePath(path.id)}
                   onMouseLeave={() => setActivePath(null)}
+                  onFocus={() => setActivePath(path.id)}
+                  onBlur={() => setActivePath(null)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      if (path.id === 'zakat') navigate('/zakat');
+                      else navigate('/projects');
+                    }
+                  }}
                   whileHover={{ y: -8, scale: 1.02 }}
+
                   className="group relative bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer"
                   onClick={() => {
                     if (path.id === 'zakat') {
