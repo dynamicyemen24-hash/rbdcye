@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 
 interface DataLoaderOptions {
   staleWhileRevalidate?: boolean;
-  cacheTime?: number; // بالثواني
+  cacheTime?: number;
   retryCount?: number;
   retryDelay?: number;
   timeout?: number;
@@ -15,9 +15,6 @@ interface DataLoaderResult<T> {
   refetch: () => void;
 }
 
-/**
- * Hook مخصص لتحميل البيانات مع دعم إعادة المحاولة والتخزين المؤقت
- */
 export function useDataLoader<T>(
   fetchFn: () => Promise<T>,
   dependencies: any[] = [],
@@ -25,7 +22,7 @@ export function useDataLoader<T>(
 ): DataLoaderResult<T> {
   const {
     staleWhileRevalidate = false,
-    cacheTime = 5 * 60, // 5 دقائق افتراضياً
+    cacheTime = 5 * 60,
     retryCount = 3,
     retryDelay = 1000,
     timeout = 15000
@@ -37,27 +34,22 @@ export function useDataLoader<T>(
 
   const cacheKey = `rbdcye_data_${dependencies.join('_')}`;
 
-  // تحميل البيانات من التخزين المؤقت
   const loadFromCache = useCallback(() => {
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         const { timestamp, value } = JSON.parse(cached);
         const age = (Date.now() - timestamp) / 1000;
-        
-        // إذا كانت البيانات لا تزال صالحة
         if (age < cacheTime) {
           return value as T;
         }
       }
-    } catch (e) {
-      console.warn('Failed to load from cache:', e);
+    } catch {
       localStorage.removeItem(cacheKey);
     }
     return null;
   }, [cacheKey, cacheTime]);
 
-  // حفظ البيانات في التخزين المؤقت
   const saveToCache = useCallback((value: T) => {
     try {
       const cacheData = {
@@ -65,16 +57,14 @@ export function useDataLoader<T>(
         value
       };
       localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-    } catch (e) {
-      console.warn('Failed to save to cache:', e);
+    } catch {
+      // silently ignore cache write errors
     }
   }, [cacheKey]);
 
-  const fetchData = useCallback(async () => {
-    let mounted = true;
+  const refetch = useCallback(async () => {
     const abortController = new AbortController();
 
-    // محاولة تحميل من التخزين المؤقت أولاً إذا كان staleWhileRevalidate
     if (staleWhileRevalidate) {
       const cached = loadFromCache();
       if (cached) {
@@ -85,35 +75,29 @@ export function useDataLoader<T>(
     setLoading(true);
     setError(null);
 
-    // إعادة المحاولة
     for (let attempt = 0; attempt < retryCount; attempt++) {
       try {
         const result = await Promise.race([
           fetchFn(),
-          new Promise<never>((_, reject) => 
+          new Promise<never>((_, reject) =>
             setTimeout(() => {
               abortController.abort();
               reject(new Error('Timeout'));
             }, timeout)
           )
         ]);
-        
-        if (!mounted) return;
-        
+
         setData(result);
         saveToCache(result);
         setError(null);
+        setLoading(false);
         return;
       } catch (err) {
         const error = err as Error;
-        
-        // إذا كان ذلك آخر محاولة
+
         if (attempt === retryCount - 1) {
-          if (!mounted) return;
-          
           setError(error);
-          
-          // محاولة استخدام البيانات من التخزين المؤقت
+
           if (!staleWhileRevalidate) {
             const cached = loadFromCache();
             if (cached) {
@@ -121,26 +105,76 @@ export function useDataLoader<T>(
               setError(null);
             }
           }
+          setLoading(false);
         } else {
-          // انتظار قبل المحاولة التالية
           await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
         }
       }
     }
+  }, [fetchFn, loadFromCache, saveToCache, staleWhileRevalidate, retryCount, retryDelay, timeout]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const abortController = new AbortController();
+
+    const runFetch = async () => {
+      if (staleWhileRevalidate) {
+        const cached = loadFromCache();
+        if (cached && mounted) {
+          setData(cached);
+        }
+      }
+
+      setLoading(true);
+      setError(null);
+
+      for (let attempt = 0; attempt < retryCount; attempt++) {
+        try {
+          const result = await Promise.race([
+            fetchFn(),
+            new Promise<never>((_, reject) =>
+              setTimeout(() => {
+                abortController.abort();
+                reject(new Error('Timeout'));
+              }, timeout)
+            )
+          ]);
+
+          if (!mounted) return;
+          setData(result);
+          saveToCache(result);
+          setError(null);
+          setLoading(false);
+          return;
+        } catch (err) {
+          if (!mounted) return;
+          const error = err as Error;
+
+          if (attempt === retryCount - 1) {
+            setError(error);
+            if (!staleWhileRevalidate) {
+              const cached = loadFromCache();
+              if (cached) {
+                setData(cached);
+                setError(null);
+              }
+            }
+            setLoading(false);
+          } else {
+            await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
+          }
+        }
+      }
+    };
+
+    runFetch();
 
     return () => {
       mounted = false;
       abortController.abort();
     };
-  }, [loadFromCache, saveToCache, staleWhileRevalidate, retryCount, retryDelay, timeout]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const refetch = useCallback(() => {
-    fetchData();
-  }, [fetchData]);
+  }, dependencies);
 
   return { data, loading, error, refetch };
 }

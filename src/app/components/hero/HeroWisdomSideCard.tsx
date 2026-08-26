@@ -1,9 +1,8 @@
-import { 
+﻿import { 
   Sparkles, 
   ChevronLeft, 
   ChevronRight,
   Quote,
-  ArrowLeft,
   Play,
   Film,
   Heart
@@ -148,7 +147,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
               loop
               muted
               playsInline
-              poster="/images/hero-video-poster.jpg"
+              poster="/images/defaults/about-hero.svg"
               className="w-full h-full object-cover scale-105 filter brightness-[0.5] contrast-[1.1] transition-all duration-700 group-hover:scale-110"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';

@@ -1,14 +1,13 @@
 import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const footerLinks = {
-  المؤسسة: [
+  "عن رحماء بينهم": [
     { label: "من نحن", href: "about" },
     { label: "رؤيتنا ورسالتنا", href: "about" },
     { label: "فريق العمل", href: "about" },
     { label: "التقارير السنوية", href: "reports" },
-    { label: "حوكمة المؤسسة", href: "about" },
+    { label: "حوكمة العمل", href: "about" },
   ],
   البرامج: [
     { label: "برامجنا", href: "programs" },
@@ -18,7 +17,7 @@ const footerLinks = {
   المشاركة: [
     { label: "تبرع الآن", href: "donate" },
     { label: "كن متطوعًا", href: "volunteer" },
-    { label: "الشراكات المؤسسية", href: "partners" },
+    { label: "الشراكات الاستراتيجية", href: "partners" },
     { label: "الوقف الخيري", href: "endowment" },
   ],
   "الموارد": [
@@ -34,15 +33,14 @@ interface FooterProps {
 }
 
 export function Footer({ setCurrentPage }: FooterProps) {
-  const navigate = useNavigate();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const handlePolicyClick = (policyType: string) => {
-    navigate('/privacy-policy', { state: { policyType } });
+    setCurrentPage('privacy-policy');
   };
 
   // Newsletter subscription
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [, setSubscribeStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,13 +55,15 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
   return (
     <footer
-      className="pt-16 pb-8"
+      className="pt-16 pb-8 relative overflow-hidden"
       style={{
         direction: "rtl",
-        background: "linear-gradient(180deg, #0F3D2E 0%, #0A2A1F 100%)",
+        background: "linear-gradient(180deg, var(--brand-green-dark) 0%, #071F17 100%)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="absolute inset-0 pattern-khatam-white opacity-[0.06] pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-1.5 pattern-band-gold pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Top Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}
@@ -82,7 +82,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
               </div>
             </button>
             <p className="text-white/65 mb-6" style={{ fontSize: "0.82rem", lineHeight: "1.8" }}>
-              مؤسسة إنسانية تنموية تعمل على تخفيف معاناة الإنسان وبناء مجتمعات مستدامة، منذ عام ١٤٣٠هـ.
+              رحماء بينهم للإغاثة والتنمية - عمل إنساني تنموي يهدف إلى تخفيف المعاناة وبناء مجتمعات مستدامة، منذ عام ١٤٣٠هـ.
             </p>
             
             {/* Trust Badges */}
@@ -100,7 +100,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
             <div className="space-y-2.5">
               {[
                 { icon: MapPin, text: "صنعاء، اليمن" },
-                { icon: Phone, text: "+٩٦٧ ١ ٢٣٤ ٥٦٧٨" },
+                { icon: Phone, text: "+967 780 777 007" },
                 { icon: Mail, text: "info@rbdcye.org" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 text-white/60">
@@ -148,10 +148,11 @@ export function Footer({ setCurrentPage }: FooterProps) {
               اشترك في نشرتنا البريدية
             </div>
             <div className="text-white/55" style={{ fontSize: "0.78rem" }}>
-              كن أول من يعلم بأخبار المؤسسة وبرامجها وفعالياتها
+              كن أول من يعلم بأخبارنا وبرامجنا وفعالياتنا
             </div>
           </div>
           <form onSubmit={handleSubscribe} className="flex gap-2 w-full sm:w-auto">
+            <label htmlFor="newsletter-email" className="sr-only">البريد الإلكتروني</label>
             <input
               id="newsletter-email"
               name="email"
@@ -175,7 +176,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
           <div className="text-white/40 text-center sm:text-right" style={{ fontSize: "0.75rem" }}>
-            © ٢٠٢٦ مؤسسة رحماء بينهم. جميع الحقوق محفوظة.
+            © ٢٠٢٦ رحماء بينهم للإغاثة والتنمية باليمن. جميع الحقوق محفوظة.
           </div>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             {/* Payment Gateways Icons */}
@@ -203,12 +204,12 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
             {/* Policy Links */}
             <div className="flex items-center gap-3 text-white/40">
-              <button onClick={() => handlePolicyClick('privacy')} className="hover:text-white/60 transition-colors text-[0.7rem] flex items-center gap-1">
+              <button onClick={() => handlePolicyClick('privacy')} className="hover:text-[var(--brand-gold-light)] transition-colors text-[0.7rem] flex items-center gap-1">
                 <Shield className="w-3 h-3" />
                 سياسة الخصوصية
               </button>
               <span className="text-white/10">|</span>
-              <button onClick={() => handlePolicyClick('terms')} className="hover:text-white/60 transition-colors text-[0.7rem] flex items-center gap-1">
+              <button onClick={() => handlePolicyClick('terms')} className="hover:text-[var(--brand-gold-light)] transition-colors text-[0.7rem] flex items-center gap-1">
                 <FileText className="w-3 h-3" />
                 الشروط والأحكام
               </button>

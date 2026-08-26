@@ -1,5 +1,5 @@
 // Intelligent Admin Dashboard - Institutional Grade with Deep Analytics
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { 
   Activity, TrendingUp, Users, DollarSign, 
   Calendar, AlertCircle, CheckCircle, XCircle,

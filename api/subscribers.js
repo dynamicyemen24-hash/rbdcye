@@ -1,5 +1,5 @@
 // Subscribers API - Handle newsletter subscriptions
-import { query, pool } from './database.js';
+import { query } from './database.js';
 
 const ALLOWED_ORIGINS = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'];
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { motion } from 'motion/react';
 import { Loader2 } from 'lucide-react';
 
 interface LazyViewportSectionProps {

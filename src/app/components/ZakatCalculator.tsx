@@ -23,6 +23,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 type ZakatType = 'money' | 'gold' | 'silver' | 'fitrah';
+type ZakatTab = ZakatType | 'compare';
 
 interface ZakatResult {
   type: ZakatType;
@@ -71,15 +72,24 @@ function saveZakatHistory(history: ZakatHistoryItem[]): void {
 
 // Nisab values (updated to current market standards)
 const NISAB_VALUES: Record<ZakatType, number> = {
-  money: 12967, // 85g gold equivalent in YER
-  gold: 85, // grams
-  silver: 595, // grams (612.36g is the precise value, 595 is a conservative threshold)
-  fitrah: 2.5, // kg per person
+  money: 12967, // 85g gold equivalent in YER - النصاب النقدي (٨٥ غرام ذهب equivalence)
+  gold: 85, // grams - نصاب الذهب (٨٥ غرام)
+  silver: 595, // grams (612.36g is the precise value, 595 is a conservative threshold) - نصاب الفضة (٥٩٥ غرام)
+  fitrah: 2.5, // kg per person - نصاب الفطر (٢.٥ كيلو per person)
+};
+
+// Nisab explanations for tooltips
+const NISAB_EXPLANATIONS: Record<ZakatType, string> = {
+  money: 'المبلغ النصاب هو قيمة ٨٥ غرام من الذهب الخام، مقداره ١٢٩٦٧ ريال يمني تقريباً بناءً على أسعار السوق الحالية',
+  gold: 'النصاب الشرعي للذهب هو ٨٥ غرام، وهي النسبة التي يجب بلوغها قبل أن تفرض الزكاة',
+  silver: 'النصاب للفضة هو ٥٩٥ غرام (القيمة الدقيقة ٦١٢.٣٦ غرام، و٥٩٥ غرام قيمة وازنة Conservative)',
+  fitrah: 'نصاب الفطر هو ٢.٥ كيلو من الطعام الأساسي لكل أسرة، ويجب إخراجها عن كل فرد في العائلة',
 };
 
 export function ZakatCalculator() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<ZakatType>('money');
+    const [activeTab, setActiveTab] = useState<ZakatTab>('money');
+
   const [amount, setAmount] = useState<string>('');
   const [result, setResult] = useState<ZakatResult | null>(null);
   const [zakatReminderDate, setZakatReminderDate] = useState<string>('');
@@ -101,8 +111,10 @@ export function ZakatCalculator() {
     setHistory(loadZakatHistory());
   }, []);
 
-  const calculateZakat = useCallback(() => {
+    const calculateZakat = useCallback(() => {
+    if (activeTab === 'compare') return;
     const input = parseFloat(amount) || 0;
+
     const zakatRate = 0.025;
     const nisab = NISAB_VALUES[activeTab];
     let description = '';
@@ -208,18 +220,18 @@ export function ZakatCalculator() {
     URL.revokeObjectURL(url);
   };
 
-  const tabs = [
-    { id: 'money', label: 'المال', icon: Coins },
-    { id: 'gold', label: 'الذهب', icon: Gem },
-    { id: 'silver', label: 'الفضة', icon: Landmark },
-    { id: 'fitrah', label: 'الفطر', icon: Calendar },
-  ];
-
   const tabConfig = [
     { id: 'money', label: 'المال', icon: Coins },
     { id: 'gold', label: 'الذهب', icon: Gem },
     { id: 'silver', label: 'الفضة', icon: Landmark },
     { id: 'fitrah', label: 'الفطر', icon: Calendar },
+  ] as const;
+
+  const comparisonConfig = [
+    { id: 'money', label: 'مال', activeTab: 'money', color: 'var(--brand-green)', icon: <Coins className="w-6 h-6 text-white" /> },
+    { id: 'gold', label: 'ذهب', activeTab: 'gold', color: 'var(--brand-gold)', icon: <Gem className="w-6 h-6 text-white" /> },
+    { id: 'silver', label: 'فضة', activeTab: 'silver', color: '#94A3B8', icon: <Landmark className="w-6 h-6 text-white" /> },
+    { id: 'fitrah', label: 'فطر', activeTab: 'fitrah', color: 'var(--brand-green)', icon: <Calendar className="w-6 h-6 text-white" /> },
   ] as const;
 
   return (
@@ -315,7 +327,40 @@ export function ZakatCalculator() {
             {tab.label}
           </button>
         ))}
+        <button
+          onClick={() => setActiveTab('compare')}
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+            activeTab === 'compare'
+              ? 'bg-[var(--brand-green-pale)] text-[var(--brand-green)]'
+              : 'bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--border)]'
+          }`}
+          title="مقارنة النِصاب"
+>
+          مقارنة
+        </button>
       </div>
+
+      {/* Comparison Mode */}
+      {activeTab === 'compare' && (
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          {comparisonConfig.map((item) => (
+            <div
+              key={item.id}
+              className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm text-center"
+            >
+              <div className="w-14 h-14 rounded-full mx-auto mb-4" style={{ backgroundColor: item.color }}>
+                {item.icon}
+              </div>
+              <h4 className="text-xl font-bold text-[var(--foreground)] mb-2">{item.label}</h4>
+              <p className="text-sm text-[var(--muted-foreground)] mb-4">النصاب:</p>
+              <div className="text-3xl font-extrabold text-[var(--brand-gold)]">{NISAB_VALUES[item.activeTab]} {item.activeTab === 'money' ? 'ريال' : item.activeTab === 'gold' ? 'غرام' : item.activeTab === 'silver' ? 'غرام' : 'كغ'}</div>
+<p className="text-xs text-[var(--muted-foreground)] mt-2">
+                {NISAB_EXPLANATIONS[item.activeTab]}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Input */}
       <div className="mb-4">
@@ -499,3 +544,5 @@ export function ZakatCalculator() {
     </div>
   );
 }
+
+

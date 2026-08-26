@@ -14,7 +14,7 @@ export function HeroHeader() {
         <div className="w-6 h-6 rounded-full bg-emerald-50 text-[#0F4C3A] flex items-center justify-center shrink-0">
           <Sparkles className="w-3.5 h-3.5 text-[#0F4C3A]" aria-hidden="true" />
         </div>
-        <span>مؤسسة رحماء بينهم للإغاثة والتنمية باليمن</span>
+        <span>رحماء بينهم للإغاثة والتنمية باليمن</span>
         <span className="text-neutral-300 font-normal">|</span>
         <span className="text-[#0F4C3A] font-bold">الجمهورية اليمنية</span>
       </motion.div>
@@ -37,7 +37,7 @@ export function HeroHeader() {
         className="max-w-2xl mx-auto space-y-3"
       >
         <p className="text-slate-700 font-cairo text-base sm:text-lg lg:text-xl leading-[1.8] font-normal">
-          مؤسسة إنسانية وتنموية مستقلة انطلقت منذ عام 2014م لصون حياة الإنسان وإغاثته، وعمارة الأرض عبر برامج إغاثية وتنموية شاملة في المناطق اليمنية الأشد احتياجاً، وفق أرفع معايير الحوكمة والشفافية.
+          منظمة إنسانية وتنموية مستقلة انطلقت منذ عام 2014م لصون حياة الإنسان وإغاثته، وعمارة الأرض عبر برامج إغاثية وتنموية شاملة في المناطق اليمنية الأشد احتياجاً، وفق أرفع معايير الحوكمة والشفافية.
         </p>
       </motion.div>
     </div>

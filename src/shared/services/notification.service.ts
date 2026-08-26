@@ -49,8 +49,8 @@ class NotificationService {
           scope: '/',
         });
         console.log('Service Worker registered for notifications');
-      } catch (error) {
-        console.warn('Failed to register service worker:', error);
+      } catch {
+        // Service worker registration failed
       }
     }
   }
@@ -180,8 +180,8 @@ class NotificationService {
         },
         body: JSON.stringify(subscription),
       });
-    } catch (error) {
-      console.warn('Failed to save subscription to server:', error);
+    } catch {
+      // Failed to save subscription to server
     }
   }
 

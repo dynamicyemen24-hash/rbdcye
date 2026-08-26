@@ -307,16 +307,8 @@ class EnhancedAuthService {
       // Continue to fallback
     }
 
-    // Fallback للمستخدمين المحليين (للاختبار والتطوير)
+    // Fallback: Supabase غير متاح — لا نسمح بالدخول ببيانات محاكاة
     await this.delay(300);
-
-    const mockUser = this.getMockUser(credentials.email, credentials.password);
-    if (mockUser) {
-      const token = this.securityManager.generateSecureToken();
-      this.securityManager.clearAttempts(credentials.email);
-      this.sessionManager.startSession(mockUser, token);
-      return { user: mockUser, token };
-    }
 
     // تسجيل محاولة فاشلة
     this.securityManager.recordAttempt(credentials.email, false);
@@ -405,73 +397,6 @@ class EnhancedAuthService {
   // المساعدة
   private delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  // المستخدمون المحليون (للاختبار)
-  private getMockUser(email: string, password: string): AuthenticatedUser | null {
-    const MOCK_USERS: Record<string, { name: string; role: AuthenticatedUser['role']; permissions: any[]; password: string }> = {
-      'admin@rbdcye.org': {
-        name: 'مدير النظام',
-        role: 'ADMIN',
-        password: 'admin123',
-        permissions: [
-          { resource: 'news', actions: ['create', 'read', 'update', 'delete', 'approve', 'publish'] },
-          { resource: 'projects', actions: ['create', 'read', 'update', 'delete', 'approve'] },
-          { resource: 'donations', actions: ['create', 'read', 'update', 'delete'] },
-          { resource: 'media', actions: ['create', 'read', 'update', 'delete'] },
-          { resource: 'partners', actions: ['create', 'read', 'update', 'delete'] },
-          { resource: 'reports', actions: ['create', 'read', 'update', 'delete'] },
-          { resource: 'stories', actions: ['create', 'read', 'update', 'delete', 'approve'] },
-          { resource: 'volunteers', actions: ['create', 'read', 'update', 'delete'] },
-          { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
-      'editor@rbdcye.org': {
-        name: 'أحمد المحرر',
-        role: 'EDITOR',
-        password: 'rbdcye123',
-        permissions: [
-          { resource: 'news', actions: ['create', 'read', 'update', 'publish'] },
-          { resource: 'stories', actions: ['create', 'read', 'update'] },
-          { resource: 'media', actions: ['create', 'read'] },
-        ],
-      },
-      'manager@rbdcye.org': {
-        name: 'فاطمة المديرة',
-        role: 'MANAGER',
-        password: 'rbdcye123',
-        permissions: [
-          { resource: 'news', actions: ['create', 'read', 'update', 'approve'] },
-          { resource: 'projects', actions: ['create', 'read', 'update'] },
-          { resource: 'reports', actions: ['create', 'read', 'update', 'publish'] },
-          { resource: 'stories', actions: ['read', 'approve'] },
-        ],
-      },
-      'viewer@rbdcye.org': {
-        name: 'خالد المشاهد',
-        role: 'VIEWER',
-        password: 'rbdcye123',
-        permissions: [
-          { resource: 'news', actions: ['read'] },
-          { resource: 'projects', actions: ['read'] },
-          { resource: 'reports', actions: ['read'] },
-        ],
-      },
-    };
-
-    const mock = MOCK_USERS[email];
-    if (mock && password === mock.password) {
-      return {
-        id: email === 'admin@rbdcye.org' ? '1' : email === 'editor@rbdcye.org' ? '2' : email === 'manager@rbdcye.org' ? '3' : '4',
-        email,
-        name: mock.name,
-        role: mock.role,
-        permissions: mock.permissions,
-        lastLogin: new Date().toISOString(),
-      };
-    }
-
-    return null;
   }
 }
 

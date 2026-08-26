@@ -24,7 +24,7 @@ const mapToNewsItem = (item: any): NewsItem => ({
   tags: item.tags || [item.category || ''],
   status: item.status || 'PUBLISHED',
   authorId: item.authorId || '1',
-  authorName: item.authorName || 'إدارة المؤسسة',
+  authorName: item.authorName || 'فريق رحماء بينهم',
   seo: {
     title: item.title || '',
     description: item.excerpt || '',

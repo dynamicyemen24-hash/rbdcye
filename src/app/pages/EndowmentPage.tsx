@@ -1,9 +1,9 @@
 // Endowment Page - الوقف الخيري
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   Building2, Heart, TrendingUp, Users, Shield,
-  CheckCircle, ArrowLeft, Clock, Target, Award,
-  BarChart3, Infinity, HandHeart, Landmark
+  Clock, Target, Award,
+  Infinity, Landmark
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function EndowmentPage() {
 
   useSEO({
     title: 'الوقف الخيري - رحماء بينهم',
-    description: 'الوقف الخيري المستدام لمؤسسة رحماء بينهم',
+    description: 'الوقف الخيري المستدام لـ رحماء بينهم',
   });
 
   const endowmentFeatures = [
@@ -26,7 +26,7 @@ export default function EndowmentPage() {
     {
       icon: Building2,
       title: "أصول وقفية",
-      desc: "أراضٍ وعقارات منتجة تدر عوائد ثابتة للمؤسسة",
+      desc: "أراضٍ وعقارات منتجة تدر عوائد ثابتة لدعم برامجنا",
     },
     {
       icon: Shield,
@@ -43,24 +43,24 @@ export default function EndowmentPage() {
   const endowmentProjects = [
     {
       name: "مجمع رحماء الوقفي",
-      target: "$1,000,000",
-      raised: "$650,000",
+      target: "250 مليون ر.ي",
+      raised: "162.5 مليون ر.ي",
       progress: 65,
       description: "مجمع تجاري سكني يضم محلات تجارية وشقق سكنية",
       returns: "12% سنوياً",
     },
     {
       name: "مزرعة النخيل الوقفية",
-      target: "$500,000",
-      raised: "$350,000",
+      target: "125 مليون ر.ي",
+      raised: "87.5 مليون ر.ي",
       progress: 70,
       description: "مزرعة نخيل منتجة في وادي حضرموت",
       returns: "15% سنوياً",
     },
     {
       name: "صندوق الوقف النقدي",
-      target: "$2,000,000",
-      raised: "$800,000",
+      target: "500 مليون ر.ي",
+      raised: "200 مليون ر.ي",
       progress: 40,
       description: "صندوق استثماري متنوع الأصول لإيرادات مستقرة",
       returns: "10% سنوياً",
@@ -119,10 +119,10 @@ export default function EndowmentPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
-              { value: "$3.5M", label: "رأس المال المستهدف", icon: Target },
+              { value: "875 مليون ر.ي", label: "رأس المال المستهدف", icon: Target },
               { value: "12%", label: "عائد استثماري مجدٍ", icon: TrendingUp },
-              { value: "2000+", label: "مستفيد سنوياً", icon: Users },
-              { value: "15+", label: "عام من الاستدامة", icon: Clock },
+              { value: "آلاف", label: "مستفيد سنوياً", icon: Users },
+              { value: "سنوات", label: "عام من الاستدامة", icon: Clock },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}

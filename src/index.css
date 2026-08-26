@@ -27,21 +27,21 @@
   /* -----------------------------------------------------------------------
      1.1 الألوان الأساسية والمؤسسية (Enterprise Color System)
      ----------------------------------------------------------------------- */
-  /* Institutional Emerald (الأخضر المؤسسي الأساسي الهادئ) */
-  --brand-green:       #0F4C3A;
-  --brand-green-light: #18604B;
-  --brand-green-dark:  #0A372A;
-  --brand-green-pale:  #F0F7F4;
-  --brand-green-hover: #0B3F30;
-  --brand-green-rgb:   15, 76, 58;
+  /* Institutional Emerald — NexoraOS™ Unified (AGENTS.md: #059669) */
+  --brand-green:       #059669;
+  --brand-green-light: #10B981;
+  --brand-green-dark:  #0F4C3A;
+  --brand-green-pale:  #ECFDF5;
+  --brand-green-hover: #047857;
+  --brand-green-rgb:   5, 150, 105;
 
-  /* Dignity Gold (الذهبي الوقاري - للتمييز والشارات والزخارف) */
-  --brand-gold:             #C69E5A;
-  --brand-gold-light:       #DAB368;
-  --brand-gold-dark:        #8F6A1A;
-  --brand-gold-bright:      #E6C875;
-  --brand-gold-pale:        #FDF8EE;
-  --brand-gold-rgb:         198, 158, 90;
+  /* Dignity Gold — Unified Amber (AGENTS.md: #d97706) */
+  --brand-gold:             #d97706;
+  --brand-gold-light:       #FBBF24;
+  --brand-gold-dark:        #92400e;
+  --brand-gold-bright:      #FCD34D;
+  --brand-gold-pale:        #FFFBEB;
+  --brand-gold-rgb:         217, 119, 6;
   
   /* WCAG 2.1 AAA High-Contrast Gold Semantic Tokens (تباين عالي > 7.1:1 ممتد) */
   --brand-gold-wcag-aaa:    #5C3E00; /* 9.8:1 contrast ratio on white/light surface - Strict WCAG 2.1 AAA */
@@ -87,11 +87,11 @@
   --white: #FFFFFF;
   --black: #000000;
 
-  /* Semantic Dynamic Colors (الألوان الدلالية) */
-  --color-success: #10B981;
-  --color-danger:  #EF4444;
-  --color-warning: #F59E0B;
-  --color-info:    #18604B;
+  /* Semantic Dynamic Colors — Unified with AGENTS.md */
+  --color-success: #059669;
+  --color-danger:  #dc2626;
+  --color-warning: #d97706;
+  --color-info:    #0ea5e9;
 
   /* Dynamic Surfaces & Backgrounds */
   --bg-primary:              var(--slate-50);

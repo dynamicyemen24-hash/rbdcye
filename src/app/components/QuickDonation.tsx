@@ -1,9 +1,9 @@
 // Quick Donation Component - Interactive Impact Calculator with Inline Payment
-import { motion } from "framer-motion";
-import { Heart, Package, CreditCard, Smartphone, Banknote, Users, Droplets, GraduationCap } from "lucide-react";
+import { motion } from "motion/react";
+import { Heart, Package, CreditCard, Banknote, Users, Droplets, GraduationCap } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { paymentGateway, BANK_ACCOUNTS } from "@/shared/services/payment-gateway.service";
+import { paymentGateway } from "@/shared/services/payment-gateway.service";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface QuickDonationProps {
@@ -66,7 +66,7 @@ const IMPACT_MULTIPLIERS: Record<string, (amount: number) => ImpactResult> = {
 };
 
 const PROJECTS = [
-  { id: "general", label: "الصندوق العام", icon: Heart, description: "مساهمة عامة في جميع برامج المؤسسة" },
+  { id: "general", label: "الصندوق العام", icon: Heart, description: "مساهمة عامة في جميع برامجنا التنموية" },
   { id: "food", label: "السلال الغذائية", icon: Package, description: "توفير سلال غذائية للأسر المحتاجة" },
   { id: "water", label: "مشروع الآبار", icon: Droplets, description: "حفر آبار وتوفير مياه شرب نظيفة" },
   { id: "education", label: "التعليم والقرآن", icon: GraduationCap, description: "دعم التعليم وتحفيز القرآن" },
@@ -100,7 +100,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
 
   useSEO({
     title: "تبرع سريع - رحماء بينهم",
-    description: "تبرع بسهولة وأثر مباشر في مشاريع المؤسسة",
+    description: "تبرع بسهولة وأثر مباشر في مشاريعنا التنموية",
   });
 
   useEffect(() => {
@@ -134,14 +134,9 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
         });
         setShowPaymentResult(true);
       } else if (result.status === 'pending') {
-        // عرض تفاصيل التحويل البنكي أو النقدي
-        const bankAccounts = BANK_ACCOUNTS || [];
-        const bankInfo = bankAccounts.length > 0 
-          ? `إلى حساب ${bankAccounts[0].accountName} - ${bankAccounts[0].iban}`
-          : 'وسيقوم فريقنا بالتواصل معك';
         setPaymentResult({
           success: true,
-          message: `يرجى إجراء التحويل البنكي ${bankInfo}`,
+          message: 'تم إنشاء طلب التبرع — سيتواصل فريقنا معك لتفاصيل التحويل',
           transactionId: result.transactionId,
         });
         setShowPaymentResult(true);

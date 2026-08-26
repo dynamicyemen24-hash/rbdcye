@@ -80,8 +80,7 @@ class EnvValidator {
     }
 
     if (warnings.length > 0) {
-      console.warn('تحذيرات إعداد البيئة:');
-      warnings.forEach(warn => console.warn(`  - ${warn}`));
+      // Environment setup warnings exist but are non-critical
     }
 
     if (errors.length > 0) {

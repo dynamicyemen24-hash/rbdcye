@@ -17,10 +17,10 @@ interface SessionData {
 function encryptData(data: SessionData): string {
   try {
     const json = JSON.stringify(data);
-    // Base64 encode + simple XOR obfuscation (layer 1)
-    const encoded = btoa(encodeURIComponent(json));
-    // Reverse string for additional obfuscation
-    return encoded.split('').reverse().join('');
+    // Use proper encoding for session storage
+    // Note: For true encryption, use Web Crypto API with AES-GCM
+    // This is obfuscation to prevent casual reading, not cryptographic security
+    return btoa(unescape(encodeURIComponent(json)));
   } catch {
     return '';
   }
@@ -28,10 +28,7 @@ function encryptData(data: SessionData): string {
 
 function decryptData(encrypted: string): SessionData | null {
   try {
-    // Reverse back
-    const reversed = encrypted.split('').reverse().join('');
-    // Decode base64
-    const json = decodeURIComponent(atob(reversed));
+    const json = decodeURIComponent(escape(atob(encrypted)));
     return JSON.parse(json) as SessionData;
   } catch {
     return null;
@@ -150,7 +147,7 @@ function generateSecureToken(user: User): string {
     iat: now,
     jti: crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).substring(2)}`,
   }));
-  const signature = btoa(`${header}.${payload}.${import.meta.env.VITE_JWT_SECRET || 'rh-secret-key'}`);
+  const signature = btoa(`${header}.${payload}.${import.meta.env.VITE_JWT_SECRET || ''}`);
   return `${header}.${payload}.${signature}`;
 }
 

@@ -1,5 +1,81 @@
 // Loading Skeletons - مكونات التحميل الموحدة
 
+// Hero section skeleton - matches actual hero layout
+export function HeroSkeleton() {
+  return (
+    <div className="min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a2e1f 0%, #0F4C3A 30%, #0d3b2a 60%, #0a2e1f 100%)' }}>
+      <div className="w-full py-28 md:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            {/* Left column skeleton */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Trust badge */}
+              <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="w-7 h-7 rounded-full border-2 border-white/50 bg-white/20 animate-pulse" />
+                  ))}
+                </div>
+                <div className="h-4 w-48 bg-white/20 rounded animate-pulse" />
+              </div>
+
+              {/* Headline */}
+              <div className="space-y-3">
+                <div className="h-12 bg-white/15 rounded-lg w-3/4 animate-pulse" />
+                <div className="h-12 bg-white/15 rounded-lg w-1/2 animate-pulse" />
+              </div>
+
+              {/* Subtitle */}
+              <div className="space-y-2">
+                <div className="h-5 bg-white/10 rounded w-full animate-pulse" />
+                <div className="h-5 bg-white/10 rounded w-4/5 animate-pulse" />
+              </div>
+
+              {/* CTAs */}
+              <div className="flex gap-3">
+                <div className="h-12 w-40 bg-white/20 rounded-xl animate-pulse" />
+                <div className="h-12 w-32 bg-white/10 rounded-xl animate-pulse" />
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-4 max-w-sm mt-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div className="w-5 h-5 mx-auto mb-1.5 bg-white/15 rounded animate-pulse" />
+                    <div className="h-6 w-12 mx-auto bg-white/15 rounded animate-pulse" />
+                    <div className="h-3 w-10 mx-auto bg-white/10 rounded animate-pulse mt-1" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right column - verse card skeleton */}
+            <div className="lg:col-span-5 hidden lg:block">
+              <div className="rounded-2xl p-6 md:p-8 bg-white/5 border border-white/10 backdrop-blur-sm">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="h-6 w-24 bg-white/15 rounded-full animate-pulse" />
+                  <div className="h-4 w-16 bg-white/10 rounded animate-pulse" />
+                </div>
+                <div className="space-y-3 mb-4">
+                  <div className="h-6 bg-white/15 rounded w-full animate-pulse" />
+                  <div className="h-6 bg-white/15 rounded w-4/5 animate-pulse" />
+                  <div className="h-6 bg-white/15 rounded w-3/4 animate-pulse" />
+                </div>
+                <div className="h-10 w-32 bg-white/10 rounded-full animate-pulse" />
+                <div className="flex gap-2 mt-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className={`h-1.5 rounded-full animate-pulse ${i === 1 ? 'w-8 bg-white/25' : 'w-1.5 bg-white/15'}`} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Card skeleton for news/projects
 export function NewsCardSkeleton() {
   return (
@@ -109,15 +185,29 @@ export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; column
   );
 }
 
-// Hero section skeleton
-export function HeroSkeleton() {
+// Page skeleton for lazy-loaded pages
+export function PageSkeleton() {
   return (
-    <div className="min-h-[60vh] bg-gradient-to-b from-[var(--secondary)] to-white flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 w-full">
-        <div className="text-center space-y-6">
-          <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-3/4 mx-auto animate-pulse" />
-          <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-1/2 mx-auto animate-pulse" />
-          <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-48 mx-auto animate-pulse" />
+    <div className="min-h-screen bg-[var(--background)]">
+      {/* Header skeleton */}
+      <div className="py-20 bg-gradient-to-b from-[var(--secondary)] to-[var(--background)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-4">
+          <div className="h-8 w-48 mx-auto bg-gray-200 rounded-full animate-pulse" />
+          <div className="h-10 w-96 mx-auto bg-gray-200 rounded-lg animate-pulse" />
+          <div className="h-5 w-80 mx-auto bg-gray-200 rounded animate-pulse" />
+        </div>
+      </div>
+      {/* Content skeleton */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-white rounded-2xl p-6 border border-[var(--border)] space-y-4">
+              <div className="h-6 bg-gray-200 rounded w-1/3 animate-pulse" />
+              <div className="h-4 bg-gray-200 rounded w-full animate-pulse" />
+              <div className="h-4 bg-gray-200 rounded w-4/5 animate-pulse" />
+              <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse" />
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -132,4 +222,5 @@ export default {
   Form: FormSkeleton,
   Table: TableSkeleton,
   Hero: HeroSkeleton,
+  Page: PageSkeleton,
 };

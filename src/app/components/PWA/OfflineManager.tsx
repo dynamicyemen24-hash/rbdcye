@@ -29,7 +29,7 @@ export interface VisitedPageMeta {
 // Map of predefined known paths and Arabic metadata
 export const ROUTE_METADATA: Record<string, { title: string; category: string }> = {
   '/': { title: 'الصفحة الرئيسية', category: 'الرئيسية' },
-  '/about': { title: 'عن المؤسسة ورؤيتنا', category: 'عن المؤسسة' },
+  '/about': { title: 'عن رحماء بينهم ورؤيتنا', category: 'عن رحماء بينهم' },
   '/programs': { title: 'البرامج التنموية والإغاثية', category: 'البرامج' },
   '/projects': { title: 'المشاريع الميدانية', category: 'المشاريع' },
   '/success': { title: 'قصص النجاح والأثر الميداني', category: 'الأثر' },

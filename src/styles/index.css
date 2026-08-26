@@ -1,6 +1,8 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+@import './islamic-patterns.css';
+@import './typography.css';
 @import './animations.css';
 @import './hero.css';
 @import './icon-enhancements.css';
@@ -8,3 +10,4 @@
 @import './mobile-safety.css';
 @import './design-system.css';
 @import './components.css';
+@import './launch-polish.css';

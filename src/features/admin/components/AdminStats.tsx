@@ -1,9 +1,9 @@
 // AdminStats - بطاقات الإحصائيات المتكاملة مع قاعدة البيانات
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MessageSquare, Heart, Users, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { query, messagesQueries, donationsQueries, volunteersQueries } from '@/lib/postgres';
+import { messagesQueries, donationsQueries, volunteersQueries } from '@/lib/postgres';
 
 interface StatsData {
   messages: { total: number; new: number; read: number; replied: number };
@@ -26,19 +26,15 @@ export const AdminStats = () => {
     setLoading(true);
     setError(null);
     try {
-      // Messages stats
-      const messagesResult = await query(messagesQueries.getStats);
-      const messagesStats = messagesResult.rows?.[0] || { total: 0, new: 0, read: 0, replied: 0, archived: 0 };
+      const [messagesResult, donationsResult, volunteersResult] = await Promise.all([
+        messagesQueries.getStats(),
+        donationsQueries.getStats(),
+        volunteersQueries.getStats(),
+      ]);
 
-      // Donations count and amount
-      const donationsResult = await query('SELECT COUNT(*) as total, COALESCE(SUM(amount), 0) as amount FROM donations');
-      const donationsTotal = donationsResult.rows?.[0]?.total || 0;
-      const donationsAmount = donationsResult.rows?.[0]?.amount || 0;
-      const donationsPending = donationsResult.rows?.[0]?.pending || 0;
-
-      // Volunteers count
-      const volunteersResult = await query('SELECT COUNT(*) as total FROM volunteers');
-      const volunteersTotal = volunteersResult.rows?.[0]?.total || 0;
+      const messagesStats = messagesResult.rows?.[0] || { total: 0, new: 0, read: 0, replied: 0 };
+      const donationsStats = donationsResult.rows?.[0] || { total: 0, amount: 0, pending: 0, completed: 0 };
+      const volunteersStats = volunteersResult.rows?.[0] || { total: 0, active: 0, pending: 0 };
 
       setStats({
         messages: {
@@ -48,15 +44,15 @@ export const AdminStats = () => {
           replied: messagesStats.replied || 0,
         },
         donations: {
-          total: donationsTotal,
-          amount: donationsAmount,
-          pending: donationsPending,
-          completed: 0,
+          total: donationsStats.total || 0,
+          amount: donationsStats.amount || 0,
+          pending: donationsStats.pending || 0,
+          completed: donationsStats.completed || 0,
         },
         volunteers: {
-          total: volunteersTotal,
-          active: 0,
-          pending: 0,
+          total: volunteersStats.total || 0,
+          active: volunteersStats.active || 0,
+          pending: volunteersStats.pending || 0,
         },
         performance: 95,
       });

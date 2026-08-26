@@ -193,12 +193,12 @@ class SEOManager {
     return {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'مؤسسة رحماء بينهم',
-      description: 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
+      name: 'رحماء بينهم',
+      description: 'الموقع الإلكتروني التعريفي الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن',
       url: 'https://rbdcye.org',
       logo: 'https://rbdcye.org/logo.png',
       email: 'info@rbdcye.org',
-      telephone: '+967-777888194',
+      telephone: '+967-780-777-007',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'اليمن',
@@ -217,7 +217,7 @@ class SEOManager {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'رحماء بينهم',
-      description: 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
+      description: 'الموقع الإلكتروني التعريفي الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن',
       url: 'https://rbdcye.org',
       potentialAction: {
         '@type': 'SearchAction',
@@ -245,7 +245,7 @@ class SEOManager {
       },
       publisher: {
         '@type': 'Organization',
-        name: 'مؤسسة رحماء بينهم',
+        name: 'رحماء بينهم',
         logo: {
           '@type': 'ImageObject',
           url: 'https://rbdcye.org/logo.png',
@@ -289,10 +289,10 @@ export const seoManager = SEOManager.getInstance();
 export function useSEO(data: SEOData) {
   useEffect(() => {
     seoManager.update(data);
-  }, [data.title, data.description]);
+  }, [data]);
 }
 
 // Constants
 export const SITE_URL = 'https://rbdcye.org';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
-export const ORGANIZATION_NAME = 'مؤسسة رحماء بينهم';
+export const ORGANIZATION_NAME = 'رحماء بينهم';

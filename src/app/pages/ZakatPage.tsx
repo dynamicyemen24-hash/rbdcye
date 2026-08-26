@@ -1,16 +1,16 @@
 // Zakat Calculator Page - حاسبة الزكاة الشرعية
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Calculator, DollarSign, Gem, Calendar, Bell, CheckCircle, ArrowLeft, ArrowRight, Shield, Heart, TrendingUp } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { analyticsService } from '@/shared/services/analytics.service';
-import { contentBridge } from '@/shared/services/content-bridge.service';
+import { contentManager } from '@/shared/services/content-manager';
 import { useSEO } from '@/utils/seoAdvanced';
 
 type ZakatType = 'money' | 'gold' | 'fitr';
 
-const GOLD_PRICE_PER_GRAM = 30; // ريال عماني تقريبي
+const GOLD_PRICE_PER_GRAM = 25000; // ريال يمني تقريبي
 
 export default function ZakatPage() {
   const navigate = useNavigate();
@@ -31,10 +31,10 @@ export default function ZakatPage() {
 
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
-      .then((result) => {
+    contentManager.getImpact()
+      .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.isDynamic ? 'sanity' : 'static');
+          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
         }
       })
       .catch(() => {
@@ -86,8 +86,8 @@ export default function ZakatPage() {
 
   const handleReminderSave = () => {
     if (reminderEmail) {
+      localStorage.setItem('zakat-reminder', JSON.stringify({ email: reminderEmail, date: new Date().toISOString() }));
       setReminderSaved(true);
-      setTimeout(() => setReminderSaved(false), 3000);
     }
   };
 
@@ -318,7 +318,7 @@ export default function ZakatPage() {
                   <div className="text-5xl font-bold text-[var(--brand-green)] mb-2">
                     {zakatResult.toFixed(2)}
                   </div>
-                  <p className="text-[var(--muted-foreground)]">ريال عماني</p>
+                  <p className="text-[var(--muted-foreground)]">ريال يمني</p>
                 </div>
 
                 <div className="bg-[var(--brand-green-pale)] p-6 rounded-xl mb-6">
@@ -396,15 +396,6 @@ export default function ZakatPage() {
         </div>
       </section>
 
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

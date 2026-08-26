@@ -1,5 +1,5 @@
 // IntroVideoPlayer - مشغل الفيديو التعريفي المدمج في الصفحة الرئيسية
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Play, Pause, Volume2, VolumeX, Maximize2, Minimize2,
   ChevronLeft, X, Grid3X3
@@ -104,8 +104,8 @@ const InlineVideoPlayer = memo(({
       } else {
         await document.exitFullscreen();
       }
-    } catch (error) {
-      console.warn('Fullscreen not supported:', error);
+    } catch {
+      // fullscreen not supported
     }
   };
 
@@ -134,11 +134,11 @@ const InlineVideoPlayer = memo(({
       <div className="absolute top-0 left-0 right-0 z-20 p-4 bg-gradient-to-b from-black/80 to-transparent">
         <div className="flex items-start justify-between">
           <div className="flex-1 text-white">
-            <h3 className="text-lg font-bold">{title || 'الفيديو التعريفي للمؤسسة'}</h3>
+            <h3 className="text-lg font-bold">{title || 'الفيديو التعريفي'}</h3>
             <div className="flex items-center gap-2 text-sm text-white/70 mt-1">
               <span>فيديو تعريفي</span>
               <span>•</span>
-              <span>مؤسسة رحماء بينهم</span>
+              <span>رحماء بينهم</span>
             </div>
           </div>
           
@@ -365,7 +365,7 @@ const InlineVideoPlayer = memo(({
       {!isFullscreen && videoRef.current?.duration && (
         <div className="p-6 bg-white dark:bg-gray-900">
           <p className="text-[var(--muted-foreground)] text-center">
-            {title || 'فيديو تعريفي بمؤسسة رحماء بينهم - إغاثة وتنمية'}
+            {title || 'فيديو تعريفي لـ رحماء بينهم - إغاثة وتنمية'}
           </p>
         </div>
       )}
@@ -397,7 +397,7 @@ StoryWatchButton.displayName = 'StoryWatchButton';
 export const IntroVideoPlayer = memo(({ 
   videoSrc = '/videos/hero-background.mp4',
   poster = '/favicon.svg',
-  title = 'الفيديو التعريفي للمؤسسة',
+  title = 'الفيديو التعريفي',
   onGalleryClick,
 }: IntroVideoPlayerProps) => {
   const [showPlayer, setShowPlayer] = useState(false);

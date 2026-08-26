@@ -1,6 +1,6 @@
 import { Droplets, Heart, Utensils, Sparkles, LucideIcon } from "lucide-react";
 
-export type TypographyFamily = 'serif-amiri' | 'serif-scheherazade' | 'sans-cairo' | 'sans-kufi' | 'sans-tajawal';
+export type TypographyFamily = 'sans-cairo' | 'serif-traditional' | 'sans-system';
 
 export interface FontOption {
   id: TypographyFamily;
@@ -11,40 +11,26 @@ export interface FontOption {
 }
 
 export const FONT_OPTIONS: FontOption[] = [
-  { 
-    id: 'serif-amiri', 
-    name: 'الخط الأميري (Serif)', 
-    category: 'serif', 
-    fontFamily: "'Amiri', serif",
-    description: 'خط كلاسيكي قرآني عريق' 
-  },
-  { 
-    id: 'serif-scheherazade', 
-    name: 'خط النسخ (Serif)', 
-    category: 'serif', 
-    fontFamily: "'Scheherazade New', 'Amiri', serif",
-    description: 'رسم نسخي تقليدي واضح' 
-  },
-  { 
-    id: 'sans-cairo', 
-    name: 'خط كايرو (Sans-Serif)', 
-    category: 'sans', 
+  {
+    id: 'sans-cairo',
+    name: 'خط كايرو (Sans-Serif)',
+    category: 'sans',
     fontFamily: "'Cairo', sans-serif",
-    description: 'عصري هندسي عالي المقروئية' 
+    description: 'عصري هندسي عالي المقروئية'
   },
-  { 
-    id: 'sans-tajawal', 
-    name: 'خط تجوال (Sans-Serif)', 
-    category: 'sans', 
-    fontFamily: "'Tajawal', sans-serif",
-    description: 'انسيابي خفيف وسلس' 
+  {
+    id: 'serif-traditional',
+    name: 'النسخ التقليدي (Serif)',
+    category: 'serif',
+    fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Sakkal Majalla', serif",
+    description: 'رسم نسخي قرآني تقليدي'
   },
-  { 
-    id: 'sans-kufi', 
-    name: 'الكوفي الحديث (Sans-Serif)', 
-    category: 'sans', 
-    fontFamily: "'Noto Kufi Arabic', sans-serif",
-    description: 'هيكلي بارز وثابت' 
+  {
+    id: 'sans-system',
+    name: 'خط النظام (Sans-Serif)',
+    category: 'sans',
+    fontFamily: "system-ui, 'Segoe UI', Tahoma, sans-serif",
+    description: 'خفيف سريع من نظام الجهاز'
   },
 ];
 

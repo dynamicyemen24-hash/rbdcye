@@ -115,7 +115,6 @@ class Logger {
 
   warn(message: string, data?: any) {
     const entry = this.format('warn', message, data);
-    console.warn(entry);
     this.persist(entry);
   }
 

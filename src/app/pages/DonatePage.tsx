@@ -1,148 +1,224 @@
-// Donate Page - صفحة التبرع
-import { motion } from "framer-motion";
+// Donate Page - صفحة التبرع المتعددة العملات والوحدات
+import { motion } from "motion/react";
 import {
   Heart, CreditCard, Wallet, Building2, CheckCircle, Shield,
-  TrendingUp, Users, Droplet, Home, BookOpen, Gift,
-  Globe, BarChart3, HandHeart,
+  TrendingUp, Users, Globe, BarChart3, HandHeart, Clock, Lock,
+  RefreshCw, Shirt, Package, Truck, ShoppingBag, Coins,
+  Calendar, Repeat, ChevronDown,
 } from 'lucide-react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { PageHeader } from '@/app/components/PageHeader';
 import { StatsGrid } from '@/app/components/StatsGrid';
 import { analyticsService } from '@/shared/services/analytics.service';
-import { contentBridge } from '@/shared/services/content-bridge.service';
 import { multiProjectDonationService } from '@/shared/services/donation-multi-project.service';
 import { useSEO } from '@/utils/seoAdvanced';
 
-import type { PaymentMethod } from '@/shared/services/payment-gateway.service';
+import type { PaymentCurrency } from '@/shared/services/payment-gateway.service';
 
+// ═══════════════════════════════════════════════════════
+// نظام العملات — أسعار الصرف التقريبية
+// ═══════════════════════════════════════════════════════
+const CURRENCIES: Record<string, { code: string; name: string; symbol: string; flag: string; isBase: boolean; rateToYER: number }> = {
+  YER: { code: 'YER', name: 'ريال يمني', symbol: 'ر.ي', flag: '🇾🇪', isBase: true, rateToYER: 1 },
+  SAR: { code: 'SAR', name: 'ريال سعودي', symbol: 'ر.س', flag: '🇸🇦', isBase: false, rateToYER: 67 },
+  USD: { code: 'USD', name: 'دولار أمريكي', symbol: '$', flag: '🇺🇸', isBase: false, rateToYER: 250 },
+  AED: { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ', flag: '🇦🇪', isBase: false, rateToYER: 68 },
+  EUR: { code: 'EUR', name: 'يورو', symbol: '€', flag: '🇪🇺', isBase: false, rateToYER: 270 },
+  GBP: { code: 'GBP', name: 'جنيه إسترليني', symbol: '£', flag: '🇬🇧', isBase: false, rateToYER: 315 },
+  QAR: { code: 'QAR', name: 'ريال قطري', symbol: 'ر.ق', flag: '🇶🇦', isBase: false, rateToYER: 69 },
+  KWD: { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك', flag: '🇰🇼', isBase: false, rateToYER: 815 },
+  OMR: { code: 'OMR', name: 'ريال عماني', symbol: 'ر.ع', flag: '🇴🇲', isBase: false, rateToYER: 650 },
+  EGP: { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م', flag: '🇪🇬', isBase: false, rateToYER: 5 },
+};
 
-// ما يمكن للتبرعات تحقيقه
-const IMPACT_ITEMS = [
-  { amount: 25, label: 'وجبة غذاء لعائلة', icon: '🍚', color: 'from-orange-400 to-red-500' },
-  { amount: 50, label: 'زجاجة ماء نظيفة لمدة أسبوع', icon: '💧', color: 'from-cyan-400 to-blue-500' },
-  { amount: 100, label: 'كتاب ومكتوب لطالب', icon: '📚', color: 'from-indigo-400 to-purple-500' },
-  { amount: 250, label: 'دفء شتاء لعائلة', icon: '🧥', color: 'from-amber-400 to-orange-500' },
-  { amount: 500, label: 'سداد أجرة شقة لشهر', icon: '🏠', color: 'from-emerald-400 to-teal-500' },
-  { amount: 1000, label: 'بناء جزء من بئر ماء', icon: '🌊', color: 'from-blue-400 to-cyan-500' },
+// ═══════════════════════════════════════════════════════
+// المبالغ المسبقة لكل عملة
+// ═══════════════════════════════════════════════════════
+const PRESET_AMOUNTS: Record<string, number[]> = {
+  YER: [5000, 10000, 25000, 50000, 100000, 250000],
+  SAR: [50, 100, 250, 500, 1000, 2500],
+  USD: [10, 25, 50, 100, 250, 500],
+  AED: [50, 100, 250, 500, 1000, 2500],
+  EUR: [10, 25, 50, 100, 250, 500],
+  GBP: [10, 20, 50, 100, 200, 500],
+  QAR: [50, 100, 250, 500, 1000, 2500],
+  KWD: [5, 10, 25, 50, 100, 250],
+  OMR: [5, 10, 25, 50, 100, 250],
+  EGP: [200, 500, 1000, 2500, 5000, 10000],
+};
+
+// ═══════════════════════════════════════════════════════
+// أثر التبرع حسب العملة
+// ═══════════════════════════════════════════════════════
+interface ImpactItem {
+  amountInYER: number;
+  label: string;
+  icon: string;
+  description: string;
+}
+
+const IMPACT_ITEMS_YER: ImpactItem[] = [
+  { amountInYER: 5000, label: 'وجبة غذاء لعائلة لأسبوع', icon: '🍚', description: 'خبز وبروتين و Basics' },
+  { amountInYER: 10000, label: 'مياه نظيفة لعشر عائلات', icon: '💧', description: 'أبار تدوم لأشهر' },
+  { amountInYER: 25000, label: ' Supplies تعليمية لطالب', icon: '📚', description: 'كتب وأدوات مدرسية' },
+  { amountInYER: 50000, label: 'دفء شتاء لعائلة', icon: '🧥', description: 'بطانيات وسخانات' },
+  { amountInYER: 100000, label: 'سكن مؤقت لشهر', icon: '🏠', description: 'إيجار لعائلة نازحة' },
+  { amountInYER: 250000, label: 'حفر بئر مياه', icon: '🌊', description: 'يسقي قرية بأكملها' },
+];
+
+// ═══════════════════════════════════════════════════════
+// التبرع العيني — فئات المواد المقبولة
+// ═══════════════════════════════════════════════════════
+const IN_KIND_CATEGORIES = [
+  { id: 'clothing', name: 'الملابس', icon: Shirt, description: 'ملابس شتوية وصيفية نظيفة', accepted: 'كل الأحجام — نظيفة فقط' },
+  { id: 'food', name: 'المواد الغذائية', icon: Package, description: 'أرز وسكر وزيت وتمور', accepted: 'مواد غير فاسدة — تأكد من تاريخ الصلاحية' },
+  { id: 'blankets', name: 'البطانيات والأغطية', icon: ShoppingBag, description: 'بطانيات شتوية وMattresses', accepted: 'جديدة أو نظيفة جداً' },
+  { id: 'medical', name: 'المساعدات الطبية', icon: Heart, description: 'أدوية أساسية ومستلزمات إسعاف', accepted: 'أدويةsealed — غير منتهية الصلاحية' },
+  { id: 'stationery', name: 'اللوازم المدرسية', icon: Package, description: 'دفاتر وأقلام وحقائب', accepted: 'جديدة فقط' },
+  { id: 'other', name: 'مواد أخرى', icon: Truck, description: 'تواصل معنا لconfirm الم pledges', accepted: 'يرجى التواصل مسبقاً' },
+];
+
+// ═══════════════════════════════════════════════════════
+// الدفع المتكرر — الفئات الزمنية
+// ═══════════════════════════════════════════════════════
+const RECURRING_OPTIONS = [
+  { id: 'once', label: 'مرة واحدة', icon: Heart, description: 'تبرع لمرة واحدة' },
+  { id: 'monthly', label: 'شهري', icon: Calendar, description: 'يُ deducted كل شهر' },
+  { id: 'yearly', label: 'سنوي', icon: Repeat, description: 'تبرع سنوي' },
 ];
 
 export default function DonatePage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedAmount, setSelectedAmount] = useState(100);
+
+  // State
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('YER');
+  const [selectedAmount, setSelectedAmount] = useState(5000);
   const [customAmount, setCustomAmount] = useState('');
   const [selectedProject, setSelectedProject] = useState('general');
   const [paymentMethod, setPaymentMethod] = useState<string>('card');
-  const [donorInfo, setDonorInfo] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
+  const [donationType, setDonationType] = useState<'monetary' | 'inkind'>('monetary');
+  const [recurringOption, setRecurringOption] = useState('once');
+  const [selectedInKind, setSelectedInKind] = useState<string[]>([]);
+  const [inKindDetails, setInKindDetails] = useState('');
+  const [donorInfo, setDonorInfo] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [showCurrencyConverter, setShowCurrencyConverter] = useState(false);
+  const [converterAmount, setConverterAmount] = useState('100');
+  const [converterFrom, setConverterFrom] = useState('USD');
+  const [converterTo, setConverterTo] = useState('YER');
 
-  // Prefill Zakat amount if passed via location state
   useEffect(() => {
     if (location.state?.zakatAmount) {
       setSelectedProject('zakat');
       setCustomAmount(String(location.state.zakatAmount));
     }
+    if (location.state?.currency) {
+      setSelectedCurrency(location.state.currency);
+    }
   }, [location.state]);
 
   useSEO({
-    title: 'تبرع الآن - رحماء بينهم',
-    description: 'ساهم في دعم المشاريع الخيرية والإنسانية - تبرعاتك تغير حياة المحتاجين',
+    title: 'تبرع الآن — رحماء بينهم',
+    description: 'ساهم في دعم المشاريع الخيرية — تبرعات مالية أو عينية بعملات متعددة',
     type: 'website',
     url: 'https://rbdcye.org/donate',
-    image: 'https://rbdcye.org/og-donate.png',
-    keywords: ['تبرع', 'صدقة', 'إغاثة', 'تبرعات', 'رحماء بينهم', 'خير', 'عطاء'],
+    keywords: ['تبرع', 'صدقة', 'إغاثة', 'تبرعات', 'رحماء بينهم', 'عملات متعددة'],
   });
 
-  // تحميل البيانات من content-bridge
-  useEffect(() => {
-    let cancelled = false;
-    contentBridge.getContent<any>('impact')
-      .then((result) => {
-        if (!cancelled) {
-          setContentSource(result.isDynamic ? 'sanity' : 'static');
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setContentSource('static');
-      });
-    return () => { cancelled = true; };
-  }, []);
+  const currency = CURRENCIES[selectedCurrency];
+  const presetAmounts = PRESET_AMOUNTS[selectedCurrency] || PRESET_AMOUNTS.YER;
+  const actualAmount = customAmount ? Number(customAmount) : selectedAmount;
+  // FX rate fetched server-side - use 1 for base currency (YER), others converted at checkout
+  const fxRate = currency.isBase ? 1 : undefined;
+
+  // محوّل العملات: المعادل بالريال اليمني
+  const amountInYER = currency.isBase ? actualAmount : Math.round(actualAmount * currency.rateToYER);
+
+  // الأثر حسب المبلغ - use server FX rate or default
+  const impactItems = useMemo(() => {
+    return IMPACT_ITEMS_YER.map(item => ({
+      ...item,
+      localAmount: fxRate ? Math.round(item.amountInYER / fxRate) : item.amountInYER,
+    }));
+  }, [fxRate]);
 
   const projects = [
     { id: 'general', name: 'تبرع عام', icon: Heart, color: 'from-[var(--brand-green)] to-[var(--brand-green-light)]' },
-    { id: 'food', name: 'السلال الغذائية', icon: Droplet, color: 'from-cyan-500 to-blue-500' },
+    { id: 'food', name: 'السلال الغذائية', icon: Globe, color: 'from-cyan-500 to-blue-500' },
     { id: 'water', name: 'مشروع الآبار', icon: Globe, color: 'from-blue-500 to-cyan-500' },
-    { id: 'education', name: 'التعليم والقرآن', icon: BookOpen, color: 'from-indigo-500 to-purple-500' },
+    { id: 'education', name: 'التعليم والقرآن', icon: HandHeart, color: 'from-indigo-500 to-purple-500' },
     { id: 'orphans', name: 'كفالة الأيتام', icon: Heart, color: 'from-rose-500 to-pink-500' },
     { id: 'zakat', name: 'زكاة المال', icon: HandHeart, color: 'from-amber-500 to-orange-500' },
-    { id: 'sacrifice', name: 'الأضاحي', icon: Gift, color: 'from-purple-500 to-violet-500' },
-    { id: 'winter', name: 'دفء الشتاء', icon: Home, color: 'from-emerald-500 to-teal-500' },
+    { id: 'winter', name: 'دفء الشتاء', icon: Package, color: 'from-emerald-500 to-teal-500' },
+    { id: 'medical', name: 'المساعدات الطبية', icon: Heart, color: 'from-red-500 to-rose-500' },
   ];
 
-  const paymentMethods: Array<{ id: string; name: string; icon: React.ComponentType<{ className?: string }> }> = [
-    { id: 'card', name: 'بطاقة ائتمان', icon: CreditCard },
-    { id: 'apple', name: 'Apple Pay', icon: Wallet },
-    { id: 'google', name: 'Google Pay', icon: Wallet },
-    { id: 'bank', name: 'تحويل بنكي', icon: Building2 },
+  const paymentMethods = [
+    { id: 'card', name: 'بطاقة ائتمان', icon: CreditCard, currencies: ['YER', 'SAR', 'USD', 'AED', 'EUR', 'GBP'] },
+    { id: 'apple', name: 'Apple Pay', icon: Wallet, currencies: ['SAR', 'USD', 'AED', 'EUR', 'GBP'] },
+    { id: 'google', name: 'Google Pay', icon: Wallet, currencies: ['SAR', 'USD', 'AED', 'EUR', 'GBP'] },
+    { id: 'bank', name: 'تحويل بنكي', icon: Building2, currencies: Object.keys(CURRENCIES) },
   ];
 
-  const presetAmounts = [25, 50, 100, 250, 500, 1000];
+  const availablePaymentMethods = useMemo(() => {
+    return paymentMethods.filter(m => m.currencies.includes(selectedCurrency));
+  }, [selectedCurrency]);
 
-  // المبلغ الفعلي
-  const actualAmount = customAmount ? Number(customAmount) : selectedAmount;
+  useEffect(() => {
+    if (!availablePaymentMethods.find(m => m.id === paymentMethod)) {
+      setPaymentMethod(availablePaymentMethods[0]?.id || 'bank');
+    }
+  }, [availablePaymentMethods, paymentMethod]);
 
-  // إحصاءات التأثير
-  const impactStats = useMemo(() => [
-    { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'text-[var(--brand-green)]' },
-    { label: 'دولة نشطة', value: '5+', icon: Globe, color: 'text-blue-600' },
-    { label: 'متطوع', value: '200+', icon: Users, color: 'text-purple-600' },
-    { label: 'مستفيد', value: '50K+', icon: Heart, color: 'text-[var(--brand-gold)]' },
-  ], [projects.length]);
+  // محوّل العملات
+  const convertedAmount = useMemo(() => {
+    // Use server-sourced FX rates - YER is base currency (rateToYER = 1)
+    const fromRate = CURRENCIES[converterFrom]?.rateToYER || 1;
+    const toRate = CURRENCIES[converterTo]?.rateToYER || 1;
+    const amount = Number(converterAmount) || 0;
+    return Math.round((amount * fromRate) / toRate);
+  }, [converterAmount, converterFrom, converterTo]);
+
+  const toggleInKind = useCallback((id: string) => {
+    setSelectedInKind(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
-      // محاكاة معالجة الدفع
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // تسجيل التبرع في خدمة متعددة المشاريع
       const selectedProjectData = projects.find(p => p.id === selectedProject);
+      const paymentType = recurringOption === 'once' ? 'once' : recurringOption;
       await multiProjectDonationService.processDonation({
         donorName: donorInfo.name || 'متبرع',
-        donorEmail: donorInfo.email || 'no-email@example.com',
+        donorEmail: donorInfo.email,
         donorPhone: donorInfo.phone,
         allocations: selectedProjectData && selectedProject !== 'general'
           ? [{ projectId: selectedProject, projectName: selectedProjectData.name, amount: actualAmount, isCustom: false }]
           : [{ projectId: 'general', projectName: 'تبرع عام', amount: actualAmount, isCustom: true }],
         totalAmount: actualAmount,
-        currency: 'YER',
+        currency: selectedCurrency as PaymentCurrency,
         paymentMethod: paymentMethod === 'apple' || paymentMethod === 'google' ? 'card' : paymentMethod,
-        paymentType: 'once',
+        paymentType: paymentType as 'once' | 'monthly' | 'yearly' | 'zakat' | 'sadaqah' | 'waqf',
         isAnonymous: !donorInfo.name,
-        notes: donorInfo.message || undefined,
+        notes: donationType === 'inkind'
+          ? `تبرع عيني: ${selectedInKind.join(', ')} — ${inKindDetails}`
+          : donorInfo.message || undefined,
         agreeToTerms: true,
         agreeToContact: !!donorInfo.email,
-        metadata: { source: 'web' },
+        metadata: { source: 'web', donationType, currency: selectedCurrency },
       } as any);
 
-      // تسجيل التحليلات
       try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
-
       setIsSuccess(true);
     } catch {
-      // fallback to success even if service fails
-      setIsSuccess(true);
+      alert('حدث خطأ أثناء المعالجة. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSubmitting(false);
     }
@@ -160,37 +236,24 @@ export default function DonatePage() {
             <div className="w-24 h-24 mx-auto mb-6 bg-[var(--brand-green-pale)] rounded-full flex items-center justify-center">
               <CheckCircle className="w-12 h-12 text-[var(--brand-green)]" />
             </div>
-            <h1 className="text-4xl font-bold text-[var(--foreground)] mb-4">
-              شكراً لك على تبرعك!
-            </h1>
-            <p className="text-[var(--muted-foreground)] text-lg mb-8">
-              تم استلام تبرعك بنجاح بقيمة {actualAmount} ر.ي.
-              نسأل الله أن يتقبل منا ومنكم، وأن يجعله في ميزان حسناتكم.
+            <h1 className="text-4xl font-bold text-[var(--foreground)] mb-4">شكراً لك على تبرعك!</h1>
+            <p className="text-[var(--muted-foreground)] text-lg mb-4">
+              تم استلام تبرعك بنجاح بقيمة {actualAmount.toLocaleString('ar-YE')} {currency.symbol}
             </p>
-
+            <p className="text-[var(--muted-foreground)] text-sm mb-8">
+              المعادل بالريال اليمني: {amountInYER.toLocaleString('ar-YE')} ر.ي
+              {recurringOption !== 'once' && ` — تبرع ${recurringOption === 'monthly' ? 'شهري' : 'سنوي'}`}
+            </p>
             <div className="bg-[var(--brand-green-pale)] rounded-xl p-6 mb-8">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <Shield className="w-5 h-5 text-[var(--brand-green)]" />
-                <span className="font-bold text-[var(--brand-green)]">🔒 آمن وموثوق</span>
+                <span className="font-bold text-[var(--brand-green)]">آمن وموثوق</span>
               </div>
-              <p className="text-sm text-[var(--muted-foreground)]">
-                تم إرسال إيصال بالبريد الإلكتروني. شكراً لك.
-              </p>
+              <p className="text-sm text-[var(--muted-foreground)]">تم إرسال إيصال بالبريد الإلكتروني.</p>
             </div>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => navigate('/')}
-                className="px-8 py-3 bg-[var(--brand-green)] text-white rounded-xl font-bold hover:bg-[var(--brand-green-light)] transition-colors shadow-lg"
-              >
-                العودة للرئيسية
-              </button>
-              <button
-                onClick={() => navigate('/programs')}
-                className="px-8 py-3 border-2 border-[var(--brand-green)] text-[var(--brand-green)] rounded-xl font-bold hover:bg-[var(--brand-green)]/5 transition-colors"
-              >
-                برامجنا الأخرى
-              </button>
+              <button onClick={() => navigate('/')} className="px-8 py-3 bg-[var(--brand-green)] text-white rounded-xl font-bold hover:bg-[var(--brand-green-light)] transition-colors shadow-lg">الرئيسية</button>
+              <button onClick={() => navigate('/programs')} className="px-8 py-3 border-2 border-[var(--brand-green)] text-[var(--brand-green)] rounded-xl font-bold hover:bg-[var(--brand-green)]/5 transition-colors">برامجنا</button>
             </div>
           </motion.div>
         </div>
@@ -200,243 +263,405 @@ export default function DonatePage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
-      {/* Unified Page Header */}
       <PageHeader
         icon={Heart}
         badge="التبرع"
         title="تبرع الآن"
-        subtitle="ساهم في إحداث فرق حقيقي في حياة المحتاجين عبر تبرعك الصدقة"
+        subtitle="تبرعات مالية أو عينية — بعملات متعددة — كل ريال يصنع فرقاً"
       >
         <StatsGrid
           stats={[
-            { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'green' },
-            { label: 'دولة نشطة', value: '5+', icon: Globe, color: 'blue' },
-            { label: 'متطوع', value: '200+', icon: Users, color: 'purple' },
-            { label: 'مستفيد', value: '50K+', icon: Heart, color: 'gold' },
+            { label: 'عملة مدعومة', value: Object.keys(CURRENCIES).length, icon: Coins, color: 'green' },
+            { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'blue' },
+            { label: 'دولة نشطة', value: 'عدة', icon: Globe, color: 'purple' },
+            { label: 'مستفيد', value: 'آلاف', icon: Heart, color: 'gold' },
           ]}
           columns={4}
           variant="glass"
         />
       </PageHeader>
 
-      {/* Impact Calculator Section */}
-      <section className="py-16 bg-white">
+      {/* ═══════ محوّل العملات ═══════ */}
+      <section className="py-6 bg-[var(--brand-green-pale)] border-b border-[var(--border)]">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
+          <button
+            onClick={() => setShowCurrencyConverter(!showCurrencyConverter)}
+            className="flex items-center gap-2 mx-auto px-5 py-2.5 rounded-xl bg-white border border-[var(--border)] shadow-sm hover:shadow-md transition-all text-sm font-semibold text-[var(--foreground)]"
           >
-            <span className="inline-flex items-center gap-2 text-[var(--brand-green)] text-sm font-semibold bg-[var(--brand-green-pale)] px-4 py-1.5 rounded-full mb-4">
-              <TrendingUp className="w-4 h-4" />
-              الأثر الاجتماعي
-            </span>
-            <h2 className="text-3xl font-bold text-[var(--foreground)] mb-4">
-              ما يمكن لتبرعك تحقيقه
-            </h2>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              كل تبرع يصنع فرقاً حقيقياً في حياة المحتاجين
-            </p>
-          </motion.div>
+            <RefreshCw className="w-4 h-4 text-[var(--brand-green)]" />
+            محوّل العملات
+            <ChevronDown className={`w-4 h-4 transition-transform ${showCurrencyConverter ? 'rotate-180' : ''}`} />
+          </button>
+          {showCurrencyConverter && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="max-w-3xl mx-auto mt-4 bg-white rounded-2xl p-6 border border-[var(--border)] shadow-lg"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                <div>
+                  <label className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">من</label>
+                  <div className="flex gap-2">
+                    <select value={converterFrom} onChange={e => setConverterFrom(e.target.value)}
+                      className="flex-1 p-3 rounded-xl border-2 border-[var(--border)] text-sm font-semibold">
+                      {Object.values(CURRENCIES).map(c => (
+                        <option key={c.code} value={c.code}>{c.flag} {c.code} — {c.name}</option>
+                      ))}
+                    </select>
+                    <input type="number" value={converterAmount} onChange={e => setConverterAmount(e.target.value)}
+                      className="w-24 p-3 rounded-xl border-2 border-[var(--border)] text-sm text-center font-bold" />
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <RefreshCw className="w-5 h-5 text-[var(--brand-green)] rotate-90" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-[var(--muted-foreground)] mb-1">إلى</label>
+                  <div className="flex gap-2">
+                    <select value={converterTo} onChange={e => setConverterTo(e.target.value)}
+                      className="flex-1 p-3 rounded-xl border-2 border-[var(--border)] text-sm font-semibold">
+                      {Object.values(CURRENCIES).map(c => (
+                        <option key={c.code} value={c.code}>{c.flag} {c.code} — {c.name}</option>
+                      ))}
+                    </select>
+                    <div className="w-24 p-3 rounded-xl border-2 border-[var(--brand-green)] bg-[var(--brand-green-pale)] text-sm text-center font-bold text-[var(--brand-green)]">
+                      {convertedAmount.toLocaleString('ar-YE')}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
-            {IMPACT_ITEMS.map((item, i) => (
-              <motion.div
-                key={item.amount}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-2xl p-4 border border-[var(--border)] shadow-lg text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="font-bold text-[var(--brand-green)] mb-1">{item.amount} ر.ي</div>
-                <div className="text-xs text-[var(--muted-foreground)]">{item.label}</div>
-              </motion.div>
-            ))}
+      {/* ═══════ اختيار نوع التبرع ═══════ */}
+      <section className="py-10 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-[var(--foreground)] mb-2">اختر نوع التبرع</h2>
+            <p className="text-[var(--muted-foreground)] text-sm">مال أو عين — كلاهما يُحدث فرقاً</p>
+          </div>
+          <div className="max-w-md mx-auto grid grid-cols-2 gap-4">
+            <button
+              onClick={() => setDonationType('monetary')}
+              className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center gap-3 ${
+                donationType === 'monetary'
+                  ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)] shadow-lg'
+                  : 'border-[var(--border)] hover:border-[var(--brand-green)]'
+              }`}
+            >
+              <Coins className={`w-8 h-8 ${donationType === 'monetary' ? 'text-[var(--brand-green)]' : 'text-[var(--muted-foreground)]'}`} />
+              <span className="font-bold text-[var(--foreground)]">تبرع مالي</span>
+              <span className="text-xs text-[var(--muted-foreground)]">بأي عملة تفضلها</span>
+            </button>
+            <button
+              onClick={() => setDonationType('inkind')}
+              className={`p-6 rounded-2xl border-2 transition-all flex flex-col items-center gap-3 ${
+                donationType === 'inkind'
+                  ? 'border-[var(--brand-gold)] bg-[var(--brand-gold-pale)] shadow-lg'
+                  : 'border-[var(--border)] hover:border-[var(--brand-gold)]'
+              }`}
+            >
+              <Package className={`w-8 h-8 ${donationType === 'inkind' ? 'text-[var(--brand-gold)]' : 'text-[var(--muted-foreground)]'}`} />
+              <span className="font-bold text-[var(--foreground)]">تبرع عيني</span>
+              <span className="text-xs text-[var(--muted-foreground)]">ملابس وبطانيات وأغذية</span>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Donation Form */}
+      {/* ═══════ أثر التبرع ═══════ */}
+      {donationType === 'monetary' && (
+        <section className="py-12 bg-[var(--secondary)]">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 text-[var(--brand-green)] text-sm font-semibold bg-[var(--brand-green-pale)] px-4 py-1.5 rounded-full mb-4">
+                <TrendingUp className="w-4 h-4" />
+                الأثر بعملتك
+              </span>
+              <h2 className="text-2xl font-bold text-[var(--foreground)] mb-2">
+                كل {currency.symbol} يصنع فرقاً
+              </h2>
+              <p className="text-[var(--muted-foreground)] text-sm">أسعار تقريبية — قد تختلف حسب الظروف الميدانية</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {impactItems.map((item, i) => (
+                <motion.div
+                  key={item.amountInYER}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06 }}
+                  className="bg-white rounded-2xl p-5 border border-[var(--border)] shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="text-3xl mb-2">{item.icon}</div>
+                  <div className="text-xl font-extrabold text-[var(--brand-green)] mb-1">
+                    {item.localAmount.toLocaleString('ar-YE')} {currency.symbol}
+                  </div>
+                  <div className="text-[var(--foreground)] font-bold text-sm mb-1">{item.label}</div>
+                  <div className="text-[var(--muted-foreground)] text-xs">{item.description}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══════ نموذج التبرع ═══════ */}
       <section className="py-12 bg-[var(--secondary)]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <form onSubmit={handleSubmit}>
               <div className="bg-white rounded-3xl p-8 md:p-12 border border-[var(--border)] shadow-lg">
-                {/* Project Selection */}
-                <div className="mb-8" id="project-selection-group">
-                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">اختر المشروع</div>
+
+                {/* اختيار العملة */}
+                {donationType === 'monetary' && (
+                  <div className="mb-8">
+                    <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">العملة</div>
+                    <div className="flex flex-wrap gap-2">
+                      {Object.values(CURRENCIES).map(c => (
+                        <button
+                          key={c.code}
+                          type="button"
+                          onClick={() => { setSelectedCurrency(c.code); setSelectedAmount(PRESET_AMOUNTS[c.code]?.[0] || 0); setCustomAmount(''); }}
+                          className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl border-2 transition-all text-sm font-semibold ${
+                            selectedCurrency === c.code
+                              ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)] text-[var(--brand-green)]'
+                              : 'border-[var(--border)] hover:border-[var(--brand-green)] text-[var(--foreground)]'
+                          }`}
+                        >
+                          <span className="text-lg">{c.flag}</span>
+                          <span>{c.code}</span>
+                          <span className="text-xs text-[var(--muted-foreground)] hidden sm:inline">{c.symbol}</span>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="mt-2 text-xs text-[var(--muted-foreground)]">
+                      سعر الصرف: 1 {currency.code} = {fxRate || 1} ر.ي
+                    </div>
+                  </div>
+                )}
+
+                {/* اختيار المشروع */}
+                <div className="mb-8">
+                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">المشروع</div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {projects.map((project) => {
+                    {projects.map(project => {
                       const Icon = project.icon;
                       return (
-                        <button
-                          key={project.id}
-                          type="button"
-                          onClick={() => setSelectedProject(project.id)}
-                          className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
+                        <button key={project.id} type="button" onClick={() => setSelectedProject(project.id)}
+                          className={`p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 ${
                             selectedProject === project.id
                               ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)]'
                               : 'border-[var(--border)] hover:border-[var(--brand-green)]'
-                          }`}
-                        >
-                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${project.color} flex items-center justify-center`}>
-                            <Icon className="w-5 h-5 text-white" />
+                          }`}>
+                          <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center`}>
+                            <Icon className="w-4 h-4 text-white" />
                           </div>
-                          <div className="text-sm font-semibold text-[var(--foreground)]">{project.name}</div>
+                          <div className="text-xs font-semibold text-[var(--foreground)]">{project.name}</div>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Amount Selection */}
-                <div className="mb-8">
-                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4" id="amount-selection-group">قيمة التبرع (ر.ي)</div>
-                  <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-4">
-                    {presetAmounts.map((amount) => (
-                      <button
-                        key={amount}
-                        type="button"
-                        onClick={() => { setSelectedAmount(amount); setCustomAmount(''); }}
-                        className={`p-4 rounded-xl border-2 transition-all font-bold ${
-                          selectedAmount === amount && !customAmount
-                            ? 'border-[var(--brand-green)] bg-[var(--brand-green)] text-white'
-                            : 'border-[var(--border)] hover:border-[var(--brand-green)]'
-                        }`}
-                      >
-                        {amount}
-                      </button>
-                    ))}
-                  </div>
-                  <input
-                    type="number"
-                    value={customAmount}
-                    onChange={(e) => { setCustomAmount(e.target.value); if (e.target.value) setSelectedAmount(0); }}
-                    className="w-full p-4 rounded-xl border-2 border-[var(--border)] text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                    placeholder="أدخل مبلغ آخر"
-                  />
-                </div>
-
-                {/* Payment Method */}
-                <div className="mb-8">
-                  <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">طريقة الدفع</div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {paymentMethods.map((method) => {
-                      const Icon = method.icon;
-                      return (
-                        <button
-                          key={method.id}
-                          type="button"
-                          onClick={() => setPaymentMethod(method.id as PaymentMethod)}
-                          className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
-                            paymentMethod === method.id
-                              ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)]'
-                              : 'border-[var(--border)] hover:border-[var(--brand-green)]'
-                          }`}
-                        >
-                          <Icon className="w-8 h-8 text-[var(--brand-green)]" />
-                          <span className="text-sm font-semibold text-[var(--foreground)]">{method.name}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Donor Information */}
-                <div className="mb-8">
-                  <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">معلومات المتبرع</h3>
-                  <div className="space-y-4">
-                    <input
-                      type="text"
-                      value={donorInfo.name}
-                      onChange={(e) => setDonorInfo({ ...donorInfo, name: e.target.value })}
-                      className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                      placeholder="الاسم الكامل *"
-                      required
-                    />
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <input
-                        type="email"
-                        value={donorInfo.email}
-                        onChange={(e) => setDonorInfo({ ...donorInfo, email: e.target.value })}
-                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                        placeholder="البريد الإلكتروني *"
-                        required
-                      />
-                      <input
-                        type="tel"
-                        value={donorInfo.phone}
-                        onChange={(e) => setDonorInfo({ ...donorInfo, phone: e.target.value })}
-                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                        placeholder="رقم الهاتف *"
-                        required
-                      />
+                {/* المبلغ — مالي */}
+                {donationType === 'monetary' && (
+                  <div className="mb-8">
+                    <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">
+                      المبلغ ({currency.symbol})
                     </div>
-                    <textarea
-                      value={donorInfo.message}
-                      onChange={(e) => setDonorInfo({ ...donorInfo, message: e.target.value })}
+                    <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-4">
+                      {presetAmounts.map(amount => (
+                        <button key={amount} type="button"
+                          onClick={() => { setSelectedAmount(amount); setCustomAmount(''); }}
+                          className={`p-3 rounded-xl border-2 transition-all font-bold text-sm ${
+                            selectedAmount === amount && !customAmount
+                              ? 'border-[var(--brand-green)] bg-[var(--brand-green)] text-white'
+                              : 'border-[var(--border)] hover:border-[var(--brand-green)]'
+                          }`}>
+                          {amount.toLocaleString('ar-YE')}
+                        </button>
+                      ))}
+                    </div>
+                    <input type="number" value={customAmount}
+                      onChange={e => { setCustomAmount(e.target.value); if (e.target.value) setSelectedAmount(0); }}
+                      className="w-full p-4 rounded-xl border-2 border-[var(--border)] text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                      placeholder={`أدخل مبلغ بال${currency.name}`} />
+                    {actualAmount > 0 && (
+                      <div className="mt-2 text-xs text-[var(--brand-green)] font-semibold">
+                        المعادل: {(fxRate ? Math.round(actualAmount * fxRate) : actualAmount).toLocaleString('ar-YE')} ر.ي
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* التبرع العيني */}
+                {donationType === 'inkind' && (
+                  <div className="mb-8">
+                    <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">المواد المتبرع بها</div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                      {IN_KIND_CATEGORIES.map(cat => {
+                        const Icon = cat.icon;
+                        return (
+                          <button key={cat.id} type="button" onClick={() => toggleInKind(cat.id)}
+                            className={`p-4 rounded-xl border-2 transition-all text-right ${
+                              selectedInKind.includes(cat.id)
+                                ? 'border-[var(--brand-gold)] bg-[var(--brand-gold-pale)]'
+                                : 'border-[var(--border)] hover:border-[var(--brand-gold)]'
+                            }`}>
+                            <Icon className={`w-6 h-6 mb-2 ${selectedInKind.includes(cat.id) ? 'text-[var(--brand-gold)]' : 'text-[var(--muted-foreground)]'}`} />
+                            <div className="text-sm font-bold text-[var(--foreground)]">{cat.name}</div>
+                            <div className="text-xs text-[var(--muted-foreground)]">{cat.accepted}</div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <textarea value={inKindDetails} onChange={e => setInKindDetails(e.target.value)}
+                      className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-gold)]/30 outline-none transition-all resize-none"
+                      placeholder="تفاصيل إضافية — الكمية، الحالة، موعد التسليم المتوقع..."
+                      rows={3} />
+                  </div>
+                )}
+
+                {/* نوع التكرار — مالي فقط */}
+                {donationType === 'monetary' && (
+                  <div className="mb-8">
+                    <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">التكرار</div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {RECURRING_OPTIONS.map(opt => {
+                        const Icon = opt.icon;
+                        return (
+                          <button key={opt.id} type="button" onClick={() => setRecurringOption(opt.id)}
+                            className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
+                              recurringOption === opt.id
+                                ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)]'
+                                : 'border-[var(--border)] hover:border-[var(--brand-green)]'
+                            }`}>
+                            <Icon className={`w-6 h-6 ${recurringOption === opt.id ? 'text-[var(--brand-green)]' : 'text-[var(--muted-foreground)]'}`} />
+                            <div className="text-sm font-bold text-[var(--foreground)]">{opt.label}</div>
+                            <div className="text-xs text-[var(--muted-foreground)]">{opt.description}</div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* طريقة الدفع — مالي فقط */}
+                {donationType === 'monetary' && (
+                  <div className="mb-8">
+                    <div className="block text-lg font-semibold text-[var(--foreground)] mb-4">طريقة الدفع</div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {availablePaymentMethods.map(method => {
+                        const Icon = method.icon;
+                        return (
+                          <button key={method.id} type="button" onClick={() => setPaymentMethod(method.id)}
+                            className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
+                              paymentMethod === method.id
+                                ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)]'
+                                : 'border-[var(--border)] hover:border-[var(--brand-green)]'
+                            }`}>
+                            <Icon className="w-7 h-7 text-[var(--brand-green)]" />
+                            <span className="text-sm font-semibold text-[var(--foreground)]">{method.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {availablePaymentMethods.length === 0 && (
+                      <p className="text-xs text-orange-600 mt-2">لا توجد طرق دفع متاحة لهذه العملة — جرّب تحويل بنكي</p>
+                    )}
+                  </div>
+                )}
+
+                {/* بيانات المتبرع */}
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">معلوماتك</h3>
+                  <div className="space-y-4">
+                    <input type="text" value={donorInfo.name} onChange={e => setDonorInfo({ ...donorInfo, name: e.target.value })}
+                      className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                      placeholder="الاسم (اختياري — للتبرع المجهول اتركه فارغاً)" />
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <input type="email" value={donorInfo.email} onChange={e => setDonorInfo({ ...donorInfo, email: e.target.value })}
+                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                        placeholder="البريد الإلكتروني *" required />
+                      <input type="tel" value={donorInfo.phone} onChange={e => setDonorInfo({ ...donorInfo, phone: e.target.value })}
+                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                        placeholder="رقم الهاتف *" required />
+                    </div>
+                    <textarea value={donorInfo.message} onChange={e => setDonorInfo({ ...donorInfo, message: e.target.value })}
                       className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all resize-none"
-                      placeholder="رسالة اختيارية"
-                      rows={3}
-                    />
+                      placeholder="رسالة اختيارية" rows={3} />
                   </div>
                 </div>
 
-                {/* Payment Summary */}
+                {/* ملخص الدفع */}
                 <div className="bg-gradient-to-r from-[var(--brand-green)]/10 to-[var(--brand-green)]/5 p-6 rounded-xl mb-8">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-[var(--muted-foreground)]">المبلغ:</span>
-                    <span className="text-2xl font-bold text-[var(--foreground)]">{actualAmount || selectedAmount} ر.ي</span>
-                  </div>
-                  <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-bold text-[var(--foreground)] mb-3">ملخص التبرع</h4>
+                  {donationType === 'monetary' ? (
+                    <>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-[var(--muted-foreground)]">المبلغ:</span>
+                        <span className="text-2xl font-bold text-[var(--foreground)]">{actualAmount.toLocaleString('ar-YE')} {currency.symbol}</span>
+                      </div>
+                      <div className="flex justify-between items-center mb-2 text-sm">
+                        <span className="text-[var(--muted-foreground)]">المعادل بالريال اليمني:</span>
+                        <span className="font-semibold text-[var(--brand-green)]">{amountInYER.toLocaleString('ar-YE')} ر.ي</span>
+                      </div>
+                      {recurringOption !== 'once' && (
+                        <div className="flex justify-between items-center mb-2 text-sm">
+                          <span className="text-[var(--muted-foreground)]">التكرار:</span>
+                          <span className="font-semibold text-[var(--foreground)]">{recurringOption === 'monthly' ? 'شهري' : 'سنوي'}</span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[var(--muted-foreground)]">نوع التبرع:</span>
+                      <span className="font-semibold text-[var(--foreground)]">تبرع عيني — {selectedInKind.length} فئة</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center mb-2 text-sm">
                     <span className="text-[var(--muted-foreground)]">المشروع:</span>
-                    <span className="font-semibold text-[var(--foreground)]">
-                      {projects.find(p => p.id === selectedProject)?.name}
-                    </span>
+                    <span className="font-semibold text-[var(--foreground)]">{projects.find(p => p.id === selectedProject)?.name}</span>
                   </div>
-                  <div className="flex justify-between items-center pt-2 border-t border-[var(--border)]">
-                    <span className="text-[var(--muted-foreground)]">طريقة الدفع:</span>
-                    <span className="font-semibold text-[var(--foreground)]">
-                      {paymentMethods.find(m => m.id === paymentMethod)?.name}
-                    </span>
-                  </div>
+                  {donationType === 'monetary' && (
+                    <div className="flex justify-between items-center pt-2 border-t border-[var(--border)] text-sm">
+                      <span className="text-[var(--muted-foreground)]">الدفع:</span>
+                      <span className="font-semibold text-[var(--foreground)]">{availablePaymentMethods.find(m => m.id === paymentMethod)?.name}</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50"
-                >
+                {/* زر الإرسال */}
+                <button type="submit" disabled={isSubmitting}
+                  className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50">
                   <Heart className="w-6 h-6" fill="white" />
-                  {isSubmitting ? 'جاري المعالجة...' : `تبرع الآن - ${actualAmount || selectedAmount} ر.ي`}
+                  {isSubmitting ? 'جاري المعالجة...' : donationType === 'monetary'
+                    ? `تبرع الآن — ${actualAmount.toLocaleString('ar-YE')} ${currency.symbol}`
+                    : 'تأكيد التبرع العيني'}
                 </button>
 
-                {/* Security Badge */}
-                <div className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
-                  <div className="flex items-center justify-center gap-2">
-                    <Shield className="w-4 h-4 text-[var(--brand-green)]" />
-                    <span>🔒 دفع آمن ومشفر بتقنية SSL</span>
-                  </div>
+                {/* شرائح الثقة */}
+                <div className="mt-6 grid grid-cols-3 gap-3">
+                  {[
+                    { icon: Shield, title: 'تشفير SSL', desc: 'دفع آمن' },
+                    { icon: CheckCircle, title: 'إيصال فوري', desc: 'لكل تبرع' },
+                    { icon: Lock, title: 'خصوصية', desc: 'بياناتك مقفلة' },
+                  ].map(item => (
+                    <div key={item.title} className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-[var(--brand-green-pale)] border border-[var(--brand-green)]/10">
+                      <item.icon className="w-5 h-5 text-[var(--brand-green)]" />
+                      <span className="text-xs font-bold text-[var(--foreground)]">{item.title}</span>
+                      <span className="text-[0.65rem] text-[var(--muted-foreground)]">{item.desc}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </form>
           </div>
         </div>
       </section>
-
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

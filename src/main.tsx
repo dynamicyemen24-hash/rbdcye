@@ -1,4 +1,4 @@
-import { StrictMode, lazy, Suspense, useState, useEffect, useRef } from "react";
+﻿import { StrictMode, lazy, Suspense, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 import AdvancedProgressBar, { ScrollProgressIndicator } from "@/components/AdvancedProgressBar";
@@ -7,19 +7,17 @@ import { HeroSkeleton } from "@/components/LoadingSkeleton";
 import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
 import { initializeCoreServices } from "@/features/core";
-import { usePageProgress } from "@/shared/hooks/usePageProgress";
 
 import { ToastProvider } from "./app/components/Toast";
 import "./styles/index.css";
 
 // ============================================================
-// CRITICAL: All initialization is now NON-BLOCKING
+// CRITICAL: All initialization is NON-BLOCKING
 // الموقع يظهر فوراً دون انتظار أي شيء
 // ============================================================
 
 // Initialize in background after DOM is ready
 if (typeof window !== 'undefined') {
-  // Use requestIdleCallback to defer non-critical work
   const scheduleInit = (cb: () => void) => {
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(() => cb(), { timeout: 2000 });
@@ -29,28 +27,14 @@ if (typeof window !== 'undefined') {
   };
 
   scheduleInit(() => {
-    // Core services - non-blocking
-    initializeCoreServices().catch(() => {
-      // Silently fail - core services are non-critical
-    });
+    initializeCoreServices().catch(() => {});
 
-    // Security headers
-    try {
-      const cspMeta = document.createElement('meta');
-      cspMeta.httpEquiv = 'Content-Security-Policy';
-      cspMeta.content = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io https://js.stripe.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://*.unsplash.com https://cdn.sanity.io; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://api.stripe.com; frame-src 'self' https://*.sanity.io https://js.stripe.com https://hooks.stripe.com; media-src 'self' https://*.sanity.io; worker-src 'self' blob:; base-uri 'self'; form-action 'self'";
-      document.head.appendChild(cspMeta);
-    } catch {
-      // Silently fail - security meta tags are non-critical
-    }
+    // CSP is set via HTTP headers (vercel.json / server config), not dynamic meta injection.
   });
 
-  // Register service worker for PWA support - after load
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch(() => {
-        // Silently fail - PWA is optional
-      });
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
     }, { passive: true, once: true });
   }
 }
@@ -59,64 +43,30 @@ if (typeof window !== 'undefined') {
 const App = lazy(() => import("./app/App"));
 
 // ============================================================
-// Loading state messages
-// ============================================================
-const LOADING_MESSAGES = [
-  { text: 'جاري تحميل الموقع...', weight: 1 },
-  { text: 'تهيئة النظام الأساسي', weight: 2 },
-  { text: 'تحميل المحتوى', weight: 2 },
-  { text: 'تجهيز الواجهة', weight: 1 },
-  { text: 'تفعيل الأمان', weight: 1 },
-  { text: 'الانتهاء...', weight: 1 },
-];
-
-// ============================================================
-// Main App with Fast Progress Bar
+// Main App - instant render, no artificial delays
 // ============================================================
 function AppWithProgress() {
-  const { percentage, message, isComplete, isReady, markInteractive } = usePageProgress('hero');
-  const [isInteractive, setIsInteractive] = useState(false);
-  const stepRef = useRef(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Fast loading sequence - 80ms per step
-    const timer = setInterval(() => {
-      if (stepRef.current < LOADING_MESSAGES.length) {
-        stepRef.current++;
-      }
-    }, 80);
-
-    // Mark interactive very quickly (1.2s)
-    const interactiveTimer = setTimeout(() => {
-      markInteractive();
-      setIsInteractive(true);
-    }, 1200);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(interactiveTimer);
-    };
-  }, [markInteractive]);
-
-  // Force complete after 2s regardless
-  useEffect(() => {
-    const forceTimer = setTimeout(() => {
-      if (!isInteractive) {
-        markInteractive();
-        setIsInteractive(true);
-      }
-    }, 2000);
-    return () => clearTimeout(forceTimer);
-  }, [isInteractive, markInteractive]);
+    // Instant progress - no delays
+    setProgress(60);
+    const t1 = setTimeout(() => setProgress(90), 100);
+    const t2 = setTimeout(() => {
+      setProgress(100);
+      setIsLoaded(true);
+    }, 200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   return (
     <>
       <AdvancedProgressBar
-        percentage={percentage}
-        message={message}
-        isComplete={isComplete || isInteractive}
-        isReady={isReady && isInteractive}
-        showAyah={true}
+        percentage={progress}
+        message=""
+        isComplete={isLoaded}
+        isReady={isLoaded}
       />
       <ScrollProgressIndicator />
       <OfflineIndicator />

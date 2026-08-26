@@ -30,7 +30,7 @@ export function SectionNavigator({
   // Update current section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      const _scrollPosition = window.scrollY;
       
       sections.forEach((sectionId, index) => {
         const element = document.getElementById(sectionId);

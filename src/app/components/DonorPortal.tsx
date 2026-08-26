@@ -1,11 +1,10 @@
 // Professional Donor Portal Component - Enterprise Grade
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Heart, History, MapPin, FileText, Settings, Bell, Download, Share2,
-  Calendar, TrendingUp, Users, DollarSign, CheckCircle, Clock, Award,
-  Gift, Mail, Phone, User, BookOpen, ExternalLink, Shield,
-  PieChart, BarChart3, Target, Sparkles, ChevronLeft, ChevronRight,
-  Sun, Moon, Printer, Upload, CreditCard, Banknote, QrCode,
+  Calendar, Users, DollarSign, CheckCircle, Clock, Award,
+  BarChart3, Target, Sparkles,
+  Printer, CreditCard, QrCode, ExternalLink, User,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, memo, useMemo } from 'react';
 
@@ -90,7 +89,7 @@ const DEFAULT_DONATIONS: DonationRecord[] = [
 ];
 
 const DEFAULT_IMPACTS: ImpactStory[] = [
-  { id: 'i1', title: 'بئر ماء - الحديدة', type: 'water', location: 'الحديدة, اليمن', beneficiaries: 320, date: '2024-12-01', description: 'تم حفر البئر وتركيب المضخة، ويستفيد منها 320 أسرة يومياً.', image: '/images/well.jpg' },
+  { id: 'i1', title: 'بئر ماء - الحديدة', type: 'water', location: 'الحديدة, اليمن', beneficiaries: 320, date: '2024-12-01', description: 'تم حفر البئر وتركيب المضخة، ويستفيد منها 320 أسرة يومياً.', image: '/images/defaults/project-water.svg' },
   { id: 'i2', title: 'كفالة اليتيم محمد', type: 'orphan', location: 'صنعاء, اليمن', beneficiaries: 1, date: '2024-10-01', description: 'محمد يدرس في الصف الثاني متوسط بتفوق، حصل على المركز الأول.' },
   { id: 'i3', title: 'توزيع السلات الغذائية', type: 'food', location: 'مأرب, اليمن', beneficiaries: 150, date: '2024-09-15', description: 'تم توزيع 150 سلة غذائية للأسر النازحة في مخيمات مأرب.' },
 ];
@@ -157,7 +156,7 @@ const StatCard = memo(function StatCard({ icon: Icon, label, value, trend, color
   );
 });
 
-const TabButton = memo(function TabButton({ id, label, icon: Icon, active, onClick }: {
+const TabButton = memo(function TabButton({ id: _id, label, icon: Icon, active, onClick }: {
   id: string; label: string; icon: any; active: boolean; onClick: () => void;
 }) {
   return (
@@ -188,7 +187,6 @@ export default function DonorPortal() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
   const [preferences, setPreferences] = useState<DonorPreferences>(DEFAULT_PREFERENCES);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   // Simulate loading
   useEffect(() => {
@@ -212,8 +210,8 @@ export default function DonorPortal() {
   const handleShare = useCallback(() => {
     if (navigator.share) {
       navigator.share({
-        title: 'مؤسسة رحماء بينهم',
-        text: 'أساهم مع مؤسسة رحماء بينهم في صنع الأثر!',
+        title: 'رحماء بينهم',
+        text: 'أساهم مع رحماء بينهم في صنع الأثر!',
         url: window.location.href,
       }).catch(() => setShowShareModal(true));
     } else {
@@ -357,7 +355,7 @@ export default function DonorPortal() {
             { label: 'سجل التبرعات', icon: History, action: () => setActiveTab('history'), color: '#2563EB' },
             { label: 'رحلة الأثر', icon: MapPin, action: () => setActiveTab('impact'), color: '#7C3AED' },
             { label: 'إعدادات', icon: Settings, action: () => setActiveTab('settings'), color: '#D97706' },
-          ].map((item, i) => (
+          ].map((item) => (
             <motion.button
               key={item.label}
               onClick={() => typeof item.action === 'function' ? item.action() : window.location.href = item.action}
@@ -428,7 +426,7 @@ export default function DonorPortal() {
                   {[
                     { name: 'كسوة الشتاء 2025', progress: 65, raised: 65000, target: 100000, daysLeft: 15 },
                     { name: 'وقف التعليم', progress: 40, raised: 400000, target: 1000000, daysLeft: 45 },
-                  ].map((campaign, i) => (
+                   ].map((campaign, _i) => (
                     <div key={campaign.name} className="p-4 bg-gradient-to-l from-emerald-50 to-white rounded-xl border border-emerald-100">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-gray-800">{campaign.name}</h4>
@@ -530,7 +528,7 @@ export default function DonorPortal() {
                           </div>
                           {donation.impact && (
                             <div className="flex flex-wrap gap-2 mt-2">
-                               {donation.impact.map((imp, idx) => (
+                               {donation.impact.map((imp, _idx) => (
                                  <span key={imp.metric} className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded-lg flex items-center gap-1">
                                   <CheckCircle className="w-3 h-3" />
                                   {imp.metric}: {imp.value}
@@ -561,7 +559,7 @@ export default function DonorPortal() {
                         </button>
                       )}
                       <button
-                        onClick={() => console.log('View details:', donation.id)}
+                        onClick={() => {}}
                         className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-lg text-xs font-medium text-gray-600 transition-all"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />

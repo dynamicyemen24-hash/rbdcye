@@ -362,8 +362,7 @@ class DataService {
 
       if (response.error) throw response.error;
       return normalizeRecords<T>(response.data || []);
-    } catch (error) {
-      console.warn(`[DataService] Supabase getAll failed for ${entity}:`, error);
+    } catch {
       return null;
     }
   }
@@ -382,8 +381,7 @@ class DataService {
 
       if (response.error) throw response.error;
       return response.data ? normalizeRecord(response.data) as T : null;
-    } catch (error) {
-      console.warn(`[DataService] Supabase getById failed for ${entity}:`, error);
+    } catch {
       return null;
     }
   }
@@ -403,8 +401,7 @@ class DataService {
 
       if (response.error) throw response.error;
       return normalizeRecord(response.data) as T;
-    } catch (error) {
-      console.warn(`[DataService] Supabase create failed for ${entity}:`, error);
+    } catch {
       return null;
     }
   }
@@ -425,8 +422,7 @@ class DataService {
 
       if (response.error) throw response.error;
       return normalizeRecord(response.data) as T;
-    } catch (error) {
-      console.warn(`[DataService] Supabase update failed for ${entity}:`, error);
+    } catch {
       return null;
     }
   }
@@ -444,8 +440,7 @@ class DataService {
 
       if (response.error) throw response.error;
       return true;
-    } catch (error) {
-      console.warn(`[DataService] Supabase delete failed for ${entity}:`, error);
+    } catch {
       return null;
     }
   }

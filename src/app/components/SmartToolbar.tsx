@@ -1,10 +1,9 @@
 // SmartToolbar - Professional Floating Toolbar with Advanced AI-Powered UX for Visitors
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   Heart, 
   Calculator, 
   Map, 
-  Share2, 
   ChevronUp, 
   X, 
   Zap,
@@ -13,8 +12,6 @@ import {
   BarChart3,
   Moon,
   Sun,
-  Download,
-  Calendar,
   Gift,
   Globe,
   Sparkles,
@@ -22,7 +19,6 @@ import {
   Award,
   HelpCircle,
   RefreshCcw,
-  ArrowRight
 } from "lucide-react";
 import { useState, useEffect, useRef, useCallback, memo, useMemo } from "react";
 

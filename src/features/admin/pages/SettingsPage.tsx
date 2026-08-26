@@ -22,7 +22,7 @@ export default function SettingsPage() {
         <h2 className="text-lg font-bold text-gray-800 mb-4">إعدادات الموقع العامة</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="siteName" className="block text-sm font-medium text-gray-700 mb-1">اسم المؤسسة</label>
+            <label htmlFor="siteName" className="block text-sm font-medium text-gray-700 mb-1">اسم الحملة</label>
             <input
               id="siteName"
               type="text"

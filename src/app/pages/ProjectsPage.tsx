@@ -1,5 +1,5 @@
 // Projects Page - صفحة المشاريع
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   Target, MapPin, Users, Calendar, ArrowLeft,
   Filter, Search, CheckCircle2, Clock, AlertCircle,
@@ -12,11 +12,11 @@ import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_PROJECTS } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface Project {
-  id: number;
+  id: number | string;
   title: string;
   category: string;
   status: 'active' | 'completed' | 'planning';
@@ -29,24 +29,27 @@ interface Project {
   description: string;
   color: string;
   date: string;
+  image: string;
 }
 
 const PROJECT_ICONS: Record<string, any> = {
   'المياه': Droplets,
-  'الإغاثة': Gift,
+  'إغاثة': Gift, 'الإغاثة': Gift,
   'التعليم': BookOpen,
   'التنمية': Heart,
   'بنية تحتية': MapPin,
   'دعوي': BookOpen,
+  'عام': Heart,
 };
 
 const PROJECT_COLORS: Record<string, string> = {
   'المياه': 'cyan',
-  'الإغاثة': 'amber',
+  'إغاثة': 'amber', 'الإغاثة': 'amber',
   'التعليم': 'purple',
   'التنمية': 'emerald',
   'بنية تحتية': 'blue',
   'دعوي': 'rose',
+  'عام': 'emerald',
 };
 
 const CATEGORIES = ["الكل", "المياه", "الإغاثة", "التعليم", "التنمية", "بنية تحتية", "دعوي"];
@@ -63,38 +66,59 @@ const statusConfig = {
   planning: { label: "قيد التخطيط", bg: "bg-amber-50", text: "text-amber-600", dot: "bg-amber-500" },
 };
 
-const colorMap: Record<string, string> = {
-  cyan: "from-cyan-500 to-blue-500",
-  rose: "from-rose-500 to-pink-500",
-  amber: "from-amber-500 to-orange-500",
-  emerald: "from-emerald-500 to-teal-500",
-  blue: "from-blue-500 to-indigo-500",
-  purple: "from-purple-500 to-violet-500",
+const PROJECT_IMAGES: Record<string, string> = {
+  'المياه': '/images/defaults/project-water.svg',
+  'إغاثة': '/images/defaults/project-relief.svg',
+  'الإغاثة': '/images/defaults/project-relief.svg',
+  'التعليم': '/images/defaults/project-education.svg',
+  'التنمية': '/images/defaults/project-development.svg',
+  'بنية تحتية': '/images/defaults/project-relief.svg',
+  'دعوي': '/images/defaults/story-community.svg',
+  'عام': '/images/defaults/project-relief.svg',
 };
 
-// تحويل بيانات SEED_PROJECTS إلى تنسيق الصفحة
+const DEFAULT_PROJECT_IMAGE = '/images/defaults/project-relief.svg';
+
+// Normalize seed data
 function normalizeSeedProjects(): Project[] {
   return SEED_PROJECTS.map((p) => {
     const statusMap: Record<string, Project['status']> = {
-      'active': 'active',
-      'completed': 'completed',
-      'pending': 'planning',
+      'active': 'active', 'completed': 'completed', 'pending': 'planning',
     };
     const category = p.category || 'التنمية';
     return {
-      id: p.id,
-      title: p.title,
-      category,
+      id: p.id, title: p.title, category,
       status: statusMap[p.status] || 'active',
-      progress: p.progress,
-      budget: p.budget,
-      raised: p.budget,
-      beneficiaries: p.beneficiaries,
-      location: p.location,
+      progress: p.progress, budget: p.budget, raised: p.budget,
+      beneficiaries: p.beneficiaries, location: p.location,
       icon: PROJECT_ICONS[category] || Heart,
       description: p.description,
       color: PROJECT_COLORS[category] || 'emerald',
       date: p.date,
+      image: p.image || PROJECT_IMAGES[category] || DEFAULT_PROJECT_IMAGE,
+    };
+  });
+}
+
+// Normalize Sanity/API data
+function normalizeApiProjects(items: any[]): Project[] {
+  return items.map(p => {
+    const category = p.category || 'عام';
+    return {
+      id: p.id || p._id || Math.random(),
+      title: p.title || '',
+      category,
+      status: (p.status || 'active') as Project['status'],
+      progress: p.progress || 0,
+      budget: p.budget ? `${Number(p.budget).toLocaleString('ar')} ر.ي` : 'غير محدد',
+      raised: p.raisedAmount ? `${Number(p.raisedAmount).toLocaleString('ar')} ر.ي` : '0',
+      beneficiaries: p.beneficiaries || '',
+      location: p.location || '',
+      icon: PROJECT_ICONS[category] || Heart,
+      description: p.description || '',
+      color: PROJECT_COLORS[category] || 'emerald',
+      date: p.start_date || '',
+      image: p.image || p.mainImage || PROJECT_IMAGES[category] || DEFAULT_PROJECT_IMAGE,
     };
   });
 }
@@ -105,36 +129,30 @@ export default function ProjectsPage() {
   const [activeStatus, setActiveStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [projects, setProjects] = useState<Project[]>(normalizeSeedProjects());
-  const [loading, setLoading] = useState(false);
+  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
 
   useSEO({
     title: 'مشاريعنا - رحماء بينهم',
     description: 'استعرض مشاريعنا الخيرية والإنسانية والتنموية في اليمن',
   });
 
-  // محاولة جلب البيانات من content-bridge (Sanity) مع fallback للبيانات الثابتة
+  // ContentManager: static instantly → Sanity in background
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
 
-    contentBridge.getContent<any>('impact')
-      .then(() => {
-        if (!cancelled) {
-          // حفظ مشاهدة الصفحة في التحليلات
-        try {
-            analyticsService.generateProjectReport();
-          } catch {
-            // Analytics failure is non-critical
-          }
-          setProjects(normalizeSeedProjects());
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setProjects(normalizeSeedProjects());
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+    contentManager.getProjects().then(result => {
+      if (cancelled) return;
+      if (result.data.length > 0 && result.source !== 'static') {
+        setProjects(normalizeApiProjects(result.data));
+        setContentSource('sanity');
+      } else {
+        setProjects(normalizeSeedProjects());
+        setContentSource('static');
+      }
+      try { analyticsService.generateProjectReport(); } catch {}
+    }).catch(() => {
+      if (!cancelled) setProjects(normalizeSeedProjects());
+    });
 
     return () => { cancelled = true; };
   }, []);
@@ -256,44 +274,45 @@ export default function ProjectsPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {filteredProjects.map((project, i) => {
               const status = statusConfig[project.status];
-              const colorMapLocal: Record<string, string> = {
-                cyan: "from-cyan-500 to-blue-500",
-                rose: "from-rose-500 to-pink-500",
-                amber: "from-amber-500 to-orange-500",
-                emerald: "from-emerald-500 to-teal-500",
-                blue: "from-blue-500 to-indigo-500",
-                purple: "from-purple-500 to-violet-500",
-              };
+              const Icon = project.icon;
 
               return (
-                <motion.div
+                <motion.article
                   key={project.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                  className="group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
                 >
-                  {/* Color header */}
-                  <div className={`h-3 bg-gradient-to-r ${colorMapLocal[project.color]}`} />
-
-                  <div className="p-6">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorMapLocal[project.color]} flex items-center justify-center`}>
-                          <project.icon className="w-6 h-6 text-white" />
+                  {/* Image header - صورة المشروع الافتراضية أو من لوحة التحكم */}
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_PROJECT_IMAGE; }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                    <span className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md ${status.bg} ${status.text}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
+                      {status.label}
+                    </span>
+                    <div className="absolute bottom-4 right-4 left-4 flex items-end justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-11 h-11 shrink-0 rounded-xl bg-white/90 backdrop-blur-sm border border-[var(--brand-gold)]/40 flex items-center justify-center shadow-lg`}>
+                          <Icon className="w-5 h-5 text-[var(--brand-green)]" />
                         </div>
-                        <div>
-                          <h3 className="font-bold text-[var(--foreground)]">{project.title}</h3>
-                          <span className="text-xs text-[var(--muted-foreground)]">{project.category}</span>
-                        </div>
+                        <h3 className="font-bold text-white drop-shadow-md leading-snug line-clamp-1">{project.title}</h3>
                       </div>
-                      <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${status.bg} ${status.text}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
-                        {status.label}
+                      <span className="shrink-0 px-2.5 py-1 rounded-full bg-[var(--brand-gold)]/90 text-white text-xs font-semibold shadow">
+                        {project.category}
                       </span>
                     </div>
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-1">
 
                     {/* Description */}
                     <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed">
@@ -312,29 +331,29 @@ export default function ProjectsPage() {
                           whileInView={{ width: `${project.progress}%` }}
                           viewport={{ once: true }}
                           transition={{ duration: 1, delay: i * 0.1 }}
-                          className={`h-full rounded-full bg-gradient-to-r ${colorMapLocal[project.color]}`}
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-green-light)]"
                         />
                       </div>
                     </div>
 
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-3 mb-4">
-                      <div className="text-center p-2 rounded-lg bg-gray-50">
+                      <div className="text-center p-2 rounded-lg bg-[var(--brand-green-pale)]/50 border border-[var(--brand-green)]/10">
                         <div className="font-bold text-sm text-[var(--foreground)]">{project.beneficiaries}</div>
                         <div className="text-xs text-[var(--muted-foreground)]">مستفيد</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-gray-50">
+                      <div className="text-center p-2 rounded-lg bg-[var(--brand-gold-pale)]/60 border border-[var(--brand-gold)]/15">
                         <div className="font-bold text-sm text-[var(--foreground)]">{project.budget}</div>
                         <div className="text-xs text-[var(--muted-foreground)]">الميزانية</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-gray-50">
+                      <div className="text-center p-2 rounded-lg bg-gray-50 border border-[var(--border)]">
                         <div className="font-bold text-sm text-[var(--foreground)]">{project.raised}</div>
                         <div className="text-xs text-[var(--muted-foreground)]">تم جمعه</div>
                       </div>
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
+                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border)] mt-auto">
                       <div className="flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
                         <MapPin className="w-3.5 h-3.5" />
                         {project.location}
@@ -348,7 +367,7 @@ export default function ProjectsPage() {
                       </button>
                     </div>
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
           </div>
@@ -364,23 +383,32 @@ export default function ProjectsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-20 bg-gradient-to-br from-[var(--brand-green-dark)] via-[var(--brand-green)] to-[var(--brand-green-light)] overflow-hidden">
+        <div className="absolute inset-0 pattern-khatam-white" />
+        <div className="absolute top-0 inset-x-0 h-2 pattern-band-gold" />
+        <div className="container mx-auto px-4 text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">هل تريد دعم مشروعاً؟</h2>
-            <p className="text-white/80 text-lg mb-8">
-              تبرع بمبلغك وساهم في تحقيق المشاريع التي تعنيك
+            <div className="mx-auto mb-6 flex justify-center">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+                <rect x="14" y="14" width="28" height="28" stroke="var(--brand-gold)" strokeWidth="1.5" />
+                <rect x="14" y="14" width="28" height="28" transform="rotate(45 28 28)" stroke="var(--brand-gold)" strokeWidth="1.5" />
+                <circle cx="28" cy="28" r="3" fill="var(--brand-gold)" />
+              </svg>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">كن شريكاً في صناعة الأثر</h2>
+            <p className="text-white/85 text-lg mb-8 leading-relaxed max-w-xl mx-auto">
+              كل مساهمة — مهما صغرت — تتحول في أيدينا إلى مياه تجري، ودرسٌ يُتلقّى، وأسرةٌ تنتج وتكفّل نفسها
             </p>
             <button
               onClick={() => navigate('/donate')}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all hover:-translate-y-0.5"
             >
-              <Heart className="w-5 h-5" fill="white" />
+              <Heart className="w-5 h-5" fill="currentColor" />
               تبرع الآن
             </button>
           </motion.div>

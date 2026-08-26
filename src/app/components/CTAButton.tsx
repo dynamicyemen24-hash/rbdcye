@@ -1,5 +1,5 @@
 // Unified CTA Button Component - Professional Design System
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
 import { forwardRef } from "react";
 

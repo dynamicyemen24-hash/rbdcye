@@ -1,11 +1,12 @@
 // Content Seed Data - صور خيرية ومحتوى تنموي
-// صور بديلة من Unsplash (روابط موثوقة)
-const PLACEHOLDER_BENEFICIARY = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&q=80';
-const PLACEHOLDER_AID = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&q=80';
-const PLACEHOLDER_EDUCATION = 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&q=80';
-const PLACEHOLDER_DEVELOPMENT = 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&q=80';
-const PLACEHOLDER_WATER = 'https://images.unsplash.com/photo-1593113630400-ea4288922497?w=800&h=600&q=80';
-const PLACEHOLDER_TRAINING = 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&q=80';
+// صور افتراضية محلية بهوية المؤسسة (زخارف إسلامية وثقافة يمنية)
+// يمكن استبدالها من لوحة التحكم عبر حقل "رابط الصورة"
+const PLACEHOLDER_BENEFICIARY = '/images/defaults/story-woman.svg';
+const PLACEHOLDER_AID = '/images/defaults/project-relief.svg';
+const PLACEHOLDER_EDUCATION = '/images/defaults/project-education.svg';
+const PLACEHOLDER_DEVELOPMENT = '/images/defaults/project-development.svg';
+const PLACEHOLDER_WATER = '/images/defaults/project-water.svg';
+const PLACEHOLDER_TRAINING = '/images/defaults/story-community.svg';
 
 export const SEED_NEWS_ITEMS = [
   {
@@ -153,18 +154,18 @@ export const SEED_SUCCESS_STORIES = [
     year: '١٤٤٥هـ',
     location: 'صنعاء',
     rating: 5,
-    image: 'https://images.unsplash.com/photo-1542815391-5e04e9682458?w=800&h=600&q=80',
+    image: '/images/defaults/story-quran.svg',
     status: 'PUBLISHED',
   },
 ];
 
 export const SEED_PARTNERS = [
-  { id: '1', name: 'منظمة الإغاثة الخيرية', logo: PLACEHOLDER_BENEFICIARY, type: 'شريك إستراتيجي', status: 'active', url: '#' },
-  { id: '2', name: 'صندوق التنمية البشرية', logo: PLACEHOLDER_AID, type: 'جهة ممولة', status: 'active', url: '#' },
-  { id: '3', name: 'جامعة العلوم والتكنولوجيا', logo: PLACEHOLDER_EDUCATION, type: 'شريك تنفيذي', status: 'active', url: '#' },
-  { id: '4', name: 'هيئة الأعمال الخيرية', logo: PLACEHOLDER_DEVELOPMENT, type: 'شريك داعم', status: 'active', url: '#' },
-  { id: '5', name: 'اللجنة الإغاثية العربية', logo: PLACEHOLDER_TRAINING, type: 'شريك إستراتيجي', status: 'active', url: '#' },
-  { id: '6', name: 'بنك الطعام اليمني', logo: PLACEHOLDER_WATER, type: 'شريك تنفيذي', status: 'active', url: '#' },
+  { id: '1', name: 'منظمة الإغاثة الخيرية', logo: '/images/defaults/partner-1.svg', type: 'شريك إستراتيجي', status: 'active', url: '#' },
+  { id: '2', name: 'صندوق التنمية البشرية', logo: '/images/defaults/partner-2.svg', type: 'جهة ممولة', status: 'active', url: '#' },
+  { id: '3', name: 'جامعة العلوم والتكنولوجيا', logo: '/images/defaults/partner-3.svg', type: 'شريك تنفيذي', status: 'active', url: '#' },
+  { id: '4', name: 'هيئة الأعمال الخيرية', logo: '/images/defaults/partner-4.svg', type: 'شريك داعم', status: 'active', url: '#' },
+  { id: '5', name: 'اللجنة الإغاثية العربية', logo: '/images/defaults/partner-5.svg', type: 'شريك إستراتيجي', status: 'active', url: '#' },
+  { id: '6', name: 'بنك الطعام اليمني', logo: '/images/defaults/partner-6.svg', type: 'شريك تنفيذي', status: 'active', url: '#' },
 ];
 
 export const SEED_IMPACT = {
@@ -189,36 +190,108 @@ export const SEED_MEDIA = [
 ];
 
 export const SEED_DONATIONS = [
-  { id: '1', donor: 'أحمد محمد علي', amount: 500, project: 'الصندوق العام', method: 'card', date: '١٤٤٦/٤/١', status: 'completed' },
-  { id: '2', donor: 'فاطمة عبدالله', amount: 250, project: 'الإغاثة الإنسانية', method: 'mobile', date: '١٤٤٦/٤/٣', status: 'completed' },
-  { id: '3', donor: 'خالد صالح', amount: 1000, project: 'دعم التعليم', method: 'transfer', date: '١٤٤٦/٣/٢٨', status: 'pending' },
-  { id: '4', donor: 'محمد حسين', amount: 100, project: 'مشروع رمضان', method: 'card', date: '١٤٤٦/٣/٢٥', status: 'completed' },
-  { id: '5', donor: 'سارة أحمد', amount: 2000, project: 'الصندوق العام', method: 'transfer', date: '١٤٤٦/٣/٢٠', status: 'completed' },
-  { id: '6', donor: 'عمر حسن', amount: 350, project: 'التنمية المجتمعية', method: 'mobile', date: '١٤٤٦/٣/١٥', status: 'failed' },
+  { id: '1', donor: 'متبرع', amount: 5000, project: 'السلال الغذائية', method: 'card', date: '١٤٤٦/٤/١', status: 'completed' },
+  { id: '2', donor: 'متبرعة', amount: 250, project: 'كفالة الأيتام', method: 'transfer', date: '١٤٤٦/٣/٣٠', status: 'completed' },
+  { id: '3', donor: 'متبرع', amount: 1000, project: 'دعم التعليم', method: 'transfer', date: '١٤٤٦/٣/٢٨', status: 'pending' },
+  { id: '4', donor: 'متبرع', amount: 100, project: 'مشروع رمضان', method: 'card', date: '١٤٤٦/٣/٢٥', status: 'completed' },
+  { id: '5', donor: 'متبرعة', amount: 2000, project: 'الصندوق العام', method: 'transfer', date: '١٤٤٦/٣/٢٠', status: 'completed' },
+  { id: '6', donor: 'متبرع', amount: 350, project: 'التنمية المجتمعية', method: 'mobile', date: '١٤٤٦/٣/١٥', status: 'failed' },
 ];
 
 export const SEED_USER_REQUESTS = [
-  { id: '1', name: 'مؤسسة الخير الدولية', email: 'info@alkhair.org', type: 'منظمة داعمة', message: 'نرغب في الشراكة مع المؤسسة في مشاريع المياه', date: 'منذ يوم', status: 'new' },
-  { id: '2', name: 'محمد عبدالله العريفي', email: 'mohd@email.com', type: 'فاعل خير', message: 'أرغب في التبرع بمبلغ شهري للمؤسسة', date: 'منذ ساعتين', status: 'new' },
-  { id: '3', name: 'جمعية البر والتقوى', email: 'info@albr.org', type: 'منظمة داعمة', message: 'نقترح توقيع مذكرة تفاهم للتعاون المشترك', date: 'منذ ٣ أيام', status: 'read' },
-  { id: '4', name: 'أحمد علي الحميدي', email: 'ahmed@email.com', type: 'فاعل خير', message: 'استفسار عن مشروع كفالة يتيم', date: 'منذ ٥ ساعات', status: 'new' },
-  { id: '5', name: 'هيئة الإغاثة الإسلامية', email: 'info@islamicrelief.org', type: 'منظمة داعمة', message: 'دعوة للمشاركة في مؤتمر الإغاثة الدولي', date: 'منذ أسبوع', status: 'replied' },
+  { id: '1', name: 'منظمة داعمة', email: '', type: 'منظمة داعمة', message: 'نرغب في الشراكة مع المؤسسة في مشاريع المياه', date: 'منذ يوم', status: 'new' },
+  { id: '2', name: 'فاعل خير', email: '', type: 'فاعل خير', message: 'أرغب في التبرع بمبلغ شهري للمؤسسة', date: 'منذ ساعتين', status: 'new' },
+  { id: '3', name: 'منظمة داعمة', email: '', type: 'منظمة داعمة', message: 'نقترح توقيع مذكرة تفاهم للتعاون المشترك', date: 'منذ ٣ أيام', status: 'read' },
+  { id: '4', name: 'فاعل خير', email: '', type: 'فاعل خير', message: 'استفسار عن مشروع كفالة يتيم', date: 'منذ ٥ ساعات', status: 'new' },
+  { id: '5', name: 'منظمة إغاثية', email: '', type: 'منظمة داعمة', message: 'دعوة للمشاركة في مؤتمر الإغاثة الدولي', date: 'منذ أسبوع', status: 'replied' },
 ];
 
 export const SEED_VOLUNTEERS = [
-  { id: '1', name: 'عبدالرحمن النجار', phone: '+٩٦٧ ٧٧٧ ١١١ ٢٢٢', email: 'abdu@email.com', field: 'تعليمي', status: 'active', hours: 120 },
-  { id: '2', name: 'نورة أحمد', phone: '+٩٦٧ ٧٧٧ ٣٣٣ ٤٤٤', email: 'nora@email.com', field: 'صحي', status: 'active', hours: 85 },
-  { id: '3', name: 'سعيد محمد', phone: '+٩٦٧ ٧٧٧ ٥٥٥ ٦٦٦', email: 'saeed@email.com', field: 'إداري', status: 'pending', hours: 0 },
-  { id: '4', name: 'مريم عبدالملك', phone: '+٩٦٧ ٧٧٧ ٧٧٧ ٨٨٨', email: 'maryam@email.com', field: 'إعلامي', status: 'active', hours: 200 },
+  { id: '1', name: 'متطوع', phone: '', email: '', field: 'تعليمي', status: 'active', hours: 120 },
+  { id: '2', name: 'متطوعة', phone: '', email: '', field: 'صحي', status: 'active', hours: 85 },
+  { id: '3', name: 'متطوع', phone: '', email: '', field: 'إداري', status: 'pending', hours: 0 },
+  { id: '4', name: 'متطوعة', phone: '', email: '', field: 'إعلامي', status: 'active', hours: 200 },
 ];
 
 export const SEED_PROJECTS = [
-  { id: 1, title: 'مشروع الكساء الشتوي ١٤٤٦', category: 'إغاثة', status: 'active', beneficiaries: '٢٠٠٠ أسرة', budget: '٣٥٠,٠٠٠ ر.ي', progress: 72, date: '٢٠٢٤-١٠-١', description: 'توزيع كسوة شتوية على الأسر المتضررة من البرد في المناطق المرتفعة', location: 'عدة محافظات' },
-  { id: 2, title: 'مشروع التعليم في الريف', category: 'تعليم', status: 'completed', beneficiaries: '٥٠٠ طالب', budget: '١٨٠,٠٠٠ ر.ي', progress: 100, date: '٢٠٢٤-٨-١', description: 'دعم التعليم في المناطق الريفية النائية بالمحافظات', location: 'حجة، عمران' },
-  { id: 3, title: 'مشروع تمكين المرأة الريفية', category: 'تنمية', status: 'pending', beneficiaries: '١٢٠ سيدة', budget: '٢٢٠,٠٠٠ ر.ي', progress: 15, date: '٢٠٢٤-١١-١', description: 'تمكين المرأة الريفية اقتصادياً عبر التدريب والتأهيل', location: 'تعز، الحديدة' },
-  { id: 4, title: 'مشروع حفر الآبار', category: 'بنية تحتية', status: 'active', beneficiaries: '٣ قرى', budget: '٤٨٠,٠٠٠ ر.ي', progress: 58, date: '٢٠٢٤-٩-١٥', description: 'توفير مياه شرب نظيفة عبر حفر آبار في المناطق المحتاجة', location: 'مأرب، الجوف' },
-  { id: 5, title: 'توزيع السلال الغذائية الرمضانية', category: 'إغاثة', status: 'active', beneficiaries: '٣٠٠٠ أسرة', budget: '٥٠٠,٠٠٠ ر.ي', progress: 90, date: '٢٠٢٤-٣-١', description: 'توزيع سلال غذائية خلال شهر رمضان المبارك', location: 'عدة محافظات' },
-  { id: 6, title: 'برنامج التحفيظ القرآني', category: 'دعوي', status: 'active', beneficiaries: '٨٠٠ طالب', budget: '١٢٠,٠٠٠ ر.ي', progress: 45, date: '٢٠٢٤-٩-١', description: 'حلقات تحفيظ قرآن في المساجد والمراكز', location: 'صنعاء، عدن' },
+  {
+    id: 1,
+    title: 'الكساء الشتوي ١٤٤٦هـ',
+    category: 'إغاثة',
+    status: 'active',
+    beneficiaries: '٢٠٠٠ أسرة',
+    budget: '٣٥٠,٠٠٠ ر.ي',
+    progress: 72,
+    date: '٢٠٢٤-١٠-١',
+    description: 'توفير أغطية وكسوة شتوية دافئة للأسر المتضررة في المناطق الجبلية المرتفعة، حيث تصل درجات الحرارة إلى ما دون الصفر، لحماية الأطفال وكبار السن من قسوة الشتاء.',
+    location: 'عدة محافظات',
+    image: '/images/defaults/project-relief.svg',
+  },
+  {
+    id: 2,
+    title: 'التعليم في الريف',
+    category: 'تعليم',
+    status: 'completed',
+    beneficiaries: '٥٠٠ طالب',
+    budget: '١٨٠,٠٠٠ ر.ي',
+    progress: 100,
+    date: '٢٠٢٤-٨-١',
+    description: 'إعادة إحياء التعليم في القرى النائية عبر تأثيث الفصول وتوزيع الحقائب المدرسية ودعم المعلمين، لضمان استمرار طلاب الريف في مقاعد الدراسة بعد سنوات الانقطاع.',
+    location: 'حجة، عمران',
+    image: '/images/defaults/project-education.svg',
+  },
+  {
+    id: 3,
+    title: 'تمكين المرأة الريفية',
+    category: 'تنمية',
+    status: 'pending',
+    beneficiaries: '١٢٠ سيدة',
+    budget: '٢٢٠,٠٠٠ ر.ي',
+    progress: 15,
+    date: '٢٠٢٤-١١-١',
+    description: 'برنامج تمكين اقتصادي متكامل للمرأة الريفية يشمل التدريب على المشاغل والإدارة المالية، ومنح رواتب أعمال صغيرة تدرّ دخلاً مستداماً يدعم أسرة كاملة.',
+    location: 'تعز، الحديدة',
+    image: '/images/defaults/project-development.svg',
+  },
+  {
+    id: 4,
+    title: 'حفر الآبار الارتوازية',
+    category: 'بنية تحتية',
+    status: 'active',
+    beneficiaries: '٣ قرى',
+    budget: '٤٨٠,٠٠٠ ر.ي',
+    progress: 58,
+    date: '٢٠٢٤-٩-١٥',
+    description: 'حفر وتجهيز آبار ارتوازية مجهزة بمضخات تعمل بالطاقة الشمسية لتأمين مياه شرب نقية دائمة، وإنهاء معاناة النساء والأطفال في قطع مسافات يومية طويلة بحثاً عن الماء.',
+    location: 'مأرب، الجوف',
+    image: '/images/defaults/project-water.svg',
+  },
+  {
+    id: 5,
+    title: 'السلال الغذائية الرمضانية',
+    category: 'إغاثة',
+    status: 'active',
+    beneficiaries: '٣٠٠٠ أسرة',
+    budget: '٥٠٠,٠٠٠ ر.ي',
+    progress: 90,
+    date: '٢٠٢٤-٣-١',
+    description: 'سنة رمضانية تصل إلى الأسر الأشد فقراً والنازحة قبل الإفطار، تحمل كل سلة منها مؤونة شهر كامل من المواد الغذائية الأساسية بجودة عالية ورقابة صارمة.',
+    location: 'عدة محافظات',
+    image: '/images/defaults/project-relief.svg',
+  },
+  {
+    id: 6,
+    title: 'حلقات التحفيظ القرآني',
+    category: 'دعوي',
+    status: 'active',
+    beneficiaries: '٨٠٠ طالب',
+    budget: '١٢٠,٠٠٠ ر.ي',
+    progress: 45,
+    date: '٢٠٢٤-٩-١',
+    description: 'دعم حلقات تحفيظ القرآن الكريم في المساجد والمراكز بحلقات صباحية ومسائية، مع مكافآت تحفيزية للحفظة وتأهيل معلمين متخصصين في التجويد والقراءات.',
+    location: 'صنعاء، عدن',
+    image: '/images/defaults/project-dawah.svg',
+  },
 ];
 
 export const SAFAVI_QIBLA_DIRECTIONS = [

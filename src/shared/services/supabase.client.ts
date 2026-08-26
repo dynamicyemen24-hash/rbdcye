@@ -24,8 +24,8 @@ if (hasSupabaseConfig) {
         },
       },
     });
-  } catch (error) {
-    console.warn('Failed to initialize Supabase client, falling back to IndexedDB');
+  } catch {
+    // Failed to initialize Supabase client, falling back to IndexedDB
   }
 }
 

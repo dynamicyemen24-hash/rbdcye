@@ -1,8 +1,8 @@
 // News Page - صفحة الأخبار
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
-  Newspaper, FolderOpen, Calendar, User, Tag, Search,
-  Filter, TrendingUp, Eye, ArrowLeft, Clock, Globe, BarChart3,
+  Newspaper, FolderOpen, Calendar, Tag, Search,
+  TrendingUp, Eye, ArrowLeft, BarChart3,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,7 @@ import { Skeleton, CardSkeleton } from "@/app/components/Skeleton";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_NEWS_ITEMS, NEWS_CATEGORIES } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
-import { sanityService } from "@/shared/services/sanity.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 function NewsLoadingSkeleton() {
@@ -41,11 +40,11 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [searchQuery, setSearchQuery] = useState("");
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<'static' | 'cache' | 'sanity'>('static');
 
   useSEO({
     title: 'الأخبار - رحماء بينهم',
-    description: 'الأخبار والفعاليات الأخيرة لمؤسسة رحماء بينهم الإنسانية',
+    description: 'الأخبار والفعاليات الأخيرة لـ رحماء بينهم الإنسانية',
     type: 'website',
     url: 'https://rbdcye.org/news',
     image: 'https://rbdcye.org/og-news.png',
@@ -75,39 +74,11 @@ export default function NewsPage() {
 
     const loadNews = async () => {
       try {
-        // محاولة تحميل البيانات من content-bridge (Sanity)
-        const bridgeResult = await contentBridge.getContent<any>('impact');
-        if (bridgeResult.isDynamic) {
-          setContentSource('sanity');
-        }
-
-        // محاولة تحميل الأخبار من Sanity
-        const sanityNews = await sanityService.getNews();
+        // ContentManager returns static defaults instantly, then upgrades to Sanity
+        const result = await contentManager.getNews();
         if (!cancelled) {
-          if (sanityNews.length > 0) {
-            const normalized = sanityNews.map((n: any) => ({
-              id: n._id || n.id,
-              title: n.title,
-              excerpt: n.excerpt,
-              content: n.content,
-              category: n.category,
-              categoryColor: n.categoryColor || '#2563EB',
-              categoryBg: n.categoryBg || '#EFF6FF',
-              date: n.publishDate || n.date,
-              dateEn: n.dateEn,
-              image: n.mainImage ? sanityService.getImageUrl(n.mainImage) : undefined,
-              views: n.views || 0,
-              featured: n.featured || false,
-              status: n.status || 'PUBLISHED',
-              tags: n.tags || [],
-              location: n.location || '',
-            }));
-            setNews(normalized);
-            setContentSource('sanity');
-          } else {
-            setNews(fallback);
-            setContentSource('static');
-          }
+          setNews(result.data);
+          setContentSource(result.source === 'sanity' ? 'sanity' : 'static');
         }
       } catch {
         if (!cancelled) {
@@ -117,7 +88,6 @@ export default function NewsPage() {
       } finally {
         if (!cancelled) {
           setLoading(false);
-          // تسجيل مشاهدة الصفحة في التحليلات
           try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
         }
       }
@@ -153,7 +123,7 @@ export default function NewsPage() {
         icon={Newspaper}
         badge="الأخبار والفعاليات"
         title="آخر الأخبار"
-        subtitle="تابع أخبار مؤسسة رحماء بينهم والفعاليات القادمة، وتعرف على أحدث الإنجازات والمبادرات"
+        subtitle="تابع أخبار رحماء بينهم والفعاليات القادمة، وتعرف على أحدث الإنجازات والمبادرات"
       >
         <StatsGrid
           stats={[
@@ -363,15 +333,6 @@ export default function NewsPage() {
         </div>
       </section>
 
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

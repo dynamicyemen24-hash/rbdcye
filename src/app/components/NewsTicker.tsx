@@ -1,5 +1,5 @@
-// News Ticker Component - الشريط الإخباري العاجل لمؤسسة رحماء بينهم
-import { motion, AnimatePresence } from 'framer-motion';
+// News Ticker Component - الشريط الإخباري العاجل لـ رحماء بينهم
+import { motion, AnimatePresence } from 'motion/react';
 import { Bell, ChevronLeft, Volume2, X, Sparkles, AlertCircle } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,9 +14,9 @@ interface NewsTickerItem {
 
 const TICKER_ITEMS: NewsTickerItem[] = [
   { id: '1', title: 'إطلاق حملة كسوة الشتاء 2025 للأسر المحتاجة والنازحين في تعز ومأرب', badge: 'حملة عاجلة', link: '/donate', isUrgent: true },
-  { id: '2', title: 'افتتاح 10 آبار مياه نقية تعمل بالطاقة الشمسية تفيد أكثر من 1,500 أسرة في مأرب', badge: 'مشروع مياه', link: '/projects' },
-  { id: '3', title: 'تأهيل 15 حلقة قرآنية ومركزاً تعليمياً في المناطق النائية لعام 1446هـ', badge: 'تعليم', link: '/programs' },
-  { id: '4', title: 'توزيع 800 سلة غذائية متكاملة للأسر المتضررة في محافظة تعز', badge: 'إغاثة طارئة', link: '/news' },
+  { id: '2', title: 'افتتاح آبار مياه نقية تعمل بالطاقة الشمسية تفيد أكثر من أسر مستفيدة في مأرب', badge: 'مشروع مياه', link: '/projects' },
+  { id: '3', title: 'تأهيل حلقات تحفيظ ومركزاً تعليمياً في المناطق النائية', badge: 'تعليم', link: '/programs' },
+  { id: '4', title: 'توزيع سلال غذائية متكاملة للأسر المتضررة في محافظة تعز', badge: 'إغاثة طارئة', link: '/news' },
 ];
 
 export const NewsTicker = memo(function NewsTicker() {
@@ -46,7 +46,7 @@ export const NewsTicker = memo(function NewsTicker() {
     >
       <div className="container mx-auto flex items-center justify-between gap-3">
         {/* Ticker Content */}
-        <div className="flex items-center gap-2.5 overflow-hidden flex-1">
+        <div className="flex items-center gap-2.5 overflow-hidden flex-1" aria-live="polite" aria-atomic="true">
           <span className={`px-2 py-0.5 rounded-full text-[0.65rem] font-bold flex items-center gap-1 shrink-0 ${
             currentItem.isUrgent 
               ? 'bg-red-500 text-white animate-pulse' 
@@ -84,6 +84,7 @@ export const NewsTicker = memo(function NewsTicker() {
             onClick={() => setIsVisible(false)}
             className="text-white/60 hover:text-white p-0.5 rounded hover:bg-white/10 transition-colors"
             title="إغلاق الشريط"
+            aria-label="إغلاق الشريط الإخباري"
           >
             <X className="w-3.5 h-3.5" />
           </button>

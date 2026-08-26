@@ -111,10 +111,9 @@
   gap: 1rem;
   padding: 0.75rem 1.5rem;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-logo-container:hover {
@@ -248,7 +247,7 @@
   font-size: 1.125rem;
   border: none;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-gold);
   position: relative;
   overflow: hidden;
@@ -278,14 +277,13 @@
   gap: 0.5rem;
   padding: 1rem 2rem;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 0.875rem;
   font-weight: 600;
   font-size: 1.125rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .hero-cta-secondary:hover {
@@ -303,7 +301,6 @@
   margin: 0 auto;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
   border-radius: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
 }

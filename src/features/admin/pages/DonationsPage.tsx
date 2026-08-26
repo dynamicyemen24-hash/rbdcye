@@ -1,9 +1,9 @@
 // DonationsPage - إدارة التبرعات
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Heart, RefreshCw, Eye, Trash2, DollarSign, TrendingUp, CheckCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-import { query, donationsQueries } from '@/lib/postgres';
+import { donationsQueries } from '@/lib/postgres';
 
 interface Donation {
   id: number;
@@ -30,7 +30,7 @@ export default function DonationsPage() {
   const fetchDonations = async () => {
     setLoading(true);
     try {
-      const result = await query(donationsQueries.findAll, [100, 0]);
+      const result = await donationsQueries.findAll(100, 0);
       const data = result.rows || [];
       setDonations(data);
       
@@ -54,7 +54,7 @@ export default function DonationsPage() {
 
   const updateStatus = async (id: number, status: string) => {
     try {
-      await query(donationsQueries.updateStatus, [status, id]);
+      await donationsQueries.updateStatus(String(id), status);
       fetchDonations();
     } catch (err) {
       console.error('Error updating donation:', err);

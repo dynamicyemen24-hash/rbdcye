@@ -5,12 +5,10 @@ import {
   X,
   Search,
   Zap,
-  Layers,
   Compass,
   Eye,
   ArrowRight,
   Sparkles,
-  Command,
 } from 'lucide-react';
 import { ShortcutDefinition } from '@/hooks/useKeyboardShortcuts';
 

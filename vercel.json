@@ -1,49 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/admin/studio/(.*)",
-      "dest": "/admin/studio/index.html"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/admin/(.*)",
-      "dest": "/index.html"
-    }
-  ],
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/admin/studio/:path*", "destination": "/index.html" },
     { "source": "/admin/:path*", "destination": "/index.html" },
-    { "source": "/api/sanity-revalidate", "destination": "/api/sanity-revalidate.js" },
-    { "source": "/api/create-checkout-session", "destination": "/api/create-checkout-session.js" },
-    { "source": "/api/donations", "destination": "/api/donations.js" },
-    { "source": "/api/contact", "destination": "/api/contact.js" },
-    { "source": "/api/notifications", "destination": "/api/notifications.js" },
-    { "source": "/api/notifications/subscribe", "destination": "/api/notifications/subscribe.js" },
-    { "source": "/api/subscribers", "destination": "/api/subscribers.js" },
-    { "source": "/api/volunteers", "destination": "/api/volunteers.js" },
-    { "source": "/api/erp", "destination": "/api/erp.js" },
-    { "source": "/api/database", "destination": "/api/database.js" },
-    { "source": "/api/impact/counters", "destination": "/api/erp.js?endpoint=counters" },
-    { "source": "/api/projects/active", "destination": "/api/erp.js?endpoint=projects" },
-    { "source": "/api/donations/total", "destination": "/api/erp.js?endpoint=donations-total" },
-    { "source": "/api/beneficiaries/stats", "destination": "/api/erp.js?endpoint=beneficiaries" },
-    { "source": "/api/partners/list", "destination": "/api/erp.js?endpoint=partners" },
-    { "source": "/api/donations/create", "destination": "/api/erp.js?endpoint=create-donation" },
-    { "source": "/api/volunteers/register", "destination": "/api/erp.js?endpoint=register-volunteer" },
-    { "source": "/api/partnerships/request", "destination": "/api/erp.js?endpoint=partnership" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
@@ -61,10 +23,7 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), payment=(self), usb=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://cdn.sanity.io https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob: https://images.unsplash.com https://cdn.sanity.io; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self';" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
-        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" }
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
     },
     {
@@ -84,20 +43,9 @@
     }
   ],
   "env": {
-    "VITE_SANITY_PROJECT_ID": "v212wi4if2y5sbvsz3fy1qy3",
+    "VITE_SANITY_PROJECT_ID": "xd0ohyiz",
     "VITE_SANITY_DATASET": "production",
-    "VITE_SANITY_API_VERSION": "@vite_sanity_api_version",
-    "VITE_SUPABASE_URL": "@vite_supabase_url",
-    "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key",
-    "VITE_STRIPE_PUBLISHABLE_KEY": "@vite_stripe_publishable_key",
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "DATABASE_URL": "@neon_database_url",
-    "SANITY_STUDIO_REVALIDATE_SECRET": "@sanity_studio_revalidate_secret",
-    "VITE_VAPID_PUBLIC_KEY": "@vite_vapid_public_key",
-    "DATABASE_API_SECRET": "@database_api_secret",
-    "EMAIL_API_KEY": "@email_api_key",
-    "EMAIL_FROM": "@email_from",
-    "CORS_ORIGIN": "https://rbdcye.org,https://www.rbdcye.org",
+    "VITE_SANITY_API_VERSION": "2026-02-01",
     "VITE_APP_URL": "https://rbdcye.org"
   }
 }

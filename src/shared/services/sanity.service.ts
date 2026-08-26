@@ -1,19 +1,10 @@
 // Sanity Service - Client for fetching content from Sanity CMS
-import { createClient } from '@sanity/client';
+import { sanityClient } from '@/sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'xd0ohyiz';
-const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
-const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || '2024-01-01';
-
-const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: true,
-});
+const client = sanityClient;
 
 const builder = imageUrlBuilder(client);
 

@@ -1,4 +1,4 @@
-// Unified Development Sectors & Linked Impact Showcase Data
+﻿// Unified Development Sectors & Linked Impact Showcase Data
 // بيانات القطاعات التنموية والمشاريع وقصص النجاح الموحدة
 
 export interface SectorProject {
@@ -70,7 +70,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 88,
         location: 'تعز، الحديدة، مأرب',
         status: 'جارٍ التنفيذ',
-        image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&q=80'
+        image: '/images/defaults/sector-relief.svg'
       },
       {
         id: 'p-relief-2',
@@ -81,7 +81,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 75,
         location: 'مأرب والحديدة',
         status: 'جارٍ التنفيذ',
-        image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&q=80'
+        image: '/images/defaults/project-infrastructure.svg'
       }
     ],
     stories: [
@@ -92,7 +92,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         quote: 'بفضل السلال الغذائية المنتظمة، استعادت أسرتي استقرارها ولم نعد نخشى تأمين قوت يومنا.',
         transformationBadge: 'استقرار معيشي موثق',
         location: 'مخيمات تعز',
-        image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&q=80'
+        image: '/images/defaults/story-woman.svg'
       }
     ]
   },
@@ -105,7 +105,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
     iconName: 'Users',
     themeColor: '#0F4C3A',
     themeBg: '#ECFDF5',
-    summary: 'يعمل القطاع على توفير أدوات الإنتاج، وتمويل الورش والورش الصغيرة، وتمكين النساء المعيلات من إمساك زمام زمام الاستقلال المالي والكرامة المعيشية.',
+    summary: 'يعمل القطاع على توفير أدوات الإنتاج، وتمويل الورش والمشاريع الصغيرة، وتمكين النساء المعيلات من الإمساك بزمام استقلالهن المالي واستعادة كرامتهن المعيشية.',
     impactMetrics: {
       totalBeneficiaries: '٢,٨٠٠+',
       completedProjects: 70,
@@ -122,7 +122,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 92,
         location: 'صنعاء وعدن',
         status: 'جارٍ التنفيذ',
-        image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&q=80'
+        image: '/images/defaults/sector-empowerment.svg'
       },
       {
         id: 'p-empower-2',
@@ -133,7 +133,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 80,
         location: 'إب وحجة',
         status: 'جارٍ التنفيذ',
-        image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&q=80'
+        image: '/images/defaults/sector-agriculture.svg'
       }
     ],
     stories: [
@@ -144,7 +144,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         quote: 'امتلاكي لمكينة الخياطة منحني القدرة على إعالة أطفالي الأربعة وتأمين مصاريف دراستهم بكرامة.',
         transformationBadge: 'اكتفاء ذاتي مستدام',
         location: 'محافظة صنعاء',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&q=80'
+        image: '/images/defaults/story-woman.svg'
       }
     ]
   },
@@ -174,7 +174,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 85,
         location: 'المحافظات النائية',
         status: 'جارٍ التنفيذ',
-        image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&q=80'
+        image: '/images/defaults/sector-education.svg'
       }
     ],
     stories: [
@@ -185,7 +185,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         quote: 'بفضل الدعم المستمر والتكفل بمستلزماتي، واصلت دراستي وتأهلت للترتيب الأول في مدرستي.',
         transformationBadge: 'تفوق علمي موثق',
         location: 'محافظة تعز',
-        image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&q=80'
+        image: '/images/defaults/story-default.svg'
       }
     ]
   },
@@ -215,7 +215,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         progressPercentage: 90,
         location: 'جوامع ومراكز اليمن',
         status: 'مستمر',
-        image: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&h=600&q=80'
+        image: '/images/defaults/sector-dawah.svg'
       }
     ],
     stories: [
@@ -226,7 +226,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         quote: 'الالتحاق بحلقة التحفيظ المكفولة أتاح لي حفظ القرآن كاملاً وأصلح مسار حياتي العلمية.',
         transformationBadge: 'إتمام القرآن الكريم',
         location: 'محافظة إب',
-        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=600&q=80'
+        image: '/images/defaults/story-man.svg'
       }
     ]
   }

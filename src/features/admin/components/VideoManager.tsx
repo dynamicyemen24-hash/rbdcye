@@ -1,5 +1,5 @@
 // VideoManager - نظام إدارة الفيديو المتكامل من لوحة التحكم
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import {
   Video, Play, Pause, Volume2, VolumeX, RefreshCw,
   CheckCircle, AlertCircle, ExternalLink, Settings,
@@ -104,7 +104,7 @@ export const VideoManager = () => {
     { label: 'إجمالي الفيديوهات', value: stats.total, color: 'text-blue-600', bg: 'bg-blue-100', icon: Video },
     { label: 'منشور', value: stats.published, color: 'text-emerald-600', bg: 'bg-emerald-100', icon: CheckCircle },
     { label: 'مميز', value: stats.featured, color: 'text-amber-600', bg: 'bg-amber-100', icon: Eye },
-    { label: 'قصة المؤسسة', value: stats.story, color: 'text-purple-600', bg: 'bg-purple-100', icon: Heart },
+    { label: 'قصة رحماء بينهم', value: stats.story, color: 'text-purple-600', icon: Heart },
   ];
 
   const openSanityStudio = () => {

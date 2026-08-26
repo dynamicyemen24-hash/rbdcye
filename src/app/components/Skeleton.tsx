@@ -1,5 +1,5 @@
 // Skeleton Components for Loading States - Enhanced with shimmer effect
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 interface SkeletonProps {
   width?: string | number;

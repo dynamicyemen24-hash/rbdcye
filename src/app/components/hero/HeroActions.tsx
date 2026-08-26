@@ -78,7 +78,7 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
         <div className="mt-2.5 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] font-bold text-slate-500 font-cairo">
           <div className="flex items-center gap-1.5 text-[#0F4C3A]">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>تبرعات رسمية وموثوقة ١٠٠٪</span>
+            <span>تبرعات رسمية وموثوقة</span>
           </div>
           <div className="flex items-center gap-1.5 text-slate-600">
             <Sparkles className="w-3.5 h-3.5 text-[#8F6A1A]" />

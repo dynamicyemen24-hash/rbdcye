@@ -1,6 +1,8 @@
 // Unified Page Header Component - Professional Design System
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
+
+import { IslamicPattern, IslamicDivider } from "@/app/components/decor/IslamicPattern";
 
 interface PageHeaderProps {
   icon: LucideIcon;
@@ -29,9 +31,11 @@ export function PageHeader({
     }}>
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
+        <IslamicPattern variant="khatam" style={{ color: "var(--brand-green)", opacity: 0.05 }} />
+        <IslamicPattern variant="arabesque" style={{ color: "var(--brand-gold)", opacity: 0.06, maskImage: "linear-gradient(to bottom, black 0%, transparent 70%)", WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 70%)" }} />
+        <div
           className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-[0.03]"
-          style={{ 
+          style={{
             background: 'radial-gradient(circle, var(--brand-green) 0%, transparent 70%)',
             filter: 'blur(60px)'
           }}
@@ -84,19 +88,20 @@ export function PageHeader({
           </div>
 
           {/* Title with consistent typography */}
-          <h1 
+          <h1
             className="mb-6"
-            style={{ 
-              fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
+            style={{
+              fontSize: 'var(--fs-h1)',
               fontWeight: 800,
-              lineHeight: 1.2,
+              lineHeight: 'var(--lh-heading)',
               color: 'var(--foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              letterSpacing: '-0.02em'
+              fontFamily: 'Cairo, sans-serif'
             }}
           >
             {title}
           </h1>
+
+          <IslamicDivider tone="gold" className="mb-6" />
 
           {/* Subtitle with consistent styling */}
           <p 

@@ -39,7 +39,7 @@ export async function queryWithRetry<T = any>(
       return result;
     } catch (error) {
       lastError = error as Error;
-      console.warn(`Sanity query attempt ${attempt + 1} failed:`, error);
+      // Retry with exponential backoff
       
       // Wait before retry with exponential backoff
       if (attempt < maxRetries - 1) {

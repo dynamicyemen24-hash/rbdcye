@@ -24,7 +24,7 @@ export function HeroStats({ metrics }: HeroStatsProps) {
               <span>مستفيد ميداني</span>
             </div>
             <div className="text-slate-950 font-black font-cairo text-2xl sm:text-3xl lg:text-4xl">
-              {formatStat(metrics?.totalBeneficiaries, "١٥٠,٠٠٠+")}
+              {formatStat(metrics?.totalBeneficiaries, "آلاف المستفيدين")}
             </div>
           </div>
           <div className="w-13 h-13 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
@@ -39,7 +39,7 @@ export function HeroStats({ metrics }: HeroStatsProps) {
               <span>مشروع تنموي</span>
             </div>
             <div className="text-slate-950 font-black font-cairo text-2xl sm:text-3xl lg:text-4xl">
-              {formatStat(metrics?.activeProjects, "٣٤٥+")}
+              {formatStat(metrics?.activeProjects, "مشاريع تنموية")}
             </div>
           </div>
           <div className="w-13 h-13 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center shrink-0">
@@ -54,7 +54,7 @@ export function HeroStats({ metrics }: HeroStatsProps) {
               <span>شريك استراتيجي</span>
             </div>
             <div className="text-slate-950 font-black font-cairo text-2xl sm:text-3xl lg:text-4xl">
-              {formatStat(metrics?.totalPartners, "٢٨+")}
+              {formatStat(metrics?.totalPartners, "شركاء استراتيجيون")}
             </div>
           </div>
           <div className="w-13 h-13 rounded-2xl bg-teal-100 text-teal-900 flex items-center justify-center shrink-0">

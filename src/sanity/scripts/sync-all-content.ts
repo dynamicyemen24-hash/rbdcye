@@ -97,8 +97,8 @@ class ContentSync {
       
       console.log(`    ✅ تم رفع الصورة: ${asset._id}`);
       return imageRef;
-    } catch (error) {
-      console.warn(`  ⚠️ فشل رفع الصورة ${imageUrl}:`, error);
+    } catch {
+      // Failed to upload image, return placeholder
       // Return a placeholder or use original URL as reference
       return `placeholder-for-${docId || Date.now()}`;
     }

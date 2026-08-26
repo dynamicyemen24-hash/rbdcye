@@ -75,7 +75,7 @@ export function Logo({ size = "md", variant = "navbar", onClick }: LogoProps) {
       <div className="text-right">
         <div
           className={`${variants.textColor} font-bold leading-tight ${sizes.text}`}
-          style={{ fontFamily: "Cairo, sans-serif", letterSpacing: "-0.02em" }}
+          style={{ fontFamily: "Cairo, sans-serif" }}
         >
           رحماء بينهم
         </div>

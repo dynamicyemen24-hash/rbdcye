@@ -12,10 +12,10 @@
  * - Dark/Light mode support
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Play, Pause, Volume2, VolumeX, Maximize2, Minimize2,
-  ChevronLeft, ChevronRight, SkipForward, Settings, Eye, Heart, X
+  Play, Pause, Volume2, VolumeX, Minimize2,
+  ChevronLeft, Settings, Eye, X
 } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, memo } from 'react';
 
@@ -37,7 +37,7 @@ const ResizableFrame = memo(({
   height, 
   onResize 
 }: ResizableFrameProps) => {
-  const [isResizing, setIsResizing] = useState(false);
+  const [_isResizing, setIsResizing] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -108,10 +108,10 @@ export const ProfessionalMediaViewer = memo(({
 }: { options?: Partial<MediaViewerOptions> } = {}) => {
   // الخيارات الافتراضية
   const {
-    autoPlay = false,
+    autoPlay: _autoPlay = false,
     showSidebar = true,
     sidebarViewMode = 'expanded',
-    theme = 'charity',
+    theme: _theme = 'charity',
     enableKeyboardNav = true,
     enableMouseWheel = true,
     enableSwipe = true,
@@ -137,8 +137,8 @@ export const ProfessionalMediaViewer = memo(({
   const [volume, setVolume] = useState(1);
 
   // البحث والتصفية
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<'all' | 'image' | 'video'>('all');
+  const [searchTerm] = useState('');
+  const [selectedType] = useState<'all' | 'image' | 'video'>('all');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsTimeout = useRef<ReturnType<typeof setTimeout>>();

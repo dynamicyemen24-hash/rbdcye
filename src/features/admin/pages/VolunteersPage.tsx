@@ -1,9 +1,9 @@
 // VolunteersPage - إدارة المتطوعين
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Users, RefreshCw, Eye, Trash2, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-import { query, volunteersQueries } from '@/lib/postgres';
+import { volunteersQueries } from '@/lib/postgres';
 
 interface Volunteer {
   id: number;
@@ -25,7 +25,7 @@ export default function VolunteersPage() {
   const fetchVolunteers = async () => {
     setLoading(true);
     try {
-      const result = await query(volunteersQueries.findAll, [100, 0]);
+      const result = await volunteersQueries.findAll(100, 0);
       setVolunteers(result.rows || []);
     } catch (err) {
       console.error('Error fetching volunteers:', err);
@@ -40,7 +40,7 @@ export default function VolunteersPage() {
 
   const updateStatus = async (id: number, status: string) => {
     try {
-      await query(volunteersQueries.updateStatus, [status, id]);
+      await volunteersQueries.updateStatus(String(id), status);
       fetchVolunteers();
     } catch (err) {
       console.error('Error updating volunteer:', err);

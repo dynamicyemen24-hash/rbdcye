@@ -250,19 +250,15 @@ class PaymentGatewayService {
   }
 
   private async handleBankTransfer(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
-    const bankDetails = {
-      bank: 'البنك الإسلامي',
-      accountName: 'مؤسسة رحماء بينهم الخيرية',
-      accountNumber: 'SA0380000000608010167515',
-      iban: 'SA0380000000608010167515',
-      swiftCode: 'ISAMSAXXXX',
-    };
-
+    // ⚠️ بيانات الحساب البنكي يجب أن تأتي من الخادم فقط — لا تُخزَّن في الكود الأمامي
     return {
       ...base,
       status: 'pending',
       confirmationCode: `BNK_${base.transactionId}`,
-      metadata: { bankDetails },
+      metadata: {
+        message: 'يرجى التواصل مع المؤسسة للحصول على التفاصيل البنكية',
+        contactEmail: 'info@rbdcye.org',
+      },
     };
   }
 
@@ -273,7 +269,7 @@ class PaymentGatewayService {
       confirmationCode: `CSH_${base.transactionId}`,
       metadata: {
         message: 'يرجى التواصل مع المؤسسة لتنسيق استلام التبرع النقدي',
-        phone: '+968-777888194',
+        contactEmail: 'info@rbdcye.org',
       },
     };
   }
@@ -361,24 +357,6 @@ class PaymentGatewayService {
     };
   }
 }
-
-// Bank account details for direct transfers
-export const BANK_ACCOUNTS = [
-  {
-    bank: 'البنك الإسلامي',
-    accountName: 'مؤسسة رحماء بينهم الخيرية',
-    accountNumber: 'SA0380000000608010167515',
-    iban: 'SA0380000000608010167515',
-    swiftCode: 'ISAMSAXXXX',
-    currency: 'SAR',
-  },
-  {
-    bank: 'البنك اليمني للإنشاء والتعمير',
-    accountName: 'مؤسسة رحماء بينهم الخيرية',
-    accountNumber: 'YER-123456789',
-    currency: 'YER',
-  },
-];
 
 // Zakat calculation
 export function calculateZakat(amount: number, assetType: 'cash' | 'gold' | 'silver' | 'business' | 'stocks' = 'cash'): number {

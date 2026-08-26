@@ -1,4 +1,18 @@
+# robots.txt for rbdcye.org
+# Allowed crawlers
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /donor/
+Disallow: /login
 
+# Sitemap
 Sitemap: https://rbdcye.org/sitemap.xml
+
+# Crawl-delay for polite bots
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 2

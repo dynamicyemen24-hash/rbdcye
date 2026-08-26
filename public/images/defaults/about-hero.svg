@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#08251B"/><stop offset=".55" stop-color="#0A3527"/><stop offset="1" stop-color="#0F4C3A"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#071F17"/><stop offset="1" stop-color="#051711"/>
+    </linearGradient>
+    <pattern id="kh" width="96" height="96" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#C69E5A" stroke-opacity=".09"><rect x="27" y="27" width="42" height="42"/><rect x="27" y="27" width="42" height="42" transform="rotate(45 48 48)"/></g>
+    </pattern>
+  </defs>
+  <rect width="1600" height="640" fill="url(#sky)"/>
+  <rect width="1600" height="640" fill="url(#kh)"/>
+  <!-- big khatam star, upper left -->
+  <g transform="rotate(45 210 170)" opacity=".85">
+    <rect x="150" y="110" width="120" height="120" fill="none" stroke="#C69E5A" stroke-width="2.5"/>
+  </g>
+  <rect x="150" y="110" width="120" height="120" fill="none" stroke="#C69E5A" stroke-width="2.5"/>
+  <circle cx="210" cy="170" r="8" fill="#C69E5A"/>
+  <!-- small stars right -->
+  <g fill="none" stroke="#C69E5A" stroke-width="2" opacity=".6">
+    <rect x="1330" y="90" width="70" height="70"/>
+    <rect x="1330" y="90" width="70" height="70" transform="rotate(45 1365 125)"/>
+    <rect x="1460" y="190" width="46" height="46"/>
+    <rect x="1460" y="190" width="46" height="46" transform="rotate(45 1483 213)"/>
+  </g>
+  <!-- crescent -->
+  <path d="M1180 96 a44 44 0 1 0 44 62 a36 36 0 1 1 -44 -62 Z" fill="#C69E5A" opacity=".9"/>
+  <!-- Sana'a style tower houses silhouette -->
+  <g fill="#04140E">
+    <path d="M60 640 V420 h110 l14 -34 14 34 h96 v220 Z"/>
+    <rect x="88" y="452" width="26" height="40" rx="13" fill="#0F4C3A"/>
+    <rect x="140" y="452" width="26" height="40" rx="13" fill="#0F4C3A"/>
+    <rect x="98" y="520" width="80" height="12" fill="#123B2C"/>
+    <path d="M320 640 V380 h130 V340 l20 -48 20 48 v40 h130 v260 Z"/>
+    <rect x="356" y="416" width="30" height="46" rx="15" fill="#0F4C3A"/>
+    <rect x="414" y="416" width="30" height="46" rx="15" fill="#0F4C3A"/>
+    <rect x="472" y="416" width="30" height="46" rx="15" fill="#0F4C3A"/>
+    <rect x="360" y="500" width="180" height="14" fill="#123B2C"/>
+    <rect x="376" y="548" width="148" height="12" fill="#123B2C"/>
+    <!-- mosque with dome + minarets -->
+    <path d="M640 640 V520 h240 v120 Z"/>
+    <path d="M700 520 a60 52 0 0 1 120 0 Z"/>
+    <path d="M753 430 a13 13 0 1 0 13 19 a11 11 0 1 1 -13 -19 Z" fill="#C69E5A"/>
+    <rect x="757" y="440" width="6" height="30" fill="#04140E"/>
+    <rect x="652" y="400" width="22" height="220" fill="#04140E"/>
+    <circle cx="663" cy="392" r="14" fill="#04140E"/>
+    <circle cx="663" cy="392" r="5" fill="#C69E5A"/>
+    <rect x="846" y="400" width="22" height="220" fill="#04140E"/>
+    <circle cx="857" cy="392" r="14" fill="#04140E"/>
+    <circle cx="857" cy="392" r="5" fill="#C69E5A"/>
+    <path d="M940 640 V430 h150 l16 -38 16 38 h108 v210 Z"/>
+    <rect x="976" y="462" width="28" height="42" rx="14" fill="#0F4C3A"/>
+    <rect x="1032" y="462" width="28" height="42" rx="14" fill="#0F4C3A"/>
+    <rect x="1090" y="462" width="28" height="42" rx="14" fill="#0F4C3A"/>
+    <rect x="968" y="540" width="230" height="12" fill="#123B2C"/>
+    <path d="M1270 640 V450 h100 l12 -30 12 30 h86 v190 Z"/>
+    <rect x="1300" y="482" width="24" height="36" rx="12" fill="#0F4C3A"/>
+    <rect x="1350" y="482" width="24" height="36" rx="12" fill="#0F4C3A"/>
+    <rect x="1310" y="550" width="120" height="10" fill="#123B2C"/>
+  </g>
+  <rect y="616" width="1600" height="24" fill="url(#ground)"/>
+</svg>

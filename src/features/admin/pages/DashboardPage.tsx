@@ -1,7 +1,7 @@
 // Admin Dashboard Page - Real-time Statistics
 // Professional Dashboard with Live Data
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Heart, MessageSquare, TrendingUp, Users, Video, ExternalLink, Volume2, VolumeX } from 'lucide-react';
 import { useEffect, useState } from 'react';
 

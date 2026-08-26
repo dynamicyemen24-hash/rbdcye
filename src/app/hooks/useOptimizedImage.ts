@@ -18,7 +18,7 @@ interface UseOptimizedImageResult {
 
 export function useOptimizedImage({
   src,
-  alt = '',
+  alt: _alt = '',
   placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3C/svg%3E',
   threshold = 0.1,
   rootMargin = '50px',
@@ -35,7 +35,7 @@ export function useOptimizedImage({
     setError(null);
   }, []);
 
-  const handleError = useCallback(() => {
+  const _handleError = useCallback(() => {
     setIsLoading(false);
     setIsError(true);
     setError(new Error(`Failed to load image: ${src}`));
@@ -107,6 +107,16 @@ export function createOptimizedImageSrc(src: string, width: number, quality = 80
   }
 
   return src;
+}
+
+export function createOptimizedImageSrcset(src: string, widths: number[] = [300, 600, 900, 1200], quality = 80): string {
+  if (!src) return '';
+
+  const validUrls = widths
+    .filter((w) => w > 0)
+    .map((w) => `${createOptimizedImageSrc(src, w, quality)} ${w}w`);
+  
+  return validUrls.join(', ');
 }
 
 export function preloadImage(src: string): Promise<void> {

@@ -1,5 +1,5 @@
 // Transparency Page - صفحة الشفافية
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   Shield, FileText, BarChart3, Eye, Award, TrendingUp, 
   Users, DollarSign, CheckCircle, Download, Search,
@@ -76,7 +76,7 @@ const GOVERNANCE_BODIES = [
   {
     title: "مجلس الإدارة",
     members: "7 أعضاء",
-    desc: "يتولى رسم السياسات العامة والإشراف على أداء المؤسسة",
+    desc: "يتولى رسم السياسات العامة والإشراف على أداء رحماء بينهم",
   },
   {
     title: "اللجنة التنفيذية",
@@ -125,7 +125,7 @@ export default function TransparencyPage() {
 
   useSEO({
     title: 'الشفافية - رحماء بينهم',
-    description: 'الشفافية والحوكمة في مؤسسة رحماء بينهم - التقارير المالية والإدارية',
+    description: 'الشفافية والحوكمة في رحماء بينهم - التقارير المالية والإدارية',
   });
 
   const filteredReports = REPORTS.filter((report) => {
@@ -160,7 +160,7 @@ export default function TransparencyPage() {
             </h1>
             
             <p className="text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto leading-relaxed mb-8">
-              نؤمن في مؤسسة رحماء بينهم بأن الشفافية هي أساس الثقة. 
+               نؤمن في رحماء بينهم بأن الشفافية هي أساس الثقة.
               نلتزم بأعلى معايير الإفصاح والحوكمة لضمان وصول تبرعاتكم إلى مستحقيها.
             </p>
 
@@ -356,7 +356,7 @@ export default function TransparencyPage() {
                     <span>•</span>
                     <span>{report.pages} صفحة</span>
                   </div>
-                  <button className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
+                  <button onClick={() => alert('سيتم إضافة رابط التحميل قريباً')} className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
                     <Download className="w-4 h-4" />
                     تحميل
                   </button>

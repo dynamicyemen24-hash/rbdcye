@@ -1,28 +1,28 @@
 // Enterprise Advanced Security System
 
+import DOMPurify from 'dompurify';
+
 // ============================================================
 // 1. Input Sanitization
 // ============================================================
 class InputSanitizer {
   static sanitizeHTML(html: string): string {
-    const dangerousTags = ['script', 'iframe', 'object', 'embed'];
-    let sanitized = html;
-    
-    dangerousTags.forEach(tag => {
-      const regex = new RegExp(`<${tag}[^>]*>.*?</${tag}>`, 'gi');
-      sanitized = sanitized.replace(regex, '');
+    return DOMPurify.sanitize(html, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'blockquote'],
+      ALLOWED_ATTR: ['href', 'target', 'rel'],
     });
-
-    return sanitized;
   }
 
   static sanitizeXSS(input: string): string {
+    return DOMPurify.sanitize(input, { ALLOWED_TAGS: [] });
+  }
+
+  static sanitizeText(input: string): string {
     return input
-      .replace(/&/g, '&')
-      .replace(/</g, '<')
-      .replace(/>/g, '>')
-      .replace(/"/g, '"')
-      .replace(/'/g, '&#x27;');
+      .replace(/[<>{}[\]\\]/g, '')
+      .replace(/javascript:/gi, '')
+      .replace(/on\w+\s*=/gi, '')
+      .trim();
   }
 }
 

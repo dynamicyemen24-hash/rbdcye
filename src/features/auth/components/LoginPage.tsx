@@ -110,14 +110,16 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 p-4 bg-[var(--brand-gold-pale)] rounded-xl">
-          <p className="text-[var(--brand-gold)]" style={{ fontSize: "0.75rem", fontWeight: 600 }}>
-            بيانات تجريبية:
-          </p>
-          <p className="text-[var(--muted-foreground)] mt-1" style={{ fontSize: "0.75rem" }}>
-            admin@rbdcye.org / admin123
-          </p>
-        </div>
+        {import.meta.env.DEV && (
+          <div className="mt-6 p-4 bg-[var(--brand-gold-pale)] rounded-xl">
+            <p className="text-[var(--brand-gold)]" style={{ fontSize: "0.75rem", fontWeight: 600 }}>
+              بيانات تجريبية:
+            </p>
+            <p className="text-[var(--muted-foreground)] mt-1" style={{ fontSize: "0.75rem" }}>
+              admin@rbdcye.org / admin123
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ pages_build_output_dir = "dist"
 enabled = true
 
 [vars]
-VITE_APP_NAME = "منصة رحماء بينهم"
+VITE_APP_NAME = "رحماء بينهم"
 VITE_SANITY_PROJECT_ID = "xd0ohyiz"
 VITE_SANITY_DATASET = "production"
 VITE_SANITY_API_VERSION = "2026-01-01"

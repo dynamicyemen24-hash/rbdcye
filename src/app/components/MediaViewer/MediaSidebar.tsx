@@ -3,7 +3,7 @@
  * Smart Media Sidebar with Virtual Scrolling
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Search, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef, useEffect, memo, useMemo } from 'react';
 

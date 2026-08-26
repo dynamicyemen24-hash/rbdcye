@@ -25,7 +25,7 @@ export function useRealtimeMessages() {
           if (Notification.permission === 'granted') {
             new Notification('📩 رسالة جديدة', {
               body: `من: ${payload.new.name}`,
-              icon: '/logo.svg',
+              icon: '/favicon.svg',
             });
           }
         }
@@ -44,7 +44,7 @@ export function useRealtimeMessages() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      supabase?.removeChannel(channel);
     };
   }, []);
 

@@ -1,5 +1,6 @@
 // Notifications API - Enterprise Grade Implementation
 import { query } from './database.js';
+import { verifyToken } from './auth.js';
 
 /**
  * Build SQL query with filters - Type-safe query builder
@@ -59,12 +60,11 @@ function apiResponse(data, meta = {}) {
 /**
  * Error response helper with proper HTTP status codes
  */
-function errorResponse(error, statusCode = 500) {
+function errorResponse(_error, statusCode = 500) {
   return {
     success: false,
-    error: error.message || 'Internal server error',
+    error: 'Internal server error',
     timestamp: new Date().toISOString(),
-    ...(process.env.NODE_ENV === 'development' ? { stack: error.stack } : {}),
   };
 }
 
@@ -221,8 +221,16 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       return getNotifications(req, res);
     } else if (req.method === 'POST') {
+      const user = await verifyToken(req);
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
       return createNotification(req, res);
     } else if (req.method === 'PUT') {
+      const user = await verifyToken(req);
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
       return updateNotification(req, res);
     } else {
       return methodNotAllowed(res);

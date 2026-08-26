@@ -2,10 +2,10 @@ import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Heart, Users, BookOpen, Mic, Droplet, Sprout, 
-  Target, CheckCircle, ArrowLeft, Building2, MapPin, 
-  Sparkles, Award, TrendingUp, BarChart3, Quote 
+  Target, ArrowLeft, Building2, MapPin, 
+  BarChart3, Quote, Sparkles 
 } from 'lucide-react';
-import { SECTORS_SHOWCASE_DATA, SectorItem } from '@/data/sectorsData';
+import { SECTORS_SHOWCASE_DATA } from '@/data/sectorsData';
 import { FallbackImage } from './FallbackImage';
 
 interface SectorShowcaseProps {
@@ -224,7 +224,7 @@ export const SectorShowcase: React.FC<SectorShowcaseProps> = memo(({ setCurrentP
                         <FallbackImage
                           src={project.image}
                           alt={`صورة توضيحية لمشروع ${project.title} - قطاع ${activeSector.categoryTag} في ${project.location}`}
-                          fallbackSrc="/images/hero-video-poster.jpg"
+                          fallbackSrc="/images/defaults/about-hero.svg"
                           containerClassName="w-full h-full"
                           className="w-full h-full object-cover"
                           referrerPolicy="no-referrer"

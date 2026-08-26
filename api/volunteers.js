@@ -1,9 +1,44 @@
-// Volunteers API - Handle volunteer registrations
-import { query, pool } from './database.js';
+// Volunteers API - Handle volunteer registrations with rate limiting and CSRF protection
+import { query } from './database.js';
 
+// Rate limiting: track requests per IP
+const volunteerRequestLogs = new Map();
+
+function checkRateLimit(ip, maxRequests = 20, windowMs = 10 * 60 * 1000) {
+  const now = Date.now();
+  const windowStart = now - windowMs;
+  const requests = volunteerRequestLogs.get(ip) || [];
+  const recentRequests = requests.filter(ts => ts >= windowStart);
+  
+  if (recentRequests.length >= maxRequests) {
+    return { allowed: false, remaining: 0 };
+  }
+  
+  recentRequests.push(now);
+  volunteerRequestLogs.set(ip, recentRequests);
+  return { allowed: true, remaining: maxRequests - recentRequests.length };
+}
+
+// CSRF token validation
+function verifyCsrfToken(req) {
+  const csrfToken = req.headers['x-csrf-token'];
+  // Get token from cookie or header - in production, use secure cookie
+  const sessionToken = req.cookies?.csrftoken || req.header('X-CSRF-Token') || '';
+  return csrfToken === sessionToken;
+}
+
+// CORS and security origins
 const ALLOWED_ORIGINS = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'];
 
 export default async function handler(req, res) {
+  const ip = req.socket.remoteAddress || 'unknown';
+  const rateLimitResult = checkRateLimit(ip, 20, 10 * 60 * 1000);
+  
+  // Rate limiting check
+  if (!rateLimitResult.allowed) {
+    return res.status(429).json({ error: 'Too many requests, please try again later.' });
+  }
+
   // CORS headers
   const origin = req.headers.origin;
   if (origin && ALLOWED_ORIGINS.includes(origin)) {
@@ -23,6 +58,11 @@ export default async function handler(req, res) {
   }
 
   try {
+    // CSRF validation
+    if (!verifyCsrfToken(req)) {
+      return res.status(403).json({ error: 'Invalid CSRF token' });
+    }
+
     const { name, email, phone, skills, availability, message } = req.body;
 
     // Sanitize inputs

@@ -1,7 +1,7 @@
 // Step Scroll Component - Section-by-Section Navigation
 // Implements "خاصية الصعود التدريجي المنظم" 
 // Smooth gradual section scrolling with visual indicators
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { ChevronUp, ChevronDown, Layers } from 'lucide-react';
 
 import { useStepScroll } from '@/app/hooks/useStepScroll';

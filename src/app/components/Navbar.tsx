@@ -1,11 +1,19 @@
-// Navbar Component - Navigation Bar for Rahamaa Foundation
-// Premium design with expressive icons, intelligent contrast backdrop, and micro-interactions
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "motion/react";
 import {
-  Heart, Menu, X, Home, Info, Layers, FolderHeart, Award,
-  ShieldCheck, UserCheck, PhoneCall, Calculator, Sparkles, HandHeart
-} from 'lucide-react';
-import { useState, useEffect, useCallback, memo } from 'react';
+  ArrowLeft,
+  BookOpenText,
+  Calculator,
+  ChevronDown,
+  CircleUserRound,
+  HandHeart,
+  Heart,
+  Home,
+  Menu,
+  ShieldCheck,
+  UsersRound,
+  X,
+} from "lucide-react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 interface NavbarProps {
   currentPage: string;
@@ -15,222 +23,89 @@ interface NavbarProps {
 interface NavItem {
   id: string;
   label: string;
-  icon: React.ComponentType<{ className?: string }>;
-  badge?: string;
+  icon: typeof Home;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'home', label: 'الرئيسية', icon: Home },
-  { id: 'about', label: 'عن المؤسسة', icon: Info },
-  { id: 'programs', label: 'برامجنا', icon: Layers },
-  { id: 'projects', label: 'مشاريعنا', icon: FolderHeart },
-  { id: 'success', label: 'قصص النجاح', icon: Award },
-  { id: 'zakat', label: 'الزكاة', icon: Calculator, badge: 'حاسبة' },
-  { id: 'transparency', label: 'الشفافية', icon: ShieldCheck },
-  { id: 'donor', label: 'بوابة المتبرع', icon: UserCheck },
-  { id: 'contact', label: 'اتصل بنا', icon: PhoneCall },
+  { id: "home", label: "الرئيسية", icon: Home },
+  { id: "about", label: "عن المؤسسة", icon: BookOpenText },
+  { id: "programs", label: "مجالات العمل", icon: UsersRound },
+  { id: "projects", label: "مشاريعنا", icon: HandHeart },
+  { id: "transparency", label: "الشفافية", icon: ShieldCheck },
 ];
+
+function BrandMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className={`${compact ? "h-10 w-10 rounded-[14px]" : "h-11 w-11 rounded-[15px]"} relative grid shrink-0 place-items-center bg-[#0F4C3A] text-[#E8C97B] shadow-[0_8px_20px_rgba(15,76,58,.15)]`}>
+        <span className="absolute inset-[6px] rotate-45 rounded-[8px] border border-[#C69E5A]/75" />
+        <Heart className="relative h-5 w-5" fill="currentColor" strokeWidth={1.8} />
+      </div>
+      <div className="text-right leading-none">
+        <div className={`${compact ? "text-base" : "text-lg"} font-extrabold tracking-tight text-[#0F4C3A]`}>رحماء بينهم</div>
+        <div className="mt-1 text-[10px] font-medium tracking-[0.14em] text-[#9B6A24]">إغاثة • تنمية • أثر</div>
+      </div>
+    </div>
+  );
+}
 
 export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 28);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavigation = useCallback((page: string) => {
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobileMenuOpen]);
+
+  const navigate = useCallback((page: string) => {
     setCurrentPage(page);
     setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [setCurrentPage]);
 
-  // Is home page hero overlay active
-  const isHomePage = currentPage === 'home' || currentPage === '';
+  const isHome = currentPage === "home" || currentPage === "";
+  const isOverlay = isHome && !isScrolled;
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-xl shadow-md shadow-emerald-950/5 border-b border-gray-100 py-2' 
-          : isHomePage
-            ? 'bg-gradient-to-b from-black/60 via-black/30 to-transparent py-3'
-            : 'bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100/80 py-2.5'
-      }`}
-      dir="rtl"
-    >
-      <nav className="container mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-14 md:h-16">
-          {/* Logo */}
-          <button 
-            onClick={() => handleNavigation('home')}
-            className="flex items-center gap-3 group outline-none"
-          >
-            <div className={`w-10 h-10 md:w-11 md:h-11 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${
-              isScrolled || !isHomePage
-                ? 'bg-gradient-to-br from-[var(--brand-green)] to-emerald-600 shadow-md shadow-emerald-600/20 text-white' 
-                : 'bg-white/20 backdrop-blur-md border border-white/40 text-white'
-            }`}>
-              <Heart className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
-            </div>
-            <div className="text-right">
-              <h1 className={`text-base md:text-lg font-bold tracking-tight transition-colors duration-300 ${
-                isScrolled || !isHomePage ? 'text-gray-900' : 'text-white'
-              }`}>
-                رحماء بينهم
-              </h1>
-              <p className={`text-[0.65rem] md:text-[0.7rem] font-medium transition-colors duration-300 ${
-                isScrolled || !isHomePage ? 'text-[var(--brand-green)]' : 'text-emerald-200'
-              }`}>
-                مؤسسة خيرية إنسانية
-              </p>
-            </div>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isOverlay ? "bg-gradient-to-b from-[#061F17]/80 to-transparent" : "border-b border-[#0F4C3A]/8 bg-white/92 shadow-[0_10px_35px_rgba(15,76,58,.08)] backdrop-blur-xl"}`} dir="rtl">
+      <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10" aria-label="التصفح الرئيسي">
+        <div className="flex h-[76px] items-center justify-between gap-6">
+          <button type="button" onClick={() => navigate("home")} aria-label="العودة إلى الصفحة الرئيسية" className={`rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[#D6A95D] focus-visible:ring-offset-2 ${isOverlay ? "brightness-0 invert" : ""}`}>
+            <BrandMark />
           </button>
 
-          {/* Desktop Navigation Links with Expressive Icons */}
-          <div className="hidden lg:flex items-center gap-1 bg-gray-100/60 p-1.5 rounded-full border border-gray-200/50 backdrop-blur-sm">
-            {NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const isActive = currentPage === item.id || (item.id === 'home' && currentPage === '');
-              
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavigation(item.id)}
-                  className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-xs font-semibold whitespace-nowrap outline-none ${
-                    isActive
-                      ? 'bg-[var(--brand-green)] text-white shadow-md shadow-[var(--brand-green)]/25'
-                      : 'text-gray-700 hover:text-[var(--brand-green)] hover:bg-white/80'
-                  }`}
-                >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                  <span>{item.label}</span>
-                  
-                  {item.badge && !isActive && (
-                    <span className="px-1.5 py-0.2 text-[0.6rem] bg-[var(--brand-gold-pale)] text-[var(--brand-gold)] font-bold rounded-full border border-[var(--brand-gold)]/20">
-                      {item.badge}
-                    </span>
-                  )}
-
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 bg-[var(--brand-green)] rounded-full -z-10"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                </button>
-              );
+          <div className="hidden items-center gap-1 rounded-2xl border border-[#0F4C3A]/8 bg-white/85 p-1.5 shadow-sm backdrop-blur-md lg:flex">
+            {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
+              const active = currentPage === id || (id === "home" && isHome);
+              return <button key={id} type="button" onClick={() => navigate(id)} aria-current={active ? "page" : undefined} className={`relative inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 text-xs font-bold transition ${active ? "bg-[#0F4C3A] text-white shadow-md shadow-[#0F4C3A]/15" : "text-[#52635D] hover:bg-[#F1F5F0] hover:text-[#0F4C3A]"}`}><Icon className="h-3.5 w-3.5" /><span>{label}</span>{id === "transparency" && <span className="h-1.5 w-1.5 rounded-full bg-[#D6A95D]" />}</button>;
             })}
+            <div className="mx-1 h-5 w-px bg-[#0F4C3A]/10" />
+            <button type="button" onClick={() => navigate("zakat")} className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-bold text-[#9B6A24] transition hover:bg-[#F7F0DF]"><Calculator className="h-3.5 w-3.5" /><span>حاسبة الزكاة</span></button>
           </div>
 
-          {/* Desktop Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Quick Zakat Button */}
-            <button
-              onClick={() => handleNavigation('zakat')}
-              className={`hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
-                isScrolled || !isHomePage
-                  ? 'bg-amber-50 text-[var(--brand-gold)] border border-[var(--brand-gold)]/30 hover:bg-amber-100'
-                  : 'bg-white/15 backdrop-blur-md text-amber-200 border border-amber-300/30 hover:bg-white/25'
-              }`}
-            >
-              <Calculator className="w-4 h-4 text-[var(--brand-gold)]" />
-              <span>الزكاة</span>
-            </button>
-
-            {/* Donate Now CTA Button */}
-            <motion.button
-              onClick={() => handleNavigation('donate')}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-4 sm:px-5 py-2 md:py-2.5 rounded-xl font-bold transition-all duration-300 shadow-lg text-xs md:text-sm bg-gradient-to-l from-[var(--brand-green)] to-emerald-600 text-white shadow-emerald-700/25 hover:shadow-emerald-700/40"
-            >
-              <Heart className="w-4 h-4" fill="currentColor" />
-              <span>تبرع الآن</span>
-            </motion.button>
-
-            {/* Mobile Menu Toggle Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-xl transition-colors ${
-                isScrolled || !isHomePage
-                  ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' 
-                  : 'bg-white/20 backdrop-blur-md text-white hover:bg-white/30'
-              }`}
-              aria-label="قائمة التصفح"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={() => navigate("donor")} className={`hidden min-h-11 items-center gap-2 rounded-xl px-3 text-xs font-bold transition xl:inline-flex ${isOverlay ? "text-white/80 hover:bg-white/10" : "text-[#0F4C3A] hover:bg-[#F1F5F0]"}`}><CircleUserRound className="h-4 w-4" /><span>بوابة المتبرع</span><ChevronDown className="h-3.5 w-3.5 rotate-90 opacity-50" /></button>
+            <motion.button type="button" onClick={() => navigate("donate")} whileHover={{ y: -2 }} whileTap={{ scale: .98 }} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#D6A95D] px-4 text-xs font-extrabold text-[#14352B] shadow-[0_10px_25px_rgba(198,158,90,.23)] transition hover:bg-[#E8C97B] sm:px-5"><HandHeart className="h-4 w-4" /><span>تبرع الآن</span><ArrowLeft className="h-3.5 w-3.5" /></motion.button>
+            <button type="button" onClick={() => setIsMobileMenuOpen((open) => !open)} aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation" aria-label={isMobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"} className={`grid h-11 w-11 place-items-center rounded-xl transition lg:hidden ${isOverlay ? "bg-white/10 text-white hover:bg-white/20" : "bg-[#F1F5F0] text-[#0F4C3A] hover:bg-[#E6EFE9]"}`}>{isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
           </div>
         </div>
 
-        {/* Mobile Navigation Menu Drawer */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-              className="lg:hidden bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-gray-100 mt-2 mb-4 overflow-hidden"
-            >
-              <div className="p-4 space-y-1">
-                {NAV_ITEMS.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = currentPage === item.id;
-
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleNavigation(item.id)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all text-sm font-semibold ${
-                        isActive
-                          ? 'bg-[var(--brand-green-pale)] text-[var(--brand-green)] border-r-4 border-[var(--brand-green)]'
-                          : 'text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                          isActive ? 'bg-[var(--brand-green)] text-white' : 'bg-gray-100 text-gray-500'
-                        }`}>
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <span>{item.label}</span>
-                      </div>
-                      {item.badge && (
-                        <span className="px-2 py-0.5 text-xs bg-amber-100 text-[var(--brand-gold)] font-bold rounded-full">
-                          {item.badge}
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-
-                <div className="pt-3 mt-3 border-t border-gray-100 flex flex-col gap-2">
-                  <button
-                    onClick={() => handleNavigation('zakat')}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-50 text-[var(--brand-gold)] border border-[var(--brand-gold)]/20 rounded-2xl font-bold text-sm"
-                  >
-                    <Calculator className="w-4 h-4" />
-                    حاسبة الزكاة الشرعية
-                  </button>
-                  <button
-                    onClick={() => handleNavigation('donate')}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-l from-[var(--brand-green)] to-emerald-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-emerald-700/25"
-                  >
-                    <Heart className="w-4 h-4" fill="white" />
-                    تبرع الآن
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
+          {isMobileMenuOpen && <motion.div id="mobile-navigation" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .2 }} className="mb-4 overflow-hidden rounded-[24px] border border-[#0F4C3A]/10 bg-white/96 p-3 shadow-2xl backdrop-blur-xl lg:hidden">
+            <div className="mb-3 flex items-center justify-between rounded-2xl bg-[#F4F8F5] px-4 py-3"><div><p className="text-xs font-extrabold text-[#0F4C3A]">رحماء بينهم</p><p className="mt-1 text-[10px] text-[#687670]">رحمة تُرى في العمل</p></div><BrandMark compact /></div>
+            <div className="grid gap-1">
+              {NAV_ITEMS.map(({ id, label, icon: Icon }) => { const active = currentPage === id || (id === "home" && isHome); return <button key={id} type="button" onClick={() => navigate(id)} aria-current={active ? "page" : undefined} className={`flex min-h-12 items-center gap-3 rounded-2xl px-4 text-right text-sm font-bold transition ${active ? "bg-[#0F4C3A] text-white" : "text-[#52635D] hover:bg-[#F1F5F0]"}`}><span className={`grid h-8 w-8 place-items-center rounded-xl ${active ? "bg-white/12 text-[#E8C97B]" : "bg-[#F1F5F0] text-[#0F4C3A]"}`}><Icon className="h-4 w-4" /></span><span>{label}</span><ChevronDown className="mr-auto h-4 w-4 -rotate-90 opacity-40" /></button>; })}
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-2 border-t border-[#0F4C3A]/8 pt-3"><button type="button" onClick={() => navigate("zakat")} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#F7F0DF] text-xs font-bold text-[#9B6A24]"><Calculator className="h-4 w-4" />حاسبة الزكاة</button><button type="button" onClick={() => navigate("donor")} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#F1F5F0] text-xs font-bold text-[#0F4C3A]"><CircleUserRound className="h-4 w-4" />بوابة المتبرع</button></div>
+          </motion.div>}
         </AnimatePresence>
       </nav>
     </header>

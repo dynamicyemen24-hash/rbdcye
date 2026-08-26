@@ -1,90 +1,123 @@
 {
-  "name": "مؤسسة رحماء بينهم الخيرية",
+  "id": "/",
+  "name": "رحماء بينهم",
   "short_name": "رحماء بينهم",
-  "description": "الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
+  "description": "منظمة إنسانية تنموية مستقلة مرخصة - إغاثة، تعليم، وتنمية مستدامة",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FAFAF7",
+  "background_color": "#0F4C3A",
   "theme_color": "#0F4C3A",
-  "display_override": ["window-controls-overlay", "minimal-ui"],
   "orientation": "any",
   "dir": "rtl",
   "lang": "ar",
   "scope": "/",
-  "categories": ["charity", "donation", "social"],
+  "categories": ["charity", "nonprofit"],
   "icons": [
     {
-      "src": "/icons/icon-48x48.png.svg",
-      "sizes": "48x48",
-      "type": "image/svg+xml"
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
     },
     {
-      "src": "/icons/icon-144x144.png.svg",
-      "sizes": "144x144",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-144x144.png.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
+      "src": "/icons/pwa-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/icon-144x144.png.svg",
+      "src": "/icons/pwa-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/pwa-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
+    },
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "android chrome"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "android chrome"
     }
   ],
   "shortcuts": [
     {
       "name": "تبرع الآن",
       "short_name": "تبرع",
-      "description": "ساهم في دعم المشاريع الخيرية",
+      "description": "ساهم بتبرع مباشر في مشاريع الإغاثة والتنمية",
       "url": "/donate",
-      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
+      "icons": [{ "src": "/icons/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "حاسبة الزكاة",
       "short_name": "الزكاة",
-      "description": "احسب زكاتك بسهولة",
+      "description": "احسب زكاة مالك بطريقة شرعية دقيقة",
       "url": "/zakat",
-      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
+      "icons": [{ "src": "/icons/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "برامجنا",
       "short_name": "البرامج",
-      "description": "استعرض برامجنا ومشاريعنا",
+      "description": "اطلع على القطاعات والبرامج التنموية",
       "url": "/programs",
-      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
+      "icons": [{ "src": "/icons/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
-      "name": "قصص النجاح",
-      "short_name": "القصص",
-      "description": "قصص نجاح المستفيدين",
+      "name": "تقارير الشفافية",
+      "short_name": "الشفافية",
+      "description": "تقارير الأثر والشفافية المالية للمؤسسة",
       "url": "/transparency",
-      "icons": [{ "src": "/icons/icon-144x144.png.svg", "sizes": "144x144" }]
-    }
-  ],
-  "related_applications": [
-    {
-      "platform": "webapp",
-      "url": "https://rbdcye.org/manifest.json"
+      "icons": [{ "src": "/icons/pwa-192x192.png", "sizes": "192x192" }]
     }
   ],
   "prefer_related_applications": false,
-  "handle_links": "preferred",
-  "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
-  },
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "protocol_handlers": [
-    {
-      "protocol": "web+rbdcye",
-      "url": "/?action=%s"
+  "translations": {
+    "ar": {
+      "name": "رحماء بينهم",
+      "short_name": "رحماء بينهم"
+    },
+    "en": {
+      "name": "Rohmaaa Between",
+      "short_name": "Rohmaaa Between"
     }
-  ]
+  }
 }

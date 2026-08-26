@@ -1,0 +1,12 @@
+{
+  "name": "@rohamaab/brand-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NexoraOS™ — Rohamaab Unified Brand Tokens (Single Source of Truth)",
+  "main": "src/tokens.ts",
+  "exports": {
+    ".": "./src/tokens.ts",
+    "./css": "./src/tokens.css"
+  }
+}

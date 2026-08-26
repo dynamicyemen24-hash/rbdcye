@@ -29,26 +29,26 @@ const CATEGORY_ICONS: Record<string, string> = {
   'عام': '📰'
 };
 
-// صور افتراضية عالية الجودة متنوعة حسب مسارات العمل الخيري للمؤسسة
-// (إغاثة، تعليم، مياه، مجتمع، أيتام، تمكين، وتحفيظ قرآني) — بطابع لائق غير شخصي
+// صور افتراضية محلية بهوية المؤسسة (زخارف إسلامية وثقافة يمنية)
+// تُستخدم فقط عند غياب صورة من لوحة التحكم أو Sanity
 const HIGH_QUALITY_FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop&crop=center', // يد عطاء ومساعدة
-  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&crop=center', // تعليم وكتاب
-  'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=800&h=600&fit=crop&crop=center', // مياه شرب نقية
-  'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop&crop=center', // تنمية مجتمعية
-  'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&fit=crop&crop=center', // أطفال وأيتام
-  'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&fit=crop&crop=center', // تمكين المرأة (تدريب)
-  'https://images.unsplash.com/photo-1542815391-5e04e9682458?w=800&h=600&fit=crop&crop=center', // مصحف شريف (تحفيظ)
-  'https://images.unsplash.com/photo-1593113630400-ea4288922497?w=800&h=600&fit=crop&crop=center', // قوافل إغاثة
+  '/images/defaults/project-relief.svg',       // إغاثة وسلال غذائية
+  '/images/defaults/project-education.svg',    // تعليم وكتاب
+  '/images/defaults/project-water.svg',        // مياه وآبار
+  '/images/defaults/project-development.svg',  // تنمية وتمكين
+  '/images/defaults/story-community.svg',      // مجتمع وتطوع
+  '/images/defaults/story-woman.svg',          // تمكين المرأة
+  '/images/defaults/story-quran.svg',          // تحفيظ قرآني
+  '/images/defaults/project-infrastructure.svg', // بنية تحتية ومساجد
 ];
 
 // صور خاصة بالمؤسسة
 const CUSTOM_FALLBACK_IMAGES = [
-  '/images/charity-1.jpg',
-  '/images/charity-2.jpg',
-  '/images/charity-3.jpg',
-  '/images/charity-4.jpg',
-  '/images/charity-5.jpg',
+  '/images/defaults/project-default.svg',
+  '/images/defaults/project-relief.svg',
+  '/images/defaults/project-water.svg',
+  '/images/defaults/project-education.svg',
+  '/images/defaults/story-default.svg',
 ];
 
 // مولد أرقام عشوائية ثابت لتجنب المشاكل في render
@@ -81,12 +81,10 @@ export const getPlaceholderImage = (
   // استخدام عداد ثابت بدلاً من Math.random لتجنب المشاكل
   placeholderCounter = (placeholderCounter + 1) % (HIGH_QUALITY_FALLBACK_IMAGES.length + 3);
   
-  // خدمات الصور البديلة (بدون Math.random) - بطابع خيري متنوع
+  // الصور الافتراضية المحلية بهوية المؤسسة (الأولوية دائماً)
   const placeholders = [
-    `https://source.unsplash.com/random/${width}x${height}/?charity,help,yemen,community`,
-    `https://picsum.photos/${width}/${height}?random=${placeholderCounter}`,
-    `https://placehold.co/${width}x${height}/${color}/FFFFFF/png?text=${encodedText}`,
     ...HIGH_QUALITY_FALLBACK_IMAGES,
+    `https://placehold.co/${width}x${height}/${color}/FFFFFF/png?text=${encodedText}`,
   ];
   
   // استخدام العداد للاختيار
@@ -105,25 +103,31 @@ export const getRandomImage = (category?: string): string => {
   if (category) {
     const categoryImages: Record<string, string[]> = {
       'تعليم': [
-        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop',
+        '/images/defaults/sector-education.svg',
+        '/images/defaults/story-quran.svg',
       ],
       'إغاثة': [
-        'https://images.unsplash.com/photo-1593113630400-ea4288922497?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&fit=crop',
+        '/images/defaults/sector-relief.svg',
+        '/images/defaults/project-water.svg',
       ],
       'تنمية': [
-        'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=800&h=600&fit=crop',
+        '/images/defaults/sector-empowerment.svg',
+        '/images/defaults/project-development.svg',
+      ],
+      'تمكين': [
+        '/images/defaults/sector-empowerment.svg',
+        '/images/defaults/story-woman.svg',
+      ],
+      'زراعة': [
+        '/images/defaults/sector-agriculture.svg',
       ],
       'رعاية': [
-        'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&fit=crop',
+        '/images/defaults/story-default.svg',
+        '/images/defaults/story-woman.svg',
       ],
+      'شراكات': ['/images/defaults/partner-1.svg'],
+      'تدريب': ['/images/defaults/story-community.svg'],
+      'دعوة': ['/images/defaults/sector-dawah.svg', '/images/defaults/project-dawah.svg'],
     };
     
     const images = categoryImages[category] || HIGH_QUALITY_FALLBACK_IMAGES;
@@ -199,14 +203,14 @@ export const getThumbnail = (url: string, size: number = 300): string => {
  * قائمة الصور الموصى بها للمؤسسة
  */
 export const RECOMMENDED_IMAGES = {
-  hero: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&h=800&fit=crop',
-  education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
-  relief: 'https://images.unsplash.com/photo-1593113630400-ea4288922497?w=800&h=600&fit=crop',
-  development: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
-  partnership: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&fit=crop',
-  volunteer: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&fit=crop',
-  children: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&h=600&fit=crop',
-  community: 'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=800&h=600&fit=crop',
+  hero: '/images/defaults/about-hero.svg',
+  education: '/images/defaults/project-education.svg',
+  relief: '/images/defaults/project-relief.svg',
+  development: '/images/defaults/project-development.svg',
+  partnership: '/images/defaults/partner-3.svg',
+  volunteer: '/images/defaults/story-community.svg',
+  children: '/images/defaults/story-default.svg',
+  community: '/images/defaults/story-man.svg',
 };
 
 export default {

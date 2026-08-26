@@ -1,13 +1,14 @@
-// Contact Page - صفحة التواصل
-import { motion } from "framer-motion";
+// Contact Page - صفحة التواصل enhanced
+import { motion } from "motion/react";
 import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe, Users, BarChart3, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { sendMessage } from "@/api/messages";
+import { contentManager } from "@/shared/services/content-manager";
+import { analyticsService } from "@/shared/services/analytics.service";
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
-import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { EnhancedBrandStory } from "@/app/components/home/EnhancedBrandStory";
 import { useSEO } from "@/utils/seoAdvanced";
 
 export default function ContactPage() {
@@ -26,19 +27,22 @@ export default function ContactPage() {
 
   useSEO({
     title: 'تواصل معنا - رحماء بينهم',
-    description: 'تواصل مع مؤسسة رحماء بينهم - نحن هنا لمساعدتك في أي استفسار',
+    description: 'تواصل مع رحماء بينهم - نحن هنا لمساعدتك في أي استفسار أو دعم إنساني',
     type: 'website',
     url: 'https://rbdcye.org/contact',
     keywords: ['تواصل', 'اتصل بنا', 'استفسار', 'دعم', 'رحماء بينهم'],
   });
 
+  // Enhanced storytelling content
+  const contactStory = "نسعى دائماً لربط بين أهل الخير والمحتاجين عبر قنوات اتصال فعالة ومتاحة. سواء كنت تتبرع، أو تستفسر عن مشروع، أو تتطوع بوقتك، فنحن هنا لنساعدك في كل خطوة من عملية التبرع والتواصل.";
+
   // تحميل البيانات من content-bridge
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
-      .then((result) => {
+    contentManager.getImpact()
+      .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.isDynamic ? 'sanity' : 'static');
+          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
         }
       })
       .catch(() => {
@@ -67,7 +71,7 @@ export default function ContactPage() {
       } else {
         setError(result.error || 'حدث خطأ في إرسال الرسالة');
       }
-    } catch (err) {
+    } catch (_err) {
       setError('خطأ في الاتصال بالخادم');
     } finally {
       setIsSubmitting(false);
@@ -93,7 +97,7 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'الهاتف',
-      details: ['+967 1 234 567', '+967 777 888 999'],
+      details: ['+967 780 777 007'],
       color: 'var(--brand-green)',
     },
     {
@@ -146,18 +150,21 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Enhanced Brand Story Section at top */}
+      <EnhancedBrandStory setCurrentPage={() => {}} />
+
       {/* Unified Page Header */}
       <PageHeader
         icon={Mail}
         badge="تواصل معنا"
         title="نحن هنا لمساعدتك"
-        subtitle="لا تتردد في مراسلتنا بأي استفسار أو اقتراح. فريقنا جاهز لتقديم المساعدة"
+        subtitle="لا تتردد في مراسلتنا بأي استفسار أو اقتراح. فريقنا جاهز لتقديم المساعدة الإنسانية"
       >
         <StatsGrid
           stats={[
-            { label: 'متطوع', value: '200+', icon: Users, color: 'green' },
-            { label: 'مشروع', value: '50+', icon: BarChart3, color: 'gold' },
-            { label: 'دولة', value: '5+', icon: Globe, color: 'blue' },
+            { label: 'متطوع', value: 'متطوعون', icon: Users, color: 'green' },
+            { label: 'مشروع', value: 'مشاريع', icon: BarChart3, color: 'gold' },
+            { label: 'دولة', value: 'عدة', icon: Globe, color: 'blue' },
             { label: 'مستفيد', value: '50K+', icon: Heart, color: 'purple' },
           ]}
           columns={4}
@@ -259,7 +266,7 @@ export default function ContactPage() {
             </motion.div>
           </div>
 
-          {/* Contact Form */}
+          {/* Contact Form - enhanced with better spacing and marketing focus */}
           <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-[var(--border)] shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
@@ -271,6 +278,21 @@ export default function ContactPage() {
                   {error}
                 </motion.div>
               )}
+              
+              {/* Story reminder above form */}
+              <div className="mb-6 p-4 bg-[var(--brand-green-pale)] rounded-xl border border-[var(--brand-green)]/20">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-[var(--brand-green)] flex-shrink-0" />
+                  <div>
+                    <p className="font-medium text-[var(--foreground)]">
+                      {contactStory}
+                    </p>
+                    <p className="text-[var(--muted-foreground)] text-sm">
+                      نحن هنا لاستقبال اتصالاتك واستفساراتك في أي وقت
+                    </p>
+                  </div>
+                </div>
+              </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -284,7 +306,7 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
                     placeholder="أدخل اسمك"
                   />
                 </div>
@@ -299,7 +321,7 @@ export default function ContactPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
                     placeholder="أدخل بريدك"
                   />
                 </div>
@@ -315,7 +337,7 @@ export default function ContactPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
                   placeholder="+967"
                 />
               </div>
@@ -331,7 +353,7 @@ export default function ContactPage() {
                   required
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
                   placeholder="موضوع رسالتك"
                 />
               </div>
@@ -347,7 +369,7 @@ export default function ContactPage() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all resize-none"
                   placeholder="اكتب رسالتك هنا..."
                 />
               </div>
@@ -377,15 +399,6 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

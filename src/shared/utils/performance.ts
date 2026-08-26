@@ -25,8 +25,8 @@ export const measurePerformance = () => {
       });
       observer.observe({ type: 'largest-contentful-paint', buffered: true });
       observer.observe({ type: 'first-input', buffered: true });
-    } catch (e) {
-      console.warn('PerformanceObserver not supported');
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 };
@@ -34,7 +34,7 @@ export const measurePerformance = () => {
 export const preloadCriticalResources = () => {
   if (typeof window !== 'undefined') {
     const links = [
-      { rel: 'preload', href: '/fonts/arabic.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+      { rel: 'preload', href: '/fonts/cairo-var-arabic.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
     ];
     links.forEach(link => {
       const el = document.createElement('link');

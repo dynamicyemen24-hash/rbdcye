@@ -126,7 +126,7 @@ class PerformanceMonitor {
         for (const entry of list.getEntries()) {
           const resource = entry as PerformanceResourceTiming;
           if (resource.duration > 1000) {
-            console.warn(`[Performance] Slow resource: ${resource.name} (${resource.duration.toFixed(0)}ms)`);
+            // slow resource detected
           }
         }
       });

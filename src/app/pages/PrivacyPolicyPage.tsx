@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Shield, Lock, FileText, CheckCircle2, UserCheck, Scale, ArrowRight } from 'lucide-react';
+import { Shield, Lock, CheckCircle2, UserCheck, Scale, ArrowRight } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSEO } from '@/utils/seoAdvanced';
 
@@ -11,8 +11,8 @@ export default function PrivacyPolicyPage() {
   const [activeTab, setActiveTab] = useState<'privacy' | 'terms' | 'donor-rights'>(initialTab);
 
   useSEO({
-    title: 'السياسات والخصوصية - مؤسسة رحماء بينهم',
-    description: 'سياسة الخصوصية، شروط الاستخدام، وميثاق حقوق المتبرعين والحوكمة المعتمدة لدى مؤسسة رحماء بينهم',
+    title: 'السياسات والخصوصية - رحماء بينهم',
+    description: 'سياسة الخصوصية، شروط الاستخدام، وميثاق حقوق المتبرعين والحوكمة المعتمدة لدى رحماء بينهم',
   });
 
   return (
@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
                 سياسة حماية البيانات والخصوصية
               </h2>
               <p>
-                تلتزم مؤسسة رحماء بينهم بحماية خصوصية جميع المتبرعين والزوار والمستفيدين. نوضح هنا كيفية جمع البيانات واستخدامها وحمايتها:
+                 نحن في رحماء بينهم ملتزمون بحماية خصوصية جميع المتبرعين والزوار والمستفيدين. نوضح هنا كيفية جمع البيانات واستخدامها وحمايتها:
               </p>
 
               <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function PrivacyPolicyPage() {
                 الشروط والأحكام العامة
               </h2>
               <p>
-                تنظم هذه الشروط استخدام الموقع الإلكتروني لمؤسسة رحماء بينهم وكافة الخدمات وعمليات التبرع المتاحة من خلاله:
+                 تنظم هذه الشروط استخدام الموقع الإلكتروني لـ رحماء بينهم وكافة الخدمات وعمليات التبرع المتاحة من خلاله:
               </p>
 
               <ul className="space-y-3">
@@ -141,7 +141,7 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-[var(--brand-green)] shrink-0 mt-0.5" />
-                  <span>تخضع المؤسسة للمراجعة المحاسبية السنوية وتصدر تقارير مالية وتدقيقية مستقلة معتمدة.</span>
+                  <span>تخضع الحملة للمراجعة المحاسبية السنوية وتصدر تقارير مالية وتدقيقية مستقلة معتمدة.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-[var(--brand-green)] shrink-0 mt-0.5" />
@@ -164,7 +164,7 @@ export default function PrivacyPolicyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
                   <h4 className="font-bold text-gray-900 mb-1 text-sm">حق المعرفة والاطلاع</h4>
-                  <p className="text-xs text-gray-600">معرفة أهداف المؤسسة، هوية مجلس الإدارة، واستراتيجيات تنفيذ المشاريع الميدانية.</p>
+                  <p className="text-xs text-gray-600">معرفة أهدافنا، هوية مجلس الإدارة، واستراتيجيات تنفيذ المشاريع الميدانية.</p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">

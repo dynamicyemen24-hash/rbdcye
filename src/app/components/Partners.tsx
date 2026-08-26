@@ -1,20 +1,15 @@
-import { motion } from "framer-motion";
-import { Handshake, Loader2 } from "lucide-react";
+﻿import { motion } from "motion/react";
+import { Handshake } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { SEED_PARTNERS } from "@/content/website";
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
-import { contentBridge } from "@/shared/services/content-bridge.service";
-import { sanityService } from "@/shared/services/sanity.service";
 
-export function Partners({ setCurrentPage }: { setCurrentPage: (p: string) => void } = { setCurrentPage: () => {} }) {
+export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: (p: string) => void } = { setCurrentPage: () => {} }) {
   const [partners, setPartners] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity' | 'hybrid'>('static');
   const [showDevBadge, setShowDevBadge] = useState(false);
 
-  // Use dynamic content hook
-  const { data: dynamicPartners, isLoading: dynamicLoading, source } = useDynamicContent<any>({
+  // ContentManager returns static defaults instantly, then upgrades to Sanity
+  const { data: dynamicPartners, source } = useDynamicContent<any>({
     contentType: 'partners',
     enableRealtime: false,
     refreshInterval: 300000
@@ -28,82 +23,37 @@ export function Partners({ setCurrentPage }: { setCurrentPage: (p: string) => vo
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    const fallback = SEED_PARTNERS.map((p: any) => ({
-      id: p.id,
-      name: p.name,
-      type: p.type,
-      status: p.status,
-      logo: p.logo,
-      website: p.url,
-    }));
-
-    const loadPartners = async () => {
-      try {
-        // Try dynamic content first
-        if (dynamicPartners.length > 0) {
-          const normalized = dynamicPartners.map((p: any) => ({ 
-            id: p._id, 
-            name: p.name, 
-            type: p.type, 
-            status: p.status, 
-            logo: p.logo, 
-            website: p.website 
-          }));
-          setPartners(normalized.filter((item: any) => item.status !== 'inactive' && item.status !== 'suspended'));
-          setContentSource(source);
-        } else {
-          // Fallback to direct Sanity fetch
-          const items = await sanityService.getPartners();
-          if (!cancelled) {
-            const normalized = items.length > 0
-              ? items.map((p: any) => ({ id: p._id, name: p.name, type: p.type, status: p.status, logo: p.logo, website: p.website }))
-              : fallback;
-            setPartners(normalized.filter((item: any) => item.status !== 'inactive' && item.status !== 'suspended'));
-            setContentSource('static');
-          }
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setPartners(fallback.filter((item: any) => item.status !== 'inactive' && item.status !== 'suspended'));
-          setContentSource('static');
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-
-    loadPartners();
-    return () => { cancelled = true; };
-  }, [dynamicPartners, source]);
-
-  if (loading || dynamicLoading) {
-    return (
-      <section className="py-20 bg-[var(--background)]" style={{ direction: "rtl" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center">
-          <Loader2 className="w-8 h-8 animate-spin text-[var(--brand-green)]" />
-        </div>
-      </section>
-    );
-  }
+    if (dynamicPartners.length > 0) {
+      const normalized = dynamicPartners.map((p: any) => ({
+        id: p.id || p._id,
+        name: p.name,
+        type: p.type,
+        status: p.status || 'active',
+        logo: p.logo,
+        website: p.website || p.url,
+      }));
+      setPartners(normalized.filter((item: any) => item.status !== 'inactive' && item.status !== 'suspended'));
+    }
+  }, [dynamicPartners]);
 
   // Dev indicator badge
   const DevBadge = showDevBadge ? (
     <div className="fixed top-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
       <div className="flex items-center gap-2">
         <div className={`w-2 h-2 rounded-full ${
-          contentSource === 'sanity' ? 'bg-green-400' : 
-          contentSource === 'hybrid' ? 'bg-blue-400' : 'bg-yellow-400'
+          source === 'sanity' ? 'bg-green-400' :
+          source === 'cache' ? 'bg-blue-400' : 'bg-yellow-400'
         }`} />
-        <span>{contentSource === 'sanity' ? 'Sanity CMS' : contentSource === 'hybrid' ? 'Hybrid' : 'Static Content'}</span>
+        <span>{source === 'sanity' ? 'Sanity CMS' : source === 'cache' ? 'Cached' : 'Static Content'}</span>
       </div>
     </div>
   ) : null;
 
   return (
-    <section className="py-20 bg-[var(--background)]" style={{ direction: "rtl" }}>
+    <section className="py-24 md:py-32 bg-[var(--background)] relative overflow-hidden" style={{ direction: "rtl" }}>
+      <div className="absolute inset-0 pattern-arabesque-light pointer-events-none" />
       {DevBadge}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

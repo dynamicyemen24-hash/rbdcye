@@ -1,97 +1,60 @@
 // ============================================================
-// Database API - Direct PostgreSQL Access
-// ⚠️ SECURITY: This file should NOT be exposed publicly!
-// Consider removing HTTP handler or adding authentication
+// Database API - Neon PostgreSQL (Serverless-compatible)
+// Works with: Vercel, Cloudflare Workers, Netlify Functions
+// ⚠️ This is SERVER-SIDE ONLY — never expose to client
 // ============================================================
-import { Pool } from 'pg';
+import { neon } from '@neondatabase/serverless';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  connectionTimeoutMillis: 5000,
-  idleTimeoutMillis: 30000,
-  max: 20,
-});
+// Neon serverless driver — uses HTTP by default (no WebSocket needed)
+const sql = neon(process.env.DATABASE_URL);
 
-// Direct query function for internal use only
+/**
+ * Execute a parameterized query
+ * @param {string} text - SQL query with $1, $2... placeholders
+ * @param {Array} params - Query parameters
+ * @returns {{ rows: Array, rowCount: number, success: boolean }}
+ */
 export async function query(text, params = []) {
-  const client = await pool.connect();
   try {
-    const result = await client.query(text, params);
+    const result = await sql(text, params);
     return {
-      rows: result.rows,
-      rowCount: result.rowCount,
+      rows: result,
+      rowCount: result.length,
       success: true,
     };
-  } finally {
-    client.release();
-  }
-}
-
-// Export pool for graceful shutdown
-export { pool };
-
-// HTTP handler - DISABLED for security reasons
-// If needed, implement proper authentication and rate limiting
-export default async function handler(req, res) {
-  // SECURITY: Block external access
-  const authHeader = req.headers.authorization;
-  const expectedToken = process.env.DATABASE_API_SECRET;
-
-  if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
-    return res.status(401).json({
-      error: 'Unauthorized - This endpoint is disabled',
-      message: 'Direct database access is not permitted',
-    });
-  }
-
-  const origin = req.headers.origin;
-  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,https://rohamaa.org,https://rbdcye.org').split(',');
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-  // Security headers
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  try {
-    const { query: sql, params = [] } = req.body;
-
-    if (!sql) {
-      return res.status(400).json({ error: 'Query is required' });
-    }
-
-    // SECURITY: Only allow SELECT queries
-    const trimmedSql = sql.trim().toUpperCase();
-    if (!trimmedSql.startsWith('SELECT')) {
-      return res.status(403).json({
-        error: 'Only SELECT queries are allowed',
-        message: 'Write operations are blocked for security',
-      });
-    }
-
-    const result = await query(sql, params);
-    res.status(200).json({
-      rows: result.rows,
-      rowCount: result.rowCount,
-      success: true,
-    });
   } catch (error) {
-    console.error('Database error:', error);
-    res.status(500).json({
-      error: error.message || 'Unknown error',
-      success: false,
-    });
+    console.error('[DB] Query error:', error.message);
+    throw error;
   }
 }
+
+/**
+ * Execute multiple queries sequentially (Neon serverless uses HTTP, no persistent connection)
+ * Note: Neon serverless driver doesn't support BEGIN/COMMIT/ROLLBACK over HTTP.
+ * For true transactions, use a persistent connection pool (pg.Pool) instead.
+ * @param {Array<{ text: string, params?: Array }>} queries
+ * @returns {Array<{ rows: Array, rowCount: number }>}
+ */
+export async function transaction(queries) {
+  const results = [];
+  for (const q of queries) {
+    const result = await sql(q.text, q.params || []);
+    results.push({ rows: result, rowCount: result.length });
+  }
+  return results;
+}
+
+/**
+ * Health check — verify database connectivity
+ */
+export async function healthCheck() {
+  try {
+    const result = await sql`SELECT 1 as ok, NOW() as time`;
+    return { healthy: true, time: result[0]?.time };
+  } catch (error) {
+    return { healthy: false, error: error.message };
+  }
+}
+
+// Export sql for raw template-tag queries
+export { sql };

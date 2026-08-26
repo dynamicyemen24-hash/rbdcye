@@ -1,11 +1,11 @@
 // Smart Donation Form Component - نموذج التبرع الذكي المتكامل مع Stripe والتبرع الدوري
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   Heart, CreditCard, Wallet, Building2, CheckCircle, Shield,
   RefreshCw, Lock, Sparkles, AlertCircle, ArrowLeft,
-  Calendar, UserCheck, HelpCircle, FileText, Check, DollarSign
+  FileText, DollarSign
 } from 'lucide-react';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { paymentGateway, type PaymentCurrency } from '@/shared/services/payment-gateway.service';

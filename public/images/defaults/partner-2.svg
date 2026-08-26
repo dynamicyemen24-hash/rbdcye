@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0F4C3A"/>
+  <pattern id="kh" width="64" height="64" patternUnits="userSpaceOnUse"><g fill="none" stroke="#C69E5A" stroke-opacity=".18" stroke-width="1"><path d="M32 0 L64 32 L32 64 L0 32 Z"/></g></pattern>
+  <rect width="512" height="512" rx="96" fill="url(#kh)"/>
+  <g transform="rotate(45 256 256)"><rect x="156" y="156" width="200" height="200" rx="24" fill="none" stroke="#C69E5A" stroke-width="7"/></g>
+  <path d="M292 196 a72 72 0 1 0 40 118 a58 58 0 1 1 -40 -118 Z" fill="#C69E5A"/>
+</svg>

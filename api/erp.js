@@ -40,7 +40,7 @@ async function getImpactCounters(req, res) {
     }));
   } catch (error) {
     console.error('ERP Impact Counters error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -66,7 +66,7 @@ async function getActiveProjects(req, res) {
     res.status(200).json(apiResponse(result.rows));
   } catch (error) {
     console.error('ERP Active Projects error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -96,7 +96,7 @@ async function getTotalDonations(req, res) {
     }));
   } catch (error) {
     console.error('ERP Donations Total error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -112,7 +112,7 @@ async function getBeneficiariesStats(req, res) {
         COUNT(*) FILTER (WHERE category = 'orphan') as orphans,
         COUNT(*) FILTER (WHERE category = 'needy') as needy,
         COUNT(*) FILTER (WHERE category = 'displaced') as displaced,
-        COUNT(*) FILTER (WHERE category = ' student') as students
+        COUNT(*) FILTER (WHERE category = 'student') as students
       FROM beneficiaries
     `);
 
@@ -127,7 +127,7 @@ async function getBeneficiariesStats(req, res) {
     }));
   } catch (error) {
     console.error('ERP Beneficiaries Stats error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -148,7 +148,7 @@ async function getPartnersList(req, res) {
     res.status(200).json(apiResponse(result.rows));
   } catch (error) {
     console.error('ERP Partners List error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -159,8 +159,21 @@ async function getPartnersList(req, res) {
 async function createDonationFromWebsite(req, res) {
   const { donor, email, amount, project, method, type } = req.body;
 
-  if (!donor || !email || !amount) {
+  // Sanitize inputs
+  const sanitizedDonor = String(donor || '').trim().slice(0, 100);
+  const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+  const sanitizedAmount = Math.max(0.01, parseFloat(amount) || 0);
+  const sanitizedProject = String(project || '').trim().slice(0, 100);
+  const sanitizedMethod = String(method || '').trim().slice(0, 50);
+  const sanitizedType = String(type || 'once').slice(0, 20);
+
+  if (!sanitizedDonor || !sanitizedEmail || !sanitizedAmount) {
     return res.status(400).json({ success: false, error: 'donor, email, and amount are required' });
+  }
+
+  // Validate email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
+    return res.status(400).json({ success: false, error: 'Invalid email format' });
   }
 
   try {
@@ -169,7 +182,7 @@ async function createDonationFromWebsite(req, res) {
       `INSERT INTO donations (donor, email, amount, project, method, type, status) 
        VALUES ($1, $2, $3, $4, $5, $6, 'pending') 
        RETURNING *`,
-      [donor, email, amount, project, method, type || 'once']
+      [sanitizedDonor, sanitizedEmail, sanitizedAmount, sanitizedProject, sanitizedMethod, sanitizedType]
     );
 
     const donation = donationResult.rows[0];
@@ -191,19 +204,41 @@ async function createDonationFromWebsite(req, res) {
     res.status(201).json(apiResponse(donation, { created: true }));
   } catch (error) {
     console.error('ERP Create Donation error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
 /**
  * ERP API: Register Volunteer
  * مطابق للمواصفات: /api/volunteers/register
+ * Program must match Sanity taxonomy: إغاثة/تعليم/صحة/إدارة/تسويق
  */
 async function registerVolunteer(req, res) {
   const { name, email, phone, program, availability, notes } = req.body;
 
-  if (!name || !email) {
+  // Sanitize inputs
+  const sanitizedName = String(name || '').trim().slice(0, 100);
+  const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+  const sanitizedPhone = String(phone || '').replace(/[^\d+]/g, '').slice(0, 20);
+
+  // Validate program against Sanity taxonomy
+  const validPrograms = ['إغاثة', 'تعليم', 'صحة', 'إدارة', 'تسويق'];
+  const sanitizedProgram = validPrograms.includes(program || '') ? program : 'إغاثة';
+
+  // Normalize availability - ensure it's a valid duration or 'full-time'
+  const sanitizedAvailability = typeof availability === 'string' && availability.trim()
+    ? availability.trim().slice(0, 50)
+    : 'full-time';
+
+  const sanitizedNotes = String(notes || '').trim().slice(0, 2000);
+
+  if (!sanitizedName || !sanitizedEmail) {
     return res.status(400).json({ success: false, error: 'name and email are required' });
+  }
+
+  // Validate email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
+    return res.status(400).json({ success: false, error: 'Invalid email format' });
   }
 
   try {
@@ -211,13 +246,13 @@ async function registerVolunteer(req, res) {
       `INSERT INTO volunteers (name, email, phone, program, availability, notes, status) 
        VALUES ($1, $2, $3, $4, $5, $6, 'pending') 
        RETURNING *`,
-      [name, email, phone, program, availability, notes]
+      [sanitizedName, sanitizedEmail, sanitizedPhone || null, sanitizedProgram, sanitizedAvailability, sanitizedNotes]
     );
 
     res.status(201).json(apiResponse(volunteerResult.rows[0], { created: true }));
   } catch (error) {
     console.error('ERP Register Volunteer error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -228,8 +263,21 @@ async function registerVolunteer(req, res) {
 async function createPartnershipRequest(req, res) {
   const { organization, contact, email, phone, proposal, type } = req.body;
 
-  if (!organization || !contact || !email) {
+  // Sanitize inputs
+  const sanitizedOrg = String(organization || '').trim().slice(0, 200);
+  const sanitizedContact = String(contact || '').trim().slice(0, 100);
+  const sanitizedEmail = String(email || '').trim().toLowerCase().slice(0, 254);
+  const sanitizedPhone = String(phone || '').replace(/[^\d+]/g, '').slice(0, 20);
+  const sanitizedProposal = String(proposal || '').trim().slice(0, 5000);
+  const sanitizedType = String(type || 'strategic').slice(0, 50);
+
+  if (!sanitizedOrg || !sanitizedContact || !sanitizedEmail) {
     return res.status(400).json({ success: false, error: 'organization, contact, and email are required' });
+  }
+
+  // Validate email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizedEmail)) {
+    return res.status(400).json({ success: false, error: 'Invalid email format' });
   }
 
   try {
@@ -237,13 +285,13 @@ async function createPartnershipRequest(req, res) {
       `INSERT INTO partnerships (organization, contact, email, phone, proposal, type, status) 
        VALUES ($1, $2, $3, $4, $5, $6, 'pending') 
        RETURNING *`,
-      [organization, contact, email, phone, proposal, type || 'strategic']
+      [sanitizedOrg, sanitizedContact, sanitizedEmail, sanitizedPhone || null, sanitizedProposal, sanitizedType]
     );
 
     res.status(201).json(apiResponse(partnershipResult.rows[0], { created: true }));
   } catch (error) {
     console.error('ERP Partnership Request error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }
 
@@ -282,14 +330,19 @@ export default async function handler(req, res) {
 
     switch (endpoint) {
       case 'counters':
+        if (req.method !== 'GET') return methodNotAllowed(res);
         return getImpactCounters(req, res);
       case 'projects':
+        if (req.method !== 'GET') return methodNotAllowed(res);
         return getActiveProjects(req, res);
       case 'donations-total':
+        if (req.method !== 'GET') return methodNotAllowed(res);
         return getTotalDonations(req, res);
       case 'beneficiaries':
+        if (req.method !== 'GET') return methodNotAllowed(res);
         return getBeneficiariesStats(req, res);
       case 'partners':
+        if (req.method !== 'GET') return methodNotAllowed(res);
         return getPartnersList(req, res);
       case 'create-donation':
         if (req.method === 'POST') return createDonationFromWebsite(req, res);
@@ -307,6 +360,6 @@ export default async function handler(req, res) {
     return methodNotAllowed(res);
   } catch (error) {
     console.error('ERP API error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 }

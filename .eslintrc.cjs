@@ -49,9 +49,9 @@ module.exports = {
   },
   rules: {
     // TypeScript
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
 
     // React
     'react/react-in-jsx-scope': 'off',
@@ -60,7 +60,7 @@ module.exports = {
 
     // React Hooks
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/set-state-in-effect': 'off',
 
     // Import
@@ -68,9 +68,11 @@ module.exports = {
     'import/no-named-as-default': 'off',
 
     // General
-    'no-console': 'off',
-    'prefer-const': 'off',
-    'no-var': 'off',
+    'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+    'prefer-const': 'warn',
+    'no-var': 'error',
+    'no-debugger': 'error',
+    'no-alert': 'warn',
   },
   ignorePatterns: [
     'dist/',

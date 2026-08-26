@@ -71,19 +71,23 @@ export const rateLimitConfig = {
   burstWindowMs: 1000,      // 1 second burst window
 };
 
-// Clean up expired entries periodically
-setInterval(() => {
+// Clean up expired entries lazily during request processing
+function cleanupExpiredEntries() {
   const now = Date.now();
   for (const [key, entry] of rateLimitMap) {
     if (entry.resetAt < now) {
       rateLimitMap.delete(key);
     }
   }
-}, 60 * 1000).unref?.();
+}
 
 export function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number; remaining?: number } {
   const now = Date.now();
   const key = ip || 'unknown';
+  
+  // Lazy cleanup on every request
+  cleanupExpiredEntries();
+  
   const entry = rateLimitMap.get(key);
 
   if (!entry || entry.resetAt < now) {
@@ -162,7 +166,7 @@ export function applyMiddleware(req: any, res: any, next?: () => void) {
     const publicPaths = ['/api/create-checkout-session', '/api/contact', '/api/subscribers', '/api/volunteers', '/api/donations'];
     const isPublic = publicPaths.some(p => req.url?.startsWith(p));
     
-    if (!isPublic && csrfToken && !validateCSRFToken(csrfToken, csrfToken)) {
+    if (!isPublic && csrfToken && !validateCSRFToken(csrfToken, sessionToken)) {
       return res.status(403).json({ success: false, error: 'Invalid CSRF token' });
     }
   }

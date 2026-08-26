@@ -1,31 +1,37 @@
 // Volunteer Page - صفحة التطوع
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target, BarChart3, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { intakeService } from "@/shared/services/intake.service";
 import { useSEO } from "@/utils/seoAdvanced";
 
-// مجالات التطوع حسب الدليل التشغيلي
+// ═══════════════════════════════════════════════════════
+// مجالات التطوع حسب الدليل التشغيلي — مطوَّر لتطابق Sanity
+// ═══════════════════════════════════════════════════════
+// Alignment with Sanity taxonomy: إغاثة/تعليم/صحة/إدارة/تسويق
 const VOLUNTEER_FIELDS = [
-  { id: 'education', label: 'تعليمي', icon: '📚', description: 'تدريس وتحفيظ' },
-  { id: 'health', label: 'صحي', icon: '🏥', description: 'دعم طبي وتمريض' },
-  { id: 'relief', label: 'إغاثي', icon: '🚚', description: 'توزيع مواد إغاثية' },
-  { id: 'media', label: 'إعلامي', icon: '📱', description: 'تصميم ومونتاج' },
-  { id: 'admin', label: 'إداري', icon: '📊', description: 'إدارة وتنسيق' },
-  { id: 'tech', label: 'تقني', icon: '💻', description: 'تطوير ودعم تقني' },
-  { id: 'logistics', label: 'لوجستي', icon: '📦', description: 'تخزين وتوزيع' },
-  { id: 'fundraising', label: 'تأمين موارد', icon: '💰', description: 'جمع تبرعات وشراكات' },
+  { id: 'إغاثة', label: 'إغاثة', icon: '🚚', description: 'توزيع مواد إغاثية' },
+  { id: 'تعليم', label: 'تعليم', icon: '📚', description: 'تدريس وتحفيظ' },
+  { id: 'صحة', label: 'صحة', icon: '🏥', description: 'دعم طبي وتمريض' },
+  { id: 'إدارة', label: 'إدارة', icon: '📊', description: 'إدارة وتنسيق' },
+  { id: 'تسويق', label: 'تسويق', icon: '📱', description: 'تصميم وتسويق' },
 ];
 
+// ═══════════════════════════════════════════════════════
+// هروب من البوتات — حقل وهمي للحصاد
+// ═══════════════════════════════════════════════════════
+// Hidden honeypot field to catch spam bots (invisible to human users)
+const HONEYPOT_FIELD = 'website';
+
 const VOLUNTEER_STATS = [
-  { label: 'متطوع نشط', value: '200+', icon: Users, color: 'text-[var(--brand-green)]' },
+  { label: 'متطوع نشط', value: 'متطوعون', icon: Users, color: 'text-[var(--brand-green)]' },
   { label: 'ميدان', value: '8', icon: Globe, color: 'text-blue-600' },
-  { label: 'ساعات تطوع', value: '10,000+', icon: Award, color: 'text-purple-600' },
-  { label: 'مشروع مدعوم', value: '50+', icon: Target, color: 'text-[var(--brand-gold)]' },
+  { label: 'ساعات تطوع', value: 'آلاف', icon: Award, color: 'text-purple-600' },
+  { label: 'مشروع مدعوم', value: 'مشاريع', icon: Target, color: 'text-[var(--brand-gold)]' },
 ];
 
 export default function VolunteerPage() {
@@ -39,7 +45,13 @@ export default function VolunteerPage() {
     phone: '',
     field: '',
     reason: '',
+    // Honeypot field - hidden from humans, filled by bots
+    honeypot: '',
   });
+
+  // Turnstile verification
+  const [turnstileVerified, setTurnstileVerified] = useState(false);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
 
   useSEO({
     title: 'تطوع معنا - رحماء بينهم',
@@ -49,10 +61,10 @@ export default function VolunteerPage() {
 
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
-      .then((result) => {
+    contentManager.getImpact()
+      .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.isDynamic ? 'sanity' : 'static');
+          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
         }
       })
       .catch(() => {
@@ -60,6 +72,27 @@ export default function VolunteerPage() {
       });
     return () => { cancelled = true; };
   }, []);
+
+  // Turnstile verification
+  async function verifyTurnstile(token: string) {
+    try {
+      const response = await fetch('https://challenges.cloudflare.com/v1/siteverify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `secret=${process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SECRET}&response=${token}`,
+      });
+      const data = await response.json();
+      setTurnstileVerified(data.success ?? false);
+      if (!data.success) {
+        setTurnstileError('التحقق منTURNSTILE فشل يرجى المحاولة مرة أخرى');
+      }
+    } catch (err) {
+      setTurnstileError('حدث خطأ في التحقق من TURNSTILE');
+      setTurnstileVerified(false);
+    }
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -72,6 +105,20 @@ export default function VolunteerPage() {
     e.preventDefault();
     setError(null);
     setSending(true);
+
+    // Check honeypot - if filled, it's a bot
+    if (formData.honeypot) {
+      setError('تم حظر الطلب - détecté comme bot');
+      setSending(false);
+      return;
+    }
+
+    // Verify Turnstile token
+    if (!turnstileVerified) {
+      setError('يجب إكمال تحقق TURNSTILE');
+      setSending(false);
+      return;
+    }
 
     try {
       await intakeService.submitVolunteer({
@@ -139,10 +186,10 @@ export default function VolunteerPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'متطوع نشط', value: '200+', icon: Users, color: 'green' },
+            { label: 'متطوع نشط', value: 'متطوعون', icon: Users, color: 'green' },
             { label: 'ميدان', value: '8', icon: Globe, color: 'blue' },
-            { label: 'ساعات تطوع', value: '10,000+', icon: Award, color: 'purple' },
-            { label: 'مشروع مدعوم', value: '50+', icon: Target, color: 'gold' },
+            { label: 'ساعات تطوع', value: 'آلاف', icon: Award, color: 'purple' },
+            { label: 'مشروع مدعوم', value: 'مشاريع', icon: Target, color: 'gold' },
           ]}
           columns={4}
           variant="glass"
@@ -240,6 +287,21 @@ export default function VolunteerPage() {
                       className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
                       placeholder="example@email.com"
                     />
+                    {/* Honeypot field - hidden from humans, filled by bots */}
+                    <input
+                      type="text"
+                      name="honeypot"
+                      className="w-full px-4 py-3 rounded-xl border border-transparent outline-none bg-transparent hidden sm:block"
+                      aria-hidden="true"
+                      readOnly
+                    />
+                    {/* Turnstile response token */}
+                    <input
+                      type="hidden"
+                      name="cf-turnstile-response"
+                      id="cf-turnstile-response"
+                      value=""
+                    />
                   </div>
                 </div>
 
@@ -296,6 +358,16 @@ export default function VolunteerPage() {
                   />
                 </div>
 
+                {/* Turnstile widget */}
+                <div className="mb-6">
+                  <script
+                    async
+                    src="https://challenges.cloudflare.com/v1/cf-turnstile.js"
+                    defer
+                  ></script>
+                  <div id="turnstile" data-sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY} data-theme="light" data-size="normal"></div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={sending}
@@ -323,15 +395,6 @@ export default function VolunteerPage() {
         </div>
       </section>
 
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

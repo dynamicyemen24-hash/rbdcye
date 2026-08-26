@@ -263,9 +263,15 @@ export function useSEO(options?: SEOOptions) {
     options?.description,
     options?.image,
     options?.url,
+    options?.canonicalUrl,
     options?.type,
     options?.noindex,
     options?.keywords,
+    options?.publishedTime,
+    options?.modifiedTime,
+    options?.author,
+    options?.section,
+    options?.jsonLd,
   ]);
 }
 

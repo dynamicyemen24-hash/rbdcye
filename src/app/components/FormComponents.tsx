@@ -6,15 +6,13 @@ export function TextField({ label, value, onChange, required, type = "text", pla
 }) {
   const [error, setError] = useState("");
 
-  const validate = (val: string) => {
-    if (required && !val.trim()) setError("هذا الحقل مطلوب");
-    else if (type === 'email' && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) setError("بريد إلكتروني غير صحيح");
-    else if (type === 'number' && val && isNaN(Number(val))) setError("رقم غير صحيح");
-    else if (maxLength && val.length > maxLength) setError(`الحد الأقصى ${maxLength} حرف`);
+  useEffect(() => {
+    if (required && !value.trim()) setError("هذا الحقل مطلوب");
+    else if (type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) setError("بريد إلكتروني غير صحيح");
+    else if (type === 'number' && value && isNaN(Number(value))) setError("رقم غير صحيح");
+    else if (maxLength && value.length > maxLength) setError(`الحد الأقصى ${maxLength} حرف`);
     else setError("");
-  };
-
-  useEffect(() => { validate(value); }, [value, validate]);
+  }, [value, required, type, maxLength]);
 
   const inputClass = `w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] transition-colors ${
     error ? 'border-red-400 bg-red-50' : 'border-[var(--border)] bg-white'

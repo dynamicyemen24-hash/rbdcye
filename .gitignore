@@ -17,6 +17,7 @@ dist-node/
 .env.production.local
 .env.neon
 .env.sanity.example
+.env.production
 
 # IDE
 .vscode/
@@ -40,6 +41,10 @@ lerna-debug.log*
 # Testing
 coverage/
 .nyc_output/
+*.lcov
+
+# Lighthouse
+.lighthouseci/
 
 # Misc
 .cache/
@@ -47,32 +52,14 @@ temp/
 tmp/
 *.tmp
 *.bak
+*.tgz
 
-# Lock files (optional - uncomment if you want to commit them)
-# package-lock.json
-# pnpm-lock.yaml
-# yarn.lock
-
-# pnpm store (local app data cache) - NOT a project directory
-%LOCALAPPDATA%/pnpm-store/
-
-# TypeScript build info
-*.tsbuildinfo
-
-# pnpm workspace store (local cache, NOT a project directory)
-.pnpm-store/
-
-# Agent/tool artifacts
-.agents/
-.vercel
-# Stray debug/helper artifacts
-bun.lock
+# Stray artifacts
 check_errors.js
 get_runtime_errors.cjs
-hero_temp.txt
-new_hero.txt
-replace_export.sh
-replace_hero.sh
 repo.json
 metadata.json
 package-lock.json
+output.txt
+wrangler-4.118.0.tgz
+.vercel

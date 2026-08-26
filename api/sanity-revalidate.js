@@ -1,7 +1,18 @@
 // Sanity Revalidate API - On-demand revalidation for Sanity CMS content
 // يستخدم هذا الـ endpoint لإعادة بناء الصفحات عند تحديث المحتوى في Sanity
 
+import crypto from 'crypto';
+
 export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-sanity-secret');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   // Only allow POST requests from Sanity webhook
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -11,8 +22,12 @@ export default async function handler(req, res) {
   const secret = req.headers['x-sanity-secret'] || req.headers['authorization']?.replace('Bearer ', '');
   const expectedSecret = process.env.SANITY_STUDIO_REVALIDATE_SECRET;
 
-  if (expectedSecret && secret !== expectedSecret) {
-    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  if (expectedSecret) {
+    const a = Buffer.from(secret || '');
+    const b = Buffer.from(expectedSecret);
+    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
   }
 
   try {
@@ -79,6 +94,6 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Revalidation error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: 'Revalidation failed' });
   }
 }

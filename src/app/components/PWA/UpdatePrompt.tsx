@@ -1,6 +1,6 @@
 // UpdatePrompt - مكون إشعار التحديثات للـ PWA
 import { RefreshCw, X } from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Button } from '../ui/button';
 

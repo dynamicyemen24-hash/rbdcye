@@ -1,6 +1,6 @@
 // Install Prompt Component - تثبيت التطبيق وتنزيل كـ PWA لسطح المكتب والموبايل
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, Smartphone, Monitor, Sparkles, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, Download, Smartphone, Monitor } from 'lucide-react';
 import { useState, useEffect, useCallback, memo } from 'react';
 
 interface BeforeInstallPromptEvent extends Event {

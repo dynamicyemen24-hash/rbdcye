@@ -1,14 +1,14 @@
 // About Page - من نحن - الهوية الموحدة
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { 
   Users, Award, Globe, Heart, Target, BookOpen, HandHeart, 
   Star, Shield, Sparkles, Quote, Compass,
   TrendingUp, Clock, BadgeCheck,
   Mail, Phone, Facebook, Twitter, Instagram, Youtube,
   Calendar, CheckCircle2,
-  GitCommit, Gem, Crown, Layers, BarChart3
+  GitCommit, Gem, Crown, Layers
 } from 'lucide-react';
-import { useRef, useState, useMemo } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PageHeader } from '@/app/components/PageHeader';
@@ -21,41 +21,14 @@ export default function AboutPage() {
     description: 'تعرف على حملة رحماء بينهم الخيرية وإنجازاتها منذ 2014',
   });
 
-  const [activeSection, setActiveSection] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
-  // Pre-generated particle data
-  const particleData = useMemo(() => Array.from({ length: 30 }, (_, i) => ({
-    id: i,
-    x: ((i * 37) % 1000),
-    y: ((i * 53) % 800),
-    duration: 5 + (i % 10),
-    delay: (i % 5) * 0.5,
-  })), []);
 
   const aboutText = "حملة \"رحماء بينهم\" الخيرية؛ حملة دعوية، إنسانية، وتنموية انطلقت عام 2014م استجابةً للأزمة اليمنية ومعاناة المواطن الإنسانية. ومنذ انطلاقها، تسعى الحملة – بدعم أهل الخير – إلى صون حياة الإنسان وإغاثته عبر برامج علمية وإغاثية متنوعة، مستهدفةً المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، انطلقاً من واجبها الشرعي والإنساني.";
 
   const supervisorMessage = `إنه لمن دواعي سرورنا اليوم وبعد ما يقارب عشرة أعوام من العطاء المستمر والجهود الدؤوبة، وبما يتوافق مع رؤيتنا وأهدافنا، يطيب لنا أن نقف شاكرين لله تعالى، وممتنين لكل صاحب يد سخية وجهد مبارك رسمنا سويا بصمات شريفة وأثرا حميدا، مما جعل حملة رحماء بينهم تحقق نجاحات مبهرة في مجالات متنوعة على مساحات واسعة، عبر ما يزيد عقد من الزمن.\n\nفشكرًا لكل داعمٍ ومحسن، وشكرًا لكل عاملٍ وداعية، وشكرًا لكل من جعل العطاء هويته ورسالة حياته.`;
 
   const partnersText = `"إلى أولئك الأخفياء الأتقياء الأصفياء، والذين ما كان لنا أن نحقق شيئاً من مشاريعنا، مؤمنين أن ما تعلّم متعلّم ولا حفظ حافظ ولا طعِم جائع ولا ارتوى ظامئ ولا اكتسى عارٍ ولا ارتسمت على محيّا حزين بسمة وكُفّت عنه دمعة إلا بفضل الله ثم بفضل الراغبين فيما عند الكريم، مَن يرون أن إصلاح المسلمين والإحسان إليهم مطلباً ربانياً ومسؤولية مجتمعية واجباً قيمياً وأخلاقياً."`;
-
-  const stats = [
-    { label: 'سنوات العطاء', value: '10+', icon: Clock },
-    { label: 'مشروع منفذ', value: '500+', icon: Target },
-    { label: 'مستفيد', value: '50K+', icon: Users },
-    { label: 'متطوع', value: '200+', icon: HandHeart },
-  ];
-
-  const sections = [
-    { id: 'hero', label: 'الرئيسية' },
-    { id: 'definition', label: 'تعريف' },
-    { id: 'supervisor', label: 'كلمة المشرف' },
-    { id: 'identity', label: 'هوية' },
-    { id: 'goals', label: 'أهدافنا' },
-    { id: 'beneficiaries', label: 'المستفيدون' },
-    { id: 'partners', label: 'الشركاء' },
-  ];
 
   const handleSocialClick = (platform: string) => {
     const urls: Record<string, string> = {
@@ -77,17 +50,17 @@ export default function AboutPage() {
       {/* Unified Page Header */}
       <PageHeader
         icon={Heart}
-        badge="مؤسسة رحماء بينهم الخيرية"
+        badge="رحماء بينهم"
         title="من نحن"
         subtitle="حملة رحماء بينهم الخيرية - تضامن إنساني وتنموي متكامل منذ 2014م"
         align="right"
       >
         <StatsGrid
           stats={[
-            { label: 'سنوات العطاء', value: '10+', icon: Clock, color: 'green' },
-            { label: 'مشروع منفذ', value: '500+', icon: Target, color: 'gold' },
+            { label: 'سنوات العطاء', value: 'عشرات', icon: Clock, color: 'green' },
+            { label: 'مشروع منفذ', value: 'مشاريع', icon: Target, color: 'gold' },
             { label: 'مستفيد', value: '50K+', icon: Users, color: 'blue' },
-            { label: 'متطوع', value: '200+', icon: HandHeart, color: 'purple' },
+            { label: 'متطوع', value: 'متطوعون', icon: HandHeart, color: 'purple' },
           ]}
           columns={4}
           variant="glass"
@@ -459,11 +432,11 @@ export default function AboutPage() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
-                  { icon: Heart, title: 'الأيتام والأرامل والأسر المتعففة', desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين', color: '#F43F5E', count: '2,500+' },
-                  { icon: HandHeart, title: 'المحتاجون والنازحون', desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين', color: '#F59E0B', count: '10,000+' },
-                  { icon: BookOpen, title: 'طلاب وحفظة القرآن والمعلمون', desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية', color: '#3B82F6', count: '1,200+' },
-                  { icon: Compass, title: 'سكان المناطق النائية والجافة', desc: 'مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن', color: 'var(--brand-green)', count: '5,000+' },
-                  { icon: TrendingUp, title: 'الأسر الباحثة عن الدخل', desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحول إلى أسر منتجة', color: '#8B5CF6', count: '800+' },
+                  { icon: Heart, title: 'الأيتام والأرامل والأسر المتعففة', desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين', color: '#F43F5E', count: 'آلاف' },
+                  { icon: HandHeart, title: 'المحتاجون والنازحون', desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين', color: '#F59E0B', count: 'عشرات آلاف' },
+                  { icon: BookOpen, title: 'طلاب وحفظة القرآن والمعلمون', desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية', color: '#3B82F6', count: 'آلاف' },
+                  { icon: Compass, title: 'سكان المناطق النائية والجافة', desc: 'مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن', color: 'var(--brand-green)', count: 'آلاف' },
+                  { icon: TrendingUp, title: 'الأسر الباحثة عن الدخل', desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحوؤل إلى أسر منتجة', color: '#8B5CF6', count: 'مئات' },
                  ].map((group, index) => (
                     <motion.div
                       key={group.title}
@@ -625,10 +598,10 @@ export default function AboutPage() {
                   <h4 className="font-semibold mb-3">تواصل</h4>
                   <ul className="space-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
                     <li className="flex items-center justify-center md:justify-start gap-2">
-                      <Phone className="w-4 h-4" /> +967 123 456 789
+                      <Phone className="w-4 h-4" /> +967 780 777 007
                     </li>
                     <li className="flex items-center justify-center md:justify-start gap-2">
-                      <Mail className="w-4 h-4" /> info@rahama.com
+                      <Mail className="w-4 h-4" /> info@rbdcye.org
                     </li>
                   </ul>
                 </div>

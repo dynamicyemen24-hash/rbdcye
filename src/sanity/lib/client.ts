@@ -2,22 +2,11 @@
  * Sanity Client Configuration
  * مع دعم Fetch API المتقدم و Image URL Builder
  */
-import { createClient } from "@sanity/client";
+import { sanityClient } from '../client';
 
 import type { QueryParams } from "@sanity/client";
 
-// Use environment variables with fallbacks for development
-const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || "xd0ohyiz";
-const dataset = import.meta.env.VITE_SANITY_DATASET || "production";
-const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || "2026-02-01";
-
-export const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: true,
-  perspective: "published",
-});
+export const client = sanityClient;
 
 /**
  * Fetch helper with consistent error handling

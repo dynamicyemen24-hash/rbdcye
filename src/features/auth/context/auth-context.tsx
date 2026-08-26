@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Helper: Check token expiration
 const checkTokenExpiration = async (session: Session | null) => {
-  if (!session) return false;
+  if (!session || !supabase) return false;
   
   const now = Math.floor(Date.now() / 1000);
   const expiresAt = session.expires_at || 0;
@@ -39,7 +39,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
+
     const getInitialSession = async () => {
+      if (!supabase) { setLoading(false); return; }
       const { data: { session: initialSession } } = await supabase.auth.getSession();
       setSession(initialSession);
       setUser(initialSession?.user ?? null);
@@ -62,11 +65,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
+    if (!supabase) throw new Error('Supabase not configured');
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
   }, []);
 
   const signUp = useCallback(async (email: string, password: string, metadata?: any) => {
+    if (!supabase) throw new Error('Supabase not configured');
     const { error } = await supabase.auth.signUp({ 
       email, 
       password,
@@ -76,11 +81,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    if (!supabase) throw new Error('Supabase not configured');
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   }, []);
 
   const resetPassword = useCallback(async (email: string) => {
+    if (!supabase) throw new Error('Supabase not configured');
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });

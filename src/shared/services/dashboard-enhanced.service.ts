@@ -31,8 +31,8 @@ export const dashboardEnhancedService = {
       if (metrics && Object.keys(metrics).length > 0) {
         return metrics;
       }
-    } catch (error) {
-      console.warn('Original dashboard service failed, trying Sanity:', error);
+    } catch {
+      // Original dashboard service failed, trying Sanity
     }
 
     // Fallback to Sanity with retry
@@ -76,8 +76,7 @@ export const dashboardEnhancedService = {
   async getChartData() {
     try {
       return await originalDashboardService.getChartData();
-    } catch (error) {
-      console.warn('Chart data failed, returning empty:', error);
+    } catch {
       return {
         donationsOverYear: [
           { month: 'يناير', amount: 0, count: 0 },

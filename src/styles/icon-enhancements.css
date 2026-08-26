@@ -12,7 +12,7 @@
 }
 
 .icon-hover-pulse {
-  transition: all 0.3s ease;
+  transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .icon-hover-pulse:hover {
@@ -30,7 +30,7 @@
 
 /* أيقونات البحث - Search Icon Enhancements */
 .search-icon-interactive {
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .search-icon-interactive:hover {
@@ -40,7 +40,7 @@
 
 /* أيقونات التنقل - Navigation Icons */
 .nav-icon-interactive {
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .nav-icon-interactive:hover {
@@ -54,7 +54,7 @@
 
 /* أيقونات التفاعل - Interactive Icons */
 .interactive-icon {
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
   cursor: pointer;
 }
 
@@ -75,7 +75,7 @@
 
 /* أيقونات الفيديو - Video Player Icons */
 .video-control-icon {
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
   backdrop-filter: blur(4px);
 }
 
@@ -86,7 +86,7 @@
 
 /* أيقونات الإحصائيات - Stats Icons */
 .stats-icon {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stats-icon:hover {
@@ -96,7 +96,7 @@
 
 /* أيقونات الفئة - Category Icons */
 .category-icon-badge {
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -168,7 +168,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-icon:hover {

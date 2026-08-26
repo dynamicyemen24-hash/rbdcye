@@ -1,6 +1,6 @@
 // VideoShowcase - مشغل الفيديوهات المرتبط بالـ Sanity
 // Video Showcase integrated with Sanity Studio
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Play, Pause, Volume2, VolumeX, Maximize2, ChevronLeft,
   Heart, Eye, Sparkles, ExternalLink,
@@ -369,10 +369,10 @@ AdvancedVideoCard.displayName = 'AdvancedVideoCard';
 // المكون الرئيسي
 export const VideoShowcase = memo(({ 
   videos: initialVideos,
-  setCurrentPage = () => {}, 
+  setCurrentPage: _setCurrentPage = () => {}, 
   limit = 8,
-  showFeatured = true,
-  theme = 'charity',
+  showFeatured: _showFeatured = true,
+  theme: _theme = 'charity',
   showStoryButton = true,
 }: VideoShowcaseProps) => {
   const [videos, setVideos] = useState<VideoItem[]>([]);

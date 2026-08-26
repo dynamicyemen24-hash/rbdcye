@@ -3,14 +3,14 @@
 // يدعم التبرع لمشاريع متعددة في صفقة واحدة
 // متصل بقاعدة البيانات الحقيقية
 // ============================================================
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'motion/react';
 import {
-  Heart, TrendingUp, CheckCircle, Plus, Minus, AlertCircle,
-  Info, DollarSign, Share2, Download, Banknote, CreditCard,
+  Heart, CheckCircle, AlertCircle,
+  Share2, Download, Banknote, CreditCard,
   Building, Target, Sparkles, Calculator, Wallet,
-  ChevronDown, ChevronUp, PiggyBank, Shield, FileText,
+  ChevronDown, ChevronUp, Shield, FileText,
   Users, BookOpen, GraduationCap, Droplets, Utensils,
-  Stethoscope, TreePine, Star, Gift, Loader2,
+  Stethoscope, TreePine, Star, Loader2,
 } from 'lucide-react';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 
@@ -21,7 +21,7 @@ import {
   type ProjectAllocation,
   type DonationReceipt,
 } from '@/shared/services/donation-multi-project.service';
-import { type PaymentMethod, type PaymentCurrency } from '@/shared/services/payment-gateway.service';
+import { type PaymentMethod } from '@/shared/services/payment-gateway.service';
 
 // ============================================================
 // Icons for projects
@@ -54,10 +54,10 @@ function getProjectIcon(name: string): any {
 const PRESET_AMOUNTS = [100, 500, 1000, 5000, 10000, 50000];
 const PAYMENT_METHODS = [
   { id: 'card' as PaymentMethod, name: 'بطاقة ائتمان', icon: CreditCard, desc: 'Visa - MasterCard - مدى' },
-  { id: 'bank' as PaymentMethod, name: 'تحويل بنكي', icon: Building, desc: 'حساب المؤسسة' },
+  { id: 'bank' as PaymentMethod, name: 'تحويل بنكي', icon: Building, desc: 'حسابنا البنكي' },
   { id: 'stripe' as PaymentMethod, name: 'Stripe', icon: Wallet, desc: 'دفع دولي آمن' },
   { id: 'moyasar' as PaymentMethod, name: 'Moyasar', icon: CreditCard, desc: 'مدى - فيزا - ماستركارد' },
-  { id: 'cash' as PaymentMethod, name: 'نقدي', icon: Banknote, desc: 'تنسيق مع المؤسسة' },
+  { id: 'cash' as PaymentMethod, name: 'نقدي', icon: Banknote, desc: 'تنسيق مع فريقنا' },
 ];
 
 // ============================================================
@@ -88,7 +88,6 @@ export default function MultiProjectDonation() {
   const [receipt, setReceipt] = useState<DonationReceipt | null>(null);
   const [error, setError] = useState('');
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [splitMethod, setSplitMethod] = useState<'equal' | 'custom'>('equal');
 
   // Load projects
   useEffect(() => {
@@ -152,12 +151,6 @@ export default function MultiProjectDonation() {
       setCustomAmount(value);
       setTotalAmount(num);
     }
-  }, []);
-
-  const handleAllocationChange = useCallback((projectId: string, amount: number) => {
-    setProjects(prev => prev.map(p => 
-      p.projectId === projectId ? { ...p, amount: Math.max(0, amount) } : p
-    ));
   }, []);
 
   const handleSubmit = async () => {
@@ -625,7 +618,7 @@ export default function MultiProjectDonation() {
                 <input id="agree-terms" type="checkbox" checked={agreeTerms} onChange={e => setAgreeTerms(e.target.checked)}
                   className="w-5 h-5 mt-0.5 rounded border-gray-300 text-[var(--brand-green)] focus:ring-[var(--brand-green)]" />
                 <span className="text-sm text-gray-600">
-                  أقر بأن هذا تبرع خيري طوعي، وأوافق على استخدام المبلغ بحسب تقدير المؤسسة لتحقيق أهدافها الإنسانية
+                  أقر بأن هذا تبرع خيري طوعي، وأوافق على استخدام المبلغ بحسب تقدير رحماء بينهم لتحقيق أهدافها الإنسانية
                   <span className="text-red-500">*</span>
                 </span>
               </label>

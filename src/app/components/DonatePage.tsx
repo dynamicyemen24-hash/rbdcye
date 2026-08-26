@@ -5,7 +5,7 @@ import { intakeService } from "@/shared/services/intake.service";
 
 const amounts = [50, 100, 250, 500, 1000, 2500];
 const projects = [
-  { id: "general", label: "الصندوق العام للمؤسسة" },
+  { id: "general", label: "الصندوق العام لدعم البرامج" },
   { id: "relief", label: "الإغاثة الإنسانية" },
   { id: "education", label: "دعم التعليم" },
   { id: "development", label: "التنمية المجتمعية" },

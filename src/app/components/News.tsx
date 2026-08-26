@@ -1,24 +1,21 @@
 // src/app/components/News.tsx
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { 
-  Calendar, ArrowLeft, Eye, Loader2, Heart, HandHeart, Users, Award, 
-  Sparkles, Clock, Share2, Bookmark, TrendingUp, Building2, Gift,
-  Search, Filter, X, ChevronDown, ChevronUp, MessageCircle, ThumbsUp,
-  Play, Grid, List, ArrowRight, Lightbulb, Quote, Target, Globe,
-  Shield, Star, UserPlus, Coffee, BookOpen, Home, Smile, Sun, Leaf, Compass
+  Calendar, ArrowLeft, Eye, Loader2, Heart, Users, 
+  Sparkles, Clock,
+  Search, Filter, X, ChevronDown, ChevronUp,
+  Grid, List, ArrowRight, Lightbulb
 } from "lucide-react";
 import { useState, useEffect, useCallback, useMemo, memo, useRef } from "react";
 
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
-import { contentBridge } from "@/shared/services/content-bridge.service";
 import { sanityService, getImageUrl } from "@/shared/services/sanity.service";
 import { 
   getSafeImage, 
   handleImageError, 
   getPlaceholderImage,
-  getRandomImage,
-  RECOMMENDED_IMAGES 
+  getRandomImage
 } from "@/utils/imageUtils";
 
 // ============================================
@@ -107,11 +104,11 @@ const NEWS_CATEGORIES_MAP: Record<string, NewsCategory> = {
     description: 'فريق المتطوعين المتميز'
   },
   'عام': { 
-    name: 'أخبار المؤسسة', 
+    name: 'أخبارنا', 
     color: '#6B7280', 
     bg: '#F3F4F6',
     icon: '📰',
-    description: 'آخر أخبار المؤسسة'
+    description: 'آخر أخبارنا'
   },
 };
 
@@ -127,99 +124,91 @@ interface NewsPageProps {
 const INSPIRATIONAL_CONTENT = [
   {
     id: 'vision-1',
-    title: 'رؤيتنا: عالم يتسع للخير',
-    excerpt: 'نسعى لأن نكون جسراً من الأمل والخير، نمد يد العون لكل محتاج، ونبني مجتمعاً مترابطاً تسوده الرحمة والتكافل.',
+    title: 'لماذا اخترنا اسم «رحماء بينهم»؟',
+    excerpt: 'لأننا لا نرى المحتاج كرقم في تقرير، بل كإنسان له وجه وقصة وحلم. نؤمن أن الرحمة ليست مشاعر عابرة، بل قرار يومي بالوقوف بجانب من سقط.',
     category: 'عام',
     icon: '🌟',
-    impact: 'رؤية المؤسسة'
+    impact: 'رسالتنا'
   },
   {
     id: 'message-1',
-    title: 'رسالتنا الإنسانية',
-    excerpt: 'نؤمن بأن الخير يبدأ بخطوة، وبأن التغيير يبدأ من قلبٍ واحد. مهمتنا تمكين المجتمعات وتحقيق الأثر المستدام.',
-    category: 'تنمية',
+    title: 'المساعدة لا تنتظر حتى تكتمل الصورة',
+    excerpt: 'في اليوم الأول من عملنا، لم يكن لدينا مكتب ولا فريق كامل. كان لدينا قلب يخالج الألم ويد واحدة تصلح ما يمكن إصلاحه. بدأت رحلتنا بسلة غذائية واحدة لعائلة في تعز، وعلمنا أن الخير لا يحتاج الكمال — يبدأ بالتوفر.',
+    category: 'إغاثة',
     icon: '💚',
-    impact: 'رسالة المؤسسة'
+    impact: 'من العمليات'
   },
   {
     id: 'values-1',
-    title: 'قيمنا التي ننطلق منها',
-    excerpt: 'الرحمة، الإخلاص، التميز، الشفافية، والتعاون. هذه القيم هي بوصلتنا في كل عمل نقوم به.',
+    title: 'الشفافية ليست شعاراً — إنها التزام',
+    excerpt: 'ننشر تقاريرنا المالية شهرية. لا نخفي ريالاً واحداً. لأن المتبرع الذي وضع ثقته فينا يستحق أن يعرف أين ذهبت ثقته. شفافيتنا ليست اختياراً — إنها عقد بيننا وبين من صدّقنا.',
     category: 'عام',
     icon: '⭐',
-    impact: 'قيم المؤسسة'
+    impact: 'شفافية حقيقية'
   },
   {
     id: 'achievement-1',
-    title: 'إنجاز جديد في التعليم',
-    excerpt: 'نفخر بدعم أكثر من 500 طالب وطالبة في المناطق النائية، وتمكينهم من مواصلة تعليمهم وتحقيق أحلامهم.',
+    title: 'عندما يتعلم طفل في قرية نائية',
+    excerpt: 'أحمد من قرية في مرتفعات إب. لم يكن يملك قلمًا. اليوم يكتب خطابه الأول إلى المتبرع الذي غيّر حياته. لم نُطعمه فقط — علّمناه أن يُطعم نفسه. هذا هو الفرق بين الإغاثة والتنمية.',
     category: 'تعليم',
     icon: '📚',
-    impact: 'تم تعليم 500+ طالب'
+    impact: 'قصة أحمد'
   },
   {
     id: 'relief-1',
-    title: 'قوافل الإغاثة مستمرة',
-    excerpt: 'واصلنا توزيع المساعدات الإغاثية على الأسر المتضررة، لتصل فرحتهم إلينا ونحن نرى الابتسامة تعود إلى وجوههم.',
+    title: 'ليست سلة غذائية — إنها لحظة رجاء',
+    excerpt: 'عندما فتحت أم محمد الباب ووجدت السلة، لم تسأل عما بداخلها. سألت: «هل أنتم من الله؟» هذه اللحظة تُذكّرنا لماذا نعمل. المساعدات تنتهي — لكن تلك اللحظة تبقى مع الأسرة.',
     category: 'إغاثة',
     icon: '🆘',
-    impact: 'إغاثة 1000+ أسرة'
+    impact: 'من الميدان'
   },
   {
     id: 'development-1',
-    title: 'مشاريع التنمية المستدامة',
-    excerpt: 'نعمل على تمكين المجتمعات من خلال مشاريع تنموية مستدامة تهدف إلى تحسين جودة الحياة وخلق فرص عمل.',
+    title: 'المتجر الصغير الذي غيّر حياة قرية',
+    excerpt: 'امرأة في الحديدة كانت تبيع في الشارع. لها متجر صغير تديره بدعم من برنامج تمكين النساء. ليس ثورياً — لكنه يكفي لأطفال يأكلون ويدرسون. هذا هو التغيير الحقيقي.',
     category: 'تنمية',
     icon: '🌱',
-    impact: 'تنمية مستدامة'
-  },
-  {
-    id: 'partnership-1',
-    title: 'شراكات استراتيجية فاعلة',
-    excerpt: 'نؤمن بأن التغيير الكبير يتحقق بالتعاون. شراكاتنا مع المؤسسات المحلية والدولية تعزز أثرنا الإنساني.',
-    category: 'شراكات',
-    icon: '🤝',
-    impact: 'شراكات جديدة'
+    impact: 'قصة فاطمة'
   },
   {
     id: 'orphan-1',
-    title: 'رعاية الأيتام والأسر',
-    excerpt: 'نمد يد العون للأيتام والأسر الأكثر احتياجاً، لنرسم البسمة على وجوههم ونمنحهم الأمان والحياة الكريمة.',
+    title: 'ليس يتيمًا — بل طالب في انتظار مستقبله',
+    excerpt: 'عمر فقد أباه في الصراع. كنا نظن أن كفالته تعني مبلغاً مالياً. اكتشفنا أنه يحتاج من يسأله: كيف حالك اليوم؟ برنامج يربطه بمُكلّف يتابع دراسته وصحته أسبوعياً.',
     category: 'رعاية',
     icon: '💝',
-    impact: 'رعاية 200+ يتيم'
+    impact: 'رعاية شاملة'
   },
   {
     id: 'volunteer-1',
-    title: 'فريق التطوع المتميز',
-    excerpt: 'نفخر بفريقنا التطوعي المتميز الذي يقود التغيير بإخلاص وتفانٍ، ويساهم في تحقيق أهدافنا الإنسانية.',
+    title: 'المتطوع الذي لم يكن يعلم أنه يبني وطنه',
+    excerpt: 'خالد كان طالب جامعي ملّ من الجلوس في البيت. سجّل في برنامج التدريب والتطوع. اليوم يقود فريقاً في المحافظة. لم يكن يعلم أنه يبني وطنه — جاء لأنهم كانوا بحاجة ليد. ووجد نفسه.',
     category: 'تطوع',
     icon: '🤲',
-    impact: '50+ متطوع'
+    impact: 'قصة خالد'
   },
   {
     id: 'wisdom-1',
-    title: 'كلمة في الرحمة',
-    excerpt: '"وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ" - نستلهم من هذه الآية رسالتنا في نشر الخير والرحمة.',
+    title: 'الآية التي لا ننساها',
+    excerpt: '"وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ" — هذه ليست آية في كتاب فقط. إنها بطاقة هويتنا. كل مشروع نبدأه، كل أسرة نزورها، كل طفل نُعلمه — نسأل: أين الرحمة هنا؟',
     category: 'عام',
     icon: '📖',
-    impact: 'قيم إسلامية'
+    impact: 'قيمنا'
   },
   {
     id: 'hope-1',
-    title: 'قصة أمل تروى',
-    excerpt: 'في كل يوم نرى قصص نجاح وأمل تتجدد، قصص لأشخاص غيّرنا حياتهم نحو الأفضل بفضل دعم المتبرعين.',
+    title: 'الابتسامة التي لا تُكتب في التقارير',
+    excerpt: 'ليس لدينا مقياس يقيس لحظة سعادة طفل عندما يرى حقيبته المدرسية الجديدة. ولا إحصاء يلتقط دعاء أمwhen she says "الحمد لله". لكن هذه اللحظات هي النجاح الحقيقي.',
     category: 'عام',
     icon: '✨',
-    impact: 'قصص نجاح'
+    impact: 'ما لا يُقاس'
   },
   {
     id: 'future-1',
-    title: 'مستقبل مشرق بجهودكم',
-    excerpt: 'بفضل دعمكم المستمر، نبني مستقبلاً مشرقاً لمجتمعنا عبر مساراتنا المتنوعة: التعليم، الإغاثة، كفالة الأيتام، التمكين، وحلقات تحفيظ القرآن الكريم — ونصنع فرقاً حقيقياً في حياة المحتاجين.',
+    title: 'ما نبنيه اليوم هو اليمن الذي نتخيله',
+    excerpt: 'لسنا مؤسسة تقدم المساعدات فقط. نحن بنّاؤون — نبني قدرات، نبني وعي، نبني ثقة. كل طفل نعلمه يصبح معلماً. كل أسرة ندعمها تصبح سندًا لجيرانها. هذا هو التأثير الذي لا يتوقف.',
     category: 'تنمية',
     icon: '🌟',
-    impact: 'مستقبل مستدام'
+    impact: 'تأثير مستدام'
   }
 ];
 
@@ -274,8 +263,7 @@ class SmartNewsService {
       }
       
       return this.getFallbackNews(limit);
-    } catch (error) {
-      console.warn('⚠️ استخدام المحتوى الافتراضي:', error);
+    } catch {
       return this.getFallbackNews(limit);
     }
   }
@@ -289,7 +277,7 @@ class SmartNewsService {
       const newsPromise = sanityService.getNews();
       const result = await Promise.race([newsPromise, timeoutPromise]);
       return result || [];
-    } catch (error) {
+    } catch {
       return [];
     }
   }
@@ -298,7 +286,7 @@ class SmartNewsService {
     const normalized = sanityNews.map((n: any) => ({
       id: n._id || `sanity-${Math.random()}`,
       title: n.title || 'خبر جديد',
-      excerpt: n.excerpt || 'تابعوا آخر أخبار المؤسسة',
+      excerpt: n.excerpt || 'تابعوا آخر أخبارنا',
       content: n.content || n.excerpt || '',
       category: NEWS_CATEGORIES_MAP[n.category] || NEWS_CATEGORIES_MAP['عام'],
       date: n.publishDate ? new Date(n.publishDate).toLocaleDateString('ar-SA', {
@@ -563,7 +551,7 @@ FullNewsCard.displayName = 'FullNewsCard';
 // 3. صفحة الأخبار الكاملة - المكون الرئيسي
 // ============================================
 
-export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPageProps) => {
+export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = false }: NewsPageProps) => {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -574,7 +562,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
   const [currentPage, setCurrentPageState] = useState(1);
   const [totalBeneficiaries, setTotalBeneficiaries] = useState(0);
   const [showInspirational, setShowInspirational] = useState(false);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity' | 'hybrid'>('static');
+  const [contentSource, setContentSource] = useState<'static' | 'cache' | 'sanity' | 'hybrid'>('static');
   const [showDevBadge, setShowDevBadge] = useState(false);
   const itemsPerPage = 6;
 
@@ -596,18 +584,18 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
     try {
       setLoading(true);
       
-      // Try to get dynamic content first
+      // ContentManager always returns data (static defaults guaranteed)
       if (dynamicNews.length > 0) {
         const allItems = dynamicNews.map((n: any) => ({
           ...n,
-          isFallback: false
+          isFallback: source === 'static'
         }));
         setItems(allItems);
         setFilteredItems(allItems);
         setContentSource(source);
         setShowInspirational(false);
       } else {
-        // Fallback to smart news service
+        // Should rarely happen — ContentManager guarantees static fallback
         const allItems = await smartNewsService.getNews();
         setItems(allItems);
         setFilteredItems(allItems);
@@ -615,10 +603,10 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
         setShowInspirational(allItems.every(item => item.isFallback));
       }
       
-      const total = (dynamicNews.length > 0 ? dynamicNews : await smartNewsService.getNews()).reduce((sum, item) => sum + (item.beneficiaries || 0), 0);
+      const total = items.reduce((sum, item) => sum + (item.beneficiaries || 0), 0);
       setTotalBeneficiaries(total);
       
-    } catch (error) {
+    } catch {
       const fallback = await smartNewsService.getFallbackNews();
       setItems(fallback);
       setFilteredItems(fallback);
@@ -635,7 +623,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
       hasInitialized.current = true;
       fetchNews();
     }
-  }, []);
+  }, [fetchNews]);
 
   useEffect(() => {
     let result = items;
@@ -716,12 +704,13 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)]" style={{ direction: "rtl" }}>
+    <div className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)] relative overflow-hidden" style={{ direction: "rtl" }}>
+      <div className="absolute inset-0 pattern-khatam-light pointer-events-none" />
       {DevBadge}
       
       {breakingNews.length > 0 && <BreakingNewsTicker items={breakingNews} />}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12 relative">
         
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -730,17 +719,17 @@ export const News = ({ setCurrentPage = () => {}, isFullPage = false }: NewsPage
         >
             <div className="inline-flex items-center gap-3 bg-[var(--success)]/10 px-6 py-2 rounded-full mb-4">
             <Heart className="w-5 h-5 text-[var(--success)]" />
-            <span className="text-[var(--success)] font-semibold">مؤسسة رحماء بينهم الخيرية</span>
+            <span className="text-[var(--success)] font-semibold">رحماء بينهم</span>
           </div>
           
           <h1 className="text-3xl md:text-5xl font-bold text-[var(--foreground)] mb-3">
-            {showInspirational ? 'رسائلنا الملهمة' : 'أخبار المؤسسة'}
-            <span className="text-[var(--success)] block md:inline"> {showInspirational ? 'ورؤانا' : 'وفعالياتها'}</span>
+            {showInspirational ? 'من الميدان' : 'أخبارنا'}
+            <span className="text-[var(--success)] block md:inline"> {showInspirational ? 'قصص تلهم' : 'وفعالياتها'}</span>
           </h1>
           
           <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
             {showInspirational 
-              ? 'نشارككم رؤيتنا ورسالتنا وقيمنا التي ننطلق منها في خدمة المجتمع'
+              ? 'قصص حقيقية من عملنا الميداني — ليس أرقاماً في تقرير، بل لحظات تلمس القلوب'
               : 'تابعوا آخر المستجدات والإنجازات والفعاليات التي تقوم بها مؤسسة رحماء بينهم'
             }
           </p>

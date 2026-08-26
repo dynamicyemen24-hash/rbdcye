@@ -82,12 +82,12 @@ export interface DonationSummary {
 // Available Projects (synced with database)
 // ============================================================
 const DEFAULT_PROJECTS: ProjectAllocation[] = [
-  { projectId: 'p1', projectName: 'بئر ماء - الحديدة', projectImage: '/images/well.jpg', amount: 0, isCustom: true },
-  { projectId: 'p2', projectName: 'كفالة يتيم', projectImage: '/images/orphan.jpg', amount: 0, isCustom: true },
-  { projectId: 'p3', projectName: 'سلة غذائية رمضان', projectImage: '/images/food.jpg', amount: 0, isCustom: true },
-  { projectId: 'p4', projectName: 'الوقف التعليمي', projectImage: '/images/education.jpg', amount: 0, isCustom: true },
-  { projectId: 'p5', projectName: 'الرعاية الصحية', projectImage: '/images/health.jpg', amount: 0, isCustom: true },
-  { projectId: 'p6', projectName: 'إغاثة طارئة', projectImage: '/images/relief.jpg', amount: 0, isCustom: true },
+  { projectId: 'p1', projectName: 'بئر ماء - الحديدة', projectImage: '/images/defaults/project-water.svg', amount: 0, isCustom: true },
+  { projectId: 'p2', projectName: 'كفالة يتيم', projectImage: '/images/defaults/project-relief.svg', amount: 0, isCustom: true },
+  { projectId: 'p3', projectName: 'سلة غذائية رمضان', projectImage: '/images/defaults/project-default.svg', amount: 0, isCustom: true },
+  { projectId: 'p4', projectName: 'الوقف التعليمي', projectImage: '/images/defaults/project-education.svg', amount: 0, isCustom: true },
+  { projectId: 'p5', projectName: 'الرعاية الصحية', projectImage: '/images/defaults/project-development.svg', amount: 0, isCustom: true },
+  { projectId: 'p6', projectName: 'إغاثة طارئة', projectImage: '/images/defaults/project-infrastructure.svg', amount: 0, isCustom: true },
   { projectId: 'p7', projectName: 'دعم المشاريع التنموية', amount: 0, isCustom: true },
   { projectId: 'p8', projectName: 'عام - حيث تحتاج المؤسسة', amount: 0, isCustom: true },
 ];

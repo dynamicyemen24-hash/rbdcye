@@ -1,9 +1,9 @@
-import { Heart, ChevronLeft, Play, Pause, Volume2, VolumeX, Sparkles, Users, Star, Handshake, Shield, ArrowDown } from "lucide-react";
+import { Heart, ChevronLeft, Play, Pause, Volume2, VolumeX, Sparkles, Users, Star, ArrowDown } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo, memo } from "react";
 
 import { SEED_IMPACT } from "@/content/website";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 
 interface HeroProps {
   readonly setCurrentPage: (page: string) => void;
@@ -46,7 +46,7 @@ const ISLAMIC_TEXTS = [
 // ============================================================
 // Video Background
 // ============================================================
-function VideoBackground() {
+const VideoBackground = memo(function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState(false);
   const [videoLoading, setVideoLoading] = useState(true);
@@ -126,7 +126,7 @@ function VideoBackground() {
 
       <video
         ref={videoRef} loop muted={isMuted} playsInline autoPlay preload="auto"
-        poster="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&h=900&q=80"
+        poster="/images/defaults/about-hero.svg"
         className={`w-full h-full object-cover transition-opacity duration-700 ${videoLoading ? 'opacity-0' : 'opacity-100'}`}
         onError={() => { setVideoError(true); setVideoLoading(false); }}
         onCanPlay={() => setVideoLoading(false)}
@@ -158,11 +158,9 @@ function VideoBackground() {
           {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         </button>
       </motion.div>
-
-      <style>{`@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }`}</style>
     </div>
   );
-}
+});
 
 // ============================================================
 // Main Hero
@@ -172,12 +170,13 @@ export function Hero({ setCurrentPage }: HeroProps) {
   const [verseIndex, setVerseIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const metricsFetched = useRef(false);
+  const isPausedRef = useRef(false);
 
   useEffect(() => {
     if (metricsFetched.current) return;
     metricsFetched.current = true;
     const fallback = { totalBeneficiaries: SEED_IMPACT.beneficiaries, activeProjects: SEED_IMPACT.projects, totalPartners: SEED_IMPACT.partners };
-    contentBridge.getContent<any>('impact')
+    contentManager.getImpact()
       .then(result => {
         const data = result.data[0];
         setMetrics(data ? {
@@ -196,8 +195,56 @@ export function Hero({ setCurrentPage }: HeroProps) {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  // Stop carousel on user interaction - uses ref to avoid re-render storm
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const handleInteraction = () => {
+      if (!isPausedRef.current) {
+        isPausedRef.current = true;
+        setIsPaused(true);
+      }
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        isPausedRef.current = false;
+        setIsPaused(false);
+      }, 5000);
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && !isPausedRef.current) {
+        isPausedRef.current = true;
+        setIsPaused(true);
+      } else if (document.visibilityState === 'visible' && isPausedRef.current) {
+        isPausedRef.current = false;
+        setIsPaused(false);
+      }
+    };
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('touchstart', handleInteraction);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
   const current = ISLAMIC_TEXTS[verseIndex];
-  const formatStat = (value: number | undefined) => typeof value === "number" ? `+${value.toLocaleString("ar-SA")}` : "...";
+
+  const formatStat = useCallback((value: number | undefined) => {
+    if (typeof value === "number") {
+      const formatted = value.toLocaleString("ar-SA");
+      return `+${formatted}`;
+    }
+    if (value === 0) return "+0";
+    return "...";
+  }, []);
+
+  const statsData = useMemo(() => [
+    { value: formatStat(metrics?.totalBeneficiaries), label: "مستفيد", icon: Users, aria: "إجمالي المستفيدين" },
+    { value: formatStat(metrics?.activeProjects), label: "مشروع", icon: Star, aria: "المشاريع النشطة" },
+    { value: formatStat(metrics?.totalPartners), label: "شريك", icon: Heart, aria: "إجمالي الشركاء والداعمين" },
+  ], [metrics, formatStat]);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden" style={{ direction: "rtl" }}>
@@ -210,45 +257,61 @@ export function Hero({ setCurrentPage }: HeroProps) {
             
             {/* ───── Left Column: Headline + CTAs ───── */}
             <div className="lg:col-span-7">
+              {/* Trust badge */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6"
               >
-                {/* Trust badge */}
-                <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 mb-6">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white/50 bg-[var(--brand-green)] flex items-center justify-center">
-                        <Heart className="w-3 h-3 text-white" fill="white" />
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-white/90 text-sm font-medium">
-                    أكثر من <strong className="text-[var(--brand-gold-light)]">١٢,٠٠٠</strong> مستفيد يثقون بنا
-                  </span>
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="w-7 h-7 rounded-full border-2 border-white/50 bg-[var(--brand-green)] flex items-center justify-center">
+                      <Heart className="w-3 h-3 text-white" fill="white" />
+                    </div>
+                  ))}
                 </div>
+                <span className="text-white/90 text-sm font-medium">
+                  أكثر من <strong className="text-[var(--brand-gold-light)]">آلاف</strong> المستفيدين يثقون بنا
+                </span>
+              </motion.div>
 
-                {/* Headline */}
-                <h1 className="text-white mb-4" style={{ fontWeight: 800, fontSize: "clamp(2.2rem, 5.5vw, 4rem)", lineHeight: 1.15 }}>
-                  رحماء بينهم...{' '}
-                  <span className="text-[var(--brand-gold-light)]">أثرٌ يدوم</span>
-                  <br />
-                  مستقبلٌ{' '}
-                  <span className="relative inline-block">
-                    يُبنى
-                    <span className="absolute bottom-1 left-0 right-0 h-1 bg-[var(--brand-gold)] rounded-full opacity-60" />
-                  </span>
-                </h1>
+              {/* Headline */}
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="text-white mb-4"
+                style={{ fontWeight: 800, fontSize: "clamp(2.2rem, 5.5vw, 4rem)", lineHeight: 1.15 }}
+              >
+                رحماء بينهم...{' '}
+                <span className="text-[var(--brand-gold-light)]">أثرٌ يدوم</span>
+                <br />
+                مستقبلٌ{' '}
+                <span className="relative inline-block">
+                  يُبنى
+                  <span className="absolute bottom-1 left-0 right-0 h-1 bg-[var(--brand-gold)] rounded-full opacity-60" />
+                </span>
+              </motion.h1>
 
-                {/* Subtitle */}
-                <p className="text-white/85 mb-8 max-w-xl" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.9 }}>
-                  مؤسسة إنسانية تنموية رائدة تعمل على تخفيف معاناة الأسرة اليمنية
-                  وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتمكين.
-                </p>
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="text-white/85 mb-8 max-w-xl"
+                style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.8 }}
+              >
+                لا نكتفي بتخفيف المعاناة — نبني قدرات المجتمع ليُطعم نفسه. إغاثة عاجلة، تعليم يُعلي الهمم، وتنمية تصنع كوادر يمنية قادرة على إعادة بناء وطنهم.
+              </motion.p>
 
-                {/* CTA buttons */}
-                <div className="flex flex-wrap items-center gap-3">
+              {/* CTA buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-wrap items-center gap-3"
+              >
                   <motion.button
                     onClick={() => setCurrentPage("donate")}
                     className="flex items-center gap-2.5 px-8 py-3.5 bg-[var(--brand-gold)] text-white rounded-xl font-bold shadow-lg shadow-[var(--brand-gold)]/25 hover:shadow-xl hover:shadow-[var(--brand-gold)]/35 hover:-translate-y-0.5 transition-all"
@@ -277,15 +340,11 @@ export function Hero({ setCurrentPage }: HeroProps) {
                     </span>
                     قصص النجاح
                   </button>
-                </div>
+              </motion.div>
 
                 {/* Stats row */}
                 <div className="mt-10 grid grid-cols-3 gap-4 max-w-sm">
-                  {[
-                    { value: formatStat(metrics?.totalBeneficiaries), label: "مستفيد", icon: Users },
-                    { value: formatStat(metrics?.activeProjects), label: "مشروع", icon: Star },
-                    { value: formatStat(metrics?.totalPartners), label: "شريك", icon: Heart },
-                  ].map((stat, i) => {
+                  {statsData.map((stat, i) => {
                     const Icon = stat.icon;
                     return (
                       <motion.div
@@ -294,15 +353,15 @@ export function Hero({ setCurrentPage }: HeroProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 + i * 0.15, duration: 0.5 }}
+                        aria-label={stat.aria}
                       >
-                        <Icon className="w-5 h-5 mx-auto mb-1.5 text-[var(--brand-gold-light)]/80" />
+                        <Icon className="w-5 h-5 mx-auto mb-1.5 text-[var(--brand-gold-light)]/80" aria-hidden="true" />
                         <div className="text-[var(--brand-gold-light)]" style={{ fontSize: "1.5rem", fontWeight: 800 }}>{stat.value}</div>
                         <div className="text-white/60 text-xs">{stat.label}</div>
                       </motion.div>
                     );
                   })}
                 </div>
-              </motion.div>
             </div>
 
             {/* ───── Right Column: Islamic Verse Card ───── */}
@@ -314,10 +373,8 @@ export function Hero({ setCurrentPage }: HeroProps) {
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
               >
-                <div className="relative rounded-2xl p-6 md:p-8 overflow-hidden" style={{
+                <div className="relative rounded-2xl p-6 md:p-8 overflow-hidden hero-verse-card" style={{
                   background: "rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
                   border: "1px solid rgba(255,255,255,0.15)",
                   boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
                 }}>
@@ -393,7 +450,7 @@ export function Hero({ setCurrentPage }: HeroProps) {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-white/50 animate-bounce">
-        <span style={{ fontSize: "0.65rem" }}>اكتشف أكثر</span>
+        <span style={{ fontSize: "0.75rem" }}>اكتشف أكثر</span>
         <ArrowDown className="w-4 h-4" />
       </div>
     </section>

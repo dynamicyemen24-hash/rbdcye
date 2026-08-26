@@ -10,7 +10,10 @@ import { createClient } from '@sanity/client';
 // Use the same config as sanity.cli.ts for consistency
 const projectId = 'xd0ohyiz';
 const dataset = 'production';
-const token = 'sk0NwGw7BWERpcmoisNT62WV3BGsbZGyYpZOGZPu0BR02aQwJdccFIML5ESvFjzA8ZG7pDOb1c4RuO1PY9WKfIjmNjjLv80PWf7bAtmWW0DmafvwHHpcFawfL19xRACbic8AoMnXlgIbAZaju6mJwkGrcdXEaRZhOxLIIdgRqThCnTARsnEL';
+const token = process.env.SANITY_AUTH_TOKEN;
+if (!token) {
+  throw new Error('SANITY_AUTH_TOKEN environment variable is required');
+}
 
 const client = createClient({
   projectId,

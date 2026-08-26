@@ -2,9 +2,9 @@
 import { getRandomImage } from "@/utils/imageUtils";
 
 const fallbackImages = [
-  'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=800&h=600&fit=crop',
+  '/images/defaults/project-relief.svg',
+  '/images/defaults/project-education.svg',
+  '/images/defaults/project-water.svg',
 ];
 
 export function getSanityImageUrl(
@@ -27,8 +27,7 @@ export function getSanityImageUrl(
     const imageId = ref.replace('image-', '');
     
     return `https://cdn.sanity.io/images/xd0ohyiz/production/${imageId}?w=${width}&h=${height}&auto=format&q=85&fit=crop`;
-  } catch (error) {
-    console.warn('Error building Sanity image URL:', error);
+  } catch {
     return fallbackCategory 
       ? getRandomImage(fallbackCategory) 
       : fallbackImages[0];

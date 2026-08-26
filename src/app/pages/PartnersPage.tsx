@@ -1,9 +1,8 @@
 // Partners Page - صفحة الشركاء
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
-  Handshake, Award, Users, Star, Shield, Target,
-  Globe, ArrowLeft, Heart, Briefcase, Building2,
-  Mail, Phone, ExternalLink, BarChart3, TrendingUp,
+  Handshake, Users, Target,
+  Heart, BarChart3, TrendingUp,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,7 @@ import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_PARTNERS, SEED_IMPACT } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface Partner {
@@ -22,18 +21,20 @@ interface Partner {
   type: string;
   status: string;
   url: string;
+  description?: string;
 }
 
 const PARTNER_TYPES = ["الكل", "شريك إستراتيجي", "جهة ممولة", "شريك تنفيذي", "شريك داعم"];
 
 function normalizePartners(): Partner[] {
-  return SEED_PARTNERS.map((p) => ({
+  return SEED_PARTNERS.map((p: any) => ({
     id: p.id,
     name: p.name,
     logo: p.logo,
     type: p.type,
     status: p.status,
     url: p.url,
+    description: p.description,
   }));
 }
 
@@ -44,12 +45,12 @@ export default function PartnersPage() {
 
   useSEO({
     title: 'شركاؤنا - رحماء بينهم',
-    description: 'شركاؤنا الاستراتيجيون والمؤسسات الداعمة لمؤسسة رحماء بينهم',
+    description: 'شركاؤنا الاستراتيجيون والجهات الداعمة لـ رحماء بينهم',
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
+    contentManager.getImpact()
       .then(() => {
         if (!cancelled) {
           try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
@@ -138,7 +139,7 @@ export default function PartnersPage() {
                 </span>
 
                 <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed">
-                  شريك موثوق في تنفيذ المشاريع الإنسانية والتنموية
+                  {partner.description || 'شريك موثوق في تنفيذ المشاريع الإنسانية والتنموية'}
                 </p>
 
                 <div className="flex items-center justify-center gap-2 pt-4 border-t border-[var(--border)]">

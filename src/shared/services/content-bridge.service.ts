@@ -1,12 +1,12 @@
 // ============================================================
-// Content Bridge Service
-// Abstracts content source (Sanity CMS or static fallback)
-// so the UI layer never knows or exposes the origin.
+// Content Bridge Service — Updated
+// Routes ALL content types through ContentManager
+// so the UI layer never knows the data source.
 // ============================================================
-import { SEED_IMPACT } from "@/content/website";
 
-import { sanityService } from "./sanity.service";
+import { contentManager, type ContentResult } from './content-manager';
 
+// Legacy type for backward compatibility
 type ImpactMetrics = {
   totalBeneficiaries?: number;
   activeProjects?: number;
@@ -14,89 +14,30 @@ type ImpactMetrics = {
   volunteers?: number;
 };
 
-type ContentResult<T> = {
-  data: T[];
-  isDynamic: boolean;
-  source: 'static' | 'sanity' | 'hybrid';
-  error: string | null;
-};
-
 /**
- * Internal: attempt a Sanity fetch with a strict timeout.
- * Returns `null` on any failure so callers can fall back silently.
- */
-async function trySanity<T>(query: string): Promise<T[] | null> {
-  try {
-    const client = sanityService.getClient();
-    const data = await client.fetch<T[]>(query);
-    return Array.isArray(data) && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Fetch impact metrics from Sanity (if available) or fall back
- * to seeded static data. The `source` field is internal only
- * and is never surfaced to the visitor in the UI.
- */
-async function getImpact(): Promise<ContentResult<ImpactMetrics>> {
-  const sanityData = await trySanity<ImpactMetrics & { beneficiaries?: number; projects?: number; partners?: number }>(
-    `*[_type == "impact"][0]{
-      totalBeneficiaries,
-      beneficiaries,
-      activeProjects,
-      projects,
-      totalPartners,
-      partners,
-      volunteers
-    }`
-  );
-
-  if (sanityData) {
-    const d = sanityData[0];
-    return {
-      data: [
-        {
-          totalBeneficiaries: d?.totalBeneficiaries || d?.beneficiaries,
-          activeProjects: d?.activeProjects || d?.projects,
-          totalPartners: d?.totalPartners || d?.partners,
-          volunteers: d?.volunteers,
-        },
-      ],
-      isDynamic: true,
-      source: 'sanity',
-      error: null,
-    };
-  }
-
-  // Static fallback – indistinguishable from CMS to the visitor
-  return {
-    data: [
-      {
-        totalBeneficiaries: SEED_IMPACT.beneficiaries,
-        activeProjects: SEED_IMPACT.projects,
-        totalPartners: SEED_IMPACT.partners,
-        volunteers: SEED_IMPACT.volunteers,
-      },
-    ],
-    isDynamic: false,
-    source: 'static',
-    error: null,
-  };
-}
-
-/**
- * Generic content getter.
- * Supported keys: "impact"
+ * Generic content getter — now supports ALL content types.
+ * The UI layer never sees loading spinners or empty states.
  */
 export const contentBridge = {
   async getContent<T = unknown>(key: string): Promise<ContentResult<T>> {
     switch (key) {
-      case "impact":
-        return getImpact() as Promise<ContentResult<T>>;
+      case 'impact':
+        return contentManager.getImpact() as Promise<ContentResult<T>>;
+      case 'news':
+        return contentManager.getNews() as Promise<ContentResult<T>>;
+      case 'projects':
+        return contentManager.getProjects() as Promise<ContentResult<T>>;
+      case 'programs':
+        return contentManager.getPrograms() as Promise<ContentResult<T>>;
+      case 'partners':
+        return contentManager.getPartners() as Promise<ContentResult<T>>;
+      case 'stories':
+        return contentManager.getSuccessStories() as Promise<ContentResult<T>>;
+      case 'search':
+        // Search is handled separately
+        return { data: [], source: 'static', isDynamic: false, error: null };
       default:
-        return { data: [], isDynamic: false, source: 'static', error: null };
+        return { data: [], source: 'static', isDynamic: false, error: null };
     }
   },
 };

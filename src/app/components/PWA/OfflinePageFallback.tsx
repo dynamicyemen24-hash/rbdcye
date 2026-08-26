@@ -1,8 +1,8 @@
 // Offline Page Fallback - واجهة بديلة عند تعذر تحميل صفحة جديدة بدون اتصال بالإنترنت
 import { memo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WifiOff, RotateCcw, HardDrive, ArrowLeft, Home, Compass } from 'lucide-react';
-import { VisitedPageMeta, ROUTE_METADATA } from './OfflineManager';
+import { WifiOff, RotateCcw, HardDrive, ArrowLeft, Home } from 'lucide-react';
+import { VisitedPageMeta } from './OfflineManager';
 
 const VISITED_PAGES_STORAGE_KEY = 'rbdcye_offline_visited_pages';
 
@@ -12,7 +12,7 @@ interface OfflinePageFallbackProps {
 }
 
 export const OfflinePageFallback = memo(function OfflinePageFallback({
-  error,
+  error: _error,
   onRetry,
 }: OfflinePageFallbackProps) {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Type, Sun, Moon, Coffee, Eye, RotateCcw, AlignJustify, Sparkles } from 'lucide-react';
 
 export type FontSizeLevel = 'normal' | 'large' | 'xlarge' | 'xxlarge';

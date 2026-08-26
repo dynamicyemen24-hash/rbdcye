@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Activity, Cpu, HardDrive, Wifi, Globe, Copy, Check, X, 
-  RefreshCw, Terminal, Layers, ArrowUpRight, Zap, ShieldCheck
+  Cpu, HardDrive, Wifi, Globe, Copy, Check, X, 
+  RefreshCw, Terminal, ShieldCheck
 } from 'lucide-react';
 
 interface NetworkMetric {
@@ -42,6 +42,8 @@ export function DevOverlay() {
   const frameCountRef = useRef(0);
   const lastTimeRef = useRef(0);
   const fpsHistoryRef = useRef<number[]>([]);
+
+  if (!import.meta.env.DEV) return null;
 
   // Keyboard Combination Handler (Ctrl+Shift+D or Cmd+Shift+D)
   useEffect(() => {

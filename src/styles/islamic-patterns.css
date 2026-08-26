@@ -1,0 +1,86 @@
+/* ============================================================
+   Islamic Geometric Pattern System - زخارف إسلامية هندسية
+   أنماط مستوحاة من الفن الإسلامي: نجمة ثمانية (خاتم)،
+   الزليج الماسي، والأرابيسك — بألوان الهوية الرسمية
+   ============================================================ */
+
+/* ── نجمة الخاتم الثمانية (Star-and-Cross) ─────────────────── */
+.pattern-khatam-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.08' stroke-width='1'%3E%3Crect x='27' y='27' width='42' height='42'/%3E%3Crect x='27' y='27' width='42' height='42' transform='rotate(45 48 48)'/%3E%3Ccircle cx='48' cy='48' r='2.5'/%3E%3Cpath d='M0 -6 L6 0 L0 6 L-6 0 Z'/%3E%3Cpath d='M96 -6 L102 0 L96 6 L90 0 Z'/%3E%3Cpath d='M0 90 L6 96 L0 102 L-6 96 Z'/%3E%3Cpath d='M96 90 L102 96 L96 102 L90 96 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pattern-khatam-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.14' stroke-width='1'%3E%3Crect x='27' y='27' width='42' height='42'/%3E%3Crect x='27' y='27' width='42' height='42' transform='rotate(45 48 48)'/%3E%3Ccircle cx='48' cy='48' r='2.5'/%3E%3Cpath d='M0 -6 L6 0 L0 6 L-6 0 Z'/%3E%3Cpath d='M96 -6 L102 0 L96 6 L90 0 Z'/%3E%3Cpath d='M0 90 L6 96 L0 102 L-6 96 Z'/%3E%3Cpath d='M96 90 L102 96 L96 102 L90 96 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pattern-khatam-white {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='0.10' stroke-width='1'%3E%3Crect x='27' y='27' width='42' height='42'/%3E%3Crect x='27' y='27' width='42' height='42' transform='rotate(45 48 48)'/%3E%3Ccircle cx='48' cy='48' r='2.5'/%3E%3Cpath d='M0 -6 L6 0 L0 6 L-6 0 Z'/%3E%3Cpath d='M96 -6 L102 0 L96 6 L90 0 Z'/%3E%3Cpath d='M0 90 L6 96 L0 102 L-6 96 Z'/%3E%3Cpath d='M96 90 L102 96 L96 102 L90 96 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── الزليج الماسي (Diamond Zellij) ────────────────────────── */
+.pattern-zellij-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M32 0 L64 32 L32 64 L0 32 Z'/%3E%3Cpath d='M0 0 L64 64 M64 0 L0 64'/%3E%3Ccircle cx='32' cy='32' r='2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pattern-zellij-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M32 0 L64 32 L32 64 L0 32 Z'/%3E%3Cpath d='M0 0 L64 64 M64 0 L0 64'/%3E%3Ccircle cx='32' cy='32' r='2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── الأرابيسك (Scalloped Arabesque Waves) ─────────────────── */
+.pattern-arabesque-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 30 Q15 10 30 30 Q45 50 60 30 Q75 10 90 30 Q105 50 120 30'/%3E%3Cpath d='M-30 55 Q-15 35 0 55 Q15 75 30 55 Q45 35 60 55 Q75 75 90 55 Q105 35 120 55 Q135 75 150 55'/%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pattern-arabesque-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M0 30 Q15 10 30 30 Q45 50 60 30 Q75 10 90 30 Q105 50 120 30'/%3E%3Cpath d='M-30 55 Q-15 35 0 55 Q15 75 30 55 Q45 35 60 55 Q75 75 90 55 Q105 35 120 55 Q135 75 150 55'/%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── شريط المحراب العلوي (Mihrab Arch Band) ────────────────── */
+.pattern-band-gold {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8' viewBox='0 0 40 8'%3E%3Cpath d='M20 0 L24 4 L20 8 L16 4 Z' fill='%23C69E5A' fill-opacity='0.85'/%3E%3Ccircle cx='0' cy='4' r='1.2' fill='%23C69E5A' fill-opacity='0.5'/%3E%3Ccircle cx='40' cy='4' r='1.2' fill='%23C69E5A' fill-opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 40px 8px;
+  background-repeat: repeat-x;
+}
+
+/* ══════════════════════════════════════════════════════════
+   زخرفة إطار ذهبية للبطاقات - Golden Ornate Frame
+   ══════════════════════════════════════════════════════════ */
+.ornate-card {
+  position: relative;
+}
+.ornate-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(198, 158, 90, 0.45),
+    rgba(198, 158, 90, 0.08) 35%,
+    rgba(15, 76, 58, 0.06) 65%,
+    rgba(198, 158, 90, 0.35)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── قوس محراب للميداليات - Mihrab Arch Medallion ─────────── */
+.mihrab-arch {
+  clip-path: path("M 60 130 C 60 95, 18 92, 18 52 C 18 22, 39 6, 60 6 C 81 6, 102 22, 102 52 C 102 92, 60 95, 60 130 Z");
+}
+
+/* ── احترام تفضيل تقليل الحركة - Reduced Motion ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

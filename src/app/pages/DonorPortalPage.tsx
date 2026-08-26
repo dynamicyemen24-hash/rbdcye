@@ -1,11 +1,11 @@
 // Donor Portal Page - صفحة حساب المتبرع
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Heart, Shield, BarChart3, History, Gift } from 'lucide-react';
 import { useEffect } from 'react';
 
 import DonorPortal from '@/app/components/DonorPortal';
 import { analyticsService } from '@/shared/services/analytics.service';
-import { contentBridge } from '@/shared/services/content-bridge.service';
+import { contentManager } from '@/shared/services/content-manager';
 import { useSEO } from '@/utils/seoAdvanced';
 
 export default function DonorPortalPage() {
@@ -20,7 +20,7 @@ export default function DonorPortalPage() {
     let cancelled = false;
 
     // محاولة تحميل بيانات المتبرع من content-bridge (Sanity)
-    contentBridge.getContent<any>('impact')
+    contentManager.getImpact()
       .then(() => {
         if (!cancelled) {
           try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }

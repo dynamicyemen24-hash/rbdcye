@@ -1,6 +1,6 @@
 // Notifications Panel - لوحة الإشعارات
 import { X, Bell, CheckCircle, XCircle, Info, AlertTriangle, Check } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface Notification {
   id: string;

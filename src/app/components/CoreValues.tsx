@@ -116,7 +116,7 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#0F4C3A] hover:bg-[#083D29] text-white font-cairo font-black text-sm border border-[#0F4C3A] shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
-              <span>تعرف على الميثاق الأخلاقي والحوكمة الكاملة للمؤسسة</span>
+              <span>تعرف على الميثاق الأخلاقي والحوكمة الكاملة لعملنا</span>
             </motion.button>
           </div>
         )}

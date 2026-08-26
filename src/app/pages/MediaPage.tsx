@@ -1,14 +1,14 @@
 // Media Page - معرض الوسائط
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import {
-  Image, Play, Grid3X3, List, Search, Camera, Video, FileImage, Eye,
-  X, Calendar, MapPin,
+  Image, Play, Grid3X3, List, Search, Camera, Video,
+  X, Calendar,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
 import { SEED_MEDIA } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface MediaItem {
@@ -48,7 +48,7 @@ export default function MediaPage() {
 
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
+    contentManager.getImpact()
       .then(() => {
         if (!cancelled) {
           try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }

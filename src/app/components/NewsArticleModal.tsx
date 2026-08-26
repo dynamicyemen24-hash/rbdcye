@@ -208,7 +208,7 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({
             <header className="article-header text-center max-w-3xl mx-auto">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-900 text-xs font-bold mb-3 border border-emerald-200">
                 <Sparkles className="w-3.5 h-3.5 text-[#C69E5A]" />
-                <span>مؤسسة رحماء بينهم - التقرير الإنساني</span>
+                <span>رحماء بينهم - التقرير الإنساني</span>
               </div>
 
               <h1 className="font-cairo font-black text-2xl sm:text-3xl lg:text-4xl leading-tight mb-4 tracking-normal">
@@ -219,7 +219,7 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({
               <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm opacity-80 font-medium pt-2 pb-6 border-b border-slate-200/30">
                 <div className="flex items-center gap-1.5">
                   <User className="w-4 h-4 text-[#C69E5A]" />
-                  <span>{article.author || 'المكتب الإعلامي للمؤسسة'}</span>
+                  <span>{article.author || 'المكتب الإعلامي'}</span>
                 </div>
                 <span>•</span>
                 <div className="flex items-center gap-1.5">
@@ -305,10 +305,10 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({
                   </p>
 
                   <ul className="list-disc list-inside space-y-2 pr-2">
-                    <li>تغطية أكثر من <strong>١٨ مديرية وقرية أشد احتياجاً</strong> وتأمين احتياجاتهم المباشرة.</li>
-                    <li>توزيع الحقائب المدرسية والمستلزمات التعليمية على أكثر من <strong>٣,٥٠٠ طالب وطالبة</strong>.</li>
-                    <li>تقديم المنح والتسهيلات التمويلية لدعم أكثر من <strong>١٢٠ مشروعاً صغيراً للأسر المنتجة</strong>.</li>
-                    <li>تأهيل وتشغيل ٣ آبار مياه صحية تعمل بالطاقة الشمسية المستدامة.</li>
+                    <li>تغطية أكثر من <strong>عشرات المديريات والقرى أشد احتياجاً</strong> وتأمين احتياجاتهم المباشرة.</li>
+                    <li>توزيع الحقائب المدرسية والمستلزمات التعليمية على أكثر من <strong>آلاف الطلاب والطالبات</strong>.</li>
+                    <li>تقديم المنح والتسهيلات التمويلية لدعم أكثر من <strong>مشاريع صغيرة مدعومة للأسر المنتجة</strong>.</li>
+                    <li>تأهيل وتشغيل <strong>آبار مُعاد تأهيلها</strong> مياه صحية تعمل بالطاقة الشمسية المستدامة.</li>
                   </ul>
 
                   {/* Highlight Callout Box */}

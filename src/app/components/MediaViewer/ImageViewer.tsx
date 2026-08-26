@@ -4,7 +4,7 @@
  * يدعم: التكبير/التصغير، التدوير، القلب، الجر، اللمس، ملء الشاشة، وأوضاع العرض المختلفة
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   ZoomIn,
   ZoomOut,

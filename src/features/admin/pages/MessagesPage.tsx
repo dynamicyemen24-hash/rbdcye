@@ -1,9 +1,9 @@
 // MessagesPage - إدارة رسائل التواصل
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MessageSquare, RefreshCw, Eye, Trash2, Filter, Mail, Globe, Monitor, MapPin } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-import { query, messagesQueries } from '@/lib/postgres';
+import { messagesQueries } from '@/lib/postgres';
 
 interface Message {
   id: number;
@@ -33,7 +33,7 @@ export default function MessagesPage() {
   const fetchMessages = async () => {
     setLoading(true);
     try {
-      const result = await query(messagesQueries.findAll, [100, 0]);
+      const result = await messagesQueries.findAll(100, 0);
       const messagesWithMeta = (result.rows || []).map((msg: any) => ({
         ...msg,
         device_info: msg.device_info || {},
@@ -53,7 +53,7 @@ export default function MessagesPage() {
 
   const updateStatus = async (id: number, status: string) => {
     try {
-      await query(messagesQueries.updateStatus, [status, id]);
+      await messagesQueries.updateStatus(String(id), status);
       fetchMessages();
     } catch (err) {
       console.error('Error updating message:', err);
@@ -63,7 +63,11 @@ export default function MessagesPage() {
   const deleteMessage = async (id: number) => {
     if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
     try {
-      await query(messagesQueries.delete, [id]);
+      const token = localStorage.getItem('rbdcye_admin_token') || '';
+      await fetch(`/api/admin?action=contacts&id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      });
       fetchMessages();
     } catch (err) {
       console.error('Error deleting message:', err);

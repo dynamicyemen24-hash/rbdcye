@@ -1,5 +1,5 @@
 // Smart Toolbar Hook - Performance Optimized Interactions
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 
 interface ToolbarPreferences {
   position: { x: number; y: number };
@@ -17,7 +17,7 @@ function getStoredPreferences(): ToolbarPreferences {
     if (stored) {
       return JSON.parse(stored);
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignore errors
   }
   return {
@@ -34,7 +34,7 @@ function savePreferences(prefs: Partial<ToolbarPreferences>) {
     const current = getStoredPreferences();
     const updated = { ...current, ...prefs };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-  } catch (e) {
+  } catch (_e) {
     // Ignore errors
   }
 }

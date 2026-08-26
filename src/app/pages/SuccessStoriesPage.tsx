@@ -1,9 +1,10 @@
 // Success Stories Page - قصص النجاح (محسّنة بدمج SEED_SUCCESS_STORIES)
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   Star, Heart, Quote, Users, BookOpen, Droplets,
   ArrowLeft, Sparkles, Award, Calendar, MapPin,
-  Play, ExternalLink, Filter, BarChart3, TrendingUp,
+    Play, ExternalLink, Filter, BarChart3, TrendingUp, Search,
+
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +13,7 @@ import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_SUCCESS_STORIES } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface Story {
@@ -30,16 +31,17 @@ interface Story {
   rating: number;
   image: string;
   status: string;
+  searchTags?: string[];
 }
 
-const CATEGORIES = ["الكل", "تعليم", "تنمية مجتمعية", "تعليم", "تنمية"];
+const CATEGORIES = ["الكل", "تعليم", "تنمية مجتمعية", "إغاثة", "دعوة"];
 
 function normalizeStories(): Story[] {
-  return SEED_SUCCESS_STORIES.map((s) => ({
+  return SEED_SUCCESS_STORIES.map((s: any) => ({
     id: s.id,
     title: s.title,
     excerpt: s.excerpt,
-    fullStory: s.excerpt,
+    fullStory: s.excerpt + '\n\n' + (s.description || s.excerpt),
     quote: s.quote,
     name: s.name,
     role: s.role,
@@ -50,23 +52,25 @@ function normalizeStories(): Story[] {
     rating: s.rating,
     image: s.image,
     status: s.status,
+    searchTags: [s.title, s.category, s.location, s.program].filter(Boolean).map((t: string) => t.toLowerCase()),
   }));
 }
 
 export default function SuccessStoriesPage() {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("الكل");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [stories, setStories] = useState<Story[]>(normalizeStories());
 
   useSEO({
     title: 'قصص النجاح - رحماء بينهم',
-    description: 'قصص نجاح ملهمة للمستفيدين الذين غيرت حياتهم برامج المؤسسة',
+    description: 'قصص نجاح ملهمة للمستفيدين الذين غيرت حياتهم برامجنا التنموية',
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
+    contentManager.getImpact()
       .then(() => {
         if (!cancelled) {
           try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
@@ -80,9 +84,13 @@ export default function SuccessStoriesPage() {
   }, []);
 
   const filteredStories = useMemo(() => {
-    if (activeCategory === "الكل") return stories;
-    return stories.filter(s => s.category === activeCategory);
-  }, [stories, activeCategory]);
+    if (activeCategory === "الكل" && !searchQuery) return stories;
+    if (activeCategory !== "الكل" && !searchQuery) return stories.filter(s => s.category === activeCategory);
+    if (activeCategory === "الكل" && searchQuery) return stories.filter(s => 
+      s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase()))
+    );
+    return stories.filter(s => s.category === activeCategory && s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase())));
+  }, [stories, activeCategory, searchQuery]);
 
   const storiesCount = useMemo(() => stories.length, [stories]);
 
@@ -98,7 +106,7 @@ export default function SuccessStoriesPage() {
         <StatsGrid
           stats={[
             { label: 'قصة نجاح', value: storiesCount, icon: BarChart3, color: 'green' },
-            { label: 'مشروع', value: '50+', icon: TrendingUp, color: 'gold' },
+            { label: 'مشروع', value: 'مشاريع', icon: TrendingUp, color: 'gold' },
             { label: 'مستفيد', value: '50K+', icon: Users, color: 'blue' },
             { label: 'تقييم', value: '4.9/5', icon: Star, color: 'purple' },
           ]}
@@ -111,6 +119,17 @@ export default function SuccessStoriesPage() {
       <section className="py-6 bg-white border-b border-[var(--border)]">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2 justify-center">
+            <div className="relative w-full max-w-md">
+              <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ابحث باسم المستفيد أو الموقع أو البرنامج..."
+                className="w-full pl-10 py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0F4C3A] transition-colors"
+                dir="rtl"
+              />
+            </div>
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}

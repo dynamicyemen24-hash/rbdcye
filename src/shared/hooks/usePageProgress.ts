@@ -1,5 +1,5 @@
 // Advanced Page Progress Tracker with smooth animations
-import { useSpring } from 'framer-motion';
+import { useSpring } from 'motion/react';
 import { useState, useEffect, useCallback } from 'react';
 
 export type ProgressStage = 'loading' | 'ready' | 'interactive' | 'complete';

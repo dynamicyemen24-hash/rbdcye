@@ -14,8 +14,7 @@ export function SanityStudioWrapper() {
     import('sanity').then(() => {
       // Studio will be loaded dynamically
       setLoading(false);
-    }).catch((err) => {
-      console.warn('Sanity Studio not available:', err);
+    }).catch(() => {
       setError('Sanity Studio غير متوفر - تأكد من تثبيت الحزم');
       setLoading(false);
     });

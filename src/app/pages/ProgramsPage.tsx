@@ -1,5 +1,5 @@
 // Programs Page - صفحة البرامج والمشاريع
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   BookOpen, Heart, Droplet, GraduationCap, Globe, Users,
   ArrowRight, Calendar, Target, TrendingUp, MapPin,
@@ -12,7 +12,7 @@ import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { SEED_PROJECTS, SEED_IMPACT } from "@/content/website";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentBridge } from "@/shared/services/content-bridge.service";
+import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 // 7 مسارات البرامج من المواصفات
@@ -101,10 +101,10 @@ export default function ProgramsPage() {
   // تحميل البيانات من content-bridge
   useEffect(() => {
     let cancelled = false;
-    contentBridge.getContent<any>('impact')
-      .then((result) => {
+    contentManager.getImpact()
+      .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.isDynamic ? 'sanity' : 'static');
+          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
           try { analyticsService.generateProjectReport(); } catch { /* non-critical */ }
         }
       })
@@ -391,15 +391,6 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Content Source Indicator (dev only) */}
-      {import.meta.env?.DEV && (
-        <div className="fixed bottom-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === 'sanity' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-            <span>{contentSource === 'sanity' ? 'Sanity CMS' : 'Static Content'}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

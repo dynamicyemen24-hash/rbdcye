@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 
 interface LazyVideoProps {
   src: string;
@@ -15,7 +15,7 @@ interface LazyVideoProps {
  */
 export function LazyVideo({ 
   src, 
-  poster = '/images/hero-poster.jpg',
+  poster = '/images/defaults/about-hero.svg',
   className = '',
   autoPlay = true,
   loop = true,
@@ -63,8 +63,7 @@ export function LazyVideo({
   };
 
   const handleError = () => {
-    console.warn('Video failed to load:', src);
-    setIsLoaded(true); // أخفي المؤشر حتى لو فشل التحميل
+    setIsLoaded(true);
   };
 
   return (

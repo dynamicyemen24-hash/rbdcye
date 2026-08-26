@@ -5,12 +5,12 @@
 // CSP Policy - Strict Content Security
 export const CSP_POLICY: Record<string, string[]> = {
   'default-src': ["'self'"],
-  'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://cdn.sanity.io', 'https://js.stripe.com', 'https://maps.googleapis.com'],
-  'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-  'img-src': ["'self'", 'data:', 'blob:', 'https:', 'https://*.unsplash.com', 'https://cdn.sanity.io', 'https://images.unsplash.com'],
-  'font-src': ["'self'", 'https://fonts.gstatic.com', 'data:'],
+  'script-src': ["'self'"],
+  'style-src': ["'self'", "'unsafe-inline'"],
+  'img-src': ["'self'", 'data:', 'blob:', 'https:', 'https://cdn.sanity.io'],
+  'font-src': ["'self'", 'data:'],
   'connect-src': ["'self'", 'https://*.supabase.co', 'wss://*.supabase.co', 'https://*.sanity.io', 'https://xd0ohyiz.apicdn.sanity.io', 'https://api.stripe.com'],
-  'frame-src': ["'self'", 'https://*.sanity.io', 'https://js.stripe.com', 'https://hooks.stripe.com'],
+  'frame-src': ['https://js.stripe.com', 'https://hooks.stripe.com', 'https://*.sanity.io'],
   'media-src': ["'self'", 'https://*.sanity.io'],
   'worker-src': ["'self'", 'blob:'],
   'manifest-src': ["'self'"],

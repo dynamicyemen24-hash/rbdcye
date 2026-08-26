@@ -1,7 +1,6 @@
 import { 
   Heart,
   ChevronLeft,
-  Sparkles
 } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -24,7 +23,7 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
       >
         <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-[#0F4C3A] text-xs sm:text-sm font-extrabold font-cairo shadow-xs">
           <span className="w-2.5 h-2.5 rounded-full bg-[#C69E5A] animate-pulse shrink-0" />
-          <span>مؤسسة رحماء بينهم للإغاثة والتنمية باليمن</span>
+          <span>رحماء بينهم للإغاثة والتنمية باليمن</span>
         </div>
 
         {/* Hero Main Headline */}
@@ -34,7 +33,7 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
 
         {/* Spacious Inspiring Narrative */}
         <p className="text-slate-700 font-cairo text-base sm:text-lg lg:text-xl leading-[2.1] font-medium max-w-2xl">
-          مؤسسة إنسانية وتنموية مستقلة انطلقت عام 2014م لصون حياة الإنسان وإغاثته عبر برامج إغاثية وتنموية شمولية، مستهدفة المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، وفق أرفع معايير الحوكمة والشفافية.
+          منظمة إنسانية وتنموية مستقلة انطلقت عام 2014م لصون حياة الإنسان وإغاثته عبر برامج إغاثية وتنموية شمولية، مستهدفة المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، وفق أرفع معايير الحوكمة والشفافية.
         </p>
       </motion.div>
 
@@ -60,7 +59,7 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
           onClick={() => setCurrentPage("programs")}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          aria-label="استكشف جميع برامج التنمية والإغاثة المستدامة لمؤسسة رحماء بينهم"
+          aria-label="استكشف جميع برامج التنمية والإغاثة المستدامة لـ رحماء بينهم"
           className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white hover:bg-slate-100/90 border-2 border-[#0A372A] text-[#0A372A] font-extrabold text-base font-cairo shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0A372A] focus-visible:ring-offset-2"
         >
           <span>استكشف البرامج والتنمية</span>

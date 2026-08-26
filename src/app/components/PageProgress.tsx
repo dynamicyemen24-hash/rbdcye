@@ -1,5 +1,5 @@
 // Page Progress - Lightweight scroll & loading progress
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'motion/react';
 
 export function PageProgress() {
   const { scrollYProgress } = useScroll();

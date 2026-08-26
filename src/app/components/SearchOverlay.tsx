@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, X, Loader2, FolderHeart, Newspaper, Award, 
-  Layers, ArrowLeft, ArrowUp, ArrowDown, CornerDownLeft, Sparkles,
+  Layers, ArrowLeft, CornerDownLeft, Sparkles,
   TrendingUp, Tag, Heart
 } from 'lucide-react';
 import { FallbackImage } from '@/app/components/FallbackImage';
-import { sanityService } from '@/shared/services/sanity.service';
+import { contentManager } from '@/shared/services/content-manager';
 
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -28,19 +28,19 @@ const FALLBACK_PROJECTS = [
     progress: 78,
     goalAmount: 150000,
     raisedAmount: 117000,
-    mainImage: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-relief.svg'
   },
   {
     _id: 'proj-2',
     _type: 'project',
     title: 'حفر وآبار مياه شرب نظيفة بالطاقة الشمسية',
-    description: 'توفير مياه صحية وآمنة لـ 15,000 نسمة في المناطق الريفية الجافة لتخفيف معاناة العطش.',
+    description: 'توفير مياه صحية وآمنة لآلاف النسمة في المناطق الريفية الجافة لتخفيف معاناة العطش.',
     category: 'المياه والبيئة',
     status: 'نشط',
     progress: 92,
     goalAmount: 85000,
     raisedAmount: 78200,
-    mainImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-water.svg'
   },
   {
     _id: 'proj-3',
@@ -52,7 +52,7 @@ const FALLBACK_PROJECTS = [
     progress: 100,
     goalAmount: 200000,
     raisedAmount: 200000,
-    mainImage: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-development.svg'
   },
   {
     _id: 'proj-4',
@@ -64,7 +64,7 @@ const FALLBACK_PROJECTS = [
     progress: 64,
     goalAmount: 120000,
     raisedAmount: 76800,
-    mainImage: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/story-default.svg'
   }
 ];
 
@@ -72,12 +72,12 @@ const FALLBACK_NEWS = [
   {
     _id: 'news-1',
     _type: 'news',
-    title: 'مؤسسة رحماء بينهم تفتتح 5 مشاريع مياه رئيسية بالمحافظات',
-    excerpt: 'افتتحت المؤسسة حزمة من المشاريع المائية بالطاقة الشمسية لخدمة أكثر من 20 ألف مواطن.',
+    title: 'رحماء بينهم تفتتح 5 مشاريع مياه رئيسية بالمحافظات',
+    excerpt: 'افتتحت رحماء بينهم حزمة من المشاريع المائية بالطاقة الشمسية لخدمة آلاف المواطنين.',
     category: 'تغطيات ميدانية',
     publishDate: '2026-08-10',
     views: 1420,
-    mainImage: 'https://images.unsplash.com/photo-1578357078586-491adf1aa5ba?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-water.svg'
   },
   {
     _id: 'news-2',
@@ -87,7 +87,7 @@ const FALLBACK_NEWS = [
     category: 'إغاثة عاجلة',
     publishDate: '2026-08-04',
     views: 2180,
-    mainImage: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-relief.svg'
   },
   {
     _id: 'news-3',
@@ -97,7 +97,7 @@ const FALLBACK_NEWS = [
     category: 'تمكين النساء',
     publishDate: '2026-07-28',
     views: 950,
-    mainImage: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-development.svg'
   }
 ];
 
@@ -109,7 +109,7 @@ const FALLBACK_STORIES = [
     story: 'حصلت أم أحمد على منحة مشروع خياطة صغير، واليوم تعيل أسرتها المكونة من 6 أفراد بتفوق.',
     beneficiaryName: 'أم أحمد (المعافر)',
     publishDate: '2026-08-01',
-    mainImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/story-woman.svg'
   },
   {
     _id: 'story-2',
@@ -118,7 +118,7 @@ const FALLBACK_STORIES = [
     story: 'بعد سنوات من السير لمسافات طويلة لجلب المياه، أصبح لدى أطفال القرية صنبور مياه نقية بجوار منازلهم.',
     beneficiaryName: 'أهالي قرية الأمل',
     publishDate: '2026-07-15',
-    mainImage: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-relief.svg'
   }
 ];
 
@@ -129,7 +129,7 @@ const FALLBACK_PROGRAMS = [
     title: 'برنامج الأمن الغذائي والاستجابة السريعة',
     description: 'توفير المساعدات الغذائية الأساسية وإغاثة المجتمعات في الأزمات والطوارئ.',
     icon: '🌾',
-    mainImage: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-relief.svg'
   },
   {
     _id: 'prog-2',
@@ -137,7 +137,7 @@ const FALLBACK_PROGRAMS = [
     title: 'برنامج التنمية الاجتماعية والتعليم',
     description: 'دعم المدارس والمراكز التعليمية وتوفير الحقائب المدرسية وكفالة الطلاب.',
     icon: '📚',
-    mainImage: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80'
+    mainImage: '/images/defaults/project-education.svg'
   }
 ];
 
@@ -212,8 +212,8 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
     const timer = setTimeout(async () => {
       try {
-        // Query Sanity Client directly via sanityService
-        const sanityRes = await sanityService.searchContent(trimmedQuery);
+        // Use ContentManager search (with timeout + fallback)
+        const sanityRes = await contentManager.search(trimmedQuery);
 
         // Fallback filter over static items
         const matchedFallbackProjects = FALLBACK_PROJECTS.filter(p =>
@@ -251,8 +251,8 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
           successStories: combinedStories,
           programs: combinedPrograms
         });
-      } catch (err) {
-        console.warn('Error fetching Sanity search results:', err);
+      } catch {
+        // Sanity search failed, using static fallback
       } finally {
         setLoading(false);
       }
@@ -283,7 +283,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
   const totalResultsCount = activeFlattenedItems.length;
 
-  const handleSelectItem = useCallback((targetPage: string, item?: any) => {
+  const handleSelectItem = useCallback((targetPage: string, _item?: any) => {
     if (setCurrentPage) {
       setCurrentPage(targetPage);
     }
@@ -320,10 +320,13 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
   // Helper to extract image URL safely
   const getItemImage = (item: any) => {
+    // ContentManager normalizes images into the 'image' field
+    if (item.image) return item.image;
     if (item.mainImage) {
       if (typeof item.mainImage === 'string') return item.mainImage;
       try {
-        return sanityService.getImageUrl(item.mainImage);
+        // Sanity image object
+        if (item.mainImage.asset?.url) return item.mainImage.asset.url;
       } catch {
         // fallback
       }
@@ -558,7 +561,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     </div>
 
                     <div className="space-y-2">
-                      {results.projects.map((proj, idx) => {
+                      {results.projects.map((proj, _idx) => {
                         const img = getItemImage(proj);
                         const globalIndex = activeFlattenedItems.findIndex(i => i.item === proj);
                         const isFocused = focusedIndex === globalIndex;

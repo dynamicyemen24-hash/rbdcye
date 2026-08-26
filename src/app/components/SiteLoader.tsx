@@ -1,6 +1,6 @@
 // Site Loader - موجه الموقع الاحترافي مع الرسائل الترحيبية ومؤشر التقدم الذكي
 // Professional Site Loader with Welcome Messages and Smart Progress
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Heart, Sparkles, Shield, Zap, SkipForward } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -10,7 +10,7 @@ interface SiteLoaderProps {
 
 // رسائل الترحيب المتقدمة
 const WELCOME_MESSAGES = [
-  { text: 'مرحباً بك في مؤسسة رحماء بينهم الخيرية', icon: Heart, color: '#10B981' },
+  { text: 'مرحباً بك في رحماء بينهم', icon: Heart, color: '#10B981' },
   { text: 'نحملك رحابة الخير والعطاء', icon: Sparkles, color: '#F59E0B' },
   { text: 'حملة دعوية إنسانية تنموية منذ 2014', icon: Shield, color: '#3B82F6' },
   { text: 'جاري التحضير لتجربة مميزة...', icon: Zap, color: '#8B5CF6' },

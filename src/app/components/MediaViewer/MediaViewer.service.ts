@@ -86,8 +86,7 @@ export class MediaViewerService {
       this.cache.set(cacheKey, normalizedMedia);
       this.cacheTimestamps.set(cacheKey, Date.now());
       return normalizedMedia;
-    } catch (error) {
-      console.warn('Failed to fetch media, using fallback:', error);
+    } catch {
       return this.getFallbackMedia();
     }
   }
@@ -232,7 +231,7 @@ export class MediaViewerService {
         _type: 'video',
         title: 'فيديو تعريفي للمؤسسة',
         type: 'video',
-        videoUrl: '/videos/intro.mp4',
+        videoUrl: '/videos/hero-background.mp4',
         duration: '4:30',
         category: 'تعريفي',
         isFeatured: true,

@@ -1,5 +1,5 @@
 // Offline Indicator - مؤشر عدم الاتصال
-import { WifiOff, Wifi } from 'lucide-react';
+import { WifiOff } from 'lucide-react';
 
 import { useNetworkStatus } from '@/utils/pwa';
 

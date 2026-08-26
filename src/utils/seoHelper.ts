@@ -1,11 +1,11 @@
-/**
+﻿/**
  * SEO Helper Utilities
  */
 
 export const seoConfig = {
   // إضافة بدائل للصور
-  imageFallback: '/images/fallback.jpg',
-  ogImage: '/og-image.jpg',
+  imageFallback: '/images/defaults/project-default.svg',
+  ogImage: '/og-image.png',
   
   // تحسين meta tags
   generateMeta: (data: {
@@ -15,8 +15,8 @@ export const seoConfig = {
     url?: string;
   } = {}) => ({
     title: data.title || 'Rahmaa Baynahum',
-    description: data.description || 'الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن',
-    image: data.image || '/images/default-og.jpg',
+    description: data.description || 'الموقع الإلكتروني التعريفي الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن',
+    image: data.image || '/og-image.png',
     url: data.url || 'https://rbdcye.org',
   }),
   
@@ -29,7 +29,7 @@ export const seoConfig = {
     '@type': 'Organization',
     name: data.name || 'Rahmaa Baynahum',
     url: data.url || 'https://rbdcye.org',
-    logo: '/images/logo.png',
+    logo: '/logo.png',
     sameAs: [
       'https://facebook.com/rbdcye',
       'https://twitter.com/rbdcye',
@@ -45,7 +45,7 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'NGO',
-    name: 'مؤسسة رحماء بينهم',
+    name: 'رحماء بينهم',
     alternateName: 'rbdcye Foundation',
     url: 'https://rbdcye.org',
     logo: 'https://rbdcye.org/favicon.svg',
@@ -77,7 +77,7 @@ export function generateArticleSchema(data: {
     '@type': 'Article',
     headline: data.title,
     description: data.description,
-    image: data.image || '/images/default-og.jpg',
+    image: data.image || '/og-image.png',
     datePublished: data.datePublished,
     dateModified: data.dateModified || data.datePublished,
     author: {

@@ -71,11 +71,11 @@ export function useKeyboardShortcuts(options: UseKeyboardShortcutsOptions = {}) 
     },
     {
       id: 'about',
-      title: 'عن المؤسسة',
-      description: 'التعرف على المؤسسة ورسالتها',
+      title: 'عن رحماء بينهم',
+      description: 'التعرف على رحماء بينهم ورسالتها',
       keyCombo: '2',
       category: 'navigation',
-      action: () => navigateTo('/about', 'عن المؤسسة', '2'),
+      action: () => navigateTo('/about', 'عن رحماء بينهم', '2'),
     },
     {
       id: 'programs',
@@ -104,7 +104,7 @@ export function useKeyboardShortcuts(options: UseKeyboardShortcutsOptions = {}) 
     {
       id: 'news',
       title: 'الأخبار والفعاليات',
-      description: 'آخر أخبار وإنجازات المؤسسة',
+      description: 'آخر أخبار وإنجازاتنا',
       keyCombo: '6',
       category: 'navigation',
       action: () => navigateTo('/news', 'الأخبار والفعاليات', '6'),

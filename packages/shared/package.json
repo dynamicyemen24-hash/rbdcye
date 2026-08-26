@@ -1,0 +1,32 @@
+{
+  "name": "@nexora/shared",
+  "version": "1.0.0",
+  "description": "Shared types and contracts for Nexora ecosystem (NexoraOS, NexWebSite, NexOSMobile)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.38.0",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.13.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/pg": "^8.11.0",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.7.0"
+  }
+}

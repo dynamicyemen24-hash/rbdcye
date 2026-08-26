@@ -3,6 +3,15 @@ import { query } from './database.js';
 
 const ALLOWED_ORIGINS = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173', 'https://rohamaa.org', 'https://rbdcye.org'];
 
+function escapeHtmlEntities(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export default async function handler(req, res) {
   // CORS with restricted origins
   const origin = req.headers.origin;
@@ -79,13 +88,13 @@ export default async function handler(req, res) {
             subject: `[موقع رحماء بينهم] ${sanitizedSubject}`,
             html: `
               <div dir="rtl" style="font-family: 'Cairo', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #fafaf7; border-radius: 8px;">
-                <h2 style="color: #1A5C48; margin-bottom: 20px;">📬 رسالة جديدة من موقع رحماء بينهم</h2>
+                <h2 style="color: #1A5C48; margin-bottom: 20px;">&#x1F4EC; رسالة جديدة من موقع رحماء بينهم</h2>
                 <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
-                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48; width: 120px;">الاسم</td><td style="padding: 10px 15px;">${sanitizedName}</td></tr>
-                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">البريد</td><td style="padding: 10px 15px;">${sanitizedEmail}</td></tr>
-                  ${sanitizedPhone ? `<tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">الهاتف</td><td style="padding: 10px 15px;" dir="ltr">${sanitizedPhone}</td></tr>` : ''}
-                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">الموضوع</td><td style="padding: 10px 15px;">${sanitizedSubject}</td></tr>
-                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48; vertical-align: top;">الرسالة</td><td style="padding: 10px 15px; white-space: pre-wrap; line-height: 1.8;">${sanitizedMessage}</td></tr>
+                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48; width: 120px;">الاسم</td><td style="padding: 10px 15px;">${escapeHtmlEntities(sanitizedName)}</td></tr>
+                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">البريد</td><td style="padding: 10px 15px;">${escapeHtmlEntities(sanitizedEmail)}</td></tr>
+                  ${sanitizedPhone ? `<tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">الهاتف</td><td style="padding: 10px 15px;" dir="ltr">${escapeHtmlEntities(sanitizedPhone)}</td></tr>` : ''}
+                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48;">الموضوع</td><td style="padding: 10px 15px;">${escapeHtmlEntities(sanitizedSubject)}</td></tr>
+                  <tr><td style="padding: 10px 15px; font-weight: bold; background: #f0fdf4; color: #1A5C48; vertical-align: top;">الرسالة</td><td style="padding: 10px 15px; white-space: pre-wrap; line-height: 1.8;">${escapeHtmlEntities(sanitizedMessage)}</td></tr>
                 </table>
               </div>
             `,

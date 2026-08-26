@@ -1,0 +1,15 @@
+/* NexoraOS™ Unified Brand Tokens — CSS */
+:root {
+  --brand-primary: #059669;
+  --brand-accent: #d97706;
+  --brand-dark-bg: #090d16;
+  --brand-light-bg: #f8fafc;
+  /* Aliases */
+  --brand-green: #059669;
+  --brand-green-dark: #0F4C3A;
+  --brand-green-light: #10B981;
+  --brand-green-pale: #ECFDF5;
+  --brand-gold: #d97706;
+  --brand-gold-light: #FBBF24;
+  --brand-gold-pale: #FFFBEB;
+}

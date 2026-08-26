@@ -6,11 +6,30 @@ import { useState, useEffect, useCallback, useRef, memo } from 'react';
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
+  lastAccessed: number;
   promise?: Promise<T>;
 }
 
+const MAX_CACHE_SIZE = 100;
+const MAX_PENDING_SIZE = 50;
 const globalCache = new Map<string, CacheEntry<any>>();
 const pendingRequests = new Map<string, Promise<any>>();
+
+function evictLRU<K, V>(map: Map<K, V>, maxSize: number) {
+  if (map.size <= maxSize) return;
+  let oldestKey: K | null = null;
+  let oldestTime = Infinity;
+  for (const [key, entry] of map) {
+    const time = (entry as any).lastAccessed ?? (entry as any).timestamp ?? 0;
+    if (time < oldestTime) {
+      oldestTime = time;
+      oldestKey = key;
+    }
+  }
+  if (oldestKey !== null) {
+    map.delete(oldestKey);
+  }
+}
 
 export function useOptimizedFetch<T>(
   key: string,
@@ -31,12 +50,11 @@ export function useOptimizedFetch<T>(
     const now = Date.now();
     const cached = globalCache.get(key);
 
-    // Return stale data immediately if available
     if (cached && now - cached.timestamp < ttl + staleTime) {
       if (!mountedRef.current) return;
+      cached.lastAccessed = now;
       setData(cached.data);
 
-      // Background refresh if stale
       if (now - cached.timestamp > ttl && !cached.promise) {
         const promise = fetcher().catch(() => {});
         cached.promise = promise;
@@ -45,7 +63,7 @@ export function useOptimizedFetch<T>(
         promise.then(result => {
           if (mountedRef.current) {
             setData(result as T);
-            globalCache.set(key, { data: result, timestamp: Date.now() });
+            globalCache.set(key, { data: result, timestamp: Date.now(), lastAccessed: Date.now() });
           }
         }).finally(() => {
           pendingRequests.delete(key);
@@ -54,7 +72,6 @@ export function useOptimizedFetch<T>(
       return;
     }
 
-    // Deduplicate in-flight requests
     if (pendingRequests.has(key)) {
       try {
         const result = await pendingRequests.get(key)!;
@@ -65,18 +82,23 @@ export function useOptimizedFetch<T>(
       return;
     }
 
-    // Fetch new data
     setLoading(true);
     setError(null);
 
     const promise = fetcher();
     pendingRequests.set(key, promise);
 
+    if (pendingRequests.size > MAX_PENDING_SIZE) {
+      const firstKey = pendingRequests.keys().next().value;
+      if (firstKey) pendingRequests.delete(firstKey);
+    }
+
     promise
       .then(result => {
         if (mountedRef.current) {
           setData(result as T);
-          globalCache.set(key, { data: result, timestamp: Date.now() });
+          evictLRU(globalCache, MAX_CACHE_SIZE - 1);
+          globalCache.set(key, { data: result, timestamp: Date.now(), lastAccessed: Date.now() });
         }
       })
       .catch((err: any) => {

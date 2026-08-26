@@ -1,5 +1,5 @@
 // Reports Page - التقارير السنوية والإصدارات
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   FileText, Download, Calendar, Eye, Search, 
   Filter, BookOpen, TrendingUp, Users, Award,
@@ -19,8 +19,8 @@ const REPORTS = [
     pages: 48,
     size: "4.2 MB",
     category: "مالي",
-    description: "التقرير المالي والإداري السنوي للمؤسسة للعام 2025",
-    highlights: ["إيرادات 2.5M$", "12,000+ مستفيد", "25 مشروع"],
+    description: "التقرير المالي والإداري السنوي للعام 2025",
+    highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
     color: "emerald",
   },
   {
@@ -31,8 +31,8 @@ const REPORTS = [
     pages: 42,
     size: "3.8 MB",
     category: "مالي",
-    description: "التقرير المالي والإداري السنوي للمؤسسة للعام 2024",
-    highlights: ["إيرادات 2M$", "10,000+ مستفيد", "20 مشروع"],
+    description: "التقرير المالي والإداري السنوي للعام 2024",
+    highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
     color: "blue",
   },
   {
@@ -67,7 +67,7 @@ const REPORTS = [
     pages: 8,
     size: "0.8 MB",
     category: "إعلامي",
-    description: "النشرة الشهرية لأخبار وفعاليات المؤسسة",
+    description: "النشرة الشهرية لأخبار وفعالياتنا",
     highlights: ["أخبار", "قصص نجاح", "فعاليات قادمة"],
     color: "rose",
   },
@@ -94,7 +94,7 @@ export default function ReportsPage() {
 
   useSEO({
     title: 'التقارير - رحماء بينهم',
-    description: 'التقارير السنوية والإصدارات الدورية لمؤسسة رحماء بينهم',
+    description: 'التقارير السنوية والإصدارات الدورية لـ رحماء بينهم',
   });
 
   const filteredReports = REPORTS.filter((report) => {
@@ -132,7 +132,7 @@ export default function ReportsPage() {
               <span className="text-[var(--brand-green)]">والإصدارات</span>
             </h1>
             <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              جميع تقارير المؤسسة المالية والإدارية والفنية متاحة للتحميل
+              جميع تقاريرنا المالية والإدارية والفنية متاحة للتحميل
             </p>
           </motion.div>
         </div>
@@ -224,7 +224,7 @@ export default function ReportsPage() {
                       <span>{report.pages} صفحة</span>
                       <span>{report.size}</span>
                     </div>
-                    <button className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
+                    <button onClick={() => alert('سيتم إضافة رابط التحميل قريباً')} className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
                       <Download className="w-4 h-4" />
                       تحميل
                     </button>

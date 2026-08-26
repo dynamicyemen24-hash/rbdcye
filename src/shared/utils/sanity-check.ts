@@ -47,7 +47,7 @@ export function checkSanityConfig(): {
 if (import.meta.env.DEV) {
   const status = checkSanityConfig();
   if (!status.configured) {
-    console.warn('[Sanity] Configuration incomplete:', status.errors);
+    // Sanity configuration incomplete
   } else {
     console.log('[Sanity] Configuration ready - Project:', status.projectId);
   }
