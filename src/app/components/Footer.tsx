@@ -1,5 +1,6 @@
 import { Heart, Mail, Phone, MapPin, ArrowUp, Shield, FileText, CreditCard, CheckCircle, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { subscribersApi } from "@/shared/services/api.service";
 
 const footerLinks = {
   "عن رحماء بينهم": [
@@ -24,7 +25,10 @@ const footerLinks = {
     { label: "الأخبار", href: "news" },
     { label: "التقارير والإصدارات", href: "reports" },
     { label: "معرض الوسائط", href: "media" },
-    { label: "تواصل معنا", href: "contact" },
+        { label: "تواصل معنا", href: "contact" },
+    { label: "مركز الرسائل", href: "messages" },
+    { label: "الاشتراكات والتحديثات", href: "subscribe" },
+
   ],
 };
 
@@ -35,21 +39,26 @@ interface FooterProps {
 export function Footer({ setCurrentPage }: FooterProps) {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const handlePolicyClick = (policyType: string) => {
+    const handlePolicyClick = (_policyType: string) => {
+
     setCurrentPage('privacy-policy');
   };
 
   // Newsletter subscription
   const [, setSubscribeStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const email = (form.elements.namedItem('email') as HTMLInputElement)?.value;
-    if (email) {
+    if (!email) return;
+    try {
+      await subscribersApi.subscribe({ email, country: 'YE', consent: true, topics: ['updates'] });
       setSubscribeStatus('success');
       form.reset();
       setTimeout(() => setSubscribeStatus('idle'), 3000);
+    } catch {
+      setSubscribeStatus('error');
     }
   };
 
@@ -145,7 +154,8 @@ export function Footer({ setCurrentPage }: FooterProps) {
         >
           <div>
             <div className="text-white mb-1" style={{ fontWeight: 700, fontSize: "0.95rem" }}>
-              اشترك في نشرتنا البريدية
+                            اشترك في نشرتنا البريدية
+
             </div>
             <div className="text-white/55" style={{ fontSize: "0.78rem" }}>
               كن أول من يعلم بأخبارنا وبرامجنا وفعالياتنا
@@ -168,8 +178,9 @@ export function Footer({ setCurrentPage }: FooterProps) {
               className="px-5 py-2.5 bg-[var(--brand-gold)] text-white rounded-lg hover:bg-[var(--brand-gold-light)] transition-colors flex-shrink-0"
               style={{ fontSize: "0.82rem", fontWeight: 600 }}
             >
-              اشتراك
+                            اشتراك
             </button>
+
           </form>
         </div>
 

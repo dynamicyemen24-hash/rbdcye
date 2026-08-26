@@ -1,87 +1,22 @@
-// Donor Portal Page - صفحة حساب المتبرع
-import { motion } from 'motion/react';
-import { Heart, Shield, BarChart3, History, Gift } from 'lucide-react';
-import { useEffect } from 'react';
+import { Bell, Heart, History, MessageSquare, Settings2, ShieldCheck, Sparkles, UserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import DonorPortal from '@/app/components/DonorPortal';
-import { analyticsService } from '@/shared/services/analytics.service';
-import { contentManager } from '@/shared/services/content-manager';
-import { useSEO } from '@/utils/seoAdvanced';
+import DonorPortal from "@/app/components/DonorPortal";
+import { useSEO } from "@/utils/seoAdvanced";
+
+const portalLinks = [
+  { label: "سجل التبرعات", description: "إيصالاتك وحالات العمليات", icon: History, tab: "history" },
+  { label: "أثر مساهمتك", description: "قصص ومؤشرات من الميدان", icon: Sparkles, tab: "impact" },
+  { label: "الإشعارات", description: "تحديثات الطلبات والحملات", icon: Bell, tab: "notifications" },
+  { label: "تفضيلات الحساب", description: "اللغة والتنبيهات والخصوصية", icon: Settings2, tab: "settings" },
+];
 
 export default function DonorPortalPage() {
-  useSEO({
-    title: 'بوابة المتبرع - رحماء بينهم',
-    description: 'متابعة تبرعاتك وأثر مبلغك بشكل فوري مع بيانات محدثة',
-    type: 'website',
-    url: 'https://rbdcye.org/donor',
-  });
+  const navigate = useNavigate();
+  useSEO({ title: "بوابة المتبرع | رحماء بينهم", description: "مساحة شخصية لمتابعة التبرعات والإيصالات والأثر والتفضيلات." });
 
-  useEffect(() => {
-    let cancelled = false;
-
-    // محاولة تحميل بيانات المتبرع من content-bridge (Sanity)
-    contentManager.getImpact()
-      .then(() => {
-        if (!cancelled) {
-          try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
-        }
-      });
-
-    return () => { cancelled = true; };
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-[var(--secondary)] pt-20" dir="rtl">
-      {/* Page Header */}
-      <section className="py-8 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-4"
-          >
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--brand-green)] to-emerald-600 flex items-center justify-center shadow-lg">
-              <Heart className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-[var(--foreground)]">بوابة المتبرع</h1>
-              <p className="text-[var(--muted-foreground)]">متابعة تبرعاتك وأثر مبلغك بشكل فوري</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Donor Portal Component */}
-      <DonorPortal />
-
-      {/* Trust Badges */}
-      <section className="py-8 bg-white border-t border-[var(--border)]">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-8 max-w-4xl mx-auto">
-            <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-              <Shield className="w-4 h-4 text-[var(--brand-green)]" />
-              <span>آمن وموثوق</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-              <BarChart3 className="w-4 h-4 text-[var(--brand-gold)]" />
-              <span>شفافية تامة</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-              <History className="w-4 h-4 text-blue-600" />
-              <span>سجل تبرعات كامل</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-              <Gift className="w-4 h-4 text-purple-600" />
-              <span>أثر مباشر</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+  return <div className="min-h-screen bg-[#F7F8F5] pt-24 text-[#14231F]" dir="rtl">
+    <section className="bg-[#0F4C3A] px-5 py-12 text-white sm:px-8 lg:px-10"><div className="mx-auto max-w-6xl"><div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end"><div><div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[#E8C97B]"><UserRound className="h-4 w-4" /> مساحة المتبرع الشخصية</div><h1 className="mt-5 text-3xl font-extrabold sm:text-5xl">تابع عطاؤك، <span className="text-[#E8C97B]">واشهد أثره.</span></h1><p className="mt-4 max-w-xl text-sm leading-7 text-white/65">بوابة مستقلة تجمع سجل التبرعات، الإيصالات، قصص الأثر، والإشعارات في مكان واحد.</p></div><div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-xs text-white/70"><ShieldCheck className="h-5 w-5 text-[#E8C97B]" /> حسابك وبياناتك في مساحة محمية</div></div></div></section>
+    <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10"><div className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{portalLinks.map(({ label, description, icon: Icon, tab }) => <button key={tab} type="button" onClick={() => navigate(`/donor?view=${tab}`)} className="group rounded-2xl border border-[#0F4C3A]/10 bg-white p-4 text-right shadow-sm transition hover:-translate-y-1 hover:border-[#0F4C3A]/25 hover:shadow-lg"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#F1F7F2] text-[#0F4C3A] transition group-hover:bg-[#0F4C3A] group-hover:text-[#E8C97B]"><Icon className="h-5 w-5" /></span><span className="mt-4 block text-sm font-extrabold text-[#0F4C3A]">{label}</span><span className="mt-1 block text-xs text-[#687670]">{description}</span></button>)}</div><div id="donor-portal-overview" className="overflow-hidden rounded-[30px] border border-[#0F4C3A]/10 bg-white shadow-[0_20px_60px_rgba(15,76,58,.08)]"><DonorPortal /></div><div className="mt-8 grid gap-4 md:grid-cols-2"><button type="button" onClick={() => navigate("/messages")} className="flex items-center gap-4 rounded-2xl border border-[#0F4C3A]/10 bg-white p-5 text-right transition hover:border-[#0F4C3A]/25"><span className="grid h-11 w-11 place-items-center rounded-xl bg-[#F1F7F2] text-[#0F4C3A]"><MessageSquare className="h-5 w-5" /></span><span><strong className="block text-sm text-[#0F4C3A]">تحتاج مساعدة؟</strong><small className="mt-1 block text-xs text-[#687670]">أرسل رسالة إلى فريق المتابعة</small></span></button><button type="button" onClick={() => navigate("/subscribe")} className="flex items-center gap-4 rounded-2xl border border-[#0F4C3A]/10 bg-white p-5 text-right transition hover:border-[#0F4C3A]/25"><span className="grid h-11 w-11 place-items-center rounded-xl bg-[#FFF7E7] text-[#9B6A24]"><Heart className="h-5 w-5" /></span><span><strong className="block text-sm text-[#0F4C3A]">تحديثات الأثر</strong><small className="mt-1 block text-xs text-[#687670]">اختر ما ترغب في متابعته من أخبار المؤسسة</small></span></button></div></main>
+  </div>;
 }

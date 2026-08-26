@@ -1,401 +1,128 @@
-// Zakat Calculator Page - حاسبة الزكاة الشرعية
 import { motion } from "motion/react";
-import { Calculator, DollarSign, Gem, Calendar, Bell, CheckCircle, ArrowLeft, ArrowRight, Shield, Heart, TrendingUp } from 'lucide-react';
-import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo, useState } from "react";
+import {
+  AlertCircle,
+  ArrowLeft,
+  BookOpen,
+  Calculator,
+  CheckCircle2,
+  Coins,
+  Gem,
+  History,
+  Info,
+  Landmark,
+  RotateCcw,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import { analyticsService } from '@/shared/services/analytics.service';
-import { contentManager } from '@/shared/services/content-manager';
-import { useSEO } from '@/utils/seoAdvanced';
+import { useSEO } from "@/utils/seoAdvanced";
 
-type ZakatType = 'money' | 'gold' | 'fitr';
+type ZakatMode = "money" | "gold" | "silver" | "fitr";
 
-const GOLD_PRICE_PER_GRAM = 25000; // ريال يمني تقريبي
+const GOLD_NISAB_GRAMS = 85;
+const SILVER_NISAB_GRAMS = 595;
+const ZAKAT_RATE = 0.025;
+
+const formatNumber = (value: number, maximumFractionDigits = 0) =>
+  new Intl.NumberFormat("ar-YE", { maximumFractionDigits }).format(Number.isFinite(value) ? value : 0);
+
+const modes: Array<{ id: ZakatMode; title: string; description: string; icon: typeof Coins }> = [
+  { id: "money", title: "زكاة المال", description: "النقد والمدخرات والذمم المرجوّة", icon: Coins },
+  { id: "gold", title: "زكاة الذهب", description: "الوزن الخالص أو المكافئ الخالص", icon: Gem },
+  { id: "silver", title: "زكاة الفضة", description: "وزن الفضة المملوك", icon: Landmark },
+  { id: "fitr", title: "زكاة الفطر", description: "عدد الأشخاص وقيمة الصاع محليًا", icon: Users },
+];
 
 export default function ZakatPage() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<ZakatType>('money');
-  const [cashAmount, setCashAmount] = useState(0);
+  const [mode, setMode] = useState<ZakatMode>("money");
+  const [cash, setCash] = useState(0);
+  const [receivables, setReceivables] = useState(0);
+  const [liabilities, setLiabilities] = useState(0);
+  const [goldPrice, setGoldPrice] = useState(25000);
   const [goldWeight, setGoldWeight] = useState(0);
-  const [familyMembers, setFamilyMembers] = useState(1);
-  const [zakatResult, setZakatResult] = useState<number | null>(null);
-  const [reminderEmail, setReminderEmail] = useState('');
-  const [reminderSaved, setReminderSaved] = useState(false);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [silverWeight, setSilverWeight] = useState(0);
+  const [fitrPeople, setFitrPeople] = useState(1);
+  const [fitrValue, setFitrValue] = useState(1500);
+  const [hasHawl, setHasHawl] = useState(true);
+  const [result, setResult] = useState<number | null>(null);
+  const [saved, setSaved] = useState(false);
 
   useSEO({
-    title: 'حاسبة الزكاة - رحماء بينهم',
-    description: 'احسب زكاة مالك وذهبك وفطرك بدقة وسهولة، وأدِ زكاتك في مصارفها الشرعية',
-    keywords: ['زكاة', 'حاسبة زكاة', 'زكاة المال', 'زكاة الذهب', 'زكاة الفطر', 'رحماء بينهم'],
+    title: "حاسبة الزكاة المعيارية | رحماء بينهم",
+    description: "أداة إرشادية واضحة لحساب زكاة المال والذهب والفضة والفطر مع إظهار الفرضيات والنصاب.",
+    keywords: ["حاسبة الزكاة", "زكاة المال", "زكاة الذهب", "زكاة الفطر", "رحماء بينهم"],
   });
 
-  useEffect(() => {
-    let cancelled = false;
-    contentManager.getImpact()
-      .then((result: any) => {
-        if (!cancelled) {
-          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setContentSource('static');
-      });
-    return () => { cancelled = true; };
-  }, []);
+  const moneyNisab = goldPrice * GOLD_NISAB_GRAMS;
+  const moneyNet = Math.max(0, cash + receivables - liabilities);
+  const nisabLabel = mode === "money" ? `${formatNumber(moneyNisab)} ر.ي` : mode === "gold" ? `${GOLD_NISAB_GRAMS} غرام` : mode === "silver" ? `${SILVER_NISAB_GRAMS} غرام` : `${formatNumber(fitrValue)} ر.ي / شخص`;
 
-  const NISAB = useMemo(() => ({
-    money: 85 * GOLD_PRICE_PER_GRAM, // ما يعادل 85 جرام ذهب
-    gold: 85,
-    fitr: 2.5, // كيلو جرام قمح تقريباً
-  }), []);
+  const calculation = useMemo(() => {
+    if (mode === "money") return { base: moneyNet, threshold: moneyNisab, eligible: hasHawl && moneyNet >= moneyNisab, unit: "ر.ي" };
+    if (mode === "gold") return { base: goldWeight, threshold: GOLD_NISAB_GRAMS, eligible: hasHawl && goldWeight >= GOLD_NISAB_GRAMS, unit: "غرام" };
+    if (mode === "silver") return { base: silverWeight, threshold: SILVER_NISAB_GRAMS, eligible: hasHawl && silverWeight >= SILVER_NISAB_GRAMS, unit: "غرام" };
+    return { base: fitrPeople * fitrValue, threshold: fitrValue, eligible: fitrPeople > 0 && fitrValue > 0, unit: "ر.ي" };
+  }, [mode, moneyNet, moneyNisab, goldWeight, silverWeight, fitrPeople, fitrValue, hasHawl]);
 
-  const calculateMoneyZakat = () => {
-    if (cashAmount >= NISAB.money) {
-      return cashAmount * 0.025;
-    }
-    return 0;
+  const calculate = () => {
+    const amount = mode === "fitr" ? fitrPeople * fitrValue : calculation.eligible ? calculation.base * ZAKAT_RATE : 0;
+    setResult(amount);
+    setSaved(false);
   };
 
-  const calculateGoldZakat = () => {
-    if (goldWeight >= NISAB.gold) {
-      return goldWeight * GOLD_PRICE_PER_GRAM * 0.025;
-    }
-    return 0;
+  const saveCalculation = () => {
+    if (result === null) return;
+    const existing = JSON.parse(localStorage.getItem("rh_zakat_history") || "[]") as Array<Record<string, unknown>>;
+    localStorage.setItem("rh_zakat_history", JSON.stringify([{ mode, amount: result, date: new Date().toISOString() }, ...existing].slice(0, 10)));
+    setSaved(true);
   };
 
-  const calculateFitrZakat = () => {
-    return familyMembers * NISAB.fitr;
-  };
-
-  const handleCalculate = () => {
-    let result = 0;
-    switch (activeTab) {
-      case 'money':
-        result = calculateMoneyZakat();
-        break;
-      case 'gold':
-        result = calculateGoldZakat();
-        break;
-      case 'fitr':
-        result = calculateFitrZakat();
-        break;
-    }
-    setZakatResult(result);
-    try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
-  };
-
-  const handleReminderSave = () => {
-    if (reminderEmail) {
-      localStorage.setItem('zakat-reminder', JSON.stringify({ email: reminderEmail, date: new Date().toISOString() }));
-      setReminderSaved(true);
-    }
-  };
-
-  const handleDonateZakat = () => {
-    navigate('/donate', { state: { zakatAmount: zakatResult } });
+  const reset = () => {
+    setCash(0); setReceivables(0); setLiabilities(0); setGoldWeight(0); setSilverWeight(0); setFitrPeople(1); setResult(null); setSaved(false);
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-20" dir="rtl">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
-              <Calculator className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">حاسبة الزكاة الشرعية</span>
-            </div>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4">
-              احسب <span className="text-[var(--brand-green)]">زكاتك</span> بسهولة
-            </h1>
-            <p className="text-xl text-[var(--muted-foreground)] max-w-2xl mx-auto mb-8">
-              أداة شرعية موثوقة لحساب زكاة المال والذهب والفطر، مع توجيه لإخراجها في مصارفها
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-[var(--brand-green)] flex justify-center mb-1">
-                  <DollarSign className="w-6 h-6" />
-                </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">2.5%</div>
-                <div className="text-xs text-[var(--muted-foreground)]">نسبة الزكاة</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-[var(--brand-gold)] flex justify-center mb-1">
-                  <Gem className="w-6 h-6" />
-                </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">{NISAB.gold} جرام</div>
-                <div className="text-xs text-[var(--muted-foreground)]">نصاب الذهب</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-blue-600 flex justify-center mb-1">
-                  <Calculator className="w-6 h-6" />
-                </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">{NISAB.money.toLocaleString('ar-SA')} ر.ي</div>
-                <div className="text-xs text-[var(--muted-foreground)]">نصاب المال</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[var(--border)]">
-                <div className="text-purple-600 flex justify-center mb-1">
-                  <Heart className="w-6 h-6" />
-                </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">8</div>
-                <div className="text-xs text-[var(--muted-foreground)]">مصارف الزكاة</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Main Calculator */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            {/* Zakat Type Tabs */}
-            <div className="flex gap-2 mb-8">
-              {[
-                { id: 'money', label: 'زكاة المال', icon: DollarSign },
-                { id: 'gold', label: 'زكاة الذهب', icon: Gem },
-                { id: 'fitr', label: 'زكاة الفطر', icon: Calendar },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as ZakatType); setZakatResult(null); }}
-                  className={`flex-1 p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
-                    activeTab === tab.id
-                      ? 'border-[var(--brand-green)] bg-[var(--brand-green-pale)] text-[var(--brand-green)]'
-                      : 'border-[var(--border)] hover:border-[var(--brand-green)]'
-                  }`}
-                >
-                  <tab.icon className="w-8 h-8" />
-                  <span className="font-semibold">{tab.label}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Money Zakat */}
-            {activeTab === 'money' && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl p-8 border border-[var(--border)] shadow-lg"
-              >
-                <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">حساب زكاة المال</h2>
-
-                <div className="mb-6">
-                  <label htmlFor="cashAmount" className="block text-lg font-semibold text-[var(--foreground)] mb-2">
-                    إجمالي المبلغ المملوك (ر.ي)
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="cashAmount"
-                      type="number"
-                      value={cashAmount || ''}
-                      onChange={(e) => setCashAmount(Number(e.target.value))}
-                      className="w-full p-4 pr-12 border-2 border-[var(--border)] rounded-xl text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                      placeholder="أدخل المبلغ"
-                    />
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]">ر.ي</span>
-                  </div>
-                </div>
-
-                <div className="bg-[var(--brand-green-pale)] p-4 rounded-xl mb-6">
-                  <p className="text-sm text-[var(--muted-foreground)]">
-                    نصاب الزكاة: {NISAB.money.toLocaleString('ar-SA')} ر.ي (ما يعادل 85 جرام ذهب)
-                  </p>
-                </div>
-
-                <div className="space-y-3 mb-8">
-                  <label className="flex items-center gap-3 p-3 border border-[var(--border)] rounded-xl cursor-pointer hover:border-[var(--brand-green)] transition-colors">
-                    <input type="checkbox" className="w-4 h-4 text-[var(--brand-green)]" defaultChecked />
-                    <span className="text-[var(--foreground)]">بلغ المال النصاب الشرعي</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 border border-[var(--border)] rounded-xl cursor-pointer hover:border-[var(--brand-green)] transition-colors">
-                    <input type="checkbox" className="w-4 h-4 text-[var(--brand-green)]" defaultChecked />
-                    <span className="text-[var(--foreground)]">مر عليه عام هجري كامل</span>
-                  </label>
-                </div>
-
-                <button onClick={handleCalculate} className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold text-lg hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl">
-                  احسب الزكاة
-                </button>
-              </motion.div>
-            )}
-
-            {/* Gold Zakat */}
-            {activeTab === 'gold' && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl p-8 border border-[var(--border)] shadow-lg"
-              >
-                <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">حساب زكاة الذهب</h2>
-
-                <div className="mb-6">
-                  <label htmlFor="goldWeight" className="block text-lg font-semibold text-[var(--foreground)] mb-2">
-                    وزن الذهب المملوك (جرام)
-                  </label>
-                  <input
-                    id="goldWeight"
-                    type="number"
-                    value={goldWeight || ''}
-                    onChange={(e) => setGoldWeight(Number(e.target.value))}
-                    className="w-full p-4 border-2 border-[var(--border)] rounded-xl text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                    placeholder="أدخل الوزن بالجرام"
-                  />
-                </div>
-
-                <div className="bg-[var(--brand-green-pale)] p-4 rounded-xl mb-6">
-                  <p className="text-sm text-[var(--muted-foreground)]">
-                    نصاب الذهب: {NISAB.gold} جرام (سعر الجرام ~ {GOLD_PRICE_PER_GRAM} ر.ي)
-                  </p>
-                </div>
-
-                <button onClick={handleCalculate} className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold text-lg hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl">
-                  احسب الزكاة
-                </button>
-              </motion.div>
-            )}
-
-            {/* Fitr Zakat */}
-            {activeTab === 'fitr' && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl p-8 border border-[var(--border)] shadow-lg"
-              >
-                <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">زكاة الفطر</h2>
-                <div className="bg-gradient-to-r from-[var(--brand-green)]/10 to-[var(--brand-green)]/5 p-6 rounded-xl mb-6">
-                  <p className="text-lg text-[var(--foreground)]">
-                    <strong>مقدار زكاة الفطر:</strong> {NISAB.fitr} ر.ي للشخص الواحد
-                  </p>
-                  <p className="text-sm text-[var(--muted-foreground)] mt-2">
-                    تُقدر بقيمة 2.5 كيلو جرام من القمح أو ما يعادله من الأرز/التمر
-                  </p>
-                </div>
-
-                <div className="mb-6">
-                  <label htmlFor="familyMembers" className="block text-lg font-semibold text-[var(--foreground)] mb-2">
-                    عدد أفراد الأسرة
-                  </label>
-                  <input
-                    id="familyMembers"
-                    type="number"
-                    value={familyMembers || ''}
-                    onChange={(e) => setFamilyMembers(Number(e.target.value))}
-                    className="w-full p-4 border-2 border-[var(--border)] rounded-xl text-lg focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                    placeholder="أدخل العدد"
-                    min="1"
-                  />
-                </div>
-
-                <button onClick={handleCalculate} className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold text-lg hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl">
-                  احسب الإجمالي
-                </button>
-              </motion.div>
-            )}
-
-            {/* Zakat Result */}
-            {zakatResult !== null && zakatResult > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl p-8 mt-6 border-2 border-[var(--brand-green)] shadow-lg"
-              >
-                <div className="text-center mb-6">
-                  <CheckCircle className="w-16 h-16 mx-auto mb-4 text-[var(--brand-green)]" />
-                  <h3 className="text-2xl font-bold text-[var(--foreground)] mb-2">قيمة الزكاة المستحقة</h3>
-                  <div className="text-5xl font-bold text-[var(--brand-green)] mb-2">
-                    {zakatResult.toFixed(2)}
-                  </div>
-                  <p className="text-[var(--muted-foreground)]">ريال يمني</p>
-                </div>
-
-                <div className="bg-[var(--brand-green-pale)] p-6 rounded-xl mb-6">
-                  <div className="flex items-start gap-3 mb-3">
-                    <TrendingUp className="w-5 h-5 text-[var(--brand-green)] flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-[var(--brand-green)] mb-1">أثر زكاتك</h4>
-                      <p className="text-sm text-[var(--muted-foreground)]">
-                        بهذا المبلغ يمكنك إطعام {Math.floor(zakatResult / 2)} شخص لمدة يوم، أو دعم أسرة متكاملة لأسبوع كامل
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleDonateZakat}
-                  className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl"
-                >
-                  <Heart className="w-5 h-5" fill="white" />
-                  أخرج زكاتك الآن
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              </motion.div>
-            )}
-
-            {zakatResult === 0 && zakatResult !== null && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl p-8 mt-6 border border-[var(--border)] shadow-lg"
-              >
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-[var(--brand-gold-pale)] rounded-full flex items-center justify-center">
-                    <Calculator className="w-8 h-8 text-[var(--brand-gold)]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">لم يبلغ النصاب الشرعي</h3>
-                  <p className="text-[var(--muted-foreground)]">
-                    المبلغ المملوك لم يبلغ النصاب الشرعي، لا تجب عليك الزكاة.
-                  </p>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Reminder Tool */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-3xl p-8 mt-6 border border-[var(--border)] shadow-lg"
-            >
-              <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
-                <Bell className="w-6 h-6 text-[var(--brand-green)]" />
-                تذكير بموعد الزكاة
-              </h3>
-              <p className="text-[var(--muted-foreground)] mb-4">
-                أدخل بريدك الإلكتروني ليتم تذكيرك في نفس التاريخ الهجري من العام القادم
-              </p>
-              <div className="flex gap-3">
-                <input
-                  type="email"
-                  value={reminderEmail}
-                  onChange={(e) => setReminderEmail(e.target.value)}
-                  className="flex-1 p-4 border-2 border-[var(--border)] rounded-xl focus:ring-2 focus:ring-[var(--brand-green)]/30 outline-none transition-all"
-                  placeholder="البريد الإلكتروني"
-                />
-                <button
-                  onClick={handleReminderSave}
-                  className="bg-[var(--brand-green)] text-white px-6 py-4 rounded-xl font-bold hover:bg-[var(--brand-green-light)] transition-colors shadow-lg"
-                >
-                  {reminderSaved ? 'تم الحفظ ✅' : 'تذكير'}
-                </button>
-              </div>
-            </motion.div>
+    <div className="min-h-screen bg-[#F7F8F5] pt-24 text-[#14231F]" dir="rtl">
+      <section className="relative overflow-hidden bg-[#0F4C3A] px-5 py-16 text-white sm:px-8 lg:px-10 lg:py-20">
+        <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "160px 160px" }} />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+            <div className="max-w-2xl"><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[#E8C97B]"><Calculator className="h-4 w-4" /> أداة مساعدة مستقلة</div><h1 className="text-3xl font-extrabold leading-[1.35] sm:text-5xl">حاسبة الزكاة <span className="text-[#E8C97B]">بوضوح وأمانة.</span></h1><p className="mt-5 max-w-xl text-sm leading-7 text-white/65 sm:text-base">احسب على أساس المدخلات التي تعرفها، وراجع النصاب والفرضيات قبل اعتماد النتيجة. الأداة إرشادية ولا تستبدل سؤال أهل العلم عند وجود تفاصيل خاصة.</p></div>
+            <div className="grid grid-cols-2 gap-3 sm:min-w-[320px]"><div className="rounded-2xl border border-white/10 bg-white/8 p-4"><div className="text-2xl font-extrabold text-[#E8C97B]">٢٫٥٪</div><div className="mt-1 text-xs text-white/55">زكاة المال عند تحقق الشروط</div></div><div className="rounded-2xl border border-white/10 bg-white/8 p-4"><div className="text-2xl font-extrabold text-[#E8C97B]">٨٥غ</div><div className="mt-1 text-xs text-white/55">مرجع نصاب الذهب</div></div></div>
           </div>
         </div>
       </section>
 
+      <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.36fr] lg:py-14 lg:px-10">
+        <section className="rounded-[28px] border border-[#0F4C3A]/10 bg-white p-5 shadow-[0_20px_60px_rgba(15,76,58,.08)] sm:p-8">
+          <div className="grid gap-2 sm:grid-cols-4">{modes.map(({ id, title, description, icon: Icon }) => <button key={id} type="button" onClick={() => { setMode(id); setResult(null); }} className={`rounded-2xl border p-4 text-right transition ${mode === id ? "border-[#0F4C3A] bg-[#0F4C3A] text-white shadow-lg" : "border-[#0F4C3A]/10 bg-[#FAFCF9] text-[#0F4C3A] hover:border-[#0F4C3A]/30"}`}><Icon className={`h-5 w-5 ${mode === id ? "text-[#E8C97B]" : "text-[#0F4C3A]"}`} /><span className="mt-3 block text-sm font-extrabold">{title}</span><span className={`mt-1 block text-[10px] leading-5 ${mode === id ? "text-white/55" : "text-[#687670]"}`}>{description}</span></button>)}</div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#0F4C3A]/8 pb-5"><div><p className="text-xs font-bold text-[#B78235]">النصاب المرجعي الحالي</p><p className="mt-2 text-xl font-extrabold text-[#0F4C3A]">{nisabLabel}</p></div><div className="flex items-center gap-2 rounded-xl bg-[#F4F8F5] px-3 py-2 text-xs text-[#687670]"><Info className="h-4 w-4 text-[#0F4C3A]" /> راجع الأسعار المحلية قبل الإخراج</div></div>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            {mode === "money" && <><Field label="النقد والمدخرات" suffix="ر.ي" value={cash} onChange={setCash} /><Field label="الذمم المرجوّة" suffix="ر.ي" value={receivables} onChange={setReceivables} /><Field label="الالتزامات الحالّة" suffix="ر.ي" value={liabilities} onChange={setLiabilities} /><Field label="سعر غرام الذهب المرجعي" suffix="ر.ي" value={goldPrice} onChange={setGoldPrice} /></>}
+            {mode === "gold" && <><Field label="الوزن الخالص أو المكافئ الخالص" suffix="غرام" value={goldWeight} onChange={setGoldWeight} /><Field label="سعر غرام الذهب المرجعي" suffix="ر.ي" value={goldPrice} onChange={setGoldPrice} /></>}
+            {mode === "silver" && <Field label="وزن الفضة المملوك" suffix="غرام" value={silverWeight} onChange={setSilverWeight} />}
+            {mode === "fitr" && <><Field label="عدد الأشخاص" suffix="شخص" value={fitrPeople} onChange={setFitrPeople} min={1} /><Field label="قيمة زكاة الفطر للشخص" suffix="ر.ي" value={fitrValue} onChange={setFitrValue} /></>}
+          </div>
+
+          {mode !== "fitr" && <label className="mt-6 flex cursor-pointer items-center gap-3 rounded-2xl border border-[#0F4C3A]/10 bg-[#FAFCF9] p-4 text-sm font-bold text-[#0F4C3A]"><input type="checkbox" checked={hasHawl} onChange={(event) => setHasHawl(event.target.checked)} className="h-5 w-5 accent-[#0F4C3A]" /> حال على المال الحول الهجري الكامل <span className="mr-auto text-xs font-normal text-[#687670]">شرط إرشادي للحساب</span></label>}
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row"><button type="button" onClick={calculate} className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-[#0F4C3A] px-6 text-sm font-extrabold text-white shadow-lg transition hover:bg-[#17694F]"><Calculator className="h-4 w-4" /> احسب النتيجة</button><button type="button" onClick={reset} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#0F4C3A]/15 px-5 text-sm font-bold text-[#0F4C3A] transition hover:bg-[#F4F8F5]"><RotateCcw className="h-4 w-4" /> إعادة ضبط</button></div>
+
+          {result !== null && <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-8 rounded-[24px] border border-[#C69E5A]/35 bg-[#FFFBF2] p-6"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center"><div><div className="flex items-center gap-2 text-sm font-bold text-[#9B6A24]"><CheckCircle2 className="h-5 w-5" /> النتيجة الإرشادية</div><div className="mt-3 text-4xl font-extrabold text-[#0F4C3A]">{formatNumber(result, 2)} <span className="text-base">ر.ي</span></div><p className="mt-2 text-xs leading-6 text-[#687670]">{mode === "fitr" ? `على أساس ${formatNumber(fitrPeople)} أشخاص × ${formatNumber(fitrValue)} ر.ي` : calculation.eligible ? `٢٫٥٪ من أصل ${formatNumber(calculation.base, 2)} ${calculation.unit}` : "لم يتحقق النصاب أو شرط الحول وفق المدخلات الحالية."}</p></div><button type="button" onClick={saveCalculation} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#0F4C3A]/15 bg-white px-4 text-xs font-bold text-[#0F4C3A]">{saved ? <CheckCircle2 className="h-4 w-4 text-[#4C9F7B]" /> : <History className="h-4 w-4" />} {saved ? "حُفظت العملية" : "حفظ في السجل"}</button></div></motion.div>}
+        </section>
+
+        <aside className="space-y-4"><div className="rounded-[24px] bg-[#0F4C3A] p-6 text-white"><ShieldCheck className="h-7 w-7 text-[#E8C97B]" /><h2 className="mt-5 text-lg font-extrabold">منهج الحساب</h2><p className="mt-3 text-xs leading-7 text-white/65">النصاب يُعرض بوضوح، والالتزامات الحالّة تُخصم من المال المدخل. لا تُخفي الأداة أي فرضية مؤثرة في النتيجة.</p><div className="mt-5 space-y-3 border-t border-white/10 pt-5 text-xs text-white/70"><div className="flex justify-between"><span>معدل زكاة المال</span><strong className="text-[#E8C97B]">٢٫٥٪</strong></div><div className="flex justify-between"><span>نصاب الذهب</span><strong className="text-[#E8C97B]">٨٥ غ</strong></div><div className="flex justify-between"><span>نصاب الفضة</span><strong className="text-[#E8C97B]">٥٩٥ غ</strong></div></div></div><div className="rounded-[24px] border border-[#0F4C3A]/10 bg-white p-6"><div className="flex items-center gap-3"><BookOpen className="h-5 w-5 text-[#B78235]" /><h2 className="text-sm font-extrabold text-[#0F4C3A]">تنبيه مهم</h2></div><p className="mt-4 text-xs leading-7 text-[#687670]">هذه حاسبة إرشادية. في زكاة عروض التجارة، الأسهم، الديون، أو اختلاف الحول والنصاب، راجع عالمًا أو جهة شرعية موثوقة قبل الإخراج.</p><div className="mt-5 flex items-start gap-2 rounded-xl bg-[#FFF7E7] p-3 text-[11px] leading-5 text-[#76521D]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /> سعر الذهب وقيمة الفطر قابلان للتعديل لأنهما يتغيران محليًا.</div></div><button type="button" onClick={() => navigate("/donate")} className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#0F4C3A]/15 bg-[#F1F5F0] py-3 text-sm font-bold text-[#0F4C3A] transition hover:bg-[#E6EFE9]"><Sparkles className="h-4 w-4 text-[#B78235]" /> أخرج زكاتك عبر رحماء بينهم <ArrowLeft className="h-4 w-4" /></button></aside>
+      </main>
     </div>
   );
+}
+
+function Field({ label, suffix, value, onChange, min = 0 }: { label: string; suffix: string; value: number; onChange: (value: number) => void; min?: number }) {
+  return <label className="block"><span className="mb-2 block text-xs font-bold text-[#0F4C3A]">{label}</span><div className="relative"><input type="number" min={min} value={value || ""} onChange={(event) => onChange(Math.max(min, Number(event.target.value) || 0))} className="min-h-12 w-full rounded-2xl border border-[#0F4C3A]/12 bg-[#FAFCF9] px-4 pl-16 text-sm font-bold text-[#14231F] outline-none transition focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10" placeholder="0" /><span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-[#8B9A94]">{suffix}</span></div></label>;
 }

@@ -31,6 +31,8 @@ const AdminPage = lazy(() => import("./pages/AdminPage").then(m => ({ default: m
 const SuccessStoriesPage = lazy(() => import("./pages/SuccessStoriesPage").then(m => ({ default: m.default })));
 const NewsPage = lazy(() => import("./pages/NewsPage").then(m => ({ default: m.default })));
 const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.default })));
+const MessagesPage = lazy(() => import("./pages/MessagesPage").then(m => ({ default: m.default })));
+const SubscriptionsPage = lazy(() => import("./pages/SubscriptionsPage").then(m => ({ default: m.default })));
 const EndowmentPage = lazy(() => import("./pages/EndowmentPage").then(m => ({ default: m.default })));
 const LoginPage = lazy(() => import("./pages/index").then(m => ({ default: m.LoginPage })));
 const DonorPortalPage = lazy(() => import("./pages/DonorPortalPage").then(m => ({ default: m.default })));
@@ -121,6 +123,8 @@ const AppContent = memo(function AppContent() {
             <Route path="/endowment" element={<PageWrapper><EndowmentPage /></PageWrapper>} />
             <Route path="/donate" element={<PageWrapper><DonatePage /></PageWrapper>} />
             <Route path="/contact" element={<PageWrapper><ContactPage /></PageWrapper>} />
+            <Route path="/messages" element={<PageWrapper><MessagesPage /></PageWrapper>} />
+            <Route path="/subscribe" element={<PageWrapper><SubscriptionsPage /></PageWrapper>} />
             <Route path="/partners" element={<PageWrapper><PartnersPage /></PageWrapper>} />
             <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
             <Route path="/donor" element={<PageWrapper><DonorPortalPage /></PageWrapper>} />

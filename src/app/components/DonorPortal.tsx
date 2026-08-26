@@ -7,6 +7,7 @@ import {
   Printer, CreditCard, QrCode, ExternalLink, User,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, memo, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { useAuth } from '@/features/auth/contexts/AuthContext';
 
@@ -179,9 +180,18 @@ const TabButton = memo(function TabButton({ id: _id, label, icon: Icon, active, 
 // ============================================================
 // Main DonorPortal Component
 // ============================================================
+type PortalTab = 'overview' | 'history' | 'impact' | 'settings' | 'notifications';
+
+const getPortalTab = (value: string | null): PortalTab => {
+  const allowed: PortalTab[] = ['overview', 'history', 'impact', 'settings', 'notifications'];
+  return allowed.includes(value as PortalTab) ? value as PortalTab : 'overview';
+};
+
 export default function DonorPortal() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'impact' | 'settings' | 'notifications'>('overview');
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState<PortalTab>(() => getPortalTab(searchParams.get('view')));
+
   const [loading, setLoading] = useState(true);
   const [showReceiptModal, setShowReceiptModal] = useState<DonationRecord | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -189,12 +199,17 @@ export default function DonorPortal() {
   const [preferences, setPreferences] = useState<DonorPreferences>(DEFAULT_PREFERENCES);
 
   // Simulate loading
-  useEffect(() => {
+    useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    setActiveTab(getPortalTab(searchParams.get('view')));
+  }, [searchParams]);
+
   const stats = useMemo(() => ({
+
     ...DEFAULT_DONOR_STATS,
     progressPercent: Math.min((DEFAULT_DONOR_STATS.totalDonated / DEFAULT_DONOR_STATS.nextMilestone) * 100, 100),
   }), []);
