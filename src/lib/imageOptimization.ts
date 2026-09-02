@@ -1,13 +1,10 @@
-import imageUrlBuilder from '@sanity/image-url';
-import { client } from '../sanity/lib/client';
+import imageUrlBuilder from "@sanity/image-url";
+import { client } from "../sanity/lib/client";
 
 const builder = imageUrlBuilder(client);
 
 export function urlForImage(source: Parameters<typeof builder.image>[0]) {
-  return builder.image(source)
-    .auto('format')
-    .fit('max')
-    .quality(80);
+  return builder.image(source).auto("format").fit("max").quality(80);
 }
 
 export function getOptimizedImageUrl(
@@ -16,20 +13,17 @@ export function getOptimizedImageUrl(
     width?: number;
     height?: number;
     quality?: number;
-    format?: 'webp' | 'jpg' | 'png';
+    format?: "webp" | "jpg" | "png";
   } = {}
 ) {
-  const { width, height, quality = 80, format = 'webp' } = options;
+  const { width, height, quality = 80, format = "webp" } = options;
 
   let image = urlForImage(source);
 
   if (width) image = image.width(width);
   if (height) image = image.height(height);
 
-  return image
-    .quality(quality)
-    .format(format)
-    .url();
+  return image.quality(quality).format(format).url();
 }
 
 export const responsiveSizes = {
@@ -51,12 +45,10 @@ export function getResponsiveImageProps(
       `${getOptimizedImageUrl(source, responsiveSizes.small)} 300w`,
       `${getOptimizedImageUrl(source, responsiveSizes.medium)} 600w`,
       `${getOptimizedImageUrl(source, responsiveSizes.large)} 1200w`,
-    ].join(', '),
-    sizes: sizes || '(max-width: 600px) 300px, (max-width: 1200px) 600px, 1200px',
+    ].join(", "),
+    sizes: sizes || "(max-width: 600px) 300px, (max-width: 1200px) 600px, 1200px",
     alt,
-    loading: 'lazy' as const,
-    decoding: 'async' as const,
+    loading: "lazy" as const,
+    decoding: "async" as const,
   };
 }
-
-

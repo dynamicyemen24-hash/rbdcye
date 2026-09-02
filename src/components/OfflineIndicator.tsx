@@ -1,6 +1,6 @@
 // Offline Indicator - مؤشر حالة الاتصال غير المتصل
-import { Wifi, WifiOff } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Wifi, WifiOff } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function OfflineIndicator() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -18,8 +18,8 @@ export function OfflineIndicator() {
       setShowIndicator(true);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     // Check on mount
     if (!navigator.onLine) {
@@ -27,8 +27,8 @@ export function OfflineIndicator() {
     }
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -37,7 +37,7 @@ export function OfflineIndicator() {
   return (
     <div
       className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full shadow-lg transition-all duration-300 ${
-        isOnline ? 'bg-green-600' : 'bg-red-600'
+        isOnline ? "bg-green-600" : "bg-red-600"
       } text-white flex items-center gap-2`}
       role="status"
       aria-live="polite"
@@ -50,7 +50,9 @@ export function OfflineIndicator() {
       ) : (
         <>
           <WifiOff className="w-4 h-4" />
-          <span className="text-sm font-medium">لا يوجد اتصال بالإنترنت - يتم العمل بالمحتوى المخزن</span>
+          <span className="text-sm font-medium">
+            لا يوجد اتصال بالإنترنت - يتم العمل بالمحتوى المخزن
+          </span>
         </>
       )}
     </div>
@@ -65,15 +67,14 @@ export function useOnlineStatus() {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
   return isOnline;
 }
-

@@ -82,16 +82,10 @@ export function ImpactNotification({ setCurrentPage = () => {} }: ImpactNotifica
                 <X className="w-3 h-3 text-[var(--muted-foreground)]" />
               </button>
             </div>
-            <p className="text-xs text-[var(--muted-foreground)] mb-2">
-              {currentUpdate.message}
-            </p>
+            <p className="text-xs text-[var(--muted-foreground)] mb-2">{currentUpdate.message}</p>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[var(--brand-green)] font-medium">
-                {currentUpdate.project}
-              </span>
-              <span className="text-[var(--muted-foreground)]">
-                {currentUpdate.time}
-              </span>
+              <span className="text-[var(--brand-green)] font-medium">{currentUpdate.project}</span>
+              <span className="text-[var(--muted-foreground)]">{currentUpdate.time}</span>
             </div>
           </div>
         </div>
@@ -118,7 +112,11 @@ export function useImpactNotification() {
     type: "success" | "info" | "warning";
   } | null>(null);
 
-  const showNotification = (title: string, message: string, type: "success" | "info" | "warning" = "info") => {
+  const showNotification = (
+    title: string,
+    message: string,
+    type: "success" | "info" | "warning" = "info"
+  ) => {
     setNotification({
       id: Date.now().toString(),
       title,
@@ -134,4 +132,3 @@ export function useImpactNotification() {
 
   return { notification, showNotification };
 }
-

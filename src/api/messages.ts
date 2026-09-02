@@ -1,5 +1,5 @@
 // API for contact form messages
-const API_BASE = import.meta.env.VITE_API_URL || '';
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 interface MessagePayload {
   name: string;
@@ -19,9 +19,9 @@ export async function sendMessage(payload: MessagePayload): Promise<MessageResul
   try {
     // Try to send to the API endpoint
     const response = await fetch(`${API_BASE}/api/contact`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
@@ -35,16 +35,19 @@ export async function sendMessage(payload: MessagePayload): Promise<MessageResul
   } catch (err) {
     // Fallback: store locally if API is unavailable
     try {
-      const localMessages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+      const localMessages = JSON.parse(localStorage.getItem("contact_messages") || "[]");
       localMessages.push({
         ...payload,
         id: `msg_${Date.now()}`,
         createdAt: new Date().toISOString(),
       });
-      localStorage.setItem('contact_messages', JSON.stringify(localMessages));
+      localStorage.setItem("contact_messages", JSON.stringify(localMessages));
       return { success: true, id: `local_${Date.now()}` };
     } catch {
-      return { success: false, error: err instanceof Error ? err.message : 'Failed to send message' };
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : "Failed to send message",
+      };
     }
   }
 }
@@ -52,14 +55,13 @@ export async function sendMessage(payload: MessagePayload): Promise<MessageResul
 export async function getMessages(): Promise<MessagePayload[]> {
   try {
     const response = await fetch(`${API_BASE}/api/contact`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     });
-    if (!response.ok) throw new Error('Failed to fetch');
+    if (!response.ok) throw new Error("Failed to fetch");
     return await response.json();
   } catch {
     // Fallback to local storage
-    return JSON.parse(localStorage.getItem('contact_messages') || '[]');
+    return JSON.parse(localStorage.getItem("contact_messages") || "[]");
   }
 }
-

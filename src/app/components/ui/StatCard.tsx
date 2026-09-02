@@ -22,7 +22,13 @@ export function StatCard({ title, value, delta, children, sparkData = [] }: Stat
           {sparkData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={sparkData} syncId={title}>
-                <Area type="monotone" dataKey="y" stroke="var(--brand-green)" fill="var(--brand-green)" fillOpacity={0.12} />
+                <Area
+                  type="monotone"
+                  dataKey="y"
+                  stroke="var(--brand-green)"
+                  fill="var(--brand-green)"
+                  fillOpacity={0.12}
+                />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
@@ -35,5 +41,3 @@ export function StatCard({ title, value, delta, children, sparkData = [] }: Stat
 }
 
 export default StatCard;
-
-

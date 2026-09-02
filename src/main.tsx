@@ -17,9 +17,9 @@ import "./styles/index.css";
 // ============================================================
 
 // Initialize in background after DOM is ready
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   const scheduleInit = (cb: () => void) => {
-    if ('requestIdleCallback' in window) {
+    if ("requestIdleCallback" in window) {
       (window as any).requestIdleCallback(() => cb(), { timeout: 2000 });
     } else {
       setTimeout(cb, 100);
@@ -33,9 +33,13 @@ if (typeof window !== 'undefined') {
   });
 
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
-    }, { passive: true, once: true });
+    window.addEventListener(
+      "load",
+      () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      },
+      { passive: true, once: true }
+    );
   }
 }
 
@@ -57,7 +61,10 @@ function AppWithProgress() {
       setProgress(100);
       setIsLoaded(true);
     }, 200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
   return (
@@ -90,5 +97,3 @@ createRoot(document.getElementById("root")!).render(
     </ErrorBoundary>
   </StrictMode>
 );
-
-

@@ -1,6 +1,19 @@
 // Volunteer Page - صفحة التطوع
 import { motion } from "motion/react";
-import { Loader2, CheckCircle, AlertCircle, Users, Heart, HandHelping, Globe, Shield, Award, Target, BarChart3, TrendingUp } from "lucide-react";
+import {
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  Users,
+  Heart,
+  HandHelping,
+  Globe,
+  Shield,
+  Award,
+  Target,
+  BarChart3,
+  TrendingUp,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { PageHeader } from "@/app/components/PageHeader";
@@ -14,39 +27,39 @@ import { useSEO } from "@/utils/seoAdvanced";
 // ═══════════════════════════════════════════════════════
 // Alignment with Sanity taxonomy: إغاثة/تعليم/صحة/إدارة/تسويق
 const VOLUNTEER_FIELDS = [
-  { id: 'إغاثة', label: 'إغاثة', icon: '🚚', description: 'توزيع مواد إغاثية' },
-  { id: 'تعليم', label: 'تعليم', icon: '📚', description: 'تدريس وتحفيظ' },
-  { id: 'صحة', label: 'صحة', icon: '🏥', description: 'دعم طبي وتمريض' },
-  { id: 'إدارة', label: 'إدارة', icon: '📊', description: 'إدارة وتنسيق' },
-  { id: 'تسويق', label: 'تسويق', icon: '📱', description: 'تصميم وتسويق' },
+  { id: "إغاثة", label: "إغاثة", icon: "🚚", description: "توزيع مواد إغاثية" },
+  { id: "تعليم", label: "تعليم", icon: "📚", description: "تدريس وتحفيظ" },
+  { id: "صحة", label: "صحة", icon: "🏥", description: "دعم طبي وتمريض" },
+  { id: "إدارة", label: "إدارة", icon: "📊", description: "إدارة وتنسيق" },
+  { id: "تسويق", label: "تسويق", icon: "📱", description: "تصميم وتسويق" },
 ];
 
 // ═══════════════════════════════════════════════════════
 // هروب من البوتات — حقل وهمي للحصاد
 // ═══════════════════════════════════════════════════════
 // Hidden honeypot field to catch spam bots (invisible to human users)
-const HONEYPOT_FIELD = 'website';
+const HONEYPOT_FIELD = "website";
 
 const VOLUNTEER_STATS = [
-  { label: 'متطوع نشط', value: 'متطوعون', icon: Users, color: 'text-[var(--brand-green)]' },
-  { label: 'ميدان', value: '8', icon: Globe, color: 'text-blue-600' },
-  { label: 'ساعات تطوع', value: 'آلاف', icon: Award, color: 'text-purple-600' },
-  { label: 'مشروع مدعوم', value: 'مشاريع', icon: Target, color: 'text-[var(--brand-gold)]' },
+  { label: "متطوع نشط", value: "متطوعون", icon: Users, color: "text-[var(--brand-green)]" },
+  { label: "ميدان", value: "8", icon: Globe, color: "text-blue-600" },
+  { label: "ساعات تطوع", value: "آلاف", icon: Award, color: "text-purple-600" },
+  { label: "مشروع مدعوم", value: "مشاريع", icon: Target, color: "text-[var(--brand-gold)]" },
 ];
 
 export default function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "sanity">("static");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    field: '',
-    reason: '',
+    name: "",
+    email: "",
+    phone: "",
+    field: "",
+    reason: "",
     // Honeypot field - hidden from humans, filled by bots
-    honeypot: '',
+    honeypot: "",
   });
 
   // Turnstile verification
@@ -54,47 +67,54 @@ export default function VolunteerPage() {
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
 
   useSEO({
-    title: 'تطوع معنا - رحماء بينهم',
-    description: 'انضم إلى فريق متطوعي رحماء بينهم - فرص تطوع في مجالات متعددة',
-    keywords: ['تطوع', 'فرص تطوع', 'عمل خيري', 'رحماء بينهم'],
+    title: "تطوع معنا - رحماء بينهم",
+    description: "انضم إلى فريق متطوعي رحماء بينهم - فرص تطوع في مجالات متعددة",
+    keywords: ["تطوع", "فرص تطوع", "عمل خيري", "رحماء بينهم"],
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
+    contentManager
+      .getImpact()
       .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
+          setContentSource(
+            result.source === "sanity" || result.source === "cache" ? "sanity" : "static"
+          );
         }
       })
       .catch(() => {
-        if (!cancelled) setContentSource('static');
+        if (!cancelled) setContentSource("static");
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Turnstile verification
   async function verifyTurnstile(token: string) {
     try {
-      const response = await fetch('https://challenges.cloudflare.com/v1/siteverify', {
-        method: 'POST',
+      const response = await fetch("https://challenges.cloudflare.com/v1/siteverify", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: `secret=${process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SECRET}&response=${token}`,
       });
       const data = await response.json();
       setTurnstileVerified(data.success ?? false);
       if (!data.success) {
-        setTurnstileError('التحقق منTURNSTILE فشل يرجى المحاولة مرة أخرى');
+        setTurnstileError("التحقق منTURNSTILE فشل يرجى المحاولة مرة أخرى");
       }
     } catch (err) {
-      setTurnstileError('حدث خطأ في التحقق من TURNSTILE');
+      setTurnstileError("حدث خطأ في التحقق من TURNSTILE");
       setTurnstileVerified(false);
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -108,14 +128,14 @@ export default function VolunteerPage() {
 
     // Check honeypot - if filled, it's a bot
     if (formData.honeypot) {
-      setError('تم حظر الطلب - détecté comme bot');
+      setError("تم حظر الطلب - détecté comme bot");
       setSending(false);
       return;
     }
 
     // Verify Turnstile token
     if (!turnstileVerified) {
-      setError('يجب إكمال تحقق TURNSTILE');
+      setError("يجب إكمال تحقق TURNSTILE");
       setSending(false);
       return;
     }
@@ -130,7 +150,7 @@ export default function VolunteerPage() {
       });
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'حدث خطأ أثناء إرسال الطلب');
+      setError(err instanceof Error ? err.message : "حدث خطأ أثناء إرسال الطلب");
     } finally {
       setSending(false);
     }
@@ -186,10 +206,10 @@ export default function VolunteerPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'متطوع نشط', value: 'متطوعون', icon: Users, color: 'green' },
-            { label: 'ميدان', value: '8', icon: Globe, color: 'blue' },
-            { label: 'ساعات تطوع', value: 'آلاف', icon: Award, color: 'purple' },
-            { label: 'مشروع مدعوم', value: 'مشاريع', icon: Target, color: 'gold' },
+            { label: "متطوع نشط", value: "متطوعون", icon: Users, color: "green" },
+            { label: "ميدان", value: "8", icon: Globe, color: "blue" },
+            { label: "ساعات تطوع", value: "آلاف", icon: Award, color: "purple" },
+            { label: "مشروع مدعوم", value: "مشاريع", icon: Target, color: "gold" },
           ]}
           columns={4}
           variant="glass"
@@ -259,7 +279,10 @@ export default function VolunteerPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                    >
                       الاسم الكامل *
                     </label>
                     <input
@@ -274,7 +297,10 @@ export default function VolunteerPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                    >
                       البريد الإلكتروني *
                     </label>
                     <input
@@ -307,7 +333,10 @@ export default function VolunteerPage() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                    >
                       رقم الهاتف *
                     </label>
                     <input
@@ -322,7 +351,10 @@ export default function VolunteerPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="field" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                    <label
+                      htmlFor="field"
+                      className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                    >
                       مجال التطوع المفضل
                     </label>
                     <select
@@ -343,7 +375,10 @@ export default function VolunteerPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="reason" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label
+                    htmlFor="reason"
+                    className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                  >
                     لماذا ترغب في التطوع معنا؟ *
                   </label>
                   <textarea
@@ -365,7 +400,12 @@ export default function VolunteerPage() {
                     src="https://challenges.cloudflare.com/v1/cf-turnstile.js"
                     defer
                   ></script>
-                  <div id="turnstile" data-sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY} data-theme="light" data-size="normal"></div>
+                  <div
+                    id="turnstile"
+                    data-sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY}
+                    data-theme="light"
+                    data-size="normal"
+                  ></div>
                 </div>
 
                 <button
@@ -394,8 +434,6 @@ export default function VolunteerPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
-

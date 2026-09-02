@@ -1,8 +1,8 @@
 // News Ticker Component - الشريط الإخباري العاجل لـ رحماء بينهم
-import { motion, AnimatePresence } from 'motion/react';
-import { Bell, ChevronLeft, Volume2, X, Sparkles, AlertCircle } from 'lucide-react';
-import { useState, useEffect, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from "motion/react";
+import { Bell, ChevronLeft, Volume2, X, Sparkles, AlertCircle } from "lucide-react";
+import { useState, useEffect, memo } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface NewsTickerItem {
   id: string;
@@ -13,10 +13,31 @@ interface NewsTickerItem {
 }
 
 const TICKER_ITEMS: NewsTickerItem[] = [
-  { id: '1', title: 'إطلاق حملة كسوة الشتاء 2025 للأسر المحتاجة والنازحين في تعز ومأرب', badge: 'حملة عاجلة', link: '/donate', isUrgent: true },
-  { id: '2', title: 'افتتاح آبار مياه نقية تعمل بالطاقة الشمسية تفيد أكثر من أسر مستفيدة في مأرب', badge: 'مشروع مياه', link: '/projects' },
-  { id: '3', title: 'تأهيل حلقات تحفيظ ومركزاً تعليمياً في المناطق النائية', badge: 'تعليم', link: '/programs' },
-  { id: '4', title: 'توزيع سلال غذائية متكاملة للأسر المتضررة في محافظة تعز', badge: 'إغاثة طارئة', link: '/news' },
+  {
+    id: "1",
+    title: "إطلاق حملة كسوة الشتاء 2025 للأسر المحتاجة والنازحين في تعز ومأرب",
+    badge: "حملة عاجلة",
+    link: "/donate",
+    isUrgent: true,
+  },
+  {
+    id: "2",
+    title: "افتتاح آبار مياه نقية تعمل بالطاقة الشمسية تفيد أكثر من أسر مستفيدة في مأرب",
+    badge: "مشروع مياه",
+    link: "/projects",
+  },
+  {
+    id: "3",
+    title: "تأهيل حلقات تحفيظ ومركزاً تعليمياً في المناطق النائية",
+    badge: "تعليم",
+    link: "/programs",
+  },
+  {
+    id: "4",
+    title: "توزيع سلال غذائية متكاملة للأسر المتضررة في محافظة تعز",
+    badge: "إغاثة طارئة",
+    link: "/news",
+  },
 ];
 
 export const NewsTicker = memo(function NewsTicker() {
@@ -38,7 +59,7 @@ export const NewsTicker = memo(function NewsTicker() {
   const currentItem = TICKER_ITEMS[currentIndex];
 
   return (
-    <div 
+    <div
       className="bg-gradient-to-r from-[var(--brand-green-dark)] via-[var(--brand-green)] to-[var(--brand-green-dark)] text-white py-1.5 px-4 text-xs font-semibold relative z-40 border-b border-white/10"
       dir="rtl"
       onMouseEnter={() => setIsPaused(true)}
@@ -46,13 +67,23 @@ export const NewsTicker = memo(function NewsTicker() {
     >
       <div className="container mx-auto flex items-center justify-between gap-3">
         {/* Ticker Content */}
-        <div className="flex items-center gap-2.5 overflow-hidden flex-1" aria-live="polite" aria-atomic="true">
-          <span className={`px-2 py-0.5 rounded-full text-[0.65rem] font-bold flex items-center gap-1 shrink-0 ${
-            currentItem.isUrgent 
-              ? 'bg-red-500 text-white animate-pulse' 
-              : 'bg-[var(--brand-gold)] text-white'
-          }`}>
-            {currentItem.isUrgent ? <AlertCircle className="w-3 h-3" /> : <Sparkles className="w-3 h-3" />}
+        <div
+          className="flex items-center gap-2.5 overflow-hidden flex-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span
+            className={`px-2 py-0.5 rounded-full text-[0.65rem] font-bold flex items-center gap-1 shrink-0 ${
+              currentItem.isUrgent
+                ? "bg-red-500 text-white animate-pulse"
+                : "bg-[var(--brand-gold)] text-white"
+            }`}
+          >
+            {currentItem.isUrgent ? (
+              <AlertCircle className="w-3 h-3" />
+            ) : (
+              <Sparkles className="w-3 h-3" />
+            )}
             {currentItem.badge}
           </span>
 
@@ -75,7 +106,7 @@ export const NewsTicker = memo(function NewsTicker() {
         {/* Ticker Controls */}
         <div className="flex items-center gap-2 shrink-0 border-r border-white/20 pr-2">
           <button
-            onClick={() => navigate('/news')}
+            onClick={() => navigate("/news")}
             className="text-white/70 hover:text-white text-[0.68rem] hidden sm:inline-block transition-colors"
           >
             كل الأخبار
@@ -93,5 +124,3 @@ export const NewsTicker = memo(function NewsTicker() {
     </div>
   );
 });
-
-

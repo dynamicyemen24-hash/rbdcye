@@ -3,7 +3,13 @@
 // Hero section skeleton - matches actual hero layout
 export function HeroSkeleton() {
   return (
-    <div className="min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 30%, var(--brand-green-dark) 60%, var(--brand-green-dark) 100%)' }}>
+    <div
+      className="min-h-screen flex items-center overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 30%, var(--brand-green-dark) 60%, var(--brand-green-dark) 100%)",
+      }}
+    >
       <div className="w-full py-28 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
@@ -13,7 +19,10 @@ export function HeroSkeleton() {
               <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2">
                 <div className="flex -space-x-2">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="w-7 h-7 rounded-full border-2 border-white/50 bg-white/20 animate-pulse" />
+                    <div
+                      key={i}
+                      className="w-7 h-7 rounded-full border-2 border-white/50 bg-white/20 animate-pulse"
+                    />
                   ))}
                 </div>
                 <div className="h-4 w-48 bg-white/20 rounded animate-pulse" />
@@ -40,7 +49,10 @@ export function HeroSkeleton() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 max-w-sm mt-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                  <div
+                    key={i}
+                    className="text-center p-3 rounded-xl bg-white/5 border border-white/10"
+                  >
                     <div className="w-5 h-5 mx-auto mb-1.5 bg-white/15 rounded animate-pulse" />
                     <div className="h-6 w-12 mx-auto bg-white/15 rounded animate-pulse" />
                     <div className="h-3 w-10 mx-auto bg-white/10 rounded animate-pulse mt-1" />
@@ -64,7 +76,10 @@ export function HeroSkeleton() {
                 <div className="h-10 w-32 bg-white/10 rounded-full animate-pulse" />
                 <div className="flex gap-2 mt-4">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className={`h-1.5 rounded-full animate-pulse ${i === 1 ? 'w-8 bg-white/25' : 'w-1.5 bg-white/15'}`} />
+                    <div
+                      key={i}
+                      className={`h-1.5 rounded-full animate-pulse ${i === 1 ? "w-8 bg-white/25" : "w-1.5 bg-white/15"}`}
+                    />
                   ))}
                 </div>
               </div>
@@ -99,7 +114,7 @@ export function NewsListSkeleton({ count = 3 }: { count?: number }) {
   return (
     <div className="space-y-4">
       {Array.from({ length: count }).map((_, i) => (
-          <NewsListItemSkeleton key={`news-list-item-${i}`} />
+        <NewsListItemSkeleton key={`news-list-item-${i}`} />
       ))}
     </div>
   );
@@ -123,7 +138,10 @@ export function PartnerSkeleton({ count = 6 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={`partner-${i}`} className="bg-white rounded-xl p-6 border border-[var(--border)] flex items-center justify-center">
+        <div
+          key={`partner-${i}`}
+          className="bg-white rounded-xl p-6 border border-[var(--border)] flex items-center justify-center"
+        >
           <div className="w-16 h-16 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg animate-pulse" />
         </div>
       ))}
@@ -136,7 +154,10 @@ export function StatsSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={`stat-card-${i}`} className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)]">
+        <div
+          key={`stat-card-${i}`}
+          className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)]"
+        >
           <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-lg w-16 mb-2 animate-pulse" />
           <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded w-20 animate-pulse" />
         </div>
@@ -168,15 +189,27 @@ export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; column
       <div className="border-b border-[var(--border)]">
         <div className="grid gap-4 p-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
           {Array.from({ length: columns }).map((_, i) => (
-            <div key={`table-header-${i}`} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
+            <div
+              key={`table-header-${i}`}
+              className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse"
+            />
           ))}
         </div>
       </div>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={`table-row-${rowIndex}`} className="border-b border-[var(--border)] last:border-0">
-          <div className="grid gap-4 p-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+        <div
+          key={`table-row-${rowIndex}`}
+          className="border-b border-[var(--border)] last:border-0"
+        >
+          <div
+            className="grid gap-4 p-4"
+            style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+          >
             {Array.from({ length: columns }).map((_, colIndex) => (
-               <div key={`table-cell-${colIndex}`} className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse" />
+              <div
+                key={`table-cell-${colIndex}`}
+                className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded animate-pulse"
+              />
             ))}
           </div>
         </div>
@@ -201,7 +234,10 @@ export function PageSkeleton() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border border-[var(--border)] space-y-4">
+            <div
+              key={i}
+              className="bg-white rounded-2xl p-6 border border-[var(--border)] space-y-4"
+            >
               <div className="h-6 bg-gray-200 rounded w-1/3 animate-pulse" />
               <div className="h-4 bg-gray-200 rounded w-full animate-pulse" />
               <div className="h-4 bg-gray-200 rounded w-4/5 animate-pulse" />
@@ -224,5 +260,3 @@ export default {
   Hero: HeroSkeleton,
   Page: PageSkeleton,
 };
-
-

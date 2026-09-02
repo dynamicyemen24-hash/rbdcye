@@ -26,13 +26,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)] p-4" style={{ direction: "rtl" }}>
+    <div
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)] p-4"
+      style={{ direction: "rtl" }}
+    >
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8">
         <div className="text-center mb-8">
           <div className="w-20 h-20 rounded-2xl bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-4">
             <Lock className="w-10 h-10 text-[var(--brand-green)]" />
           </div>
-          <h1 className="text-[var(--foreground)] mb-2" style={{ fontSize: "1.5rem", fontWeight: 800 }}>
+          <h1
+            className="text-[var(--foreground)] mb-2"
+            style={{ fontSize: "1.5rem", fontWeight: 800 }}
+          >
             دخول لوحة التحكم
           </h1>
           <p className="text-[var(--muted-foreground)]" style={{ fontSize: "0.9rem" }}>
@@ -43,13 +49,19 @@ export default function LoginPage() {
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3">
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-            <p className="text-red-700" style={{ fontSize: "0.85rem" }}>{error}</p>
+            <p className="text-red-700" style={{ fontSize: "0.85rem" }}>
+              {error}
+            </p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="login-email" className="block text-[var(--foreground)] mb-2" style={{ fontSize: "0.85rem", fontWeight: 600 }}>
+            <label
+              htmlFor="login-email"
+              className="block text-[var(--foreground)] mb-2"
+              style={{ fontSize: "0.85rem", fontWeight: 600 }}
+            >
               البريد الإلكتروني
             </label>
             <div className="relative">
@@ -68,7 +80,11 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="login-password" className="block text-[var(--foreground)] mb-2" style={{ fontSize: "0.85rem", fontWeight: 600 }}>
+            <label
+              htmlFor="login-password"
+              className="block text-[var(--foreground)] mb-2"
+              style={{ fontSize: "0.85rem", fontWeight: 600 }}
+            >
               كلمة المرور
             </label>
             <div className="relative">
@@ -112,7 +128,10 @@ export default function LoginPage() {
 
         {import.meta.env.DEV && (
           <div className="mt-6 p-4 bg-[var(--brand-gold-pale)] rounded-xl">
-            <p className="text-[var(--brand-gold)]" style={{ fontSize: "0.75rem", fontWeight: 600 }}>
+            <p
+              className="text-[var(--brand-gold)]"
+              style={{ fontSize: "0.75rem", fontWeight: 600 }}
+            >
               بيانات تجريبية:
             </p>
             <p className="text-[var(--muted-foreground)] mt-1" style={{ fontSize: "0.75rem" }}>
@@ -124,4 +143,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

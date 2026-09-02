@@ -25,8 +25,18 @@ export default function AdminDashboardExtras() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard title="الزوار هذا الشهر" value="3,420" delta="+12%" sparkData={sampleSpark as any} />
-        <StatCard title="التبرعات (ر.ي)" value="72,300" delta="+8%" sparkData={sampleSpark as any} />
+        <StatCard
+          title="الزوار هذا الشهر"
+          value="3,420"
+          delta="+12%"
+          sparkData={sampleSpark as any}
+        />
+        <StatCard
+          title="التبرعات (ر.ي)"
+          value="72,300"
+          delta="+8%"
+          sparkData={sampleSpark as any}
+        />
         <StatCard title="المشاريع النشطة" value={24} delta="-1%" sparkData={sampleSpark as any} />
       </div>
 
@@ -53,5 +63,3 @@ export default function AdminDashboardExtras() {
     </div>
   );
 }
-
-

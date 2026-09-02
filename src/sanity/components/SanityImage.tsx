@@ -39,9 +39,11 @@ export function SanityImage({
   if (!value?.asset) return null;
 
   const dimensions = getImageDimensions(value);
-  const imgHeight = height || Math.round(width / (dimensions?.width && dimensions?.height
-    ? dimensions.width / dimensions.height
-    : 1.5));
+  const imgHeight =
+    height ||
+    Math.round(
+      width / (dimensions?.width && dimensions?.height ? dimensions.width / dimensions.height : 1.5)
+    );
 
   const src = urlFor(value, width, imgHeight);
   const lqipBlur = value?.asset?.metadata?.lqip;
@@ -107,18 +109,12 @@ export function SanityPicture({
 }) {
   if (!value) return null;
 
-  const srcSet = widths
-    .map((w) => `${urlFor(value, w)} ${w}w`)
-    .join(", ");
+  const srcSet = widths.map((w) => `${urlFor(value, w)} ${w}w`).join(", ");
 
   return (
     <picture>
       {widths.map((w) => (
-        <source
-          key={w}
-          srcSet={urlFor(value, w)}
-          media={`(max-width: ${w}px)`}
-        />
+        <source key={w} srcSet={urlFor(value, w)} media={`(max-width: ${w}px)`} />
       ))}
       <img
         src={urlFor(value, widths[widths.length - 1])}
@@ -132,4 +128,3 @@ export function SanityPicture({
     </picture>
   );
 }
-

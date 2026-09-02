@@ -31,7 +31,9 @@ export function FeatureStory() {
               src={story.image || FALLBACK_IMAGE}
               alt={story.title}
               loading="lazy"
-              onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = FALLBACK_IMAGE;
+              }}
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
@@ -60,7 +62,10 @@ export function FeatureStory() {
               >
                 {story.category}
               </span>
-              <span className="flex items-center gap-1 text-xs" style={{ color: "var(--muted-foreground)" }}>
+              <span
+                className="flex items-center gap-1 text-xs"
+                style={{ color: "var(--muted-foreground)" }}
+              >
                 <MapPin className="w-3.5 h-3.5" />
                 {story.location} · {story.year}
               </span>
@@ -68,7 +73,11 @@ export function FeatureStory() {
 
             <h3
               className="font-extrabold mb-4"
-              style={{ fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", color: "var(--foreground)", lineHeight: 1.4 }}
+              style={{
+                fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)",
+                color: "var(--foreground)",
+                lineHeight: 1.4,
+              }}
             >
               {story.title}
             </h3>
@@ -85,17 +94,23 @@ export function FeatureStory() {
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center font-extrabold text-lg shrink-0"
                   style={{
-                    background: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
+                    background:
+                      "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
                     color: "#FFFFFF",
                   }}
                 >
                   {story.name?.charAt(0)}
                 </div>
                 <div>
-                  <div className="font-bold" style={{ fontSize: "0.95rem", color: "var(--foreground)" }}>
+                  <div
+                    className="font-bold"
+                    style={{ fontSize: "0.95rem", color: "var(--foreground)" }}
+                  >
                     {story.name}
                   </div>
-                  <div style={{ fontSize: "0.78rem", color: "var(--muted-foreground)" }}>{story.role}</div>
+                  <div style={{ fontSize: "0.78rem", color: "var(--muted-foreground)" }}>
+                    {story.role}
+                  </div>
                 </div>
               </div>
 
@@ -117,4 +132,3 @@ export function FeatureStory() {
     </Section>
   );
 }
-

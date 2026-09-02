@@ -1,29 +1,29 @@
 // Advanced Page Progress Tracker with smooth animations
-import { useSpring } from 'motion/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useSpring } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
 
-export type ProgressStage = 'loading' | 'ready' | 'interactive' | 'complete';
+export type ProgressStage = "loading" | "ready" | "interactive" | "complete";
 
 // Smart loading messages based on context
 const LOADING_MESSAGES: Record<string, string[]> = {
-  default: ['جاري تحميل المحتوى...', 'تجهيز البيانات...', 'تحسين التجربة...', 'محتوى جاهز ✓'],
-  hero: ['تشغيل الفيديو...', 'تحميل الخلفية...', 'تجهيز العناصر...', 'أهلاً بك ✓'],
-  programs: ['جلب المشاريع...', 'تحليل البيانات...', 'تحديث الإحصائيات...', 'البرامج جاهزة ✓'],
-  news: ['تحميل الأخبار...', 'تحديث المصادر...', 'ترتيب المحتوى...', 'آخر الأخبار ✓'],
-  donations: ['تجهيز بوابة الدفع...', 'تأمين الاتصال...', 'تحضير النماذج...', 'التبرع جاهز ✓'],
-  admin: ['تحميل لوحة التحكم...', 'جلب البيانات...', 'تحديث الإحصائيات...', 'لوحة التحكم جاهزة ✓'],
-  stories: ['جلب قصص النجاح...', 'تحليل التأثير...', 'ترتيب القصص...', 'قصص ملهمة ✓'],
-  partners: ['جلب الشراكات...', 'تحديث البيانات...', 'جاهز للعرض...', 'الشركاء ✓'],
-  media: ['تحميل الوسائط...', 'معالجة الصور...', 'تجهيز المعرض...', 'المكتبة جاهزة ✓'],
-  contact: ['تجهيز نموذج التواصل...', 'تأمين الاتصال...', 'جاهز للإرسال...', 'تواصل معنا ✓'],
+  default: ["جاري تحميل المحتوى...", "تجهيز البيانات...", "تحسين التجربة...", "محتوى جاهز ✓"],
+  hero: ["تشغيل الفيديو...", "تحميل الخلفية...", "تجهيز العناصر...", "أهلاً بك ✓"],
+  programs: ["جلب المشاريع...", "تحليل البيانات...", "تحديث الإحصائيات...", "البرامج جاهزة ✓"],
+  news: ["تحميل الأخبار...", "تحديث المصادر...", "ترتيب المحتوى...", "آخر الأخبار ✓"],
+  donations: ["تجهيز بوابة الدفع...", "تأمين الاتصال...", "تحضير النماذج...", "التبرع جاهز ✓"],
+  admin: ["تحميل لوحة التحكم...", "جلب البيانات...", "تحديث الإحصائيات...", "لوحة التحكم جاهزة ✓"],
+  stories: ["جلب قصص النجاح...", "تحليل التأثير...", "ترتيب القصص...", "قصص ملهمة ✓"],
+  partners: ["جلب الشراكات...", "تحديث البيانات...", "جاهز للعرض...", "الشركاء ✓"],
+  media: ["تحميل الوسائط...", "معالجة الصور...", "تجهيز المعرض...", "المكتبة جاهزة ✓"],
+  contact: ["تجهيز نموذج التواصل...", "تأمين الاتصال...", "جاهز للإرسال...", "تواصل معنا ✓"],
 };
 
 function getMessages(key: string): string[] {
   return LOADING_MESSAGES[key] || LOADING_MESSAGES.default;
 }
 
-export function usePageProgress(pageKey: string = 'default') {
-  const [stage, setStage] = useState<ProgressStage>('loading');
+export function usePageProgress(pageKey: string = "default") {
+  const [stage, setStage] = useState<ProgressStage>("loading");
   const [messageIndex, setMessageIndex] = useState(0);
   const messages = getMessages(pageKey);
 
@@ -47,7 +47,7 @@ export function usePageProgress(pageKey: string = 'default') {
 
     const runPhase = () => {
       if (currentPhase >= phases.length) {
-        setStage('ready');
+        setStage("ready");
         return;
       }
 
@@ -65,15 +65,15 @@ export function usePageProgress(pageKey: string = 'default') {
     runPhase();
 
     return () => {
-      timers.forEach(t => clearTimeout(t));
+      timers.forEach((t) => clearTimeout(t));
     };
   }, [pageKey, springPercentage]);
 
   const markInteractive = useCallback(() => {
-    setStage('interactive');
+    setStage("interactive");
     springPercentage.set(100);
     setMessageIndex(messages.length - 1);
-    setTimeout(() => setStage('complete'), 500);
+    setTimeout(() => setStage("complete"), 500);
   }, [messages.length, springPercentage]);
 
   return {
@@ -81,8 +81,7 @@ export function usePageProgress(pageKey: string = 'default') {
     percentage: springPercentage,
     message: messages[Math.min(messageIndex, messages.length - 1)],
     markInteractive,
-    isComplete: stage === 'complete',
-    isReady: stage === 'ready' || stage === 'interactive' || stage === 'complete',
+    isComplete: stage === "complete",
+    isReady: stage === "ready" || stage === "interactive" || stage === "complete",
   };
 }
-

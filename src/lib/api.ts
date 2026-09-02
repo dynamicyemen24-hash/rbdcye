@@ -49,16 +49,10 @@ class ApiClient {
 
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
-        const response = await this.fetchWithTimeout(
-          url,
-          options,
-          this.defaultOptions.timeout!
-        );
+        const response = await this.fetchWithTimeout(url, options, this.defaultOptions.timeout!);
 
         if (!response.ok && response.status >= 500 && attempt < retries) {
-          await new Promise((resolve) =>
-            setTimeout(resolve, retryDelay * Math.pow(2, attempt))
-          );
+          await new Promise((resolve) => setTimeout(resolve, retryDelay * Math.pow(2, attempt)));
           continue;
         }
 
@@ -66,9 +60,7 @@ class ApiClient {
       } catch (error) {
         lastError = error as Error;
         if (attempt < retries) {
-          await new Promise((resolve) =>
-            setTimeout(resolve, retryDelay * Math.pow(2, attempt))
-          );
+          await new Promise((resolve) => setTimeout(resolve, retryDelay * Math.pow(2, attempt)));
         }
       }
     }
@@ -83,34 +75,25 @@ class ApiClient {
     };
 
     const url = `${this.baseUrl}${endpoint}`;
-    const response = await this.retryFetch(
-      url,
-      fetchOptions,
-      retries!,
-      retryDelay!
-    );
+    const response = await this.retryFetch(url, fetchOptions, retries!, retryDelay!);
 
     if (!response.ok) {
-      const error = await response
-        .json()
-        .catch(() => ({ error: 'Request failed' }));
-      throw new Error(
-        (error as { error?: string }).error || `HTTP ${response.status}`
-      );
+      const error = await response.json().catch(() => ({ error: "Request failed" }));
+      throw new Error((error as { error?: string }).error || `HTTP ${response.status}`);
     }
 
     return response.json() as Promise<T>;
   }
 
   get<T>(endpoint: string, options?: ApiOptions) {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+    return this.request<T>(endpoint, { ...options, method: "GET" });
   }
 
   post<T>(endpoint: string, body?: unknown, options?: ApiOptions) {
     return this.request<T>(endpoint, {
       ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
       body: body ? JSON.stringify(body) : undefined,
     });
   }
@@ -118,18 +101,16 @@ class ApiClient {
   put<T>(endpoint: string, body?: unknown, options?: ApiOptions) {
     return this.request<T>(endpoint, {
       ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      method: "PUT",
+      headers: { "Content-Type": "application/json", ...options?.headers },
       body: body ? JSON.stringify(body) : undefined,
     });
   }
 
   delete<T>(endpoint: string, options?: ApiOptions) {
-    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+    return this.request<T>(endpoint, { ...options, method: "DELETE" });
   }
 }
 
-export const apiClient = new ApiClient('/api');
+export const apiClient = new ApiClient("/api");
 export default apiClient;
-
-

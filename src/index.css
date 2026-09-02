@@ -12,12 +12,16 @@
    font-amiri / font-sans / font-heading actually generate real utilities
    ========================================================================== */
 @theme {
-  --font-cairo: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-amiri: 'Amiri', 'Cairo', serif;
-  --font-sans: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Amiri', 'Cairo', serif;
+  --font-cairo:
+    "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-amiri: "Amiri", "Cairo", serif;
+  --font-sans:
+    "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading:
+    "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Amiri", "Cairo", serif;
 }
 
 /* ==========================================================================
@@ -27,28 +31,28 @@
   /* -----------------------------------------------------------------------
      1.1 الألوان الأساسية والمؤسسية (Enterprise Color System)
      ----------------------------------------------------------------------- */
-/* Institutional Emerald — Ruhamaa Design System (AGENTS.md: #0F4C3A) */
-   --brand-green:       #0F4C3A;
-   --brand-green-light: #17694F;
-   --brand-green-dark:  #0A3527;
-   --brand-green-pale:  #E9F1EC;
-   --brand-green-hover: #0F4C3A;
-   --brand-green-rgb:   15, 76, 58;
+  /* Institutional Emerald — Ruhamaa Design System (AGENTS.md: #0F4C3A) */
+  --brand-green: #0f4c3a;
+  --brand-green-light: #17694f;
+  --brand-green-dark: #0a3527;
+  --brand-green-pale: #e9f1ec;
+  --brand-green-hover: #0f4c3a;
+  --brand-green-rgb: 15, 76, 58;
 
-   /* Dignity Gold — Ruhamaa Design System (AGENTS.md: #C69E5A) */
-   --brand-gold:             #C69E5A;
-   --brand-gold-light:       #D6B274;
-   --brand-gold-dark:        #8C6212;
-   --brand-gold-bright:      #D6B274;
-   --brand-gold-pale:        #F7EFE0;
-   --brand-gold-rgb:         198, 158, 90;
-  
+  /* Dignity Gold — Ruhamaa Design System (AGENTS.md: #C69E5A) */
+  --brand-gold: #c69e5a;
+  --brand-gold-light: #d6b274;
+  --brand-gold-dark: #8c6212;
+  --brand-gold-bright: #d6b274;
+  --brand-gold-pale: #f7efe0;
+  --brand-gold-rgb: 198, 158, 90;
+
   /* WCAG 2.1 AAA High-Contrast Gold Semantic Tokens (تباين عالي > 7.1:1 ممتد) */
-  --brand-gold-wcag-aaa:    #5C3E00; /* 9.8:1 contrast ratio on white/light surface - Strict WCAG 2.1 AAA */
-  --brand-gold-wcag-darkbg: #FBBF24; /* 8.5:1 contrast ratio on dark emerald (#0F4C3A) & slate (#0F172A) */
-  --brand-gold-badge-bg:   #FDF6E2;
-  --brand-gold-badge-text: #5A3D02; /* 9.5:1 contrast ratio against #FDF6E2 and white */
-  --brand-gold-border-aaa: #8C6212; /* High-contrast border against light backgrounds */
+  --brand-gold-wcag-aaa: #5c3e00; /* 9.8:1 contrast ratio on white/light surface - Strict WCAG 2.1 AAA */
+  --brand-gold-wcag-darkbg: #fbbf24; /* 8.5:1 contrast ratio on dark emerald (#0F4C3A) & slate (#0F172A) */
+  --brand-gold-badge-bg: #fdf6e2;
+  --brand-gold-badge-text: #5a3d02; /* 9.5:1 contrast ratio against #FDF6E2 and white */
+  --brand-gold-border-aaa: #8c6212; /* High-contrast border against light backgrounds */
 
   /* =========================================================================
      CUSTOM ISLAMIC SVG GEOMETRIC PATTERN CSS VARIABLES (الأنماط الإسلامية)
@@ -60,19 +64,19 @@
   --pattern-andalusian-star: url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.22' stroke-width='0.75'%3E%3Ccircle cx='45' cy='45' r='36' stroke-dasharray='3 3'/%3E%3Cpolygon points='45,9 55,27 75,17 71,37 90,45 71,53 75,73 55,63 45,81 35,63 15,73 19,53 0,45 19,37 15,17 35,27'/%3E%3Cpolygon points='45,21 52,33 65,27 62,40 73,45 62,50 65,63 52,57 45,69 38,57 25,63 28,50 17,45 28,40 25,27 38,33' stroke='%230F4C3A' stroke-opacity='0.2' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
 
   /* Neutrals & Slate Scale (التدرج المحايد عالي الوضوح من الأبيض إلى 0A0A0A) */
-  --neutral-50:  #FAFAFA;
-  --neutral-100: #F5F5F5;
-  --neutral-200: #E5E5E5;
-  --neutral-300: #D4D4D4;
-  --neutral-400: #A3A3A3;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
   --neutral-500: #737373;
   --neutral-600: #525252;
   --neutral-700: #404040;
   --neutral-800: #262626;
   --neutral-900: #171717;
-  --neutral-950: #0A0A0A;
+  --neutral-950: #0a0a0a;
 
-  --slate-50:  #f8fafc;
+  --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
   --slate-300: #cbd5e1;
@@ -84,137 +88,147 @@
   --slate-900: #0f172a;
   --slate-950: #020617;
 
-  --white: #FFFFFF;
+  --white: #ffffff;
   --black: #000000;
 
   /* Semantic Dynamic Colors — Unified with AGENTS.md */
-  --color-success: #0F4C3A;
-  --color-danger:  #dc2626;
+  --color-success: #0f4c3a;
+  --color-danger: #dc2626;
   --color-warning: #d97706;
-  --color-info:    #0ea5e9;
+  --color-info: #0ea5e9;
 
   /* Dynamic Surfaces & Backgrounds */
-  --bg-primary:              var(--slate-50);
-  --bg-secondary:            var(--slate-100);
-  --bg-surface:              var(--white);
-  --bg-elevated:             var(--white);
-  --bg-inverse:              var(--neutral-950);
+  --bg-primary: var(--slate-50);
+  --bg-secondary: var(--slate-100);
+  --bg-surface: var(--white);
+  --bg-elevated: var(--white);
+  --bg-inverse: var(--neutral-950);
 
-  --background:              var(--slate-50);
-  --foreground:              var(--neutral-900);
+  --background: var(--slate-50);
+  --foreground: var(--neutral-900);
 
-  --surface-base:            var(--slate-50);
-  --surface-subtle:          var(--slate-100);
-  --surface-card:            var(--white);
+  --surface-base: var(--slate-50);
+  --surface-subtle: var(--slate-100);
+  --surface-card: var(--white);
   --surface-card-foreground: var(--neutral-900);
-  --surface-elevated:        var(--white);
+  --surface-elevated: var(--white);
 
-  --card:                    var(--white);
-  --card-foreground:         var(--neutral-900);
-  --popover:                 var(--white);
-  --popover-foreground:      var(--neutral-900);
+  --card: var(--white);
+  --card-foreground: var(--neutral-900);
+  --popover: var(--white);
+  --popover-foreground: var(--neutral-900);
 
-  --primary:                 var(--brand-green);
-  --primary-foreground:      var(--white);
-  --primary-hover:           var(--brand-green-light);
-  --primary-subtle:          var(--brand-green-pale);
+  --primary: var(--brand-green);
+  --primary-foreground: var(--white);
+  --primary-hover: var(--brand-green-light);
+  --primary-subtle: var(--brand-green-pale);
 
-  --secondary:               var(--slate-100);
-  --secondary-foreground:    var(--neutral-900);
-  --muted:                   var(--slate-100);
-  --muted-foreground:        var(--slate-600);
+  --secondary: var(--slate-100);
+  --secondary-foreground: var(--neutral-900);
+  --muted: var(--slate-100);
+  --muted-foreground: var(--slate-600);
 
-  --accent:                  var(--brand-gold);
-  --accent-foreground:       var(--white);
-  --accent-hover:            var(--brand-gold-light);
-  --accent-subtle:           var(--brand-gold-pale);
+  --accent: var(--brand-gold);
+  --accent-foreground: var(--white);
+  --accent-hover: var(--brand-gold-light);
+  --accent-subtle: var(--brand-gold-pale);
 
-  --destructive:             var(--color-danger);
-  --destructive-foreground:  var(--white);
+  --destructive: var(--color-danger);
+  --destructive-foreground: var(--white);
 
-  --border:                  rgba(15, 23, 42, 0.08);
-  --border-strong:           rgba(15, 23, 42, 0.16);
-  --border-subtle:           rgba(15, 23, 42, 0.04);
-  --input:                   var(--slate-50);
-  --ring:                    var(--brand-green);
+  --border: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.16);
+  --border-subtle: rgba(15, 23, 42, 0.04);
+  --input: var(--slate-50);
+  --ring: var(--brand-green);
 
   /* Status & Feedback Aliases */
-  --success:                 var(--color-success);
-  --success-bg:              #ECFDF5;
-  --warning:                 var(--color-warning);
-  --warning-bg:              #FFFBEB;
-  --danger:                  var(--color-danger);
-  --danger-bg:               #FEF2F2;
-  --info:                    var(--color-info);
-  --info-bg:                 #EFF6FF;
+  --success: var(--color-success);
+  --success-bg: #ecfdf5;
+  --warning: var(--color-warning);
+  --warning-bg: #fffbeb;
+  --danger: var(--color-danger);
+  --danger-bg: #fef2f2;
+  --info: var(--color-info);
+  --info-bg: #eff6ff;
 
   /* -----------------------------------------------------------------------
      1.2 الخطوط والطباعة (Typography System - Arabic First + Inter Dual)
      ----------------------------------------------------------------------- */
-  --font-family-cairo:   'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-inter:   'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-amiri:   'Amiri', 'Cairo', serif;
+  --font-family-cairo:
+    "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-inter:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-amiri: "Amiri", "Cairo", serif;
 
-  --font-cairo:   var(--font-family-cairo);
-  --font-inter:   var(--font-family-inter);
-  --font-sans:    var(--font-family-cairo);
+  --font-cairo: var(--font-family-cairo);
+  --font-inter: var(--font-family-inter);
+  --font-sans: var(--font-family-cairo);
   --font-heading: var(--font-family-cairo);
-  --font-amiri:   var(--font-family-amiri);
+  --font-amiri: var(--font-family-amiri);
 
   /* Proportional Type Scale with Golden Ratio Rhythm */
-  --text-xs:   0.75rem;     /* 12px */
-  --text-sm:   0.875rem;    /* 14px */
-  --text-base: 1rem;        /* 16px (Base) */
-  --text-lg:   1.125rem;    /* 18px */
-  --text-xl:   1.25rem;     /* 20px */
-  --text-2xl:  1.5rem;      /* 24px */
-  --text-3xl:  1.875rem;    /* 30px */
-  --text-4xl:  2.25rem;     /* 36px */
-  --text-5xl:  3rem;        /* 48px */
-  --text-6xl:  3.75rem;     /* 60px */
-  --text-7xl:  4.5rem;      /* 72px */
-  --text-8xl:  6rem;        /* 96px */
-  --text-9xl:  8rem;        /* 128px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px (Base) */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+  --text-7xl: 4.5rem; /* 72px */
+  --text-8xl: 6rem; /* 96px */
+  --text-9xl: 8rem; /* 128px */
 
   /* Line Heights tuned for Arabic Typography & Diacritics */
   --line-height-headings: 1.35;
   --line-height-subtitles: 1.6;
-  --line-height-body:     1.95;
-  --line-height-article:  2.15;
+  --line-height-body: 1.95;
+  --line-height-article: 2.15;
 
   /* -----------------------------------------------------------------------
      Unified Subheading Tokens (متغيرات العناوين الفرعية الموحدة لكافة الصفحات)
      ----------------------------------------------------------------------- */
-  --subheading-font-family:      var(--font-cairo);
-  --subheading-size-xs:          var(--text-xs);    /* 0.75rem / 12px */
-  --subheading-size-sm:          var(--text-sm);    /* 0.875rem / 14px */
-  --subheading-size-base:        var(--text-base);  /* 1rem / 16px */
-  --subheading-size-lg:          var(--text-lg);    /* 1.125rem / 18px */
-  --subheading-size-xl:          var(--text-xl);    /* 1.25rem / 20px */
-  --subheading-weight-normal:    400;
-  --subheading-weight-medium:    500;
-  --subheading-weight-semibold:  600;
-  --subheading-weight-bold:      700;
-  --subheading-line-height:      var(--line-height-subtitles);
-  --subheading-color:            var(--slate-700); /* WCAG AAA 8.3:1 contrast ratio against light backgrounds */
-  --subheading-color-dark:       var(--slate-200); /* WCAG AAA 13.5:1 contrast ratio against dark backgrounds */
+  --subheading-font-family: var(--font-cairo);
+  --subheading-size-xs: var(--text-xs); /* 0.75rem / 12px */
+  --subheading-size-sm: var(--text-sm); /* 0.875rem / 14px */
+  --subheading-size-base: var(--text-base); /* 1rem / 16px */
+  --subheading-size-lg: var(--text-lg); /* 1.125rem / 18px */
+  --subheading-size-xl: var(--text-xl); /* 1.25rem / 20px */
+  --subheading-weight-normal: 400;
+  --subheading-weight-medium: 500;
+  --subheading-weight-semibold: 600;
+  --subheading-weight-bold: 700;
+  --subheading-line-height: var(--line-height-subtitles);
+  --subheading-color: var(
+    --slate-700
+  ); /* WCAG AAA 8.3:1 contrast ratio against light backgrounds */
+  --subheading-color-dark: var(
+    --slate-200
+  ); /* WCAG AAA 13.5:1 contrast ratio against dark backgrounds */
 
   /* Unified Section Spacing Tokens (المسافات الفاصلة الموحدة للأقسام) */
-  --section-spacing:      clamp(3.5rem, 6vw, 6.5rem);  /* 56px to 104px responsive vertical section margin/padding */
-  --section-spacing-lg:   clamp(4.5rem, 8vw, 8.5rem);  /* 72px to 136px */
-  --section-spacing-sm:   clamp(2.5rem, 4vw, 4.5rem);  /* 40px to 72px */
+  --section-spacing: clamp(
+    3.5rem,
+    6vw,
+    6.5rem
+  ); /* 56px to 104px responsive vertical section margin/padding */
+  --section-spacing-lg: clamp(4.5rem, 8vw, 8.5rem); /* 72px to 136px */
+  --section-spacing-sm: clamp(2.5rem, 4vw, 4.5rem); /* 40px to 72px */
 
   /* -----------------------------------------------------------------------
      1.3 شبكة التصميم 8px الصارمة (Strict 8px Grid Spatial System)
      ----------------------------------------------------------------------- */
-  --space-0:  0px;
-  --space-1:  8px;
-  --space-2:  16px;
-  --space-3:  24px;
-  --space-4:  32px;
-  --space-5:  40px;
-  --space-6:  48px;
-  --space-8:  64px;
+  --space-0: 0px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
   --space-10: 80px;
   --space-12: 96px;
   --space-16: 128px;
@@ -222,39 +236,41 @@
   --space-24: 192px;
 
   /* Breakpoint Containers */
-  --container-narrow:    768px;
-  --container-standard:  1200px;
-  --container-wide:      1440px;
-  --container-ultra:     1680px;
-  --container-full:      100%;
+  --container-narrow: 768px;
+  --container-standard: 1200px;
+  --container-wide: 1440px;
+  --container-ultra: 1680px;
+  --container-full: 100%;
 
-  --header-height:       116px;
-  --navbar-height:       80px;
-  --ticker-height:       36px;
-  --mobile-nav-height:   64px;
-  --touch-target-min:    44px;
+  --header-height: 116px;
+  --navbar-height: 80px;
+  --ticker-height: 36px;
+  --mobile-nav-height: 64px;
+  --touch-target-min: 44px;
 
   /* -----------------------------------------------------------------------
      1.4 زوايا وظلال وانتقالات الحركة (Radii, Shadows & Transitions)
      ----------------------------------------------------------------------- */
-  --radius-xs:   4px;
-  --radius-sm:   6px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
-  --radius-2xl:  24px;
-  --radius-3xl:  32px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
   --radius-full: 9999px;
-  --radius:      var(--radius-lg);
+  --radius: var(--radius-lg);
 
---shadow-sm: 0 1px 3px rgba(var(--foreground-rgb), 0.05);
-   --shadow-md: 0 4px 6px -1px rgba(var(--foreground-rgb), 0.06), 0 2px 4px -2px rgba(var(--foreground-rgb), 0.04);
-   --shadow-lg: 0 10px 40px rgba(var(--foreground-rgb), 0.08);
-   --shadow-xl: 0 20px 45px -5px rgba(var(--foreground-rgb), 0.1);
+  --shadow-sm: 0 1px 3px rgba(var(--foreground-rgb), 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(var(--foreground-rgb), 0.06),
+    0 2px 4px -2px rgba(var(--foreground-rgb), 0.04);
+  --shadow-lg: 0 10px 40px rgba(var(--foreground-rgb), 0.08);
+  --shadow-xl: 0 20px 45px -5px rgba(var(--foreground-rgb), 0.1);
 
-  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow:   350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* -----------------------------------------------------------------------
@@ -262,99 +278,99 @@
    ----------------------------------------------------------------------- */
 .dark {
   /* Rich Dark Background Scale */
-  --bg-primary:              #0B0F19;
-  --bg-secondary:            #111827;
-  --bg-surface:              #111827;
-  --bg-elevated:             #1F2937;
-  --bg-inverse:              #F8FAFC;
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-surface: #111827;
+  --bg-elevated: #1f2937;
+  --bg-inverse: #f8fafc;
 
-  --background:              #090D16;
-  --foreground:              #F8FAFC;
+  --background: #090d16;
+  --foreground: #f8fafc;
 
-  --surface-base:            #090D16;
-  --surface-subtle:          #111827;
-  --surface-card:            #111827;
-  --surface-card-foreground: #F8FAFC;
-  --surface-elevated:        #1F2937;
+  --surface-base: #090d16;
+  --surface-subtle: #111827;
+  --surface-card: #111827;
+  --surface-card-foreground: #f8fafc;
+  --surface-elevated: #1f2937;
 
-  --card:                    #111827;
-  --card-foreground:         #F8FAFC;
-  --popover:                 #111827;
-  --popover-foreground:      #F8FAFC;
+  --card: #111827;
+  --card-foreground: #f8fafc;
+  --popover: #111827;
+  --popover-foreground: #f8fafc;
 
-  --secondary:               #1F2937;
-  --secondary-foreground:    #F8FAFC;
-  --muted:                   #1F2937;
-  --muted-foreground:        #9CA3AF;
+  --secondary: #1f2937;
+  --secondary-foreground: #f8fafc;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
 
---primary:                 #0F4C3A;
-   --primary-foreground:      #FFFFFF;
-   --primary-hover:           #17694F;
-   --primary-subtle:          rgba(var(--brand-green-rgb), 0.15);
+  --primary: #0f4c3a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #17694f;
+  --primary-subtle: rgba(var(--brand-green-rgb), 0.15);
 
-  --accent:                  #E6C875;
-  --accent-foreground:       #000000;
-  --accent-hover:            #F59E0B;
-  --accent-subtle:           rgba(230, 200, 117, 0.15);
+  --accent: #e6c875;
+  --accent-foreground: #000000;
+  --accent-hover: #f59e0b;
+  --accent-subtle: rgba(230, 200, 117, 0.15);
 
---brand-green-pale:        rgba(var(--brand-green-rgb), 0.15);
-   --brand-gold-pale:         rgba(var(--brand-gold-rgb), 0.15);
+  --brand-green-pale: rgba(var(--brand-green-rgb), 0.15);
+  --brand-gold-pale: rgba(var(--brand-gold-rgb), 0.15);
 
-  --border:                  rgba(var(--primary-foreground-rgb), 0.15);
-  --border-strong:           rgba(var(--primary-foreground-rgb), 0.3);
-  --border-subtle:           rgba(var(--primary-foreground-rgb), 0.08);
-  --input:                   #1F2937;
-  --ring:                    #10B981;
+  --border: rgba(var(--primary-foreground-rgb), 0.15);
+  --border-strong: rgba(var(--primary-foreground-rgb), 0.3);
+  --border-subtle: rgba(var(--primary-foreground-rgb), 0.08);
+  --input: #1f2937;
+  --ring: #10b981;
 }
 
 /* -----------------------------------------------------------------------
    1.6 وضع التباين العالي لقارئات الشاشة وضعاف البصر (High Contrast Accessibility)
    ----------------------------------------------------------------------- */
 .high-contrast {
-  --background:              #000000 !important;
-  --foreground:              #FFFFFF !important;
-  --card:                    #000000 !important;
-  --card-foreground:         #FFFFFF !important;
-  --bg-primary:              #000000 !important;
-  --bg-secondary:            #000000 !important;
-  --bg-surface:              #000000 !important;
-  --border:                  #FFFFFF !important;
-  --border-strong:           #FFFFFF !important;
-  --border-subtle:           #FFFFFF !important;
-  --brand-green:             #00FF88 !important;
-  --brand-gold:              #FFEA00 !important;
-  --primary:                 #00FF88 !important;
-  --primary-foreground:      #000000 !important;
-  --muted-foreground:        #E0E0E0 !important;
-  --subheading-color:        #FFFFFF !important;
+  --background: #000000 !important;
+  --foreground: #ffffff !important;
+  --card: #000000 !important;
+  --card-foreground: #ffffff !important;
+  --bg-primary: #000000 !important;
+  --bg-secondary: #000000 !important;
+  --bg-surface: #000000 !important;
+  --border: #ffffff !important;
+  --border-strong: #ffffff !important;
+  --border-subtle: #ffffff !important;
+  --brand-green: #00ff88 !important;
+  --brand-gold: #ffea00 !important;
+  --primary: #00ff88 !important;
+  --primary-foreground: #000000 !important;
+  --muted-foreground: #e0e0e0 !important;
+  --subheading-color: #ffffff !important;
 }
 
 :root:not(.dark).high-contrast {
-  --background:              #FFFFFF !important;
-  --foreground:              #000000 !important;
-  --card:                    #FFFFFF !important;
-  --card-foreground:         #000000 !important;
-  --bg-primary:              #FFFFFF !important;
-  --bg-secondary:            #F0F0F0 !important;
-  --bg-surface:              #FFFFFF !important;
-  --border:                  #000000 !important;
-  --border-strong:           #000000 !important;
-  --border-subtle:           #000000 !important;
-  --brand-green:             #004D25 !important;
-  --brand-gold:              #805B00 !important;
-  --primary:                 #004D25 !important;
-  --primary-foreground:      #FFFFFF !important;
-  --muted-foreground:        #111111 !important;
-  --subheading-color:        #000000 !important;
+  --background: #ffffff !important;
+  --foreground: #000000 !important;
+  --card: #ffffff !important;
+  --card-foreground: #000000 !important;
+  --bg-primary: #ffffff !important;
+  --bg-secondary: #f0f0f0 !important;
+  --bg-surface: #ffffff !important;
+  --border: #000000 !important;
+  --border-strong: #000000 !important;
+  --border-subtle: #000000 !important;
+  --brand-green: #004d25 !important;
+  --brand-gold: #805b00 !important;
+  --primary: #004d25 !important;
+  --primary-foreground: #ffffff !important;
+  --muted-foreground: #111111 !important;
+  --subheading-color: #000000 !important;
 }
 
 .high-contrast * {
   text-shadow: none !important;
   box-shadow: none !important;
 }
-.high-contrast button, 
-.high-contrast input, 
-.high-contrast select, 
+.high-contrast button,
+.high-contrast input,
+.high-contrast select,
 .high-contrast a {
   outline: 2px solid currentColor !important;
 }
@@ -362,7 +378,9 @@
 /* ==========================================================================
    2. GLOBAL RESET & BASE RULES
    ========================================================================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -401,27 +419,35 @@ body[dir="rtl"] {
   font-family: var(--font-family-inter);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-family-cairo);
   text-rendering: optimizeLegibility;
   color: var(--slate-900);
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: clamp(2.125rem, 4.5vw + 1rem, 3.75rem);
   line-height: 1.25;
   font-weight: 900;
   letter-spacing: -0.025em;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: clamp(1.75rem, 3vw + 0.875rem, 2.75rem);
   line-height: 1.3;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: clamp(1.35rem, 1.8vw + 0.75rem, 2rem);
   line-height: 1.35;
   font-weight: 700;
@@ -562,7 +588,9 @@ section {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -658,12 +686,14 @@ section {
   height: 52px;
   padding: 0 32px;
   background-color: var(--brand-green);
-  color: #FFFFFF; /* WCAG AAA 9.39:1 text contrast */
+  color: #ffffff; /* WCAG AAA 9.39:1 text contrast */
   font-weight: 800;
   font-family: var(--font-cairo);
   border-radius: var(--radius-xl);
-border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on light Islamic backgrounds */
-   box-shadow: 0 4px 14px rgba(var(--brand-green-rgb), 0.35), 0 0 0 1px rgba(var(--brand-green-rgb), 0.15);
+  border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on light Islamic backgrounds */
+  box-shadow:
+    0 4px 14px rgba(var(--brand-green-rgb), 0.35),
+    0 0 0 1px rgba(var(--brand-green-rgb), 0.15);
   transition: all var(--transition-fast);
   cursor: pointer;
   white-space: nowrap;
@@ -672,7 +702,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 
 .btn-primary:hover {
   background-color: var(--brand-green-dark);
-  color: #FFFFFF;
+  color: #ffffff;
   border-color: var(--brand-green-dark);
   box-shadow: 0 8px 22px rgba(var(--brand-green-rgb), 0.45);
   transform: translateY(-2px) scale(1.02);
@@ -680,7 +710,10 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 
 .btn-primary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green), 0 8px 20px rgba(var(--brand-green-rgb), 0.4);
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 6px var(--brand-green),
+    0 8px 20px rgba(var(--brand-green-rgb), 0.4);
 }
 
 .btn-primary:active {
@@ -694,12 +727,12 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   gap: 8px;
   height: 52px;
   padding: 0 32px;
-  background: linear-gradient(135deg, #D4AF67, #C69E5A);
+  background: linear-gradient(135deg, #d4af67, #c69e5a);
   color: var(--brand-green-dark); /* WCAG AAA 13.1:1 text contrast ratio */
   font-weight: 900;
   font-family: var(--font-cairo);
   border-radius: var(--radius-xl);
-  border: 2px solid #5C4314; /* WCAG AAA 7.8:1 boundary contrast on light Islamic backgrounds */
+  border: 2px solid #5c4314; /* WCAG AAA 7.8:1 boundary contrast on light Islamic backgrounds */
   box-shadow: 0 4px 16px rgba(92, 67, 20, 0.28);
   transition: all var(--transition-fast);
   cursor: pointer;
@@ -708,16 +741,19 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 }
 
 .btn-gold:hover {
-  background: linear-gradient(135deg, #C69E5A, #B88A3B);
+  background: linear-gradient(135deg, #c69e5a, #b88a3b);
   color: #000000;
-  border-color: #4A350E;
+  border-color: #4a350e;
   box-shadow: 0 8px 24px rgba(74, 53, 14, 0.4);
   transform: translateY(-2px) scale(1.02);
 }
 
 .btn-gold:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #5C4314, 0 8px 20px rgba(92, 67, 20, 0.45);
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 6px #5c4314,
+    0 8px 20px rgba(92, 67, 20, 0.45);
 }
 
 .btn-secondary {
@@ -727,7 +763,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   gap: 8px;
   height: 52px;
   padding: 0 32px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: var(--brand-green-dark); /* WCAG AAA 12.5:1 text contrast */
   font-weight: 800;
   font-family: var(--font-cairo);
@@ -741,7 +777,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 }
 
 .btn-secondary:hover {
-  background-color: #F0F7F4;
+  background-color: #f0f7f4;
   color: var(--brand-green-dark);
   border-color: var(--brand-green-dark);
   box-shadow: 0 4px 14px rgba(var(--brand-green-rgb), 0.18);
@@ -750,7 +786,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 
 .btn-secondary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green-dark);
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 6px var(--brand-green-dark);
 }
 
 .btn-tertiary {
@@ -775,7 +813,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 
 .btn-tertiary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green-dark);
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 6px var(--brand-green-dark);
   border-radius: var(--radius-md);
 }
 
@@ -789,7 +829,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   padding: 32px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-subtle);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
 
 .card-enterprise:hover {
@@ -805,7 +847,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   padding: 6px 16px;
   background-color: var(--brand-gold-badge-bg);
   color: var(--brand-gold-badge-text); /* WCAG 2.1 AAA 9.5:1 text contrast */
-  border: 1px solid #C69E5A;
+  border: 1px solid #c69e5a;
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: 800;
@@ -817,9 +859,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   align-items: center;
   gap: 6px;
   padding: 6px 16px;
-  background-color: #E8F8EE;
-  color: #042E1F; /* WCAG 2.1 AAA 13.8:1 text contrast */
-  border: 1px solid #18604B;
+  background-color: #e8f8ee;
+  color: #042e1f; /* WCAG 2.1 AAA 13.8:1 text contrast */
+  border: 1px solid #18604b;
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: 800;
@@ -834,7 +876,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(var(--primary-foreground-rgb), 0.18);
-  box-shadow: 0 20px 50px rgba(var(--foreground-rgb), 0.22), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.22);
+  box-shadow:
+    0 20px 50px rgba(var(--foreground-rgb), 0.22),
+    inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.22);
 }
 
 .hero-glass-card {
@@ -842,7 +886,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(var(--primary-foreground-rgb), 0.15);
-  box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.16), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.18);
+  box-shadow:
+    0 12px 36px rgba(var(--foreground-rgb), 0.16),
+    inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.18);
 }
 
 .glass-badge {
@@ -857,7 +903,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(var(--primary-foreground-rgb), 0.16);
-  box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.12), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.16);
+  box-shadow:
+    0 12px 36px rgba(var(--foreground-rgb), 0.12),
+    inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.16);
 }
 
 .dark .glass-card {
@@ -878,13 +926,14 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 }
 
 .pattern-islamic-subtle {
-  background-image: radial-gradient(circle at 50% 50%, rgba(var(--brand-gold-rgb), 0.06) 0%, transparent 70%),
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(var(--brand-gold-rgb), 0.06) 0%, transparent 70%),
     url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M60 0L75 25L100 15L90 40L115 55L90 70L100 95L75 85L60 110L45 85L20 95L30 70L5 55L30 40L20 15L45 25Z'/%3E%3Ccircle cx='60' cy='55' r='12' fill='none' stroke='%230F4C3A' stroke-opacity='0.1'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 120px 120px;
 }
 
 .pattern-sanaani-brick {
-  background-image: 
+  background-image:
     linear-gradient(335deg, rgba(13, 92, 62, 0.05) 23px, transparent 23px),
     linear-gradient(155deg, rgba(var(--brand-gold-rgb), 0.05) 23px, transparent 23px);
   background-size: 58px 58px;
@@ -930,7 +979,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 
 .divider-islamic::before,
 .divider-islamic::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(var(--brand-gold-rgb), 0.4), transparent);
@@ -947,13 +996,20 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 .divider-ornate-gold {
   height: 2px;
   width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(var(--brand-gold-rgb), 0.2) 20%, #C69E5A 50%, rgba(var(--brand-gold-rgb), 0.2) 80%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--brand-gold-rgb), 0.2) 20%,
+    #c69e5a 50%,
+    rgba(var(--brand-gold-rgb), 0.2) 80%,
+    transparent 100%
+  );
   position: relative;
   margin: 2.5rem 0;
 }
 
 .divider-ornate-gold::after {
-  content: '❖';
+  content: "❖";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -969,13 +1025,18 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 }
 
 .islamic-card-accent::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--brand-green) 0%, var(--brand-gold) 50%, var(--brand-green) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--brand-green) 0%,
+    var(--brand-gold) 50%,
+    var(--brand-green) 100%
+  );
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 }
@@ -986,7 +1047,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 .text-gold-aaa,
 .text-gold-wcag,
 .text-brand-gold-aaa {
-  color: var(--brand-gold-wcag-aaa); /* #5C3E00: WCAG AAA 9.8:1 contrast ratio on light backgrounds */
+  color: var(
+    --brand-gold-wcag-aaa
+  ); /* #5C3E00: WCAG AAA 9.8:1 contrast ratio on light backgrounds */
 }
 
 .dark .text-gold-aaa,
@@ -997,7 +1060,9 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 .bg-slate-950 .text-gold-aaa,
 .bg-[#0F4C3A] .text-gold-aaa,
 .bg-brand-green-dark .text-gold-aaa {
-  color: var(--brand-gold-wcag-darkbg); /* #FBBF24: WCAG AAA 8.5:1 contrast ratio on dark backgrounds */
+  color: var(
+    --brand-gold-wcag-darkbg
+  ); /* #FBBF24: WCAG AAA 8.5:1 contrast ratio on dark backgrounds */
 }
 
 .border-gold-aaa {
@@ -1035,7 +1100,7 @@ border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on
 }
 
 .heading-gold-underline::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   right: 0;
@@ -1067,16 +1132,6 @@ article p,
 article ul li,
 .article-content ul li,
 .prose-arabic ul li {
-  line-height: 2.0;
+  line-height: 2;
   margin-bottom: 0.625rem;
 }
-
-
-
-
-
-
-
-
-
-

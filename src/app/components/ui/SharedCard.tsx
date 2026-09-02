@@ -11,14 +11,7 @@ export interface SharedCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const SharedCard = forwardRef<HTMLDivElement, SharedCardProps>(
   (
-    {
-      variant = "default",
-      padding = "md",
-      radius = "lg",
-      children,
-      className = "",
-      ...props
-    },
+    { variant = "default", padding = "md", radius = "lg", children, className = "", ...props },
     ref
   ) => {
     // Design Tokens mapping for padding (4px scale)
@@ -31,15 +24,16 @@ export const SharedCard = forwardRef<HTMLDivElement, SharedCardProps>(
 
     // Border radius design tokens
     const radiusMap = {
-      sm: "rounded-lg",   // 8px
-      md: "rounded-xl",   // 12px
-      lg: "rounded-2xl",  // 16px
-      xl: "rounded-3xl",  // 24px
+      sm: "rounded-lg", // 8px
+      md: "rounded-xl", // 12px
+      lg: "rounded-2xl", // 16px
+      xl: "rounded-3xl", // 24px
       full: "rounded-full",
     };
 
     const variantStyles = {
-      default: "bg-white dark:bg-slate-900 border border-[var(--border)] shadow-sm text-[var(--foreground)]",
+      default:
+        "bg-white dark:bg-slate-900 border border-[var(--border)] shadow-sm text-[var(--foreground)]",
       interactive:
         "bg-white dark:bg-slate-900 border border-[var(--border)] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 text-[var(--foreground)] cursor-pointer",
       glass:
@@ -63,5 +57,3 @@ export const SharedCard = forwardRef<HTMLDivElement, SharedCardProps>(
 SharedCard.displayName = "SharedCard";
 
 export default SharedCard;
-
-

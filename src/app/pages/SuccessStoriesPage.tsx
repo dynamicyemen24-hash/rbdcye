@@ -1,9 +1,20 @@
 // الأثر والمعرفة - صفحة المعرفة والبحوث والأثر
 import { motion } from "motion/react";
 import {
-  BookOpen, Quote, Users, BarChart3, TrendingUp, Search,
-  ArrowLeft, Calendar, MapPin, FileText, FolderOpen,
-  Award, Star, Download,
+  BookOpen,
+  Quote,
+  Users,
+  BarChart3,
+  TrendingUp,
+  Search,
+  ArrowLeft,
+  Calendar,
+  MapPin,
+  FileText,
+  FolderOpen,
+  Award,
+  Star,
+  Download,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -40,7 +51,7 @@ function normalizeStories(): KnowledgeItem[] {
     id: s.id,
     title: s.title,
     excerpt: s.excerpt,
-    fullStory: s.excerpt + '\n\n' + (s.description || s.excerpt),
+    fullStory: s.excerpt + "\n\n" + (s.description || s.excerpt),
     quote: s.quote,
     name: s.name,
     role: s.role,
@@ -51,55 +62,75 @@ function normalizeStories(): KnowledgeItem[] {
     rating: s.rating,
     image: s.image,
     status: s.status,
-    searchTags: [s.title, s.category, s.location, s.program].filter(Boolean).map((t: string) => t.toLowerCase()),
+    searchTags: [s.title, s.category, s.location, s.program]
+      .filter(Boolean)
+      .map((t: string) => t.toLowerCase()),
   }));
 }
 
 export default function SuccessStoriesPage() {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("الكل");
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedItem, setSelectedItem] = useState<KnowledgeItem | null>(null);
   const [items, setItems] = useState<KnowledgeItem[]>(normalizeStories());
 
   useSEO({
-    title: 'الأثر والمعرفة - رحماء بينهم',
-    description: 'نتائج أبحاثنا وتقارير أثرنا ودراساتنا التنموية في اليمن',
+    title: "الأثر والمعرفة - رحماء بينهم",
+    description: "نتائج أبحاثنا وتقارير أثرنا ودراساتنا التنموية في اليمن",
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
+    contentManager
+      .getImpact()
       .then(() => {
         if (!cancelled) {
-          try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
+          try {
+            analyticsService.generateImpactReport();
+          } catch {
+            /* non-critical */
+          }
           setItems(normalizeStories());
         }
       })
       .catch(() => {
         if (!cancelled) setItems(normalizeStories());
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === "الكل" && !searchQuery) return items;
-    if (activeCategory !== "الكل" && !searchQuery) return items.filter(s => s.category === activeCategory);
-    if (activeCategory === "الكل" && searchQuery) return items.filter(s =>
-      s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase()))
+    if (activeCategory !== "الكل" && !searchQuery)
+      return items.filter((s) => s.category === activeCategory);
+    if (activeCategory === "الكل" && searchQuery)
+      return items.filter((s) =>
+        s.searchTags?.some((tag) => tag.includes(searchQuery.toLowerCase()))
+      );
+    return items.filter(
+      (s) =>
+        s.category === activeCategory &&
+        s.searchTags?.some((tag) => tag.includes(searchQuery.toLowerCase()))
     );
-    return items.filter(s => s.category === activeCategory && s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase())));
   }, [items, activeCategory, searchQuery]);
 
   const itemsCount = useMemo(() => items.length, [items]);
 
   const categoryIcon = (cat: string) => {
     switch (cat) {
-      case 'بحث': return BookOpen;
-      case 'تقرير': return FileText;
-      case 'دراسة': return FolderOpen;
-      case 'تقييم': return Award;
-      default: return BarChart3;
+      case "بحث":
+        return BookOpen;
+      case "تقرير":
+        return FileText;
+      case "دراسة":
+        return FolderOpen;
+      case "تقييم":
+        return Award;
+      default:
+        return BarChart3;
     }
   };
 
@@ -113,10 +144,10 @@ export default function SuccessStoriesPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'بحث', value: itemsCount, icon: BookOpen, color: 'green' },
-            { label: 'تقرير', value: 'متاح', icon: FileText, color: 'gold' },
-            { label: 'مستفيد', value: '12,847', icon: Users, color: 'blue' },
-            { label: 'تقييم', value: '4.9/5', icon: Star, color: 'purple' },
+            { label: "بحث", value: itemsCount, icon: BookOpen, color: "green" },
+            { label: "تقرير", value: "متاح", icon: FileText, color: "gold" },
+            { label: "مستفيد", value: "12,847", icon: Users, color: "blue" },
+            { label: "تقييم", value: "4.9/5", icon: Star, color: "purple" },
           ]}
           columns={4}
           variant="glass"
@@ -176,7 +207,9 @@ export default function SuccessStoriesPage() {
                     />
                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1">
                       <Icon className="w-3.5 h-3.5 text-[var(--brand-green)]" />
-                      <span className="text-xs font-medium text-[var(--brand-green)]">{item.category}</span>
+                      <span className="text-xs font-medium text-[var(--brand-green)]">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="absolute bottom-3 left-3">
                       <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-[var(--foreground)]">
@@ -206,7 +239,9 @@ export default function SuccessStoriesPage() {
                         <Users className="w-5 h-5 text-[var(--brand-green)]" />
                       </div>
                       <div>
-                        <p className="font-semibold text-sm text-[var(--foreground)]">{item.name}</p>
+                        <p className="font-semibold text-sm text-[var(--foreground)]">
+                          {item.name}
+                        </p>
                         <p className="text-xs text-[var(--muted-foreground)]">{item.role}</p>
                       </div>
                     </div>
@@ -239,7 +274,9 @@ export default function SuccessStoriesPage() {
           {filteredItems.length === 0 && (
             <div className="text-center py-16">
               <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد نتائج مطابقة</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد نتائج مطابقة
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير الفئة أو كلمة البحث</p>
             </div>
           )}
@@ -335,9 +372,10 @@ export default function SuccessStoriesPage() {
           >
             <h2 className="text-4xl font-bold text-white mb-4">هل تريد الوصول إلى تقاريرنا؟</h2>
             <p className="text-white/80 text-lg mb-8">
-            تحميل التقارير والأبحاث متاح مجاناً لدعم الشفافية والمعرفة المشتركة</p>
+              تحميل التقارير والأبحاث متاح مجاناً لدعم الشفافية والمعرفة المشتركة
+            </p>
             <button
-              onClick={() => navigate('/reports')}
+              onClick={() => navigate("/reports")}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
               <FileText className="w-5 h-5" />
@@ -349,4 +387,3 @@ export default function SuccessStoriesPage() {
     </div>
   );
 }
-

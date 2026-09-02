@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function usePerformanceMonitor(componentName: string) {
   const renderCount = useRef(0);
@@ -28,14 +28,10 @@ export function usePerformanceMonitor(componentName: string) {
         const endTime = performance.now();
         const duration = endTime - startTime;
         if (duration > 100) {
-          console.warn(
-            `[Performance] ${componentName} mount took ${duration.toFixed(2)}ms`
-          );
+          console.warn(`[Performance] ${componentName} mount took ${duration.toFixed(2)}ms`);
         }
       };
     }
     return undefined;
   }, [componentName]);
 }
-
-

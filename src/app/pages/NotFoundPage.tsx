@@ -6,8 +6,8 @@ import { useSEO } from "@/utils/seoAdvanced";
 
 export default function NotFoundPage() {
   useSEO({
-    title: '404 - الصفحة غير موجودة | رحماء بينهم',
-    description: 'الصفحة التي تبحث عنها غير موجودة.',
+    title: "404 - الصفحة غير موجودة | رحماء بينهم",
+    description: "الصفحة التي تبحث عنها غير موجودة.",
     noindex: true,
   });
 
@@ -38,7 +38,7 @@ export default function NotFoundPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-4">
             عذراً، الصفحة غير موجودة
           </h1>
-          
+
           <p className="text-[var(--muted-foreground)] text-lg mb-8 max-w-xl mx-auto">
             الصفحة التي تبحث عنها غير موجودة أو تم نقلها إلى موقع آخر.
           </p>
@@ -60,7 +60,7 @@ export default function NotFoundPage() {
                 العودة للرئيسية
               </button>
             </Link>
-            
+
             <Link to="/contact">
               <button className="inline-flex items-center gap-2 border-2 border-[var(--border)] text-[var(--foreground)] px-8 py-3 rounded-xl font-bold hover:bg-[var(--secondary)] transition-colors">
                 تواصل معنا
@@ -103,5 +103,3 @@ export default function NotFoundPage() {
     </div>
   );
 }
-
-

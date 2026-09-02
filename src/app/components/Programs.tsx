@@ -23,11 +23,14 @@ interface SectorData {
   href: string;
 }
 
-const categoryIcons: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
-  'إغاثة': Heart,
-  'تعليم': BookOpen,
-  'تنمية': Users,
-  'دعوة': Mic,
+const categoryIcons: Record<
+  string,
+  React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+> = {
+  إغاثة: Heart,
+  تعليم: BookOpen,
+  تنمية: Users,
+  دعوة: Mic,
 };
 
 const SECTORS: SectorData[] = [
@@ -85,81 +88,93 @@ const SECTORS: SectorData[] = [
   },
 ];
 
-const SectorCard = memo(({ sector, index, setCurrentPage }: {
-  sector: SectorData;
-  index: number;
-  setCurrentPage: (page: string) => void;
-}) => {
-  const Icon = sector.icon;
+const SectorCard = memo(
+  ({
+    sector,
+    index,
+    setCurrentPage,
+  }: {
+    sector: SectorData;
+    index: number;
+    setCurrentPage: (page: string) => void;
+  }) => {
+    const Icon = sector.icon;
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
-    >
-      <div
-        className={`relative bg-gradient-to-br ${sector.gradient} rounded-2xl border border-[var(--border)] overflow-hidden hover:shadow-lg transition-shadow duration-300`}
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
       >
         <div
-          className="absolute top-0 right-0 w-1.5 h-full rounded-l-full"
-          style={{ backgroundColor: sector.color }}
-        />
+          className={`relative bg-gradient-to-br ${sector.gradient} rounded-2xl border border-[var(--border)] overflow-hidden hover:shadow-lg transition-shadow duration-300`}
+        >
+          <div
+            className="absolute top-0 right-0 w-1.5 h-full rounded-l-full"
+            style={{ backgroundColor: sector.color }}
+          />
 
-        <div className="p-6 pr-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
-              style={{ backgroundColor: `${sector.color}12`, border: `1.5px solid ${sector.color}25` }}
-            >
-              <Icon className="w-5 h-5" style={{ color: sector.color }} />
-            </div>
-            <h3 className="text-base font-bold" style={{ color: "var(--foreground)" }}>
-              {sector.title}
-            </h3>
-          </div>
-
-          <p className="text-sm font-semibold mb-3 leading-relaxed" style={{ color: sector.color }}>
-            {sector.headline}
-          </p>
-
-          <p className="text-sm leading-[1.9] mb-5" style={{ color: "var(--muted-foreground)" }}>
-            {sector.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-5">
-            {sector.themes.map((theme) => (
-              <span
-                key={theme}
-                className="px-3 py-1 rounded-full text-xs font-medium"
+          <div className="p-6 pr-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
                 style={{
-                  backgroundColor: `${sector.color}10`,
-                  color: sector.color,
-                  border: `1px solid ${sector.color}20`,
+                  backgroundColor: `${sector.color}12`,
+                  border: `1.5px solid ${sector.color}25`,
                 }}
               >
-                {theme}
-              </span>
-            ))}
+                <Icon className="w-5 h-5" style={{ color: sector.color }} />
+              </div>
+              <h3 className="text-base font-bold" style={{ color: "var(--foreground)" }}>
+                {sector.title}
+              </h3>
+            </div>
+
+            <p
+              className="text-sm font-semibold mb-3 leading-relaxed"
+              style={{ color: sector.color }}
+            >
+              {sector.headline}
+            </p>
+
+            <p className="text-sm leading-[1.9] mb-5" style={{ color: "var(--muted-foreground)" }}>
+              {sector.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-5">
+              {sector.themes.map((theme) => (
+                <span
+                  key={theme}
+                  className="px-3 py-1 rounded-full text-xs font-medium"
+                  style={{
+                    backgroundColor: `${sector.color}10`,
+                    color: sector.color,
+                    border: `1px solid ${sector.color}20`,
+                  }}
+                >
+                  {theme}
+                </span>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setCurrentPage(sector.href)}
+              className="flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3 group"
+              style={{ color: sector.color }}
+            >
+              <span>استكشف القطاع</span>
+              <ChevronLeft className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setCurrentPage(sector.href)}
-            className="flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3 group"
-            style={{ color: sector.color }}
-          >
-            <span>استكشف القطاع</span>
-            <ChevronLeft className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
         </div>
-      </div>
-    </motion.div>
-  );
-});
+      </motion.div>
+    );
+  }
+);
 
-SectorCard.displayName = 'SectorCard';
+SectorCard.displayName = "SectorCard";
 
 const SkeletonLoader = () => (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -189,7 +204,7 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
 
   // ContentManager returns static SECTORS instantly, then upgrades to Sanity programs
   const { data: dynamicPrograms } = useDynamicContent<any>({
-    contentType: 'programs',
+    contentType: "programs",
     enableRealtime: false,
     refreshInterval: 300000,
   });
@@ -197,9 +212,9 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
   // Merge dynamic programs from Sanity into SECTORS when available
   useEffect(() => {
     if (dynamicPrograms && dynamicPrograms.length > 0) {
-      const merged = SECTORS.map(sector => {
-        const dynamic = dynamicPrograms.find((p: any) =>
-          p.category === sector.category || p.title === sector.title
+      const merged = SECTORS.map((sector) => {
+        const dynamic = dynamicPrograms.find(
+          (p: any) => p.category === sector.category || p.title === sector.title
         );
         if (dynamic) {
           return {
@@ -216,7 +231,10 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
   }, [dynamicPrograms]);
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[var(--background)] to-[var(--brand-green-pale)]/10" style={{ direction: "rtl" }}>
+    <section
+      className="py-20 bg-gradient-to-b from-[var(--background)] to-[var(--brand-green-pale)]/10"
+      style={{ direction: "rtl" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
@@ -238,8 +256,7 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
               transition={{ duration: 0.5, delay: 0.05 }}
               className="text-[var(--foreground)] text-3xl md:text-4xl font-bold mb-2"
             >
-              برامجنا وقطاعات{" "}
-              <span className="text-[var(--brand-green)]">التدخل</span>
+              برامجنا وقطاعات <span className="text-[var(--brand-green)]">التدخل</span>
             </motion.h2>
 
             <motion.p
@@ -249,7 +266,8 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-[var(--muted-foreground)] mt-2 max-w-2xl text-base leading-relaxed"
             >
-              أربعة محاور متكاملة تشكّل منظومتنا — الإغاثة، والتعليم، والتنمية، والدعوة؛ يعمل كلٌّ منها بمنهجية المسح والتنفيذ والمتابعة ليصل الأثر كاملاً لمن يستحقه
+              أربعة محاور متكاملة تشكّل منظومتنا — الإغاثة، والتعليم، والتنمية، والدعوة؛ يعمل كلٌّ
+              منها بمنهجية المسح والتنفيذ والمتابعة ليصل الأثر كاملاً لمن يستحقه
             </motion.p>
           </div>
 
@@ -307,5 +325,3 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
     </section>
   );
 }
-
-

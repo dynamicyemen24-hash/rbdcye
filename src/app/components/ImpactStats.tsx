@@ -1,11 +1,24 @@
 // Impact Statistics Component - Narrative Storytelling Design
 // إحصائيات الأثر - تصميم سردي هرمي يحكي قصة التغيير
-import { Users, FolderOpen, Handshake, Heart, DollarSign, TrendingUp, Award, HandHeart } from "lucide-react";
+import {
+  Users,
+  FolderOpen,
+  Handshake,
+  Heart,
+  DollarSign,
+  TrendingUp,
+  Award,
+  HandHeart,
+} from "lucide-react";
 import { useState, useEffect, useRef, type ComponentType } from "react";
 
 import { SEED_IMPACT } from "@/content/website";
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
-import { IslamicPattern, IslamicDivider, StarMedallion } from "@/app/components/decor/IslamicPattern";
+import {
+  IslamicPattern,
+  IslamicDivider,
+  StarMedallion,
+} from "@/app/components/decor/IslamicPattern";
 
 interface Metric {
   icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
@@ -38,7 +51,21 @@ function useCountUp(target: number, duration = 2200, start = false) {
 }
 
 // ─── Decorative floating orb ──────────────────────────────
-function Orb({ color, size, top, left, right, delay }: { color: string; size: number; top: string; left?: string; right?: string; delay: number }) {
+function Orb({
+  color,
+  size,
+  top,
+  left,
+  right,
+  delay,
+}: {
+  color: string;
+  size: number;
+  top: string;
+  left?: string;
+  right?: string;
+  delay: number;
+}) {
   return (
     <div
       className="absolute rounded-full pointer-events-none"
@@ -68,7 +95,8 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
     <div
       className="relative h-full rounded-3xl p-8 md:p-10 overflow-hidden text-white flex flex-col justify-between min-h-[320px]"
       style={{
-        background: "linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 55%, var(--brand-green-light) 100%)",
+        background:
+          "linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 55%, var(--brand-green-light) 100%)",
         boxShadow: "0 24px 48px rgba(15, 76, 58, 0.25)",
         opacity: 0,
         animation: inView ? "card-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards" : "none",
@@ -78,7 +106,10 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
       <IslamicPattern variant="khatam" style={{ color: "var(--brand-gold)", opacity: 0.16 }} />
       <div
         className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(var(--brand-gold-rgb, 198, 158, 90), 0.25), transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(var(--brand-gold-rgb, 198, 158, 90), 0.25), transparent 70%)",
+        }}
       />
 
       <div className="relative z-10">
@@ -105,7 +136,10 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
             {metric.label}
           </span>
         </div>
-        <p className="text-white/75 leading-relaxed" style={{ fontSize: "0.95rem", maxWidth: "42ch" }}>
+        <p
+          className="text-white/75 leading-relaxed"
+          style={{ fontSize: "0.95rem", maxWidth: "42ch" }}
+        >
           {metric.story}
         </p>
       </div>
@@ -124,7 +158,9 @@ function FeatureMetric({ metric, inView }: { metric: Metric; inView: boolean }) 
       style={{
         boxShadow: "0 12px 32px rgba(15, 76, 58, 0.08)",
         opacity: 0,
-        animation: inView ? "card-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards" : "none",
+        animation: inView
+          ? "card-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards"
+          : "none",
       }}
     >
       <IslamicPattern variant="arabesque" style={{ color: "var(--brand-gold)", opacity: 0.1 }} />
@@ -141,18 +177,34 @@ function FeatureMetric({ metric, inView }: { metric: Metric; inView: boolean }) 
           <DollarSign className="w-3.5 h-3.5" />
           قيمة ما وصل للمستحقين
         </span>
-        <div className="tabular-nums leading-none mb-3" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.4rem)", fontWeight: 800, color: "var(--brand-gold)" }}>
+        <div
+          className="tabular-nums leading-none mb-3"
+          style={{
+            fontSize: "clamp(2.2rem, 4.5vw, 3.4rem)",
+            fontWeight: 800,
+            color: "var(--brand-gold)",
+          }}
+        >
           {inView ? `+${fmt(count)}` : "٠"}
         </div>
-        <div className="mb-2" style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}>
+        <div
+          className="mb-2"
+          style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--foreground)" }}
+        >
           {metric.label}
         </div>
-        <p className="leading-relaxed" style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", maxWidth: "40ch" }}>
+        <p
+          className="leading-relaxed"
+          style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", maxWidth: "40ch" }}
+        >
           {metric.story}
         </p>
       </div>
 
-      <div className="relative z-10 mt-6 flex items-center gap-2 text-xs" style={{ color: "var(--muted-foreground)" }}>
+      <div
+        className="relative z-10 mt-6 flex items-center gap-2 text-xs"
+        style={{ color: "var(--muted-foreground)" }}
+      >
         <TrendingUp className="w-4 h-4" style={{ color: "var(--brand-green)" }} />
         بإشراف لجنة شرعية ومحاسبين مستقلين
       </div>
@@ -161,7 +213,15 @@ function FeatureMetric({ metric, inView }: { metric: Metric; inView: boolean }) 
 }
 
 // ─── Compact supporting metric chip ───────────────────────
-function SupportMetric({ metric, index, inView }: { metric: Metric; index: number; inView: boolean }) {
+function SupportMetric({
+  metric,
+  index,
+  inView,
+}: {
+  metric: Metric;
+  index: number;
+  inView: boolean;
+}) {
   const Icon = metric.icon;
   const count = useCountUp(metric.value, 1800 + index * 150, inView);
 
@@ -170,7 +230,9 @@ function SupportMetric({ metric, index, inView }: { metric: Metric; index: numbe
       className="group relative rounded-2xl p-5 bg-white border border-[var(--border)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--brand-gold)]/40"
       style={{
         opacity: 0,
-        animation: inView ? `card-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + index * 0.08}s forwards` : "none",
+        animation: inView
+          ? `card-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + index * 0.08}s forwards`
+          : "none",
       }}
     >
       <div className="flex items-center gap-4">
@@ -181,10 +243,16 @@ function SupportMetric({ metric, index, inView }: { metric: Metric; index: numbe
           <Icon className="w-6 h-6" style={{ color: metric.color }} />
         </div>
         <div className="min-w-0">
-          <div className="tabular-nums leading-tight" style={{ fontSize: "1.45rem", fontWeight: 800, color: metric.color }}>
+          <div
+            className="tabular-nums leading-tight"
+            style={{ fontSize: "1.45rem", fontWeight: 800, color: metric.color }}
+          >
             {inView ? `+${fmt(count)}` : "٠"}
           </div>
-          <div className="truncate" style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--foreground)" }}>
+          <div
+            className="truncate"
+            style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--foreground)" }}
+          >
             {metric.label}
           </div>
         </div>
@@ -206,7 +274,7 @@ export function ImpactStats() {
     totalDonations?: number;
     productiveFamilies?: number;
   } | null>(null);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "sanity">("static");
   const [showDevBadge, setShowDevBadge] = useState(false);
   const [inView, setInView] = useState(false);
   const [counterReady, setCounterReady] = useState(false);
@@ -243,7 +311,8 @@ export function ImpactStats() {
         if (dynamicImpact?.length > 0) {
           const d = dynamicImpact[0];
           setMetrics({
-            totalBeneficiaries: d?.totalBeneficiaries ?? d?.beneficiaries ?? fallback.totalBeneficiaries,
+            totalBeneficiaries:
+              d?.totalBeneficiaries ?? d?.beneficiaries ?? fallback.totalBeneficiaries,
             activeProjects: d?.activeProjects ?? d?.projects ?? fallback.activeProjects,
             totalPartners: d?.totalPartners ?? d?.partners ?? fallback.totalPartners,
             totalVolunteers: d?.totalVolunteers ?? d?.volunteers ?? fallback.totalVolunteers,
@@ -286,7 +355,8 @@ export function ImpactStats() {
     icon: Users,
     value: metrics?.totalBeneficiaries ?? 0,
     label: "مستفيد مباشر غيّرت حياتهم",
-    story: "رجالٌ ونساء وأطفال في مختلف المحافظات اليمنية وجدوا يدًا ممدة؛ ماءً يصل قراهم، ودراسةً لا تنقطع، وأسرةً تستعيد كرامتها.",
+    story:
+      "رجالٌ ونساء وأطفال في مختلف المحافظات اليمنية وجدوا يدًا ممدة؛ ماءً يصل قراهم، ودراسةً لا تنقطع، وأسرةً تستعيد كرامتها.",
     color: "var(--brand-green)",
   };
 
@@ -294,7 +364,8 @@ export function ImpactStats() {
     icon: DollarSign,
     value: metrics?.totalDonations ?? 0,
     label: "دولار وصل لمستحقيه",
-    story: "كل ريال من تبرعاتكم تحوّل إلى طعامٍ على المائدة، ودواءٍ يُنقذ حياة، وحلقةٍ تُحفظ فيها آيات الله.",
+    story:
+      "كل ريال من تبرعاتكم تحوّل إلى طعامٍ على المائدة، ودواءٍ يُنقذ حياة، وحلقةٍ تُحفظ فيها آيات الله.",
     color: "var(--brand-gold)",
   };
 
@@ -303,7 +374,8 @@ export function ImpactStats() {
       icon: FolderOpen,
       value: metrics?.activeProjects ?? 0,
       label: "مشروع نوعي منجز",
-      story: "مشاريع مدروسة تبدأ بالمسح الميداني ولا تنتهي عند التسليم بل تمتد للمتابعة والاستدامة.",
+      story:
+        "مشاريع مدروسة تبدأ بالمسح الميداني ولا تنتهي عند التسليم بل تمتد للمتابعة والاستدامة.",
       color: "var(--brand-green)",
     },
     {
@@ -324,7 +396,8 @@ export function ImpactStats() {
       icon: Heart,
       value: metrics?.productiveFamilies ?? 0,
       label: "أسرة منتجة",
-      story: "أسر انتقلت من صفوف الانتظار إلى صفوف الإنتاج، بفضل رواتب الأعمال وبرامج التمكين الاقتصادي.",
+      story:
+        "أسر انتقلت من صفوف الانتظار إلى صفوف الإنتاج، بفضل رواتب الأعمال وبرامج التمكين الاقتصادي.",
       color: "var(--brand-gold-dark)",
     },
   ];
@@ -358,7 +431,9 @@ export function ImpactStats() {
       {showDevBadge && (
         <div className="fixed top-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${contentSource === "sanity" ? "bg-green-400" : "bg-yellow-400"}`} />
+            <div
+              className={`w-2 h-2 rounded-full ${contentSource === "sanity" ? "bg-green-400" : "bg-yellow-400"}`}
+            />
             <span>{contentSource === "sanity" ? "Sanity CMS" : "Static Content"}</span>
           </div>
         </div>
@@ -370,7 +445,9 @@ export function ImpactStats() {
           className="text-center mb-14"
           style={{
             opacity: 0,
-            animation: inView ? "fade-in-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s forwards" : "none",
+            animation: inView
+              ? "fade-in-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s forwards"
+              : "none",
           }}
         >
           <span
@@ -398,7 +475,8 @@ export function ImpactStats() {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
+                backgroundImage:
+                  "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
               }}
             >
               التغيير الحقيقي
@@ -407,10 +485,14 @@ export function ImpactStats() {
 
           <p
             className="max-w-2xl mx-auto mb-6"
-            style={{ fontSize: "clamp(0.92rem, 1.4vw, 1.05rem)", lineHeight: 1.9, color: "var(--muted-foreground)" }}
+            style={{
+              fontSize: "clamp(0.92rem, 1.4vw, 1.05rem)",
+              lineHeight: 1.9,
+              color: "var(--muted-foreground)",
+            }}
           >
-            خلف كل رقم هنا أسرة استقرت، وطفل عاد لمكتبته، وقريّة صارت تزرع أرضها؛
-            هذه ليست إحصائياتٍ جافة بل سجلّ أمانة نشارككم إياها بشفافية كاملة
+            خلف كل رقم هنا أسرة استقرت، وطفل عاد لمكتبته، وقريّة صارت تزرع أرضها؛ هذه ليست إحصائياتٍ
+            جافة بل سجلّ أمانة نشارككم إياها بشفافية كاملة
           </p>
 
           <IslamicDivider tone="gold" />
@@ -441,14 +523,22 @@ export function ImpactStats() {
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             opacity: 0,
-            animation: inView ? "fade-in-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s forwards" : "none",
+            animation: inView
+              ? "fade-in-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s forwards"
+              : "none",
           }}
         >
           <IslamicPattern variant="zellij" style={{ color: "var(--brand-green)", opacity: 0.04 }} />
 
           <div className="relative flex flex-col md:flex-row md:items-center gap-3 md:gap-0 md:justify-between mb-8">
-            <h3 className="flex items-center gap-2" style={{ fontSize: "1.1rem", fontWeight: 800, color: "var(--foreground)" }}>
-              <span className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "var(--brand-green-pale)" }}>
+            <h3
+              className="flex items-center gap-2"
+              style={{ fontSize: "1.1rem", fontWeight: 800, color: "var(--foreground)" }}
+            >
+              <span
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: "var(--brand-green-pale)" }}
+              >
                 <TrendingUp className="w-5 h-5" style={{ color: "var(--brand-green)" }} />
               </span>
               أين تذهب جهودنا؟
@@ -469,13 +559,21 @@ export function ImpactStats() {
                   <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--foreground)" }}>
                     {item.label}
                   </span>
-                  <span className="tabular-nums" style={{ fontSize: "0.85rem", fontWeight: 800, color: item.color }}>
+                  <span
+                    className="tabular-nums"
+                    style={{ fontSize: "0.85rem", fontWeight: 800, color: item.color }}
+                  >
                     {inView ? `${item.pct}٪` : "٠٪"}
                   </span>
                 </div>
-                <div className="relative h-3 rounded-full overflow-hidden" style={{ background: `${item.color}12` }}>
+                <div
+                  className="relative h-3 rounded-full overflow-hidden"
+                  style={{ background: `${item.color}12` }}
+                >
                   <div
-                    ref={(el) => { progressRefs.current[i] = el; }}
+                    ref={(el) => {
+                      progressRefs.current[i] = el;
+                    }}
                     className="h-full rounded-full transition-all duration-[1200ms] ease-out"
                     style={{
                       width: inView ? `${item.pct}%` : "0%",
@@ -490,8 +588,15 @@ export function ImpactStats() {
 
           {/* Bottom note */}
           <div className="relative mt-8 pt-5 border-t border-[var(--border)]/60 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p className="text-xs text-center sm:text-right" style={{ color: "var(--muted-foreground)" }}>
-              إجمالي البرامج المنفذة: <strong style={{ color: "var(--brand-green)" }}>{metrics?.activeProjects ?? 0}</strong> برنامجاً ومشروعاً
+            <p
+              className="text-xs text-center sm:text-right"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              إجمالي البرامج المنفذة:{" "}
+              <strong style={{ color: "var(--brand-green)" }}>
+                {metrics?.activeProjects ?? 0}
+              </strong>{" "}
+              برنامجاً ومشروعاً
             </p>
             <p className="text-xs" style={{ color: "var(--muted-foreground)" }}>
               تُحدَّث الأرقام دورياً بعد التدقيق الميداني والمالي
@@ -519,5 +624,3 @@ export function ImpactStats() {
     </section>
   );
 }
-
-

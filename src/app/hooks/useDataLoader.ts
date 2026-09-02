@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 
 interface DataLoaderOptions {
   staleWhileRevalidate?: boolean;
@@ -25,14 +25,14 @@ export function useDataLoader<T>(
     cacheTime = 5 * 60,
     retryCount = 3,
     retryDelay = 1000,
-    timeout = 15000
+    timeout = 15000,
   } = options;
 
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const cacheKey = `rbdcye_data_${dependencies.join('_')}`;
+  const cacheKey = `rbdcye_data_${dependencies.join("_")}`;
 
   const loadFromCache = useCallback(() => {
     try {
@@ -50,17 +50,20 @@ export function useDataLoader<T>(
     return null;
   }, [cacheKey, cacheTime]);
 
-  const saveToCache = useCallback((value: T) => {
-    try {
-      const cacheData = {
-        timestamp: Date.now(),
-        value
-      };
-      localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-    } catch {
-      // silently ignore cache write errors
-    }
-  }, [cacheKey]);
+  const saveToCache = useCallback(
+    (value: T) => {
+      try {
+        const cacheData = {
+          timestamp: Date.now(),
+          value,
+        };
+        localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+      } catch {
+        // silently ignore cache write errors
+      }
+    },
+    [cacheKey]
+  );
 
   const refetch = useCallback(async () => {
     const abortController = new AbortController();
@@ -82,9 +85,9 @@ export function useDataLoader<T>(
           new Promise<never>((_, reject) =>
             setTimeout(() => {
               abortController.abort();
-              reject(new Error('Timeout'));
+              reject(new Error("Timeout"));
             }, timeout)
-          )
+          ),
         ]);
 
         setData(result);
@@ -107,7 +110,7 @@ export function useDataLoader<T>(
           }
           setLoading(false);
         } else {
-          await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
+          await new Promise((resolve) => setTimeout(resolve, retryDelay * (attempt + 1)));
         }
       }
     }
@@ -136,9 +139,9 @@ export function useDataLoader<T>(
             new Promise<never>((_, reject) =>
               setTimeout(() => {
                 abortController.abort();
-                reject(new Error('Timeout'));
+                reject(new Error("Timeout"));
               }, timeout)
-            )
+            ),
           ]);
 
           if (!mounted) return;
@@ -162,7 +165,7 @@ export function useDataLoader<T>(
             }
             setLoading(false);
           } else {
-            await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)));
+            await new Promise((resolve) => setTimeout(resolve, retryDelay * (attempt + 1)));
           }
         }
       }
@@ -178,5 +181,3 @@ export function useDataLoader<T>(
 
   return { data, loading, error, refetch };
 }
-
-

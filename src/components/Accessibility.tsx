@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface AccessibilitySettings {
   highContrast: boolean;
@@ -17,54 +17,54 @@ export function useAccessibility() {
 
   useEffect(() => {
     // Detect system preferences
-    const prefersHighContrast = window.matchMedia('(prefers-contrast: more)');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+    const prefersHighContrast = window.matchMedia("(prefers-contrast: more)");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
     setSettings({
       highContrast: prefersHighContrast.matches,
-      largeText: localStorage.getItem('a11y-large-text') === 'true',
+      largeText: localStorage.getItem("a11y-large-text") === "true",
       reducedMotion: prefersReducedMotion.matches,
-      screenReader: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      screenReader: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     });
 
     // Listen for changes
     const handleContrastChange = (e: MediaQueryListEvent) => {
-      setSettings(prev => ({ ...prev, highContrast: e.matches }));
+      setSettings((prev) => ({ ...prev, highContrast: e.matches }));
     };
     const handleMotionChange = (e: MediaQueryListEvent) => {
-      setSettings(prev => ({ ...prev, reducedMotion: e.matches }));
+      setSettings((prev) => ({ ...prev, reducedMotion: e.matches }));
     };
 
-    prefersHighContrast.addEventListener('change', handleContrastChange);
-    prefersReducedMotion.addEventListener('change', handleMotionChange);
+    prefersHighContrast.addEventListener("change", handleContrastChange);
+    prefersReducedMotion.addEventListener("change", handleMotionChange);
 
     return () => {
-      prefersHighContrast.removeEventListener('change', handleContrastChange);
-      prefersReducedMotion.removeEventListener('change', handleMotionChange);
+      prefersHighContrast.removeEventListener("change", handleContrastChange);
+      prefersReducedMotion.removeEventListener("change", handleMotionChange);
     };
   }, []);
 
   const toggleHighContrast = () => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const newVal = !prev.highContrast;
-      document.documentElement.classList.toggle('high-contrast', newVal);
+      document.documentElement.classList.toggle("high-contrast", newVal);
       return { ...prev, highContrast: newVal };
     });
   };
 
   const toggleLargeText = () => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const newVal = !prev.largeText;
-      document.documentElement.classList.toggle('large-text', newVal);
-      localStorage.setItem('a11y-large-text', String(newVal));
+      document.documentElement.classList.toggle("large-text", newVal);
+      localStorage.setItem("a11y-large-text", String(newVal));
       return { ...prev, largeText: newVal };
     });
   };
 
   const toggleReducedMotion = () => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const newVal = !prev.reducedMotion;
-      document.documentElement.classList.toggle('reduced-motion', newVal);
+      document.documentElement.classList.toggle("reduced-motion", newVal);
       return { ...prev, reducedMotion: newVal };
     });
   };
@@ -132,4 +132,3 @@ export function AccessibilityToolbar() {
     </div>
   );
 }
-

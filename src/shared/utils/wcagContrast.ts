@@ -86,7 +86,10 @@ export function getContrastRatio(color1: string | RGBColor, color2: string | RGB
 /**
  * Determine if text color achieves WCAG 2.1 AAA compliance (ratio >= 7.0:1) against background
  */
-export function isWCAGAAACompliant(textColor: string | RGBColor, bgColor: string | RGBColor): boolean {
+export function isWCAGAAACompliant(
+  textColor: string | RGBColor,
+  bgColor: string | RGBColor
+): boolean {
   const ratio = getContrastRatio(textColor, bgColor);
   return ratio >= 7.0;
 }
@@ -111,7 +114,10 @@ export function getOptimalAAAColor(
   if (isDarkBg) {
     return {
       textColor: ratioWithLight >= 7.0 ? lightColorHex : goldAccentHex,
-      contrastRatio: Math.max(ratioWithLight, getContrastRatio(bgRgb, parseColorToRGB(goldAccentHex)!)),
+      contrastRatio: Math.max(
+        ratioWithLight,
+        getContrastRatio(bgRgb, parseColorToRGB(goldAccentHex)!)
+      ),
       isDarkBg: true,
     };
   } else {
@@ -137,7 +143,7 @@ function checkHasDarkBg(element: HTMLElement): boolean {
         curr.classList.contains("bg-slate-800") ||
         curr.classList.contains("bg-emerald-900") ||
         curr.classList.contains("bg-emerald-950") ||
-curr.classList.contains("bg-brand-green") ||
+        curr.classList.contains("bg-brand-green") ||
         curr.classList.contains("bg-brand-green-dark")
       ) {
         return true;
@@ -181,5 +187,3 @@ export function applyDynamicAAAContrast(element: HTMLElement): void {
   element.setAttribute("data-wcag-aaa", "true");
   element.setAttribute("data-contrast-ratio", optimal.contrastRatio.toFixed(2));
 }
-
-

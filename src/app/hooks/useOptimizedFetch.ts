@@ -1,7 +1,7 @@
 // ============================================================
 // useOptimizedFetch Hook - optimized fetching with caching and deduplication
 // ============================================================
-import { useState, useEffect, useCallback, useRef, memo } from 'react';
+import { useState, useEffect, useCallback, useRef, memo } from "react";
 
 interface CacheEntry<T> {
   data: T;
@@ -60,14 +60,20 @@ export function useOptimizedFetch<T>(
         cached.promise = promise;
         pendingRequests.set(key, promise);
 
-        promise.then(result => {
-          if (mountedRef.current) {
-            setData(result as T);
-            globalCache.set(key, { data: result, timestamp: Date.now(), lastAccessed: Date.now() });
-          }
-        }).finally(() => {
-          pendingRequests.delete(key);
-        });
+        promise
+          .then((result) => {
+            if (mountedRef.current) {
+              setData(result as T);
+              globalCache.set(key, {
+                data: result,
+                timestamp: Date.now(),
+                lastAccessed: Date.now(),
+              });
+            }
+          })
+          .finally(() => {
+            pendingRequests.delete(key);
+          });
       }
       return;
     }
@@ -94,7 +100,7 @@ export function useOptimizedFetch<T>(
     }
 
     promise
-      .then(result => {
+      .then((result) => {
         if (mountedRef.current) {
           setData(result as T);
           evictLRU(globalCache, MAX_CACHE_SIZE - 1);
@@ -103,7 +109,7 @@ export function useOptimizedFetch<T>(
       })
       .catch((err: any) => {
         if (mountedRef.current) {
-          setError(err?.message || 'حدث خطأ');
+          setError(err?.message || "حدث خطأ");
         }
       })
       .finally(() => {
@@ -133,5 +139,3 @@ export function createOptimizedComponent<T extends object>(
 ) {
   return memo(Component, areEqual);
 }
-
-

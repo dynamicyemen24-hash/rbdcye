@@ -29,7 +29,6 @@ const PILLARS = [
 ];
 
 export function WhyUs({ setCurrentPage = () => {} }: WhyUsProps) {
-
   return (
     <Section tone="pale" pattern="khatam">
       <SectionHeader
@@ -43,9 +42,7 @@ export function WhyUs({ setCurrentPage = () => {} }: WhyUsProps) {
       <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
         {PILLARS.map((pillar, i) => (
           <Reveal key={pillar.title} delay={i * 0.1}>
-            <article
-              className="group h-full rounded-3xl p-8 bg-white/85 backdrop-blur-sm border border-[var(--border)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:border-[var(--brand-gold)]/40"
-            >
+            <article className="group h-full rounded-3xl p-8 bg-white/85 backdrop-blur-sm border border-[var(--border)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:border-[var(--brand-gold)]/40">
               <StarMedallion size={76} color="var(--brand-gold)" className="mb-6">
                 <pillar.icon
                   className="w-8 h-8 transition-transform duration-500 group-hover:scale-110"
@@ -88,5 +85,3 @@ export function WhyUs({ setCurrentPage = () => {} }: WhyUsProps) {
     </Section>
   );
 }
-
-

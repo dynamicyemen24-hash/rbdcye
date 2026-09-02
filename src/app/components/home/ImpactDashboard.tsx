@@ -2,7 +2,17 @@
 // عرض أرقام الأثر بأسلوب بصري متحرك ومقنع
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "motion/react";
-import { Users, Droplet, Home, BookOpen, Heart, TrendingUp, ArrowLeft, Play, Pause } from "lucide-react";
+import {
+  Users,
+  Droplet,
+  Home,
+  BookOpen,
+  Heart,
+  TrendingUp,
+  ArrowLeft,
+  Play,
+  Pause,
+} from "lucide-react";
 
 interface Metric {
   id: string;
@@ -30,7 +40,8 @@ const METRICS: Metric[] = [
     suffix: "",
     icon: Home,
     color: "var(--brand-gold)",
-    bgGradient: "linear-gradient(135deg, rgba(var(--brand-gold-rgb),0.08), rgba(var(--brand-gold-light-rgb),0.04))",
+    bgGradient:
+      "linear-gradient(135deg, rgba(var(--brand-gold-rgb),0.08), rgba(var(--brand-gold-light-rgb),0.04))",
     description: "مشاريع تنموية وإغاثية باليمن",
   },
   {
@@ -89,7 +100,9 @@ function useCountUp(target: number, duration = 2500, startOnView = true) {
   useEffect(() => {
     if (!startOnView || started) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setStarted(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setStarted(true);
+      },
       { threshold: 0.3 }
     );
     if (ref.current) observer.observe(ref.current);
@@ -114,7 +127,7 @@ function useCountUp(target: number, duration = 2500, startOnView = true) {
 
 function formatArabicNumber(n: number): string {
   if (n >= 1000000) return `${(n / 1000000).toFixed(1)} مليون`;
-  if (n >= 1000) return `${(n / 1000).toFixed(1).replace('.0', '')} آلاف`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(".0", "")} آلاف`;
   return n.toLocaleString("ar-YE");
 }
 
@@ -132,7 +145,10 @@ function MetricCard({ metric, index }: { metric: Metric; index: number }) {
       className="group relative bg-white rounded-2xl p-6 md:p-7 border border-[var(--border)] shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden"
     >
       {/* Subtle background */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: metric.bgGradient }} />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: metric.bgGradient }}
+      />
 
       <div className="relative z-10">
         {/* Icon */}
@@ -147,21 +163,29 @@ function MetricCard({ metric, index }: { metric: Metric; index: number }) {
         </div>
 
         {/* Number */}
-        <div className="text-3xl md:text-4xl font-extrabold mb-1 tracking-tight" style={{ color: metric.color }}>
-          {formatArabicNumber(count)}{metric.suffix}
+        <div
+          className="text-3xl md:text-4xl font-extrabold mb-1 tracking-tight"
+          style={{ color: metric.color }}
+        >
+          {formatArabicNumber(count)}
+          {metric.suffix}
         </div>
 
         {/* Label */}
         <div className="text-[var(--foreground)] font-bold text-sm mb-1.5">{metric.label}</div>
 
         {/* Description */}
-        <div className="text-[var(--muted-foreground)] text-xs leading-relaxed">{metric.description}</div>
+        <div className="text-[var(--muted-foreground)] text-xs leading-relaxed">
+          {metric.description}
+        </div>
       </div>
 
       {/* Bottom accent line */}
       <div
         className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `linear-gradient(to left, transparent, ${metric.color}, transparent)` }}
+        style={{
+          background: `linear-gradient(to left, transparent, ${metric.color}, transparent)`,
+        }}
       />
     </motion.div>
   );
@@ -171,7 +195,11 @@ export function ImpactDashboard() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   return (
-    <section dir="rtl" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "var(--secondary)" }}>
+    <section
+      dir="rtl"
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: "var(--secondary)" }}
+    >
       <div className="absolute inset-0 pattern-bg opacity-30 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
@@ -187,14 +215,20 @@ export function ImpactDashboard() {
             أثرنا بالأرقام
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--foreground)] mb-4">
-            نحسب أثرنا{' '}
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))" }}>
+            نحسب أثرنا{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
+              }}
+            >
               بالنتائج
             </span>
           </h2>
           <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto text-base leading-relaxed">
-            كل رقم يروي قصة — قصة أسرة أنقذت، طفل عاد للمدرسة، قرية حصلت على ماء نظيف.
-            نعمل بشفافية مطلقة لضمان وصول كل ريال لمن يحتاجه.
+            كل رقم يروي قصة — قصة أسرة أنقذت، طفل عاد للمدرسة، قرية حصلت على ماء نظيف. نعمل بشفافية
+            مطلقة لضمان وصول كل ريال لمن يحتاجه.
           </p>
         </motion.div>
 
@@ -221,5 +255,3 @@ export function ImpactDashboard() {
     </section>
   );
 }
-
-

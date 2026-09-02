@@ -1,8 +1,15 @@
 // News Page - صفحة الأخبار
 import { motion } from "motion/react";
 import {
-  Newspaper, FolderOpen, Calendar, Tag, Search,
-  TrendingUp, Eye, ArrowLeft, BarChart3,
+  Newspaper,
+  FolderOpen,
+  Calendar,
+  Tag,
+  Search,
+  TrendingUp,
+  Eye,
+  ArrowLeft,
+  BarChart3,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -40,15 +47,15 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [searchQuery, setSearchQuery] = useState("");
-  const [contentSource, setContentSource] = useState<'static' | 'cache' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "cache" | "sanity">("static");
 
   useSEO({
-    title: 'الأخبار - رحماء بينهم',
-    description: 'الأخبار والفعاليات الأخيرة لـ رحماء بينهم الإنسانية',
-    type: 'website',
-    url: 'https://rbdcye.org/news',
-    image: 'https://rbdcye.org/og-news.png',
-    keywords: ['أخبار', 'فعاليات', 'إغاثة', 'تنمية', 'تعليم', 'يمن', 'رحماء بينهم'],
+    title: "الأخبار - رحماء بينهم",
+    description: "الأخبار والفعاليات الأخيرة لـ رحماء بينهم الإنسانية",
+    type: "website",
+    url: "https://rbdcye.org/news",
+    image: "https://rbdcye.org/og-news.png",
+    keywords: ["أخبار", "فعاليات", "إغاثة", "تنمية", "تعليم", "يمن", "رحماء بينهم"],
   });
 
   useEffect(() => {
@@ -78,30 +85,37 @@ export default function NewsPage() {
         const result = await contentManager.getNews();
         if (!cancelled) {
           setNews(result.data);
-          setContentSource(result.source === 'sanity' ? 'sanity' : 'static');
+          setContentSource(result.source === "sanity" ? "sanity" : "static");
         }
       } catch {
         if (!cancelled) {
           setNews(fallback);
-          setContentSource('static');
+          setContentSource("static");
         }
       } finally {
         if (!cancelled) {
           setLoading(false);
-          try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
+          try {
+            analyticsService.generateImpactReport();
+          } catch {
+            /* non-critical */
+          }
         }
       }
     };
 
     loadNews();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // تصفية الأخبار
   const filteredNews = useMemo(() => {
     return news.filter((n: any) => {
       const matchesCategory = activeCategory === "الكل" || n.category === activeCategory;
-      const matchesSearch = n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSearch =
+        n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (n.excerpt && n.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
@@ -127,10 +141,15 @@ export default function NewsPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'خبر منشور', value: news.length, icon: BarChart3, color: 'green' },
-            { label: 'أخبار مميزة', value: featuredNews.length, icon: TrendingUp, color: 'gold' },
-            { label: 'فئة', value: NEWS_CATEGORIES.length - 1, icon: Tag, color: 'blue' },
-            { label: 'مشاهدة', value: news.reduce((sum, n) => sum + (n.views || 0), 0).toLocaleString('ar-SA'), icon: Eye, color: 'purple' },
+            { label: "خبر منشور", value: news.length, icon: BarChart3, color: "green" },
+            { label: "أخبار مميزة", value: featuredNews.length, icon: TrendingUp, color: "gold" },
+            { label: "فئة", value: NEWS_CATEGORIES.length - 1, icon: Tag, color: "blue" },
+            {
+              label: "مشاهدة",
+              value: news.reduce((sum, n) => sum + (n.views || 0), 0).toLocaleString("ar-SA"),
+              icon: Eye,
+              color: "purple",
+            },
           ]}
           columns={4}
           variant="glass"
@@ -160,7 +179,7 @@ export default function NewsPage() {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all`}
                   style={{
                     backgroundColor: activeCategory === cat.name ? cat.color : cat.bg,
-                    color: activeCategory === cat.name ? 'white' : cat.color,
+                    color: activeCategory === cat.name ? "white" : cat.color,
                   }}
                 >
                   {cat.name}
@@ -227,13 +246,14 @@ export default function NewsPage() {
                     <div className="flex items-center gap-2 mb-3">
                       <span
                         className="px-2.5 py-1 rounded-full text-xs font-bold"
-                        style={{ background: n.categoryBg || 'var(--brand-green-pale)', color: n.categoryColor || 'var(--brand-green)' }}
+                        style={{
+                          background: n.categoryBg || "var(--brand-green-pale)",
+                          color: n.categoryColor || "var(--brand-green)",
+                        }}
                       >
                         {n.category}
                       </span>
-                      <span className="text-[var(--muted-foreground)] text-xs">
-                        • {n.date}
-                      </span>
+                      <span className="text-[var(--muted-foreground)] text-xs">• {n.date}</span>
                     </div>
                     <h3 className="font-bold text-lg text-[var(--foreground)] mb-2 group-hover:text-[var(--brand-green)] transition-colors line-clamp-2">
                       {n.title}
@@ -245,7 +265,7 @@ export default function NewsPage() {
                       onClick={() => navigate(`/news/${n.id}`)}
                       className="mt-auto flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
                     >
-                        اقرأ المزيد
+                      اقرأ المزيد
                       <ArrowLeft className="w-4 h-4" />
                     </button>
                   </div>
@@ -262,7 +282,9 @@ export default function NewsPage() {
           {news.length === 0 ? (
             <div className="text-center py-16">
               <FolderOpen className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4 opacity-50" />
-              <h3 className="text-[var(--foreground)] text-lg font-semibold mb-2">لا توجد أخبار حالياً</h3>
+              <h3 className="text-[var(--foreground)] text-lg font-semibold mb-2">
+                لا توجد أخبار حالياً
+              </h3>
               <p className="text-[var(--muted-foreground)]">
                 نعمل على إضافة محتوى جديد، تابعنا لاحقاً
               </p>
@@ -270,7 +292,9 @@ export default function NewsPage() {
           ) : filteredNews.length === 0 ? (
             <div className="text-center py-16">
               <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد أخبار مطابقة</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد أخبار مطابقة
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث أو الفئة</p>
             </div>
           ) : (
@@ -292,18 +316,25 @@ export default function NewsPage() {
                     <div className="flex items-center gap-2 mb-3">
                       <span
                         className="px-2.5 py-1 rounded-full text-xs font-bold"
-                        style={{ background: n.categoryBg || 'var(--brand-green-pale)', color: n.categoryColor || 'var(--brand-green)' }}
+                        style={{
+                          background: n.categoryBg || "var(--brand-green-pale)",
+                          color: n.categoryColor || "var(--brand-green)",
+                        }}
                       >
                         {n.category}
                       </span>
-                      <span className="text-[var(--muted-foreground)] text-xs">
-                        • {n.date}
-                      </span>
+                      <span className="text-[var(--muted-foreground)] text-xs">• {n.date}</span>
                     </div>
-                    <h3 className="font-bold text-[var(--foreground)] mb-2 line-clamp-2" style={{ fontSize: "1rem" }}>
+                    <h3
+                      className="font-bold text-[var(--foreground)] mb-2 line-clamp-2"
+                      style={{ fontSize: "1rem" }}
+                    >
                       {n.title}
                     </h3>
-                    <p className="text-[var(--muted-foreground)] flex-1 mb-4 line-clamp-3" style={{ fontSize: "0.85rem", lineHeight: "1.7" }}>
+                    <p
+                      className="text-[var(--muted-foreground)] flex-1 mb-4 line-clamp-3"
+                      style={{ fontSize: "0.85rem", lineHeight: "1.7" }}
+                    >
                       {n.excerpt}
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]">
@@ -332,9 +363,6 @@ export default function NewsPage() {
           )}
         </div>
       </section>
-
     </div>
   );
 }
-
-

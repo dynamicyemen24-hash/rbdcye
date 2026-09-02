@@ -1,6 +1,10 @@
-import { dashboardService as originalDashboardService } from './dashboard.service';
-import { dataService } from './data.service';
-import { fetchProjectsWithRetry, fetchNewsWithRetry, fetchSuccessStoriesWithRetry } from './sanityWithRetry';
+import { dashboardService as originalDashboardService } from "./dashboard.service";
+import { dataService } from "./data.service";
+import {
+  fetchProjectsWithRetry,
+  fetchNewsWithRetry,
+  fetchSuccessStoriesWithRetry,
+} from "./sanityWithRetry";
 
 // Fallback data for when all sources fail
 const FALLBACK_DATA = {
@@ -41,21 +45,27 @@ export const dashboardEnhancedService = {
         fetchProjectsWithRetry(),
         fetchNewsWithRetry(),
         fetchSuccessStoriesWithRetry(),
-        dataService.getAll('rh_partners_data'),
+        dataService.getAll("rh_partners_data"),
       ]);
 
       return {
-        totalBeneficiaries: projects.reduce((sum: number, p: any) => sum + (p.beneficiaries || 0), 0),
-        activeProjects: projects.filter((p: any) => p.status === 'active').length,
+        totalBeneficiaries: projects.reduce(
+          (sum: number, p: any) => sum + (p.beneficiaries || 0),
+          0
+        ),
+        activeProjects: projects.filter((p: any) => p.status === "active").length,
         totalPartners: partners.length,
         totalVolunteers: FALLBACK_DATA.volunteers.length,
-        newMessages: FALLBACK_DATA.requests.filter((r: any) => r.status === 'new').length,
-        totalDonations: FALLBACK_DATA.donations.reduce((sum: number, d: any) => sum + (d.amount || 0), 0),
+        newMessages: FALLBACK_DATA.requests.filter((r: any) => r.status === "new").length,
+        totalDonations: FALLBACK_DATA.donations.reduce(
+          (sum: number, d: any) => sum + (d.amount || 0),
+          0
+        ),
         newsCount: news.length,
         storiesCount: stories.length,
       };
     } catch (error) {
-      console.error('All dashboard data sources failed:', error);
+      console.error("All dashboard data sources failed:", error);
       // Return empty metrics as last resort
       return {
         totalBeneficiaries: 0,
@@ -79,21 +89,21 @@ export const dashboardEnhancedService = {
     } catch {
       return {
         donationsOverYear: [
-          { month: 'يناير', amount: 0, count: 0 },
-          { month: 'فبراير', amount: 0, count: 0 },
-          { month: 'مارس', amount: 0, count: 0 },
-          { month: 'أبريل', amount: 0, count: 0 },
-          { month: 'مايو', amount: 0, count: 0 },
-          { month: 'يونيو', amount: 0, count: 0 },
+          { month: "يناير", amount: 0, count: 0 },
+          { month: "فبراير", amount: 0, count: 0 },
+          { month: "مارس", amount: 0, count: 0 },
+          { month: "أبريل", amount: 0, count: 0 },
+          { month: "مايو", amount: 0, count: 0 },
+          { month: "يونيو", amount: 0, count: 0 },
         ],
         projectsByCategory: [],
         weeklyActivity: [
-          { day: 'السبت', visits: 0, donations: 0 },
-          { day: 'الأحد', visits: 0, donations: 0 },
-          { day: 'الإثنين', visits: 0, donations: 0 },
-          { day: 'الثلاثاء', visits: 0, donations: 0 },
-          { day: 'الأربعاء', visits: 0, donations: 0 },
-          { day: 'الخميس', visits: 0, donations: 0 },
+          { day: "السبت", visits: 0, donations: 0 },
+          { day: "الأحد", visits: 0, donations: 0 },
+          { day: "الإثنين", visits: 0, donations: 0 },
+          { day: "الثلاثاء", visits: 0, donations: 0 },
+          { day: "الأربعاء", visits: 0, donations: 0 },
+          { day: "الخميس", visits: 0, donations: 0 },
         ],
       };
     }
@@ -104,20 +114,20 @@ export const dashboardEnhancedService = {
    */
   async refreshAll() {
     const entities = [
-      'rh_projects_data',
-      'rh_news_data',
-      'rh_stories_data',
-      'rh_partners_data',
-      'rh_donations_data',
-      'rh_requests_data',
-      'rh_volunteers_data',
+      "rh_projects_data",
+      "rh_news_data",
+      "rh_stories_data",
+      "rh_partners_data",
+      "rh_donations_data",
+      "rh_requests_data",
+      "rh_volunteers_data",
     ];
 
     // Clear cache first
     dataService.clearAllCaches();
 
     // Refresh all entities in parallel
-    const refreshPromises = entities.map(entity => 
+    const refreshPromises = entities.map((entity) =>
       dataService.getAll(entity, true).catch((err) => {
         console.error(`Failed to refresh ${entity}:`, err);
         return [];
@@ -129,4 +139,3 @@ export const dashboardEnhancedService = {
 };
 
 export { dataService };
-

@@ -1,5 +1,5 @@
 // Dynamic import declaration for optional xlsx module
-declare module 'xlsx' {
+declare module "xlsx" {
   export interface WorkBook {
     SheetNames: string[];
     Sheets: { [sheet: string]: WorkSheet };
@@ -23,8 +23,8 @@ declare module 'xlsx' {
 }
 
 interface WriteOptions {
-  bookType: 'xlsx' | 'xls' | 'csv';
-  type: 'array' | 'string' | 'buffer';
+  bookType: "xlsx" | "xls" | "csv";
+  type: "array" | "string" | "buffer";
 }
 
 interface SheetOptions {
@@ -39,5 +39,3 @@ interface AddOptions {
 interface ReadOptions {
   type?: string;
 }
-
-

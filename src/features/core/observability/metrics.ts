@@ -45,7 +45,7 @@ class MetricsCollector {
 
   createCounter(name: string, tags: Record<string, string> = {}): Counter {
     const key = this.getKey(name, tags);
-    
+
     return {
       increment: (value = 1) => {
         const current = this.counters.get(key)?.value || 0;
@@ -62,7 +62,7 @@ class MetricsCollector {
 
   createGauge(name: string, tags: Record<string, string> = {}): Gauge {
     const key = this.getKey(name, tags);
-    
+
     return {
       setValue: (value: number) => {
         this.gauges.set(key, { value, tags });
@@ -84,7 +84,7 @@ class MetricsCollector {
 
   createHistogram(name: string, tags: Record<string, string> = {}): Histogram {
     const key = this.getKey(name, tags);
-    
+
     return {
       observe: (value: number) => {
         const existing = this.histograms.get(key) || { values: [], tags };
@@ -95,7 +95,7 @@ class MetricsCollector {
       getPercentile: (p: number) => {
         const values = this.histograms.get(key)?.values || [];
         if (values.length === 0) return 0;
-        
+
         const sorted = [...values].sort((a, b) => a - b);
         const index = Math.ceil((p / 100) * sorted.length) - 1;
         return sorted[Math.max(0, index)];
@@ -134,7 +134,10 @@ class MetricsCollector {
   }
 
   private getKey(name: string, tags: Record<string, string>): string {
-    const tagStr = Object.entries(tags).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => `${k}:${v}`).join(',');
+    const tagStr = Object.entries(tags)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([k, v]) => `${k}:${v}`)
+      .join(",");
     return `${name}{${tagStr}}`;
   }
 
@@ -143,7 +146,7 @@ class MetricsCollector {
       try {
         listener(data);
       } catch (error) {
-        console.error('Metrics listener error:', error);
+        console.error("Metrics listener error:", error);
       }
     }
   }
@@ -159,7 +162,7 @@ class MetricsCollector {
 export const metrics = MetricsCollector.getInstance();
 
 // Structured Logger
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = "debug" | "info" | "warn" | "error";
 
 interface LogEntry {
   level: LogLevel;
@@ -202,17 +205,13 @@ class Logger {
     // Console output in development
     if (import.meta.env.DEV) {
       const styles = {
-        debug: 'color: #6b7280',
-        info: 'color: #3b82f6',
-        warn: 'color: #f59e0b',
-        error: 'color: #ef4444',
+        debug: "color: #6b7280",
+        info: "color: #3b82f6",
+        warn: "color: #f59e0b",
+        error: "color: #ef4444",
       };
-      
-      console.log(
-        `%c[${entry.level.toUpperCase()}] ${message}`,
-        styles[level],
-        context || {}
-      );
+
+      console.log(`%c[${entry.level.toUpperCase()}] ${message}`, styles[level], context || {});
     }
 
     // Notify listeners
@@ -220,31 +219,33 @@ class Logger {
       try {
         listener(entry);
       } catch (error) {
-        console.error('Logger listener error:', error);
+        console.error("Logger listener error:", error);
       }
     }
   }
 
   debug(message: string, context?: Record<string, any>) {
-    this.log('debug', message, context);
+    this.log("debug", message, context);
   }
 
   info(message: string, context?: Record<string, any>) {
-    this.log('info', message, context);
+    this.log("info", message, context);
   }
 
   warn(message: string, context?: Record<string, any>) {
-    this.log('warn', message, context);
+    this.log("warn", message, context);
   }
 
   error(message: string, error?: Error, context?: Record<string, any>) {
-    this.log('error', message, {
+    this.log("error", message, {
       ...context,
-      error: error ? {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      } : null,
+      error: error
+        ? {
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+          }
+        : null,
     });
   }
 
@@ -256,7 +257,7 @@ class Logger {
   getLogs(level?: LogLevel, limit = 100): LogEntry[] {
     let logs = [...this.logs];
     if (level) {
-      logs = logs.filter(log => log.level === level);
+      logs = logs.filter((log) => log.level === level);
     }
     return logs.slice(-limit);
   }
@@ -271,7 +272,7 @@ class Logger {
 
   private getUserId(): string | undefined {
     try {
-      const userStr = localStorage.getItem('auth_user');
+      const userStr = localStorage.getItem("auth_user");
       if (userStr) {
         const user = JSON.parse(userStr);
         return user.id;
@@ -339,7 +340,7 @@ class Tracer {
       try {
         listener(span);
       } catch (error) {
-        console.error('Tracer listener error:', error);
+        console.error("Tracer listener error:", error);
       }
     }
 
@@ -373,7 +374,7 @@ class Tracer {
   getSpans(traceId?: string): Span[] {
     const spans = Array.from(this.spans.values());
     if (traceId) {
-      return spans.filter(span => span.traceId === traceId);
+      return spans.filter((span) => span.traceId === traceId);
     }
     return spans;
   }
@@ -401,18 +402,18 @@ export function trace(operationName: string) {
 
     descriptor.value = async function (...args: any[]) {
       const span = tracer.startSpan(operationName);
-      
+
       try {
-        tracer.addTag('class', _target.constructor.name);
-        tracer.addTag('method', propertyKey);
-        
+        tracer.addTag("class", _target.constructor.name);
+        tracer.addTag("method", propertyKey);
+
         const result = await originalMethod.apply(this, args);
-        
-        tracer.addTag('status', 'success');
+
+        tracer.addTag("status", "success");
         return result;
       } catch (error) {
-        tracer.addTag('status', 'error');
-        tracer.addTag('error', error instanceof Error ? error.message : 'Unknown error');
+        tracer.addTag("status", "error");
+        tracer.addTag("error", error instanceof Error ? error.message : "Unknown error");
         throw error;
       } finally {
         tracer.endSpan(span.spanId);
@@ -432,7 +433,7 @@ export function measure(operationName: string) {
 
     descriptor.value = async function (...args: any[]) {
       const startTime = Date.now();
-      
+
       try {
         counter.increment();
         const result = await originalMethod.apply(this, args);
@@ -447,4 +448,3 @@ export function measure(operationName: string) {
     return descriptor;
   };
 }
-

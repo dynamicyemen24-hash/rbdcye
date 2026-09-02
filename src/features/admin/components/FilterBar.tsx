@@ -1,5 +1,5 @@
-import { Search, X, Calendar } from 'lucide-react';
-import React from 'react';
+import { Search, X, Calendar } from "lucide-react";
+import React from "react";
 
 interface FilterBarProps {
   filters: {
@@ -15,11 +15,11 @@ interface FilterBarProps {
 
 export function FilterBar({ filters, onFilterChange, onClear }: FilterBarProps) {
   const statusOptions = [
-    { value: 'all', label: 'الكل' },
-    { value: 'new', label: 'جديد' },
-    { value: 'read', label: 'مقروء' },
-    { value: 'replied', label: 'تم الرد' },
-    { value: 'archived', label: 'مؤرشف' },
+    { value: "all", label: "الكل" },
+    { value: "new", label: "جديد" },
+    { value: "read", label: "مقروء" },
+    { value: "replied", label: "تم الرد" },
+    { value: "archived", label: "مؤرشف" },
   ];
 
   return (
@@ -46,7 +46,7 @@ export function FilterBar({ filters, onFilterChange, onClear }: FilterBarProps) 
             onChange={(e) => onFilterChange({ ...filters, status: e.target.value })}
             className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
-            {statusOptions.map(option => (
+            {statusOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -76,7 +76,7 @@ export function FilterBar({ filters, onFilterChange, onClear }: FilterBarProps) 
         </div>
 
         {/* زر مسح الفلاتر */}
-        {(filters.search || filters.status !== 'all' || filters.fromDate || filters.toDate) && (
+        {(filters.search || filters.status !== "all" || filters.fromDate || filters.toDate) && (
           <button
             onClick={onClear}
             className="flex items-center gap-1 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -89,4 +89,3 @@ export function FilterBar({ filters, onFilterChange, onClear }: FilterBarProps) 
     </div>
   );
 }
-

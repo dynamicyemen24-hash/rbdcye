@@ -5,7 +5,7 @@ export function HeroHeader() {
   return (
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-10">
       {/* Official Identity Badge without generic "رقم" clutter */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -20,7 +20,7 @@ export function HeroHeader() {
       </motion.div>
 
       {/* Hero Headline with Golden Balance & Breathing Line-height */}
-      <motion.h1 
+      <motion.h1
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -37,7 +37,9 @@ export function HeroHeader() {
         className="max-w-2xl mx-auto space-y-3"
       >
         <p className="text-slate-700 font-cairo text-base sm:text-lg lg:text-xl leading-[1.8] font-normal">
-          منظمة إنسانية وتنموية مستقلة انطلقت منذ عام 2014م لصون حياة الإنسان وإغاثته، وعمارة الأرض عبر برامج إغاثية وتنموية شاملة في المناطق اليمنية الأشد احتياجاً، وفق أرفع معايير الحوكمة والشفافية.
+          منظمة إنسانية وتنموية مستقلة انطلقت منذ عام 2014م لصون حياة الإنسان وإغاثته، وعمارة الأرض
+          عبر برامج إغاثية وتنموية شاملة في المناطق اليمنية الأشد احتياجاً، وفق أرفع معايير الحوكمة
+          والشفافية.
         </p>
       </motion.div>
     </div>
@@ -45,5 +47,3 @@ export function HeroHeader() {
 }
 
 export default HeroHeader;
-
-

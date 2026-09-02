@@ -1,9 +1,22 @@
 // Projects Page - صفحة المشاريع
 import { motion } from "motion/react";
 import {
-  Target, MapPin, Users, Calendar, ArrowLeft,
-  Filter, Search, CheckCircle2, Clock, AlertCircle,
-  Heart, Droplets, BookOpen, Gift, BarChart3, TrendingUp,
+  Target,
+  MapPin,
+  Users,
+  Calendar,
+  ArrowLeft,
+  Filter,
+  Search,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Heart,
+  Droplets,
+  BookOpen,
+  Gift,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +32,7 @@ interface Project {
   id: number | string;
   title: string;
   category: string;
-  status: 'active' | 'completed' | 'planning';
+  status: "active" | "completed" | "planning";
   progress: number;
   budget: string;
   raised: string;
@@ -33,23 +46,25 @@ interface Project {
 }
 
 const PROJECT_ICONS: Record<string, any> = {
-  'المياه': Droplets,
-  'إغاثة': Gift, 'الإغاثة': Gift,
-  'التعليم': BookOpen,
-  'التنمية': Heart,
-  'بنية تحتية': MapPin,
-  'دعوي': BookOpen,
-  'عام': Heart,
+  المياه: Droplets,
+  إغاثة: Gift,
+  الإغاثة: Gift,
+  التعليم: BookOpen,
+  التنمية: Heart,
+  "بنية تحتية": MapPin,
+  دعوي: BookOpen,
+  عام: Heart,
 };
 
 const PROJECT_COLORS: Record<string, string> = {
-  'المياه': 'cyan',
-  'إغاثة': 'amber', 'الإغاثة': 'amber',
-  'التعليم': 'purple',
-  'التنمية': 'emerald',
-  'بنية تحتية': 'blue',
-  'دعوي': 'rose',
-  'عام': 'emerald',
+  المياه: "cyan",
+  إغاثة: "amber",
+  الإغاثة: "amber",
+  التعليم: "purple",
+  التنمية: "emerald",
+  "بنية تحتية": "blue",
+  دعوي: "rose",
+  عام: "emerald",
 };
 
 const CATEGORIES = ["الكل", "المياه", "الإغاثة", "التعليم", "التنمية", "بنية تحتية", "دعوي"];
@@ -61,39 +76,61 @@ const STATUS_FILTERS = [
 ];
 
 const statusConfig = {
-  active: { label: "نشط", bg: "bg-[var(--success-bg)]", text: "text-[var(--success)]", dot: "bg-[var(--success-bg)]0" },
-  completed: { label: "مكتمل", bg: "bg-[var(--info-bg)]", text: "text-[var(--info)]", dot: "bg-[var(--info-bg)]0" },
-  planning: { label: "قيد التخطيط", bg: "bg-[var(--warning-bg)]", text: "text-[var(--warning)]", dot: "bg-[var(--warning-bg)]0" },
+  active: {
+    label: "نشط",
+    bg: "bg-[var(--success-bg)]",
+    text: "text-[var(--success)]",
+    dot: "bg-[var(--success-bg)]0",
+  },
+  completed: {
+    label: "مكتمل",
+    bg: "bg-[var(--info-bg)]",
+    text: "text-[var(--info)]",
+    dot: "bg-[var(--info-bg)]0",
+  },
+  planning: {
+    label: "قيد التخطيط",
+    bg: "bg-[var(--warning-bg)]",
+    text: "text-[var(--warning)]",
+    dot: "bg-[var(--warning-bg)]0",
+  },
 };
 
 const PROJECT_IMAGES: Record<string, string> = {
-  'المياه': '/images/defaults/project-water.svg',
-  'إغاثة': '/images/defaults/project-relief.svg',
-  'الإغاثة': '/images/defaults/project-relief.svg',
-  'التعليم': '/images/defaults/project-education.svg',
-  'التنمية': '/images/defaults/project-development.svg',
-  'بنية تحتية': '/images/defaults/project-relief.svg',
-  'دعوي': '/images/defaults/story-community.svg',
-  'عام': '/images/defaults/project-relief.svg',
+  المياه: "/images/defaults/project-water.svg",
+  إغاثة: "/images/defaults/project-relief.svg",
+  الإغاثة: "/images/defaults/project-relief.svg",
+  التعليم: "/images/defaults/project-education.svg",
+  التنمية: "/images/defaults/project-development.svg",
+  "بنية تحتية": "/images/defaults/project-relief.svg",
+  دعوي: "/images/defaults/story-community.svg",
+  عام: "/images/defaults/project-relief.svg",
 };
 
-const DEFAULT_PROJECT_IMAGE = '/images/defaults/project-relief.svg';
+const DEFAULT_PROJECT_IMAGE = "/images/defaults/project-relief.svg";
 
 // Normalize seed data
 function normalizeSeedProjects(): Project[] {
   return SEED_PROJECTS.map((p) => {
-    const statusMap: Record<string, Project['status']> = {
-      'active': 'active', 'completed': 'completed', 'pending': 'planning',
+    const statusMap: Record<string, Project["status"]> = {
+      active: "active",
+      completed: "completed",
+      pending: "planning",
     };
-    const category = p.category || 'التنمية';
+    const category = p.category || "التنمية";
     return {
-      id: p.id, title: p.title, category,
-      status: statusMap[p.status] || 'active',
-      progress: p.progress, budget: p.budget, raised: p.budget,
-      beneficiaries: p.beneficiaries, location: p.location,
+      id: p.id,
+      title: p.title,
+      category,
+      status: statusMap[p.status] || "active",
+      progress: p.progress,
+      budget: p.budget,
+      raised: p.budget,
+      beneficiaries: p.beneficiaries,
+      location: p.location,
       icon: PROJECT_ICONS[category] || Heart,
       description: p.description,
-      color: PROJECT_COLORS[category] || 'emerald',
+      color: PROJECT_COLORS[category] || "emerald",
       date: p.date,
       image: p.image || PROJECT_IMAGES[category] || DEFAULT_PROJECT_IMAGE,
     };
@@ -102,22 +139,22 @@ function normalizeSeedProjects(): Project[] {
 
 // Normalize Sanity/API data
 function normalizeApiProjects(items: any[]): Project[] {
-  return items.map(p => {
-    const category = p.category || 'عام';
+  return items.map((p) => {
+    const category = p.category || "عام";
     return {
       id: p.id || p._id || Math.random(),
-      title: p.title || '',
+      title: p.title || "",
       category,
-      status: (p.status || 'active') as Project['status'],
+      status: (p.status || "active") as Project["status"],
       progress: p.progress || 0,
-      budget: p.budget ? `${Number(p.budget).toLocaleString('ar')} ر.ي` : 'غير محدد',
-      raised: p.raisedAmount ? `${Number(p.raisedAmount).toLocaleString('ar')} ر.ي` : '0',
-      beneficiaries: p.beneficiaries || '',
-      location: p.location || '',
+      budget: p.budget ? `${Number(p.budget).toLocaleString("ar")} ر.ي` : "غير محدد",
+      raised: p.raisedAmount ? `${Number(p.raisedAmount).toLocaleString("ar")} ر.ي` : "0",
+      beneficiaries: p.beneficiaries || "",
+      location: p.location || "",
       icon: PROJECT_ICONS[category] || Heart,
-      description: p.description || '',
-      color: PROJECT_COLORS[category] || 'emerald',
-      date: p.start_date || '',
+      description: p.description || "",
+      color: PROJECT_COLORS[category] || "emerald",
+      date: p.start_date || "",
       image: p.image || p.mainImage || PROJECT_IMAGES[category] || DEFAULT_PROJECT_IMAGE,
     };
   });
@@ -129,57 +166,68 @@ export default function ProjectsPage() {
   const [activeStatus, setActiveStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [projects, setProjects] = useState<Project[]>(normalizeSeedProjects());
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "sanity">("static");
 
   useSEO({
-    title: 'مشاريعنا - رحماء بينهم',
-    description: 'استعرض مشاريعنا الخيرية والإنسانية والتنموية في اليمن',
+    title: "مشاريعنا - رحماء بينهم",
+    description: "استعرض مشاريعنا الخيرية والإنسانية والتنموية في اليمن",
   });
 
   // ContentManager: static instantly → Sanity in background
   useEffect(() => {
     let cancelled = false;
 
-    contentManager.getProjects().then(result => {
-      if (cancelled) return;
-      if (result.data.length > 0 && result.source !== 'static') {
-        setProjects(normalizeApiProjects(result.data));
-        setContentSource('sanity');
-      } else {
-        setProjects(normalizeSeedProjects());
-        setContentSource('static');
-      }
-      try {
-        analyticsService.generateProjectReport();
-      } catch {
-        // Reporting is optional; the projects page remains usable if analytics is unavailable.
-      }
-    }).catch(() => {
-      if (!cancelled) setProjects(normalizeSeedProjects());
-    });
+    contentManager
+      .getProjects()
+      .then((result) => {
+        if (cancelled) return;
+        if (result.data.length > 0 && result.source !== "static") {
+          setProjects(normalizeApiProjects(result.data));
+          setContentSource("sanity");
+        } else {
+          setProjects(normalizeSeedProjects());
+          setContentSource("static");
+        }
+        try {
+          analyticsService.generateProjectReport();
+        } catch {
+          // Reporting is optional; the projects page remains usable if analytics is unavailable.
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setProjects(normalizeSeedProjects());
+      });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
       const matchesCategory = activeCategory === "الكل" || project.category === activeCategory;
       const matchesStatus = activeStatus === "all" || project.status === activeStatus;
-      const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSearch =
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesStatus && matchesSearch;
     });
   }, [projects, activeCategory, activeStatus, searchQuery]);
 
   // إحصاءات سريعة
-  const totalBeneficiaries = useMemo(() =>
-    projects.reduce((sum, p) => {
-      const num = parseInt(p.beneficiaries.replace(/[^\d]/g, '')) || 0;
-      return sum + num;
-    }, 0), [projects]);
+  const totalBeneficiaries = useMemo(
+    () =>
+      projects.reduce((sum, p) => {
+        const num = parseInt(p.beneficiaries.replace(/[^\d]/g, "")) || 0;
+        return sum + num;
+      }, 0),
+    [projects]
+  );
 
-  const activeProjects = useMemo(() =>
-    projects.filter(p => p.status === 'active').length, [projects]);
+  const activeProjects = useMemo(
+    () => projects.filter((p) => p.status === "active").length,
+    [projects]
+  );
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
@@ -192,10 +240,15 @@ export default function ProjectsPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'مشروع نشط', value: projects.length, icon: BarChart3, color: 'green' },
-            { label: 'قيد التنفيذ', value: activeProjects, icon: Target, color: 'gold' },
-            { label: 'مستفيد', value: totalBeneficiaries.toLocaleString('ar-SA'), icon: Users, color: 'blue' },
-            { label: 'فئة', value: CATEGORIES.length - 1, icon: TrendingUp, color: 'purple' },
+            { label: "مشروع نشط", value: projects.length, icon: BarChart3, color: "green" },
+            { label: "قيد التنفيذ", value: activeProjects, icon: Target, color: "gold" },
+            {
+              label: "مستفيد",
+              value: totalBeneficiaries.toLocaleString("ar-SA"),
+              icon: Users,
+              color: "blue",
+            },
+            { label: "فئة", value: CATEGORIES.length - 1, icon: TrendingUp, color: "purple" },
           ]}
           columns={4}
           variant="glass"
@@ -208,15 +261,25 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--brand-green)]" />
-              <span className="text-[var(--muted-foreground)]">إجمالي المشاريع: <strong className="text-[var(--foreground)]">{projects.length}</strong></span>
+              <span className="text-[var(--muted-foreground)]">
+                إجمالي المشاريع:{" "}
+                <strong className="text-[var(--foreground)]">{projects.length}</strong>
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--brand-gold)]" />
-              <span className="text-[var(--muted-foreground)]">النشطة: <strong className="text-[var(--foreground)]">{activeProjects}</strong></span>
+              <span className="text-[var(--muted-foreground)]">
+                النشطة: <strong className="text-[var(--foreground)]">{activeProjects}</strong>
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--info-bg)]0" />
-              <span className="text-[var(--muted-foreground)]">المستفيدون: <strong className="text-[var(--foreground)]">{totalBeneficiaries.toLocaleString('ar-SA')}</strong></span>
+              <span className="text-[var(--muted-foreground)]">
+                المستفيدون:{" "}
+                <strong className="text-[var(--foreground)]">
+                  {totalBeneficiaries.toLocaleString("ar-SA")}
+                </strong>
+              </span>
             </div>
           </div>
         </div>
@@ -295,20 +358,28 @@ export default function ProjectsPage() {
                       src={project.image}
                       alt={project.title}
                       loading="lazy"
-                      onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_PROJECT_IMAGE; }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = DEFAULT_PROJECT_IMAGE;
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                    <span className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md ${status.bg} ${status.text}`}>
+                    <span
+                      className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md ${status.bg} ${status.text}`}
+                    >
                       <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
                       {status.label}
                     </span>
                     <div className="absolute bottom-4 right-4 left-4 flex items-end justify-between gap-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className={`w-11 h-11 shrink-0 rounded-xl bg-white/90 backdrop-blur-sm border border-[var(--brand-gold)]/40 flex items-center justify-center shadow-lg`}>
+                        <div
+                          className={`w-11 h-11 shrink-0 rounded-xl bg-white/90 backdrop-blur-sm border border-[var(--brand-gold)]/40 flex items-center justify-center shadow-lg`}
+                        >
                           <Icon className="w-5 h-5 text-[var(--brand-green)]" />
                         </div>
-                        <h3 className="font-bold text-white drop-shadow-md leading-snug line-clamp-1">{project.title}</h3>
+                        <h3 className="font-bold text-white drop-shadow-md leading-snug line-clamp-1">
+                          {project.title}
+                        </h3>
                       </div>
                       <span className="shrink-0 px-2.5 py-1 rounded-full bg-[var(--brand-gold)]/90 text-white text-xs font-semibold shadow">
                         {project.category}
@@ -317,7 +388,6 @@ export default function ProjectsPage() {
                   </div>
 
                   <div className="p-6 flex flex-col flex-1">
-
                     {/* Description */}
                     <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed">
                       {project.description}
@@ -327,7 +397,9 @@ export default function ProjectsPage() {
                     <div className="mb-4">
                       <div className="flex items-center justify-between text-sm mb-1.5">
                         <span className="text-[var(--muted-foreground)]">نسبة الإنجاز</span>
-                        <span className="font-semibold text-[var(--brand-green)]">{project.progress}%</span>
+                        <span className="font-semibold text-[var(--brand-green)]">
+                          {project.progress}%
+                        </span>
                       </div>
                       <div className="h-2.5 bg-[var(--muted)] rounded-full overflow-hidden">
                         <motion.div
@@ -343,15 +415,21 @@ export default function ProjectsPage() {
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-3 mb-4">
                       <div className="text-center p-2 rounded-lg bg-[var(--brand-green-pale)]/50 border border-[var(--brand-green)]/10">
-                        <div className="font-bold text-sm text-[var(--foreground)]">{project.beneficiaries}</div>
+                        <div className="font-bold text-sm text-[var(--foreground)]">
+                          {project.beneficiaries}
+                        </div>
                         <div className="text-xs text-[var(--muted-foreground)]">مستفيد</div>
                       </div>
                       <div className="text-center p-2 rounded-lg bg-[var(--brand-gold-pale)]/60 border border-[var(--brand-gold)]/15">
-                        <div className="font-bold text-sm text-[var(--foreground)]">{project.budget}</div>
+                        <div className="font-bold text-sm text-[var(--foreground)]">
+                          {project.budget}
+                        </div>
                         <div className="text-xs text-[var(--muted-foreground)]">الميزانية</div>
                       </div>
                       <div className="text-center p-2 rounded-lg bg-[var(--secondary)] border border-[var(--border)]">
-                        <div className="font-bold text-sm text-[var(--foreground)]">{project.raised}</div>
+                        <div className="font-bold text-sm text-[var(--foreground)]">
+                          {project.raised}
+                        </div>
                         <div className="text-xs text-[var(--muted-foreground)]">تم جمعه</div>
                       </div>
                     </div>
@@ -363,7 +441,7 @@ export default function ProjectsPage() {
                         {project.location}
                       </div>
                       <button
-                        onClick={() => navigate('/donate')}
+                        onClick={() => navigate("/donate")}
                         className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
                       >
                         تبرع
@@ -379,7 +457,9 @@ export default function ProjectsPage() {
           {filteredProjects.length === 0 && (
             <div className="text-center py-16">
               <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد مشاريع مطابقة</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد مشاريع مطابقة
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث</p>
             </div>
           )}
@@ -399,17 +479,35 @@ export default function ProjectsPage() {
           >
             <div className="mx-auto mb-6 flex justify-center">
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-                <rect x="14" y="14" width="28" height="28" stroke="var(--brand-gold)" strokeWidth="1.5" />
-                <rect x="14" y="14" width="28" height="28" transform="rotate(45 28 28)" stroke="var(--brand-gold)" strokeWidth="1.5" />
+                <rect
+                  x="14"
+                  y="14"
+                  width="28"
+                  height="28"
+                  stroke="var(--brand-gold)"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="14"
+                  y="14"
+                  width="28"
+                  height="28"
+                  transform="rotate(45 28 28)"
+                  stroke="var(--brand-gold)"
+                  strokeWidth="1.5"
+                />
                 <circle cx="28" cy="28" r="3" fill="var(--brand-gold)" />
               </svg>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">كن شريكاً في صناعة الأثر</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              كن شريكاً في صناعة الأثر
+            </h2>
             <p className="text-white/85 text-lg mb-8 leading-relaxed max-w-xl mx-auto">
-              كل مساهمة — مهما صغرت — تتحول في أيدينا إلى مياه تجري، ودرسٌ يُتلقّى، وأسرةٌ تنتج وتكفّل نفسها
+              كل مساهمة — مهما صغرت — تتحول في أيدينا إلى مياه تجري، ودرسٌ يُتلقّى، وأسرةٌ تنتج
+              وتكفّل نفسها
             </p>
             <button
-              onClick={() => navigate('/donate')}
+              onClick={() => navigate("/donate")}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all hover:-translate-y-0.5"
             >
               <Heart className="w-5 h-5" fill="currentColor" />
@@ -421,5 +519,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-
-

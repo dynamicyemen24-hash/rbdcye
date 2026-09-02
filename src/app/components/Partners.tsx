@@ -4,15 +4,19 @@ import { useEffect, useState } from "react";
 
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
 
-export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: (p: string) => void } = { setCurrentPage: () => {} }) {
+export function Partners(
+  { setCurrentPage: _setCurrentPage }: { setCurrentPage: (p: string) => void } = {
+    setCurrentPage: () => {},
+  }
+) {
   const [partners, setPartners] = useState<any[]>([]);
   const [showDevBadge, setShowDevBadge] = useState(false);
 
   // ContentManager returns static defaults instantly, then upgrades to Sanity
   const { data: dynamicPartners, source } = useDynamicContent<any>({
-    contentType: 'partners',
+    contentType: "partners",
     enableRealtime: false,
-    refreshInterval: 300000
+    refreshInterval: 300000,
   });
 
   // Show dev badge in development mode
@@ -28,11 +32,13 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
         id: p.id || p._id,
         name: p.name,
         type: p.type,
-        status: p.status || 'active',
+        status: p.status || "active",
         logo: p.logo,
         website: p.website || p.url,
       }));
-      setPartners(normalized.filter((item: any) => item.status !== 'inactive' && item.status !== 'suspended'));
+      setPartners(
+        normalized.filter((item: any) => item.status !== "inactive" && item.status !== "suspended")
+      );
     }
   }, [dynamicPartners]);
 
@@ -40,17 +46,27 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
   const DevBadge = showDevBadge ? (
     <div className="fixed top-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
       <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${
-          source === 'sanity' ? 'bg-green-400' :
-          source === 'cache' ? 'bg-blue-400' : 'bg-yellow-400'
-        }`} />
-        <span>{source === 'sanity' ? 'Sanity CMS' : source === 'cache' ? 'Cached' : 'Static Content'}</span>
+        <div
+          className={`w-2 h-2 rounded-full ${
+            source === "sanity"
+              ? "bg-green-400"
+              : source === "cache"
+                ? "bg-blue-400"
+                : "bg-yellow-400"
+          }`}
+        />
+        <span>
+          {source === "sanity" ? "Sanity CMS" : source === "cache" ? "Cached" : "Static Content"}
+        </span>
       </div>
     </div>
   ) : null;
 
   return (
-    <section className="py-24 md:py-32 bg-[var(--background)] relative overflow-hidden" style={{ direction: "rtl" }}>
+    <section
+      className="py-24 md:py-32 bg-[var(--background)] relative overflow-hidden"
+      style={{ direction: "rtl" }}
+    >
       <div className="absolute inset-0 pattern-arabesque-light pointer-events-none" />
       {DevBadge}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
@@ -61,14 +77,19 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <span className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full" style={{ fontSize: "0.8rem", fontWeight: 600 }}>
+          <span
+            className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full"
+            style={{ fontSize: "0.8rem", fontWeight: 600 }}
+          >
             ????? ??????
           </span>
           <h2 className="text-[var(--foreground)]">
-            ??????? ??{" "}
-            <span className="text-[var(--brand-green)]">????? ????????</span>
+            ??????? ?? <span className="text-[var(--brand-green)]">????? ????????</span>
           </h2>
-          <p className="text-[var(--muted-foreground)] mt-2 max-w-xl mx-auto" style={{ fontSize: "0.9rem", lineHeight: "1.7" }}>
+          <p
+            className="text-[var(--muted-foreground)] mt-2 max-w-xl mx-auto"
+            style={{ fontSize: "0.9rem", lineHeight: "1.7" }}
+          >
             ???? ?? ????? ??????????? ??????? ????? ?????? ??? ???? ?????
           </p>
         </motion.div>
@@ -87,7 +108,10 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
               <div className="w-16 h-16 rounded-xl bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
                 <Handshake className="w-8 h-8 text-[var(--brand-green)]" />
               </div>
-              <h3 className="text-[var(--foreground)] mb-1" style={{ fontWeight: 700, fontSize: "0.95rem" }}>
+              <h3
+                className="text-[var(--foreground)] mb-1"
+                style={{ fontWeight: 700, fontSize: "0.95rem" }}
+              >
                 {partner.name}
               </h3>
               <p className="text-[var(--muted-foreground)]" style={{ fontSize: "0.78rem" }}>
@@ -100,5 +124,3 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
     </section>
   );
 }
-
-

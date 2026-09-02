@@ -38,7 +38,13 @@ class EventBus {
     };
   }
 
-  async publish<T>(eventType: string, payload: T, source = 'unknown', correlationId?: string, userId?: string): Promise<void> {
+  async publish<T>(
+    eventType: string,
+    payload: T,
+    source = "unknown",
+    correlationId?: string,
+    userId?: string
+  ): Promise<void> {
     const event: StoredEvent = {
       type: eventType,
       payload,
@@ -56,8 +62,8 @@ class EventBus {
     }
 
     const handlers = this.handlers.get(eventType) || new Set();
-    const promises = Array.from(handlers).map(handler => 
-      Promise.resolve(handler(payload)).catch(err => 
+    const promises = Array.from(handlers).map((handler) =>
+      Promise.resolve(handler(payload)).catch((err) =>
         console.error(`[EventBus] Error in handler for ${eventType}:`, err)
       )
     );
@@ -67,7 +73,7 @@ class EventBus {
 
   getHistory(eventType?: string): StoredEvent[] {
     if (!eventType) return [...this.eventHistory];
-    return this.eventHistory.filter(e => e.type === eventType);
+    return this.eventHistory.filter((e) => e.type === eventType);
   }
 
   clear() {
@@ -80,14 +86,14 @@ export const eventBus = EventBus.getInstance();
 
 // Domain Events
 export const DOMAIN_EVENTS = {
-  USER_LOGIN: 'user.login',
-  USER_LOGOUT: 'user.logout',
-  PROJECT_CREATED: 'project.created',
-  PROJECT_UPDATED: 'project.updated',
-  DONATION_CREATED: 'donation.created',
-  VOLUNTEER_REGISTERED: 'volunteer.registered',
-  NEWS_PUBLISHED: 'news.published',
-  STORY_CREATED: 'story.created',
+  USER_LOGIN: "user.login",
+  USER_LOGOUT: "user.logout",
+  PROJECT_CREATED: "project.created",
+  PROJECT_UPDATED: "project.updated",
+  DONATION_CREATED: "donation.created",
+  VOLUNTEER_REGISTERED: "volunteer.registered",
+  NEWS_PUBLISHED: "news.published",
+  STORY_CREATED: "story.created",
 } as const;
 
 // Event Sourcing - Store all state changes
@@ -123,11 +129,11 @@ export class EventSourcer {
   getAggregate(aggregateId: string) {
     const events = this.events.get(aggregateId) || [];
     const snapshot = this.snapshots.get(aggregateId);
-    
+
     if (snapshot && events.length > 10) {
-      const recentEvents = events.slice(events.findIndex(e => 
-        e.metadata.timestamp > snapshot.timestamp
-      ));
+      const recentEvents = events.slice(
+        events.findIndex((e) => e.metadata.timestamp > snapshot.timestamp)
+      );
       return this.rebuildState([snapshot.state, ...recentEvents]);
     }
 
@@ -136,4 +142,3 @@ export class EventSourcer {
 }
 
 export const eventSourcer = new EventSourcer();
-

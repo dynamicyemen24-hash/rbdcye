@@ -1,8 +1,8 @@
 // src/shared/hooks/useDynamicContent.ts
 // Updated: Always returns data (static defaults guaranteed)
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from "react";
 
-import { contentBridge } from '@/shared/services/content-bridge.service';
+import { contentBridge } from "@/shared/services/content-bridge.service";
 
 interface UseDynamicContentOptions<T> {
   contentType: string;
@@ -15,11 +15,11 @@ export function useDynamicContent<T = any>({
   contentType,
   initialData,
   enableRealtime = false,
-  refreshInterval = 300000 // 5 minutes
+  refreshInterval = 300000, // 5 minutes
 }: UseDynamicContentOptions<T>) {
   const [data, setData] = useState<T[]>(initialData || []);
   const [isLoading, setIsLoading] = useState(false); // Start as false — static data is instant
-  const [source, setSource] = useState<'static' | 'cache' | 'sanity' | 'hybrid'>('static');
+  const [source, setSource] = useState<"static" | "cache" | "sanity" | "hybrid">("static");
   const [error, setError] = useState<Error | null>(null);
   const mountedRef = useRef(true);
 
@@ -53,7 +53,9 @@ export function useDynamicContent<T = any>({
       };
     }
 
-    return () => { mountedRef.current = false; };
+    return () => {
+      mountedRef.current = false;
+    };
   }, [loadContent, enableRealtime, refreshInterval]);
 
   return {
@@ -61,9 +63,7 @@ export function useDynamicContent<T = any>({
     isLoading,
     source,
     error,
-    isDynamic: source === 'sanity' || source === 'hybrid' || source === 'cache',
+    isDynamic: source === "sanity" || source === "hybrid" || source === "cache",
     refresh: loadContent,
   };
 }
-
-

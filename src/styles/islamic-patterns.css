@@ -61,16 +61,22 @@
     rgba(var(--brand-green-rgb), 0.06) 65%,
     rgba(var(--brand-gold-rgb), 0.35)
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
 }
 
 /* ── قوس محراب للميداليات - Mihrab Arch Medallion ─────────── */
 .mihrab-arch {
-  clip-path: path("M 60 130 C 60 95, 18 92, 18 52 C 18 22, 39 6, 60 6 C 81 6, 102 22, 102 52 C 102 92, 60 95, 60 130 Z");
+  clip-path: path(
+    "M 60 130 C 60 95, 18 92, 18 52 C 18 22, 39 6, 60 6 C 81 6, 102 22, 102 52 C 102 92, 60 95, 60 130 Z"
+  );
 }
 
 /* ── احترام تفضيل تقليل الحركة - Reduced Motion ───────────── */
@@ -84,13 +90,3 @@
     scroll-behavior: auto !important;
   }
 }
-
-
-
-
-
-
-
-
-
-

@@ -1,43 +1,71 @@
 // Intelligent Admin Dashboard - Institutional Grade with Deep Analytics
-import { motion } from 'motion/react';
-import { 
-  Activity, TrendingUp, Users, DollarSign, 
-  Calendar, AlertCircle, CheckCircle, XCircle,
-  Brain, Zap, Target, BarChart3, PieChart,
-  ArrowUp, ArrowDown, Eye, MousePointer,
-  Clock, Globe, Smartphone, Monitor,
-  MessageSquare, Bell
-} from 'lucide-react';
-import React, { useState, useEffect, useMemo } from 'react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart as RechartsPie, Pie, ResponsiveContainer, Cell } from 'recharts';
+import { motion } from "motion/react";
+import {
+  Activity,
+  TrendingUp,
+  Users,
+  DollarSign,
+  Calendar,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+  Brain,
+  Zap,
+  Target,
+  BarChart3,
+  PieChart,
+  ArrowUp,
+  ArrowDown,
+  Eye,
+  MousePointer,
+  Clock,
+  Globe,
+  Smartphone,
+  Monitor,
+  MessageSquare,
+  Bell,
+} from "lucide-react";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  PieChart as RechartsPie,
+  Pie,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 
 // AI-Powered Insights Component
 const AIInsightsPanel = () => {
   const [insights] = useState([
     {
-      type: 'opportunity',
+      type: "opportunity",
       icon: TrendingUp,
-      title: 'فرصة نمو ذكية',
-      text: 'التبرعات زادت 23% هذا الشهر - يُنصح بتكثيف حملة التبرع السريع',
+      title: "فرصة نمو ذكية",
+      text: "التبرعات زادت 23% هذا الشهر - يُنصح بتكثيف حملة التبرع السريع",
       confidence: 94,
-      action: 'عرض التفاصيل'
+      action: "عرض التفاصيل",
     },
     {
-      type: 'alert',
+      type: "alert",
       icon: AlertCircle,
-      title: 'تنبيه ذكي',
-      text: '12 متطوع جديد بانتظار الموافقة - متوسط وقت الرد: 48 ساعة',
+      title: "تنبيه ذكي",
+      text: "12 متطوع جديد بانتظار الموافقة - متوسط وقت الرد: 48 ساعة",
       confidence: 88,
-      action: 'مراجعة الطلبات'
+      action: "مراجعة الطلبات",
     },
     {
-      type: 'prediction',
+      type: "prediction",
       icon: Brain,
-      title: 'توقع ذكي',
-      text: 'زيادة متوقعة في الزيارات خلال الأسبوع القادم بنسبة 35%',
+      title: "توقع ذكي",
+      text: "زيادة متوقعة في الزيارات خلال الأسبوع القادم بنسبة 35%",
       confidence: 91,
-      action: 'الاستعداد'
-    }
+      action: "الاستعداد",
+    },
   ]);
 
   return (
@@ -61,22 +89,30 @@ const AIInsightsPanel = () => {
             transition={{ delay: index * 0.1 }}
             className="flex items-start gap-4 p-4 rounded-xl bg-gradient-to-l from-gray-50 to-white border border-gray-100 hover:shadow-md transition-all"
           >
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-              insight.type === 'opportunity' ? 'bg-green-100 text-green-600' :
-              insight.type === 'alert' ? 'bg-orange-100 text-orange-600' :
-              'bg-blue-100 text-blue-600'
-            }`}>
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                insight.type === "opportunity"
+                  ? "bg-green-100 text-green-600"
+                  : insight.type === "alert"
+                    ? "bg-orange-100 text-orange-600"
+                    : "bg-blue-100 text-blue-600"
+              }`}
+            >
               <insight.icon className="w-5 h-5" />
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-center justify-between mb-1">
                 <h4 className="font-semibold text-gray-800">{insight.title}</h4>
-                <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                  insight.confidence >= 90 ? 'bg-green-100 text-green-700' :
-                  insight.confidence >= 80 ? 'bg-yellow-100 text-yellow-700' :
-                  'bg-red-100 text-red-700'
-                }`}>
+                <span
+                  className={`text-xs font-medium px-2 py-1 rounded-full ${
+                    insight.confidence >= 90
+                      ? "bg-green-100 text-green-700"
+                      : insight.confidence >= 80
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-red-100 text-red-700"
+                  }`}
+                >
                   {insight.confidence}% دقة
                 </span>
               </div>
@@ -93,51 +129,53 @@ const AIInsightsPanel = () => {
 };
 
 // Pre-generated chart data (memoized for performance)
-const generateChartData = () => Array.from({ length: 30 }, (_, i) => ({
-  day: i + 1,
-  value: Math.floor(Math.random() * 1000) + 700
-}));
+const generateChartData = () =>
+  Array.from({ length: 30 }, (_, i) => ({
+    day: i + 1,
+    value: Math.floor(Math.random() * 1000) + 700,
+  }));
 
-const generateMiniChartData = (multiplier: number, offset: number) => Array.from({ length: 30 }, (_, i) => ({
-  day: i + 1,
-  value: Math.floor(Math.random() * multiplier) + offset
-}));
+const generateMiniChartData = (multiplier: number, offset: number) =>
+  Array.from({ length: 30 }, (_, i) => ({
+    day: i + 1,
+    value: Math.floor(Math.random() * multiplier) + offset,
+  }));
 
 // Advanced Metrics Grid with Deep Analytics
 const AdvancedMetricsGrid = () => {
   const metrics = [
     {
-      label: 'إجمالي الزوار',
-      value: '24.8K',
+      label: "إجمالي الزوار",
+      value: "24.8K",
       change: +15.3,
       icon: Eye,
-      color: 'blue',
-      chartData: generateChartData()
+      color: "blue",
+      chartData: generateChartData(),
     },
     {
-      label: 'معدل التفاعل',
-      value: '3.2%',
+      label: "معدل التفاعل",
+      value: "3.2%",
       change: +0.8,
       icon: MousePointer,
-      color: 'purple',
-      chartData: generateMiniChartData(5, 2)
+      color: "purple",
+      chartData: generateMiniChartData(5, 2),
     },
     {
-      label: 'متوسط المدة',
-      value: '4.5 دقيقة',
+      label: "متوسط المدة",
+      value: "4.5 دقيقة",
       change: -0.3,
       icon: Clock,
-      color: 'orange',
-      chartData: generateMiniChartData(3, 3)
+      color: "orange",
+      chartData: generateMiniChartData(3, 3),
     },
     {
-      label: 'مصادر الزيارات',
-      value: '12 دولة',
+      label: "مصادر الزيارات",
+      value: "12 دولة",
       change: +3,
       icon: Globe,
-      color: 'green',
-      chartData: []
-    }
+      color: "green",
+      chartData: [],
+    },
   ];
 
   return (
@@ -151,11 +189,19 @@ const AdvancedMetricsGrid = () => {
           className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className={`w-12 h-12 bg-${metric.color}-100 rounded-xl flex items-center justify-center`}>
+            <div
+              className={`w-12 h-12 bg-${metric.color}-100 rounded-xl flex items-center justify-center`}
+            >
               <metric.icon className={`w-6 h-6 text-${metric.color}-600`} />
             </div>
-            <div className={`flex items-center gap-1 text-sm font-medium ${metric.change > 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {metric.change > 0 ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
+            <div
+              className={`flex items-center gap-1 text-sm font-medium ${metric.change > 0 ? "text-green-600" : "text-red-600"}`}
+            >
+              {metric.change > 0 ? (
+                <ArrowUp className="w-4 h-4" />
+              ) : (
+                <ArrowDown className="w-4 h-4" />
+              )}
               {Math.abs(metric.change)}%
             </div>
           </div>
@@ -169,11 +215,25 @@ const AdvancedMetricsGrid = () => {
                 <AreaChart data={metric.chartData}>
                   <defs>
                     <linearGradient id={`gradient-${index}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={`var(--brand-${metric.color})`} stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor={`var(--brand-${metric.color})`} stopOpacity={0}/>
+                      <stop
+                        offset="5%"
+                        stopColor={`var(--brand-${metric.color})`}
+                        stopOpacity={0.3}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor={`var(--brand-${metric.color})`}
+                        stopOpacity={0}
+                      />
                     </linearGradient>
                   </defs>
-                  <Area type="monotone" dataKey="value" stroke={`var(--brand-${metric.color})`} fill={`url(#gradient-${index})`} strokeWidth={2} />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke={`var(--brand-${metric.color})`}
+                    fill={`url(#gradient-${index})`}
+                    strokeWidth={2}
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -186,26 +246,37 @@ const AdvancedMetricsGrid = () => {
 
 // User Behavior Analytics
 const UserBehaviorAnalytics = () => {
-  const behaviorData = useMemo(() => [
-    { name: 'الصفحة الرئيسية', visits: 4521, percentage: 35 },
-    { name: 'التبرعات', visits: 2890, percentage: 22 },
-    { name: 'الأخبار', visits: 1980, percentage: 15 },
-    { name: 'التطوع', visits: 1654, percentage: 13 },
-    { name: 'البرامج', visits: 1432, percentage: 11 },
-    { name: 'أخرى', visits: 520, percentage: 4 },
-  ], []);
+  const behaviorData = useMemo(
+    () => [
+      { name: "الصفحة الرئيسية", visits: 4521, percentage: 35 },
+      { name: "التبرعات", visits: 2890, percentage: 22 },
+      { name: "الأخبار", visits: 1980, percentage: 15 },
+      { name: "التطوع", visits: 1654, percentage: 13 },
+      { name: "البرامج", visits: 1432, percentage: 11 },
+      { name: "أخرى", visits: 520, percentage: 4 },
+    ],
+    []
+  );
 
-  const COLORS = ['#0F4C3A', '#10B981', '#059669', '#34D399', '#6EE7B7', '#A7F3D0'];
+  const COLORS = ["#0F4C3A", "#10B981", "#059669", "#34D399", "#6EE7B7", "#A7F3D0"];
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
       <h3 className="text-lg font-bold text-gray-800 mb-6">تحليل سلوك المستخدمين</h3>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <ResponsiveContainer width="100%" height={250}>
             <RechartsPie>
-              <Pie data={behaviorData} dataKey="visits" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+              <Pie
+                data={behaviorData}
+                dataKey="visits"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label
+              >
                 {behaviorData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
@@ -237,37 +308,41 @@ const UserBehaviorAnalytics = () => {
 const SmartNotificationsCenter = () => {
   const [notifications] = useState([
     {
-      id: '1',
-      type: 'message',
-      title: 'رسالة جديدة',
-      text: 'تم استلام رسالة جديدة من أحمد محمد',
-      time: 'منذ 5 دقائق',
-      read: false
+      id: "1",
+      type: "message",
+      title: "رسالة جديدة",
+      text: "تم استلام رسالة جديدة من أحمد محمد",
+      time: "منذ 5 دقائق",
+      read: false,
     },
     {
-      id: '2',
-      type: 'donation',
-      title: 'تبرع جديد',
-      text: 'تم استلام تبرع بقيمة 500$ لمشروع التعليم',
-      time: 'منذ 15 دقيقة',
-      read: false
+      id: "2",
+      type: "donation",
+      title: "تبرع جديد",
+      text: "تم استلام تبرع بقيمة 500$ لمشروع التعليم",
+      time: "منذ 15 دقيقة",
+      read: false,
     },
     {
-      id: '3',
-      type: 'volunteer',
-      title: 'متطوع جديد',
-      text: 'سارة أحمد سجلت للتطوع في مجال الصحة',
-      time: 'منذ ساعة',
-      read: true
-    }
+      id: "3",
+      type: "volunteer",
+      title: "متطوع جديد",
+      text: "سارة أحمد سجلت للتطوع في مجال الصحة",
+      time: "منذ ساعة",
+      read: true,
+    },
   ]);
 
   const getNotificationIcon = (type: string) => {
-    switch(type) {
-      case 'message': return <MessageSquare className="w-5 h-5 text-blue-600" />;
-      case 'donation': return <DollarSign className="w-5 h-5 text-green-600" />;
-      case 'volunteer': return <Users className="w-5 h-5 text-purple-600" />;
-      default: return <Bell className="w-5 h-5 text-gray-600" />;
+    switch (type) {
+      case "message":
+        return <MessageSquare className="w-5 h-5 text-blue-600" />;
+      case "donation":
+        return <DollarSign className="w-5 h-5 text-green-600" />;
+      case "volunteer":
+        return <Users className="w-5 h-5 text-purple-600" />;
+      default:
+        return <Bell className="w-5 h-5 text-gray-600" />;
     }
   };
 
@@ -276,7 +351,7 @@ const SmartNotificationsCenter = () => {
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-gray-800">الإشعارات الذكية</h3>
         <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">
-          {notifications.filter(n => !n.read).length} جديد
+          {notifications.filter((n) => !n.read).length} جديد
         </span>
       </div>
 
@@ -287,7 +362,7 @@ const SmartNotificationsCenter = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className={`flex items-start gap-3 p-4 rounded-xl border transition-all ${
-              notification.read ? 'bg-gray-50 border-gray-100' : 'bg-blue-50 border-blue-100'
+              notification.read ? "bg-gray-50 border-gray-100" : "bg-blue-50 border-blue-100"
             }`}
           >
             {getNotificationIcon(notification.type)}
@@ -312,17 +387,17 @@ export default function IntelligentAdminDashboard() {
     activeUsers: 247,
     currentDonations: 1250,
     pendingMessages: 8,
-    systemHealth: 99.9
+    systemHealth: 99.9,
   });
 
   // Simulate real-time updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setRealtimeData(prev => ({
+      setRealtimeData((prev) => ({
         activeUsers: prev.activeUsers + Math.floor(Math.random() * 10) - 5,
         currentDonations: prev.currentDonations + Math.floor(Math.random() * 100),
         pendingMessages: Math.max(0, prev.pendingMessages + Math.floor(Math.random() * 3) - 1),
-        systemHealth: 99.5 + Math.random() * 0.5
+        systemHealth: 99.5 + Math.random() * 0.5,
       }));
     }, 5000);
 
@@ -342,9 +417,7 @@ export default function IntelligentAdminDashboard() {
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span className="text-sm font-medium">النظام نشط</span>
           </div>
-          <div className="text-sm text-gray-600">
-            {new Date().toLocaleString('ar-SA')}
-          </div>
+          <div className="text-sm text-gray-600">{new Date().toLocaleString("ar-SA")}</div>
         </div>
       </div>
 
@@ -392,7 +465,7 @@ export default function IntelligentAdminDashboard() {
               <span className="text-sm font-semibold text-green-600">2.5 ساعة</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div className="bg-green-600 h-2 rounded-full" style={{ width: '85%' }} />
+              <div className="bg-green-600 h-2 rounded-full" style={{ width: "85%" }} />
             </div>
           </div>
         </div>
@@ -402,8 +475,11 @@ export default function IntelligentAdminDashboard() {
           <div className="flex items-end justify-between">
             <div className="text-3xl font-bold text-[var(--brand-green)]">4.8/5</div>
             <div className="flex gap-1">
-              {[1,2,3,4,5].map(i => (
-                <div key={i} className={`w-6 h-6 rounded ${i <= 4 ? 'bg-[var(--brand-gold)]' : 'bg-gray-200'}`} />
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div
+                  key={i}
+                  className={`w-6 h-6 rounded ${i <= 4 ? "bg-[var(--brand-gold)]" : "bg-gray-200"}`}
+                />
               ))}
             </div>
           </div>
@@ -418,4 +494,3 @@ export default function IntelligentAdminDashboard() {
     </div>
   );
 }
-

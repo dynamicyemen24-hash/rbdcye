@@ -1,6 +1,6 @@
 // Enterprise Resilience Patterns - Circuit Breaker, Retry, Rate Limiter
 
-type CircuitState = 'CLOSED' | 'OPEN' | 'HALF_OPEN';
+type CircuitState = "CLOSED" | "OPEN" | "HALF_OPEN";
 
 interface CircuitBreakerOptions {
   failureThreshold: number;
@@ -22,7 +22,7 @@ interface RateLimiterOptions {
 
 // Circuit Breaker Pattern
 export class CircuitBreaker {
-  private state: CircuitState = 'CLOSED';
+  private state: CircuitState = "CLOSED";
   private failureCount = 0;
   private lastFailureTime?: number;
   private successCount = 0;
@@ -30,12 +30,12 @@ export class CircuitBreaker {
   constructor(private options: CircuitBreakerOptions) {}
 
   async execute<T>(fn: () => Promise<T>, fallback?: () => T): Promise<T> {
-    if (this.state === 'OPEN') {
+    if (this.state === "OPEN") {
       if (this.shouldAttemptReset()) {
-        this.state = 'HALF_OPEN';
+        this.state = "HALF_OPEN";
       } else {
         if (fallback) return fallback();
-        throw new Error('Circuit breaker is OPEN');
+        throw new Error("Circuit breaker is OPEN");
       }
     }
 
@@ -53,17 +53,16 @@ export class CircuitBreaker {
   }
 
   private shouldAttemptReset(): boolean {
-    return !!this.lastFailureTime && 
-      Date.now() - this.lastFailureTime > this.options.resetTimeout;
+    return !!this.lastFailureTime && Date.now() - this.lastFailureTime > this.options.resetTimeout;
   }
 
   private onSuccess() {
     this.failureCount = 0;
-    
-    if (this.state === 'HALF_OPEN') {
+
+    if (this.state === "HALF_OPEN") {
       this.successCount++;
       if (this.successCount >= 2) {
-        this.state = 'CLOSED';
+        this.state = "CLOSED";
         this.successCount = 0;
       }
     }
@@ -72,13 +71,13 @@ export class CircuitBreaker {
   private onFailure() {
     this.failureCount++;
     this.lastFailureTime = Date.now();
-    
+
     if (this.failureCount >= this.options.failureThreshold) {
-      this.state = 'OPEN';
+      this.state = "OPEN";
     }
-    
-    if (this.state === 'HALF_OPEN') {
-      this.state = 'OPEN';
+
+    if (this.state === "HALF_OPEN") {
+      this.state = "OPEN";
       this.lastFailureTime = Date.now();
     }
   }
@@ -92,7 +91,7 @@ export class CircuitBreaker {
   }
 
   reset() {
-    this.state = 'CLOSED';
+    this.state = "CLOSED";
     this.failureCount = 0;
     this.lastFailureTime = undefined;
     this.successCount = 0;
@@ -100,16 +99,8 @@ export class CircuitBreaker {
 }
 
 // Retry with Exponential Backoff
-export async function retry<T>(
-  fn: () => Promise<T>,
-  options: RetryOptions = {}
-): Promise<T> {
-  const {
-    maxRetries = 3,
-    initialDelay = 1000,
-    maxDelay = 10000,
-    backoffMultiplier = 2,
-  } = options;
+export async function retry<T>(fn: () => Promise<T>, options: RetryOptions = {}): Promise<T> {
+  const { maxRetries = 3, initialDelay = 1000, maxDelay = 10000, backoffMultiplier = 2 } = options;
   let lastError: Error;
   let currentDelay = initialDelay;
 
@@ -118,9 +109,9 @@ export async function retry<T>(
       return await fn();
     } catch (error) {
       lastError = error as Error;
-      
+
       if (attempt < maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, currentDelay));
+        await new Promise((resolve) => setTimeout(resolve, currentDelay));
         currentDelay = Math.min(currentDelay * backoffMultiplier, maxDelay);
       }
     }
@@ -137,16 +128,16 @@ export class RateLimiter {
 
   async execute<T>(fn: () => Promise<T>): Promise<T> {
     const now = Date.now();
-    
+
     // Remove old requests outside the window
-    this.requests = this.requests.filter(time => now - time < this.options.windowMs);
+    this.requests = this.requests.filter((time) => now - time < this.options.windowMs);
 
     if (this.requests.length >= this.options.maxRequests) {
       const oldestRequest = this.requests[0];
       const waitTime = this.options.windowMs - (now - oldestRequest);
-      
+
       if (waitTime > 0) {
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
         return this.execute(fn);
       }
     }
@@ -157,8 +148,8 @@ export class RateLimiter {
 
   getStatus() {
     const now = Date.now();
-    const recentRequests = this.requests.filter(time => now - time < this.options.windowMs);
-    
+    const recentRequests = this.requests.filter((time) => now - time < this.options.windowMs);
+
     return {
       currentCount: recentRequests.length,
       maxRequests: this.options.maxRequests,
@@ -207,10 +198,10 @@ export class Bulkhead {
   async execute<T>(fn: () => Promise<T>): Promise<T> {
     if (this.running >= this.maxConcurrent) {
       if (this.queue.length >= this.maxQueue) {
-        throw new Error('Bulkhead queue is full');
+        throw new Error("Bulkhead queue is full");
       }
-      
-      await new Promise<void>(resolve => this.queue.push(resolve));
+
+      await new Promise<void>((resolve) => this.queue.push(resolve));
     }
 
     this.running++;
@@ -267,12 +258,7 @@ export async function resilient<T>(
   } = options;
 
   return circuitBreaker.execute(
-    () => rateLimiter.execute(
-      () => bulkhead.execute(
-        () => retry(fn, { maxRetries: retries })
-      )
-    ),
+    () => rateLimiter.execute(() => bulkhead.execute(() => retry(fn, { maxRetries: retries }))),
     fallback
   );
 }
-

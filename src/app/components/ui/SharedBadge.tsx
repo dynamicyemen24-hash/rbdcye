@@ -10,24 +10,15 @@ export interface SharedBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export const SharedBadge = forwardRef<HTMLSpanElement, SharedBadgeProps>(
-  (
-    {
-      variant = "primary",
-      size = "md",
-      children,
-      icon,
-      className = "",
-      ...props
-    },
-    ref
-  ) => {
+  ({ variant = "primary", size = "md", children, icon, className = "", ...props }, ref) => {
     const sizeStyles = {
-      sm: "px-2.5 py-1 text-xs gap-1.5",  // 10px horizontal, 4px vertical
-      md: "px-3.5 py-1.5 text-sm gap-2",  // 14px horizontal, 6px vertical
+      sm: "px-2.5 py-1 text-xs gap-1.5", // 10px horizontal, 4px vertical
+      md: "px-3.5 py-1.5 text-sm gap-2", // 14px horizontal, 6px vertical
     };
 
     const variantStyles = {
-      primary: "bg-[var(--brand-green)]/10 text-[var(--brand-green)] border border-[var(--brand-green)]/20 font-semibold",
+      primary:
+        "bg-[var(--brand-green)]/10 text-[var(--brand-green)] border border-[var(--brand-green)]/20 font-semibold",
       gold: "bg-[var(--brand-gold)]/15 text-amber-800 dark:text-[var(--brand-gold-light)] border border-[var(--brand-gold)]/30 font-semibold",
       outline: "bg-transparent text-[var(--foreground)] border border-[var(--border)] font-medium",
       subtle: "bg-[var(--muted)] text-[var(--muted-foreground)] font-medium",
@@ -49,5 +40,3 @@ export const SharedBadge = forwardRef<HTMLSpanElement, SharedBadgeProps>(
 SharedBadge.displayName = "SharedBadge";
 
 export default SharedBadge;
-
-

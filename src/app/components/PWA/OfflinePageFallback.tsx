@@ -1,10 +1,10 @@
 // Offline Page Fallback - واجهة بديلة عند تعذر تحميل صفحة جديدة بدون اتصال بالإنترنت
-import { memo, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { WifiOff, RotateCcw, HardDrive, ArrowLeft, Home } from 'lucide-react';
-import { VisitedPageMeta } from './OfflineManager';
+import { memo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { WifiOff, RotateCcw, HardDrive, ArrowLeft, Home } from "lucide-react";
+import { VisitedPageMeta } from "./OfflineManager";
 
-const VISITED_PAGES_STORAGE_KEY = 'rbdcye_offline_visited_pages';
+const VISITED_PAGES_STORAGE_KEY = "rbdcye_offline_visited_pages";
 
 interface OfflinePageFallbackProps {
   error?: Error | null;
@@ -57,7 +57,8 @@ export const OfflinePageFallback = memo(function OfflinePageFallback({
         </h2>
 
         <p className="text-sm text-slate-600 mb-6 max-w-lg mx-auto leading-relaxed">
-          يبدو أنك تتصفح بدون اتصال بالإنترنت ولم تتم زيارة هذه الصفحة مسبقاً. يمكنك تصفح الصفحات المحفوظة لديك مسبقاً أو إعادة المحاولة عند توفر الشبكة.
+          يبدو أنك تتصفح بدون اتصال بالإنترنت ولم تتم زيارة هذه الصفحة مسبقاً. يمكنك تصفح الصفحات
+          المحفوظة لديك مسبقاً أو إعادة المحاولة عند توفر الشبكة.
         </p>
 
         {/* Action Buttons */}
@@ -70,7 +71,7 @@ export const OfflinePageFallback = memo(function OfflinePageFallback({
             إعادة محاولة الاتصال
           </button>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
           >
             <Home className="w-4 h-4 text-[#0F4C3A]" />
@@ -92,7 +93,7 @@ export const OfflinePageFallback = memo(function OfflinePageFallback({
                   key={page.path}
                   onClick={() => {
                     navigate(page.path);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                   className="p-3 bg-slate-50 hover:bg-emerald-50/70 border border-slate-200 hover:border-emerald-300 rounded-xl text-right transition-all flex items-center justify-between group cursor-pointer"
                 >
@@ -114,5 +115,3 @@ export const OfflinePageFallback = memo(function OfflinePageFallback({
 });
 
 export default OfflinePageFallback;
-
-

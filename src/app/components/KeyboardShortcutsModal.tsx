@@ -1,16 +1,7 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  Keyboard,
-  X,
-  Search,
-  Zap,
-  Compass,
-  Eye,
-  ArrowRight,
-  Sparkles,
-} from 'lucide-react';
-import { ShortcutDefinition } from '@/hooks/useKeyboardShortcuts';
+import { useState, useMemo, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Keyboard, X, Search, Zap, Compass, Eye, ArrowRight, Sparkles } from "lucide-react";
+import { ShortcutDefinition } from "@/hooks/useKeyboardShortcuts";
 
 interface KeyboardShortcutsModalProps {
   isOpen: boolean;
@@ -23,8 +14,10 @@ export function KeyboardShortcutsModal({
   onClose,
   shortcuts,
 }: KeyboardShortcutsModalProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'navigation' | 'actions' | 'accessibility'>('all');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<
+    "all" | "navigation" | "actions" | "accessibility"
+  >("all");
   const modalRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,27 +28,26 @@ export function KeyboardShortcutsModal({
         searchInputRef.current?.focus();
       }, 100);
     } else {
-      setSearchQuery('');
+      setSearchQuery("");
     }
   }, [isOpen]);
 
   // Close on Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         e.preventDefault();
         onClose();
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   // Filter shortcuts
   const filteredShortcuts = useMemo(() => {
     return shortcuts.filter((shortcut) => {
-      const matchesCategory =
-        selectedCategory === 'all' || shortcut.category === selectedCategory;
+      const matchesCategory = selectedCategory === "all" || shortcut.category === selectedCategory;
       const query = searchQuery.trim().toLowerCase();
       if (!query) return matchesCategory;
 
@@ -70,24 +62,24 @@ export function KeyboardShortcutsModal({
   }, [shortcuts, searchQuery, selectedCategory]);
 
   const categories = [
-    { id: 'all', label: 'جميع الاختصارات', icon: Sparkles, count: shortcuts.length },
+    { id: "all", label: "جميع الاختصارات", icon: Sparkles, count: shortcuts.length },
     {
-      id: 'navigation',
-      label: 'التنقل بين الصفحات',
+      id: "navigation",
+      label: "التنقل بين الصفحات",
       icon: Compass,
-      count: shortcuts.filter((s) => s.category === 'navigation').length,
+      count: shortcuts.filter((s) => s.category === "navigation").length,
     },
     {
-      id: 'actions',
-      label: 'الإجراءات والأدوات',
+      id: "actions",
+      label: "الإجراءات والأدوات",
       icon: Zap,
-      count: shortcuts.filter((s) => s.category === 'actions').length,
+      count: shortcuts.filter((s) => s.category === "actions").length,
     },
     {
-      id: 'accessibility',
-      label: 'الوصول ومؤشرات التركيز',
+      id: "accessibility",
+      label: "الوصول ومؤشرات التركيز",
       icon: Eye,
-      count: shortcuts.filter((s) => s.category === 'accessibility').length,
+      count: shortcuts.filter((s) => s.category === "accessibility").length,
     },
   ];
 
@@ -119,7 +111,7 @@ export function KeyboardShortcutsModal({
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+          transition={{ type: "spring", stiffness: 380, damping: 28 }}
           className="relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-gray-200/80 dark:border-zinc-800 flex flex-col overflow-hidden z-10"
         >
           {/* Header */}
@@ -153,7 +145,10 @@ export function KeyboardShortcutsModal({
 
             {/* Search Input */}
             <div className="relative mt-2">
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <Search
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                aria-hidden="true"
+              />
               <input
                 ref={searchInputRef}
                 type="text"
@@ -164,7 +159,7 @@ export function KeyboardShortcutsModal({
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 px-2 py-1"
                 >
                   مسح
@@ -173,7 +168,10 @@ export function KeyboardShortcutsModal({
             </div>
 
             {/* Categories Filters */}
-            <div className="flex items-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-none" role="tablist">
+            <div
+              className="flex items-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-none"
+              role="tablist"
+            >
               {categories.map((cat) => {
                 const isSelected = selectedCategory === cat.id;
                 const Icon = cat.icon;
@@ -185,8 +183,8 @@ export function KeyboardShortcutsModal({
                     onClick={() => setSelectedCategory(cat.id as any)}
                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                       isSelected
-                        ? 'bg-[var(--brand-green)] text-white shadow-sm'
-                        : 'bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700'
+                        ? "bg-[var(--brand-green)] text-white shadow-sm"
+                        : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700"
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" aria-hidden="true" />
@@ -194,8 +192,8 @@ export function KeyboardShortcutsModal({
                     <span
                       className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
                         isSelected
-                          ? 'bg-white/20 text-white'
-                          : 'bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400'
+                          ? "bg-white/20 text-white"
+                          : "bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400"
                       }`}
                     >
                       {cat.count}
@@ -231,7 +229,7 @@ export function KeyboardShortcutsModal({
                         <span className="font-bold text-sm text-gray-900 dark:text-white font-cairo group-hover:text-[var(--brand-green)] transition-colors">
                           {shortcut.title}
                         </span>
-                        {shortcut.category === 'navigation' && (
+                        {shortcut.category === "navigation" && (
                           <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-100/70 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold font-cairo">
                             صفحة
                           </span>
@@ -258,7 +256,10 @@ export function KeyboardShortcutsModal({
                       </>
                     )}
 
-                    <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[var(--brand-green)] group-hover:-translate-x-1 transition-all mr-1" aria-hidden="true" />
+                    <ArrowRight
+                      className="w-4 h-4 text-gray-300 group-hover:text-[var(--brand-green)] group-hover:-translate-x-1 transition-all mr-1"
+                      aria-hidden="true"
+                    />
                   </div>
                 </button>
               ))
@@ -272,7 +273,13 @@ export function KeyboardShortcutsModal({
                 💡
               </span>
               <span>
-                اضغط على أرقام <strong className="text-gray-900 dark:text-white font-mono">1-9</strong> في أي وقت للتنقل المباشر، أو مفتاح <kbd className="px-1.5 py-0.5 bg-white dark:bg-zinc-800 border border-gray-200 rounded font-mono">Tab</kbd> للتنقل بالتركيز المرئي.
+                اضغط على أرقام{" "}
+                <strong className="text-gray-900 dark:text-white font-mono">1-9</strong> في أي وقت
+                للتنقل المباشر، أو مفتاح{" "}
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-zinc-800 border border-gray-200 rounded font-mono">
+                  Tab
+                </kbd>{" "}
+                للتنقل بالتركيز المرئي.
               </span>
             </div>
 
@@ -288,5 +295,3 @@ export function KeyboardShortcutsModal({
     </AnimatePresence>
   );
 }
-
-

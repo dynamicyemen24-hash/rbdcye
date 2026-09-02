@@ -4,20 +4,20 @@
  */
 
 // أنواع الوسائط المدعومة
-export type MediaItemType = 'image' | 'video' | 'document';
-export type ImageFitMode = 'contain' | 'cover' | 'original' | 'width' | 'height';
+export type MediaItemType = "image" | "video" | "document";
+export type ImageFitMode = "contain" | "cover" | "original" | "width" | "height";
 export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
-export type SidebarViewMode = 'expanded' | 'collapsed' | 'hidden';
-export type ViewerSize = 'compact' | 'normal' | 'large' | 'fullscreen';
+export type SidebarViewMode = "expanded" | "collapsed" | "hidden";
+export type ViewerSize = "compact" | "normal" | "large" | "fullscreen";
 
 // واجهة الوسائط الأساسية
 export interface MediaItem {
   _id: string;
-  _type: 'media' | 'video';
+  _type: "media" | "video";
   title: string;
   description?: string;
   type: MediaItemType;
-  
+
   // للصور
   imageFile?: {
     asset: {
@@ -27,7 +27,7 @@ export interface MediaItem {
     };
     alt?: string;
   };
-  
+
   // للفيديو
   videoFile?: {
     asset: {
@@ -45,7 +45,7 @@ export interface MediaItem {
     };
   };
   duration?: string;
-  
+
   // مشترك
   url?: string;
   altText?: string;
@@ -55,11 +55,11 @@ export interface MediaItem {
   isFeatured?: boolean;
   isCover?: boolean;
   order?: number;
-  status?: 'published' | 'draft' | 'archived';
+  status?: "published" | "draft" | "archived";
   publishDate?: string;
   _createdAt?: string;
   _updatedAt?: string;
-  
+
   // إحصائيات
   views?: number;
   likes?: number;
@@ -71,26 +71,26 @@ export interface MediaViewerOptions {
   autoPlay?: boolean;
   loop?: boolean;
   showSidebar?: boolean;
-  sidebarPosition?: 'left' | 'right';
+  sidebarPosition?: "left" | "right";
   sidebarViewMode?: SidebarViewMode;
-  
+
   // الإعدادات البصرية
-  theme?: 'light' | 'dark' | 'charity';
+  theme?: "light" | "dark" | "charity";
   enableAnimations?: boolean;
   showThumbnails?: boolean;
-  
+
   // الإعدادات التنقل
   enableKeyboardNav?: boolean;
   enableMouseWheel?: boolean;
   enableSwipe?: boolean;
   enableAutoLoop?: boolean;
-  
+
   // الإعدادات الأداء
   lazyLoad?: boolean;
   preloadCount?: number;
-  
+
   // أبعاد الإطار
-  aspectRatio?: '16:9' | '4:3' | '1:1' | 'auto';
+  aspectRatio?: "16:9" | "4:3" | "1:1" | "auto";
   initialSize?: ViewerSize;
 }
 
@@ -130,4 +130,3 @@ export interface NavigationState {
   canPrevious: boolean;
   canNext: boolean;
 }
-

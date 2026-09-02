@@ -1,5 +1,5 @@
-import { X, Send } from 'lucide-react';
-import React, { useState } from 'react';
+import { X, Send } from "lucide-react";
+import React, { useState } from "react";
 
 interface ReplyModalProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface ReplyModalProps {
 }
 
 export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps) {
-  const [reply, setReply] = useState('');
+  const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
 
   if (!isOpen || !message) return null;
@@ -21,9 +21,9 @@ export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps
     setSending(true);
     try {
       await onSend(reply);
-      setReply('');
+      setReply("");
     } catch (error) {
-      console.error('Error sending reply:', error);
+      console.error("Error sending reply:", error);
     } finally {
       setSending(false);
     }
@@ -53,7 +53,7 @@ export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps
           </div>
 
           <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+            <div className="mb-4">
               <label htmlFor="reply-text" className="block text-sm font-medium text-gray-700 mb-2">
                 نص الرد
               </label>
@@ -67,9 +67,7 @@ export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps
                 dir="rtl"
                 disabled={sending}
               />
-              <p className="mt-1 text-xs text-gray-500">
-                {reply.length} / 5000 حرف
-              </p>
+              <p className="mt-1 text-xs text-gray-500">{reply.length} / 5000 حرف</p>
             </div>
 
             <div className="flex items-center gap-2 justify-end">
@@ -105,4 +103,3 @@ export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps
     </div>
   );
 }
-

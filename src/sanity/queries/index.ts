@@ -493,4 +493,3 @@ export const IMPACT_METRICS_QUERY = defineQuery(`
     "totalDonationAmount": sum(*[_type == "donation" && status == "completed"].amount)
   }
 `);
-

@@ -87,14 +87,18 @@
 
 /* Prevent zoom on input focus (iOS) */
 @media (max-width: 768px) {
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 16px;
   }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -107,18 +111,9 @@
   ::-webkit-scrollbar {
     width: 4px;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: var(--brand-green);
     border-radius: 2px;
   }
 }
-
-
-
-
-
-
-
-
-

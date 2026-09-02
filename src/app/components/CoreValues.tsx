@@ -53,7 +53,7 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
     <section className="section-padding-lg bg-white relative overflow-hidden font-cairo" dir="rtl">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--brand-green)]/20 to-transparent pointer-events-none" />
       <div className="absolute inset-0 pattern-sanaani-arch opacity-15 pointer-events-none" />
-      
+
       <div className="container-standard relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--brand-gold)]/15 text-[var(--brand-gold-dark)] dark:text-[var(--warning)] text-xs font-bold font-cairo border border-[var(--brand-gold)]/30 mb-3.5 shadow-2xs">
@@ -65,7 +65,8 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
           </h2>
           <div className="w-16 h-1 bg-[var(--brand-green)]/20 mx-auto rounded-full mb-4" />
           <p className="section-subtitle max-w-2xl mx-auto">
-            نرتكز على منظومة قيمية صارمة توجه كل مشروع ميداني وريال ينفق لإحداث تحول حقيقي ومستدام يصون كرامة المستفيدين.
+            نرتكز على منظومة قيمية صارمة توجه كل مشروع ميداني وريال ينفق لإحداث تحول حقيقي ومستدام
+            يصون كرامة المستفيدين.
           </p>
         </div>
 
@@ -85,7 +86,7 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
                 className="bg-white rounded-3xl p-7 border border-[var(--border)] shadow-sm hover:shadow-xl hover:border-[var(--brand-green)]/40 transition-all flex flex-col justify-between text-center group cursor-pointer"
               >
                 <div>
-                  <div 
+                  <div
                     className="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 shadow-xs"
                     style={{ backgroundColor: val.bg, color: val.color }}
                   >
@@ -99,7 +100,10 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-[var(--border)] flex items-center justify-center text-xs font-black font-cairo" style={{ color: val.color }}>
+                <div
+                  className="mt-8 pt-4 border-t border-[var(--border)] flex items-center justify-center text-xs font-black font-cairo"
+                  style={{ color: val.color }}
+                >
                   <span>ركيزة أساسية</span>
                 </div>
               </motion.div>
@@ -126,5 +130,3 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
 }
 
 export default CoreValues;
-
-

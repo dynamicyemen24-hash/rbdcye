@@ -1,15 +1,32 @@
 // VideoManager - نظام إدارة الفيديو المتكامل من لوحة التحكم
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 import {
-  Video, Play, Pause, Volume2, VolumeX, RefreshCw,
-  CheckCircle, AlertCircle, ExternalLink, Settings,
-  Image, FileVideo, Globe, Youtube, Upload,
-  Eye, Heart, Edit3, Trash2, ChevronDown, ChevronUp,
-  Loader2
-} from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+  Video,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  RefreshCw,
+  CheckCircle,
+  AlertCircle,
+  ExternalLink,
+  Settings,
+  Image,
+  FileVideo,
+  Globe,
+  Youtube,
+  Upload,
+  Eye,
+  Heart,
+  Edit3,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+} from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 
-import { sanityClient } from '@/sanity/client';
+import { sanityClient } from "@/sanity/client";
 
 interface VideoItem {
   _id: string;
@@ -36,7 +53,13 @@ interface VideoStats {
 
 export const VideoManager = () => {
   const [videos, setVideos] = useState<VideoItem[]>([]);
-  const [stats, setStats] = useState<VideoStats>({ total: 0, featured: 0, story: 0, published: 0, drafts: 0 });
+  const [stats, setStats] = useState<VideoStats>({
+    total: 0,
+    featured: 0,
+    story: 0,
+    published: 0,
+    drafts: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -62,53 +85,73 @@ export const VideoManager = () => {
         }
       `);
       setVideos(data || []);
-      
+
       const v = data || [];
       setStats({
         total: v.length,
         featured: v.filter((x: VideoItem) => x.isFeatured).length,
         story: v.filter((x: VideoItem) => x.isStoryVideo).length,
-        published: v.filter((x: VideoItem) => x.status === 'published').length,
-        drafts: v.filter((x: VideoItem) => x.status === 'draft' || !x.status).length,
+        published: v.filter((x: VideoItem) => x.status === "published").length,
+        drafts: v.filter((x: VideoItem) => x.status === "draft" || !x.status).length,
       });
     } catch (err) {
-      console.error('Failed to fetch videos:', err);
-      setError('فشل تحميل بيانات الفيديو من Sanity');
+      console.error("Failed to fetch videos:", err);
+      setError("فشل تحميل بيانات الفيديو من Sanity");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { fetchVideos(); }, [fetchVideos]);
+  useEffect(() => {
+    fetchVideos();
+  }, [fetchVideos]);
 
   const toggleFeatured = async (video: VideoItem) => {
     try {
       await sanityClient.patch(video._id).set({ isFeatured: !video.isFeatured }).commit();
       fetchVideos();
     } catch (err) {
-      console.error('Failed to toggle featured:', err);
+      console.error("Failed to toggle featured:", err);
     }
   };
 
   const toggleStatus = async (video: VideoItem) => {
-    const newStatus = video.status === 'published' ? 'draft' : 'published';
+    const newStatus = video.status === "published" ? "draft" : "published";
     try {
       await sanityClient.patch(video._id).set({ status: newStatus }).commit();
       fetchVideos();
     } catch (err) {
-      console.error('Failed to toggle status:', err);
+      console.error("Failed to toggle status:", err);
     }
   };
 
   const statCards = [
-    { label: 'إجمالي الفيديوهات', value: stats.total, color: 'text-blue-600', bg: 'bg-blue-100', icon: Video },
-    { label: 'منشور', value: stats.published, color: 'text-emerald-600', bg: 'bg-emerald-100', icon: CheckCircle },
-    { label: 'مميز', value: stats.featured, color: 'text-amber-600', bg: 'bg-amber-100', icon: Eye },
-    { label: 'قصة رحماء بينهم', value: stats.story, color: 'text-purple-600', icon: Heart },
+    {
+      label: "إجمالي الفيديوهات",
+      value: stats.total,
+      color: "text-blue-600",
+      bg: "bg-blue-100",
+      icon: Video,
+    },
+    {
+      label: "منشور",
+      value: stats.published,
+      color: "text-emerald-600",
+      bg: "bg-emerald-100",
+      icon: CheckCircle,
+    },
+    {
+      label: "مميز",
+      value: stats.featured,
+      color: "text-amber-600",
+      bg: "bg-amber-100",
+      icon: Eye,
+    },
+    { label: "قصة رحماء بينهم", value: stats.story, color: "text-purple-600", icon: Heart },
   ];
 
   const openSanityStudio = () => {
-    window.open('https://xd0ohyiz.sanity.studio/desk/video', '_blank');
+    window.open("https://xd0ohyiz.sanity.studio/desk/video", "_blank");
   };
 
   return (
@@ -134,7 +177,7 @@ export const VideoManager = () => {
             className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
             disabled={loading}
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             تحديث
           </button>
           <button
@@ -228,7 +271,7 @@ export const VideoManager = () => {
                 className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50"
                 onClick={() => setExpandedId(expandedId === video._id ? null : video._id)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
+                  if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     setExpandedId(expandedId === video._id ? null : video._id);
                   }
@@ -241,10 +284,14 @@ export const VideoManager = () => {
                   <div className="min-w-0">
                     <h4 className="font-bold text-gray-800 text-sm truncate">{video.title}</h4>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                        video.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
-                      }`}>
-                        {video.status === 'published' ? 'منشور' : 'مسودة'}
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                          video.status === "published"
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-amber-100 text-amber-700"
+                        }`}
+                      >
+                        {video.status === "published" ? "منشور" : "مسودة"}
                       </span>
                       {video.category && (
                         <span className="text-[10px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
@@ -288,7 +335,7 @@ export const VideoManager = () => {
               {expandedId === video._id && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
+                  animate={{ height: "auto", opacity: 1 }}
                   className="border-t border-gray-100 p-4 bg-gray-50"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -302,14 +349,23 @@ export const VideoManager = () => {
                       )}
                       <div className="flex flex-wrap gap-2">
                         {video.tags?.map((tag) => (
-                          <span key={tag} className="px-2 py-1 bg-white text-gray-600 rounded-lg text-[10px] border border-gray-200">
+                          <span
+                            key={tag}
+                            className="px-2 py-1 bg-white text-gray-600 rounded-lg text-[10px] border border-gray-200"
+                          >
                             #{tag}
                           </span>
                         ))}
                       </div>
                       <div className="flex items-center gap-4 text-xs text-gray-500">
-                        <span className="flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> {video.views?.toLocaleString() || 0} مشاهدة</span>
-                        <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> {video.likes?.toLocaleString() || 0} إعجاب</span>
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3.5 h-3.5" /> {video.views?.toLocaleString() || 0}{" "}
+                          مشاهدة
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Heart className="w-3.5 h-3.5" /> {video.likes?.toLocaleString() || 0}{" "}
+                          إعجاب
+                        </span>
                       </div>
                     </div>
 
@@ -318,20 +374,22 @@ export const VideoManager = () => {
                       <button
                         onClick={() => toggleFeatured(video)}
                         className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
-                          video.isFeatured ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600 hover:bg-amber-50'
+                          video.isFeatured
+                            ? "bg-amber-100 text-amber-700"
+                            : "bg-gray-100 text-gray-600 hover:bg-amber-50"
                         }`}
                       >
-                        {video.isFeatured ? '⭐ إلغاء التميز' : '⭐ تعيين مميز'}
+                        {video.isFeatured ? "⭐ إلغاء التميز" : "⭐ تعيين مميز"}
                       </button>
                       <button
                         onClick={() => toggleStatus(video)}
                         className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
-                          video.status === 'published'
-                            ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                            : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                          video.status === "published"
+                            ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
+                            : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
                         }`}
                       >
-                        {video.status === 'published' ? '📥 إلغاء النشر' : '📤 نشر'}
+                        {video.status === "published" ? "📥 إلغاء النشر" : "📤 نشر"}
                       </button>
                       <a
                         href={`https://xd0ohyiz.sanity.studio/desk/video;${video._id}`}
@@ -355,4 +413,3 @@ export const VideoManager = () => {
 };
 
 export default VideoManager;
-

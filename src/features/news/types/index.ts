@@ -7,7 +7,7 @@ export interface NewsItem {
   featuredImage: string;
   category: NewsCategory;
   tags: string[];
-  status: 'DRAFT' | 'REVIEW' | 'APPROVED' | 'SCHEDULED' | 'PUBLISHED' | 'ARCHIVED';
+  status: "DRAFT" | "REVIEW" | "APPROVED" | "SCHEDULED" | "PUBLISHED" | "ARCHIVED";
   authorId: string;
   authorName: string;
   reviewerId?: string;
@@ -50,8 +50,8 @@ export interface NewsQueryParams {
   status?: string;
   featured?: boolean;
   search?: string;
-  sortBy?: 'createdAt' | 'publishedAt' | 'views' | 'title';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "createdAt" | "publishedAt" | "views" | "title";
+  sortOrder?: "asc" | "desc";
 }
 
 export interface PaginatedResponse<T> {
@@ -63,4 +63,3 @@ export interface PaginatedResponse<T> {
     totalPages: number;
   };
 }
-

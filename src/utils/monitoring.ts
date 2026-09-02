@@ -2,7 +2,7 @@
 // monitoring.ts - نظام المراقبة والتسجيل
 // ============================================================
 
-type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
 
 interface LogEntry {
   timestamp: string;
@@ -16,8 +16,8 @@ interface LogEntry {
 }
 
 class Logger {
-  private static LOG_PREFIX = '[rbdcye]';
-  private static STORAGE_KEY = 'app_logs';
+  private static LOG_PREFIX = "[rbdcye]";
+  private static STORAGE_KEY = "app_logs";
   private static MAX_LOGS = 100;
 
   // تنسيق الرسالة
@@ -29,15 +29,15 @@ class Logger {
       data,
       userId: this.getUserId(),
       sessionId: this.getSessionId(),
-      url: typeof window !== 'undefined' ? window.location.href : undefined,
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
+      url: typeof window !== "undefined" ? window.location.href : undefined,
+      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
     };
   }
 
   // الحصول على معرف المستخدم
   private getUserId(): string | undefined {
     try {
-      const user = localStorage.getItem('auth_user');
+      const user = localStorage.getItem("auth_user");
       if (user) {
         const parsed = JSON.parse(user);
         return parsed.id;
@@ -51,10 +51,10 @@ class Logger {
   // الحصول على معرف الجلسة
   private getSessionId(): string | undefined {
     try {
-      let sessionId = sessionStorage.getItem('session_id');
+      let sessionId = sessionStorage.getItem("session_id");
       if (!sessionId) {
         sessionId = `sess_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-        sessionStorage.setItem('session_id', sessionId);
+        sessionStorage.setItem("session_id", sessionId);
       }
       return sessionId;
     } catch {
@@ -68,7 +68,7 @@ class Logger {
     try {
       const logs = this.getLogs();
       logs.push(entry);
-      
+
       // الاحتفاظ بآخر 100 سجل فقط
       if (logs.length > Logger.MAX_LOGS) {
         logs.splice(0, logs.length - Logger.MAX_LOGS);
@@ -102,30 +102,33 @@ class Logger {
   // --- مستويات السجل ---
 
   debug(message: string, data?: any) {
-    const entry = this.format('debug', message, data);
+    const entry = this.format("debug", message, data);
     console.debug(entry);
     // لا نحفظ debug في التخزين المحلي
   }
 
   info(message: string, data?: any) {
-    const entry = this.format('info', message, data);
+    const entry = this.format("info", message, data);
     if (import.meta.env.DEV) console.log(entry);
     this.persist(entry);
   }
 
   warn(message: string, data?: any) {
-    const entry = this.format('warn', message, data);
+    const entry = this.format("warn", message, data);
     this.persist(entry);
   }
 
   error(message: string, error?: Error | unknown, data?: any) {
-    const entry = this.format('error', message, {
+    const entry = this.format("error", message, {
       ...data,
-      error: error instanceof Error ? {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      } : error,
+      error:
+        error instanceof Error
+          ? {
+              name: error.name,
+              message: error.message,
+              stack: error.stack,
+            }
+          : error,
     });
     console.error(entry);
     this.persist(entry);
@@ -135,13 +138,16 @@ class Logger {
   }
 
   fatal(message: string, error?: Error | unknown, data?: any) {
-    const entry = this.format('fatal', message, {
+    const entry = this.format("fatal", message, {
       ...data,
-      error: error instanceof Error ? {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      } : error,
+      error:
+        error instanceof Error
+          ? {
+              name: error.name,
+              message: error.message,
+              stack: error.stack,
+            }
+          : error,
     });
     console.error(entry);
     this.persist(entry);
@@ -155,7 +161,7 @@ class Logger {
     // يمكن إضافة Sentry هنا
     // يمكن إضافة LogRocket هنا
     // يمكن إضافة خدمة مخصصة هنا
-    
+
     // مثال: إرسال لـ Sentry
     // if (typeof Sentry !== 'undefined') {
     //   Sentry.captureException(new Error(entry.message), {
@@ -165,8 +171,8 @@ class Logger {
     // }
 
     // أو إرسال لـ API مخصص
-    if (isFatal && typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
-      navigator.sendBeacon('/api/logs', JSON.stringify(entry));
+    if (isFatal && typeof navigator !== "undefined" && "sendBeacon" in navigator) {
+      navigator.sendBeacon("/api/logs", JSON.stringify(entry));
     }
   }
 
@@ -175,17 +181,17 @@ class Logger {
   // قياس الأداء
   measure<T>(label: string, fn: () => T | Promise<T>): T | Promise<T> {
     const start = performance.now();
-    
+
     try {
       const result = fn();
-      
+
       if (result instanceof Promise) {
         return result.finally(() => {
           const duration = performance.now() - start;
           this.info(`Performance: ${label}`, { duration: `${duration.toFixed(2)}ms` });
         });
       }
-      
+
       const duration = performance.now() - start;
       this.info(`Performance: ${label}`, { duration: `${duration.toFixed(2)}ms` });
       return result;
@@ -204,12 +210,15 @@ class Logger {
   // تعيين سياق المستخدم
   setUserContext(userId: string, email: string, role: string) {
     try {
-      sessionStorage.setItem('user_context', JSON.stringify({
-        userId,
-        email,
-        role,
-        timestamp: new Date().toISOString(),
-      }));
+      sessionStorage.setItem(
+        "user_context",
+        JSON.stringify({
+          userId,
+          email,
+          role,
+          timestamp: new Date().toISOString(),
+        })
+      );
     } catch {
       // Ignore errors
     }
@@ -218,7 +227,7 @@ class Logger {
   // مسح سياق المستخدم
   clearUserContext() {
     try {
-      sessionStorage.removeItem('user_context');
+      sessionStorage.removeItem("user_context");
     } catch {
       // Ignore errors
     }
@@ -230,4 +239,3 @@ export const logger = new Logger();
 
 // تصدير أنواع
 export type { LogLevel, LogEntry };
-

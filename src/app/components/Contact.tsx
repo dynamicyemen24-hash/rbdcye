@@ -79,10 +79,12 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
             تواصل معنا
           </span>
           <h2 className="text-[var(--foreground)] mb-3">
-            نحن هنا{" "}
-            <span className="text-[var(--brand-green)]">للاستماع إليك</span>
+            نحن هنا <span className="text-[var(--brand-green)]">للاستماع إليك</span>
           </h2>
-          <p className="text-[var(--muted-foreground)] max-w-xl mx-auto" style={{ fontSize: "0.9rem", lineHeight: "1.7" }}>
+          <p
+            className="text-[var(--muted-foreground)] max-w-xl mx-auto"
+            style={{ fontSize: "0.9rem", lineHeight: "1.7" }}
+          >
             سواء كنت مانحًا أو متطوعًا أو شريكًا أو مستفيدًا، نسعد بتواصلك معنا
           </p>
         </motion.div>
@@ -109,11 +111,17 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                     <Icon className="w-5 h-5" style={{ color: item.color }} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--foreground)" }}>
+                    <div
+                      style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--foreground)" }}
+                    >
                       {item.title}
                     </div>
                     {item.lines.map((line) => (
-                      <div key={line} className="text-[var(--muted-foreground)]" style={{ fontSize: "0.8rem" }}>
+                      <div
+                        key={line}
+                        className="text-[var(--muted-foreground)]"
+                        style={{ fontSize: "0.8rem" }}
+                      >
                         {line}
                       </div>
                     ))}
@@ -167,7 +175,10 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                 <h3 className="text-[var(--foreground)] mb-2" style={{ fontWeight: 700 }}>
                   تم إرسال رسالتك بنجاح
                 </h3>
-                <p className="text-[var(--muted-foreground)] max-w-xs" style={{ fontSize: "0.85rem" }}>
+                <p
+                  className="text-[var(--muted-foreground)] max-w-xs"
+                  style={{ fontSize: "0.85rem" }}
+                >
                   شكرًا لتواصلك معنا. سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.
                 </p>
                 <button
@@ -185,7 +196,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="contact-name" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                    <label
+                      htmlFor="contact-name"
+                      className="block mb-1.5 text-[var(--foreground)]"
+                      style={{ fontSize: "0.82rem" }}
+                    >
                       الاسم الكامل <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -199,7 +214,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                    <label
+                      htmlFor="contact-email"
+                      className="block mb-1.5 text-[var(--foreground)]"
+                      style={{ fontSize: "0.82rem" }}
+                    >
                       البريد الإلكتروني <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -217,7 +236,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="contact-phone" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                    <label
+                      htmlFor="contact-phone"
+                      className="block mb-1.5 text-[var(--foreground)]"
+                      style={{ fontSize: "0.82rem" }}
+                    >
                       رقم الهاتف
                     </label>
                     <input
@@ -230,7 +253,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="contact-type" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                    <label
+                      htmlFor="contact-type"
+                      className="block mb-1.5 text-[var(--foreground)]"
+                      style={{ fontSize: "0.82rem" }}
+                    >
                       نوع التواصل
                     </label>
                     <select
@@ -251,7 +278,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="contact-subject" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                  <label
+                    htmlFor="contact-subject"
+                    className="block mb-1.5 text-[var(--foreground)]"
+                    style={{ fontSize: "0.82rem" }}
+                  >
                     الموضوع <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -265,7 +296,11 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-message" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem" }}>
+                  <label
+                    htmlFor="contact-message"
+                    className="block mb-1.5 text-[var(--foreground)]"
+                    style={{ fontSize: "0.82rem" }}
+                  >
                     الرسالة <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -301,6 +336,4 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
       </div>
     </section>
   );
-}
-
-
+};

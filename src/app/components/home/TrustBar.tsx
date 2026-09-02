@@ -70,5 +70,3 @@ export function TrustBar() {
     </div>
   );
 }
-
-

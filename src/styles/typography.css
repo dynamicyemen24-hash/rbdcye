@@ -7,32 +7,60 @@
 :root {
   /* ── السلم النوعي السائل (Fluid Type Scale) ──
      مبني على نسبة 1.2 مع حدّ أدنى/أقصى لكل مستوى */
-  --fs-display: clamp(1.9rem, 1.1rem + 3.6vw, 3rem);      /* عناوين كبرى */
-  --fs-h1:      clamp(1.7rem, 1.15rem + 2.6vw, 2.5rem);   /* عنوان الصفحة */
-  --fs-h2:      clamp(1.45rem, 1.2rem + 1.5vw, 1.95rem);  /* ترويسة قسم */
-  --fs-h3:      clamp(1.15rem, 1.05rem + 0.6vw, 1.35rem); /* عنوان فرعي */
-  --fs-lead:    clamp(0.98rem, 0.94rem + 0.35vw, 1.12rem);/* فقرة قائدة */
-  --fs-body:    0.95rem;                                   /* نص أساسي */
-  --fs-sm:      0.85rem;                                   /* نص ثانوي */
-  --fs-xs:      0.75rem;                                   /* حواشٍ وشارات */
+  --fs-display: clamp(1.9rem, 1.1rem + 3.6vw, 3rem); /* عناوين كبرى */
+  --fs-h1: clamp(1.7rem, 1.15rem + 2.6vw, 2.5rem); /* عنوان الصفحة */
+  --fs-h2: clamp(1.45rem, 1.2rem + 1.5vw, 1.95rem); /* ترويسة قسم */
+  --fs-h3: clamp(1.15rem, 1.05rem + 0.6vw, 1.35rem); /* عنوان فرعي */
+  --fs-lead: clamp(0.98rem, 0.94rem + 0.35vw, 1.12rem); /* فقرة قائدة */
+  --fs-body: 0.95rem; /* نص أساسي */
+  --fs-sm: 0.85rem; /* نص ثانوي */
+  --fs-xs: 0.75rem; /* حواشٍ وشارات */
 
   /* ارتفاعات الأسطر المحسّنة للعربية */
   --lh-display: 1.35;
   --lh-heading: 1.45;
-  --lh-body:    1.95;
+  --lh-body: 1.95;
 }
 
 /* ── أدوات السلم النوعي ─────────────────────────────────── */
-.t-display { font-size: var(--fs-display); line-height: var(--lh-display); font-weight: 800; }
-.t-h1      { font-size: var(--fs-h1);      line-height: var(--lh-heading); font-weight: 800; }
-.t-h2      { font-size: var(--fs-h2);      line-height: var(--lh-heading); font-weight: 700; }
-.t-h3      { font-size: var(--fs-h3);      line-height: var(--lh-heading); font-weight: 700; }
-.t-lead    { font-size: var(--fs-lead);    line-height: var(--lh-body); font-weight: 400; }
-.t-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
-.t-sm      { font-size: var(--fs-sm);      line-height: 1.75; }
+.t-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: 800;
+}
+.t-h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  font-weight: 800;
+}
+.t-h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  font-weight: 700;
+}
+.t-h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  font-weight: 700;
+}
+.t-lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  font-weight: 400;
+}
+.t-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+.t-sm {
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+}
 
 /* ── توازن أسطر العناوين (Progressive Enhancement) ──────── */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   text-wrap: balance;
 }
 
@@ -90,24 +118,22 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(var(--brand-green-rgb), 0.4), rgba(var(--brand-gold-rgb), 0.4));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--brand-green-rgb), 0.4),
+    rgba(var(--brand-gold-rgb), 0.4)
+  );
   border-radius: 8px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(var(--brand-green-rgb), 0.6), rgba(var(--brand-gold-rgb), 0.6));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--brand-green-rgb), 0.6),
+    rgba(var(--brand-gold-rgb), 0.6)
+  );
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-
-
-
-
-
-
-
-
-
-

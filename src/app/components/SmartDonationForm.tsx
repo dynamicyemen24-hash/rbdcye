@@ -1,16 +1,26 @@
 // Smart Donation Form Component - نموذج التبرع الذكي المتكامل مع Stripe والتبرع الدوري
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 import {
-  Heart, CreditCard, Wallet, Building2, CheckCircle, Shield,
-  RefreshCw, Lock, Sparkles, AlertCircle, ArrowLeft,
-  FileText, DollarSign
-} from 'lucide-react';
-import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+  Heart,
+  CreditCard,
+  Wallet,
+  Building2,
+  CheckCircle,
+  Shield,
+  RefreshCw,
+  Lock,
+  Sparkles,
+  AlertCircle,
+  ArrowLeft,
+  FileText,
+  DollarSign,
+} from "lucide-react";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { paymentGateway, type PaymentCurrency } from '@/shared/services/payment-gateway.service';
-import { multiProjectDonationService } from '@/shared/services/donation-multi-project.service';
-import { RecurringDonationToggle } from './RecurringDonationToggle';
+import { paymentGateway, type PaymentCurrency } from "@/shared/services/payment-gateway.service";
+import { multiProjectDonationService } from "@/shared/services/donation-multi-project.service";
+import { RecurringDonationToggle } from "./RecurringDonationToggle";
 
 interface SmartDonationFormProps {
   initialProject?: string;
@@ -19,41 +29,43 @@ interface SmartDonationFormProps {
 }
 
 export function SmartDonationForm({
-  initialProject = 'general',
+  initialProject = "general",
   initialAmount,
-  initialCurrency = 'SAR',
+  initialCurrency = "SAR",
 }: SmartDonationFormProps) {
   const navigate = useNavigate();
 
   // 1. التردد والدورية (مرة واحدة / دوري شهري / دوري سنوي)
-  const [donationFrequency, setDonationFrequency] = useState<'once' | 'monthly' | 'yearly'>('once');
+  const [donationFrequency, setDonationFrequency] = useState<"once" | "monthly" | "yearly">("once");
 
   // 2. العملة والمبلغ
   const [currency, setCurrency] = useState<PaymentCurrency>(initialCurrency);
   const [selectedAmount, setSelectedAmount] = useState<number>(initialAmount || 100);
-  const [customAmount, setCustomAmount] = useState<string>('');
+  const [customAmount, setCustomAmount] = useState<string>("");
 
   // 3. اختيار المشروع
   const [selectedProject, setSelectedProject] = useState<string>(initialProject);
 
   // 4. طريقة الدفع (تضمين Stripe بشكل أساسي)
-  const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'apple' | 'google' | 'bank'>('stripe');
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "apple" | "google" | "bank">(
+    "stripe"
+  );
 
   // 5. معلومات البطاقة للنماذج المباشرة في Stripe
   const [cardDetails, setCardDetails] = useState({
-    number: '',
-    expiry: '',
-    cvc: '',
-    name: '',
+    number: "",
+    expiry: "",
+    cvc: "",
+    name: "",
   });
 
   // 6. بيانات المتبرع والخيار المجهول
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [donorInfo, setDonorInfo] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   // 7. حالات المعالجة والنجاح
@@ -63,31 +75,37 @@ export function SmartDonationForm({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // قيم المبالغ الجاهزة حسب العملة
-  const CURRENCY_PRESETS: Record<PaymentCurrency, number[]> = useMemo(() => ({
-    SAR: [50, 100, 250, 500, 1000, 2500],
-    USD: [10, 25, 50, 100, 250, 500],
-    YER: [5000, 10000, 25000, 50000, 100000, 250000],
-    AED: [50, 100, 250, 500, 1000, 2500],
-    OMR: [5, 10, 25, 50, 100, 250],
-  }), []);
+  const CURRENCY_PRESETS: Record<PaymentCurrency, number[]> = useMemo(
+    () => ({
+      SAR: [50, 100, 250, 500, 1000, 2500],
+      USD: [10, 25, 50, 100, 250, 500],
+      YER: [5000, 10000, 25000, 50000, 100000, 250000],
+      AED: [50, 100, 250, 500, 1000, 2500],
+      OMR: [5, 10, 25, 50, 100, 250],
+    }),
+    []
+  );
 
-  const CURRENCY_SYMBOLS: Record<PaymentCurrency, string> = useMemo(() => ({
-    SAR: 'ر.س',
-    USD: '$',
-    YER: 'ر.ي',
-    AED: 'د.إ',
-    OMR: 'ر.ع',
-  }), []);
+  const CURRENCY_SYMBOLS: Record<PaymentCurrency, string> = useMemo(
+    () => ({
+      SAR: "ر.س",
+      USD: "$",
+      YER: "ر.ي",
+      AED: "د.إ",
+      OMR: "ر.ع",
+    }),
+    []
+  );
 
   // المشاريع المتاحة
   const projects = [
-    { id: 'general', name: 'تبرع عام (حيث الأشد حاجة)', icon: Heart, badge: 'عام' },
-    { id: 'food', name: 'السلال الغذائية الطارئة', icon: Sparkles, badge: 'إغاثة' },
-    { id: 'water', name: 'حفر وتأهيل آبار المياه', icon: Sparkles, badge: 'سقيا' },
-    { id: 'education', name: 'كفالة الطلاب والتعليم', icon: FileText, badge: 'تعليم' },
-    { id: 'orphans', name: 'كفالة الأيتام الشاملة', icon: Heart, badge: 'كفالة' },
-    { id: 'zakat', name: 'زكاة المال الشرعية', icon: Shield, badge: 'زكاة' },
-    { id: 'winter', name: 'كسوة ودفء الشتاء', icon: Sparkles, badge: 'شتاء' },
+    { id: "general", name: "تبرع عام (حيث الأشد حاجة)", icon: Heart, badge: "عام" },
+    { id: "food", name: "السلال الغذائية الطارئة", icon: Sparkles, badge: "إغاثة" },
+    { id: "water", name: "حفر وتأهيل آبار المياه", icon: Sparkles, badge: "سقيا" },
+    { id: "education", name: "كفالة الطلاب والتعليم", icon: FileText, badge: "تعليم" },
+    { id: "orphans", name: "كفالة الأيتام الشاملة", icon: Heart, badge: "كفالة" },
+    { id: "zakat", name: "زكاة المال الشرعية", icon: Shield, badge: "زكاة" },
+    { id: "winter", name: "كسوة ودفء الشتاء", icon: Sparkles, badge: "شتاء" },
   ];
 
   // المبلغ الحقيقي المختار
@@ -95,7 +113,11 @@ export function SmartDonationForm({
 
   // تأثير التبرع الفعلي المحسوب بالدولار
   const amountInUSD = useMemo(() => {
-    return currency === 'YER' ? (actualAmount / 250) : currency === 'SAR' ? (actualAmount / 3.75) : actualAmount;
+    return currency === "YER"
+      ? actualAmount / 250
+      : currency === "SAR"
+        ? actualAmount / 3.75
+        : actualAmount;
   }, [actualAmount, currency]);
 
   // رؤية الأثر الفعلي باللغة العربية
@@ -103,62 +125,62 @@ export function SmartDonationForm({
     if (amountInUSD >= 1000) {
       return {
         label: "سقيا جارية - بئر ماء بالطاقة الشمسية",
-        desc: `يسهم تبرعك بقيمة ${actualAmount.toLocaleString('ar-SA')} ${CURRENCY_SYMBOLS[currency]} في تأمين مياه شرب نصر نابعة ونقية لقرى كاملة في اليمن مدى الحياة.`,
+        desc: `يسهم تبرعك بقيمة ${actualAmount.toLocaleString("ar-SA")} ${CURRENCY_SYMBOLS[currency]} في تأمين مياه شرب نصر نابعة ونقية لقرى كاملة في اليمن مدى الحياة.`,
         icon: "🌊",
-        badge: "أثر مستدام"
+        badge: "أثر مستدام",
       };
     } else if (amountInUSD >= 500) {
       return {
         label: "إيواء وأمان لأسرة نازحة",
         desc: `يغطي هذا التبرع السخي تكلفة إيجار أو صيانة مسكن آمن لأسرة نازحة مهددة بالطرد لحمايتهم من القرس والضياع.`,
         icon: "🏠",
-        badge: "إيواء وصون"
+        badge: "إيواء وصون",
       };
     } else if (amountInUSD >= 250) {
       return {
         label: "دفء الشتاء والكسوة الحرارية",
         desc: `يوفر تبرعك سلال البطانيات والكسوة الشتوية لـ ${Math.floor(amountInUSD / 50) || 1} أسر في مخيمات النزوح الجبلية.`,
         icon: "🧥",
-        badge: "وقاية ودفء"
+        badge: "وقاية ودفء",
       };
     } else if (amountInUSD >= 100) {
       return {
         label: "كفالة طفل يتيم / طالب علم",
         desc: `يغطي تبرعك الشامل الحقيبة والمستلزمات والرعاية لأطفال أيتام لإعادتهم إلى مقاعد الدراسية بثقة.`,
         icon: "📚",
-        badge: "بناء الأجيال"
+        badge: "بناء الأجيال",
       };
     } else if (amountInUSD >= 50) {
       return {
         label: "سقيا ماء شرب نقي",
         desc: `يوفر تبرعك مياه شرب معقمة وصالحة للاستخدام تفي بحاجة عائلات نازحة متعددة لمدة أسابيع.`,
         icon: "💧",
-        badge: "سقيا وحياة"
+        badge: "سقيا وحياة",
       };
     } else {
       return {
         label: "سلة غذائية وإغاثة طارئة",
         desc: "يوجه تبرعك المباشر لتوفير المواد الأساسية العاجلة وسداد احتياجات الأسر الأشد فقراً وتأثراً.",
         icon: "🍚",
-        badge: "قوت عاجل"
+        badge: "قوت عاجل",
       };
     }
   }, [amountInUSD, actualAmount, currency, CURRENCY_SYMBOLS]);
 
   // تنسيق رقم البطاقة تلقائياً
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, '').substring(0, 16);
-    const formatted = val.match(/.{1,4}/g)?.join(' ') || val;
-    setCardDetails(prev => ({ ...prev, number: formatted }));
+    const val = e.target.value.replace(/\D/g, "").substring(0, 16);
+    const formatted = val.match(/.{1,4}/g)?.join(" ") || val;
+    setCardDetails((prev) => ({ ...prev, number: formatted }));
   };
 
   // تنسيق تاريخ الانتهاء MM/YY
   const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, '').substring(0, 4);
+    const val = e.target.value.replace(/\D/g, "").substring(0, 4);
     if (val.length >= 3) {
-      setCardDetails(prev => ({ ...prev, expiry: `${val.substring(0, 2)}/${val.substring(2)}` }));
+      setCardDetails((prev) => ({ ...prev, expiry: `${val.substring(0, 2)}/${val.substring(2)}` }));
     } else {
-      setCardDetails(prev => ({ ...prev, expiry: val }));
+      setCardDetails((prev) => ({ ...prev, expiry: val }));
     }
   };
 
@@ -168,12 +190,12 @@ export function SmartDonationForm({
     setErrorMsg(null);
 
     if (!actualAmount || actualAmount <= 0) {
-      setErrorMsg('يرجى تحديد أو إدخال مبلغ تبرع صحيح');
+      setErrorMsg("يرجى تحديد أو إدخال مبلغ تبرع صحيح");
       return;
     }
 
-    if (!isAnonymous && !donorInfo.email && paymentMethod === 'stripe') {
-      setErrorMsg('يرجى إدخال البريد الإلكتروني لإرسال سند التبرع الإلكتروني');
+    if (!isAnonymous && !donorInfo.email && paymentMethod === "stripe") {
+      setErrorMsg("يرجى إدخال البريد الإلكتروني لإرسال سند التبرع الإلكتروني");
       return;
     }
 
@@ -184,41 +206,58 @@ export function SmartDonationForm({
       const paymentResponse = await paymentGateway.initiatePayment({
         amount: actualAmount,
         currency: currency,
-        method: paymentMethod === 'stripe' ? 'stripe' : paymentMethod === 'bank' ? 'bank' : 'card',
-        type: donationFrequency === 'monthly' ? 'monthly' : donationFrequency === 'yearly' ? 'yearly' : 'once',
+        method: paymentMethod === "stripe" ? "stripe" : paymentMethod === "bank" ? "bank" : "card",
+        type:
+          donationFrequency === "monthly"
+            ? "monthly"
+            : donationFrequency === "yearly"
+              ? "yearly"
+              : "once",
         projectId: selectedProject,
-        donorName: isAnonymous ? 'فاعل خير' : donorInfo.name || 'متبرع كريم',
-        donorEmail: donorInfo.email || 'donor@rohamaa.org',
+        donorName: isAnonymous ? "فاعل خير" : donorInfo.name || "متبرع كريم",
+        donorEmail: donorInfo.email || "donor@rohamaa.org",
         donorPhone: donorInfo.phone,
-        description: `تبرع ${donationFrequency === 'monthly' ? 'دوري شهري' : donationFrequency === 'yearly' ? 'دوري سنوي' : 'لمرة واحدة'} لمشروع ${projects.find(p => p.id === selectedProject)?.name}`,
-        recurring: donationFrequency !== 'once',
-        recurringInterval: donationFrequency === 'monthly' ? 'monthly' : donationFrequency === 'yearly' ? 'yearly' : undefined,
+        description: `تبرع ${donationFrequency === "monthly" ? "دوري شهري" : donationFrequency === "yearly" ? "دوري سنوي" : "لمرة واحدة"} لمشروع ${projects.find((p) => p.id === selectedProject)?.name}`,
+        recurring: donationFrequency !== "once",
+        recurringInterval:
+          donationFrequency === "monthly"
+            ? "monthly"
+            : donationFrequency === "yearly"
+              ? "yearly"
+              : undefined,
       });
 
       // 2. توثيق التبرع في نظام التبرعات متعدد المشاريع
       await multiProjectDonationService.processDonation({
-        donorName: isAnonymous ? 'فاعل خير' : donorInfo.name || 'متبرع كريم',
-        donorEmail: donorInfo.email || 'anonymous@rohamaa.org',
+        donorName: isAnonymous ? "فاعل خير" : donorInfo.name || "متبرع كريم",
+        donorEmail: donorInfo.email || "anonymous@rohamaa.org",
         donorPhone: donorInfo.phone,
-        allocations: [{
-          projectId: selectedProject,
-          projectName: projects.find(p => p.id === selectedProject)?.name || 'تبرع عام',
-          amount: actualAmount,
-          isCustom: !!customAmount,
-        }],
+        allocations: [
+          {
+            projectId: selectedProject,
+            projectName: projects.find((p) => p.id === selectedProject)?.name || "تبرع عام",
+            amount: actualAmount,
+            isCustom: !!customAmount,
+          },
+        ],
         totalAmount: actualAmount,
         currency: currency,
         paymentMethod: paymentMethod as any,
-        paymentType: donationFrequency === 'monthly' ? 'monthly' : donationFrequency === 'yearly' ? 'yearly' : 'once',
+        paymentType:
+          donationFrequency === "monthly"
+            ? "monthly"
+            : donationFrequency === "yearly"
+              ? "yearly"
+              : "once",
         isAnonymous: isAnonymous,
         notes: donorInfo.message,
         agreeToTerms: true,
         agreeToContact: !isAnonymous,
         metadata: {
-          gateway: 'Stripe_Secure_v2',
+          gateway: "Stripe_Secure_v2",
           frequency: donationFrequency,
           stripeSessionId: paymentResponse.transactionId,
-        }
+        },
       });
 
       setTransactionDetails({
@@ -226,14 +265,20 @@ export function SmartDonationForm({
         amount: actualAmount,
         currency: currency,
         frequency: donationFrequency,
-        project: projects.find(p => p.id === selectedProject)?.name,
-        date: new Date().toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        project: projects.find((p) => p.id === selectedProject)?.name,
+        date: new Date().toLocaleDateString("ar-SA", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
       });
 
       setIsSuccess(true);
     } catch (err: any) {
-      console.error('Stripe Donation Error:', err);
-      setErrorMsg(err.message || 'حدث خطأ غير متوقع أثناء معالجة الدفع عبر Stripe. يرجى المحاولة مرة أخرى.');
+      console.error("Stripe Donation Error:", err);
+      setErrorMsg(
+        err.message || "حدث خطأ غير متوقع أثناء معالجة الدفع عبر Stripe. يرجى المحاولة مرة أخرى."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -259,10 +304,14 @@ export function SmartDonationForm({
 
         <h2 className="text-3xl font-black text-slate-900 mb-2">تقبل الله طاعتكم وعطاءكم!</h2>
         <p className="text-slate-600 text-base mb-6">
-          تم استلام تبرعكم المبارك بنجاح بقيمة <strong className="text-emerald-700 font-extrabold">{transactionDetails.amount.toLocaleString('ar-SA')} {CURRENCY_SYMBOLS[transactionDetails.currency as PaymentCurrency]}</strong>
-          {transactionDetails.frequency !== 'once' && (
+          تم استلام تبرعكم المبارك بنجاح بقيمة{" "}
+          <strong className="text-emerald-700 font-extrabold">
+            {transactionDetails.amount.toLocaleString("ar-SA")}{" "}
+            {CURRENCY_SYMBOLS[transactionDetails.currency as PaymentCurrency]}
+          </strong>
+          {transactionDetails.frequency !== "once" && (
             <span className="text-amber-700 block mt-1 font-bold">
-              (تبرع دوري {transactionDetails.frequency === 'monthly' ? 'شهري' : 'سنوي'} متكرر)
+              (تبرع دوري {transactionDetails.frequency === "monthly" ? "شهري" : "سنوي"} متكرر)
             </span>
           )}
         </p>
@@ -271,7 +320,9 @@ export function SmartDonationForm({
         <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8 text-right space-y-3 text-sm">
           <div className="flex justify-between items-center pb-2 border-b border-slate-200">
             <span className="text-slate-500 font-medium">رقم إثبات العملية:</span>
-            <span className="font-mono font-bold text-slate-800 dir-ltr text-xs">{transactionDetails.id}</span>
+            <span className="font-mono font-bold text-slate-800 dir-ltr text-xs">
+              {transactionDetails.id}
+            </span>
           </div>
           <div className="flex justify-between items-center pb-2 border-b border-slate-200">
             <span className="text-slate-500 font-medium">المشروع المستهدف:</span>
@@ -284,7 +335,11 @@ export function SmartDonationForm({
           <div className="flex justify-between items-center">
             <span className="text-slate-500 font-medium">نوع التبرع:</span>
             <span className="font-bold text-emerald-700">
-              {transactionDetails.frequency === 'monthly' ? 'صدقة جارية (تجدد شهرياً)' : transactionDetails.frequency === 'yearly' ? 'صدقة جارية (تجدد سنوياً)' : 'تبرع لمرة واحدة'}
+              {transactionDetails.frequency === "monthly"
+                ? "صدقة جارية (تجدد شهرياً)"
+                : transactionDetails.frequency === "yearly"
+                  ? "صدقة جارية (تجدد سنوياً)"
+                  : "تبرع لمرة واحدة"}
             </span>
           </div>
         </div>
@@ -300,9 +355,9 @@ export function SmartDonationForm({
             <Heart className="w-4 h-4 fill-white" />
             <span>تبرع آخر</span>
           </button>
-          
+
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="btn-secondary py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>العودة للرئيسية</span>
@@ -315,8 +370,10 @@ export function SmartDonationForm({
 
   return (
     <div className="w-full max-w-4xl mx-auto font-cairo" dir="rtl">
-      <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 sm:p-10 md:p-12 border border-slate-200/90 shadow-2xl relative overflow-hidden">
-        
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-3xl p-6 sm:p-10 md:p-12 border border-slate-200/90 shadow-2xl relative overflow-hidden"
+      >
         {/* Subtle Islamic Geometry Background Accent */}
         <div className="absolute inset-0 pattern-islamic-stars opacity-[0.03] pointer-events-none" />
 
@@ -343,15 +400,21 @@ export function SmartDonationForm({
                 onClick={() => setSelectedProject(proj.id)}
                 className={`p-3.5 rounded-2xl border-2 text-right transition-all cursor-pointer flex flex-col justify-between gap-2 ${
                   selectedProject === proj.id
-                    ? 'border-[var(--brand-green)] bg-[var(--brand-green)]/5 shadow-sm'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? "border-[var(--brand-green)] bg-[var(--brand-green)]/5 shadow-sm"
+                    : "border-slate-200 hover:border-slate-300 bg-white"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <proj.icon className={`w-5 h-5 ${selectedProject === proj.id ? 'text-[var(--brand-green)]' : 'text-slate-400'}`} />
-                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
-                    selectedProject === proj.id ? 'bg-[var(--brand-green)] text-white' : 'bg-slate-100 text-slate-600'
-                  }`}>
+                  <proj.icon
+                    className={`w-5 h-5 ${selectedProject === proj.id ? "text-[var(--brand-green)]" : "text-slate-400"}`}
+                  />
+                  <span
+                    className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
+                      selectedProject === proj.id
+                        ? "bg-[var(--brand-green)] text-white"
+                        : "bg-slate-100 text-slate-600"
+                    }`}
+                  >
                     {proj.badge}
                   </span>
                 </div>
@@ -369,22 +432,22 @@ export function SmartDonationForm({
             <label className="text-base sm:text-lg font-black text-slate-900">
               حدد قيمة التبرع ({CURRENCY_SYMBOLS[currency]})
             </label>
-            
+
             {/* اختيار العملة */}
             <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
-              {(['SAR', 'USD', 'YER', 'AED'] as const).map((curr) => (
+              {(["SAR", "USD", "YER", "AED"] as const).map((curr) => (
                 <button
                   key={curr}
                   type="button"
                   onClick={() => {
                     setCurrency(curr);
                     setSelectedAmount(CURRENCY_PRESETS[curr][1]);
-                    setCustomAmount('');
+                    setCustomAmount("");
                   }}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     currency === curr
-                      ? 'bg-[var(--brand-green)] text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? "bg-[var(--brand-green)] text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {curr}
@@ -401,15 +464,15 @@ export function SmartDonationForm({
                 type="button"
                 onClick={() => {
                   setSelectedAmount(preset);
-                  setCustomAmount('');
+                  setCustomAmount("");
                 }}
                 className={`py-3 px-2 rounded-xl border-2 text-sm font-extrabold transition-all cursor-pointer text-center ${
                   selectedAmount === preset && !customAmount
-                    ? 'border-[var(--brand-green)] bg-[var(--brand-green)] text-white shadow-md scale-[1.02]'
-                    : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300'
+                    ? "border-[var(--brand-green)] bg-[var(--brand-green)] text-white shadow-md scale-[1.02]"
+                    : "border-slate-200 bg-white text-slate-800 hover:border-slate-300"
                 }`}
               >
-                {preset.toLocaleString('ar-SA')}
+                {preset.toLocaleString("ar-SA")}
               </button>
             ))}
           </div>
@@ -472,11 +535,11 @@ export function SmartDonationForm({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-4">
             <button
               type="button"
-              onClick={() => setPaymentMethod('stripe')}
+              onClick={() => setPaymentMethod("stripe")}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
-                paymentMethod === 'stripe'
-                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                paymentMethod === "stripe"
+                  ? "border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               }`}
             >
               <CreditCard className="w-6 h-6 text-[var(--brand-green)]" />
@@ -485,11 +548,11 @@ export function SmartDonationForm({
 
             <button
               type="button"
-              onClick={() => setPaymentMethod('apple')}
+              onClick={() => setPaymentMethod("apple")}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
-                paymentMethod === 'apple'
-                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                paymentMethod === "apple"
+                  ? "border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               }`}
             >
               <Wallet className="w-6 h-6 text-slate-900" />
@@ -498,11 +561,11 @@ export function SmartDonationForm({
 
             <button
               type="button"
-              onClick={() => setPaymentMethod('google')}
+              onClick={() => setPaymentMethod("google")}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
-                paymentMethod === 'google'
-                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                paymentMethod === "google"
+                  ? "border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               }`}
             >
               <Wallet className="w-6 h-6 text-blue-600" />
@@ -511,11 +574,11 @@ export function SmartDonationForm({
 
             <button
               type="button"
-              onClick={() => setPaymentMethod('bank')}
+              onClick={() => setPaymentMethod("bank")}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
-                paymentMethod === 'bank'
-                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                paymentMethod === "bank"
+                  ? "border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               }`}
             >
               <Building2 className="w-6 h-6 text-amber-700" />
@@ -524,10 +587,10 @@ export function SmartDonationForm({
           </div>
 
           {/* نماذج الدفع المباشرة لبطاقات الائتمان عبر Stripe */}
-          {paymentMethod === 'stripe' && (
+          {paymentMethod === "stripe" && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               className="p-5 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl space-y-4"
             >
               <div className="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -535,11 +598,18 @@ export function SmartDonationForm({
                   <Lock className="w-3.5 h-3.5" />
                   دفع آمن ومشفّر بالكامل
                 </span>
-                <span className="text-xs font-mono text-slate-400 font-bold">Visa / MasterCard / Mada</span>
+                <span className="text-xs font-mono text-slate-400 font-bold">
+                  Visa / MasterCard / Mada
+                </span>
               </div>
 
               <div>
-                <label htmlFor="card-number-input" className="block text-xs font-bold text-slate-300 mb-1.5">رقم البطاقة الائتمانية</label>
+                <label
+                  htmlFor="card-number-input"
+                  className="block text-xs font-bold text-slate-300 mb-1.5"
+                >
+                  رقم البطاقة الائتمانية
+                </label>
                 <input
                   id="card-number-input"
                   type="text"
@@ -553,7 +623,12 @@ export function SmartDonationForm({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor="card-expiry-input" className="block text-xs font-bold text-slate-300 mb-1.5">تاريخ الانتهاء (MM/YY)</label>
+                  <label
+                    htmlFor="card-expiry-input"
+                    className="block text-xs font-bold text-slate-300 mb-1.5"
+                  >
+                    تاريخ الانتهاء (MM/YY)
+                  </label>
                   <input
                     id="card-expiry-input"
                     type="text"
@@ -565,7 +640,12 @@ export function SmartDonationForm({
                   />
                 </div>
                 <div>
-                  <label htmlFor="card-cvc-input" className="block text-xs font-bold text-slate-300 mb-1.5">رمز الأمان (CVC/CVV)</label>
+                  <label
+                    htmlFor="card-cvc-input"
+                    className="block text-xs font-bold text-slate-300 mb-1.5"
+                  >
+                    رمز الأمان (CVC/CVV)
+                  </label>
                   <input
                     id="card-cvc-input"
                     type="text"
@@ -573,7 +653,12 @@ export function SmartDonationForm({
                     maxLength={4}
                     placeholder="123"
                     value={cardDetails.cvc}
-                    onChange={(e) => setCardDetails(prev => ({ ...prev, cvc: e.target.value.replace(/\D/g, '') }))}
+                    onChange={(e) =>
+                      setCardDetails((prev) => ({
+                        ...prev,
+                        cvc: e.target.value.replace(/\D/g, ""),
+                      }))
+                    }
                     className="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-sm tracking-widest outline-none focus:border-emerald-500 dir-ltr text-center"
                   />
                 </div>
@@ -586,7 +671,7 @@ export function SmartDonationForm({
         <div className="mb-8 relative z-10 space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-slate-200">
             <h3 className="text-base sm:text-lg font-black text-slate-900">بيانات المتبرع</h3>
-            
+
             {/* خيار التبرع كفاعل خير */}
             <label className="inline-flex items-center gap-2 cursor-pointer select-none">
               <input
@@ -595,23 +680,21 @@ export function SmartDonationForm({
                 onChange={(e) => setIsAnonymous(e.target.checked)}
                 className="w-4 h-4 text-[var(--brand-green)] rounded border-slate-300 focus:ring-[var(--brand-green)]"
               />
-              <span className="text-xs font-bold text-slate-700">التبرع كـ &quot;فاعل خير&quot; (مجهول)</span>
+              <span className="text-xs font-bold text-slate-700">
+                التبرع كـ &quot;فاعل خير&quot; (مجهول)
+              </span>
             </label>
           </div>
 
           {!isAnonymous && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="space-y-3"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
               <div>
                 <input
                   type="text"
                   required
                   placeholder="الاسم الكامل *"
                   value={donorInfo.name}
-                  onChange={(e) => setDonorInfo(prev => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setDonorInfo((prev) => ({ ...prev, name: e.target.value }))}
                   className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none text-right"
                 />
               </div>
@@ -622,14 +705,14 @@ export function SmartDonationForm({
                   required
                   placeholder="البريد الإلكتروني (لإرسال السند الإلكتروني) *"
                   value={donorInfo.email}
-                  onChange={(e) => setDonorInfo(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) => setDonorInfo((prev) => ({ ...prev, email: e.target.value }))}
                   className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
                 />
                 <input
                   type="tel"
                   placeholder="رقم الواتساب / الهاتف (اختياري)"
                   value={donorInfo.phone}
-                  onChange={(e) => setDonorInfo(prev => ({ ...prev, phone: e.target.value }))}
+                  onChange={(e) => setDonorInfo((prev) => ({ ...prev, phone: e.target.value }))}
                   className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
                 />
               </div>
@@ -640,7 +723,7 @@ export function SmartDonationForm({
             placeholder="رسالة أو إهداء أو دعاء مع التبرع (اختياري)..."
             rows={2}
             value={donorInfo.message}
-            onChange={(e) => setDonorInfo(prev => ({ ...prev, message: e.target.value }))}
+            onChange={(e) => setDonorInfo((prev) => ({ ...prev, message: e.target.value }))}
             className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none resize-none text-right"
           />
         </div>
@@ -669,8 +752,10 @@ export function SmartDonationForm({
               <>
                 <Heart className="w-5 h-5 fill-white" />
                 <span>
-                  تأكيد التبرع الآن — {actualAmount.toLocaleString('ar-SA')} {CURRENCY_SYMBOLS[currency]}
-                  {donationFrequency !== 'once' && ` (${donationFrequency === 'monthly' ? 'شهرياً' : 'سنوياً'})`}
+                  تأكيد التبرع الآن — {actualAmount.toLocaleString("ar-SA")}{" "}
+                  {CURRENCY_SYMBOLS[currency]}
+                  {donationFrequency !== "once" &&
+                    ` (${donationFrequency === "monthly" ? "شهرياً" : "سنوياً"})`}
                 </span>
               </>
             )}
@@ -681,12 +766,9 @@ export function SmartDonationForm({
             <span>معالجة الدفع معتمدة ومشفرة عالمياً بأعلى معايير الأمان المصرفي</span>
           </p>
         </div>
-
       </form>
     </div>
   );
 }
 
 export default SmartDonationForm;
-
-

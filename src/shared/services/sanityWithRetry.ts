@@ -1,10 +1,10 @@
-import { createClient } from '@sanity/client';
+import { createClient } from "@sanity/client";
 
 // Sanity configuration
-const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'xd0ohyiz';
-const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
-const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || '2024-01-01';
-const apiTimeout = parseInt(import.meta.env.VITE_API_TIMEOUT || '30000', 10);
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || "xd0ohyiz";
+const dataset = import.meta.env.VITE_SANITY_DATASET || "production";
+const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || "2024-01-01";
+const apiTimeout = parseInt(import.meta.env.VITE_API_TIMEOUT || "30000", 10);
 
 // Create Sanity client
 const client = createClient({
@@ -19,36 +19,33 @@ const client = createClient({
 /**
  * Query with retry logic and timeout
  */
-export async function queryWithRetry<T = any>(
-  query: string,
-  maxRetries: number = 3
-): Promise<T> {
+export async function queryWithRetry<T = any>(query: string, maxRetries: number = 3): Promise<T> {
   let lastError: Error | null = null;
-  
+
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
       const result = await Promise.race([
         client.fetch<T>(query),
         new Promise<never>((_, reject) => {
           setTimeout(() => {
-            reject(new Error('Request timeout'));
+            reject(new Error("Request timeout"));
           }, apiTimeout);
-        })
+        }),
       ]);
-      
+
       return result;
     } catch (error) {
       lastError = error as Error;
       // Retry with exponential backoff
-      
+
       // Wait before retry with exponential backoff
       if (attempt < maxRetries - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
+        await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
       }
     }
   }
-  
-  throw lastError || new Error('Unknown error');
+
+  throw lastError || new Error("Unknown error");
 }
 
 /**
@@ -70,11 +67,11 @@ export async function fetchProjectsWithRetry() {
     "endDate": endDate,
     "slug": slug
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch projects:', error);
+    console.error("Failed to fetch projects:", error);
     return []; // Return empty array on error
   }
 }
@@ -95,11 +92,11 @@ export async function fetchNewsWithRetry() {
     views,
     "date": coalesce(date, _createdAt)
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch news:', error);
+    console.error("Failed to fetch news:", error);
     return [];
   }
 }
@@ -117,11 +114,11 @@ export async function fetchPartnersWithRetry() {
     website,
     status
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch partners:', error);
+    console.error("Failed to fetch partners:", error);
     return [];
   }
 }
@@ -138,11 +135,11 @@ export async function fetchSuccessStoriesWithRetry() {
     "mainImage": mainImage,
     content
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch success stories:', error);
+    console.error("Failed to fetch success stories:", error);
     return [];
   }
 }
@@ -166,11 +163,11 @@ export async function fetchEventsWithRetry() {
     capacity,
     registeredCount
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch events:', error);
+    console.error("Failed to fetch events:", error);
     return [];
   }
 }
@@ -189,11 +186,11 @@ export async function fetchDashboardMetricsWithRetry() {
     "totalTestimonials": count(*[_type == "testimonial" && status == "published"]),
     "totalDonations": count(*[_type == "donation" && status == "completed"])
   }`;
-  
+
   try {
     return await queryWithRetry(query);
   } catch (error) {
-    console.error('Failed to fetch dashboard metrics:', error);
+    console.error("Failed to fetch dashboard metrics:", error);
     return {
       totalProjects: 0,
       activeProjects: 0,
@@ -208,4 +205,3 @@ export async function fetchDashboardMetricsWithRetry() {
 }
 
 export { client };
-

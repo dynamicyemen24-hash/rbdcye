@@ -2,7 +2,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'ADMIN' | 'EDITOR' | 'MANAGER' | 'VIEWER';
+  role: "ADMIN" | "EDITOR" | "MANAGER" | "VIEWER";
   permissions: Permission[];
   avatar?: string;
   createdAt?: string;
@@ -34,4 +34,3 @@ export interface TokenPayload {
   exp: number;
   iat: number;
 }
-

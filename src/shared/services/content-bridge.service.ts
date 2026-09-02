@@ -4,7 +4,7 @@
 // so the UI layer never knows the data source.
 // ============================================================
 
-import { contentManager, type ContentResult } from './content-manager';
+import { contentManager, type ContentResult } from "./content-manager";
 
 // Legacy type for backward compatibility
 type ImpactMetrics = {
@@ -21,25 +21,23 @@ type ImpactMetrics = {
 export const contentBridge = {
   async getContent<T = unknown>(key: string): Promise<ContentResult<T>> {
     switch (key) {
-      case 'impact':
+      case "impact":
         return contentManager.getImpact() as Promise<ContentResult<T>>;
-      case 'news':
+      case "news":
         return contentManager.getNews() as Promise<ContentResult<T>>;
-      case 'projects':
+      case "projects":
         return contentManager.getProjects() as Promise<ContentResult<T>>;
-      case 'programs':
+      case "programs":
         return contentManager.getPrograms() as Promise<ContentResult<T>>;
-      case 'partners':
+      case "partners":
         return contentManager.getPartners() as Promise<ContentResult<T>>;
-      case 'stories':
+      case "stories":
         return contentManager.getSuccessStories() as Promise<ContentResult<T>>;
-      case 'search':
+      case "search":
         // Search is handled separately
-        return { data: [], source: 'static', isDynamic: false, error: null };
+        return { data: [], source: "static", isDynamic: false, error: null };
       default:
-        return { data: [], source: 'static', isDynamic: false, error: null };
+        return { data: [], source: "static", isDynamic: false, error: null };
     }
   },
 };
-
-

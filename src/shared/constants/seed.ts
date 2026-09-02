@@ -1,3 +1,1 @@
-export * from '@/content/website';
-
-
+export * from "@/content/website";

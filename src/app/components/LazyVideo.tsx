@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 
 interface LazyVideoProps {
   src: string;
@@ -13,14 +13,14 @@ interface LazyVideoProps {
 /**
  * ???? ????? ?????? ?????? ????? ??? ???????
  */
-export function LazyVideo({ 
-  src, 
-  poster = '/images/defaults/about-hero.svg',
-  className = '',
+export function LazyVideo({
+  src,
+  poster = "/images/defaults/about-hero.svg",
+  className = "",
   autoPlay = true,
   loop = true,
   muted = true,
-  playsInline = true
+  playsInline = true,
 }: LazyVideoProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -37,7 +37,7 @@ export function LazyVideo({
           if (entry.isIntersecting) {
             setIsInView(true);
             // ????? ??????? ??? ??????
-            if ('requestIdleCallback' in window) {
+            if ("requestIdleCallback" in window) {
               requestIdleCallback(() => {
                 videoElement.load();
               });
@@ -68,13 +68,11 @@ export function LazyVideo({
 
   return (
     <div className={`relative ${className}`}>
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
-      )}
+      {!isLoaded && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />}
       <video
         ref={videoRef}
         className={`w-full h-full object-cover transition-opacity duration-500 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
+          isLoaded ? "opacity-100" : "opacity-0"
         }`}
         poster={poster}
         preload="metadata"
@@ -87,17 +85,12 @@ export function LazyVideo({
         onError={handleError}
       >
         <source src={src} type="video/mp4" />
-        <source src={src.replace('.mp4', '.webm')} type="video/webm" />
+        <source src={src.replace(".mp4", ".webm")} type="video/webm" />
         {/* ?? ???? ??? ??? ??????? ??? ???? */}
-        <img 
-          src={poster} 
-          alt="????? ?????? ????????" 
-          className="w-full h-full object-cover"
-        />
+        <img src={poster} alt="????? ?????? ????????" className="w-full h-full object-cover" />
         {/* Track for accessibility */}
         <track kind="captions" src="" label="Arabic" />
       </video>
     </div>
   );
 }
-

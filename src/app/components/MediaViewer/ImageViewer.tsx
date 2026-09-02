@@ -4,7 +4,7 @@
  * يدعم: التكبير/التصغير، التدوير، القلب، الجر، اللمس، ملء الشاشة، وأوضاع العرض المختلفة
  */
 
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from "motion/react";
 import {
   ZoomIn,
   ZoomOut,
@@ -22,11 +22,11 @@ import {
   RefreshCw,
   ImageOff,
   Move,
-} from 'lucide-react';
-import { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+} from "lucide-react";
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 
 // ===== الأنواع =====
-export type ImageFitMode = 'original' | 'fitWidth' | 'fitHeight' | 'contain' | 'cover';
+export type ImageFitMode = "original" | "fitWidth" | "fitHeight" | "contain" | "cover";
 
 export interface MediaItem {
   url: string;
@@ -57,7 +57,7 @@ interface ImageViewerProps {
   onNext?: () => void;
   hasPrevious?: boolean;
   hasNext?: boolean;
-  theme?: 'light' | 'dark' | 'charity';
+  theme?: "light" | "dark" | "charity";
   enableFullscreen?: boolean;
   autoHideControls?: boolean;
 }
@@ -68,17 +68,17 @@ const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, 
 // دالة مساعدة للحصول على تسمية وضع العرض (لتجنب التيرناري المتداخل)
 const getFitModeLabel = (mode: ImageFitMode): string => {
   switch (mode) {
-    case 'contain':
-      return 'Fit';
-    case 'cover':
-      return 'Cover';
-    case 'fitWidth':
-      return 'عرض';
-    case 'fitHeight':
-      return 'ارتفاع';
-    case 'original':
+    case "contain":
+      return "Fit";
+    case "cover":
+      return "Cover";
+    case "fitWidth":
+      return "عرض";
+    case "fitHeight":
+      return "ارتفاع";
+    case "original":
     default:
-      return 'أصلي';
+      return "أصلي";
   }
 };
 
@@ -91,7 +91,7 @@ export const ImageViewer = memo(
     onNext,
     hasPrevious,
     hasNext,
-    theme = 'charity',
+    theme = "charity",
     enableFullscreen = true,
     autoHideControls = true,
   }: ImageViewerProps) => {
@@ -101,7 +101,7 @@ export const ImageViewer = memo(
       rotation: 0,
       flipHorizontal: false,
       flipVertical: false,
-      fitMode: 'contain',
+      fitMode: "contain",
       panX: 0,
       panY: 0,
     });
@@ -132,13 +132,13 @@ export const ImageViewer = memo(
       const handleMouseMove = () => resetTimer();
       const handleKeyDown = () => resetTimer();
 
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("keydown", handleKeyDown);
       resetTimer();
 
       return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("keydown", handleKeyDown);
         clearTimeout(controlsTimeout.current);
       };
     }, [autoHideControls]);
@@ -183,7 +183,7 @@ export const ImageViewer = memo(
         rotation: 0,
         flipHorizontal: false,
         flipVertical: false,
-        fitMode: 'contain',
+        fitMode: "contain",
         panX: 0,
         panY: 0,
       });
@@ -195,15 +195,15 @@ export const ImageViewer = memo(
         const response = await fetch(media.url);
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.download = media.title || 'image';
+        link.download = media.title || "image";
         document.body.appendChild(link);
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
       } catch {
-        window.open(media.url, '_blank');
+        window.open(media.url, "_blank");
       }
     }, [media]);
 
@@ -221,7 +221,7 @@ export const ImageViewer = memo(
         }
       } else {
         await navigator.clipboard.writeText(media.url);
-        alert('تم نسخ الرابط إلى الحافظة');
+        alert("تم نسخ الرابط إلى الحافظة");
       }
     }, [media]);
 
@@ -245,7 +245,7 @@ export const ImageViewer = memo(
         panStart.current = { x: state.panX, y: state.panY };
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
       },
-      [state.zoom, state.panX, state.panY],
+      [state.zoom, state.panX, state.panY]
     );
 
     const onPointerMove = useCallback((e: React.PointerEvent) => {
@@ -322,16 +322,16 @@ export const ImageViewer = memo(
         isDragging.current = false;
       };
 
-      container.addEventListener('touchstart', handleTouchStart, { passive: false });
-      container.addEventListener('touchmove', handleTouchMove, { passive: false });
-      container.addEventListener('touchend', handleTouchEnd);
-      container.addEventListener('touchcancel', handleTouchEnd);
+      container.addEventListener("touchstart", handleTouchStart, { passive: false });
+      container.addEventListener("touchmove", handleTouchMove, { passive: false });
+      container.addEventListener("touchend", handleTouchEnd);
+      container.addEventListener("touchcancel", handleTouchEnd);
 
       return () => {
-        container.removeEventListener('touchstart', handleTouchStart);
-        container.removeEventListener('touchmove', handleTouchMove);
-        container.removeEventListener('touchend', handleTouchEnd);
-        container.removeEventListener('touchcancel', handleTouchEnd);
+        container.removeEventListener("touchstart", handleTouchStart);
+        container.removeEventListener("touchmove", handleTouchMove);
+        container.removeEventListener("touchend", handleTouchEnd);
+        container.removeEventListener("touchcancel", handleTouchEnd);
       };
     }, [state.zoom, state.panX, state.panY]);
 
@@ -349,16 +349,16 @@ export const ImageViewer = memo(
       // حساب المقياس حسب وضع العرض
       let finalScale: number;
       switch (fitMode) {
-        case 'fitWidth':
+        case "fitWidth":
           finalScale = containerWidth / imgWidth;
           break;
-        case 'fitHeight':
+        case "fitHeight":
           finalScale = containerHeight / imgHeight;
           break;
-        case 'contain':
+        case "contain":
           finalScale = Math.min(containerWidth / imgWidth, containerHeight / imgHeight);
           break;
-        case 'cover':
+        case "cover":
           finalScale = Math.max(containerWidth / imgWidth, containerHeight / imgHeight);
           break;
         default: // 'original'
@@ -366,23 +366,23 @@ export const ImageViewer = memo(
           break;
       }
 
-      const scale = fitMode === 'original' ? zoom : finalScale;
+      const scale = fitMode === "original" ? zoom : finalScale;
 
       const transforms = [
         `translate(${panX}px, ${panY}px)`,
         `scale(${scale})`,
         `rotate(${rotation}deg)`,
-        flipHorizontal ? 'scaleX(-1)' : '',
-        flipVertical ? 'scaleY(-1)' : '',
+        flipHorizontal ? "scaleX(-1)" : "",
+        flipVertical ? "scaleY(-1)" : "",
       ]
         .filter(Boolean)
-        .join(' ');
+        .join(" ");
 
       return {
         transform: transforms,
-        transformOrigin: 'center',
-        cursor: scale > 1 ? 'grab' : 'default',
-        touchAction: 'none',
+        transformOrigin: "center",
+        cursor: scale > 1 ? "grab" : "default",
+        touchAction: "none",
       };
     }, [state]);
 
@@ -396,17 +396,17 @@ export const ImageViewer = memo(
             exit={{ opacity: 0, y: 10 }}
             className="absolute bottom-4 left-4 right-4 bg-black/70 rounded-lg p-4 text-white backdrop-blur-sm"
           >
-            <h3 className="font-bold text-lg mb-2">{media?.title || 'بدون عنوان'}</h3>
+            <h3 className="font-bold text-lg mb-2">{media?.title || "بدون عنوان"}</h3>
             {media?.description && (
               <p className="text-sm text-white/80 mb-2">{media.description}</p>
             )}
             <div className="flex items-center gap-4 text-xs text-white/60">
-              <span>التصنيف: {media?.category || 'غير محدد'}</span>
+              <span>التصنيف: {media?.category || "غير محدد"}</span>
               <span>
-                تاريخ الإضافة:{' '}
+                تاريخ الإضافة:{" "}
                 {media?._createdAt
-                  ? new Date(media._createdAt).toLocaleDateString('ar-YE')
-                  : 'غير محدد'}
+                  ? new Date(media._createdAt).toLocaleDateString("ar-YE")
+                  : "غير محدد"}
               </span>
             </div>
           </motion.div>
@@ -419,7 +419,7 @@ export const ImageViewer = memo(
       () => (
         <div
           className={`absolute top-4 right-4 z-20 flex items-center gap-2 transition-opacity duration-300 ${
-            controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            controlsVisible ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
           {/* المجموعة الأولى: تكبير/تصغير، تدوير، قلب، إعادة ضبط */}
@@ -454,7 +454,7 @@ export const ImageViewer = memo(
             <button
               onClick={handleFlipHorizontal}
               className={`p-2 rounded transition-colors ${
-                state.flipHorizontal ? 'bg-white/30' : 'hover:bg-white/20'
+                state.flipHorizontal ? "bg-white/30" : "hover:bg-white/20"
               }`}
               title="قلب أفقي"
             >
@@ -463,7 +463,7 @@ export const ImageViewer = memo(
             <button
               onClick={handleFlipVertical}
               className={`p-2 rounded transition-colors ${
-                state.flipVertical ? 'bg-white/30' : 'hover:bg-white/20'
+                state.flipVertical ? "bg-white/30" : "hover:bg-white/20"
               }`}
               title="قلب عمودي"
             >
@@ -482,22 +482,22 @@ export const ImageViewer = memo(
 
           {/* المجموعة الثانية: أوضاع العرض، تنزيل، مشاركة، ملء الشاشة */}
           <div className="flex items-center gap-1 bg-black/70 rounded-lg p-1 backdrop-blur-sm">
-            {(
-              ['contain', 'cover', 'fitWidth', 'fitHeight', 'original'] as ImageFitMode[]
-            ).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => handleFitMode(mode)}
-                className={`px-2 py-1 rounded text-xs transition-colors ${
-                  state.fitMode === mode
-                    ? 'bg-white/30 text-white'
-                    : 'text-white/70 hover:bg-white/20'
-                }`}
-                title={mode}
-              >
-                {getFitModeLabel(mode)}
-              </button>
-            ))}
+            {(["contain", "cover", "fitWidth", "fitHeight", "original"] as ImageFitMode[]).map(
+              (mode) => (
+                <button
+                  key={mode}
+                  onClick={() => handleFitMode(mode)}
+                  className={`px-2 py-1 rounded text-xs transition-colors ${
+                    state.fitMode === mode
+                      ? "bg-white/30 text-white"
+                      : "text-white/70 hover:bg-white/20"
+                  }`}
+                  title={mode}
+                >
+                  {getFitModeLabel(mode)}
+                </button>
+              )
+            )}
             <div className="w-px h-6 bg-white/20 mx-1" />
             <button
               onClick={handleDownload}
@@ -537,7 +537,7 @@ export const ImageViewer = memo(
                 onClick={onPrevious}
                 disabled={!hasPrevious}
                 className={`p-2 rounded transition-colors ${
-                  hasPrevious ? 'hover:bg-white/20' : 'opacity-50 cursor-not-allowed'
+                  hasPrevious ? "hover:bg-white/20" : "opacity-50 cursor-not-allowed"
                 }`}
                 title="السابق"
               >
@@ -549,7 +549,7 @@ export const ImageViewer = memo(
                 onClick={onNext}
                 disabled={!hasNext}
                 className={`p-2 rounded transition-colors ${
-                  hasNext ? 'hover:bg-white/20' : 'opacity-50 cursor-not-allowed'
+                  hasNext ? "hover:bg-white/20" : "opacity-50 cursor-not-allowed"
                 }`}
                 title="التالي"
               >
@@ -589,7 +589,7 @@ export const ImageViewer = memo(
         handleDownload,
         handleShare,
         toggleFullscreen,
-      ],
+      ]
     );
 
     // ---- زر المعلومات ----
@@ -598,14 +598,14 @@ export const ImageViewer = memo(
         <button
           onClick={() => setShowInfo(!showInfo)}
           className={`absolute top-4 left-4 p-2 rounded-lg bg-black/70 hover:bg-white/20 transition-colors backdrop-blur-sm z-20 ${
-            controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            controlsVisible ? "opacity-100" : "opacity-0 pointer-events-none"
           } transition-opacity duration-300`}
           title="المعلومات"
         >
           <Info className="w-5 h-5 text-white" />
         </button>
       ),
-      [controlsVisible, showInfo],
+      [controlsVisible, showInfo]
     );
 
     // ---- حالة التحميل والخطأ ----
@@ -613,11 +613,7 @@ export const ImageViewer = memo(
 
     // تطبيق السمة (theme) على الخلفية
     const bgClass =
-      theme === 'light'
-        ? 'bg-white/95'
-        : theme === 'charity'
-          ? 'bg-charity/95'
-          : 'bg-black/95';
+      theme === "light" ? "bg-white/95" : theme === "charity" ? "bg-charity/95" : "bg-black/95";
 
     return (
       <motion.div
@@ -626,7 +622,7 @@ export const ImageViewer = memo(
         exit={{ opacity: 0 }}
         className={`fixed inset-0 z-50 flex items-center justify-center ${bgClass} p-4`}
         onKeyDown={(e) => {
-          if (e.key === 'Escape') onClose();
+          if (e.key === "Escape") onClose();
         }}
         role="dialog"
         aria-modal="true"
@@ -669,7 +665,7 @@ export const ImageViewer = memo(
             <img
               ref={imageRef}
               src={media.url}
-              alt={media.altText || media.title || 'صورة'}
+              alt={media.altText || media.title || "صورة"}
               className="max-w-full max-h-full select-none"
               style={imageStyle}
               onLoad={() => setImageLoaded(true)}
@@ -690,10 +686,9 @@ export const ImageViewer = memo(
         </div>
       </motion.div>
     );
-  },
+  }
 );
 
-ImageViewer.displayName = 'ImageViewer';
+ImageViewer.displayName = "ImageViewer";
 export default ImageViewer;
 /* cspell:enable */
-

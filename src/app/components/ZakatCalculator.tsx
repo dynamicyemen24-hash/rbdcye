@@ -22,8 +22,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-type ZakatType = 'money' | 'gold' | 'silver' | 'fitrah';
-type ZakatTab = ZakatType | 'compare';
+type ZakatType = "money" | "gold" | "silver" | "fitrah";
+type ZakatTab = ZakatType | "compare";
 
 interface ZakatResult {
   type: ZakatType;
@@ -45,7 +45,20 @@ interface ZakatHistoryItem {
 
 // Hijri date conversion helper
 function getHijriDateReminder(date: Date): string {
-  const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادي الأول', 'جمادي الثاني', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+  const hijriMonths = [
+    "محرم",
+    "صفر",
+    "ربيع الأول",
+    "ربيع الثاني",
+    "جمادي الأول",
+    "جمادي الثاني",
+    "رجب",
+    "شعبان",
+    "رمضان",
+    "شوال",
+    "ذو القعدة",
+    "ذو الحجة",
+  ];
   const hijriYear = date.getFullYear() - 622;
   const hijriMonth = hijriMonths[date.getMonth() % 12];
   return `${hijriMonth} ${hijriYear}هـ`;
@@ -54,7 +67,7 @@ function getHijriDateReminder(date: Date): string {
 // Load zakat history from localStorage
 function loadZakatHistory(): ZakatHistoryItem[] {
   try {
-    const saved = localStorage.getItem('zakat_calculator_history');
+    const saved = localStorage.getItem("zakat_calculator_history");
     return saved ? JSON.parse(saved) : [];
   } catch {
     return [];
@@ -64,7 +77,7 @@ function loadZakatHistory(): ZakatHistoryItem[] {
 // Save zakat history to localStorage
 function saveZakatHistory(history: ZakatHistoryItem[]): void {
   try {
-    localStorage.setItem('zakat_calculator_history', JSON.stringify(history.slice(0, 20)));
+    localStorage.setItem("zakat_calculator_history", JSON.stringify(history.slice(0, 20)));
   } catch {
     // Silently fail
   }
@@ -80,22 +93,24 @@ const NISAB_VALUES: Record<ZakatType, number> = {
 
 // Nisab explanations for tooltips
 const NISAB_EXPLANATIONS: Record<ZakatType, string> = {
-  money: 'المبلغ النصاب هو قيمة ٨٥ غرام من الذهب الخام، مقداره ١٢٩٦٧ ريال يمني تقريباً بناءً على أسعار السوق الحالية',
-  gold: 'النصاب الشرعي للذهب هو ٨٥ غرام، وهي النسبة التي يجب بلوغها قبل أن تفرض الزكاة',
-  silver: 'النصاب للفضة هو ٥٩٥ غرام (القيمة الدقيقة ٦١٢.٣٦ غرام، و٥٩٥ غرام قيمة وازنة Conservative)',
-  fitrah: 'نصاب الفطر هو ٢.٥ كيلو من الطعام الأساسي لكل أسرة، ويجب إخراجها عن كل فرد في العائلة',
+  money:
+    "المبلغ النصاب هو قيمة ٨٥ غرام من الذهب الخام، مقداره ١٢٩٦٧ ريال يمني تقريباً بناءً على أسعار السوق الحالية",
+  gold: "النصاب الشرعي للذهب هو ٨٥ غرام، وهي النسبة التي يجب بلوغها قبل أن تفرض الزكاة",
+  silver:
+    "النصاب للفضة هو ٥٩٥ غرام (القيمة الدقيقة ٦١٢.٣٦ غرام، و٥٩٥ غرام قيمة وازنة Conservative)",
+  fitrah: "نصاب الفطر هو ٢.٥ كيلو من الطعام الأساسي لكل أسرة، ويجب إخراجها عن كل فرد في العائلة",
 };
 
 export function ZakatCalculator() {
   const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<ZakatTab>('money');
+  const [activeTab, setActiveTab] = useState<ZakatTab>("money");
 
-  const [amount, setAmount] = useState<string>('');
+  const [amount, setAmount] = useState<string>("");
   const [result, setResult] = useState<ZakatResult | null>(null);
-  const [zakatReminderDate, setZakatReminderDate] = useState<string>('');
+  const [zakatReminderDate, setZakatReminderDate] = useState<string>("");
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState<ZakatHistoryItem[]>([]);
-  const [reminderEmail, setReminderEmail] = useState<string>('');
+  const [reminderEmail, setReminderEmail] = useState<string>("");
   const [reminderSaved, setReminderSaved] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
 
@@ -111,26 +126,26 @@ export function ZakatCalculator() {
     setHistory(loadZakatHistory());
   }, []);
 
-    const calculateZakat = useCallback(() => {
-    if (activeTab === 'compare') return;
+  const calculateZakat = useCallback(() => {
+    if (activeTab === "compare") return;
     const input = parseFloat(amount) || 0;
 
     const zakatRate = 0.025;
     const nisab = NISAB_VALUES[activeTab];
-    let description = '';
+    let description = "";
 
     switch (activeTab) {
-      case 'money':
-        description = 'المال (النقد والبنوك)';
+      case "money":
+        description = "المال (النقد والبنوك)";
         break;
-      case 'gold':
-        description = 'الذهب';
+      case "gold":
+        description = "الذهب";
         break;
-      case 'silver':
-        description = 'الفضة';
+      case "silver":
+        description = "الفضة";
         break;
-      case 'fitrah':
-        description = 'الفطر';
+      case "fitrah":
+        description = "الفطر";
         break;
     }
 
@@ -176,7 +191,7 @@ export function ZakatCalculator() {
   // Handle payment for zakat - uses React Router navigation (SPA-friendly)
   const handlePayZakat = () => {
     if (!result || result.zakat === 0) return;
-    navigate('/donate', { state: { zakatAmount: result.zakat, zakatType: result.type } });
+    navigate("/donate", { state: { zakatAmount: result.zakat, zakatType: result.type } });
   };
 
   // Toggle zakat reminder modal
@@ -209,29 +224,53 @@ export function ZakatCalculator() {
 الزكاة المستحقة: ${result.zakat.toFixed(2)}
 النصاب: ${result.nisab}
 النسبة: ${result.zakatRate * 100}%
-التاريخ: ${new Date().toLocaleDateString('ar-SA')}
+التاريخ: ${new Date().toLocaleDateString("ar-SA")}
 ملاحظة: هذه حاسبة إرشادية. يرجى استشارة الفقيه المختص للتأكد من الضوابط الشرعية.`;
-    const blob = new Blob([content], { type: 'text/plain' });
+    const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `zakat-calculation-${new Date().toISOString().split('T')[0]}.txt`;
+    a.download = `zakat-calculation-${new Date().toISOString().split("T")[0]}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   const tabConfig = [
-    { id: 'money', label: 'المال', icon: Coins },
-    { id: 'gold', label: 'الذهب', icon: Gem },
-    { id: 'silver', label: 'الفضة', icon: Landmark },
-    { id: 'fitrah', label: 'الفطر', icon: Calendar },
+    { id: "money", label: "المال", icon: Coins },
+    { id: "gold", label: "الذهب", icon: Gem },
+    { id: "silver", label: "الفضة", icon: Landmark },
+    { id: "fitrah", label: "الفطر", icon: Calendar },
   ] as const;
 
   const comparisonConfig = [
-    { id: 'money', label: 'مال', activeTab: 'money', color: 'var(--brand-green)', icon: <Coins className="w-6 h-6 text-white" /> },
-    { id: 'gold', label: 'ذهب', activeTab: 'gold', color: 'var(--brand-gold)', icon: <Gem className="w-6 h-6 text-white" /> },
-    { id: 'silver', label: 'فضة', activeTab: 'silver', color: '#94A3B8', icon: <Landmark className="w-6 h-6 text-white" /> },
-    { id: 'fitrah', label: 'فطر', activeTab: 'fitrah', color: 'var(--brand-green)', icon: <Calendar className="w-6 h-6 text-white" /> },
+    {
+      id: "money",
+      label: "مال",
+      activeTab: "money",
+      color: "var(--brand-green)",
+      icon: <Coins className="w-6 h-6 text-white" />,
+    },
+    {
+      id: "gold",
+      label: "ذهب",
+      activeTab: "gold",
+      color: "var(--brand-gold)",
+      icon: <Gem className="w-6 h-6 text-white" />,
+    },
+    {
+      id: "silver",
+      label: "فضة",
+      activeTab: "silver",
+      color: "#94A3B8",
+      icon: <Landmark className="w-6 h-6 text-white" />,
+    },
+    {
+      id: "fitrah",
+      label: "فطر",
+      activeTab: "fitrah",
+      color: "var(--brand-green)",
+      icon: <Calendar className="w-6 h-6 text-white" />,
+    },
   ] as const;
 
   return (
@@ -284,16 +323,26 @@ export function ZakatCalculator() {
                 </button>
               </div>
               {history.length === 0 ? (
-                <p className="text-center text-[var(--muted-foreground)] py-8">لا توجد عمليات سابقة</p>
+                <p className="text-center text-[var(--muted-foreground)] py-8">
+                  لا توجد عمليات سابقة
+                </p>
               ) : (
                 <div className="space-y-3">
                   {history.map((item) => (
                     <div key={item.id} className="p-3 border border-[var(--border)] rounded-lg">
                       <div className="flex justify-between items-start mb-1">
                         <span className="font-medium text-[var(--foreground)]">
-                          {item.type === 'money' ? 'زكاة مال' : item.type === 'gold' ? 'زكاة ذهب' : item.type === 'silver' ? 'زكاة فضة' : 'زكاة فطر'}
+                          {item.type === "money"
+                            ? "زكاة مال"
+                            : item.type === "gold"
+                              ? "زكاة ذهب"
+                              : item.type === "silver"
+                                ? "زكاة فضة"
+                                : "زكاة فطر"}
                         </span>
-                        <span className="text-xs text-[var(--muted-foreground)]">{new Date(item.date).toLocaleDateString('ar-SA')}</span>
+                        <span className="text-xs text-[var(--muted-foreground)]">
+                          {new Date(item.date).toLocaleDateString("ar-SA")}
+                        </span>
                       </div>
                       <div className="text-sm text-[var(--muted-foreground)]">
                         المبلغ: {item.amount} | الزكاة: {item.zakat.toFixed(2)}
@@ -314,13 +363,13 @@ export function ZakatCalculator() {
             key={tab.id}
             onClick={() => {
               setActiveTab(tab.id);
-              setAmount('');
+              setAmount("");
               setResult(null);
             }}
             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               activeTab === tab.id
-                ? 'bg-[var(--brand-gold-pale)] text-[var(--brand-gold)]'
-                : 'bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--border)]'
+                ? "bg-[var(--brand-gold-pale)] text-[var(--brand-gold)]"
+                : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--border)]"
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -328,33 +377,45 @@ export function ZakatCalculator() {
           </button>
         ))}
         <button
-          onClick={() => setActiveTab('compare')}
+          onClick={() => setActiveTab("compare")}
           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-            activeTab === 'compare'
-              ? 'bg-[var(--brand-green-pale)] text-[var(--brand-green)]'
-              : 'bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--border)]'
+            activeTab === "compare"
+              ? "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
+              : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--border)]"
           }`}
           title="مقارنة النِصاب"
->
+        >
           مقارنة
         </button>
       </div>
 
       {/* Comparison Mode */}
-      {activeTab === 'compare' && (
+      {activeTab === "compare" && (
         <div className="grid grid-cols-2 gap-4 mb-6">
           {comparisonConfig.map((item) => (
             <div
               key={item.id}
               className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm text-center"
             >
-              <div className="w-14 h-14 rounded-full mx-auto mb-4" style={{ backgroundColor: item.color }}>
+              <div
+                className="w-14 h-14 rounded-full mx-auto mb-4"
+                style={{ backgroundColor: item.color }}
+              >
                 {item.icon}
               </div>
               <h4 className="text-xl font-bold text-[var(--foreground)] mb-2">{item.label}</h4>
               <p className="text-sm text-[var(--muted-foreground)] mb-4">النصاب:</p>
-              <div className="text-3xl font-extrabold text-[var(--brand-gold)]">{NISAB_VALUES[item.activeTab]} {item.activeTab === 'money' ? 'ريال' : item.activeTab === 'gold' ? 'غرام' : item.activeTab === 'silver' ? 'غرام' : 'كغ'}</div>
-<p className="text-xs text-[var(--muted-foreground)] mt-2">
+              <div className="text-3xl font-extrabold text-[var(--brand-gold)]">
+                {NISAB_VALUES[item.activeTab]}{" "}
+                {item.activeTab === "money"
+                  ? "ريال"
+                  : item.activeTab === "gold"
+                    ? "غرام"
+                    : item.activeTab === "silver"
+                      ? "غرام"
+                      : "كغ"}
+              </div>
+              <p className="text-xs text-[var(--muted-foreground)] mt-2">
                 {NISAB_EXPLANATIONS[item.activeTab]}
               </p>
             </div>
@@ -365,10 +426,10 @@ export function ZakatCalculator() {
       {/* Input */}
       <div className="mb-4">
         <label className="form-label">
-          {activeTab === 'money' && 'المبلغ (بالريال اليمني)'}
-          {activeTab === 'gold' && 'وزن الذهب (بالغرام)'}
-          {activeTab === 'silver' && 'وزن الفضة (بالغرام)'}
-          {activeTab === 'fitrah' && 'عدد الأسر (كل أسرة 2.5 كغ)'}
+          {activeTab === "money" && "المبلغ (بالريال اليمني)"}
+          {activeTab === "gold" && "وزن الذهب (بالغرام)"}
+          {activeTab === "silver" && "وزن الفضة (بالغرام)"}
+          {activeTab === "fitrah" && "عدد الأسر (كل أسرة 2.5 كغ)"}
         </label>
         <input
           type="number"
@@ -381,10 +442,7 @@ export function ZakatCalculator() {
       </div>
 
       {/* Calculate Button */}
-      <button
-        onClick={calculateZakat}
-        className="btn-primary w-full justify-center"
-      >
+      <button onClick={calculateZakat} className="btn-primary w-full justify-center">
         <RefreshCw className="w-4 h-4" />
         احسب الزكاة
       </button>
@@ -399,12 +457,19 @@ export function ZakatCalculator() {
           <div className="text-center mb-3">
             <p className="text-sm text-[var(--muted-foreground)]">النتيجة</p>
             <p className="text-2xl font-bold text-[var(--brand-gold)]">
-              {result.zakat.toFixed(2)} {activeTab === 'money' ? 'ريال' : activeTab === 'fitrah' ? 'كغ' : 'غرام'}
+              {result.zakat.toFixed(2)}{" "}
+              {activeTab === "money" ? "ريال" : activeTab === "fitrah" ? "كغ" : "غرام"}
             </p>
           </div>
           <div className="text-xs text-[var(--muted-foreground)] space-y-1">
-            <p>المبلغ: {result.amount} {activeTab === 'money' ? 'ريال' : activeTab === 'fitrah' ? 'كغ' : 'غرام'}</p>
-            <p>حد الزكاة (النصاب): {result.nisab} {activeTab === 'money' ? 'ريال' : activeTab === 'fitrah' ? 'كغ' : 'غرام'}</p>
+            <p>
+              المبلغ: {result.amount}{" "}
+              {activeTab === "money" ? "ريال" : activeTab === "fitrah" ? "كغ" : "غرام"}
+            </p>
+            <p>
+              حد الزكاة (النصاب): {result.nisab}{" "}
+              {activeTab === "money" ? "ريال" : activeTab === "fitrah" ? "كغ" : "غرام"}
+            </p>
             <p>النسبة: 2.5%</p>
             {!result.isAboveNisab && (
               <p className="text-[var(--destructive)] font-medium">
@@ -447,10 +512,7 @@ export function ZakatCalculator() {
 
           {/* Donate Button - Pay Zakat Now */}
           {result.zakat > 0 && (
-            <button
-              onClick={handlePayZakat}
-              className="mt-3 w-full btn-gold justify-center"
-            >
+            <button onClick={handlePayZakat} className="mt-3 w-full btn-gold justify-center">
               <Wallet className="w-4 h-4" />
               أخرج زكاتك الآن
             </button>
@@ -527,7 +589,9 @@ export function ZakatCalculator() {
                         <CheckCircle className="w-4 h-4" />
                         تم الحفظ
                       </>
-                    ) : 'حفظ التذكير'}
+                    ) : (
+                      "حفظ التذكير"
+                    )}
                   </button>
                   <button
                     onClick={() => setShowReminder(false)}
@@ -544,7 +608,3 @@ export function ZakatCalculator() {
     </div>
   );
 }
-
-
-
-

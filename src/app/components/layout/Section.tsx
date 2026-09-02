@@ -2,7 +2,11 @@
 // يفرض إيقاعاً بصرياً ثابتاً: مسافات متسقة + تناوب خلفيات محسوب
 import { motion } from "motion/react";
 
-import { IslamicPattern, IslamicDivider, StarMedallion } from "@/app/components/decor/IslamicPattern";
+import {
+  IslamicPattern,
+  IslamicDivider,
+  StarMedallion,
+} from "@/app/components/decor/IslamicPattern";
 import type { LucideIcon } from "lucide-react";
 
 export type SectionTone = "white" | "pale" | "cream" | "dark" | "gradient";
@@ -13,12 +17,14 @@ const TONE_STYLES: Record<SectionTone, { style: React.CSSProperties; className?:
   },
   pale: {
     style: {
-      background: "linear-gradient(180deg, var(--background) 0%, var(--brand-green-pale) 55%, var(--background) 100%)",
+      background:
+        "linear-gradient(180deg, var(--background) 0%, var(--brand-green-pale) 55%, var(--background) 100%)",
     },
   },
   cream: {
     style: {
-      background: "linear-gradient(180deg, var(--background) 0%, var(--brand-gold-pale) 60%, var(--background) 100%)",
+      background:
+        "linear-gradient(180deg, var(--background) 0%, var(--brand-gold-pale) 60%, var(--background) 100%)",
     },
   },
   dark: {
@@ -184,18 +190,30 @@ export function SectionHeader({
 // ─── درز زخرفي بين الأقسام: خط ذهبي + ميدالية نجمية ────────
 export function SectionSeam() {
   return (
-    <div dir="rtl" aria-hidden="true" className="relative h-20 flex items-center justify-center overflow-hidden" style={{ background: "var(--background)" }}>
+    <div
+      dir="rtl"
+      aria-hidden="true"
+      className="relative h-20 flex items-center justify-center overflow-hidden"
+      style={{ background: "var(--background)" }}
+    >
       <div
         className="absolute inset-x-0 top-1/2 h-px"
-        style={{ background: "linear-gradient(to left, transparent, rgba(var(--brand-gold-rgb),0.55), transparent)" }}
+        style={{
+          background:
+            "linear-gradient(to left, transparent, rgba(var(--brand-gold-rgb),0.55), transparent)",
+        }}
       />
-      <div className="relative flex items-center justify-center px-5" style={{ background: "var(--background)" }}>
+      <div
+        className="relative flex items-center justify-center px-5"
+        style={{ background: "var(--background)" }}
+      >
         <StarMedallion size={52} color="var(--brand-gold)">
-          <span className="block w-2.5 h-2.5 rotate-45" style={{ background: "var(--brand-gold)" }} />
+          <span
+            className="block w-2.5 h-2.5 rotate-45"
+            style={{ background: "var(--brand-gold)" }}
+          />
         </StarMedallion>
       </div>
     </div>
   );
 }
-
-

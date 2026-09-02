@@ -1,18 +1,18 @@
-@import './fonts.css';
-@import './globals.css';
-@import './site-loader.css';
-@import './tailwind.css';
-@import './theme.css';
-@import './islamic-patterns.css';
-@import './typography.css';
-@import './animations.css';
-@import './hero.css';
-@import './icon-enhancements.css';
-@import './video-player.css';
-@import './mobile-safety.css';
-@import './design-system.css';
-@import './components.css';
-@import './launch-polish.css';
+@import "./fonts.css";
+@import "./globals.css";
+@import "./site-loader.css";
+@import "./tailwind.css";
+@import "./theme.css";
+@import "./islamic-patterns.css";
+@import "./typography.css";
+@import "./animations.css";
+@import "./hero.css";
+@import "./icon-enhancements.css";
+@import "./video-player.css";
+@import "./mobile-safety.css";
+@import "./design-system.css";
+@import "./components.css";
+@import "./launch-polish.css";
 
 /* ==========================================================================
     PERFORMANCE: Content Visibility for below-fold sections
@@ -42,13 +42,3 @@ main section:first-child,
     will-change: auto;
   }
 }
-
-
-
-
-
-
-
-
-
-

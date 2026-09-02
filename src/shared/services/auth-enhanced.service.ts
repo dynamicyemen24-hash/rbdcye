@@ -1,10 +1,9 @@
 // ============================================================
 // auth-enhanced.service.ts - نظام مصادقة متقدم آمن للإنتاج
 // ============================================================
-import { supabase } from './supabase.client';
+import { supabase } from "./supabase.client";
 
-import type { User, LoginCredentials } from '@/features/auth/types/auth';
-
+import type { User, LoginCredentials } from "@/features/auth/types/auth";
 
 // الواجهة الموسعة للمستخدم مع معلومات إضافية
 export interface AuthenticatedUser extends User {
@@ -52,7 +51,7 @@ class SecurityManager {
   canAttempt(email: string): { allowed: boolean; remainingTime?: number } {
     const attempts = this.loginAttempts.get(email) || [];
     const recentAttempts = attempts.filter(
-      a => Date.now() - a.timestamp < SecurityManager.LOCKOUT_DURATION && !a.success
+      (a) => Date.now() - a.timestamp < SecurityManager.LOCKOUT_DURATION && !a.success
     );
 
     if (recentAttempts.length >= SecurityManager.MAX_LOGIN_ATTEMPTS) {
@@ -68,14 +67,14 @@ class SecurityManager {
   generateSecureToken(): string {
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    const token = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    const token = Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join("");
     return `roh_${token}_${Date.now()}`;
   }
 
   // التحقق من صلاحية الجلسة
   isSessionValid(token: string): boolean {
     try {
-      const parts = token.split('_');
+      const parts = token.split("_");
       if (parts.length < 3) return false;
       const timestamp = parseInt(parts[parts.length - 1], 10);
       return Date.now() - timestamp < SecurityManager.SESSION_DURATION;
@@ -87,13 +86,13 @@ class SecurityManager {
   // التحقق من كلمة المرور
   validatePassword(password: string): { valid: boolean; message?: string } {
     if (password.length < 8) {
-      return { valid: false, message: 'كلمة المرور يجب أن تكون 8 أحرف على الأقل' };
+      return { valid: false, message: "كلمة المرور يجب أن تكون 8 أحرف على الأقل" };
     }
     if (!/[A-Z]/.test(password) && !/[a-z]/.test(password)) {
-      return { valid: false, message: 'كلمة المرور يجب أن تحتوي على حروف' };
+      return { valid: false, message: "كلمة المرور يجب أن تحتوي على حروف" };
     }
     if (!/[0-9]/.test(password)) {
-      return { valid: false, message: 'كلمة المرور يجب أن تحتوي على رقم' };
+      return { valid: false, message: "كلمة المرور يجب أن تحتوي على رقم" };
     }
     return { valid: true };
   }
@@ -124,7 +123,7 @@ class SecurityManager {
 
 // ===== 2. نظام الجلسات المتقدم =====
 class SessionManager {
-  private static SESSION_KEY = 'auth_session';
+  private static SESSION_KEY = "auth_session";
   private static REFRESH_THRESHOLD = 30 * 60 * 1000; // 30 دقيقة
 
   static SESSION_DURATION = 60 * 60 * 1000; // ساعة واحدة
@@ -143,10 +142,10 @@ class SessionManager {
     };
 
     localStorage.setItem(SessionManager.SESSION_KEY, this.encryptSession(session));
-    localStorage.setItem('auth_token', token);
-    localStorage.setItem('auth_user', JSON.stringify(user));
-    localStorage.setItem('auth_user_role', user.role);
-    localStorage.setItem('auth_user_name', user.name);
+    localStorage.setItem("auth_token", token);
+    localStorage.setItem("auth_user", JSON.stringify(user));
+    localStorage.setItem("auth_user_role", user.role);
+    localStorage.setItem("auth_user_name", user.name);
 
     // تعيين مراقبة النشاط
     this.startActivityMonitor();
@@ -155,10 +154,10 @@ class SessionManager {
   // إنهاء الجلسة
   endSession() {
     localStorage.removeItem(SessionManager.SESSION_KEY);
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_user');
-    localStorage.removeItem('auth_user_role');
-    localStorage.removeItem('auth_user_name');
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+    localStorage.removeItem("auth_user_role");
+    localStorage.removeItem("auth_user_name");
   }
 
   // الحصول على الجلسة الحالية
@@ -192,7 +191,7 @@ class SessionManager {
     const session = this.getSession();
     if (!session) return false;
 
-    const lastActivity = new Date(session.user.lastLogin || '').getTime();
+    const lastActivity = new Date(session.user.lastLogin || "").getTime();
     return Date.now() - lastActivity > SessionManager.REFRESH_THRESHOLD;
   }
 
@@ -201,7 +200,7 @@ class SessionManager {
     try {
       return btoa(JSON.stringify(session));
     } catch {
-      return '';
+      return "";
     }
   }
 
@@ -228,7 +227,7 @@ class SessionManager {
     setInterval(updateActivity, 60000);
 
     // تحديث النشاط عند التفاعل
-    ['click', 'keydown', 'mousemove', 'scroll', 'touchstart'].forEach(event => {
+    ["click", "keydown", "mousemove", "scroll", "touchstart"].forEach((event) => {
       window.addEventListener(event, updateActivity, { passive: true });
     });
   }
@@ -238,25 +237,37 @@ class SessionManager {
 class PermissionManager {
   // التحقق من صلاحية وصول للوحة التحكم
   canAccessDashboard(user?: AuthenticatedUser | null): boolean {
-    return !!user && ['ADMIN', 'MANAGER', 'EDITOR', 'VIEWER'].includes(user.role);
+    return !!user && ["ADMIN", "MANAGER", "EDITOR", "VIEWER"].includes(user.role);
   }
 
   // التحقق من صلاحية تنفيذ إجراء
   canPerformAction(user: AuthenticatedUser | null, resource: string, action: string): boolean {
     if (!user) return false;
-    if (user.role === 'ADMIN') return true;
+    if (user.role === "ADMIN") return true;
 
     return user.permissions.some(
-      p => p.resource === resource && p.actions.includes(action as any)
+      (p) => p.resource === resource && p.actions.includes(action as any)
     );
   }
 
   // الحصول على الموارد المسموح بها للمستخدم
   getAllowedResources(user: AuthenticatedUser): string[] {
-    if (user.role === 'ADMIN') {
-      return ['news', 'stories', 'projects', 'reports', 'media', 'partners', 'donations', 'requests', 'volunteers', 'subscribers', 'users'];
+    if (user.role === "ADMIN") {
+      return [
+        "news",
+        "stories",
+        "projects",
+        "reports",
+        "media",
+        "partners",
+        "donations",
+        "requests",
+        "volunteers",
+        "subscribers",
+        "users",
+      ];
     }
-    return user.permissions.map(p => p.resource);
+    return user.permissions.map((p) => p.resource);
   }
 }
 
@@ -292,8 +303,8 @@ class EnhancedAuthService {
         const user: AuthenticatedUser = {
           id: data.user.id,
           email: data.user.email || credentials.email,
-          name: data.user.user_metadata?.name || credentials.email.split('@')[0],
-          role: data.user.user_metadata?.role || 'EDITOR',
+          name: data.user.user_metadata?.name || credentials.email.split("@")[0],
+          role: data.user.user_metadata?.role || "EDITOR",
           permissions: data.user.user_metadata?.permissions || [],
           lastLogin: new Date().toISOString(),
         };
@@ -313,7 +324,7 @@ class EnhancedAuthService {
     // تسجيل محاولة فاشلة
     this.securityManager.recordAttempt(credentials.email, false);
 
-    throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+    throw new Error("البريد الإلكتروني أو كلمة المرور غير صحيحة");
   }
 
   // تسجيل الخروج الآمن
@@ -334,9 +345,9 @@ class EnhancedAuthService {
       if (data.session?.user) {
         const user: AuthenticatedUser = {
           id: data.session.user.id,
-          email: data.session.user.email || '',
-          name: data.session.user.user_metadata?.name || '',
-          role: data.session.user.user_metadata?.role || 'VIEWER',
+          email: data.session.user.email || "",
+          name: data.session.user.user_metadata?.name || "",
+          role: data.session.user.user_metadata?.role || "VIEWER",
           permissions: data.session.user.user_metadata?.permissions || [],
           lastLogin: new Date().toISOString(),
         };
@@ -391,12 +402,12 @@ class EnhancedAuthService {
   async verifyTwoFactor(code: string): Promise<boolean> {
     // تنفيذ مستقبلي للتأكيد الثنائي
     await this.delay(500);
-    return code === '123456'; // placeholder
+    return code === "123456"; // placeholder
   }
 
   // المساعدة
   private delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
@@ -404,4 +415,3 @@ class EnhancedAuthService {
 export const authEnhanced = new EnhancedAuthService();
 export const securityManager = new SecurityManager();
 export { SessionManager, PermissionManager };
-

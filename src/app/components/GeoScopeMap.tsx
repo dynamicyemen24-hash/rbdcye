@@ -19,18 +19,126 @@ interface Governorate {
 
 // Yemen governorates with project data
 const YEMEN_GOVERNORATES: Governorate[] = [
-  { id: "sanaa", name: "صنعاء", lat: 15.3694, lng: 44.1917, projects: 0, beneficiaries: 0, color: "var(--brand-green)", sector: "إغاثة وأمن غذائي" },
-  { id: "taiz", name: "تعز", lat: 13.7833, lng: 44.1333, projects: 0, beneficiaries: 0, color: "var(--brand-gold)", sector: "مياه وإصحاح بيئي" },
-  { id: "hodeidah", name: "الحديدة", lat: 15.3433, lng: 43.2333, projects: 0, beneficiaries: 0, color: "#2563EB", sector: "صحة واستجابة طارئة" },
-  { id: "hajjah", name: "حجة", lat: 16.0933, lng: 43.8944, projects: 0, beneficiaries: 0, color: "#7C3AED", sector: "إغاثة وسقيا ماء" },
-  { id: "dhale", name: "ذمار", lat: 13.9333, lng: 44.8667, projects: 0, beneficiaries: 0, color: "#E74C3C", sector: "تعليم وتنمية" },
-  { id: "abyan", name: "ابين", lat: 13.9933, lng: 45.8667, projects: 0, beneficiaries: 0, color: "#F59E0B", sector: "تمكين اقتصادي" },
-  { id: "shabwah", name: "شبوة", lat: 14.8500, lng: 45.9667, projects: 0, beneficiaries: 0, color: "#10B981", sector: "إغاثة وأمن غذائي" },
-  { id: "hadramawt", name: "حضرموت", lat: 15.4000, lng: 48.3667, projects: 0, beneficiaries: 0, color: "#8B5CF6", sector: "تعليم وتنمية" },
-  { id: "adDalis", name: "الضالع", lat: 14.6667, lng: 47.3333, projects: 0, beneficiaries: 0, color: "#06B6D4", sector: "مياه وإصحاح بيئي" },
-  { id: "lahij", name: "لحج", lat: 13.2000, lng: 44.8000, projects: 0, beneficiaries: 0, color: "#EC4899", sector: "إغاثة وسقيا ماء" },
-  { id: "mahrah", name: "المحويت", lat: 16.7333, lng: 52.6667, projects: 0, beneficiaries: 0, color: "#FFD700", sector: "تمكين اقتصادي" },
-  { id: "rijal", name: "ريمة", lat: 17.5167, lng: 43.5667, projects: 0, beneficiaries: 0, color: "#F97316", sector: "صحة واستجابة طارئة" },
+  {
+    id: "sanaa",
+    name: "صنعاء",
+    lat: 15.3694,
+    lng: 44.1917,
+    projects: 0,
+    beneficiaries: 0,
+    color: "var(--brand-green)",
+    sector: "إغاثة وأمن غذائي",
+  },
+  {
+    id: "taiz",
+    name: "تعز",
+    lat: 13.7833,
+    lng: 44.1333,
+    projects: 0,
+    beneficiaries: 0,
+    color: "var(--brand-gold)",
+    sector: "مياه وإصحاح بيئي",
+  },
+  {
+    id: "hodeidah",
+    name: "الحديدة",
+    lat: 15.3433,
+    lng: 43.2333,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#2563EB",
+    sector: "صحة واستجابة طارئة",
+  },
+  {
+    id: "hajjah",
+    name: "حجة",
+    lat: 16.0933,
+    lng: 43.8944,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#7C3AED",
+    sector: "إغاثة وسقيا ماء",
+  },
+  {
+    id: "dhale",
+    name: "ذمار",
+    lat: 13.9333,
+    lng: 44.8667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#E74C3C",
+    sector: "تعليم وتنمية",
+  },
+  {
+    id: "abyan",
+    name: "ابين",
+    lat: 13.9933,
+    lng: 45.8667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#F59E0B",
+    sector: "تمكين اقتصادي",
+  },
+  {
+    id: "shabwah",
+    name: "شبوة",
+    lat: 14.85,
+    lng: 45.9667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#10B981",
+    sector: "إغاثة وأمن غذائي",
+  },
+  {
+    id: "hadramawt",
+    name: "حضرموت",
+    lat: 15.4,
+    lng: 48.3667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#8B5CF6",
+    sector: "تعليم وتنمية",
+  },
+  {
+    id: "adDalis",
+    name: "الضالع",
+    lat: 14.6667,
+    lng: 47.3333,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#06B6D4",
+    sector: "مياه وإصحاح بيئي",
+  },
+  {
+    id: "lahij",
+    name: "لحج",
+    lat: 13.2,
+    lng: 44.8,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#EC4899",
+    sector: "إغاثة وسقيا ماء",
+  },
+  {
+    id: "mahrah",
+    name: "المحويت",
+    lat: 16.7333,
+    lng: 52.6667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#FFD700",
+    sector: "تمكين اقتصادي",
+  },
+  {
+    id: "rijal",
+    name: "ريمة",
+    lat: 17.5167,
+    lng: 43.5667,
+    projects: 0,
+    beneficiaries: 0,
+    color: "#F97316",
+    sector: "صحة واستجابة طارئة",
+  },
 ];
 
 export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
@@ -46,12 +154,18 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
     : YEMEN_GOVERNORATES;
 
   return (
-    <section id="geosope-map" className="py-24 md:py-32 bg-gradient-to-b from-[var(--brand-green-pale)]/10 to-white relative overflow-hidden">
+    <section
+      id="geosope-map"
+      className="py-24 md:py-32 bg-gradient-to-b from-[var(--brand-green-pale)]/10 to-white relative overflow-hidden"
+    >
       <div className="absolute inset-0 pattern-zellij-light pointer-events-none" />
       <div className="container mx-auto px-4 relative">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full" style={{ fontSize: "0.8rem", fontWeight: 600 }}>
+          <span
+            className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full"
+            style={{ fontSize: "0.8rem", fontWeight: 600 }}
+          >
             الواقع الجغرافي
           </span>
           <h2 className="text-4xl font-bold mb-4">
@@ -70,20 +184,27 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
               onClick={() => setSelectedSector(null)}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                 !selectedSector
-                  ? 'bg-[var(--brand-green)] text-white'
-                  : 'bg-white text-[var(--muted-foreground)] border border-slate-200'
+                  ? "bg-[var(--brand-green)] text-white"
+                  : "bg-white text-[var(--muted-foreground)] border border-slate-200"
               }`}
             >
               الكل
             </button>
-            {['إغاثة وأمن غذائي', 'مياه وإصحاح بيئي', 'صحة واستجابة طارئة', 'إغاثة وسقيا ماء', 'تعليم وتنمية', 'تمكين اقتصادي'].map((sector) => {
+            {[
+              "إغاثة وأمن غذائي",
+              "مياه وإصحاح بيئي",
+              "صحة واستجابة طارئة",
+              "إغاثة وسقيا ماء",
+              "تعليم وتنمية",
+              "تمكين اقتصادي",
+            ].map((sector) => {
               const sectorColor: Record<string, string> = {
-                'إغاثة وأمن غذائي': 'var(--brand-green)',
-                'مياه وإصحاح بيئي': 'var(--brand-blue)',
-                'صحة واستجابة طارئة': 'var(--brand-green)',
-                'إغاثة وسقيا ماء': 'var(--brand-gold)',
-                'تعليم وتنمية': 'var(--brand-purple)',
-                'تمكين اقتصادي': 'var(--brand-gold)',
+                "إغاثة وأمن غذائي": "var(--brand-green)",
+                "مياه وإصحاح بيئي": "var(--brand-blue)",
+                "صحة واستجابة طارئة": "var(--brand-green)",
+                "إغاثة وسقيا ماء": "var(--brand-gold)",
+                "تعليم وتنمية": "var(--brand-purple)",
+                "تمكين اقتصادي": "var(--brand-gold)",
               };
               const isSelected = selectedSector === sector;
               return (
@@ -92,8 +213,9 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
                   onClick={() => setSelectedSector(sector)}
                   className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                     isSelected
-                      ? `bg-${Object.keys(sectorColor).find(k => sectorColor[k] === sectorColor[sector]) ?? 'brand-green'} text-white`
-                      : 'bg-white text-[var(--muted-foreground)] border border-slate-200'}
+                      ? `bg-${Object.keys(sectorColor).find((k) => sectorColor[k] === sectorColor[sector]) ?? "brand-green"} text-white`
+                      : "bg-white text-[var(--muted-foreground)] border border-slate-200"
+                  }
                   }`}
                 >
                   {sector}
@@ -106,7 +228,9 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
           <div className="text-center p-4 bg-white rounded-xl border border-[var(--border)] shadow-sm">
-            <div className="text-2xl font-bold text-[var(--brand-green)]">{YEMEN_GOVERNORATES.length}</div>
+            <div className="text-2xl font-bold text-[var(--brand-green)]">
+              {YEMEN_GOVERNORATES.length}
+            </div>
             <div className="text-sm text-[var(--muted-foreground)]">محافظة</div>
           </div>
           <div className="text-center p-4 bg-white rounded-xl border border-[var(--border)] shadow-sm">
@@ -114,7 +238,9 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
             <div className="text-sm text-[var(--muted-foreground)]">مشروع نشط</div>
           </div>
           <div className="text-center p-4 bg-white rounded-xl border border-[var(--border)] shadow-sm">
-            <div className="text-2xl font-bold text-blue-600">{totalBeneficiaries.toLocaleString('ar-SA')}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {totalBeneficiaries.toLocaleString("ar-SA")}
+            </div>
             <div className="text-sm text-[var(--muted-foreground)]">مستفيد</div>
           </div>
           <div className="text-center p-4 bg-white rounded-xl border border-[var(--border)] shadow-sm">
@@ -177,9 +303,10 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
                     onMouseEnter={() => setHoveredGovernorate(governorate.id)}
                     onMouseLeave={() => setHoveredGovernorate(null)}
                     className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/80 backdrop-blur-sm border border-[var(--border)] hover:shadow-md transition-all"
-                    style={{ 
-                      transform: hoveredGovernorate === governorate.id ? 'scale(1.05)' : 'scale(1)',
-                      borderColor: hoveredGovernorate === governorate.id ? governorate.color : undefined
+                    style={{
+                      transform: hoveredGovernorate === governorate.id ? "scale(1.05)" : "scale(1)",
+                      borderColor:
+                        hoveredGovernorate === governorate.id ? governorate.color : undefined,
                     }}
                   >
                     <div
@@ -223,7 +350,9 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-[var(--muted-foreground)]">المستفيدون</span>
-                      <span className="font-medium">{governorate.beneficiaries.toLocaleString('ar-SA')}</span>
+                      <span className="font-medium">
+                        {governorate.beneficiaries.toLocaleString("ar-SA")}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -252,4 +381,3 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
     </section>
   );
 }
-

@@ -1,7 +1,7 @@
 export interface PerformanceMetric {
   name: string;
   value: number;
-  rating: 'good' | 'needs-improvement' | 'poor';
+  rating: "good" | "needs-improvement" | "poor";
   delta: number;
   id: string;
 }
@@ -28,7 +28,7 @@ class PerformanceMonitor {
   }
 
   init() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     this.observeNavigation();
     this.observePaint();
@@ -39,18 +39,18 @@ class PerformanceMonitor {
 
   private observeNavigation() {
     try {
-      const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
       if (navEntry) {
-        this.metrics.set('TTFB', {
-          name: 'TTFB',
+        this.metrics.set("TTFB", {
+          name: "TTFB",
           value: navEntry.responseStart,
-          rating: this.rateMetric('TTFB', navEntry.responseStart),
+          rating: this.rateMetric("TTFB", navEntry.responseStart),
           delta: navEntry.responseStart,
           id: this.generateId(),
         });
       }
     } catch (error) {
-      console.error('Navigation observation error:', error);
+      console.error("Navigation observation error:", error);
     }
   }
 
@@ -58,21 +58,21 @@ class PerformanceMonitor {
     try {
       const paintObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.name === 'first-contentful-paint') {
-            this.metrics.set('FCP', {
-              name: 'FCP',
+          if (entry.name === "first-contentful-paint") {
+            this.metrics.set("FCP", {
+              name: "FCP",
               value: entry.startTime,
-              rating: this.rateMetric('FCP', entry.startTime),
+              rating: this.rateMetric("FCP", entry.startTime),
               delta: entry.startTime,
               id: this.generateId(),
             });
           }
         }
       });
-      paintObserver.observe({ type: 'paint', buffered: true });
+      paintObserver.observe({ type: "paint", buffered: true });
       this.observers.push(paintObserver);
     } catch (error) {
-      console.error('Paint observation error:', error);
+      console.error("Paint observation error:", error);
     }
   }
 
@@ -85,18 +85,18 @@ class PerformanceMonitor {
             clsValue += (entry as any).value;
           }
         }
-        this.metrics.set('CLS', {
-          name: 'CLS',
+        this.metrics.set("CLS", {
+          name: "CLS",
           value: clsValue,
-          rating: this.rateMetric('CLS', clsValue),
+          rating: this.rateMetric("CLS", clsValue),
           delta: clsValue,
           id: this.generateId(),
         });
       });
-      clsObserver.observe({ type: 'layout-shift', buffered: true });
+      clsObserver.observe({ type: "layout-shift", buffered: true });
       this.observers.push(clsObserver);
     } catch (error) {
-      console.error('CLS observation error:', error);
+      console.error("CLS observation error:", error);
     }
   }
 
@@ -104,19 +104,19 @@ class PerformanceMonitor {
     try {
       const fidObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          this.metrics.set('FID', {
-            name: 'FID',
+          this.metrics.set("FID", {
+            name: "FID",
             value: (entry as any).processingStart - entry.startTime,
-            rating: this.rateMetric('FID', (entry as any).processingStart - entry.startTime),
+            rating: this.rateMetric("FID", (entry as any).processingStart - entry.startTime),
             delta: (entry as any).processingStart - entry.startTime,
             id: this.generateId(),
           });
         }
       });
-      fidObserver.observe({ type: 'first-input', buffered: true });
+      fidObserver.observe({ type: "first-input", buffered: true });
       this.observers.push(fidObserver);
     } catch (error) {
-      console.error('FID observation error:', error);
+      console.error("FID observation error:", error);
     }
   }
 
@@ -130,14 +130,14 @@ class PerformanceMonitor {
           }
         }
       });
-      resourceObserver.observe({ type: 'resource', buffered: true });
+      resourceObserver.observe({ type: "resource", buffered: true });
       this.observers.push(resourceObserver);
     } catch (error) {
-      console.error('Resource timing error:', error);
+      console.error("Resource timing error:", error);
     }
   }
 
-  private rateMetric(name: string, value: number): 'good' | 'needs-improvement' | 'poor' {
+  private rateMetric(name: string, value: number): "good" | "needs-improvement" | "poor" {
     const thresholds: Record<string, { good: number; poor: number }> = {
       FCP: { good: 1800, poor: 3000 },
       LCP: { good: 2500, poor: 4000 },
@@ -148,11 +148,11 @@ class PerformanceMonitor {
     };
 
     const threshold = thresholds[name];
-    if (!threshold) return 'good';
+    if (!threshold) return "good";
 
-    if (value <= threshold.good) return 'good';
-    if (value <= threshold.poor) return 'needs-improvement';
-    return 'poor';
+    if (value <= threshold.good) return "good";
+    if (value <= threshold.poor) return "needs-improvement";
+    return "poor";
   }
 
   private generateId(): string {
@@ -173,7 +173,7 @@ class PerformanceMonitor {
 
   clear() {
     this.metrics.clear();
-    this.observers.forEach(observer => observer.disconnect());
+    this.observers.forEach((observer) => observer.disconnect());
     this.observers = [];
   }
 
@@ -184,4 +184,3 @@ class PerformanceMonitor {
 }
 
 export const performanceMonitor = PerformanceMonitor.getInstance();
-

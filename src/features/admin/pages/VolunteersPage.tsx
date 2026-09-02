@@ -1,9 +1,9 @@
 // VolunteersPage - إدارة المتطوعين
-import { motion } from 'motion/react';
-import { Users, RefreshCw, Eye, Trash2, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion } from "motion/react";
+import { Users, RefreshCw, Eye, Trash2, CheckCircle, XCircle, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
 
-import { volunteersQueries } from '@/lib/postgres';
+import { volunteersQueries } from "@/lib/postgres";
 
 interface Volunteer {
   id: number;
@@ -20,7 +20,7 @@ interface Volunteer {
 export default function VolunteersPage() {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
 
   const fetchVolunteers = async () => {
     setLoading(true);
@@ -28,7 +28,7 @@ export default function VolunteersPage() {
       const result = await volunteersQueries.findAll(100, 0);
       setVolunteers(result.rows || []);
     } catch (err) {
-      console.error('Error fetching volunteers:', err);
+      console.error("Error fetching volunteers:", err);
     } finally {
       setLoading(false);
     }
@@ -43,40 +43,48 @@ export default function VolunteersPage() {
       await volunteersQueries.updateStatus(String(id), status);
       fetchVolunteers();
     } catch (err) {
-      console.error('Error updating volunteer:', err);
+      console.error("Error updating volunteer:", err);
     }
   };
 
-  const filteredVolunteers = volunteers.filter(v => {
-    if (filter === 'all') return true;
+  const filteredVolunteers = volunteers.filter((v) => {
+    if (filter === "all") return true;
     return v.status === filter;
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'bg-green-100 text-green-700';
-      case 'inactive': return 'bg-gray-100 text-gray-700';
-      case 'pending': return 'bg-yellow-100 text-yellow-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case "active":
+        return "bg-green-100 text-green-700";
+      case "inactive":
+        return "bg-gray-100 text-gray-700";
+      case "pending":
+        return "bg-yellow-100 text-yellow-700";
+      default:
+        return "bg-gray-100 text-gray-700";
     }
   };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'active': return 'نشط';
-      case 'inactive': return 'غير نشط';
-      case 'pending': return 'قيد المراجعة';
-      default: return status;
+      case "active":
+        return "نشط";
+      case "inactive":
+        return "غير نشط";
+      case "pending":
+        return "قيد المراجعة";
+      default:
+        return status;
     }
   };
 
   const getFieldLabel = (field: string) => {
     const labels: Record<string, string> = {
-      'إغاثة': 'إغاثة',
-      'تعليم': 'تعليم',
-      'صحة': 'صحة',
-      'إدارة': 'إدارة',
-      'تسويق': 'تسويق'
+      إغاثة: "إغاثة",
+      تعليم: "تعليم",
+      صحة: "صحة",
+      إدارة: "إدارة",
+      تسويق: "تسويق",
     };
     return labels[field] || field;
   };
@@ -127,7 +135,7 @@ export default function VolunteersPage() {
             <div>
               <p className="text-sm text-gray-600">نشط</p>
               <p className="text-xl font-bold text-gray-800">
-                {volunteers.filter(v => v.status === 'active').length}
+                {volunteers.filter((v) => v.status === "active").length}
               </p>
             </div>
           </div>
@@ -140,7 +148,7 @@ export default function VolunteersPage() {
             <div>
               <p className="text-sm text-gray-600">قيد المراجعة</p>
               <p className="text-xl font-bold text-gray-800">
-                {volunteers.filter(v => v.status === 'pending').length}
+                {volunteers.filter((v) => v.status === "pending").length}
               </p>
             </div>
           </div>
@@ -162,22 +170,20 @@ export default function VolunteersPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        {['all', 'active', 'inactive', 'pending'].map(status => (
+        {["all", "active", "inactive", "pending"].map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
             className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
               filter === status
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? "bg-emerald-100 text-emerald-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
-            {status === 'all' ? 'الكل' : getStatusLabel(status)}
+            {status === "all" ? "الكل" : getStatusLabel(status)}
           </button>
         ))}
-        <div className="mr-auto text-sm text-gray-500">
-          {filteredVolunteers.length} متطوع
-        </div>
+        <div className="mr-auto text-sm text-gray-500">{filteredVolunteers.length} متطوع</div>
       </div>
 
       {/* Volunteers List */}
@@ -200,7 +206,9 @@ export default function VolunteersPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="font-bold text-gray-800">{volunteer.name}</h3>
-                    <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(volunteer.status)}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs ${getStatusColor(volunteer.status)}`}
+                    >
                       {getStatusLabel(volunteer.status)}
                     </span>
                     <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">
@@ -216,21 +224,21 @@ export default function VolunteersPage() {
                     <p className="text-sm text-gray-600 mb-1">الدافع: {volunteer.motivation}</p>
                   )}
                   <p className="text-xs text-gray-400 mt-2">
-                    {new Date(volunteer.created_at).toLocaleString('ar-SA')}
+                    {new Date(volunteer.created_at).toLocaleString("ar-SA")}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 mr-4">
-                  {volunteer.status === 'pending' && (
+                  {volunteer.status === "pending" && (
                     <>
                       <button
-                        onClick={() => updateStatus(volunteer.id, 'active')}
+                        onClick={() => updateStatus(volunteer.id, "active")}
                         className="p-2 hover:bg-green-50 rounded-lg transition-colors"
                         title="قبول"
                       >
                         <CheckCircle className="w-5 h-5 text-green-600" />
                       </button>
                       <button
-                        onClick={() => updateStatus(volunteer.id, 'inactive')}
+                        onClick={() => updateStatus(volunteer.id, "inactive")}
                         className="p-2 hover:bg-red-50 rounded-lg transition-colors"
                         title="رفض"
                       >
@@ -247,4 +255,3 @@ export default function VolunteersPage() {
     </div>
   );
 }
-

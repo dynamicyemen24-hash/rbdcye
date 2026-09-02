@@ -1,5 +1,5 @@
-import { MessageSquare, Clock, CheckCircle, Archive, Reply } from 'lucide-react';
-import React from 'react';
+import { MessageSquare, Clock, CheckCircle, Archive, Reply } from "lucide-react";
+import React from "react";
 
 interface StatsCardsProps {
   stats: {
@@ -13,11 +13,11 @@ interface StatsCardsProps {
 
 export function StatsCards({ stats }: StatsCardsProps) {
   const cards = [
-    { label: 'الكل', value: stats.total, icon: MessageSquare, color: 'bg-blue-50 text-blue-600' },
-    { label: 'جديد', value: stats.new, icon: Clock, color: 'bg-red-50 text-red-600' },
-    { label: 'مقروء', value: stats.read, icon: CheckCircle, color: 'bg-gray-50 text-gray-600' },
-    { label: 'تم الرد', value: stats.replied, icon: Reply, color: 'bg-green-50 text-green-600' },
-    { label: 'مؤرشف', value: stats.archived, icon: Archive, color: 'bg-yellow-50 text-yellow-600' },
+    { label: "الكل", value: stats.total, icon: MessageSquare, color: "bg-blue-50 text-blue-600" },
+    { label: "جديد", value: stats.new, icon: Clock, color: "bg-red-50 text-red-600" },
+    { label: "مقروء", value: stats.read, icon: CheckCircle, color: "bg-gray-50 text-gray-600" },
+    { label: "تم الرد", value: stats.replied, icon: Reply, color: "bg-green-50 text-green-600" },
+    { label: "مؤرشف", value: stats.archived, icon: Archive, color: "bg-yellow-50 text-yellow-600" },
   ];
 
   return (
@@ -38,4 +38,3 @@ export function StatsCards({ stats }: StatsCardsProps) {
     </div>
   );
 }
-

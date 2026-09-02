@@ -2,11 +2,11 @@
 // يدعم JSON، CSV، Excel مع معالجة متطورة للبيانات الضخمة والأخطاء
 // Note: xlsx (Excel support) requires: npm install xlsx
 
-import { dataService } from './data.service';
+import { dataService } from "./data.service";
 
 // ===================== الأنواع الأساسية =====================
 
-export type ExportFormat = 'json' | 'csv' | 'excel';
+export type ExportFormat = "json" | "csv" | "excel";
 
 export interface ExportOptions {
   format: ExportFormat;
@@ -15,7 +15,7 @@ export interface ExportOptions {
   dateFrom?: string;
   dateTo?: string;
   includeMetadata?: boolean;
-  orderBy?: { field: string; dir: 'asc' | 'desc' };
+  orderBy?: { field: string; dir: "asc" | "desc" };
   limit?: number;
   formatOptions?: {
     csvDelimiter?: string;
@@ -24,11 +24,11 @@ export interface ExportOptions {
 }
 
 export interface ImportOptions {
-  format: 'json' | 'csv' | 'excel';
+  format: "json" | "csv" | "excel";
   entity: string;
   content?: string;
   file?: File;
-  conflictStrategy?: 'skip' | 'update' | 'error';
+  conflictStrategy?: "skip" | "update" | "error";
   validateItem?: (item: Record<string, unknown>) => true | string;
   batchSize?: number;
   onProgress?: (progress: { imported: number; total: number; percent: number }) => void;
@@ -57,17 +57,17 @@ export interface ImportError {
 export function downloadFile(
   content: string | ArrayBuffer | Blob,
   filename: string,
-  mimeType: string = 'application/octet-stream'
+  mimeType: string = "application/octet-stream"
 ): void {
   let blob: Blob;
-  if (typeof content === 'string') {
+  if (typeof content === "string") {
     blob = new Blob([content], { type: mimeType });
   } else {
     blob = new Blob([content], { type: mimeType });
   }
 
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
@@ -80,7 +80,7 @@ export function readFileAsText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error('فشل قراءة الملف'));
+    reader.onerror = () => reject(new Error("فشل قراءة الملف"));
     reader.readAsText(file);
   });
 }
@@ -100,9 +100,10 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
     const to = options.dateTo ? new Date(options.dateTo).getTime() : Date.now();
     data = data.filter((item: any) => {
       const dateVal = item.createdAt || item.date || 0;
-      const ts = typeof dateVal === 'string' || dateVal instanceof Date 
-        ? new Date(dateVal).getTime() 
-        : Number(dateVal);
+      const ts =
+        typeof dateVal === "string" || dateVal instanceof Date
+          ? new Date(dateVal).getTime()
+          : Number(dateVal);
       return ts >= from && ts <= to;
     });
   }
@@ -110,10 +111,10 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
   if (options.orderBy) {
     const { field, dir } = options.orderBy;
     data.sort((a: any, b: any) => {
-      const aVal = String(a[field] || '');
-      const bVal = String(b[field] || '');
-      if (aVal < bVal) return dir === 'asc' ? -1 : 1;
-      if (aVal > bVal) return dir === 'asc' ? 1 : -1;
+      const aVal = String(a[field] || "");
+      const bVal = String(b[field] || "");
+      if (aVal < bVal) return dir === "asc" ? -1 : 1;
+      if (aVal > bVal) return dir === "asc" ? 1 : -1;
       return 0;
     });
   }
@@ -125,8 +126,10 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
   if (options.fields && options.fields.length > 0) {
     data = data.map((item: any) => {
       // Include id field for type compatibility
-      const filtered: Record<string, unknown> = { 
-        id: (item.id != null ? String(item.id) : `item-${Math.random().toString(36).slice(2)}`) as string 
+      const filtered: Record<string, unknown> = {
+        id: (item.id != null
+          ? String(item.id)
+          : `item-${Math.random().toString(36).slice(2)}`) as string,
       };
       for (const f of options.fields!) {
         filtered[f] = item[f];
@@ -148,7 +151,7 @@ export async function exportToJSON(options: ExportOptions): Promise<string> {
         metadata: {
           exportedAt: new Date().toISOString(),
           totalItems: data.length,
-          source: 'rbdcye Platform',
+          source: "rbdcye Platform",
           entity,
         },
         data,
@@ -162,8 +165,8 @@ export async function exportToJSON(options: ExportOptions): Promise<string> {
 }
 
 export async function exportToCSV(options: ExportOptions): Promise<string> {
-  const delimiter = options.formatOptions?.csvDelimiter || ',';
-  let csvOutput = '';
+  const delimiter = options.formatOptions?.csvDelimiter || ",";
+  let csvOutput = "";
 
   for (const entity of options.entities) {
     const data = await fetchEntityData(entity, options);
@@ -173,30 +176,31 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
     }
 
     const firstItem = data[0] as Record<string, unknown>;
-    const headers = options.fields && options.fields.length > 0
-      ? options.fields
-      : Object.keys(firstItem).filter(k => !k.startsWith('_'));
+    const headers =
+      options.fields && options.fields.length > 0
+        ? options.fields
+        : Object.keys(firstItem).filter((k) => !k.startsWith("_"));
 
     csvOutput += `# جدول ${entity} - تم التصدير في ${new Date().toISOString()}\n`;
-    csvOutput += headers.join(delimiter) + '\n';
+    csvOutput += headers.join(delimiter) + "\n";
 
     for (const item of data) {
       const itemRecord = item as Record<string, unknown>;
-      const row = headers.map(h => {
+      const row = headers.map((h) => {
         const val = itemRecord[h];
-        if (val === null || val === undefined) return '';
-        if (typeof val === 'object') {
+        if (val === null || val === undefined) return "";
+        if (typeof val === "object") {
           return `"${JSON.stringify(val).replace(/"/g, '""')}"`;
         }
         const str = String(val);
-        if (str.includes(delimiter) || str.includes('"') || str.includes('\n')) {
+        if (str.includes(delimiter) || str.includes('"') || str.includes("\n")) {
           return `"${str.replace(/"/g, '""')}"`;
         }
         return str;
       });
-      csvOutput += row.join(delimiter) + '\n';
+      csvOutput += row.join(delimiter) + "\n";
     }
-    csvOutput += '\n';
+    csvOutput += "\n";
   }
 
   return csvOutput;
@@ -205,23 +209,26 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
 export async function exportToExcel(options: ExportOptions): Promise<ArrayBuffer> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, import/no-unresolved
-    const XLSX: any = await import('xlsx');
+    const XLSX: any = await import("xlsx");
     const workbook = XLSX.utils.book_new();
 
     for (const entity of options.entities) {
       const data = await fetchEntityData(entity, options);
       const sheet = XLSX.utils.json_to_sheet(data);
       if (options.includeMetadata) {
-        XLSX.utils.sheet_add_json(sheet, [{ exportedAt: new Date().toISOString(), entity }], { skipHeader: true, origin: 'A1' });
+        XLSX.utils.sheet_add_json(sheet, [{ exportedAt: new Date().toISOString(), entity }], {
+          skipHeader: true,
+          origin: "A1",
+        });
       }
       const sheetName = entity.substring(0, 31);
       XLSX.utils.book_append_sheet(workbook, sheet, sheetName);
     }
 
-    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     return wbout;
   } catch {
-    throw new Error('مكتبة xlsx غير مثبتة. يرجى تشغيل: npm install xlsx');
+    throw new Error("مكتبة xlsx غير مثبتة. يرجى تشغيل: npm install xlsx");
   }
 }
 
@@ -233,14 +240,14 @@ function parseJSONContent(content: string): unknown[] {
 }
 
 function parseCSVContent(content: string): Record<string, unknown>[] {
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const headers: string[] = [];
   let dataStartIndex = 0;
-  
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-    if (line.startsWith('#') || !line) continue;
-    headers.push(...line.split(','));
+    if (line.startsWith("#") || !line) continue;
+    headers.push(...line.split(","));
     dataStartIndex = i + 1;
     break;
   }
@@ -250,11 +257,11 @@ function parseCSVContent(content: string): Record<string, unknown>[] {
   const data: Record<string, unknown>[] = [];
   for (let i = dataStartIndex; i < lines.length; i++) {
     const line = lines[i].trim();
-    if (!line || line.startsWith('#')) continue;
-    const values = line.split(',');
+    if (!line || line.startsWith("#")) continue;
+    const values = line.split(",");
     const record: Record<string, unknown> = {};
     headers.forEach((header, idx) => {
-      record[header.trim()] = values[idx] || '';
+      record[header.trim()] = values[idx] || "";
     });
     data.push(record);
   }
@@ -276,7 +283,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     format,
     content,
     file,
-    conflictStrategy = 'skip',
+    conflictStrategy = "skip",
     validateItem,
     batchSize = 50,
     onProgress,
@@ -298,39 +305,39 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     let rawData: unknown[] = [];
 
     if (file) {
-      if (format === 'json') {
-        rawData = await readFileAsJSON(file) as unknown[];
+      if (format === "json") {
+        rawData = (await readFileAsJSON(file)) as unknown[];
         rawData = Array.isArray(rawData) ? rawData : [];
-      } else if (format === 'csv') {
+      } else if (format === "csv") {
         const text = await readFileAsText(file);
         rawData = parseCSVContent(text);
-      } else if (format === 'excel') {
+      } else if (format === "excel") {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any, import/no-unresolved
-        const XLSX: any = await import('xlsx');
+        const XLSX: any = await import("xlsx");
         const buffer = await file.arrayBuffer();
-        const workbook = XLSX.read(buffer, { type: 'array' });
+        const workbook = XLSX.read(buffer, { type: "array" });
         const sheet = sheetName
           ? workbook.Sheets[sheetName]
           : workbook.Sheets[workbook.SheetNames[0]];
-        if (!sheet) throw new Error('الورقة المطلوبة غير موجودة في ملف Excel');
-        rawData = XLSX.utils.sheet_to_json(sheet, { defval: '' }) as unknown[];
+        if (!sheet) throw new Error("الورقة المطلوبة غير موجودة في ملف Excel");
+        rawData = XLSX.utils.sheet_to_json(sheet, { defval: "" }) as unknown[];
       } else {
-        throw new Error('تنسيق غير مدعوم مع ملف');
+        throw new Error("تنسيق غير مدعوم مع ملف");
       }
     } else if (content) {
-      if (format === 'json') {
+      if (format === "json") {
         rawData = parseJSONContent(content);
-      } else if (format === 'csv') {
+      } else if (format === "csv") {
         rawData = parseCSVContent(content);
       } else {
-        throw new Error('تنسيق غير مدعوم مع محتوى نصي');
+        throw new Error("تنسيق غير مدعوم مع محتوى نصي");
       }
     } else {
-      throw new Error('يجب توفير محتوى أو ملف للاستيراد');
+      throw new Error("يجب توفير محتوى أو ملف للاستيراد");
     }
 
     if (!Array.isArray(rawData)) {
-      throw new Error('البيانات المستوردة ليست مصفوفة صالحة');
+      throw new Error("البيانات المستوردة ليست مصفوفة صالحة");
     }
 
     const total = rawData.length;
@@ -341,7 +348,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
       const item = rawData[i] as Record<string, unknown>;
       const cleanItem: Record<string, unknown> = {};
       for (const key of Object.keys(item)) {
-        if (!key.startsWith('_')) {
+        if (!key.startsWith("_")) {
           cleanItem[key] = item[key];
         }
       }
@@ -351,7 +358,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
       if (validateItem) {
         const validationResult = validateItem(cleanItem);
         if (validationResult !== true) {
-          result.errors.push({ row: i + 1, message: validationResult, code: 'VALIDATION_ERROR' });
+          result.errors.push({ row: i + 1, message: validationResult, code: "VALIDATION_ERROR" });
           continue;
         }
       }
@@ -361,7 +368,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     const batches = chunkArray(prepared, batchSize);
     for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
       if (abortSignal?.aborted) {
-        result.warnings.push('تم إلغاء الاستيراد');
+        result.warnings.push("تم إلغاء الاستيراد");
         break;
       }
 
@@ -369,15 +376,15 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
       for (const item of batch) {
         try {
           const itemId = item.id != null ? String(item.id) : undefined;
-          
-          if (conflictStrategy === 'skip' || conflictStrategy === 'update') {
+
+          if (conflictStrategy === "skip" || conflictStrategy === "update") {
             if (itemId) {
               const existing = await dataService.getById(entity as any, itemId);
               if (existing) {
-                if (conflictStrategy === 'skip') {
+                if (conflictStrategy === "skip") {
                   result.skipped = (result.skipped || 0) + 1;
                   continue;
-                } else if (conflictStrategy === 'update') {
+                } else if (conflictStrategy === "update") {
                   await dataService.update(entity as any, itemId, item);
                   result.updated = (result.updated || 0) + 1;
                   result.imported++;
@@ -393,7 +400,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
           result.errors.push({
             row: result.totalProcessed - prepared.length + batchIndex * batchSize + 1,
             message: error instanceof Error ? error.message : String(error),
-            code: 'IMPORT_ERROR',
+            code: "IMPORT_ERROR",
           });
         }
       }
@@ -411,12 +418,11 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     if (result.errors.length > total * 0.5) {
       result.success = false;
     }
-
   } catch (error) {
     result.success = false;
     result.errors.push({
       message: `خطأ فادح: ${error instanceof Error ? error.message : String(error)}`,
-      code: 'FATAL',
+      code: "FATAL",
     });
   }
 
@@ -429,38 +435,37 @@ export async function exportData(options: ExportOptions): Promise<void> {
   let mime: string;
 
   switch (options.format) {
-    case 'json':
+    case "json":
       content = await exportToJSON(options);
       filename = `export_${Date.now()}.json`;
-      mime = 'application/json';
+      mime = "application/json";
       break;
-    case 'csv':
+    case "csv":
       content = await exportToCSV(options);
       filename = `export_${Date.now()}.csv`;
-      mime = 'text/csv;charset=utf-8;';
+      mime = "text/csv;charset=utf-8;";
       break;
-    case 'excel':
+    case "excel":
       content = await exportToExcel(options);
       filename = `export_${Date.now()}.xlsx`;
-      mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
       break;
     default:
-      throw new Error('تنسيق غير مدعوم');
+      throw new Error("تنسيق غير مدعوم");
   }
 
   downloadFile(content, filename, mime);
 }
 
 export const EXPORT_ENTITIES = [
-  { id: 'rh_news_data', label: 'الأخبار' },
-  { id: 'rh_stories_data', label: 'قصص النجاح' },
-  { id: 'rh_projects_data', label: 'المشاريع' },
-  { id: 'rh_partners_data', label: 'الشركاء' },
-  { id: 'rh_donations_data', label: 'التبرعات' },
-  { id: 'rh_volunteers_data', label: 'المتطوعون' },
-  { id: 'rh_subscriber_accounts', label: 'حسابات المشتركين' },
-  { id: 'rh_requests_data', label: 'طلبات التواصل' },
-  { id: 'rh_reports_data', label: 'التقارير' },
-  { id: 'rh_media_data', label: 'الوسائط' },
+  { id: "rh_news_data", label: "الأخبار" },
+  { id: "rh_stories_data", label: "قصص النجاح" },
+  { id: "rh_projects_data", label: "المشاريع" },
+  { id: "rh_partners_data", label: "الشركاء" },
+  { id: "rh_donations_data", label: "التبرعات" },
+  { id: "rh_volunteers_data", label: "المتطوعون" },
+  { id: "rh_subscriber_accounts", label: "حسابات المشتركين" },
+  { id: "rh_requests_data", label: "طلبات التواصل" },
+  { id: "rh_reports_data", label: "التقارير" },
+  { id: "rh_media_data", label: "الوسائط" },
 ];
-

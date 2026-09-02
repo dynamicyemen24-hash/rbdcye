@@ -1,10 +1,20 @@
 // Programs Page - صفحة البرامج والمشاريع
 import { motion } from "motion/react";
 import {
-  BookOpen, Heart, Droplet, GraduationCap, Globe, Users,
-  ArrowRight, Calendar, Target, TrendingUp, MapPin,
-    Award, CheckCircle, BarChart3,
-
+  BookOpen,
+  Heart,
+  Droplet,
+  GraduationCap,
+  Globe,
+  Users,
+  ArrowRight,
+  Calendar,
+  Target,
+  TrendingUp,
+  MapPin,
+  Award,
+  CheckCircle,
+  BarChart3,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,71 +30,71 @@ import { useSEO } from "@/utils/seoAdvanced";
 // 7 مسارات البرامج من المواصفات
 const PROGRAM_PATHS = [
   {
-    id: 'da'
-    , label: 'مسار الدعوة',
+    id: "da",
+    label: "مسار الدعوة",
     icon: BookOpen,
-    color: 'blue',
-    description: 'برامج الدعوة إلى الله والتعليم الشرعي والنشر العلمي',
-    projects: ['مشروع الدعاة', 'تحفيظ القرآن', 'النشر العلمي'],
+    color: "blue",
+    description: "برامج الدعوة إلى الله والتعليم الشرعي والنشر العلمي",
+    projects: ["مشروع الدعاة", "تحفيظ القرآن", "النشر العلمي"],
   },
   {
-    id: 'social',
-    label: 'مسار الرعاية الاجتماعية',
+    id: "social",
+    label: "مسار الرعاية الاجتماعية",
     icon: Heart,
-    color: 'rose',
-    description: 'برامج الكفالات، المساعدات المقطوعة، الكسوة، والكفارات',
-    projects: ['الكفالة', 'المساعدات المقطوعة', 'الكسوة', 'الكفارات'],
+    color: "rose",
+    description: "برامج الكفالات، المساعدات المقطوعة، الكسوة، والكفارات",
+    projects: ["الكفالة", "المساعدات المقطوعة", "الكسوة", "الكفارات"],
   },
   {
-    id: 'food',
-    label: 'مسار الأمن الغذائي',
+    id: "food",
+    label: "مسار الأمن الغذائي",
     icon: Droplet,
-    color: 'cyan',
-    description: 'برامج المطابخ الخيرية، السلال الغذائية، التمور، واللحوم',
-    projects: ['المطابخ الخيرية', 'السلال الغذائية', 'التمور', 'اللحوم'],
+    color: "cyan",
+    description: "برامج المطابخ الخيرية، السلال الغذائية، التمور، واللحوم",
+    projects: ["المطابخ الخيرية", "السلال الغذائية", "التمور", "اللحوم"],
   },
   {
-    id: 'seasonal',
-    label: 'المسار الموسمي',
+    id: "seasonal",
+    label: "المسار الموسمي",
     icon: Calendar,
-    color: 'amber',
-    description: 'برامج الأضاحي، تفطير الصائمين، ودفء الشتاء',
-    projects: ['الأضاحي', 'تفطير الصائمين', 'دفء الشتاء'],
+    color: "amber",
+    description: "برامج الأضاحي، تفطير الصائمين، ودفء الشتاء",
+    projects: ["الأضاحي", "تفطير الصائمين", "دفء الشتاء"],
   },
   {
-    id: 'endowment',
-    label: 'مسار الصدقات الجارية',
+    id: "endowment",
+    label: "مسار الصدقات الجارية",
     icon: Globe,
-    color: 'emerald',
-    description: 'برامج بناء المساجد، حفر الآبار، وبناء دور القرآن',
-    projects: ['بناء المساجد', 'حفر الآبار', 'دور القرآن'],
+    color: "emerald",
+    description: "برامج بناء المساجد، حفر الآبار، وبناء دور القرآن",
+    projects: ["بناء المساجد", "حفر الآبار", "دور القرآن"],
   },
   {
-    id: 'waqf',
-    label: 'مسار الأوقاف',
+    id: "waqf",
+    label: "مسار الأوقاف",
     icon: Award,
-    color: 'purple',
-    description: 'برامج الأوقاف العقارية والأسهم الوقفية والتمكين الاقتصادي',
-    projects: ['الوقف العقاري', 'الأسهم الوقفية', 'تمليك الأدوات'],
+    color: "purple",
+    description: "برامج الأوقاف العقارية والأسهم الوقفية والتمكين الاقتصادي",
+    projects: ["الوقف العقاري", "الأسهم الوقفية", "تمليك الأدوات"],
   },
   {
-    id: 'zakat',
-    label: 'حاسبة الزكاة',
+    id: "zakat",
+    label: "حاسبة الزكاة",
     icon: Target,
-    color: 'green',
-    description: 'أداة حساب الزكاة المالية، الذهب، والفطر مع توجيه للدفع',
-    projects: ['زكاة المال', 'زكاة الذهب', 'زكاة الفطر'],
+    color: "green",
+    description: "أداة حساب الزكاة المالية، الذهب، والفطر مع توجيه للدفع",
+    projects: ["زكاة المال", "زكاة الذهب", "زكاة الفطر"],
   },
 ];
 
 const PATH_COLORS: Record<string, string> = {
-  blue: 'from-blue-500 to-indigo-500',
-  rose: 'from-rose-500 to-pink-500',
-  cyan: 'from-cyan-500 to-blue-500',
-  amber: 'from-amber-500 to-orange-500',
-  emerald: 'from-emerald-500 to-teal-500',
-  purple: 'from-purple-500 to-violet-500',
-  green: 'from-[var(--brand-green)] to-[var(--brand-green-light)]',
+  blue: "from-blue-500 to-indigo-500",
+  rose: "from-rose-500 to-pink-500",
+  cyan: "from-cyan-500 to-blue-500",
+  amber: "from-amber-500 to-orange-500",
+  emerald: "from-emerald-500 to-teal-500",
+  purple: "from-purple-500 to-violet-500",
+  green: "from-[var(--brand-green)] to-[var(--brand-green-light)]",
 };
 
 export default function ProgramsPage() {
@@ -92,67 +102,90 @@ export default function ProgramsPage() {
   const [, setActivePath] = useState<string | null>(null);
 
   useSEO({
-    title: 'برامجنا - رحماء بينهم',
-    description: 'برامجنا الخيرية والإنسانية والتنموية في اليمن - 7 مسارات شاملة',
-    type: 'website',
-    url: 'https://rbdcye.org/programs',
-    keywords: ['برامج', 'مشاريع', 'إغاثة', 'تنمية', 'تعليم', 'يمن', 'رحماء بينهم'],
+    title: "برامجنا - رحماء بينهم",
+    description: "برامجنا الخيرية والإنسانية والتنموية في اليمن - 7 مسارات شاملة",
+    type: "website",
+    url: "https://rbdcye.org/programs",
+    keywords: ["برامج", "مشاريع", "إغاثة", "تنمية", "تعليم", "يمن", "رحماء بينهم"],
   });
 
   // تحميل البيانات من content-bridge
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
-            .then((_result: { source?: string }) => {
+    contentManager
+      .getImpact()
+      .then((_result: { source?: string }) => {
         if (!cancelled) {
-          try { analyticsService.generateProjectReport(); } catch { /* non-critical */ }
+          try {
+            analyticsService.generateProjectReport();
+          } catch {
+            /* non-critical */
+          }
         }
       })
       .catch(() => undefined);
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const programs = SEED_PROJECTS;
 
   // إحصاءات سريعة
-  const totalBeneficiaries = useMemo(() =>
-    programs.reduce((sum, p) => {
-      const num = parseInt(p.beneficiaries.replace(/[^\d]/g, '')) || 0;
-      return sum + num;
-    }, 0), [programs]);
+  const totalBeneficiaries = useMemo(
+    () =>
+      programs.reduce((sum, p) => {
+        const num = parseInt(p.beneficiaries.replace(/[^\d]/g, "")) || 0;
+        return sum + num;
+      }, 0),
+    [programs]
+  );
 
-  const activeProjects = useMemo(() =>
-    programs.filter(p => p.status === 'active').length, [programs]);
+  const activeProjects = useMemo(
+    () => programs.filter((p) => p.status === "active").length,
+    [programs]
+  );
 
-  
-
-  const totalBudget = useMemo(() =>
-    programs.reduce((sum, p) => {
-      const num = parseInt(p.budget.replace(/[^\d]/g, '')) || 0;
-      return sum + num;
-    }, 0), [programs]);
+  const totalBudget = useMemo(
+    () =>
+      programs.reduce((sum, p) => {
+        const num = parseInt(p.budget.replace(/[^\d]/g, "")) || 0;
+        return sum + num;
+      }, 0),
+    [programs]
+  );
 
   return (
-     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
-       {/* Unified Page Header */}
-       <PageHeader
-         icon={GraduationCap}
-         badge="برامجنا"
-         title="برامجنا ومشاريعنا"
-         subtitle="نطمح لتغطية جميع احتياجات المجتمع عبر 7 مسارات متكاملة تشمل الدعوة، الرعاية الاجتماعية، الأمن الغذائي، والتنمية المستدامة"
-       >
-         <StatsGrid
-           stats={[
-             { label: 'مشروع', value: programs.length, icon: BarChart3, color: 'green' },
-             { label: 'نشط', value: activeProjects, icon: Target, color: 'gold' },
-             { label: 'مستفيد', value: totalBeneficiaries.toLocaleString('ar-SA'), icon: Users, color: 'blue' },
-             { label: 'الميزانية (ر.ي)', value: totalBudget.toLocaleString('ar-SA'), icon: TrendingUp, color: 'purple' },
-           ]}
-           columns={4}
-           variant="glass"
-         />
-       </PageHeader>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
+      {/* Unified Page Header */}
+      <PageHeader
+        icon={GraduationCap}
+        badge="برامجنا"
+        title="برامجنا ومشاريعنا"
+        subtitle="نطمح لتغطية جميع احتياجات المجتمع عبر 7 مسارات متكاملة تشمل الدعوة، الرعاية الاجتماعية، الأمن الغذائي، والتنمية المستدامة"
+      >
+        <StatsGrid
+          stats={[
+            { label: "مشروع", value: programs.length, icon: BarChart3, color: "green" },
+            { label: "نشط", value: activeProjects, icon: Target, color: "gold" },
+            {
+              label: "مستفيد",
+              value: totalBeneficiaries.toLocaleString("ar-SA"),
+              icon: Users,
+              color: "blue",
+            },
+            {
+              label: "الميزانية (ر.ي)",
+              value: totalBudget.toLocaleString("ar-SA"),
+              icon: TrendingUp,
+              color: "purple",
+            },
+          ]}
+          columns={4}
+          variant="glass"
+        />
+      </PageHeader>
 
       {/* Program Paths Section */}
       <section className="py-20 bg-white">
@@ -179,7 +212,6 @@ export default function ProgramsPage() {
             {PROGRAM_PATHS.map((path, i) => {
               const Icon = path.icon;
               const gradient = PATH_COLORS[path.color];
-              
 
               return (
                 <motion.div
@@ -188,35 +220,39 @@ export default function ProgramsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                                    role="button"
+                  role="button"
                   tabIndex={0}
                   onMouseEnter={() => setActivePath(path.id)}
                   onMouseLeave={() => setActivePath(null)}
                   onFocus={() => setActivePath(path.id)}
                   onBlur={() => setActivePath(null)}
                   onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
+                    if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      if (path.id === 'zakat') navigate('/zakat');
-                      else navigate('/projects');
+                      if (path.id === "zakat") navigate("/zakat");
+                      else navigate("/projects");
                     }
                   }}
                   whileHover={{ y: -8, scale: 1.02 }}
 
                   className="group relative bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer"
                   onClick={() => {
-                    if (path.id === 'zakat') {
-                      navigate('/zakat');
+                    if (path.id === "zakat") {
+                      navigate("/zakat");
                     } else {
-                      navigate('/projects');
+                      navigate("/projects");
                     }
                   }}
                 >
                   {/* Gradient accent */}
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${gradient}`} />
+                  <div
+                    className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${gradient}`}
+                  />
 
                   <div className="flex items-start gap-4 mb-4">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <div
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                    >
                       <Icon className="w-7 h-7 text-white" />
                     </div>
                     <div>
@@ -232,7 +268,10 @@ export default function ProgramsPage() {
                   {/* Projects list */}
                   <div className="mt-4 space-y-2">
                     {path.projects.map((project, j) => (
-                      <div key={j} className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
+                      <div
+                        key={j}
+                        className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]"
+                      >
                         <CheckCircle className="w-3 h-3 text-[var(--brand-green)]" />
                         <span>{project}</span>
                       </div>
@@ -240,7 +279,9 @@ export default function ProgramsPage() {
                   </div>
 
                   {/* Hover effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                  />
 
                   <div className="mt-4 flex items-center gap-2 text-[var(--brand-green)] text-sm font-semibold">
                     <span>عرض المزيد</span>
@@ -289,12 +330,23 @@ export default function ProgramsPage() {
                     <Target className="w-7 h-7 text-[var(--brand-green)]" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[var(--foreground)] text-lg mb-1">{program.title}</h3>
-                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
-                      program.status === 'active' ? 'bg-[var(--success-bg)] text-[var(--success)]' :
-                      program.status === 'completed' ? 'bg-[var(--info-bg)] text-[var(--info)]' : 'bg-[var(--warning-bg)] text-[var(--warning)]'
-                    }`}>
-                      {program.status === 'active' ? 'نشط' : program.status === 'completed' ? 'مكتمل' : 'قيد الانتظار'}
+                    <h3 className="font-bold text-[var(--foreground)] text-lg mb-1">
+                      {program.title}
+                    </h3>
+                    <span
+                      className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
+                        program.status === "active"
+                          ? "bg-[var(--success-bg)] text-[var(--success)]"
+                          : program.status === "completed"
+                            ? "bg-[var(--info-bg)] text-[var(--info)]"
+                            : "bg-[var(--warning-bg)] text-[var(--warning)]"
+                      }`}
+                    >
+                      {program.status === "active"
+                        ? "نشط"
+                        : program.status === "completed"
+                          ? "مكتمل"
+                          : "قيد الانتظار"}
                     </span>
                   </div>
                 </div>
@@ -318,7 +370,9 @@ export default function ProgramsPage() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs text-[var(--muted-foreground)]">نسبة الإنجاز</span>
-                      <span className="text-xs font-bold text-[var(--brand-green)]">{program.progress}%</span>
+                      <span className="text-xs font-bold text-[var(--brand-green)]">
+                        {program.progress}%
+                      </span>
                     </div>
                     <div className="h-2 bg-[var(--muted)] rounded-full overflow-hidden">
                       <motion.div
@@ -339,14 +393,14 @@ export default function ProgramsPage() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
                   <button
-                    onClick={() => navigate('/projects')}
+                    onClick={() => navigate("/projects")}
                     className="flex items-center gap-1 text-sm text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
                   >
                     عرض التفاصيل
                     <ArrowRight className="w-3 h-3" />
                   </button>
                   <button
-                    onClick={() => navigate('/donate')}
+                    onClick={() => navigate("/donate")}
                     className="flex items-center gap-1 text-sm bg-[var(--brand-green)] text-white px-4 py-1.5 rounded-lg hover:bg-[var(--brand-green-light)] transition-colors"
                   >
                     <Heart className="w-4 h-4" />
@@ -360,8 +414,12 @@ export default function ProgramsPage() {
           {programs.length === 0 && (
             <div className="text-center py-16">
               <Calendar className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4 opacity-50" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد برامج متاحة حالياً</h3>
-              <p className="text-[var(--muted-foreground)]">نحن نعمل على إضافة برامج جديدة قريباً</p>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد برامج متاحة حالياً
+              </h3>
+              <p className="text-[var(--muted-foreground)]">
+                نحن نعمل على إضافة برامج جديدة قريباً
+              </p>
             </div>
           )}
         </div>
@@ -383,14 +441,14 @@ export default function ProgramsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => navigate('/donate')}
+                onClick={() => navigate("/donate")}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 <Heart className="w-5 h-5" fill="white" />
                 تبرع الآن
               </button>
               <button
-                onClick={() => navigate('/contact')}
+                onClick={() => navigate("/contact")}
                 className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 transition-all"
               >
                 <Users className="w-5 h-5" />
@@ -400,9 +458,6 @@ export default function ProgramsPage() {
           </motion.div>
         </div>
       </section>
-
     </div>
   );
 }
-
-

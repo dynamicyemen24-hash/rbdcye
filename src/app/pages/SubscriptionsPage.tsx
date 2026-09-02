@@ -8,7 +8,10 @@ import { useSEO } from "@/utils/seoAdvanced";
 const topics = ["تقارير الأثر", "فرص التبرع", "قصص المستفيدين", "التطوع والشراكات"];
 
 export default function SubscriptionsPage() {
-  useSEO({ title: "الاشتراكات والتحديثات | رحماء بينهم", description: "اشترك في تحديثات رحماء بينهم واختر ما يهمك من قصص الأثر وفرص المشاركة." });
+  useSEO({
+    title: "الاشتراكات والتحديثات | رحماء بينهم",
+    description: "اشترك في تحديثات رحماء بينهم واختر ما يهمك من قصص الأثر وفرص المشاركة.",
+  });
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>(topics);
@@ -18,20 +21,189 @@ export default function SubscriptionsPage() {
     event.preventDefault();
     setStatus("sending");
     try {
-      await subscribersApi.subscribe({ email, name, country: "YE", topics: selectedTopics, consent: true });
-      localStorage.setItem("rh_subscription", JSON.stringify({ email, name, topics: selectedTopics, updatedAt: new Date().toISOString() }));
+      await subscribersApi.subscribe({
+        email,
+        name,
+        country: "YE",
+        topics: selectedTopics,
+        consent: true,
+      });
+      localStorage.setItem(
+        "rh_subscription",
+        JSON.stringify({ email, name, topics: selectedTopics, updatedAt: new Date().toISOString() })
+      );
       setStatus("success");
-    } catch { setStatus("error"); }
+    } catch {
+      setStatus("error");
+    }
   };
 
-  const toggleTopic = (topic: string) => setSelectedTopics((current) => current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]);
+  const toggleTopic = (topic: string) =>
+    setSelectedTopics((current) =>
+      current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]
+    );
 
-  return <div className="min-h-screen bg-[var(--background)] pt-24 text-[var(--brand-ink)]" dir="rtl">
-    <section className="relative overflow-hidden bg-[var(--brand-green)] px-5 py-16 text-white sm:px-8 lg:px-10"><div className="absolute -left-20 -top-28 h-72 w-72 rounded-full bg-[var(--brand-gold)]/15 blur-3xl" /><div className="relative mx-auto max-w-6xl"><div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[var(--brand-gold)]"><BellRing className="h-4 w-4" /> مركز الاشتراكات</div><h1 className="mt-6 max-w-2xl text-3xl font-extrabold leading-[1.4] sm:text-5xl">ابق قريبًا من <span className="text-[var(--brand-gold)]">الأثر.</span></h1><p className="mt-4 max-w-xl text-sm leading-7 text-white/65 sm:text-base">اختر نوع التحديثات التي تهمك، وسنرسل لك أخبار المؤسسة وتقارير أثرها دون إغراق بريدك.</p></div></section>
-    <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:px-10"><section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,76,58,.07)] sm:p-8">{status === "success" ? <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex min-h-[360px] flex-col items-center justify-center text-center"><div className="grid h-20 w-20 place-items-center rounded-full bg-[var(--brand-green-pale)]"><CheckCircle2 className="h-10 w-10 text-[var(--success)]" /></div><h2 className="mt-6 text-2xl font-extrabold text-[var(--brand-green)]">تم تأكيد اشتراكك</h2><p className="mt-3 max-w-md text-sm leading-7 text-[var(--muted-foreground)]">سنرسل التحديثات إلى {email}. يمكنك تعديل تفضيلاتك من الرسائل القادمة أو التواصل معنا.</p><button type="button" onClick={() => setStatus("idle")} className="mt-6 rounded-xl border border-[var(--brand-green)]/15 px-5 py-3 text-xs font-bold text-[var(--brand-green)]">تحديث بيانات الاشتراك</button></motion.div> : <><div className="flex items-end justify-between gap-4 border-b border-[var(--brand-green)]/8 pb-5"><div><p className="text-xs font-bold text-[var(--brand-gold-dark)]">تحديثات منتقاة</p><h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-green)]">أنشئ تفضيلاتك</h2></div><Sparkles className="h-7 w-7 text-[var(--brand-gold)]" /></div><form onSubmit={submit} className="mt-7 space-y-6"><div className="grid gap-5 sm:grid-cols-2"><Field icon={UserRound} label="الاسم" value={name} onChange={setName} /><Field icon={Mail} label="البريد الإلكتروني" type="email" required value={email} onChange={setEmail} /></div><fieldset><legend className="mb-3 text-xs font-extrabold text-[var(--brand-green)]">ما الذي ترغب في متابعته؟</legend><div className="grid gap-3 sm:grid-cols-2">{topics.map((topic) => <label key={topic} className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 text-sm font-bold transition ${selectedTopics.includes(topic) ? "border-[var(--brand-green)]/25 bg-[var(--brand-green-pale)] text-[var(--brand-green)]" : "border-[var(--brand-green)]/10 text-[var(--muted-foreground)]"}`}><input type="checkbox" checked={selectedTopics.includes(topic)} onChange={() => toggleTopic(topic)} className="h-4 w-4 accent-[var(--brand-green)]" />{topic}</label>)}</div></fieldset><label className="flex items-start gap-3 rounded-2xl bg-[var(--brand-green-pale)] p-4 text-xs leading-6 text-[var(--muted-foreground)]"><input required type="checkbox" className="mt-1 h-4 w-4 accent-[var(--brand-green)]" /> أوافق على استقبال تحديثات رحماء بينهم، ويمكنني إلغاء الاشتراك في أي وقت.</label><button disabled={status === "sending"} type="submit" className="min-h-12 w-full rounded-2xl bg-[var(--brand-green)] text-sm font-extrabold text-white transition hover:bg-[var(--brand-green-light)] disabled:opacity-60">{status === "sending" ? "جارٍ حفظ الاشتراك..." : "تأكيد الاشتراك"}</button>{status === "error" && <p className="text-center text-xs font-bold text-[var(--destructive)]">تعذر حفظ الاشتراك الآن. حاول مرة أخرى.</p>}</form></>}</section><aside className="space-y-4"><div className="rounded-[24px] bg-[var(--brand-green)] p-6 text-white"><ShieldCheck className="h-7 w-7 text-[var(--brand-gold)]" /><h2 className="mt-5 text-lg font-extrabold">رسائل قليلة، قيمة أكبر</h2><p className="mt-3 text-xs leading-7 text-white/65">نستخدم بيانات اشتراكك لإرسال النوع الذي اخترته فقط، ولا نبيع قوائم المشتركين أو نشاركها لأغراض تجارية.</p></div><div className="rounded-[24px] border border-[var(--brand-green)]/10 bg-white p-6"><h2 className="text-sm font-extrabold text-[var(--brand-green)]">ما الذي يصلك؟</h2><div className="mt-4 space-y-3 text-xs leading-6 text-[var(--muted-foreground)]"><p>ملخصات أثر قابلة للقراءة والمشاركة.</p><p>فرص تبرع مرتبطة باحتياج واضح.</p><p>دعوات تطوع وشراكات ذات معنى.</p></div></div></aside></main>
-  </div>;
+  return (
+    <div className="min-h-screen bg-[var(--background)] pt-24 text-[var(--brand-ink)]" dir="rtl">
+      <section className="relative overflow-hidden bg-[var(--brand-green)] px-5 py-16 text-white sm:px-8 lg:px-10">
+        <div className="absolute -left-20 -top-28 h-72 w-72 rounded-full bg-[var(--brand-gold)]/15 blur-3xl" />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[var(--brand-gold)]">
+            <BellRing className="h-4 w-4" /> مركز الاشتراكات
+          </div>
+          <h1 className="mt-6 max-w-2xl text-3xl font-extrabold leading-[1.4] sm:text-5xl">
+            ابق قريبًا من <span className="text-[var(--brand-gold)]">الأثر.</span>
+          </h1>
+          <p className="mt-4 max-w-xl text-sm leading-7 text-white/65 sm:text-base">
+            اختر نوع التحديثات التي تهمك، وسنرسل لك أخبار المؤسسة وتقارير أثرها دون إغراق بريدك.
+          </p>
+        </div>
+      </section>
+      <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:px-10">
+        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,76,58,.07)] sm:p-8">
+          {status === "success" ? (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex min-h-[360px] flex-col items-center justify-center text-center"
+            >
+              <div className="grid h-20 w-20 place-items-center rounded-full bg-[var(--brand-green-pale)]">
+                <CheckCircle2 className="h-10 w-10 text-[var(--success)]" />
+              </div>
+              <h2 className="mt-6 text-2xl font-extrabold text-[var(--brand-green)]">
+                تم تأكيد اشتراكك
+              </h2>
+              <p className="mt-3 max-w-md text-sm leading-7 text-[var(--muted-foreground)]">
+                سنرسل التحديثات إلى {email}. يمكنك تعديل تفضيلاتك من الرسائل القادمة أو التواصل
+                معنا.
+              </p>
+              <button
+                type="button"
+                onClick={() => setStatus("idle")}
+                className="mt-6 rounded-xl border border-[var(--brand-green)]/15 px-5 py-3 text-xs font-bold text-[var(--brand-green)]"
+              >
+                تحديث بيانات الاشتراك
+              </button>
+            </motion.div>
+          ) : (
+            <>
+              <div className="flex items-end justify-between gap-4 border-b border-[var(--brand-green)]/8 pb-5">
+                <div>
+                  <p className="text-xs font-bold text-[var(--brand-gold-dark)]">تحديثات منتقاة</p>
+                  <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-green)]">
+                    أنشئ تفضيلاتك
+                  </h2>
+                </div>
+                <Sparkles className="h-7 w-7 text-[var(--brand-gold)]" />
+              </div>
+              <form onSubmit={submit} className="mt-7 space-y-6">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Field icon={UserRound} label="الاسم" value={name} onChange={setName} />
+                  <Field
+                    icon={Mail}
+                    label="البريد الإلكتروني"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={setEmail}
+                  />
+                </div>
+                <fieldset>
+                  <legend className="mb-3 text-xs font-extrabold text-[var(--brand-green)]">
+                    ما الذي ترغب في متابعته؟
+                  </legend>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {topics.map((topic) => (
+                      <label
+                        key={topic}
+                        className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 text-sm font-bold transition ${selectedTopics.includes(topic) ? "border-[var(--brand-green)]/25 bg-[var(--brand-green-pale)] text-[var(--brand-green)]" : "border-[var(--brand-green)]/10 text-[var(--muted-foreground)]"}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedTopics.includes(topic)}
+                          onChange={() => toggleTopic(topic)}
+                          className="h-4 w-4 accent-[var(--brand-green)]"
+                        />
+                        {topic}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <label className="flex items-start gap-3 rounded-2xl bg-[var(--brand-green-pale)] p-4 text-xs leading-6 text-[var(--muted-foreground)]">
+                  <input
+                    required
+                    type="checkbox"
+                    className="mt-1 h-4 w-4 accent-[var(--brand-green)]"
+                  />{" "}
+                  أوافق على استقبال تحديثات رحماء بينهم، ويمكنني إلغاء الاشتراك في أي وقت.
+                </label>
+                <button
+                  disabled={status === "sending"}
+                  type="submit"
+                  className="min-h-12 w-full rounded-2xl bg-[var(--brand-green)] text-sm font-extrabold text-white transition hover:bg-[var(--brand-green-light)] disabled:opacity-60"
+                >
+                  {status === "sending" ? "جارٍ حفظ الاشتراك..." : "تأكيد الاشتراك"}
+                </button>
+                {status === "error" && (
+                  <p className="text-center text-xs font-bold text-[var(--destructive)]">
+                    تعذر حفظ الاشتراك الآن. حاول مرة أخرى.
+                  </p>
+                )}
+              </form>
+            </>
+          )}
+        </section>
+        <aside className="space-y-4">
+          <div className="rounded-[24px] bg-[var(--brand-green)] p-6 text-white">
+            <ShieldCheck className="h-7 w-7 text-[var(--brand-gold)]" />
+            <h2 className="mt-5 text-lg font-extrabold">رسائل قليلة، قيمة أكبر</h2>
+            <p className="mt-3 text-xs leading-7 text-white/65">
+              نستخدم بيانات اشتراكك لإرسال النوع الذي اخترته فقط، ولا نبيع قوائم المشتركين أو
+              نشاركها لأغراض تجارية.
+            </p>
+          </div>
+          <div className="rounded-[24px] border border-[var(--brand-green)]/10 bg-white p-6">
+            <h2 className="text-sm font-extrabold text-[var(--brand-green)]">ما الذي يصلك؟</h2>
+            <div className="mt-4 space-y-3 text-xs leading-6 text-[var(--muted-foreground)]">
+              <p>ملخصات أثر قابلة للقراءة والمشاركة.</p>
+              <p>فرص تبرع مرتبطة باحتياج واضح.</p>
+              <p>دعوات تطوع وشراكات ذات معنى.</p>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+  );
 }
 
-function Field({ icon: Icon, label, value, onChange, type = "text", required = false }: { icon: typeof Mail; label: string; value: string; onChange: (value: string) => void; type?: string; required?: boolean }) { return <label><span className="mb-2 block text-xs font-bold text-[var(--brand-green)]">{label}</span><div className="relative"><Icon className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--brand-gold-dark)]" /><input required={required} type={type} value={value} onChange={(event) => onChange(event.target.value)} className="min-h-12 w-full rounded-2xl border border-[var(--brand-green)]/12 bg-[var(--brand-green-pale)] px-4 pr-11 text-sm outline-none transition focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10" /></div></label>; }
-
-
+function Field({
+  icon: Icon,
+  label,
+  value,
+  onChange,
+  type = "text",
+  required = false,
+}: {
+  icon: typeof Mail;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <label>
+      <span className="mb-2 block text-xs font-bold text-[var(--brand-green)]">{label}</span>
+      <div className="relative">
+        <Icon className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--brand-gold-dark)]" />
+        <input
+          required={required}
+          type={type}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="min-h-12 w-full rounded-2xl border border-[var(--brand-green)]/12 bg-[var(--brand-green-pale)] px-4 pr-11 text-sm outline-none transition focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10"
+        />
+      </div>
+    </label>
+  );
+}

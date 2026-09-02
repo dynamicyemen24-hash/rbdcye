@@ -4,8 +4,19 @@
 import { lazy, Suspense, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  Heart, Calculator, Smartphone, Download, CheckCircle2, WifiOff,
-  BellRing, Zap, ShoppingBasket, BookOpen, Droplets, ArrowLeft, Wrench,
+  Heart,
+  Calculator,
+  Smartphone,
+  Download,
+  CheckCircle2,
+  WifiOff,
+  BellRing,
+  Zap,
+  ShoppingBasket,
+  BookOpen,
+  Droplets,
+  ArrowLeft,
+  Wrench,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +25,9 @@ import { Reveal } from "@/app/components/layout/Reveal";
 import { QuickDonation } from "@/app/components/QuickDonation";
 import { usePwaInstall } from "@/shared/hooks/usePwaInstall";
 
-const ZakatCalculator = lazy(() => import("@/app/components/ZakatCalculator").then(m => ({ default: m.ZakatCalculator })));
+const ZakatCalculator = lazy(() =>
+  import("@/app/components/ZakatCalculator").then((m) => ({ default: m.ZakatCalculator }))
+);
 
 type ToolTab = "donation" | "zakat";
 
@@ -39,12 +52,17 @@ function InstallAppCard() {
         <div className="flex items-center gap-3 mb-3">
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: "rgba(var(--brand-gold-rgb),0.2)", border: "1px solid rgba(var(--brand-gold-rgb),0.4)" }}
+            style={{
+              background: "rgba(var(--brand-gold-rgb),0.2)",
+              border: "1px solid rgba(var(--brand-gold-rgb),0.4)",
+            }}
           >
             <Smartphone className="w-5.5 h-5.5" style={{ color: "var(--brand-gold-light)" }} />
           </div>
           <div>
-            <div className="font-extrabold" style={{ fontSize: "var(--fs-body)" }}>تطبيق رحماء بينهم</div>
+            <div className="font-extrabold" style={{ fontSize: "var(--fs-body)" }}>
+              تطبيق رحماء بينهم
+            </div>
             <div className="text-white/70" style={{ fontSize: "var(--fs-xs)" }}>
               {installed ? "مثبّت على جهازك" : "مجاني · دون متجر التطبيقات"}
             </div>
@@ -52,16 +70,28 @@ function InstallAppCard() {
         </div>
 
         {installed ? (
-          <div className="flex items-center gap-2 text-sm" style={{ color: "var(--brand-gold-light)" }}>
+          <div
+            className="flex items-center gap-2 text-sm"
+            style={{ color: "var(--brand-gold-light)" }}
+          >
             <CheckCircle2 className="w-4 h-4" />
             تستمتع بالتجربة الكاملة عبر التطبيق
           </div>
         ) : (
           <>
             <ul className="space-y-1.5 mb-4 text-white/80" style={{ fontSize: "var(--fs-xs)" }}>
-              <li className="flex items-center gap-2"><BellRing className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />إشعارات الحملات العاجلة</li>
-              <li className="flex items-center gap-2"><WifiOff className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />تصفح يعمل حتى دون اتصال</li>
-              <li className="flex items-center gap-2"><Zap className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />تبرع بثلاث نقرات فقط</li>
+              <li className="flex items-center gap-2">
+                <BellRing className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />
+                إشعارات الحملات العاجلة
+              </li>
+              <li className="flex items-center gap-2">
+                <WifiOff className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />
+                تصفح يعمل حتى دون اتصال
+              </li>
+              <li className="flex items-center gap-2">
+                <Zap className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-gold)" }} />
+                تبرع بثلاث نقرات فقط
+              </li>
             </ul>
 
             <button
@@ -113,9 +143,19 @@ function ImpactEstimatorCard() {
   const [amount, setAmount] = useState(50);
 
   const equivalents = [
-    { icon: ShoppingBasket, per: 25, label: "سلة غذائية تكفي أسرة شهراً", color: "var(--brand-green)" },
+    {
+      icon: ShoppingBasket,
+      per: 25,
+      label: "سلة غذائية تكفي أسرة شهراً",
+      color: "var(--brand-green)",
+    },
     { icon: BookOpen, per: 15, label: "حقيبة مدرسية لطالب", color: "var(--brand-gold)" },
-    { icon: Droplets, per: 150, label: "حصة في حفر بئر يروي قرية", color: "var(--brand-green-light)" },
+    {
+      icon: Droplets,
+      per: 150,
+      label: "حصة في حفر بئر يروي قرية",
+      color: "var(--brand-green-light)",
+    },
   ].map((e) => ({ ...e, count: Math.floor(amount / e.per) }));
 
   return (
@@ -123,13 +163,23 @@ function ImpactEstimatorCard() {
       <div className="flex items-center gap-3 mb-4">
         <div
           className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: "var(--brand-gold-pale)", border: "1px solid rgba(var(--brand-gold-rgb),0.35)" }}
+          style={{
+            background: "var(--brand-gold-pale)",
+            border: "1px solid rgba(var(--brand-gold-rgb),0.35)",
+          }}
         >
           <Calculator className="w-5.5 h-5.5" style={{ color: "var(--brand-gold)" }} />
         </div>
         <div>
-          <div className="font-extrabold" style={{ fontSize: "var(--fs-body)", color: "var(--foreground)" }}>كم يساوي تبرعك؟</div>
-          <div style={{ fontSize: "var(--fs-xs)", color: "var(--muted-foreground)" }}>جرّب المبالغ وشاهد الأثر فوراً</div>
+          <div
+            className="font-extrabold"
+            style={{ fontSize: "var(--fs-body)", color: "var(--foreground)" }}
+          >
+            كم يساوي تبرعك؟
+          </div>
+          <div style={{ fontSize: "var(--fs-xs)", color: "var(--muted-foreground)" }}>
+            جرّب المبالغ وشاهد الأثر فوراً
+          </div>
         </div>
       </div>
 
@@ -142,7 +192,10 @@ function ImpactEstimatorCard() {
             className={`px-3.5 py-1.5 rounded-full font-bold transition-all ${amount === a ? "scale-105" : "hover:scale-105"}`}
             style={{
               fontSize: "var(--fs-sm)",
-              background: amount === a ? "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))" : "var(--muted)",
+              background:
+                amount === a
+                  ? "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))"
+                  : "var(--muted)",
               color: amount === a ? "#FFFFFF" : "var(--muted-foreground)",
               boxShadow: amount === a ? "0 6px 16px rgba(15,76,58,0.25)" : "none",
             }}
@@ -164,10 +217,18 @@ function ImpactEstimatorCard() {
               style={{ background: `${e.color}0D` }}
             >
               <e.icon className="w-4 h-4 shrink-0" style={{ color: e.color }} />
-              <span className="font-bold tabular-nums" style={{ color: e.color, fontSize: "var(--fs-sm)" }}>
+              <span
+                className="font-bold tabular-nums"
+                style={{ color: e.color, fontSize: "var(--fs-sm)" }}
+              >
                 {e.count.toLocaleString("ar-SA")}
               </span>
-              <span className="truncate" style={{ fontSize: "var(--fs-xs)", color: "var(--muted-foreground)" }}>{e.label}</span>
+              <span
+                className="truncate"
+                style={{ fontSize: "var(--fs-xs)", color: "var(--muted-foreground)" }}
+              >
+                {e.label}
+              </span>
             </motion.div>
           ) : null
         )}
@@ -213,7 +274,11 @@ export function DonorToolkit() {
         <Reveal className="lg:col-span-2">
           <div className="rounded-3xl overflow-hidden bg-white border border-[var(--border)] shadow-xl h-full flex flex-col">
             {/* شريط التبويبات */}
-            <div className="flex border-b border-[var(--border)]" role="tablist" aria-label="الأدوات الرئيسية">
+            <div
+              className="flex border-b border-[var(--border)]"
+              role="tablist"
+              aria-label="الأدوات الرئيسية"
+            >
               {tabs.map((t) => (
                 <button
                   key={t.id}
@@ -221,7 +286,9 @@ export function DonorToolkit() {
                   aria-selected={tab === t.id}
                   onClick={() => setTab(t.id)}
                   className={`relative flex-1 py-4 px-6 text-center font-bold transition-colors flex items-center justify-center gap-2 ${
-                    tab === t.id ? "text-[var(--brand-green)]" : "text-[var(--muted-foreground)] hover:text-[var(--brand-green)]"
+                    tab === t.id
+                      ? "text-[var(--brand-green)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--brand-green)]"
                   }`}
                   style={{ fontSize: "var(--fs-body)" }}
                 >
@@ -231,7 +298,10 @@ export function DonorToolkit() {
                     <motion.span
                       layoutId="toolkit-tab"
                       className="absolute bottom-0 inset-x-8 h-0.5 rounded-full"
-                      style={{ background: "linear-gradient(to left, var(--brand-gold), var(--brand-green))" }}
+                      style={{
+                        background:
+                          "linear-gradient(to left, var(--brand-gold), var(--brand-green))",
+                      }}
                     />
                   )}
                 </button>
@@ -251,7 +321,14 @@ export function DonorToolkit() {
                   {tab === "donation" ? (
                     <QuickDonation embedded />
                   ) : (
-                    <Suspense fallback={<div className="skeleton-pulse rounded-2xl min-h-[420px]" aria-hidden="true" />}>
+                    <Suspense
+                      fallback={
+                        <div
+                          className="skeleton-pulse rounded-2xl min-h-[420px]"
+                          aria-hidden="true"
+                        />
+                      }
+                    >
                       <ZakatCalculator />
                     </Suspense>
                   )}
@@ -274,5 +351,3 @@ export function DonorToolkit() {
     </Section>
   );
 }
-
-

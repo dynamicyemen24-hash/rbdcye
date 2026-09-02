@@ -1,7 +1,4 @@
-import { 
-  Heart,
-  ChevronLeft,
-} from "lucide-react";
+import { Heart, ChevronLeft } from "lucide-react";
 import { motion } from "motion/react";
 
 interface HeroMainColumnProps {
@@ -13,7 +10,6 @@ interface HeroMainColumnProps {
 export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
   return (
     <div className="flex flex-col justify-center h-full space-y-8 py-2 text-right">
-      
       {/* 1. Identity Pill */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
@@ -28,12 +24,17 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
 
         {/* Hero Main Headline */}
         <h1 className="font-cairo font-black text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.28] text-slate-900 tracking-tight">
-          معاً نصنع التنمية ونحفظ <span className="text-[#0F4C3A] relative inline-block border-b-4 border-[#C69E5A]/40 pb-1">الكرامة الإنسانية</span>
+          معاً نصنع التنمية ونحفظ{" "}
+          <span className="text-[#0F4C3A] relative inline-block border-b-4 border-[#C69E5A]/40 pb-1">
+            الكرامة الإنسانية
+          </span>
         </h1>
 
         {/* Spacious Inspiring Narrative */}
         <p className="text-slate-700 font-cairo text-base sm:text-lg lg:text-xl leading-[2.1] font-medium max-w-2xl">
-          منظمة إنسانية وتنموية مستقلة انطلقت عام 2014م لصون حياة الإنسان وإغاثته عبر برامج إغاثية وتنموية شمولية، مستهدفة المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، وفق أرفع معايير الحوكمة والشفافية.
+          منظمة إنسانية وتنموية مستقلة انطلقت عام 2014م لصون حياة الإنسان وإغاثته عبر برامج إغاثية
+          وتنموية شمولية، مستهدفة المحافظات والمناطق اليمنية الأشد تضرراً ومأساة، وفق أرفع معايير
+          الحوكمة والشفافية.
         </p>
       </motion.div>
 
@@ -66,11 +67,8 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
           <ChevronLeft className="w-5 h-5 text-[var(--brand-green-dark)]" />
         </motion.button>
       </motion.div>
-
     </div>
   );
 }
 
 export default HeroMainColumn;
-
-

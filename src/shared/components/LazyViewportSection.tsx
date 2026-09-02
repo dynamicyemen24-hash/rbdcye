@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, ReactNode } from 'react';
-import { motion } from 'motion/react';
+import React, { useRef, useState, useEffect, ReactNode } from "react";
+import { motion } from "motion/react";
 
 interface LazyViewportSectionProps {
   children: ReactNode;
@@ -13,10 +13,10 @@ interface LazyViewportSectionProps {
 export function LazyViewportSection({
   children,
   threshold = 0.1,
-  rootMargin = '150px 0px',
-  minHeight = '200px',
+  rootMargin = "150px 0px",
+  minHeight = "200px",
   id,
-  className = '',
+  className = "",
 }: LazyViewportSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -25,7 +25,7 @@ export function LazyViewportSection({
     const element = ref.current;
     if (!element) return;
 
-    if (!('IntersectionObserver' in window)) {
+    if (!("IntersectionObserver" in window)) {
       setIsVisible(true);
       return;
     }
@@ -45,7 +45,12 @@ export function LazyViewportSection({
   }, [threshold, rootMargin]);
 
   return (
-    <div ref={ref} id={id} className={className} style={{ minHeight: isVisible ? 'auto' : minHeight }}>
+    <div
+      ref={ref}
+      id={id}
+      className={className}
+      style={{ minHeight: isVisible ? "auto" : minHeight }}
+    >
       {isVisible ? (
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -60,5 +65,3 @@ export function LazyViewportSection({
 }
 
 export default LazyViewportSection;
-
-

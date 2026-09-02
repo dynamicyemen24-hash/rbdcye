@@ -1,21 +1,34 @@
 // src/app/components/News.tsx
 
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Calendar, ArrowLeft, Eye, Loader2, Heart, Users, 
-  Sparkles, Clock,
-  Search, Filter, X, ChevronDown, ChevronUp,
-  Grid, List, ArrowRight, Lightbulb
+import {
+  Calendar,
+  ArrowLeft,
+  Eye,
+  Loader2,
+  Heart,
+  Users,
+  Sparkles,
+  Clock,
+  Search,
+  Filter,
+  X,
+  ChevronDown,
+  ChevronUp,
+  Grid,
+  List,
+  ArrowRight,
+  Lightbulb,
 } from "lucide-react";
 import { useState, useEffect, useCallback, useMemo, memo, useRef } from "react";
 
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
 import { sanityService, getImageUrl } from "@/shared/services/sanity.service";
-import { 
-  getSafeImage, 
-  handleImageError, 
+import {
+  getSafeImage,
+  handleImageError,
   getPlaceholderImage,
-  getRandomImage
+  getRandomImage,
 } from "@/utils/imageUtils";
 
 // ============================================
@@ -54,61 +67,61 @@ interface NewsItem {
 }
 
 const NEWS_CATEGORIES_MAP: Record<string, NewsCategory> = {
-  'تعليم': { 
-    name: 'تعليم', 
-    color: '#2563EB', 
-    bg: '#EFF6FF',
-    icon: '📚',
-    description: 'تمكين العلم والمعرفة'
+  تعليم: {
+    name: "تعليم",
+    color: "#2563EB",
+    bg: "#EFF6FF",
+    icon: "📚",
+    description: "تمكين العلم والمعرفة",
   },
-  'إغاثة': { 
-    name: 'إغاثة', 
-    color: '#E74C3C', 
-    bg: '#FEF2F2',
-    icon: '🆘',
-    description: 'عون وإغاثة المحتاجين'
+  إغاثة: {
+    name: "إغاثة",
+    color: "#E74C3C",
+    bg: "#FEF2F2",
+    icon: "🆘",
+    description: "عون وإغاثة المحتاجين",
   },
-  'تنمية': { 
-    name: 'تنمية', 
-    color: '#10B981', 
-    bg: '#ECFDF5',
-    icon: '🌱',
-    description: 'تنمية مستدامة للمجتمع'
+  تنمية: {
+    name: "تنمية",
+    color: "#10B981",
+    bg: "#ECFDF5",
+    icon: "🌱",
+    description: "تنمية مستدامة للمجتمع",
   },
-  'شراكات': { 
-    name: 'شراكات', 
-    color: '#7C3AED', 
-    bg: '#F5F3FF',
-    icon: '🤝',
-    description: 'شراكات استراتيجية فاعلة'
+  شراكات: {
+    name: "شراكات",
+    color: "#7C3AED",
+    bg: "#F5F3FF",
+    icon: "🤝",
+    description: "شراكات استراتيجية فاعلة",
   },
-  'تدريب': { 
-    name: 'تدريب', 
-    color: '#F59E0B', 
-    bg: '#FFFBEB',
-    icon: '🎯',
-    description: 'تمكين الكوادر والمتطوعين'
+  تدريب: {
+    name: "تدريب",
+    color: "#F59E0B",
+    bg: "#FFFBEB",
+    icon: "🎯",
+    description: "تمكين الكوادر والمتطوعين",
   },
-  'رعاية': { 
-    name: 'رعاية اجتماعية', 
-    color: '#EC4899', 
-    bg: '#FDF2F8',
-    icon: '💝',
-    description: 'رعاية الأسر والأيتام'
+  رعاية: {
+    name: "رعاية اجتماعية",
+    color: "#EC4899",
+    bg: "#FDF2F8",
+    icon: "💝",
+    description: "رعاية الأسر والأيتام",
   },
-  'تطوع': { 
-    name: 'تطوع', 
-    color: '#14B8A6', 
-    bg: '#F0FDFA',
-    icon: '🤲',
-    description: 'فريق المتطوعين المتميز'
+  تطوع: {
+    name: "تطوع",
+    color: "#14B8A6",
+    bg: "#F0FDFA",
+    icon: "🤲",
+    description: "فريق المتطوعين المتميز",
   },
-  'عام': { 
-    name: 'أخبارنا', 
-    color: '#6B7280', 
-    bg: '#F3F4F6',
-    icon: '📰',
-    description: 'آخر أخبارنا'
+  عام: {
+    name: "أخبارنا",
+    color: "#6B7280",
+    bg: "#F3F4F6",
+    icon: "📰",
+    description: "آخر أخبارنا",
   },
 };
 
@@ -123,93 +136,104 @@ interface NewsPageProps {
 
 const INSPIRATIONAL_CONTENT = [
   {
-    id: 'vision-1',
-    title: 'لماذا اخترنا اسم «رحماء بينهم»؟',
-    excerpt: 'لأننا لا نرى المحتاج كرقم في تقرير، بل كإنسان له وجه وقصة وحلم. نؤمن أن الرحمة ليست مشاعر عابرة، بل قرار يومي بالوقوف بجانب من سقط.',
-    category: 'عام',
-    icon: '🌟',
-    impact: 'رسالتنا'
+    id: "vision-1",
+    title: "لماذا اخترنا اسم «رحماء بينهم»؟",
+    excerpt:
+      "لأننا لا نرى المحتاج كرقم في تقرير، بل كإنسان له وجه وقصة وحلم. نؤمن أن الرحمة ليست مشاعر عابرة، بل قرار يومي بالوقوف بجانب من سقط.",
+    category: "عام",
+    icon: "🌟",
+    impact: "رسالتنا",
   },
   {
-    id: 'message-1',
-    title: 'المساعدة لا تنتظر حتى تكتمل الصورة',
-    excerpt: 'في اليوم الأول من عملنا، لم يكن لدينا مكتب ولا فريق كامل. كان لدينا قلب يخالج الألم ويد واحدة تصلح ما يمكن إصلاحه. بدأت رحلتنا بسلة غذائية واحدة لعائلة في تعز، وعلمنا أن الخير لا يحتاج الكمال — يبدأ بالتوفر.',
-    category: 'إغاثة',
-    icon: '💚',
-    impact: 'من العمليات'
+    id: "message-1",
+    title: "المساعدة لا تنتظر حتى تكتمل الصورة",
+    excerpt:
+      "في اليوم الأول من عملنا، لم يكن لدينا مكتب ولا فريق كامل. كان لدينا قلب يخالج الألم ويد واحدة تصلح ما يمكن إصلاحه. بدأت رحلتنا بسلة غذائية واحدة لعائلة في تعز، وعلمنا أن الخير لا يحتاج الكمال — يبدأ بالتوفر.",
+    category: "إغاثة",
+    icon: "💚",
+    impact: "من العمليات",
   },
   {
-    id: 'values-1',
-    title: 'الشفافية ليست شعاراً — إنها التزام',
-    excerpt: 'ننشر تقاريرنا المالية شهرية. لا نخفي ريالاً واحداً. لأن المتبرع الذي وضع ثقته فينا يستحق أن يعرف أين ذهبت ثقته. شفافيتنا ليست اختياراً — إنها عقد بيننا وبين من صدّقنا.',
-    category: 'عام',
-    icon: '⭐',
-    impact: 'شفافية حقيقية'
+    id: "values-1",
+    title: "الشفافية ليست شعاراً — إنها التزام",
+    excerpt:
+      "ننشر تقاريرنا المالية شهرية. لا نخفي ريالاً واحداً. لأن المتبرع الذي وضع ثقته فينا يستحق أن يعرف أين ذهبت ثقته. شفافيتنا ليست اختياراً — إنها عقد بيننا وبين من صدّقنا.",
+    category: "عام",
+    icon: "⭐",
+    impact: "شفافية حقيقية",
   },
   {
-    id: 'achievement-1',
-    title: 'عندما يتعلم طفل في قرية نائية',
-    excerpt: 'أحمد من قرية في مرتفعات إب. لم يكن يملك قلمًا. اليوم يكتب خطابه الأول إلى المتبرع الذي غيّر حياته. لم نُطعمه فقط — علّمناه أن يُطعم نفسه. هذا هو الفرق بين الإغاثة والتنمية.',
-    category: 'تعليم',
-    icon: '📚',
-    impact: 'قصة أحمد'
+    id: "achievement-1",
+    title: "عندما يتعلم طفل في قرية نائية",
+    excerpt:
+      "أحمد من قرية في مرتفعات إب. لم يكن يملك قلمًا. اليوم يكتب خطابه الأول إلى المتبرع الذي غيّر حياته. لم نُطعمه فقط — علّمناه أن يُطعم نفسه. هذا هو الفرق بين الإغاثة والتنمية.",
+    category: "تعليم",
+    icon: "📚",
+    impact: "قصة أحمد",
   },
   {
-    id: 'relief-1',
-    title: 'ليست سلة غذائية — إنها لحظة رجاء',
-    excerpt: 'عندما فتحت أم محمد الباب ووجدت السلة، لم تسأل عما بداخلها. سألت: «هل أنتم من الله؟» هذه اللحظة تُذكّرنا لماذا نعمل. المساعدات تنتهي — لكن تلك اللحظة تبقى مع الأسرة.',
-    category: 'إغاثة',
-    icon: '🆘',
-    impact: 'من الميدان'
+    id: "relief-1",
+    title: "ليست سلة غذائية — إنها لحظة رجاء",
+    excerpt:
+      "عندما فتحت أم محمد الباب ووجدت السلة، لم تسأل عما بداخلها. سألت: «هل أنتم من الله؟» هذه اللحظة تُذكّرنا لماذا نعمل. المساعدات تنتهي — لكن تلك اللحظة تبقى مع الأسرة.",
+    category: "إغاثة",
+    icon: "🆘",
+    impact: "من الميدان",
   },
   {
-    id: 'development-1',
-    title: 'المتجر الصغير الذي غيّر حياة قرية',
-    excerpt: 'امرأة في الحديدة كانت تبيع في الشارع. لها متجر صغير تديره بدعم من برنامج تمكين النساء. ليس ثورياً — لكنه يكفي لأطفال يأكلون ويدرسون. هذا هو التغيير الحقيقي.',
-    category: 'تنمية',
-    icon: '🌱',
-    impact: 'قصة فاطمة'
+    id: "development-1",
+    title: "المتجر الصغير الذي غيّر حياة قرية",
+    excerpt:
+      "امرأة في الحديدة كانت تبيع في الشارع. لها متجر صغير تديره بدعم من برنامج تمكين النساء. ليس ثورياً — لكنه يكفي لأطفال يأكلون ويدرسون. هذا هو التغيير الحقيقي.",
+    category: "تنمية",
+    icon: "🌱",
+    impact: "قصة فاطمة",
   },
   {
-    id: 'orphan-1',
-    title: 'ليس يتيمًا — بل طالب في انتظار مستقبله',
-    excerpt: 'عمر فقد أباه في الصراع. كنا نظن أن كفالته تعني مبلغاً مالياً. اكتشفنا أنه يحتاج من يسأله: كيف حالك اليوم؟ برنامج يربطه بمُكلّف يتابع دراسته وصحته أسبوعياً.',
-    category: 'رعاية',
-    icon: '💝',
-    impact: 'رعاية شاملة'
+    id: "orphan-1",
+    title: "ليس يتيمًا — بل طالب في انتظار مستقبله",
+    excerpt:
+      "عمر فقد أباه في الصراع. كنا نظن أن كفالته تعني مبلغاً مالياً. اكتشفنا أنه يحتاج من يسأله: كيف حالك اليوم؟ برنامج يربطه بمُكلّف يتابع دراسته وصحته أسبوعياً.",
+    category: "رعاية",
+    icon: "💝",
+    impact: "رعاية شاملة",
   },
   {
-    id: 'volunteer-1',
-    title: 'المتطوع الذي لم يكن يعلم أنه يبني وطنه',
-    excerpt: 'خالد كان طالب جامعي ملّ من الجلوس في البيت. سجّل في برنامج التدريب والتطوع. اليوم يقود فريقاً في المحافظة. لم يكن يعلم أنه يبني وطنه — جاء لأنهم كانوا بحاجة ليد. ووجد نفسه.',
-    category: 'تطوع',
-    icon: '🤲',
-    impact: 'قصة خالد'
+    id: "volunteer-1",
+    title: "المتطوع الذي لم يكن يعلم أنه يبني وطنه",
+    excerpt:
+      "خالد كان طالب جامعي ملّ من الجلوس في البيت. سجّل في برنامج التدريب والتطوع. اليوم يقود فريقاً في المحافظة. لم يكن يعلم أنه يبني وطنه — جاء لأنهم كانوا بحاجة ليد. ووجد نفسه.",
+    category: "تطوع",
+    icon: "🤲",
+    impact: "قصة خالد",
   },
   {
-    id: 'wisdom-1',
-    title: 'الآية التي لا ننساها',
-    excerpt: '"وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ" — هذه ليست آية في كتاب فقط. إنها بطاقة هويتنا. كل مشروع نبدأه، كل أسرة نزورها، كل طفل نُعلمه — نسأل: أين الرحمة هنا؟',
-    category: 'عام',
-    icon: '📖',
-    impact: 'قيمنا'
+    id: "wisdom-1",
+    title: "الآية التي لا ننساها",
+    excerpt:
+      '"وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ" — هذه ليست آية في كتاب فقط. إنها بطاقة هويتنا. كل مشروع نبدأه، كل أسرة نزورها، كل طفل نُعلمه — نسأل: أين الرحمة هنا؟',
+    category: "عام",
+    icon: "📖",
+    impact: "قيمنا",
   },
   {
-    id: 'hope-1',
-    title: 'الابتسامة التي لا تُكتب في التقارير',
-    excerpt: 'ليس لدينا مقياس يقيس لحظة سعادة طفل عندما يرى حقيبته المدرسية الجديدة. ولا إحصاء يلتقط دعاء أمwhen she says "الحمد لله". لكن هذه اللحظات هي النجاح الحقيقي.',
-    category: 'عام',
-    icon: '✨',
-    impact: 'ما لا يُقاس'
+    id: "hope-1",
+    title: "الابتسامة التي لا تُكتب في التقارير",
+    excerpt:
+      'ليس لدينا مقياس يقيس لحظة سعادة طفل عندما يرى حقيبته المدرسية الجديدة. ولا إحصاء يلتقط دعاء أمwhen she says "الحمد لله". لكن هذه اللحظات هي النجاح الحقيقي.',
+    category: "عام",
+    icon: "✨",
+    impact: "ما لا يُقاس",
   },
   {
-    id: 'future-1',
-    title: 'ما نبنيه اليوم هو اليمن الذي نتخيله',
-    excerpt: 'لسنا مؤسسة تقدم المساعدات فقط. نحن بنّاؤون — نبني قدرات، نبني وعي، نبني ثقة. كل طفل نعلمه يصبح معلماً. كل أسرة ندعمها تصبح سندًا لجيرانها. هذا هو التأثير الذي لا يتوقف.',
-    category: 'تنمية',
-    icon: '🌟',
-    impact: 'تأثير مستدام'
-  }
+    id: "future-1",
+    title: "ما نبنيه اليوم هو اليمن الذي نتخيله",
+    excerpt:
+      "لسنا مؤسسة تقدم المساعدات فقط. نحن بنّاؤون — نبني قدرات، نبني وعي، نبني ثقة. كل طفل نعلمه يصبح معلماً. كل أسرة ندعمها تصبح سندًا لجيرانها. هذا هو التأثير الذي لا يتوقف.",
+    category: "تنمية",
+    icon: "🌟",
+    impact: "تأثير مستدام",
+  },
 ];
 
 // ============================================
@@ -225,26 +249,30 @@ class SmartNewsService {
 
   private initializeFallback() {
     this.fallbackItems = INSPIRATIONAL_CONTENT.map((content, index) => {
-      const category = NEWS_CATEGORIES_MAP[content.category] || NEWS_CATEGORIES_MAP['عام'];
+      const category = NEWS_CATEGORIES_MAP[content.category] || NEWS_CATEGORIES_MAP["عام"];
       const dates = [
-        '15 يونيو 2026', '10 يونيو 2026', '5 يونيو 2026',
-        '28 مايو 2026', '20 مايو 2026', '15 مايو 2026'
+        "15 يونيو 2026",
+        "10 يونيو 2026",
+        "5 يونيو 2026",
+        "28 مايو 2026",
+        "20 مايو 2026",
+        "15 مايو 2026",
       ];
-      
+
       return {
         id: content.id || `fallback-${index}`,
         title: content.title,
         excerpt: content.excerpt,
-        content: content.excerpt + ' نعمل معاً لتحقيق الخير والبركة في المجتمع.',
+        content: content.excerpt + " نعمل معاً لتحقيق الخير والبركة في المجتمع.",
         category: category,
         date: dates[index % dates.length],
         views: Math.floor(Math.random() * 500) + 100,
         featuredImage: getRandomImage(content.category),
-        status: 'published',
+        status: "published",
         readTime: Math.ceil(content.excerpt.length / 200) + 1,
-        author: 'فريق رحماء بينهم',
-        tags: ['خير', 'تنمية', 'مجتمع', 'إنسانية'],
-        impact: content.impact || 'أثر إيجابي',
+        author: "فريق رحماء بينهم",
+        tags: ["خير", "تنمية", "مجتمع", "إنسانية"],
+        impact: content.impact || "أثر إيجابي",
         beneficiaries: Math.floor(Math.random() * 500) + 50,
         comments: Math.floor(Math.random() * 30),
         likes: Math.floor(Math.random() * 100),
@@ -256,12 +284,12 @@ class SmartNewsService {
   async getNews(limit?: number): Promise<NewsItem[]> {
     try {
       const sanityNews = await this.fetchFromSanity();
-      
+
       if (sanityNews && sanityNews.length > 0) {
         const mixed = this.mixWithFallback(sanityNews);
         return limit ? mixed.slice(0, limit) : mixed;
       }
-      
+
       return this.getFallbackNews(limit);
     } catch {
       return this.getFallbackNews(limit);
@@ -270,10 +298,10 @@ class SmartNewsService {
 
   private async fetchFromSanity(): Promise<any[]> {
     try {
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 5000)
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Request timeout")), 5000)
       );
-      
+
       const newsPromise = sanityService.getNews();
       const result = await Promise.race([newsPromise, timeoutPromise]);
       return result || [];
@@ -285,15 +313,17 @@ class SmartNewsService {
   private mixWithFallback(sanityNews: any[]): NewsItem[] {
     const normalized = sanityNews.map((n: any) => ({
       id: n._id || `sanity-${Math.random()}`,
-      title: n.title || 'خبر جديد',
-      excerpt: n.excerpt || 'تابعوا آخر أخبارنا',
-      content: n.content || n.excerpt || '',
-      category: NEWS_CATEGORIES_MAP[n.category] || NEWS_CATEGORIES_MAP['عام'],
-      date: n.publishDate ? new Date(n.publishDate).toLocaleDateString('ar-SA', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }) : new Date().toLocaleDateString('ar-SA'),
+      title: n.title || "خبر جديد",
+      excerpt: n.excerpt || "تابعوا آخر أخبارنا",
+      content: n.content || n.excerpt || "",
+      category: NEWS_CATEGORIES_MAP[n.category] || NEWS_CATEGORIES_MAP["عام"],
+      date: n.publishDate
+        ? new Date(n.publishDate).toLocaleDateString("ar-SA", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        : new Date().toLocaleDateString("ar-SA"),
       views: n.views || Math.floor(Math.random() * 200) + 50,
       featuredImage: getSafeImage(
         n.mainImage ? getImageUrl(n.mainImage) : undefined,
@@ -301,11 +331,11 @@ class SmartNewsService {
         n.category,
         true
       ),
-      status: n.status || 'published',
+      status: n.status || "published",
       readTime: Math.ceil((n.content?.length || n.excerpt?.length || 0) / 200) || 2,
-      author: n.author || 'فريق رحماء بينهم',
-      tags: n.tags || ['خير', 'تنمية'],
-      impact: n.impact || 'أثر إيجابي',
+      author: n.author || "فريق رحماء بينهم",
+      tags: n.tags || ["خير", "تنمية"],
+      impact: n.impact || "أثر إيجابي",
       beneficiaries: n.beneficiaries || Math.floor(Math.random() * 300) + 50,
       comments: n.comments || Math.floor(Math.random() * 20),
       likes: n.likes || Math.floor(Math.random() * 80),
@@ -314,7 +344,7 @@ class SmartNewsService {
 
     const shuffledFallback = this.shuffleArray([...this.fallbackItems]);
     const fallbackToAdd = shuffledFallback.slice(0, Math.min(3, this.fallbackItems.length));
-    
+
     return [...normalized, ...fallbackToAdd];
   }
 
@@ -361,7 +391,7 @@ const BreakingNewsTicker = memo(({ items }: { items: NewsItem[] }) => {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
             </span>
             <span className="text-sm font-bold whitespace-nowrap">
-              {items.some(item => !item.isFallback) ? 'عاجل' : 'نشاطاتنا'}
+              {items.some((item) => !item.isFallback) ? "عاجل" : "نشاطاتنا"}
             </span>
           </div>
 
@@ -391,7 +421,7 @@ const BreakingNewsTicker = memo(({ items }: { items: NewsItem[] }) => {
               <div
                 key={index}
                 className={`h-1.5 rounded-full transition-all duration-500 ${
-                  index === currentIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
+                  index === currentIndex ? "w-6 bg-white" : "w-1.5 bg-white/40"
                 }`}
               />
             ))}
@@ -404,7 +434,7 @@ const BreakingNewsTicker = memo(({ items }: { items: NewsItem[] }) => {
   );
 });
 
-BreakingNewsTicker.displayName = 'BreakingNewsTicker';
+BreakingNewsTicker.displayName = "BreakingNewsTicker";
 
 // ============================================
 // 2. بطاقة الخبر الكاملة
@@ -418,7 +448,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsLiked(!isLiked);
-    setLikes(prev => isLiked ? prev - 1 : prev + 1);
+    setLikes((prev) => (isLiked ? prev - 1 : prev + 1));
   };
 
   const handleImageErrorLocal = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -427,7 +457,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
     handleImageError(e, placeholder);
   };
 
-  const imageSrc = imageError 
+  const imageSrc = imageError
     ? getPlaceholderImage(item.title, item.category.name)
     : getSafeImage(item.featuredImage, item.title, item.category.name, true);
 
@@ -438,7 +468,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
       className={`group bg-white rounded-2xl overflow-hidden shadow-lg border ${
-        item.isFallback ? 'border-[var(--brand-green)]/20' : 'border-[var(--border)]'
+        item.isFallback ? "border-[var(--brand-green)]/20" : "border-[var(--border)]"
       } hover:shadow-2xl transition-all duration-400 cursor-pointer relative`}
       onClick={onClick}
     >
@@ -448,7 +478,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
           مستوحى من رسالتنا
         </div>
       )}
-      
+
       <div className="relative h-56 overflow-hidden bg-[var(--secondary)]">
         <img
           src={imageSrc}
@@ -457,17 +487,17 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
           loading="lazy"
           onError={handleImageErrorLocal}
         />
-        
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        
+
         <div className="absolute top-4 right-4 flex gap-2 flex-wrap">
           <span
             className="px-3 py-1.5 rounded-full text-white shadow-lg"
-            style={{ 
-              fontSize: "0.7rem", 
-              fontWeight: 700, 
+            style={{
+              fontSize: "0.7rem",
+              fontWeight: 700,
               background: item.category.color,
-              boxShadow: `0 4px 15px ${item.category.color}40`
+              boxShadow: `0 4px 15px ${item.category.color}40`,
             }}
           >
             {item.category.icon} {item.category.name}
@@ -493,9 +523,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
           {item.title}
         </h3>
 
-        <p className="text-[var(--muted-foreground)] text-sm line-clamp-2 my-2">
-          {item.excerpt}
-        </p>
+        <p className="text-[var(--muted-foreground)] text-sm line-clamp-2 my-2">{item.excerpt}</p>
 
         {item.tags && item.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
@@ -532,10 +560,10 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
               whileTap={{ scale: 0.9 }}
               onClick={handleLike}
               className={`flex items-center gap-1 text-xs transition-colors ${
-                isLiked ? 'text-[var(--success)]' : 'text-[var(--muted-foreground)]'
+                isLiked ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"
               }`}
             >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-[var(--brand-green)]' : ''}`} />
+              <Heart className={`w-4 h-4 ${isLiked ? "fill-[var(--brand-green)]" : ""}`} />
               {likes}
             </motion.button>
           </div>
@@ -545,32 +573,41 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
   );
 });
 
-FullNewsCard.displayName = 'FullNewsCard';
+FullNewsCard.displayName = "FullNewsCard";
 
 // ============================================
 // 3. صفحة الأخبار الكاملة - المكون الرئيسي
 // ============================================
 
-export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = false }: NewsPageProps) => {
+export const News = ({
+  setCurrentPage = () => {},
+  isFullPage: _isFullPage = false,
+}: NewsPageProps) => {
   const [items, setItems] = useState<NewsItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('الكل');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("الكل");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPageState] = useState(1);
   const [totalBeneficiaries, setTotalBeneficiaries] = useState(0);
   const [showInspirational, setShowInspirational] = useState(false);
-  const [contentSource, setContentSource] = useState<'static' | 'cache' | 'sanity' | 'hybrid'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "cache" | "sanity" | "hybrid">(
+    "static"
+  );
   const [showDevBadge, setShowDevBadge] = useState(false);
   const itemsPerPage = 6;
 
   // Use dynamic content hook
-  const { data: dynamicNews = [], isLoading: dynamicLoading, source } = useDynamicContent<NewsItem>({
-    contentType: 'news',
+  const {
+    data: dynamicNews = [],
+    isLoading: dynamicLoading,
+    source,
+  } = useDynamicContent<NewsItem>({
+    contentType: "news",
     enableRealtime: false,
-    refreshInterval: 300000
+    refreshInterval: 300000,
   });
 
   // Show dev badge in development mode
@@ -583,12 +620,12 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
   const fetchNews = useCallback(async () => {
     try {
       setLoading(true);
-      
+
       // ContentManager always returns data (static defaults guaranteed)
       if (dynamicNews.length > 0) {
         const allItems = dynamicNews.map((n: any) => ({
           ...n,
-          isFallback: source === 'static'
+          isFallback: source === "static",
         }));
         setItems(allItems);
         setFilteredItems(allItems);
@@ -599,24 +636,23 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
         const allItems = await smartNewsService.getNews();
         setItems(allItems);
         setFilteredItems(allItems);
-        setContentSource('static');
-        setShowInspirational(allItems.every(item => item.isFallback));
+        setContentSource("static");
+        setShowInspirational(allItems.every((item) => item.isFallback));
       }
-      
+
       const total = items.reduce((sum, item) => sum + (item.beneficiaries || 0), 0);
       setTotalBeneficiaries(total);
-      
     } catch {
       const fallback = await smartNewsService.getFallbackNews();
       setItems(fallback);
       setFilteredItems(fallback);
-      setContentSource('static');
+      setContentSource("static");
       setShowInspirational(true);
     } finally {
       setLoading(false);
     }
   }, [dynamicNews, source]);
-  
+
   const hasInitialized = useRef(false);
   useEffect(() => {
     if (!hasInitialized.current) {
@@ -627,20 +663,21 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
 
   useEffect(() => {
     let result = items;
-    
+
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      result = result.filter(item => 
-        item.title.toLowerCase().includes(query) ||
-        item.excerpt.toLowerCase().includes(query) ||
-        item.tags?.some(tag => tag.toLowerCase().includes(query))
+      result = result.filter(
+        (item) =>
+          item.title.toLowerCase().includes(query) ||
+          item.excerpt.toLowerCase().includes(query) ||
+          item.tags?.some((tag) => tag.toLowerCase().includes(query))
       );
     }
-    
-    if (selectedCategory !== 'الكل') {
-      result = result.filter(item => item.category.name === selectedCategory);
+
+    if (selectedCategory !== "الكل") {
+      result = result.filter((item) => item.category.name === selectedCategory);
     }
-    
+
     setFilteredItems(result);
     setCurrentPageState(1);
   }, [searchQuery, selectedCategory, items]);
@@ -653,7 +690,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
   }, [filteredItems, currentPage, itemsPerPage]);
 
   const categories = useMemo(() => {
-    const unique = ['الكل', ...new Set(items.map(item => item.category.name))];
+    const unique = ["الكل", ...new Set(items.map((item) => item.category.name))];
     return unique;
   }, [items]);
 
@@ -663,18 +700,32 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
   const DevBadge = showDevBadge ? (
     <div className="fixed top-4 left-4 z-50 bg-purple-600 text-white text-xs px-3 py-2 rounded-lg shadow-lg">
       <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${
-          contentSource === 'sanity' ? 'bg-green-400' : 
-          contentSource === 'hybrid' ? 'bg-blue-400' : 'bg-yellow-400'
-        }`} />
-        <span>{contentSource === 'sanity' ? 'Sanity CMS' : contentSource === 'hybrid' ? 'Hybrid' : 'Static Content'}</span>
+        <div
+          className={`w-2 h-2 rounded-full ${
+            contentSource === "sanity"
+              ? "bg-green-400"
+              : contentSource === "hybrid"
+                ? "bg-blue-400"
+                : "bg-yellow-400"
+          }`}
+        />
+        <span>
+          {contentSource === "sanity"
+            ? "Sanity CMS"
+            : contentSource === "hybrid"
+              ? "Hybrid"
+              : "Static Content"}
+        </span>
       </div>
     </div>
   ) : null;
 
   if (loading || dynamicLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)]" style={{ direction: "rtl" }}>
+      <div
+        className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)]"
+        style={{ direction: "rtl" }}
+      >
         {DevBadge}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
           <div className="flex flex-col items-center justify-center space-y-8">
@@ -687,9 +738,9 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
             </div>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((i) => (
-                <div 
-                  key={i} 
-                  className="w-2 h-2 bg-[var(--success)] rounded-full animate-bounce" 
+                <div
+                  key={i}
+                  className="w-2 h-2 bg-[var(--success)] rounded-full animate-bounce"
                   style={{ animationDelay: `${i * 0.1}s` }}
                 />
               ))}
@@ -704,36 +755,40 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)] relative overflow-hidden" style={{ direction: "rtl" }}>
+    <div
+      className="min-h-screen bg-gradient-to-b from-[#F0FDF4] to-[var(--secondary)] relative overflow-hidden"
+      style={{ direction: "rtl" }}
+    >
       <div className="absolute inset-0 pattern-khatam-light pointer-events-none" />
       {DevBadge}
-      
+
       {breakingNews.length > 0 && <BreakingNewsTicker items={breakingNews} />}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12 relative">
-        
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-            <div className="inline-flex items-center gap-3 bg-[var(--success)]/10 px-6 py-2 rounded-full mb-4">
+          <div className="inline-flex items-center gap-3 bg-[var(--success)]/10 px-6 py-2 rounded-full mb-4">
             <Heart className="w-5 h-5 text-[var(--success)]" />
             <span className="text-[var(--success)] font-semibold">رحماء بينهم</span>
           </div>
-          
+
           <h1 className="text-3xl md:text-5xl font-bold text-[var(--foreground)] mb-3">
-            {showInspirational ? 'من الميدان' : 'أخبارنا'}
-            <span className="text-[var(--success)] block md:inline"> {showInspirational ? 'قصص تلهم' : 'وفعالياتها'}</span>
+            {showInspirational ? "من الميدان" : "أخبارنا"}
+            <span className="text-[var(--success)] block md:inline">
+              {" "}
+              {showInspirational ? "قصص تلهم" : "وفعالياتها"}
+            </span>
           </h1>
-          
+
           <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
-            {showInspirational 
-              ? 'قصص حقيقية من عملنا الميداني — ليس أرقاماً في تقرير، بل لحظات تلمس القلوب'
-              : 'تابعوا آخر المستجدات والإنجازات والفعاليات التي تقوم بها مؤسسة رحماء بينهم'
-            }
+            {showInspirational
+              ? "قصص حقيقية من عملنا الميداني — ليس أرقاماً في تقرير، بل لحظات تلمس القلوب"
+              : "تابعوا آخر المستجدات والإنجازات والفعاليات التي تقوم بها مؤسسة رحماء بينهم"}
           </p>
-          
+
           {showInspirational && (
             <div className="mt-4 inline-flex items-center gap-2 bg-amber-50 text-amber-700 px-4 py-2 rounded-full border border-amber-200">
               <Lightbulb className="w-4 h-4" />
@@ -751,11 +806,13 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
             <div className="text-[var(--success)] text-2xl font-bold">{items.length}</div>
             <div className="text-[var(--muted-foreground)] text-sm">
-              {showInspirational ? 'رسائل ملهمة' : 'إجمالي الأخبار'}
+              {showInspirational ? "رسائل ملهمة" : "إجمالي الأخبار"}
             </div>
           </div>
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
-            <div className="text-[var(--success)] text-2xl font-bold">{totalBeneficiaries.toLocaleString()}</div>
+            <div className="text-[var(--success)] text-2xl font-bold">
+              {totalBeneficiaries.toLocaleString()}
+            </div>
             <div className="text-[var(--muted-foreground)] text-sm">إجمالي المستفيدين</div>
           </div>
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[var(--border)] text-center">
@@ -781,14 +838,16 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)]" />
               <input
                 type="text"
-                placeholder={showInspirational ? 'ابحث في الرسائل الملهمة...' : 'ابحث في الأخبار...'}
+                placeholder={
+                  showInspirational ? "ابحث في الرسائل الملهمة..." : "ابحث في الأخبار..."
+                }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[var(--secondary)] border border-[var(--border)] rounded-xl py-2.5 pr-10 pl-4 focus:outline-none focus:border-[var(--brand-green)] transition-colors"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] hover:text-red-500"
                 >
                   <X className="w-4 h-4" />
@@ -812,17 +871,21 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
 
               <div className="flex bg-[var(--secondary)] rounded-xl p-1">
                 <button
-                  onClick={() => setViewMode('grid')}
+                  onClick={() => setViewMode("grid")}
                   className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'grid' ? 'bg-white shadow-sm text-[var(--success)]' : 'text-[var(--muted-foreground)]'
+                    viewMode === "grid"
+                      ? "bg-white shadow-sm text-[var(--success)]"
+                      : "text-[var(--muted-foreground)]"
                   }`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setViewMode('list')}
+                  onClick={() => setViewMode("list")}
                   className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'list' ? 'bg-white shadow-sm text-[var(--success)]' : 'text-[var(--muted-foreground)]'
+                    viewMode === "list"
+                      ? "bg-white shadow-sm text-[var(--success)]"
+                      : "text-[var(--muted-foreground)]"
                   }`}
                 >
                   <List className="w-4 h-4" />
@@ -835,7 +898,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
             {showFilters && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
+                animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
@@ -848,11 +911,11 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
                         onClick={() => setSelectedCategory(category)}
                         className={`px-4 py-1.5 rounded-full text-sm transition-all ${
                           selectedCategory === category
-                            ? 'bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30'
-                            : 'bg-[var(--secondary)] text-[var(--muted-foreground)] hover:bg-[var(--border)]'
+                            ? "bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30"
+                            : "bg-[var(--secondary)] text-[var(--muted-foreground)] hover:bg-[var(--border)]"
                         }`}
                       >
-                        {category === 'الكل' ? '📰 الكل' : category}
+                        {category === "الكل" ? "📰 الكل" : category}
                       </button>
                     ))}
                   </div>
@@ -867,15 +930,14 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
             <div className="text-6xl mb-4">🤝</div>
             <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">لا توجد نتائج</h3>
             <p className="text-[var(--muted-foreground)]">
-              {showInspirational 
-                ? 'جاري إضافة المزيد من الرسائل الملهمة قريباً'
-                : 'لم يتم العثور على أخبار تطابق معايير البحث'
-              }
+              {showInspirational
+                ? "جاري إضافة المزيد من الرسائل الملهمة قريباً"
+                : "لم يتم العثور على أخبار تطابق معايير البحث"}
             </p>
             <button
               onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('الكل');
+                setSearchQuery("");
+                setSelectedCategory("الكل");
               }}
               className="mt-4 text-[var(--brand-green)] hover:underline"
             >
@@ -883,15 +945,18 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
             </button>
           </div>
         ) : (
-          <div className={viewMode === 'grid' 
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-            : 'space-y-4'
-          }>
+          <div
+            className={
+              viewMode === "grid"
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                : "space-y-4"
+            }
+          >
             {currentItems.map((item) => (
               <FullNewsCard
                 key={item.id}
                 item={item}
-                onClick={() => setCurrentPage('news-detail')}
+                onClick={() => setCurrentPage("news-detail")}
               />
             ))}
           </div>
@@ -910,7 +975,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
             >
               <ArrowRight className="w-4 h-4" />
             </button>
-            
+
             {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
               let pageNum;
               if (totalPages <= 5) {
@@ -922,22 +987,22 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
               } else {
                 pageNum = currentPage - 2 + i;
               }
-              
+
               return (
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPageState(pageNum)}
                   className={`min-w-[40px] px-3 py-2 rounded-xl transition-colors ${
                     currentPage === pageNum
-                      ? 'bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30'
-                      : 'bg-white border border-[var(--border)] hover:bg-[var(--secondary)]'
+                      ? "bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30"
+                      : "bg-white border border-[var(--border)] hover:bg-[var(--secondary)]"
                   }`}
                 >
                   {pageNum}
                 </button>
               );
             })}
-            
+
             <button
               onClick={() => setCurrentPageState(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
@@ -953,4 +1018,3 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
 };
 
 export default memo(News);
-

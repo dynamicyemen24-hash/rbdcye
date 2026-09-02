@@ -20,11 +20,14 @@ function AdminLoadingSkeleton() {
             <div className="h-10 bg-[var(--muted)] rounded-lg w-1/3"></div>
             <div className="h-10 bg-[var(--muted)] rounded-lg w-32"></div>
           </div>
-          
+
           {/* Stats skeleton */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={`admin-stat-${i}`} className="bg-white rounded-xl p-6 border border-[var(--border)]">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={`admin-stat-${i}`}
+                className="bg-white rounded-xl p-6 border border-[var(--border)]"
+              >
                 <div className="h-4 bg-[var(--muted)] rounded w-1/2 mb-2"></div>
                 <div className="h-8 bg-[var(--muted)] rounded w-3/4"></div>
               </div>
@@ -53,7 +56,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      navigate('/login', { replace: true });
+      navigate("/login", { replace: true });
     }
   }, [isAuthenticated, isLoading, navigate]);
 
@@ -70,10 +73,10 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
 
 export default function AdminPage() {
   const urlParams = new URLSearchParams(window.location.search);
-  const tabFromUrl = urlParams.get('tab');
-  
+  const tabFromUrl = urlParams.get("tab");
+
   const renderContent = () => {
-    if (tabFromUrl === 'messages') {
+    if (tabFromUrl === "messages") {
       return <MessagesPage />;
     }
     return <AdminDashboard onClose={() => {}} />;
@@ -82,12 +85,8 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <AuthGuard>
-        <Suspense fallback={<AdminLoadingSkeleton />}>
-          {renderContent()}
-        </Suspense>
+        <Suspense fallback={<AdminLoadingSkeleton />}>{renderContent()}</Suspense>
       </AuthGuard>
     </div>
   );
 }
-
-

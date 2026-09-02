@@ -1,7 +1,7 @@
 // Offline Indicator - مؤشر عدم الاتصال
-import { WifiOff } from 'lucide-react';
+import { WifiOff } from "lucide-react";
 
-import { useNetworkStatus } from '@/utils/pwa';
+import { useNetworkStatus } from "@/utils/pwa";
 
 export default function OfflineIndicator() {
   const { isOnline } = useNetworkStatus();
@@ -17,5 +17,3 @@ export default function OfflineIndicator() {
     </div>
   );
 }
-
-

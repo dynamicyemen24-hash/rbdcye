@@ -1,8 +1,15 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { RefreshCw, Calendar, Sparkles, HeartHandshake, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import React from "react";
+import { motion } from "motion/react";
+import {
+  RefreshCw,
+  Calendar,
+  Sparkles,
+  HeartHandshake,
+  ShieldCheck,
+  CheckCircle2,
+} from "lucide-react";
 
-export type DonationFrequency = 'once' | 'monthly' | 'yearly';
+export type DonationFrequency = "once" | "monthly" | "yearly";
 
 interface RecurringDonationToggleProps {
   frequency: DonationFrequency;
@@ -16,29 +23,29 @@ export function RecurringDonationToggle({
   frequency,
   onChange,
   amount,
-  currencySymbol = 'ر.س',
-  className = '',
+  currencySymbol = "ر.س",
+  className = "",
 }: RecurringDonationToggleProps) {
   const options = [
     {
-      id: 'once' as DonationFrequency,
-      label: 'مرة واحدة',
-      subtitle: 'تبرع فوري مخصص',
+      id: "once" as DonationFrequency,
+      label: "مرة واحدة",
+      subtitle: "تبرع فوري مخصص",
       badge: null,
       icon: HeartHandshake,
     },
     {
-      id: 'monthly' as DonationFrequency,
-      label: 'دوري شهري',
-      subtitle: 'أجر متجدد كل شهر',
-      badge: 'الأكثر أثراً',
+      id: "monthly" as DonationFrequency,
+      label: "دوري شهري",
+      subtitle: "أجر متجدد كل شهر",
+      badge: "الأكثر أثراً",
       icon: Calendar,
     },
     {
-      id: 'yearly' as DonationFrequency,
-      label: 'دوري سنوي',
-      subtitle: 'كفالة واستدامة سنوية',
-      badge: 'استدامة شاملة',
+      id: "yearly" as DonationFrequency,
+      label: "دوري سنوي",
+      subtitle: "كفالة واستدامة سنوية",
+      badge: "استدامة شاملة",
       icon: Sparkles,
     },
   ];
@@ -80,8 +87,8 @@ export function RecurringDonationToggle({
               onClick={() => onChange(opt.id)}
               className={`relative py-3.5 px-2 sm:px-4 rounded-xl text-right transition-all duration-300 cursor-pointer flex flex-col items-center sm:items-start justify-center gap-1 border ${
                 isActive
-                  ? 'bg-[var(--brand-green)] text-white border-[var(--brand-green)] shadow-md'
-                  : 'bg-white/60 hover:bg-white text-slate-700 border-transparent hover:border-slate-200'
+                  ? "bg-[var(--brand-green)] text-white border-[var(--brand-green)] shadow-md"
+                  : "bg-white/60 hover:bg-white text-slate-700 border-transparent hover:border-slate-200"
               }`}
             >
               {/* Top Badge */}
@@ -89,8 +96,8 @@ export function RecurringDonationToggle({
                 <span
                   className={`text-[10px] font-black px-2 py-0.5 rounded-full mb-0.5 ${
                     isActive
-                      ? 'bg-[var(--brand-gold)] text-slate-950'
-                      : 'bg-emerald-100 text-[var(--brand-green)]'
+                      ? "bg-[var(--brand-gold)] text-slate-950"
+                      : "bg-emerald-100 text-[var(--brand-green)]"
                   }`}
                 >
                   {opt.badge}
@@ -98,13 +105,15 @@ export function RecurringDonationToggle({
               )}
 
               <div className="flex items-center gap-1.5 font-black text-xs sm:text-sm">
-                <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[var(--brand-gold)]' : 'text-slate-500'}`} />
+                <Icon
+                  className={`w-4 h-4 shrink-0 ${isActive ? "text-[var(--brand-gold)]" : "text-slate-500"}`}
+                />
                 <span>{opt.label}</span>
               </div>
 
               <span
                 className={`text-[11px] font-medium hidden sm:block ${
-                  isActive ? 'text-emerald-100' : 'text-slate-500'
+                  isActive ? "text-emerald-100" : "text-slate-500"
                 }`}
               >
                 {opt.subtitle}
@@ -119,10 +128,10 @@ export function RecurringDonationToggle({
       </div>
 
       {/* Dynamic Info Banner for Recurring Donations */}
-      {frequency !== 'once' && (
+      {frequency !== "once" && (
         <motion.div
           initial={{ opacity: 0, y: -6, height: 0 }}
-          animate={{ opacity: 1, y: 0, height: 'auto' }}
+          animate={{ opacity: 1, y: 0, height: "auto" }}
           exit={{ opacity: 0, y: -6, height: 0 }}
           transition={{ duration: 0.3 }}
           className="mt-3 p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200/80 text-xs text-emerald-950 flex items-start gap-3 shadow-2xs"
@@ -133,19 +142,21 @@ export function RecurringDonationToggle({
           <div className="space-y-1">
             <div className="font-extrabold text-sm text-[var(--brand-green)] flex items-center gap-1.5">
               <span>
-                {frequency === 'monthly'
-                  ? 'الاشتراك الدوري الشهري (صدقة جارية)'
-                  : 'الاشتراك الدوري السنوي (كفالة مستدامة)'}
+                {frequency === "monthly"
+                  ? "الاشتراك الدوري الشهري (صدقة جارية)"
+                  : "الاشتراك الدوري السنوي (كفالة مستدامة)"}
               </span>
               {amount && amount > 0 && (
                 <span className="px-2 py-0.5 rounded-md bg-emerald-200/80 text-[var(--brand-green)] font-black text-xs">
-                  {amount.toLocaleString('ar-SA')} {currencySymbol} / {frequency === 'monthly' ? 'شهرياً' : 'سنوياً'}
+                  {amount.toLocaleString("ar-SA")} {currencySymbol} /{" "}
+                  {frequency === "monthly" ? "شهرياً" : "سنوياً"}
                 </span>
               )}
             </div>
             <p className="text-slate-700 leading-relaxed">
-              سيتم الاستقطاع الآمن والتلقائي عبر قناة الدفع المعتمدة كل{' '}
-              {frequency === 'monthly' ? 'شهر' : 'سنة'}. يمكنك التحكم الكامل أو إيقاف الاشتراك في أي وقت بنقرة واحدة من حساب المتبرع.
+              سيتم الاستقطاع الآمن والتلقائي عبر قناة الدفع المعتمدة كل{" "}
+              {frequency === "monthly" ? "شهر" : "سنة"}. يمكنك التحكم الكامل أو إيقاف الاشتراك في أي
+              وقت بنقرة واحدة من حساب المتبرع.
             </p>
           </div>
         </motion.div>
@@ -155,5 +166,3 @@ export function RecurringDonationToggle({
 }
 
 export default RecurringDonationToggle;
-
-

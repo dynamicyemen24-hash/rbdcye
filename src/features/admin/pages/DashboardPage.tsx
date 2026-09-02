@@ -1,21 +1,30 @@
 // Admin Dashboard Page - Real-time Statistics
 // Professional Dashboard with Live Data
 
-import { motion } from 'motion/react';
-import { Heart, MessageSquare, TrendingUp, Users, Video, ExternalLink, Volume2, VolumeX } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { motion } from "motion/react";
+import {
+  Heart,
+  MessageSquare,
+  TrendingUp,
+  Users,
+  Video,
+  ExternalLink,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
-import AdminStats from '@/features/admin/components/AdminStats';
-import { VideoManager } from '@/features/admin/components/VideoManager';
-import { useAuth } from '@/features/auth';
-import { sanityClient } from '@/sanity/client';
+import AdminStats from "@/features/admin/components/AdminStats";
+import { VideoManager } from "@/features/admin/components/VideoManager";
+import { useAuth } from "@/features/auth";
+import { sanityClient } from "@/sanity/client";
 
 interface HeroVideoInfo {
   hasVideo: boolean;
   hasPoster: boolean;
   muted: boolean;
   loop: boolean;
-  source: 'sanity_file' | 'external_url' | 'local_fallback';
+  source: "sanity_file" | "external_url" | "local_fallback";
 }
 
 export default function DashboardPage() {
@@ -25,7 +34,7 @@ export default function DashboardPage() {
     hasPoster: false,
     muted: true,
     loop: true,
-    source: 'local_fallback',
+    source: "local_fallback",
   });
   const [loading, setLoading] = useState(true);
 
@@ -44,9 +53,11 @@ export default function DashboardPage() {
             }
           `);
           if (settings) {
-            const source: HeroVideoInfo['source'] = 
-              settings.heroVideo ? 'sanity_file' :
-              settings.heroVideoUrl ? 'external_url' : 'local_fallback';
+            const source: HeroVideoInfo["source"] = settings.heroVideo
+              ? "sanity_file"
+              : settings.heroVideoUrl
+                ? "external_url"
+                : "local_fallback";
             setHeroInfo({
               hasVideo: !!(settings.heroVideo || settings.heroVideoUrl),
               hasPoster: !!settings.heroPoster,
@@ -59,7 +70,7 @@ export default function DashboardPage() {
           // Sanity unavailable, keep defaults
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error("Error fetching stats:", error);
       } finally {
         setLoading(false);
       }
@@ -79,7 +90,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">مرحباً، {user?.email?.split('@')[0] || 'المشرف'}</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          مرحباً، {user?.email?.split("@")[0] || "المشرف"}
+        </h1>
         <p className="text-gray-600">إليك إحصائيات الموقع اليوم</p>
       </div>
 
@@ -104,7 +117,7 @@ export default function DashboardPage() {
             <div>
               <h3 className="text-sm font-medium text-gray-600">فيديو الهيرو (الخلفية)</h3>
               <p className="text-lg font-bold text-gray-800">
-                {heroInfo.hasVideo ? '🟢 نشط' : '🟡 الفيديو الافتراضي'}
+                {heroInfo.hasVideo ? "🟢 نشط" : "🟡 الفيديو الافتراضي"}
               </p>
             </div>
           </div>
@@ -121,16 +134,23 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-2 gap-3 mt-2">
           <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-            <div className={`w-2 h-2 rounded-full ${heroInfo.hasVideo ? 'bg-green-500' : 'bg-yellow-500'}`} />
+            <div
+              className={`w-2 h-2 rounded-full ${heroInfo.hasVideo ? "bg-green-500" : "bg-yellow-500"}`}
+            />
             <span className="text-xs text-gray-600">
-              {heroInfo.source === 'sanity_file' ? 'ملف مرفوع في Sanity' :
-               heroInfo.source === 'external_url' ? 'رابط خارجي' : 'ملف محلي (افتراضي)'}
+              {heroInfo.source === "sanity_file"
+                ? "ملف مرفوع في Sanity"
+                : heroInfo.source === "external_url"
+                  ? "رابط خارجي"
+                  : "ملف محلي (افتراضي)"}
             </span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-            <div className={`w-2 h-2 rounded-full ${heroInfo.hasPoster ? 'bg-green-500' : 'bg-yellow-500'}`} />
+            <div
+              className={`w-2 h-2 rounded-full ${heroInfo.hasPoster ? "bg-green-500" : "bg-yellow-500"}`}
+            />
             <span className="text-xs text-gray-600">
-              {heroInfo.hasPoster ? 'صورة خلفية (Poster) متوفرة' : 'صورة خلفية افتراضية'}
+              {heroInfo.hasPoster ? "صورة خلفية (Poster) متوفرة" : "صورة خلفية افتراضية"}
             </span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
@@ -140,13 +160,11 @@ export default function DashboardPage() {
               <Volume2 className="w-3 h-3 text-gray-500" />
             )}
             <span className="text-xs text-gray-600">
-              {heroInfo.muted ? 'صوت مكتوم' : 'صوت نشط'}
+              {heroInfo.muted ? "صوت مكتوم" : "صوت نشط"}
             </span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-            <span className="text-xs text-gray-600">
-              تكرار: {heroInfo.loop ? 'نعم' : 'لا'}
-            </span>
+            <span className="text-xs text-gray-600">تكرار: {heroInfo.loop ? "نعم" : "لا"}</span>
           </div>
         </div>
       </motion.div>
@@ -177,4 +195,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

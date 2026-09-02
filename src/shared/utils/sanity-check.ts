@@ -12,27 +12,27 @@ export function checkSanityConfig(): {
   errors: string[];
 } {
   const errors: string[] = [];
-  
+
   const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
   const dataset = import.meta.env.VITE_SANITY_DATASET;
   const readToken = import.meta.env.VITE_SANITY_READ_TOKEN;
   const writeToken = import.meta.env.VITE_SANITY_WRITE_TOKEN;
-  
+
   if (!projectId) {
-    errors.push('VITE_SANITY_PROJECT_ID is not set');
+    errors.push("VITE_SANITY_PROJECT_ID is not set");
   }
-  
+
   if (!dataset) {
-    errors.push('VITE_SANITY_DATASET is not set');
+    errors.push("VITE_SANITY_DATASET is not set");
   }
-  
+
   const hasReadToken = !!readToken;
   const hasWriteToken = !!writeToken;
-  
+
   if (!hasReadToken && !import.meta.env.DEV) {
-    errors.push('VITE_SANITY_READ_TOKEN is required in production');
+    errors.push("VITE_SANITY_READ_TOKEN is required in production");
   }
-  
+
   return {
     configured: errors.length === 0,
     projectId: projectId || null,
@@ -49,7 +49,7 @@ if (import.meta.env.DEV) {
   if (!status.configured) {
     // Sanity configuration incomplete
   } else {
-    if (import.meta.env.DEV) console.log('[Sanity] Configuration ready - Project:', status.projectId);
+    if (import.meta.env.DEV)
+      console.log("[Sanity] Configuration ready - Project:", status.projectId);
   }
 }
-

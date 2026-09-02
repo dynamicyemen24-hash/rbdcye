@@ -1,4 +1,5 @@
-type CacheStrategy = 'cache-first' | 'network-first' | 'stale-while-revalidate' | 'cache-only' | 'network-only';
+type CacheStrategy =
+  "cache-first" | "network-first" | "stale-while-revalidate" | "cache-only" | "network-only";
 
 interface CacheOptions {
   maxAge?: number;
@@ -29,11 +30,7 @@ class SmartCacheService {
     fetcher: () => Promise<T>,
     options: Partial<CacheOptions> = {}
   ): Promise<T> {
-    const {
-      maxAge = 5 * 60 * 1000,
-      maxEntries = 50,
-      cacheName = 'default',
-    } = options;
+    const { maxAge = 5 * 60 * 1000, maxEntries = 50, cacheName = "default" } = options;
 
     const memoryEntry = this.memoryCache.get(key);
 
@@ -95,7 +92,7 @@ class SmartCacheService {
           key,
           value: data,
           expiry: Date.now() + (options?.maxAge || 5 * 60 * 1000),
-          tags: [options?.cacheName || 'default'],
+          tags: [options?.cacheName || "default"],
         });
       })
       .catch(() => {});
@@ -152,4 +149,3 @@ export function useSmartCache<T>(
     },
   };
 }
-

@@ -1,19 +1,19 @@
 // Update Notification - PWA update notification
-import { RefreshCw, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { RefreshCw, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function UpdateNotification() {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then((reg) => {
-        reg.addEventListener('updatefound', () => {
+        reg.addEventListener("updatefound", () => {
           const newWorker = reg.installing;
           if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
                 setWaitingWorker(newWorker);
                 setShow(true);
               }
@@ -31,7 +31,7 @@ export function UpdateNotification() {
 
   const handleUpdate = () => {
     if (waitingWorker) {
-      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+      waitingWorker.postMessage({ type: "SKIP_WAITING" });
       window.location.reload();
     }
   };
@@ -39,7 +39,10 @@ export function UpdateNotification() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-[9999] max-w-sm bg-white rounded-xl shadow-2xl border border-gray-200 p-4" dir="rtl">
+    <div
+      className="fixed bottom-4 right-4 z-[9999] max-w-sm bg-white rounded-xl shadow-2xl border border-gray-200 p-4"
+      dir="rtl"
+    >
       <div className="flex items-start gap-3">
         <div className="flex-1">
           <p className="text-sm font-semibold text-gray-800 mb-1">تحديث متاح</p>
@@ -62,5 +65,3 @@ export function UpdateNotification() {
     </div>
   );
 }
-
-

@@ -2,7 +2,7 @@
  * Sanity Client Configuration
  * مع دعم Fetch API المتقدم و Image URL Builder
  */
-import { sanityClient } from '../client';
+import { sanityClient } from "../client";
 
 import type { QueryParams } from "@sanity/client";
 
@@ -35,5 +35,3 @@ export function getServerClient(token?: string) {
     token: token || import.meta.env.VITE_SANITY_API_READ_TOKEN,
   });
 }
-
-

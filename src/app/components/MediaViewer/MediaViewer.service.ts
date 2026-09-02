@@ -3,9 +3,9 @@
  * Professional Media Viewer Business Logic
  */
 
-import { sanityClient } from '@/sanity/client';
+import { sanityClient } from "@/sanity/client";
 
-import { MediaItem, MediaItemType } from './MediaViewer.types';
+import { MediaItem, MediaItemType } from "./MediaViewer.types";
 
 // استعلام GROQ للوسائط
 const MEDIA_QUERY = `*[_type == "media" && status == "published"] | order(order asc, _createdAt desc) {
@@ -67,9 +67,9 @@ export class MediaViewerService {
    * جلب جميع الوسائط من Sanity
    */
   async fetchAllMedia(): Promise<MediaItem[]> {
-    const cacheKey = 'all-media';
+    const cacheKey = "all-media";
     const cached = this.cache.get(cacheKey);
-    
+
     if (cached && this.isCacheValid(cacheKey)) {
       return cached;
     }
@@ -82,7 +82,7 @@ export class MediaViewerService {
 
       // تحويل البيانات إلى التنسيق الموحد
       const normalizedMedia = this.normalizeMediaData(mediaItems, videoItems);
-      
+
       this.cache.set(cacheKey, normalizedMedia);
       this.cacheTimestamps.set(cacheKey, Date.now());
       return normalizedMedia;
@@ -98,11 +98,11 @@ export class MediaViewerService {
     const media: MediaItem[] = [];
 
     // معالجة الصور والمستندات
-    mediaItems.forEach(item => {
-      if (item.type === 'image' || item.type === 'document') {
+    mediaItems.forEach((item) => {
+      if (item.type === "image" || item.type === "document") {
         media.push({
           _id: item._id,
-          _type: 'media',
+          _type: "media",
           title: item.title,
           description: item.description,
           type: item.type as MediaItemType,
@@ -125,17 +125,19 @@ export class MediaViewerService {
     });
 
     // معالجة الفيديوهات
-    videoItems.forEach(item => {
+    videoItems.forEach((item) => {
       media.push({
         _id: item._id,
-        _type: 'video',
+        _type: "video",
         title: item.title,
         description: item.description,
-        type: 'video',
+        type: "video",
         videoUrl: item.videoUrl,
-        thumbnail: item.thumbnailUrl ? {
-          asset: { _id: '', _ref: '', url: item.thumbnailUrl }
-        } : undefined,
+        thumbnail: item.thumbnailUrl
+          ? {
+              asset: { _id: "", _ref: "", url: item.thumbnailUrl },
+            }
+          : undefined,
         duration: item.duration,
         category: item.category,
         tags: item.tags,
@@ -170,7 +172,7 @@ export class MediaViewerService {
       featuredOnly?: boolean;
     }
   ): MediaItem[] {
-    return media.filter(item => {
+    return media.filter((item) => {
       if (options.type && item.type !== options.type) return false;
       if (options.category && item.category !== options.category) return false;
       if (options.album && (!item.albums || !item.albums.includes(options.album))) return false;
@@ -179,7 +181,7 @@ export class MediaViewerService {
         const searchLower = options.searchTerm.toLowerCase();
         const matchesTitle = item.title?.toLowerCase().includes(searchLower);
         const matchesDescription = item.description?.toLowerCase().includes(searchLower);
-        const matchesTags = item.tags?.some(tag => tag.toLowerCase().includes(searchLower));
+        const matchesTags = item.tags?.some((tag) => tag.toLowerCase().includes(searchLower));
         if (!matchesTitle && !matchesDescription && !matchesTags) return false;
       }
       return true;
@@ -198,15 +200,17 @@ export class MediaViewerService {
    * الحصول على الصورة الغلاف
    */
   getCoverImage(media: MediaItem[]): MediaItem | undefined {
-    return media.find(item => item.type === 'image' && item.isCover) ||
-           media.find(item => item.type === 'image');
+    return (
+      media.find((item) => item.type === "image" && item.isCover) ||
+      media.find((item) => item.type === "image")
+    );
   }
 
   /**
    * بناء رابط الصورة من Sanity
    */
   buildImageUrl(ref: string, width = 600, height = 400): string {
-    return `https://cdn.sanity.io/images/${process.env.VITE_SANITY_PROJECT_ID || 'xd0ohyiz'}/${process.env.VITE_SANITY_DATASET || 'production'}/${ref}?w=${width}&h=${height}&auto=format`;
+    return `https://cdn.sanity.io/images/${process.env.VITE_SANITY_PROJECT_ID || "xd0ohyiz"}/${process.env.VITE_SANITY_DATASET || "production"}/${ref}?w=${width}&h=${height}&auto=format`;
   }
 
   /**
@@ -215,28 +219,28 @@ export class MediaViewerService {
   private getFallbackMedia(): MediaItem[] {
     return [
       {
-        _id: 'fallback-1',
-        _type: 'media',
-        title: 'مؤسسة رحماء بينهم - صورة تعريفية',
-        type: 'image',
-        url: '/favicon.svg',
-        altText: 'مؤسسة رحماء بينهم',
-        category: 'organization',
+        _id: "fallback-1",
+        _type: "media",
+        title: "مؤسسة رحماء بينهم - صورة تعريفية",
+        type: "image",
+        url: "/favicon.svg",
+        altText: "مؤسسة رحماء بينهم",
+        category: "organization",
         isFeatured: true,
         order: 0,
-        status: 'published',
+        status: "published",
       },
       {
-        _id: 'fallback-2',
-        _type: 'video',
-        title: 'فيديو تعريفي للمؤسسة',
-        type: 'video',
-        videoUrl: '/videos/hero-background.mp4',
-        duration: '4:30',
-        category: 'تعريفي',
+        _id: "fallback-2",
+        _type: "video",
+        title: "فيديو تعريفي للمؤسسة",
+        type: "video",
+        videoUrl: "/videos/hero-background.mp4",
+        duration: "4:30",
+        category: "تعريفي",
         isFeatured: true,
         order: 1,
-        status: 'published',
+        status: "published",
         views: 15200,
         likes: 1243,
       },
@@ -263,4 +267,3 @@ export class MediaViewerService {
 
 // المثال الواحد
 export const mediaViewerService = new MediaViewerService();
-

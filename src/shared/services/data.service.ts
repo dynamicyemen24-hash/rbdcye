@@ -8,12 +8,12 @@ import {
   SEED_SUCCESS_STORIES,
   SEED_USER_REQUESTS,
   SEED_VOLUNTEERS,
-} from '@/content/website';
-import { API_BASE_URL } from '@/shared/constants/api';
-import { withRetry } from '@/shared/utils/errors';
+} from "@/content/website";
+import { API_BASE_URL } from "@/shared/constants/api";
+import { withRetry } from "@/shared/utils/errors";
 
-import { postgresService } from './postgres.service';
-import { DB_SCHEMA, hasSupabaseConfig, supabase } from './supabase.client';
+import { postgresService } from "./postgres.service";
+import { DB_SCHEMA, hasSupabaseConfig, supabase } from "./supabase.client";
 
 // ========== CACHE SYSTEM ==========
 const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
@@ -74,24 +74,77 @@ function dedupeRequest<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
 }
 
 // ========== ENTITY CONFIG ==========
-const ENTITY_CONFIG: Record<string, { endpoint: string; seed: any[]; table?: string; orderBy?: string }> = {
-  rh_news_data: { endpoint: '/news', seed: SEED_NEWS_ITEMS, table: 'posts', orderBy: 'created_at' },
-  rh_stories_data: { endpoint: '/stories', seed: SEED_SUCCESS_STORIES, table: 'success_stories', orderBy: 'created_at' },
-  rh_partners_data: { endpoint: '/partners', seed: SEED_PARTNERS, table: 'partners', orderBy: 'created_at' },
-  rh_projects_data: { endpoint: '/projects', seed: SEED_PROJECTS, table: 'projects', orderBy: 'created_at' },
-  rh_reports_data: { endpoint: '/reports', seed: SEED_REPORTS, table: 'reports', orderBy: 'created_at' },
-  rh_media_data: { endpoint: '/media', seed: SEED_MEDIA, table: 'media_library', orderBy: 'created_at' },
-  rh_donations_data: { endpoint: '/donations', seed: SEED_DONATIONS, table: 'donations', orderBy: 'created_at' },
-  rh_requests_data: { endpoint: '/messages', seed: SEED_USER_REQUESTS, table: 'service_requests', orderBy: 'created_at' },
-  rh_volunteers_data: { endpoint: '/volunteers', seed: SEED_VOLUNTEERS, table: 'volunteers', orderBy: 'created_at' },
-  rh_subscriber_accounts: { endpoint: '/subscribers', seed: [], table: 'subscribers', orderBy: 'created_at' },
-  rh_dashboard_users: { endpoint: '/users', seed: [], table: 'dashboard_users', orderBy: 'created_at' },
+const ENTITY_CONFIG: Record<
+  string,
+  { endpoint: string; seed: any[]; table?: string; orderBy?: string }
+> = {
+  rh_news_data: { endpoint: "/news", seed: SEED_NEWS_ITEMS, table: "posts", orderBy: "created_at" },
+  rh_stories_data: {
+    endpoint: "/stories",
+    seed: SEED_SUCCESS_STORIES,
+    table: "success_stories",
+    orderBy: "created_at",
+  },
+  rh_partners_data: {
+    endpoint: "/partners",
+    seed: SEED_PARTNERS,
+    table: "partners",
+    orderBy: "created_at",
+  },
+  rh_projects_data: {
+    endpoint: "/projects",
+    seed: SEED_PROJECTS,
+    table: "projects",
+    orderBy: "created_at",
+  },
+  rh_reports_data: {
+    endpoint: "/reports",
+    seed: SEED_REPORTS,
+    table: "reports",
+    orderBy: "created_at",
+  },
+  rh_media_data: {
+    endpoint: "/media",
+    seed: SEED_MEDIA,
+    table: "media_library",
+    orderBy: "created_at",
+  },
+  rh_donations_data: {
+    endpoint: "/donations",
+    seed: SEED_DONATIONS,
+    table: "donations",
+    orderBy: "created_at",
+  },
+  rh_requests_data: {
+    endpoint: "/messages",
+    seed: SEED_USER_REQUESTS,
+    table: "service_requests",
+    orderBy: "created_at",
+  },
+  rh_volunteers_data: {
+    endpoint: "/volunteers",
+    seed: SEED_VOLUNTEERS,
+    table: "volunteers",
+    orderBy: "created_at",
+  },
+  rh_subscriber_accounts: {
+    endpoint: "/subscribers",
+    seed: [],
+    table: "subscribers",
+    orderBy: "created_at",
+  },
+  rh_dashboard_users: {
+    endpoint: "/users",
+    seed: [],
+    table: "dashboard_users",
+    orderBy: "created_at",
+  },
 };
 
 // ========== HELPERS ==========
 const normalizeEndpoint = (endpoint: string) => {
-  const base = API_BASE_URL.replace(/\/$/, '');
-  const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const base = API_BASE_URL.replace(/\/$/, "");
+  const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
   return `${base}${path}`;
 };
 
@@ -106,7 +159,7 @@ const readPayload = (payload: any) => {
 
 const getItemTime = (item: any) => {
   const candidate = item?.updatedAt || item?.createdAt || item?.dateEn || item?.date;
-  const timestamp = Date.parse(String(candidate || ''));
+  const timestamp = Date.parse(String(candidate || ""));
   return Number.isFinite(timestamp) ? timestamp : 0;
 };
 
@@ -124,7 +177,7 @@ const mergeLatestById = <T extends { id: string | number }>(primary: T[], second
 
 const getAuthHeaders = (): Record<string, string> => {
   try {
-    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof localStorage !== "undefined" ? localStorage.getItem("auth_token") : null;
     return token ? { Authorization: `Bearer ${token}` } : {};
   } catch {
     return {};
@@ -138,14 +191,13 @@ const toHeaderRecord = (headers: HeadersInit | undefined): Record<string, string
   return headers as Record<string, string>;
 };
 
-const toCamelKey = (key: string) => key.replace(/_([a-z])/g, (_, char: string) => char.toUpperCase());
+const toCamelKey = (key: string) =>
+  key.replace(/_([a-z])/g, (_, char: string) => char.toUpperCase());
 const toSnakeKey = (key: string) => key.replace(/[A-Z]/g, (char) => `_${char.toLowerCase()}`);
 
 const normalizeRecord = (record: any) => {
-  if (!record || typeof record !== 'object' || Array.isArray(record)) return record;
-  return Object.fromEntries(
-    Object.entries(record).map(([key, value]) => [toCamelKey(key), value])
-  );
+  if (!record || typeof record !== "object" || Array.isArray(record)) return record;
+  return Object.fromEntries(Object.entries(record).map(([key, value]) => [toCamelKey(key), value]));
 };
 
 const normalizeRecords = <T>(records: any[]): T[] => records.map(normalizeRecord) as T[];
@@ -168,20 +220,18 @@ const SANITIZE_PATTERNS = [
 ];
 
 function sanitizeValue(value: unknown): unknown {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     let sanitized = value;
-    SANITIZE_PATTERNS.forEach(pattern => {
-      sanitized = sanitized.replace(pattern, '');
+    SANITIZE_PATTERNS.forEach((pattern) => {
+      sanitized = sanitized.replace(pattern, "");
     });
     return sanitized.trim();
   }
   if (Array.isArray(value)) {
     return value.map(sanitizeValue);
   }
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([k, v]) => [k, sanitizeValue(v)])
-    );
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, sanitizeValue(v)]));
   }
   return value;
 }
@@ -236,10 +286,10 @@ class DataService {
       const limited = Array.isArray(items) ? items.slice(0, 500) : items;
       localStorage.setItem(entity, JSON.stringify(limited));
     } catch (e) {
-      if (e instanceof DOMException && e.name === 'QuotaExceededError') {
+      if (e instanceof DOMException && e.name === "QuotaExceededError") {
         try {
           for (const key of Object.keys(localStorage)) {
-            if (key.startsWith('rh_')) {
+            if (key.startsWith("rh_")) {
               localStorage.removeItem(key);
             }
           }
@@ -257,9 +307,9 @@ class DataService {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     const headers: Record<string, string> = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
       ...getAuthHeaders(),
       ...toHeaderRecord(init.headers),
     };
@@ -268,12 +318,12 @@ class DataService {
       const response = await fetch(normalizeEndpoint(endpoint), {
         ...init,
         headers,
-        credentials: 'include',
+        credentials: "include",
         signal: controller.signal,
       });
 
       if (!response.ok) {
-        const message = await response.text().catch(() => '');
+        const message = await response.text().catch(() => "");
         throw new Error(message || `API request failed with ${response.status}`);
       }
 
@@ -305,39 +355,78 @@ class DataService {
   }
 
   private async createInPostgres<T>(entity: string, item: any): Promise<T | null> {
-    if (entity === 'rh_projects_data') return postgresService.createProject(item) as any;
-    if (entity === 'rh_news_data') return postgresService.createNews(item) as any;
-    if (entity === 'rh_donations_data') return postgresService.createDonation(item) as any;
-    if (entity === 'rh_requests_data') return postgresService.createRequest(item) as any;
-    if (entity === 'rh_volunteers_data') return postgresService.createVolunteer(item) as any;
-    if (entity === 'rh_partners_data') return postgresService.createPartner(item) as any;
-    if (entity === 'rh_media_data') return postgresService.createMedia(item) as any;
-    if (entity === 'rh_reports_data') return postgresService.createReport(item) as any;
-    if (entity === 'rh_stories_data') return postgresService.createSuccessStory(item) as any;
-    if (entity === 'rh_dashboard_users') return postgresService.createUser(item) as any;
+    if (entity === "rh_projects_data") return postgresService.createProject(item) as any;
+    if (entity === "rh_news_data") return postgresService.createNews(item) as any;
+    if (entity === "rh_donations_data") return postgresService.createDonation(item) as any;
+    if (entity === "rh_requests_data") return postgresService.createRequest(item) as any;
+    if (entity === "rh_volunteers_data") return postgresService.createVolunteer(item) as any;
+    if (entity === "rh_partners_data") return postgresService.createPartner(item) as any;
+    if (entity === "rh_media_data") return postgresService.createMedia(item) as any;
+    if (entity === "rh_reports_data") return postgresService.createReport(item) as any;
+    if (entity === "rh_stories_data") return postgresService.createSuccessStory(item) as any;
+    if (entity === "rh_dashboard_users") return postgresService.createUser(item) as any;
     return null;
   }
 
-  private async updateInPostgres<T>(entity: string, id: string | number, updates: Partial<T>): Promise<T | null> {
-    if (entity === 'rh_projects_data') return postgresService.updateProject(id as string, updates as any) as any;
-    if (entity === 'rh_news_data') return postgresService.updateNews(id as string, updates as any) as any;
-    if (entity === 'rh_donations_data') { await postgresService.updateDonationStatus(id as string, (updates as any).status); return null; }
-    if (entity === 'rh_requests_data') { await postgresService.updateRequestStatus(id as string, (updates as any).status); return null; }
-    if (entity === 'rh_volunteers_data') { await postgresService.updateVolunteerStatus(id as string, (updates as any).status); return null; }
-    if (entity === 'rh_partners_data') return postgresService.updatePartner(id as string, updates as any) as any;
-    if (entity === 'rh_reports_data') return postgresService.updateReport(id as string, updates as any) as any;
-    if (entity === 'rh_stories_data') return postgresService.updateSuccessStory(id as string, updates as any) as any;
-    if (entity === 'rh_dashboard_users') { await postgresService.updateUserRole(id as string, (updates as any).role); return null; }
+  private async updateInPostgres<T>(
+    entity: string,
+    id: string | number,
+    updates: Partial<T>
+  ): Promise<T | null> {
+    if (entity === "rh_projects_data")
+      return postgresService.updateProject(id as string, updates as any) as any;
+    if (entity === "rh_news_data")
+      return postgresService.updateNews(id as string, updates as any) as any;
+    if (entity === "rh_donations_data") {
+      await postgresService.updateDonationStatus(id as string, (updates as any).status);
+      return null;
+    }
+    if (entity === "rh_requests_data") {
+      await postgresService.updateRequestStatus(id as string, (updates as any).status);
+      return null;
+    }
+    if (entity === "rh_volunteers_data") {
+      await postgresService.updateVolunteerStatus(id as string, (updates as any).status);
+      return null;
+    }
+    if (entity === "rh_partners_data")
+      return postgresService.updatePartner(id as string, updates as any) as any;
+    if (entity === "rh_reports_data")
+      return postgresService.updateReport(id as string, updates as any) as any;
+    if (entity === "rh_stories_data")
+      return postgresService.updateSuccessStory(id as string, updates as any) as any;
+    if (entity === "rh_dashboard_users") {
+      await postgresService.updateUserRole(id as string, (updates as any).role);
+      return null;
+    }
     return null;
   }
 
   private async deleteInPostgres(entity: string, id: string | number): Promise<boolean> {
-    if (entity === 'rh_projects_data') { await postgresService.deleteProject(id as string); return true; }
-    if (entity === 'rh_news_data') { await postgresService.deleteNews(id as string); return true; }
-    if (entity === 'rh_partners_data') { await postgresService.deletePartner(id as string); return true; }
-    if (entity === 'rh_media_data') { await postgresService.deleteMedia(id as string); return true; }
-    if (entity === 'rh_reports_data') { await postgresService.deleteReport(id as string); return true; }
-    if (entity === 'rh_stories_data') { await postgresService.deleteSuccessStory(id as string); return true; }
+    if (entity === "rh_projects_data") {
+      await postgresService.deleteProject(id as string);
+      return true;
+    }
+    if (entity === "rh_news_data") {
+      await postgresService.deleteNews(id as string);
+      return true;
+    }
+    if (entity === "rh_partners_data") {
+      await postgresService.deletePartner(id as string);
+      return true;
+    }
+    if (entity === "rh_media_data") {
+      await postgresService.deleteMedia(id as string);
+      return true;
+    }
+    if (entity === "rh_reports_data") {
+      await postgresService.deleteReport(id as string);
+      return true;
+    }
+    if (entity === "rh_stories_data") {
+      await postgresService.deleteSuccessStory(id as string);
+      return true;
+    }
     return false;
   }
 
@@ -350,14 +439,11 @@ class DataService {
       let response = await supabase
         .schema(DB_SCHEMA)
         .from(config.table)
-        .select('*')
-        .order(config.orderBy || 'created_at', { ascending: false });
+        .select("*")
+        .order(config.orderBy || "created_at", { ascending: false });
 
       if (response.error && config.orderBy) {
-        response = await supabase
-          .schema(DB_SCHEMA)
-          .from(config.table)
-          .select('*');
+        response = await supabase.schema(DB_SCHEMA).from(config.table).select("*");
       }
 
       if (response.error) throw response.error;
@@ -375,12 +461,12 @@ class DataService {
       const response = await supabase
         .schema(DB_SCHEMA)
         .from(config.table)
-        .select('*')
-        .eq('id', id)
+        .select("*")
+        .eq("id", id)
         .maybeSingle();
 
       if (response.error) throw response.error;
-      return response.data ? normalizeRecord(response.data) as T : null;
+      return response.data ? (normalizeRecord(response.data) as T) : null;
     } catch {
       return null;
     }
@@ -406,17 +492,23 @@ class DataService {
     }
   }
 
-  private async updateSupabase<T>(entity: string, id: string | number, updates: Partial<T>): Promise<T | null> {
+  private async updateSupabase<T>(
+    entity: string,
+    id: string | number,
+    updates: Partial<T>
+  ): Promise<T | null> {
     const config = this.getConfig(entity);
     if (!hasSupabaseConfig || !supabase || !config.table) return null;
 
     try {
-      const sanitized = sanitizeRecord(prepareRecordForDatabase({ ...updates, updatedAt: new Date().toISOString() }));
+      const sanitized = sanitizeRecord(
+        prepareRecordForDatabase({ ...updates, updatedAt: new Date().toISOString() })
+      );
       const response = await supabase
         .schema(DB_SCHEMA)
         .from(config.table)
         .update(sanitized)
-        .eq('id', id)
+        .eq("id", id)
         .select()
         .single();
 
@@ -432,11 +524,7 @@ class DataService {
     if (!hasSupabaseConfig || !supabase || !config.table) return null;
 
     try {
-      const response = await supabase
-        .schema(DB_SCHEMA)
-        .from(config.table)
-        .delete()
-        .eq('id', id);
+      const response = await supabase.schema(DB_SCHEMA).from(config.table).delete().eq("id", id);
 
       if (response.error) throw response.error;
       return true;
@@ -451,7 +539,10 @@ class DataService {
    * Get all items for an entity.
    * Strategy: Cache → Postgres (Neon) → Supabase → HTTP API → LocalStorage → Seed data
    */
-  async getAll<T extends { id: string | number }>(entity: string, forceRefresh: boolean = false): Promise<T[]> {
+  async getAll<T extends { id: string | number }>(
+    entity: string,
+    forceRefresh: boolean = false
+  ): Promise<T[]> {
     const cacheKey = `getAll:${entity}`;
 
     // 1. Check cache (with stale-while-revalidate)
@@ -496,10 +587,14 @@ class DataService {
 
     // 5. Try HTTP API
     try {
-      const payload = await withRetry(() => this.request<any>(this.getConfig(entity).endpoint), 2, 1000);
+      const payload = await withRetry(
+        () => this.request<any>(this.getConfig(entity).endpoint),
+        2,
+        1000
+      );
       const items = readPayload(payload);
       if (Array.isArray(items) && items.length > 0) {
-        const merged = stored ? mergeLatestById(items as T[], stored) : items as T[];
+        const merged = stored ? mergeLatestById(items as T[], stored) : (items as T[]);
         this.setLocal(entity, merged);
         setCache(cacheKey, merged);
         return merged;
@@ -534,7 +629,10 @@ class DataService {
   /**
    * Get a single item by ID.
    */
-  async getById<T extends { id: string | number }>(entity: string, id: string | number): Promise<T | null> {
+  async getById<T extends { id: string | number }>(
+    entity: string,
+    id: string | number
+  ): Promise<T | null> {
     const cacheKey = `getById:${entity}:${id}`;
     const cached = getCached<T>(cacheKey);
     if (cached) return cached.data;
@@ -542,7 +640,7 @@ class DataService {
     // Try PostgresService
     try {
       const items = await this.fetchFromPostgres<T>(entity);
-      const result = items.find(item => String(item.id) === String(id)) || null;
+      const result = items.find((item) => String(item.id) === String(id)) || null;
       if (result) {
         setCache(cacheKey, result);
         return result;
@@ -564,7 +662,11 @@ class DataService {
 
     // Try HTTP API
     try {
-      const payload = await withRetry(() => this.request<any>(`${this.getConfig(entity).endpoint}/${id}`), 2, 1000);
+      const payload = await withRetry(
+        () => this.request<any>(`${this.getConfig(entity).endpoint}/${id}`),
+        2,
+        1000
+      );
       const result = readPayload(payload) as T;
       if (result) {
         setCache(cacheKey, result);
@@ -576,7 +678,7 @@ class DataService {
 
     // Fallback to local storage
     const all = this.getStored<T>(entity) || this.getLocal<T>(entity);
-    return all.find(item => String(item.id) === String(id)) || null;
+    return all.find((item) => String(item.id) === String(id)) || null;
   }
 
   /**
@@ -589,18 +691,25 @@ class DataService {
     const sanitizedItem = sanitizeRecord({ ...item });
 
     if (sanitizedItem.email && !validateEmail(String(sanitizedItem.email))) {
-      throw new Error('Invalid email format');
+      throw new Error("Invalid email format");
     }
     if (sanitizedItem.phone && !validatePhone(String(sanitizedItem.phone))) {
-      throw new Error('Invalid phone format');
+      throw new Error("Invalid phone format");
     }
 
     // Try PostgresService first (Neon)
     try {
-      const created = await withRetry(() => this.createInPostgres<T>(entity, sanitizedItem), 2, 1000);
+      const created = await withRetry(
+        () => this.createInPostgres<T>(entity, sanitizedItem),
+        2,
+        1000
+      );
       if (created) {
         const all = await this.getAll<T>(entity, true);
-        this.setLocal(entity, [created, ...all.filter((entry) => String(entry.id) !== String(created.id))]);
+        this.setLocal(entity, [
+          created,
+          ...all.filter((entry) => String(entry.id) !== String(created.id)),
+        ]);
         return created;
       }
     } catch {
@@ -612,7 +721,10 @@ class DataService {
       const created = await withRetry(() => this.createSupabase<T>(entity, sanitizedItem), 2, 1000);
       if (created) {
         const all = await this.getAll<T>(entity, true);
-        this.setLocal(entity, [created, ...all.filter((entry) => String(entry.id) !== String(created.id))]);
+        this.setLocal(entity, [
+          created,
+          ...all.filter((entry) => String(entry.id) !== String(created.id)),
+        ]);
         return created;
       }
     } catch {
@@ -621,13 +733,21 @@ class DataService {
 
     // Try HTTP API
     try {
-      const payload = await withRetry(() => this.request<any>(this.getConfig(entity).endpoint, {
-        method: 'POST',
-        body: JSON.stringify(sanitizedItem),
-      }), 2, 1000);
+      const payload = await withRetry(
+        () =>
+          this.request<any>(this.getConfig(entity).endpoint, {
+            method: "POST",
+            body: JSON.stringify(sanitizedItem),
+          }),
+        2,
+        1000
+      );
       const created = readPayload(payload) as T;
       const all = await this.getAll<T>(entity, true);
-      this.setLocal(entity, [created, ...all.filter((entry) => String(entry.id) !== String(created.id))]);
+      this.setLocal(entity, [
+        created,
+        ...all.filter((entry) => String(entry.id) !== String(created.id)),
+      ]);
       return created;
     } catch {
       // Fall through to local
@@ -649,17 +769,28 @@ class DataService {
   /**
    * Update an existing item.
    */
-  async update<T extends { id: string | number }>(entity: string, id: string | number, updates: Partial<T>): Promise<T | null> {
+  async update<T extends { id: string | number }>(
+    entity: string,
+    id: string | number,
+    updates: Partial<T>
+  ): Promise<T | null> {
     invalidateCache(entity);
 
     const sanitizedUpdates = sanitizeRecord({ ...updates } as unknown as Record<string, unknown>);
 
     // Try PostgresService
     try {
-      const updated = await withRetry(() => this.updateInPostgres<T>(entity, id, sanitizedUpdates as unknown as Partial<T>), 2, 1000);
+      const updated = await withRetry(
+        () => this.updateInPostgres<T>(entity, id, sanitizedUpdates as unknown as Partial<T>),
+        2,
+        1000
+      );
       if (updated) {
         const all = await this.getAll<T>(entity, true);
-        this.setLocal(entity, all.map((item) => String(item.id) === String(id) ? updated : item));
+        this.setLocal(
+          entity,
+          all.map((item) => (String(item.id) === String(id) ? updated : item))
+        );
         return updated;
       }
     } catch {
@@ -668,10 +799,17 @@ class DataService {
 
     // Try Supabase
     try {
-      const updated = await withRetry(() => this.updateSupabase<T>(entity, id, sanitizedUpdates as unknown as Partial<T>), 2, 1000);
+      const updated = await withRetry(
+        () => this.updateSupabase<T>(entity, id, sanitizedUpdates as unknown as Partial<T>),
+        2,
+        1000
+      );
       if (updated) {
         const all = await this.getAll<T>(entity, true);
-        this.setLocal(entity, all.map((item) => String(item.id) === String(id) ? updated : item));
+        this.setLocal(
+          entity,
+          all.map((item) => (String(item.id) === String(id) ? updated : item))
+        );
         return updated;
       }
     } catch {
@@ -680,13 +818,21 @@ class DataService {
 
     // Try HTTP API
     try {
-      const payload = await withRetry(() => this.request<any>(`${this.getConfig(entity).endpoint}/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(sanitizedUpdates),
-      }), 2, 1000);
+      const payload = await withRetry(
+        () =>
+          this.request<any>(`${this.getConfig(entity).endpoint}/${id}`, {
+            method: "PATCH",
+            body: JSON.stringify(sanitizedUpdates),
+          }),
+        2,
+        1000
+      );
       const updated = readPayload(payload) as T;
       const all = await this.getAll<T>(entity, true);
-      this.setLocal(entity, all.map((item) => String(item.id) === String(id) ? updated : item));
+      this.setLocal(
+        entity,
+        all.map((item) => (String(item.id) === String(id) ? updated : item))
+      );
       return updated;
     } catch {
       // Fall through to local
@@ -694,7 +840,7 @@ class DataService {
 
     // Local fallback
     const all = this.getLocal<T>(entity);
-    const idx = all.findIndex(item => String(item.id) === String(id));
+    const idx = all.findIndex((item) => String(item.id) === String(id));
     if (idx === -1) return null;
     all[idx] = { ...all[idx], ...sanitizedUpdates, updatedAt: new Date().toISOString() } as T;
     this.setLocal(entity, all);
@@ -712,7 +858,10 @@ class DataService {
       const deleted = await withRetry(() => this.deleteInPostgres(entity, id), 2, 1000);
       if (deleted) {
         const all = this.getLocal<any>(entity);
-        this.setLocal(entity, all.filter(item => String(item.id) !== String(id)));
+        this.setLocal(
+          entity,
+          all.filter((item) => String(item.id) !== String(id))
+        );
         return true;
       }
     } catch {
@@ -724,7 +873,10 @@ class DataService {
       const deleted = await withRetry(() => this.deleteSupabase(entity, id), 2, 1000);
       if (deleted) {
         const all = this.getLocal<any>(entity);
-        this.setLocal(entity, all.filter(item => String(item.id) !== String(id)));
+        this.setLocal(
+          entity,
+          all.filter((item) => String(item.id) !== String(id))
+        );
         return true;
       }
     } catch {
@@ -733,14 +885,18 @@ class DataService {
 
     // Try HTTP API
     try {
-      await withRetry(() => this.request(`${this.getConfig(entity).endpoint}/${id}`, { method: 'DELETE' }), 2, 1000);
+      await withRetry(
+        () => this.request(`${this.getConfig(entity).endpoint}/${id}`, { method: "DELETE" }),
+        2,
+        1000
+      );
     } catch {
       // Fall through
     }
 
     // Local fallback
     const all = this.getLocal<any>(entity);
-    const filtered = all.filter(item => String(item.id) !== String(id));
+    const filtered = all.filter((item) => String(item.id) !== String(id));
     if (filtered.length === all.length) return false;
     this.setLocal(entity, filtered);
     return true;
@@ -752,7 +908,9 @@ class DataService {
   prefetch(entity: string): void {
     const cacheKey = `getAll:${entity}`;
     if (getCached(cacheKey)) return; // Already cached
-    this.getAll(entity).catch(() => { /* silent */ });
+    this.getAll(entity).catch(() => {
+      /* silent */
+    });
   }
 
   /**
@@ -766,4 +924,3 @@ class DataService {
 }
 
 export const dataService = new DataService();
-

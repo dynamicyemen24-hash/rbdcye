@@ -44,7 +44,11 @@ export function TextField({
 
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem", fontWeight: 600 }}>
+      <label
+        htmlFor={id}
+        className="block mb-1.5 text-[var(--foreground)]"
+        style={{ fontSize: "0.82rem", fontWeight: 600 }}
+      >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       {multiline ? (
@@ -101,7 +105,11 @@ export function SelectField({
   const id = useId();
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem", fontWeight: 600 }}>
+      <label
+        htmlFor={id}
+        className="block mb-1.5 text-[var(--foreground)]"
+        style={{ fontSize: "0.82rem", fontWeight: 600 }}
+      >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <select
@@ -133,7 +141,10 @@ interface CheckboxFieldProps {
 
 export function CheckboxField({ label, checked, onChange, className = "" }: CheckboxFieldProps) {
   return (
-    <label className={`flex items-center gap-2 text-[var(--foreground)] ${className}`} style={{ fontSize: "0.82rem", fontWeight: 500 }}>
+    <label
+      className={`flex items-center gap-2 text-[var(--foreground)] ${className}`}
+      style={{ fontSize: "0.82rem", fontWeight: 500 }}
+    >
       <input
         type="checkbox"
         checked={checked}
@@ -212,7 +223,9 @@ export function FormModal({ isOpen, onClose, title, children, size = "md" }: For
         style={{ direction: "rtl" }}
       >
         <div className="flex items-center justify-between mb-5 sticky top-0 bg-white pb-3 border-b border-[var(--border)] z-10">
-          <h3 id="form-modal-title" style={{ fontWeight: 700, fontSize: "1rem" }}>{title}</h3>
+          <h3 id="form-modal-title" style={{ fontWeight: 700, fontSize: "1rem" }}>
+            {title}
+          </h3>
           <button
             onClick={onClose}
             aria-label="إغلاق"
@@ -232,7 +245,15 @@ export function FormModal({ isOpen, onClose, title, children, size = "md" }: For
 // ============================================================
 
 // ---------- نموذج الشريك ----------
-export function PartnerForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function PartnerForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     name: editItem?.name || "",
     type: editItem?.type || "",
@@ -251,7 +272,8 @@ export function PartnerForm({ editItem, onSave, onCancel }: { editItem?: any; on
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     if (!form.name || form.name.trim().length === 0) newErrors.name = "الاسم مطلوب";
-    if (form.contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contactEmail)) newErrors.contactEmail = "صيغة البريد غير صحيحة";
+    if (form.contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contactEmail))
+      newErrors.contactEmail = "صيغة البريد غير صحيحة";
     if (Object.keys(newErrors).length) {
       setErrors(newErrors);
       return;
@@ -264,7 +286,13 @@ export function PartnerForm({ editItem, onSave, onCancel }: { editItem?: any; on
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="اسم المؤسسة *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required error={errors.name} />
+      <TextField
+        label="اسم المؤسسة *"
+        value={form.name}
+        onChange={(v) => setForm({ ...form, name: v })}
+        required
+        error={errors.name}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <SelectField
           label="نوع الشراكة"
@@ -288,24 +316,71 @@ export function PartnerForm({ editItem, onSave, onCancel }: { editItem?: any; on
           ]}
         />
       </div>
-      <TextField label="الموقع الإلكتروني" value={form.url} onChange={(v) => setForm({ ...form, url: v })} placeholder="https://" />
-      <TextField label="شعار المؤسسة (رابط)" value={form.logo} onChange={(v) => setForm({ ...form, logo: v })} placeholder="https://..." />
-      <TextField label="وصف الشراكة" value={form.description} onChange={(v) => setForm({ ...form, description: v })} multiline rows={3} />
+      <TextField
+        label="الموقع الإلكتروني"
+        value={form.url}
+        onChange={(v) => setForm({ ...form, url: v })}
+        placeholder="https://"
+      />
+      <TextField
+        label="شعار المؤسسة (رابط)"
+        value={form.logo}
+        onChange={(v) => setForm({ ...form, logo: v })}
+        placeholder="https://..."
+      />
+      <TextField
+        label="وصف الشراكة"
+        value={form.description}
+        onChange={(v) => setForm({ ...form, description: v })}
+        multiline
+        rows={3}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="البريد الإلكتروني للتواصل" value={form.contactEmail} onChange={(v) => setForm({ ...form, contactEmail: v })} type="email" />
-        <TextField label="رقم الهاتف" value={form.contactPhone} onChange={(v) => setForm({ ...form, contactPhone: v })} />
+        <TextField
+          label="البريد الإلكتروني للتواصل"
+          value={form.contactEmail}
+          onChange={(v) => setForm({ ...form, contactEmail: v })}
+          type="email"
+        />
+        <TextField
+          label="رقم الهاتف"
+          value={form.contactPhone}
+          onChange={(v) => setForm({ ...form, contactPhone: v })}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="تاريخ بدء الشراكة" value={form.partnershipStart} onChange={(v) => setForm({ ...form, partnershipStart: v })} placeholder="YYYY/MM/DD" />
-        <TextField label="تاريخ انتهاء الشراكة" value={form.partnershipEnd} onChange={(v) => setForm({ ...form, partnershipEnd: v })} placeholder="YYYY/MM/DD" />
+        <TextField
+          label="تاريخ بدء الشراكة"
+          value={form.partnershipStart}
+          onChange={(v) => setForm({ ...form, partnershipStart: v })}
+          placeholder="YYYY/MM/DD"
+        />
+        <TextField
+          label="تاريخ انتهاء الشراكة"
+          value={form.partnershipEnd}
+          onChange={(v) => setForm({ ...form, partnershipEnd: v })}
+          placeholder="YYYY/MM/DD"
+        />
       </div>
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج المشروع ----------
-export function ProjectForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function ProjectForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     title: editItem?.title || "",
     description: editItem?.description || "",
@@ -326,7 +401,8 @@ export function ProjectForm({ editItem, onSave, onCancel }: { editItem?: any; on
     const newErrors: Record<string, string> = {};
     if (!form.title || form.title.trim().length === 0) newErrors.title = "اسم المشروع مطلوب";
     const progressNum = Number(form.progress);
-    if (isNaN(progressNum) || progressNum < 0 || progressNum > 100) newErrors.progress = "قيمة النسبة يجب أن تكون بين 0 و 100";
+    if (isNaN(progressNum) || progressNum < 0 || progressNum > 100)
+      newErrors.progress = "قيمة النسبة يجب أن تكون بين 0 و 100";
     if (Object.keys(newErrors).length) {
       setErrors(newErrors);
       return;
@@ -340,8 +416,20 @@ export function ProjectForm({ editItem, onSave, onCancel }: { editItem?: any; on
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="اسم المشروع *" value={form.title} onChange={(v) => setForm({ ...form, title: v })} required error={errors.title} />
-      <TextField label="وصف المشروع" value={form.description} onChange={(v) => setForm({ ...form, description: v })} multiline rows={3} />
+      <TextField
+        label="اسم المشروع *"
+        value={form.title}
+        onChange={(v) => setForm({ ...form, title: v })}
+        required
+        error={errors.title}
+      />
+      <TextField
+        label="وصف المشروع"
+        value={form.description}
+        onChange={(v) => setForm({ ...form, description: v })}
+        multiline
+        rows={3}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <SelectField
           label="التصنيف"
@@ -369,25 +457,71 @@ export function ProjectForm({ editItem, onSave, onCancel }: { editItem?: any; on
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="نسبة الإنجاز %" value={String(form.progress)} onChange={(v) => setForm({ ...form, progress: v })} type="number" min="0" max="100" error={errors.progress} />
-        <TextField label="الميزانية (ر.ي)" value={form.budget} onChange={(v) => setForm({ ...form, budget: v })} />
+        <TextField
+          label="نسبة الإنجاز %"
+          value={String(form.progress)}
+          onChange={(v) => setForm({ ...form, progress: v })}
+          type="number"
+          min="0"
+          max="100"
+          error={errors.progress}
+        />
+        <TextField
+          label="الميزانية (ر.ي)"
+          value={form.budget}
+          onChange={(v) => setForm({ ...form, budget: v })}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="عدد المستفيدين" value={form.beneficiaries} onChange={(v) => setForm({ ...form, beneficiaries: v })} />
-        <TextField label="الموقع" value={form.location} onChange={(v) => setForm({ ...form, location: v })} />
+        <TextField
+          label="عدد المستفيدين"
+          value={form.beneficiaries}
+          onChange={(v) => setForm({ ...form, beneficiaries: v })}
+        />
+        <TextField
+          label="الموقع"
+          value={form.location}
+          onChange={(v) => setForm({ ...form, location: v })}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="تاريخ البداية" value={form.startDate} onChange={(v) => setForm({ ...form, startDate: v })} placeholder="YYYY-MM-DD" />
-        <TextField label="تاريخ النهاية المتوقع" value={form.endDate} onChange={(v) => setForm({ ...form, endDate: v })} placeholder="YYYY-MM-DD" />
+        <TextField
+          label="تاريخ البداية"
+          value={form.startDate}
+          onChange={(v) => setForm({ ...form, startDate: v })}
+          placeholder="YYYY-MM-DD"
+        />
+        <TextField
+          label="تاريخ النهاية المتوقع"
+          value={form.endDate}
+          onChange={(v) => setForm({ ...form, endDate: v })}
+          placeholder="YYYY-MM-DD"
+        />
       </div>
-      <TextField label="مدير المشروع" value={form.manager} onChange={(v) => setForm({ ...form, manager: v })} />
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <TextField
+        label="مدير المشروع"
+        value={form.manager}
+        onChange={(v) => setForm({ ...form, manager: v })}
+      />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج التقرير ----------
-export function ReportForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function ReportForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     title: editItem?.title || "",
     type: editItem?.type || "",
@@ -415,7 +549,13 @@ export function ReportForm({ editItem, onSave, onCancel }: { editItem?: any; onS
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="عنوان التقرير *" value={form.title} onChange={(v) => setForm({ ...form, title: v })} required error={errors.title} />
+      <TextField
+        label="عنوان التقرير *"
+        value={form.title}
+        onChange={(v) => setForm({ ...form, title: v })}
+        required
+        error={errors.title}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <SelectField
           label="نوع التقرير"
@@ -441,18 +581,51 @@ export function ReportForm({ editItem, onSave, onCancel }: { editItem?: any; onS
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextField label="التاريخ" value={form.date} onChange={(v) => setForm({ ...form, date: v })} placeholder="YYYY/MM/DD" />
-        <TextField label="حجم الملف" value={form.size} onChange={(v) => setForm({ ...form, size: v })} placeholder="مثال: 5.2 م.ب" />
+        <TextField
+          label="التاريخ"
+          value={form.date}
+          onChange={(v) => setForm({ ...form, date: v })}
+          placeholder="YYYY/MM/DD"
+        />
+        <TextField
+          label="حجم الملف"
+          value={form.size}
+          onChange={(v) => setForm({ ...form, size: v })}
+          placeholder="مثال: 5.2 م.ب"
+        />
       </div>
-      <TextField label="رابط الملف" value={form.file} onChange={(v) => setForm({ ...form, file: v })} placeholder="https://..." />
-      <TextField label="الوصف" value={form.description} onChange={(v) => setForm({ ...form, description: v })} multiline rows={3} />
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <TextField
+        label="رابط الملف"
+        value={form.file}
+        onChange={(v) => setForm({ ...form, file: v })}
+        placeholder="https://..."
+      />
+      <TextField
+        label="الوصف"
+        value={form.description}
+        onChange={(v) => setForm({ ...form, description: v })}
+        multiline
+        rows={3}
+      />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج قصة نجاح ----------
-export function SuccessStoryForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function SuccessStoryForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     title: editItem?.title || "",
     excerpt: editItem?.excerpt || "",
@@ -479,15 +652,46 @@ export function SuccessStoryForm({ editItem, onSave, onCancel }: { editItem?: an
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="عنوان القصة *" value={form.title} onChange={(v) => setForm({ ...form, title: v })} required />
-      <TextField label="ملخص القصة" value={form.excerpt} onChange={(v) => setForm({ ...form, excerpt: v })} multiline rows={3} />
-      <TextField label="اقتباس" value={form.quote} onChange={(v) => setForm({ ...form, quote: v })} multiline rows={2} placeholder="اقتباس من صاحب القصة..." />
+      <TextField
+        label="عنوان القصة *"
+        value={form.title}
+        onChange={(v) => setForm({ ...form, title: v })}
+        required
+      />
+      <TextField
+        label="ملخص القصة"
+        value={form.excerpt}
+        onChange={(v) => setForm({ ...form, excerpt: v })}
+        multiline
+        rows={3}
+      />
+      <TextField
+        label="اقتباس"
+        value={form.quote}
+        onChange={(v) => setForm({ ...form, quote: v })}
+        multiline
+        rows={2}
+        placeholder="اقتباس من صاحب القصة..."
+      />
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="اسم المستفيد *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
-        <TextField label="الصفة" value={form.role} onChange={(v) => setForm({ ...form, role: v })} />
+        <TextField
+          label="اسم المستفيد *"
+          value={form.name}
+          onChange={(v) => setForm({ ...form, name: v })}
+          required
+        />
+        <TextField
+          label="الصفة"
+          value={form.role}
+          onChange={(v) => setForm({ ...form, role: v })}
+        />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="البرنامج" value={form.program} onChange={(v) => setForm({ ...form, program: v })} />
+        <TextField
+          label="البرنامج"
+          value={form.program}
+          onChange={(v) => setForm({ ...form, program: v })}
+        />
         <SelectField
           label="التصنيف"
           value={form.category}
@@ -502,13 +706,31 @@ export function SuccessStoryForm({ editItem, onSave, onCancel }: { editItem?: an
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="السنة" value={form.year} onChange={(v) => setForm({ ...form, year: v })} placeholder="١٤٤٦هـ" />
-        <TextField label="الموقع" value={form.location} onChange={(v) => setForm({ ...form, location: v })} />
+        <TextField
+          label="السنة"
+          value={form.year}
+          onChange={(v) => setForm({ ...form, year: v })}
+          placeholder="١٤٤٦هـ"
+        />
+        <TextField
+          label="الموقع"
+          value={form.location}
+          onChange={(v) => setForm({ ...form, location: v })}
+        />
       </div>
-      <TextField label="رابط الصورة" value={form.image} onChange={(v) => setForm({ ...form, image: v })} placeholder="https://..." />
+      <TextField
+        label="رابط الصورة"
+        value={form.image}
+        onChange={(v) => setForm({ ...form, image: v })}
+        placeholder="https://..."
+      />
       <div className="grid grid-cols-2 gap-4">
         <div className="mb-4">
-          <label htmlFor="story-rating" className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem", fontWeight: 600 }}>
+          <label
+            htmlFor="story-rating"
+            className="block mb-1.5 text-[var(--foreground)]"
+            style={{ fontSize: "0.82rem", fontWeight: 600 }}
+          >
             التقييم
           </label>
           <select
@@ -536,13 +758,25 @@ export function SuccessStoryForm({ editItem, onSave, onCancel }: { editItem?: an
           ]}
         />
       </div>
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج متطوع ----------
-export function VolunteerForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function VolunteerForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     name: editItem?.name || "",
     email: editItem?.email || "",
@@ -566,10 +800,26 @@ export function VolunteerForm({ editItem, onSave, onCancel }: { editItem?: any; 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="الاسم الكامل *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
+      <TextField
+        label="الاسم الكامل *"
+        value={form.name}
+        onChange={(v) => setForm({ ...form, name: v })}
+        required
+      />
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="البريد الإلكتروني *" value={form.email} onChange={(v) => setForm({ ...form, email: v })} type="email" required />
-        <TextField label="رقم الهاتف *" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} required />
+        <TextField
+          label="البريد الإلكتروني *"
+          value={form.email}
+          onChange={(v) => setForm({ ...form, email: v })}
+          type="email"
+          required
+        />
+        <TextField
+          label="رقم الهاتف *"
+          value={form.phone}
+          onChange={(v) => setForm({ ...form, phone: v })}
+          required
+        />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <SelectField
@@ -598,19 +848,54 @@ export function VolunteerForm({ editItem, onSave, onCancel }: { editItem?: any; 
           ]}
         />
       </div>
-      <TextField label="الخبرات السابقة" value={form.experience} onChange={(v) => setForm({ ...form, experience: v })} multiline rows={3} />
+      <TextField
+        label="الخبرات السابقة"
+        value={form.experience}
+        onChange={(v) => setForm({ ...form, experience: v })}
+        multiline
+        rows={3}
+      />
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="التوفر" value={form.availability} onChange={(v) => setForm({ ...form, availability: v })} placeholder="مثال: أيام الأسبوع، نهاية الأسبوع" />
-        <TextField label="الساعات المجمعة" value={String(form.hours)} onChange={(v) => setForm({ ...form, hours: v })} type="number" min="0" />
+        <TextField
+          label="التوفر"
+          value={form.availability}
+          onChange={(v) => setForm({ ...form, availability: v })}
+          placeholder="مثال: أيام الأسبوع، نهاية الأسبوع"
+        />
+        <TextField
+          label="الساعات المجمعة"
+          value={String(form.hours)}
+          onChange={(v) => setForm({ ...form, hours: v })}
+          type="number"
+          min="0"
+        />
       </div>
-      <TextField label="دوافع التطوع" value={form.motivation} onChange={(v) => setForm({ ...form, motivation: v })} multiline rows={3} />
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <TextField
+        label="دوافع التطوع"
+        value={form.motivation}
+        onChange={(v) => setForm({ ...form, motivation: v })}
+        multiline
+        rows={3}
+      />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج المستخدم والصلاحيات ----------
-export function UserForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function UserForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     name: editItem?.name || "",
     email: editItem?.email || "",
@@ -652,8 +937,19 @@ export function UserForm({ editItem, onSave, onCancel }: { editItem?: any; onSav
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField label="الاسم الكامل *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} required />
-      <TextField label="البريد الإلكتروني *" value={form.email} onChange={(v) => setForm({ ...form, email: v })} type="email" required />
+      <TextField
+        label="الاسم الكامل *"
+        value={form.name}
+        onChange={(v) => setForm({ ...form, name: v })}
+        required
+      />
+      <TextField
+        label="البريد الإلكتروني *"
+        value={form.email}
+        onChange={(v) => setForm({ ...form, email: v })}
+        type="email"
+        required
+      />
       <div className="grid grid-cols-2 gap-4">
         <SelectField
           label="الدور"
@@ -678,7 +974,11 @@ export function UserForm({ editItem, onSave, onCancel }: { editItem?: any; onSav
         />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="رقم الهاتف" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} />
+        <TextField
+          label="رقم الهاتف"
+          value={form.phone}
+          onChange={(v) => setForm({ ...form, phone: v })}
+        />
         <SelectField
           label="القسم"
           value={form.department}
@@ -693,7 +993,10 @@ export function UserForm({ editItem, onSave, onCancel }: { editItem?: any; onSav
         />
       </div>
       <fieldset className="mb-4">
-        <legend className="block mb-1.5 text-[var(--foreground)]" style={{ fontSize: "0.82rem", fontWeight: 600 }}>
+        <legend
+          className="block mb-1.5 text-[var(--foreground)]"
+          style={{ fontSize: "0.82rem", fontWeight: 600 }}
+        >
           الصلاحيات
         </legend>
         <div className="grid grid-cols-2 gap-2">
@@ -707,14 +1010,32 @@ export function UserForm({ editItem, onSave, onCancel }: { editItem?: any; onSav
           ))}
         </div>
       </fieldset>
-      <TextField label="ملاحظات" value={form.notes} onChange={(v) => setForm({ ...form, notes: v })} multiline rows={3} />
-      <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel={editItem ? "تحديث" : "إضافة"} />
+      <TextField
+        label="ملاحظات"
+        value={form.notes}
+        onChange={(v) => setForm({ ...form, notes: v })}
+        multiline
+        rows={3}
+      />
+      <FormActions
+        onSave={handleSubmit as any}
+        onCancel={onCancel}
+        submitLabel={editItem ? "تحديث" : "إضافة"}
+      />
     </form>
   );
 }
 
 // ---------- نموذج الرد على الطلب ----------
-export function RequestResponseForm({ editItem, onSave, onCancel }: { editItem?: any; onSave: (data: any) => void; onCancel: () => void }) {
+export function RequestResponseForm({
+  editItem,
+  onSave,
+  onCancel,
+}: {
+  editItem?: any;
+  onSave: (data: any) => void;
+  onCancel: () => void;
+}) {
   const [form, setForm] = useState({
     response: editItem?.response || "",
     status: editItem?.status || "read",
@@ -752,7 +1073,12 @@ export function RequestResponseForm({ editItem, onSave, onCancel }: { editItem?:
         ]}
       />
       <div className="grid grid-cols-2 gap-4">
-        <TextField label="تاريخ المتابعة" value={form.followUpDate} onChange={(v) => setForm({ ...form, followUpDate: v })} placeholder="YYYY/MM/DD" />
+        <TextField
+          label="تاريخ المتابعة"
+          value={form.followUpDate}
+          onChange={(v) => setForm({ ...form, followUpDate: v })}
+          placeholder="YYYY/MM/DD"
+        />
         <SelectField
           label="تعيين إلى"
           value={form.assignedTo}
@@ -769,4 +1095,3 @@ export function RequestResponseForm({ editItem, onSave, onCancel }: { editItem?:
     </form>
   );
 }
-

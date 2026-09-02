@@ -4,8 +4,8 @@ export interface DashboardUser {
   id: string;
   name: string;
   email: string;
-  role: 'ADMIN' | 'EDITOR' | 'VIEWER' | 'MANAGER';
-  status: 'active' | 'inactive' | 'suspended';
+  role: "ADMIN" | "EDITOR" | "VIEWER" | "MANAGER";
+  status: "active" | "inactive" | "suspended";
   permissions: string[];
   createdAt: string;
   lastLogin?: string;
@@ -20,10 +20,10 @@ export interface DashboardDonation {
   phone?: string;
   amount: number;
   project: string;
-  method: 'card' | 'mobile' | 'transfer';
+  method: "card" | "mobile" | "transfer";
   date: string;
-  status: 'completed' | 'pending' | 'failed' | 'refunded';
-  type: 'once' | 'monthly';
+  status: "completed" | "pending" | "failed" | "refunded";
+  type: "once" | "monthly";
   notes?: string;
 }
 
@@ -32,12 +32,12 @@ export interface DashboardRequest {
   name: string;
   email: string;
   phone?: string;
-  type: 'منظمة داعمة' | 'فاعل خير' | 'متبرع' | 'شريك' | 'متطوع' | 'إعلامي' | 'أخرى';
+  type: "منظمة داعمة" | "فاعل خير" | "متبرع" | "شريك" | "متطوع" | "إعلامي" | "أخرى";
   message: string;
   date: string;
-  status: 'new' | 'read' | 'replied' | 'archived';
+  status: "new" | "read" | "replied" | "archived";
   assignedTo?: string;
-  priority?: 'low' | 'medium' | 'high';
+  priority?: "low" | "medium" | "high";
 }
 
 export interface DashboardVolunteer {
@@ -46,7 +46,7 @@ export interface DashboardVolunteer {
   phone: string;
   email: string;
   field: string;
-  status: 'active' | 'inactive' | 'pending';
+  status: "active" | "inactive" | "pending";
   hours: number;
   joinDate: string;
   skills?: string[];
@@ -57,18 +57,18 @@ export interface DashboardVolunteer {
 export interface DashboardReport {
   id: string;
   title: string;
-  type: 'تقرير سنوي' | 'نشرة دورية' | 'تقرير مالي' | 'دراسة' | 'تقرير أداء';
+  type: "تقرير سنوي" | "نشرة دورية" | "تقرير مالي" | "دراسة" | "تقرير أداء";
   date: string;
   file: string;
   size: string;
-  status: 'published' | 'draft' | 'archived';
+  status: "published" | "draft" | "archived";
   description?: string;
 }
 
 export interface DashboardMedia {
   id: string;
   title: string;
-  type: 'image' | 'video' | 'document' | 'audio';
+  type: "image" | "video" | "document" | "audio";
   url: string;
   date: string;
   size: string;
@@ -88,4 +88,3 @@ export interface DashboardMetrics {
   newsCount: number;
   storiesCount: number;
 }
-

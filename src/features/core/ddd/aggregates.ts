@@ -27,7 +27,7 @@ class Email {
 class Money {
   constructor(
     private readonly amount: number,
-    private readonly currency: string = 'OMR'
+    private readonly currency: string = "OMR"
   ) {
     if (amount < 0) {
       throw new Error(`Invalid amount: ${amount}`);
@@ -36,7 +36,7 @@ class Money {
 
   add(other: Money): Money {
     if (this.currency !== other.currency) {
-      throw new Error('Cannot add different currencies');
+      throw new Error("Cannot add different currencies");
     }
     return new Money(this.amount + other.amount);
   }
@@ -57,7 +57,7 @@ class Money {
 class ProjectId {
   constructor(private readonly value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('Project ID cannot be empty');
+      throw new Error("Project ID cannot be empty");
     }
   }
 
@@ -111,10 +111,10 @@ interface AggregateRoot {
 }
 
 class ProjectAggregate extends Entity<ProjectId> {
-  private title: string = '';
-  private description: string = '';
+  private title: string = "";
+  private description: string = "";
   private budget: Money | null = null;
-  private status: string = 'active';
+  private status: string = "active";
   private progress: number = 0;
   private beneficiaries: number = 0;
   public uncommittedEvents: any[] = [];
@@ -125,17 +125,17 @@ class ProjectAggregate extends Entity<ProjectId> {
 
   create(title: string, description: string, budget: Money) {
     if (this._version !== 0) {
-      throw new Error('Project already created');
+      throw new Error("Project already created");
     }
 
     this.title = title;
     this.description = description;
     this.budget = budget;
-    this.status = 'active';
-    
+    this.status = "active";
+
     this.incrementVersion();
     this.uncommittedEvents.push({
-      type: 'ProjectCreated',
+      type: "ProjectCreated",
       data: { id: this._id.getValue(), title, description, budget: budget.getAmount() },
       timestamp: new Date(),
     });
@@ -143,7 +143,7 @@ class ProjectAggregate extends Entity<ProjectId> {
 
   updateProgress(newProgress: number) {
     if (newProgress < 0 || newProgress > 100) {
-      throw new Error('Progress must be between 0 and 100');
+      throw new Error("Progress must be between 0 and 100");
     }
 
     const oldProgress = this.progress;
@@ -151,7 +151,7 @@ class ProjectAggregate extends Entity<ProjectId> {
     this.incrementVersion();
 
     this.uncommittedEvents.push({
-      type: 'ProjectProgressUpdated',
+      type: "ProjectProgressUpdated",
       data: { id: this._id.getValue(), oldProgress, newProgress },
       timestamp: new Date(),
     });
@@ -159,14 +159,14 @@ class ProjectAggregate extends Entity<ProjectId> {
 
   addBeneficiaries(count: number) {
     if (count < 0) {
-      throw new Error('Cannot add negative beneficiaries');
+      throw new Error("Cannot add negative beneficiaries");
     }
 
     this.beneficiaries += count;
     this.incrementVersion();
 
     this.uncommittedEvents.push({
-      type: 'BeneficiariesAdded',
+      type: "BeneficiariesAdded",
       data: { id: this._id.getValue(), count, total: this.beneficiaries },
       timestamp: new Date(),
     });
@@ -174,15 +174,15 @@ class ProjectAggregate extends Entity<ProjectId> {
 
   applyEvent(event: any): void {
     switch (event.type) {
-      case 'ProjectCreated':
+      case "ProjectCreated":
         this.title = event.data.title;
         this.description = event.data.description;
         this.budget = new Money(event.data.budget);
         break;
-      case 'ProjectProgressUpdated':
+      case "ProjectProgressUpdated":
         this.progress = event.data.newProgress;
         break;
-      case 'BeneficiariesAdded':
+      case "BeneficiariesAdded":
         this.beneficiaries = event.data.total;
         break;
     }
@@ -259,7 +259,7 @@ class DomainEventBus {
 
   publish(event: DomainEvent) {
     const handlers = this.handlers.get(event.type) || [];
-    handlers.forEach(handler => {
+    handlers.forEach((handler) => {
       try {
         handler(event);
       } catch (error) {
@@ -278,7 +278,7 @@ class ProjectCreatedHandler {
   handle(event: DomainEvent) {
     const { title } = event.data;
     console.log(`[ProjectCreated] New project: ${title}`);
-    
+
     // Send notification
     // Update analytics
     // Create related entities
@@ -289,7 +289,7 @@ class ProjectProgressUpdatedHandler {
   handle(event: DomainEvent) {
     const { newProgress } = event.data;
     console.log(`[ProgressUpdate] Project progress: ${newProgress}%`);
-    
+
     // Update dashboard stats
     // Check milestone completion
     // Send progress report
@@ -297,8 +297,14 @@ class ProjectProgressUpdatedHandler {
 }
 
 // Register handlers
-domainEventBus.register('ProjectCreated', new ProjectCreatedHandler().handle.bind(new ProjectCreatedHandler()));
-domainEventBus.register('ProjectProgressUpdated', new ProjectProgressUpdatedHandler().handle.bind(new ProjectProgressUpdatedHandler()));
+domainEventBus.register(
+  "ProjectCreated",
+  new ProjectCreatedHandler().handle.bind(new ProjectCreatedHandler())
+);
+domainEventBus.register(
+  "ProjectProgressUpdated",
+  new ProjectProgressUpdatedHandler().handle.bind(new ProjectProgressUpdatedHandler())
+);
 
 // ============================================================
 // Unit of Work Pattern
@@ -341,7 +347,7 @@ class UnitOfWork {
 
     // Publish all events
     for (const aggregate of [...this.newAggregates, ...this.modifiedAggregates]) {
-      aggregate.uncommittedEvents.forEach(event => {
+      aggregate.uncommittedEvents.forEach((event) => {
         this.eventBus.publish({
           aggregateId: aggregate.id,
           type: event.type,
@@ -372,7 +378,7 @@ class UnitOfWork {
   }
 }
 
-export { 
+export {
   Email,
   Money,
   ProjectId,
@@ -380,6 +386,5 @@ export {
   ProjectAggregate,
   InMemoryProjectRepository,
   UnitOfWork,
-  type DomainEvent
+  type DomainEvent,
 };
-

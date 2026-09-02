@@ -6,17 +6,12 @@ interface HeroStatsProps {
 }
 
 export function HeroStats({ metrics }: HeroStatsProps) {
-  const formatStat = (value: number | undefined, defaultVal: string) => 
+  const formatStat = (value: number | undefined, defaultVal: string) =>
     typeof value === "number" ? value.toLocaleString("ar-SA") : defaultVal;
 
   return (
-    <div 
-      className="max-w-5xl mx-auto"
-      role="region" 
-      aria-label="إحصائيات الأثر الميداني"
-    >
+    <div className="max-w-5xl mx-auto" role="region" aria-label="إحصائيات الأثر الميداني">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 text-right">
-        
         <div className="bg-white hover:bg-slate-50 rounded-3xl p-6 sm:p-7 lg:p-8 border-2 border-slate-200/90 hover:border-emerald-400 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 text-slate-700 text-xs sm:text-sm md:text-base font-bold font-cairo mb-1.5">
@@ -61,12 +56,9 @@ export function HeroStats({ metrics }: HeroStatsProps) {
             <Handshake className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
         </div>
-
       </div>
     </div>
   );
 }
 
 export default HeroStats;
-
-

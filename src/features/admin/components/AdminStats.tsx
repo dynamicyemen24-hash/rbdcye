@@ -1,9 +1,9 @@
 // AdminStats - بطاقات الإحصائيات المتكاملة مع قاعدة البيانات
-import { motion } from 'motion/react';
-import { MessageSquare, Heart, Users, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { motion } from "motion/react";
+import { MessageSquare, Heart, Users, TrendingUp, RefreshCw, AlertCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { messagesQueries, donationsQueries, volunteersQueries } from '@/lib/postgres';
+import { messagesQueries, donationsQueries, volunteersQueries } from "@/lib/postgres";
 
 interface StatsData {
   messages: { total: number; new: number; read: number; replied: number };
@@ -33,7 +33,12 @@ export const AdminStats = () => {
       ]);
 
       const messagesStats = messagesResult.rows?.[0] || { total: 0, new: 0, read: 0, replied: 0 };
-      const donationsStats = donationsResult.rows?.[0] || { total: 0, amount: 0, pending: 0, completed: 0 };
+      const donationsStats = donationsResult.rows?.[0] || {
+        total: 0,
+        amount: 0,
+        pending: 0,
+        completed: 0,
+      };
       const volunteersStats = volunteersResult.rows?.[0] || { total: 0, active: 0, pending: 0 };
 
       setStats({
@@ -57,8 +62,8 @@ export const AdminStats = () => {
         performance: 95,
       });
     } catch (err) {
-      console.error('Error fetching stats:', err);
-      setError('فشل تحميل البيانات من قاعدة البيانات');
+      console.error("Error fetching stats:", err);
+      setError("فشل تحميل البيانات من قاعدة البيانات");
     } finally {
       setLoading(false);
     }
@@ -70,36 +75,36 @@ export const AdminStats = () => {
 
   const statCards = [
     {
-      title: 'الرسائل',
+      title: "الرسائل",
       value: stats.messages.total,
       subtitle: `${stats.messages.new} جديد`,
       icon: MessageSquare,
-      color: 'text-blue-600',
-      bg: 'bg-blue-100',
+      color: "text-blue-600",
+      bg: "bg-blue-100",
     },
     {
-      title: 'التبرعات',
+      title: "التبرعات",
       value: stats.donations.total,
       subtitle: `${stats.donations.amount.toLocaleString()} ريال`,
       icon: Heart,
-      color: 'text-red-600',
-      bg: 'bg-red-100',
+      color: "text-red-600",
+      bg: "bg-red-100",
     },
     {
-      title: 'المتطوعون',
+      title: "المتطوعون",
       value: stats.volunteers.total,
-      subtitle: 'مسجل',
+      subtitle: "مسجل",
       icon: Users,
-      color: 'text-green-600',
-      bg: 'bg-green-100',
+      color: "text-green-600",
+      bg: "bg-green-100",
     },
     {
-      title: 'أداء الموقع',
+      title: "أداء الموقع",
       value: `${stats.performance}%`,
-      subtitle: 'ممتاز',
+      subtitle: "ممتاز",
       icon: TrendingUp,
-      color: 'text-purple-600',
-      bg: 'bg-purple-100',
+      color: "text-purple-600",
+      bg: "bg-purple-100",
     },
   ];
 
@@ -117,10 +122,7 @@ export const AdminStats = () => {
         <AlertCircle className="w-6 h-6 text-red-500" />
         <div>
           <p className="text-red-600 font-medium">{error}</p>
-          <button
-            onClick={fetchStats}
-            className="text-sm text-red-600 underline mt-1"
-          >
+          <button onClick={fetchStats} className="text-sm text-red-600 underline mt-1">
             إعادة المحاولة
           </button>
         </div>
@@ -160,4 +162,3 @@ export const AdminStats = () => {
 };
 
 export default AdminStats;
-

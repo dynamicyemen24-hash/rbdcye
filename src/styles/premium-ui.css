@@ -66,7 +66,10 @@
   border-radius: 50%;
   background: rgba(var(--primary-foreground-rgb), 0.08);
   color: rgba(var(--primary-foreground-rgb), 0.7);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .header-top-bar .top-bar-social a:hover {
@@ -77,7 +80,12 @@
 
 /* Announcement Strip - below main nav */
 .header-announcement {
-  background: linear-gradient(90deg, var(--brand-gold-pale), var(--brand-green-pale), var(--brand-gold-pale));
+  background: linear-gradient(
+    90deg,
+    var(--brand-gold-pale),
+    var(--brand-green-pale),
+    var(--brand-gold-pale)
+  );
   border-bottom: 1px solid var(--border);
   padding: 0.5rem 0;
   font-size: 0.8rem;
@@ -124,7 +132,10 @@
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   direction: rtl;
 }
 
@@ -235,7 +246,9 @@
   font-weight: 600;
   color: var(--muted-foreground);
   cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
   white-space: nowrap;
   outline: none;
   border: none;
@@ -297,7 +310,10 @@
   background: var(--brand-gold-pale);
   border: 1px solid rgba(217, 164, 65, 0.2);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav-cta-zakat:hover {
@@ -324,7 +340,9 @@
   background: var(--gradient-brand);
   box-shadow: var(--shadow-md);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   border: none;
 }
 
@@ -342,7 +360,10 @@
   color: var(--foreground);
   cursor: pointer;
   border: 1px solid var(--border);
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .header-main-nav.transparent .nav-mobile-toggle {
@@ -438,7 +459,7 @@
 
 /* Hero headline - primary focus */
 .hero-headline {
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   font-size: clamp(2.2rem, 5.5vw, 4rem);
   font-weight: 800;
   color: var(--primary-foreground);
@@ -457,7 +478,7 @@
 }
 
 .hero-headline .underline-gold::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0.1em;
   left: 0;
@@ -496,7 +517,9 @@
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-md);
 }
 
@@ -517,7 +540,9 @@
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .hero-cta-secondary:hover {
@@ -626,8 +651,13 @@
 }
 
 @keyframes hero-scroll-bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
 }
 
 /* ============================================================
@@ -647,7 +677,12 @@
 .stats-section {
   position: relative;
   padding: 5rem 0;
-  background: linear-gradient(180deg, var(--secondary) 0%, var(--background) 50%, var(--secondary) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--secondary) 0%,
+    var(--background) 50%,
+    var(--secondary) 100%
+  );
   direction: rtl;
   overflow: hidden;
 }
@@ -737,7 +772,10 @@
   background: var(--card);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   overflow: hidden;
 }
 
@@ -911,12 +949,3 @@
 .radius-unified-2xl {
   border-radius: var(--radius-2xl);
 }
-
-
-
-
-
-
-
-
-

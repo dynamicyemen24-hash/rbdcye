@@ -12,7 +12,9 @@
 }
 
 .icon-hover-pulse {
-  transition: filter 0.3s ease, transform 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    transform 0.3s ease;
 }
 
 .icon-hover-pulse:hover {
@@ -30,7 +32,9 @@
 
 /* أيقونات البحث - Search Icon Enhancements */
 .search-icon-interactive {
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .search-icon-interactive:hover {
@@ -40,7 +44,9 @@
 
 /* أيقونات التنقل - Navigation Icons */
 .nav-icon-interactive {
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .nav-icon-interactive:hover {
@@ -54,7 +60,9 @@
 
 /* أيقونات التفاعل - Interactive Icons */
 .interactive-icon {
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
   cursor: pointer;
 }
 
@@ -75,7 +83,9 @@
 
 /* أيقونات الفيديو - Video Player Icons */
 .video-control-icon {
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
   backdrop-filter: blur(4px);
 }
 
@@ -86,7 +96,9 @@
 
 /* أيقونات الإحصائيات - Stats Icons */
 .stats-icon {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stats-icon:hover {
@@ -96,7 +108,9 @@
 
 /* أيقونات الفئة - Category Icons */
 .category-icon-badge {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   box-shadow: 0 2px 8px rgba(var(--foreground-rgb), 0.1);
 }
 
@@ -107,7 +121,8 @@
 
 /* تأثيرات الأيقونات المتقدمة - Advanced Icon Effects */
 @keyframes icon-glow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 2px currentColor);
   }
   50% {
@@ -121,7 +136,8 @@
 
 /* أيقونات متحركة - Animated Icons */
 @keyframes icon-breath {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -144,9 +160,10 @@
 }
 
 .icon-shimmer {
-  background: linear-gradient(90deg, 
-    currentColor, 
-    color-mix(in srgb, currentColor 50%, transparent), 
+  background: linear-gradient(
+    90deg,
+    currentColor,
+    color-mix(in srgb, currentColor 50%, transparent),
     currentColor
   );
   background-size: 200% 100%;
@@ -168,7 +185,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-icon:hover {
@@ -187,7 +206,7 @@
   .icon-hover-bounce:hover {
     transform: scale(1.05);
   }
-  
+
   .nav-icon-interactive:hover {
     transform: none;
   }
@@ -204,7 +223,7 @@
     transition: none;
     animation: none;
   }
-  
+
   .icon-hover-scale:hover,
   .icon-hover-pulse:hover,
   .icon-hover-bounce:hover,
@@ -223,14 +242,30 @@
 }
 
 /* تأثيرات الأيقونات الجماعية - Staggered Icon Animations */
-.stagger-icons > *:nth-child(1) { animation-delay: 0ms; }
-.stagger-icons > *:nth-child(2) { animation-delay: 50ms; }
-.stagger-icons > *:nth-child(3) { animation-delay: 100ms; }
-.stagger-icons > *:nth-child(4) { animation-delay: 150ms; }
-.stagger-icons > *:nth-child(5) { animation-delay: 200ms; }
-.stagger-icons > *:nth-child(6) { animation-delay: 250ms; }
-.stagger-icons > *:nth-child(7) { animation-delay: 300ms; }
-.stagger-icons > *:nth-child(8) { animation-delay: 350ms; }
+.stagger-icons > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-icons > *:nth-child(2) {
+  animation-delay: 50ms;
+}
+.stagger-icons > *:nth-child(3) {
+  animation-delay: 100ms;
+}
+.stagger-icons > *:nth-child(4) {
+  animation-delay: 150ms;
+}
+.stagger-icons > *:nth-child(5) {
+  animation-delay: 200ms;
+}
+.stagger-icons > *:nth-child(6) {
+  animation-delay: 250ms;
+}
+.stagger-icons > *:nth-child(7) {
+  animation-delay: 300ms;
+}
+.stagger-icons > *:nth-child(8) {
+  animation-delay: 350ms;
+}
 
 /* أيقونات الخطوط العريضة - Filled State Icons */
 .icon-filled {
@@ -240,7 +275,8 @@
 
 /* أيقونات متناثرة - Floating Icons */
 @keyframes icon-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   25% {
@@ -257,7 +293,8 @@
 
 /* تأثيرات اللمعان على الشارات - Badge Glow Effects */
 @keyframes badge-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(var(--brand-green-rgb, 15, 76, 58), 0.5);
   }
   50% {
@@ -268,12 +305,3 @@
 .badge-glow {
   animation: badge-glow 2s ease-in-out infinite;
 }
-
-
-
-
-
-
-
-
-

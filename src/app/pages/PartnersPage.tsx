@@ -1,9 +1,6 @@
 // Partners Page - صفحة الشركاء
 import { motion } from "motion/react";
-import {
-  Handshake, Users, Target,
-  Heart, BarChart3, TrendingUp,
-} from "lucide-react";
+import { Handshake, Users, Target, Heart, BarChart3, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,28 +41,34 @@ export default function PartnersPage() {
   const [partners, setPartners] = useState<Partner[]>(normalizePartners());
 
   useSEO({
-    title: 'شركاؤنا - رحماء بينهم',
-    description: 'شركاؤنا الاستراتيجيون والجهات الداعمة لـ رحماء بينهم',
+    title: "شركاؤنا - رحماء بينهم",
+    description: "شركاؤنا الاستراتيجيون والجهات الداعمة لـ رحماء بينهم",
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
+    contentManager
+      .getImpact()
       .then(() => {
         if (!cancelled) {
-          try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
+          try {
+            analyticsService.generateDonorReport();
+          } catch {
+            /* non-critical */
+          }
           setPartners(normalizePartners());
         }
       })
       .catch(() => {
         if (!cancelled) setPartners(normalizePartners());
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const filteredPartners = activeType === "الكل"
-    ? partners
-    : partners.filter(p => p.type === activeType);
+  const filteredPartners =
+    activeType === "الكل" ? partners : partners.filter((p) => p.type === activeType);
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
@@ -78,10 +81,15 @@ export default function PartnersPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'شريك نشط', value: partners.length, icon: BarChart3, color: 'green' },
-            { label: 'إجمالي الشركاء', value: SEED_IMPACT.partners, icon: Users, color: 'gold' },
-            { label: 'مستفيد', value: SEED_IMPACT.beneficiaries.toLocaleString('ar-SA'), icon: TrendingUp, color: 'blue' },
-            { label: 'مشروع', value: SEED_IMPACT.projects, icon: Target, color: 'purple' },
+            { label: "شريك نشط", value: partners.length, icon: BarChart3, color: "green" },
+            { label: "إجمالي الشركاء", value: SEED_IMPACT.partners, icon: Users, color: "gold" },
+            {
+              label: "مستفيد",
+              value: SEED_IMPACT.beneficiaries.toLocaleString("ar-SA"),
+              icon: TrendingUp,
+              color: "blue",
+            },
+            { label: "مشروع", value: SEED_IMPACT.projects, icon: Target, color: "purple" },
           ]}
           columns={4}
           variant="glass"
@@ -139,13 +147,15 @@ export default function PartnersPage() {
                 </span>
 
                 <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed">
-                  {partner.description || 'شريك موثوق في تنفيذ المشاريع الإنسانية والتنموية'}
+                  {partner.description || "شريك موثوق في تنفيذ المشاريع الإنسانية والتنموية"}
                 </p>
 
                 <div className="flex items-center justify-center gap-2 pt-4 border-t border-[var(--border)]">
-                  <span className={`w-2 h-2 rounded-full ${partner.status === 'active' ? 'bg-[var(--success-bg)]0' : 'bg-gray-400'}`} />
+                  <span
+                    className={`w-2 h-2 rounded-full ${partner.status === "active" ? "bg-[var(--success-bg)]0" : "bg-gray-400"}`}
+                  />
                   <span className="text-xs text-[var(--muted-foreground)]">
-                    {partner.status === 'active' ? 'نشط' : 'غير نشط'}
+                    {partner.status === "active" ? "نشط" : "غير نشط"}
                   </span>
                 </div>
               </motion.div>
@@ -155,7 +165,9 @@ export default function PartnersPage() {
           {filteredPartners.length === 0 && (
             <div className="text-center py-16">
               <Handshake className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا يوجد شركاء مطابقين</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا يوجد شركاء مطابقين
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير نوع الشريك</p>
             </div>
           )}
@@ -177,14 +189,14 @@ export default function PartnersPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => navigate('/contact')}
+                onClick={() => navigate("/contact")}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 <Handshake className="w-5 h-5" />
                 تواصل معنا
               </button>
               <button
-                onClick={() => navigate('/donate')}
+                onClick={() => navigate("/donate")}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--brand-gold)] text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 <Heart className="w-5 h-5" fill="white" />
@@ -197,5 +209,3 @@ export default function PartnersPage() {
     </div>
   );
 }
-
-

@@ -27,7 +27,7 @@ export function useDynamicContrast<T extends HTMLElement = HTMLDivElement>({
 
     const auditElements = () => {
       if (auditTimeoutRef.current) return;
-      
+
       auditTimeoutRef.current = setTimeout(() => {
         const root = containerRef.current || document.body;
         const elements = root.querySelectorAll<HTMLElement>(selector);
@@ -41,7 +41,7 @@ export function useDynamicContrast<T extends HTMLElement = HTMLDivElement>({
         if (onAuditComplete) {
           onAuditComplete(auditedCount);
         }
-        
+
         auditTimeoutRef.current = null;
       }, 100);
     };
@@ -72,5 +72,3 @@ export function useDynamicContrast<T extends HTMLElement = HTMLDivElement>({
 }
 
 export default useDynamicContrast;
-
-

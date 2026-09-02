@@ -35,7 +35,7 @@ class TestRunner {
   private results: Array<{
     suite: string;
     test: string;
-    status: 'pass' | 'fail';
+    status: "pass" | "fail";
     duration: number;
     error?: string;
   }> = [];
@@ -50,14 +50,14 @@ class TestRunner {
   suite(name: string, fn: () => void) {
     const suite: TestSuite = { name, tests: [] };
     this.suites.push(suite);
-    
+
     // Execute
     fn();
   }
 
   async run() {
     this.results = [];
-    
+
     for (const suite of this.suites) {
       if (suite.beforeAll) await suite.beforeAll();
 
@@ -71,18 +71,18 @@ class TestRunner {
           } else {
             await test.fn();
           }
-          
+
           this.results.push({
             suite: suite.name,
             test: test.name,
-            status: 'pass',
+            status: "pass",
             duration: Date.now() - startTime,
           });
         } catch (error) {
           this.results.push({
             suite: suite.name,
             test: test.name,
-            status: 'fail',
+            status: "fail",
             duration: Date.now() - startTime,
             error: error instanceof Error ? error.message : String(error),
           });
@@ -101,9 +101,9 @@ class TestRunner {
 
   getStats() {
     const total = this.results.length;
-    const passed = this.results.filter(r => r.status === 'pass').length;
-    const failed = this.results.filter(r => r.status === 'fail').length;
-    
+    const passed = this.results.filter((r) => r.status === "pass").length;
+    const failed = this.results.filter((r) => r.status === "fail").length;
+
     return {
       total,
       passed,
@@ -127,7 +127,7 @@ export const testRunner = TestRunner.getInstance();
 // Test DSL
 export const describe = (name: string, fn: () => void) => testRunner.suite(name, fn);
 export const it = (name: string, fn: () => Promise<void> | void, options?: Partial<TestCase>) => {
-  const suite = testRunner['suites'][testRunner['suites'].length - 1];
+  const suite = testRunner["suites"][testRunner["suites"].length - 1];
   if (suite) {
     suite.tests.push({
       name,
@@ -172,7 +172,7 @@ export const expect = (actual: any): AssertionHelpers => ({
   toThrow: (expected?: string | RegExp) => {
     try {
       actual();
-      throw new Error('Expected function to throw');
+      throw new Error("Expected function to throw");
     } catch (error: unknown) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
       if (expected instanceof RegExp) {
@@ -250,17 +250,17 @@ export async function runTests() {
   const results = await runner.run();
   const stats = runner.getStats();
 
-  console.log('\n=== Test Results ===');
+  console.log("\n=== Test Results ===");
   console.log(`Total: ${stats.total}`);
   console.log(`Passed: ${stats.passed}`);
   console.log(`Failed: ${stats.failed}`);
   console.log(`Pass Rate: ${stats.passRate.toFixed(2)}%`);
 
   if (stats.failed > 0) {
-    console.log('\n=== Failed Tests ===');
+    console.log("\n=== Failed Tests ===");
     results
-      .filter(r => r.status === 'fail')
-      .forEach(r => {
+      .filter((r) => r.status === "fail")
+      .forEach((r) => {
         console.log(`  ${r.suite} > ${r.test}`);
         console.log(`    Error: ${r.error}`);
       });
@@ -268,4 +268,3 @@ export async function runTests() {
 
   return { results, stats };
 }
-

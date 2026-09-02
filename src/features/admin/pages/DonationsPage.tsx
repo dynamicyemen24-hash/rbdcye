@@ -1,9 +1,9 @@
 // DonationsPage - إدارة التبرعات
-import { motion } from 'motion/react';
-import { Heart, RefreshCw, Eye, Trash2, DollarSign, TrendingUp, CheckCircle } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion } from "motion/react";
+import { Heart, RefreshCw, Eye, Trash2, DollarSign, TrendingUp, CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
 
-import { donationsQueries } from '@/lib/postgres';
+import { donationsQueries } from "@/lib/postgres";
 
 interface Donation {
   id: number;
@@ -24,7 +24,7 @@ interface Donation {
 export default function DonationsPage() {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
   const [stats, setStats] = useState({ total: 0, amount: 0, pending: 0, completed: 0 });
 
   const fetchDonations = async () => {
@@ -33,16 +33,16 @@ export default function DonationsPage() {
       const result = await donationsQueries.findAll(100, 0);
       const data = result.rows || [];
       setDonations(data);
-      
+
       // Calculate stats
       const total = data.length;
       const amount = data.reduce((sum: number, d: Donation) => sum + (d.amount || 0), 0);
-      const pending = data.filter((d: Donation) => d.status === 'pending').length;
-      const completed = data.filter((d: Donation) => d.status === 'completed').length;
-      
+      const pending = data.filter((d: Donation) => d.status === "pending").length;
+      const completed = data.filter((d: Donation) => d.status === "completed").length;
+
       setStats({ total, amount, pending, completed });
     } catch (err) {
-      console.error('Error fetching donations:', err);
+      console.error("Error fetching donations:", err);
     } finally {
       setLoading(false);
     }
@@ -57,32 +57,42 @@ export default function DonationsPage() {
       await donationsQueries.updateStatus(String(id), status);
       fetchDonations();
     } catch (err) {
-      console.error('Error updating donation:', err);
+      console.error("Error updating donation:", err);
     }
   };
 
-  const filteredDonations = donations.filter(d => {
-    if (filter === 'all') return true;
+  const filteredDonations = donations.filter((d) => {
+    if (filter === "all") return true;
     return d.status === filter;
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-700';
-      case 'completed': return 'bg-green-100 text-green-700';
-      case 'failed': return 'bg-red-100 text-red-700';
-      case 'refunded': return 'bg-gray-100 text-gray-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case "pending":
+        return "bg-yellow-100 text-yellow-700";
+      case "completed":
+        return "bg-green-100 text-green-700";
+      case "failed":
+        return "bg-red-100 text-red-700";
+      case "refunded":
+        return "bg-gray-100 text-gray-700";
+      default:
+        return "bg-gray-100 text-gray-700";
     }
   };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'pending': return 'معلق';
-      case 'completed': return 'مكتمل';
-      case 'failed': return 'فاشل';
-      case 'refunded': return 'مسترجع';
-      default: return status;
+      case "pending":
+        return "معلق";
+      case "completed":
+        return "مكتمل";
+      case "failed":
+        return "فاشل";
+      case "refunded":
+        return "مسترجع";
+      default:
+        return status;
     }
   };
 
@@ -161,22 +171,20 @@ export default function DonationsPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        {['all', 'pending', 'completed', 'failed', 'refunded'].map(status => (
+        {["all", "pending", "completed", "failed", "refunded"].map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
             className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
               filter === status
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? "bg-emerald-100 text-emerald-700"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
-            {status === 'all' ? 'الكل' : getStatusLabel(status)}
+            {status === "all" ? "الكل" : getStatusLabel(status)}
           </button>
         ))}
-        <div className="mr-auto text-sm text-gray-500">
-          {filteredDonations.length} تبرع
-        </div>
+        <div className="mr-auto text-sm text-gray-500">{filteredDonations.length} تبرع</div>
       </div>
 
       {/* Donations List */}
@@ -199,9 +207,11 @@ export default function DonationsPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="font-bold text-gray-800">
-                      {donation.anonymous ? 'متبرع مجهول' : donation.donor}
+                      {donation.anonymous ? "متبرع مجهول" : donation.donor}
                     </h3>
-                    <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(donation.status)}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs ${getStatusColor(donation.status)}`}
+                    >
                       {getStatusLabel(donation.status)}
                     </span>
                   </div>
@@ -219,19 +229,22 @@ export default function DonationsPage() {
                     <p className="text-sm text-gray-500">ملاحظات: {donation.notes}</p>
                   )}
                   <p className="text-xs text-gray-400 mt-2">
-                    {new Date(donation.created_at).toLocaleString('ar-SA')}
+                    {new Date(donation.created_at).toLocaleString("ar-SA")}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 mr-4">
-                  {donation.status === 'pending' && (
+                  {donation.status === "pending" && (
                     <button
-                      onClick={() => updateStatus(donation.id, 'completed')}
+                      onClick={() => updateStatus(donation.id, "completed")}
                       className="px-3 py-1.5 bg-green-100 text-green-700 rounded-lg text-sm hover:bg-green-200 transition-colors"
                     >
                       تأكيد
                     </button>
                   )}
-                  <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="عرض">
+                  <button
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title="عرض"
+                  >
                     <Eye className="w-5 h-5 text-gray-600" />
                   </button>
                 </div>
@@ -243,4 +256,3 @@ export default function DonationsPage() {
     </div>
   );
 }
-

@@ -1,22 +1,25 @@
 // ============================================================
 // integration.service.ts - تكامل بين الصفحات العامة ولوحة التحكم
 // ============================================================
-import { logger } from '@/utils/monitoring';
+import { logger } from "@/utils/monitoring";
 
-import { DB_SCHEMA, supabase } from './supabase.client';
+import { DB_SCHEMA, supabase } from "./supabase.client";
 
-import type { Subscriber, Donation, Volunteer, ServiceRequest } from '@/shared/types/database';
+import type { Subscriber, Donation, Volunteer, ServiceRequest } from "@/shared/types/database";
 
 // ---------- Public ↔ Admin Bridge ----------
 class IntegrationService {
   // --- Content Sync ---
-  async syncContentToPublic(contentType: 'posts' | 'pages' | 'projects' | 'news', contentId: string) {
+  async syncContentToPublic(
+    contentType: "posts" | "pages" | "projects" | "news",
+    contentId: string
+  ) {
     try {
       const tableMap = {
-        posts: 'posts',
-        pages: 'pages',
-        projects: 'projects',
-        news: 'posts',
+        posts: "posts",
+        pages: "pages",
+        projects: "projects",
+        news: "posts",
       };
 
       const tableName = tableMap[contentType];
@@ -26,14 +29,14 @@ class IntegrationService {
       this.invalidatePublicCache(contentType);
       this.invalidateAdminCache(tableName);
 
-      logger.info('Content synced to public', { contentType, contentId });
+      logger.info("Content synced to public", { contentType, contentId });
     } catch (error) {
-      logger.error('Failed to sync content', error, { contentType, contentId });
+      logger.error("Failed to sync content", error, { contentType, contentId });
     }
   }
 
   // --- Form Submissions → Admin Dashboard ---
-  
+
   // تحويل نموذج الاتصال إلى طلب خدمة
   async submitContactForm(form: {
     name: string;
@@ -47,17 +50,19 @@ class IntegrationService {
       // 1. حفظ في service_requests
       const { error: requestError } = await supabase
         .schema(DB_SCHEMA)
-        .from('service_requests')
-        .insert([{
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          type: 'contact',
-          subject: form.subject,
-          message: form.message,
-          status: 'new',
-          created_at: new Date().toISOString(),
-        }]);
+        .from("service_requests")
+        .insert([
+          {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            type: "contact",
+            subject: form.subject,
+            message: form.message,
+            status: "new",
+            created_at: new Date().toISOString(),
+          },
+        ]);
 
       if (requestError) throw requestError;
 
@@ -66,20 +71,20 @@ class IntegrationService {
         email: form.email,
         name: form.name,
         phone: form.phone,
-        source: 'contact',
+        source: "contact",
       });
 
       // 3. إرسال إشعار للمشرفين (اختياري)
       await this.createNotification({
-        title: 'رسالة جديدة',
+        title: "رسالة جديدة",
         message: `رسالة من ${form.name}: ${form.subject}`,
-        type: 'info',
+        type: "info",
       });
 
-      logger.info('Contact form submitted', { email: form.email });
+      logger.info("Contact form submitted", { email: form.email });
       return { success: true };
     } catch (error) {
-      logger.error('Contact form submission failed', error, { form });
+      logger.error("Contact form submission failed", error, { form });
       return { success: false, error };
     }
   }
@@ -98,18 +103,20 @@ class IntegrationService {
       // 1. حفظ التبرع
       const { data: donation, error: donationError } = await supabase
         .schema(DB_SCHEMA)
-        .from('donations')
-        .insert([{
-          donor_name: form.donor,
-          email: form.email,
-          phone: form.phone,
-          amount: form.amount,
-          project: form.project,
-          method: form.method,
-          type: form.type,
-          status: 'pending',
-          created_at: new Date().toISOString(),
-        }])
+        .from("donations")
+        .insert([
+          {
+            donor_name: form.donor,
+            email: form.email,
+            phone: form.phone,
+            amount: form.amount,
+            project: form.project,
+            method: form.method,
+            type: form.type,
+            status: "pending",
+            created_at: new Date().toISOString(),
+          },
+        ])
         .select()
         .single();
 
@@ -118,19 +125,21 @@ class IntegrationService {
       // 2. إنشاء طربقة متابعة
       const { error: requestError } = await supabase
         .schema(DB_SCHEMA)
-        .from('service_requests')
-        .insert([{
-          name: form.donor,
-          email: form.email,
-          phone: form.phone,
-          type: 'donation',
-          subject: `تبرع لمشروع ${form.project}`,
-          message: `تبرع ${form.type} بمبلغ ${form.amount} ريال عبر ${form.method}`,
-          status: 'new',
-          related_entity: 'donation',
-          related_id: donation.id,
-          created_at: new Date().toISOString(),
-        }]);
+        .from("service_requests")
+        .insert([
+          {
+            name: form.donor,
+            email: form.email,
+            phone: form.phone,
+            type: "donation",
+            subject: `تبرع لمشروع ${form.project}`,
+            message: `تبرع ${form.type} بمبلغ ${form.amount} ريال عبر ${form.method}`,
+            status: "new",
+            related_entity: "donation",
+            related_id: donation.id,
+            created_at: new Date().toISOString(),
+          },
+        ]);
 
       if (requestError) throw requestError;
 
@@ -139,24 +148,24 @@ class IntegrationService {
         email: form.email,
         name: form.donor,
         phone: form.phone,
-        source: 'donation',
+        source: "donation",
       });
 
       // 4. إشعار للمشرف
       await this.createNotification({
-        title: 'تبرع جديد',
+        title: "تبرع جديد",
         message: `تبرع جديد من ${form.donor} بمبلغ ${form.amount} ريال`,
-        type: 'success',
+        type: "success",
       });
 
-      logger.info('Donation submitted', { 
-        donationId: donation.id, 
-        amount: form.amount 
+      logger.info("Donation submitted", {
+        donationId: donation.id,
+        amount: form.amount,
       });
 
       return { success: true, donationId: donation.id };
     } catch (error) {
-      logger.error('Donation submission failed', error, { form });
+      logger.error("Donation submission failed", error, { form });
       return { success: false, error };
     }
   }
@@ -173,17 +182,19 @@ class IntegrationService {
       // 1. حفظ المتطوع
       const { data: volunteer, error: volunteerError } = await supabase
         .schema(DB_SCHEMA)
-        .from('volunteers')
-        .insert([{
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          field: form.field,
-          motivation: form.motivation,
-          status: 'pending',
-          hours: 0,
-          created_at: new Date().toISOString(),
-        }])
+        .from("volunteers")
+        .insert([
+          {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            field: form.field,
+            motivation: form.motivation,
+            status: "pending",
+            hours: 0,
+            created_at: new Date().toISOString(),
+          },
+        ])
         .select()
         .single();
 
@@ -192,19 +203,21 @@ class IntegrationService {
       // 2. إنشاء طلب خدمة
       const { error: requestError } = await supabase
         .schema(DB_SCHEMA)
-        .from('service_requests')
-        .insert([{
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          type: 'volunteer',
-          subject: `طلب تطوع - ${form.field || 'عام'}`,
-          message: form.motivation || 'طلب تطوع من الموقع',
-          status: 'new',
-          related_entity: 'volunteer',
-          related_id: volunteer.id,
-          created_at: new Date().toISOString(),
-        }]);
+        .from("service_requests")
+        .insert([
+          {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            type: "volunteer",
+            subject: `طلب تطوع - ${form.field || "عام"}`,
+            message: form.motivation || "طلب تطوع من الموقع",
+            status: "new",
+            related_entity: "volunteer",
+            related_id: volunteer.id,
+            created_at: new Date().toISOString(),
+          },
+        ]);
 
       if (requestError) throw requestError;
 
@@ -213,32 +226,32 @@ class IntegrationService {
         email: form.email,
         name: form.name,
         phone: form.phone,
-        source: 'volunteer',
+        source: "volunteer",
       });
 
       // 4. إشعار
       await this.createNotification({
-        title: 'متطوع جديد',
-        message: `طلب تطوع من ${form.name} في مجال ${form.field || 'عام'}`,
-        type: 'info',
+        title: "متطوع جديد",
+        message: `طلب تطوع من ${form.name} في مجال ${form.field || "عام"}`,
+        type: "info",
       });
 
-      logger.info('Volunteer application submitted', { 
-        volunteerId: volunteer.id 
+      logger.info("Volunteer application submitted", {
+        volunteerId: volunteer.id,
       });
 
       return { success: true, volunteerId: volunteer.id };
     } catch (error) {
-      logger.error('Volunteer submission failed', error, { form });
+      logger.error("Volunteer submission failed", error, { form });
       return { success: false, error };
     }
   }
 
   // --- Cache Management ---
   invalidatePublicCache(type: string) {
-    const publicRoutes = ['posts', 'pages', 'projects', 'news', 'events'];
-    publicRoutes.forEach(route => {
-      if (type === route || type === 'all') {
+    const publicRoutes = ["posts", "pages", "projects", "news", "events"];
+    publicRoutes.forEach((route) => {
+      if (type === route || type === "all") {
         localStorage.removeItem(`cache_${route}`);
       }
     });
@@ -246,11 +259,18 @@ class IntegrationService {
 
   invalidateAdminCache(table: string) {
     const adminTables = [
-      'posts', 'pages', 'projects', 'donations', 'volunteers',
-      'subscribers', 'service_requests', 'success_stories', 'media_library'
+      "posts",
+      "pages",
+      "projects",
+      "donations",
+      "volunteers",
+      "subscribers",
+      "service_requests",
+      "success_stories",
+      "media_library",
     ];
-    adminTables.forEach(t => {
-      if (table === t || table === 'all') {
+    adminTables.forEach((t) => {
+      if (table === t || table === "all") {
         localStorage.removeItem(t);
       }
     });
@@ -261,66 +281,70 @@ class IntegrationService {
     email: string;
     name?: string;
     phone?: string;
-    source: 'contact' | 'donation' | 'volunteer' | 'website';
+    source: "contact" | "donation" | "volunteer" | "website";
   }) {
     try {
       // Check if exists
       const { data: existing } = await supabase
         .schema(DB_SCHEMA)
-        .from('subscribers')
-        .select('id')
-        .eq('email', data.email)
+        .from("subscribers")
+        .select("id")
+        .eq("email", data.email)
         .maybeSingle();
 
       if (existing) {
         // Update
         await supabase
           .schema(DB_SCHEMA)
-          .from('subscribers')
+          .from("subscribers")
           .update({
             name: data.name,
             phone: data.phone,
             source: data.source,
-            status: 'active',
+            status: "active",
             updated_at: new Date().toISOString(),
           })
-          .eq('email', data.email);
+          .eq("email", data.email);
       } else {
         // Insert
         await supabase
           .schema(DB_SCHEMA)
-          .from('subscribers')
-          .insert([{
-            email: data.email,
-            name: data.name,
-            phone: data.phone,
-            source: data.source,
-            status: 'pending',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          }]);
+          .from("subscribers")
+          .insert([
+            {
+              email: data.email,
+              name: data.name,
+              phone: data.phone,
+              source: data.source,
+              status: "pending",
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            },
+          ]);
       }
     } catch (error) {
-      logger.warn('Subscriber upsert failed', { data, error });
+      logger.warn("Subscriber upsert failed", { data, error });
     }
   }
 
   private async createNotification(notification: {
     title: string;
     message: string;
-    type: 'info' | 'warning' | 'success' | 'error';
+    type: "info" | "warning" | "success" | "error";
   }) {
     try {
       await supabase
         .schema(DB_SCHEMA)
-        .from('admin_notifications')
-        .insert([{
-          ...notification,
-          is_read: false,
-          created_at: new Date().toISOString(),
-        }]);
+        .from("admin_notifications")
+        .insert([
+          {
+            ...notification,
+            is_read: false,
+            created_at: new Date().toISOString(),
+          },
+        ]);
     } catch (error) {
-      logger.warn('Notification creation failed', { notification, error });
+      logger.warn("Notification creation failed", { notification, error });
     }
   }
 }
@@ -337,4 +361,3 @@ export const publicApi = {
   submitVolunteer: (form: Parameters<typeof integrationService.submitVolunteerForm>[0]) =>
     integrationService.submitVolunteerForm(form),
 };
-

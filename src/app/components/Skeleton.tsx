@@ -1,5 +1,5 @@
 // Skeleton Components for Loading States - Enhanced with shimmer effect
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 
 interface SkeletonProps {
   width?: string | number;
@@ -8,16 +8,21 @@ interface SkeletonProps {
   rounded?: boolean;
 }
 
-export function Skeleton({ width = '100%', height = '1rem', className = '', rounded = true }: SkeletonProps) {
+export function Skeleton({
+  width = "100%",
+  height = "1rem",
+  className = "",
+  rounded = true,
+}: SkeletonProps) {
   return (
     <div
-      className={`relative overflow-hidden bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 ${rounded ? 'rounded-lg' : ''} ${className}`}
+      className={`relative overflow-hidden bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 ${rounded ? "rounded-lg" : ""} ${className}`}
       style={{ width, height }}
     >
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-        animate={{ x: ['-100%', '200%'] }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+        animate={{ x: ["-100%", "200%"] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
       />
     </div>
   );
@@ -26,7 +31,10 @@ export function Skeleton({ width = '100%', height = '1rem', className = '', roun
 export function HeroSkeleton() {
   return (
     <div className="relative h-screen min-h-[700px] overflow-hidden bg-gradient-to-br from-[var(--brand-green)]/5 to-[var(--brand-gold)]/5">
-      <div className="container mx-auto px-4 h-full flex flex-col items-center justify-center text-center" dir="rtl">
+      <div
+        className="container mx-auto px-4 h-full flex flex-col items-center justify-center text-center"
+        dir="rtl"
+      >
         <Skeleton width="80px" height="80px" className="rounded-full mb-8" />
         <Skeleton height="3rem" width="60%" className="mb-4 mx-auto" />
         <Skeleton height="1.5rem" width="80%" className="mb-8 mx-auto" />
@@ -44,7 +52,7 @@ export function HeroSkeleton() {
   );
 }
 
-export function CardSkeleton({ className = '' }: { className?: string }) {
+export function CardSkeleton({ className = "" }: { className?: string }) {
   return (
     <div className={`bg-white rounded-2xl border border-gray-200 overflow-hidden ${className}`}>
       <Skeleton height="192px" className="rounded-none" />
@@ -98,5 +106,3 @@ export function FormSkeleton() {
     </div>
   );
 }
-
-

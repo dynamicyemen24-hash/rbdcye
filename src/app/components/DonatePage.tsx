@@ -43,7 +43,10 @@ export function DonatePage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4" style={{ direction: "rtl" }}>
+      <div
+        className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4"
+        style={{ direction: "rtl" }}
+      >
         <div className="bg-white rounded-3xl p-10 max-w-md w-full text-center shadow-xl border border-[var(--border)]">
           <div className="w-20 h-20 rounded-full bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-5">
             <CheckCircle className="w-10 h-10 text-[var(--brand-green)]" />
@@ -51,10 +54,16 @@ export function DonatePage() {
           <h2 className="text-[var(--foreground)] mb-3" style={{ fontWeight: 800 }}>
             جزاك الله خيرًا
           </h2>
-          <p className="text-[var(--muted-foreground)] mb-2" style={{ fontSize: "0.9rem", lineHeight: "1.7" }}>
+          <p
+            className="text-[var(--muted-foreground)] mb-2"
+            style={{ fontSize: "0.9rem", lineHeight: "1.7" }}
+          >
             تم استلام تبرعك بنجاح. ستصلك رسالة تأكيد على بريدك الإلكتروني.
           </p>
-          <div className="mt-5 p-4 rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]" style={{ fontSize: "0.9rem", fontWeight: 700 }}>
+          <div
+            className="mt-5 p-4 rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
+            style={{ fontSize: "0.9rem", fontWeight: 700 }}
+          >
             مبلغ التبرع: {finalAmount.toLocaleString("ar-SA")} ريال
           </div>
           <button
@@ -80,7 +89,10 @@ export function DonatePage() {
           <h1 className="text-[var(--foreground)] mb-3" style={{ fontWeight: 800 }}>
             تبرع وشارك في صنع الأثر
           </h1>
-          <p className="text-[var(--muted-foreground)] max-w-md mx-auto" style={{ fontSize: "0.9rem", lineHeight: "1.7" }}>
+          <p
+            className="text-[var(--muted-foreground)] max-w-md mx-auto"
+            style={{ fontSize: "0.9rem", lineHeight: "1.7" }}
+          >
             تبرعك يصل مباشرة إلى المستحقين ويُحدث فرقًا حقيقيًا في حياتهم
           </p>
         </div>
@@ -90,9 +102,14 @@ export function DonatePage() {
           <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-5">
             {/* Donation Type */}
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>نوع التبرع</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+                نوع التبرع
+              </div>
               <div className="grid grid-cols-2 gap-3">
-                {[{ id: "once", label: "تبرع لمرة واحدة" }, { id: "monthly", label: "تبرع شهري منتظم" }].map((t) => (
+                {[
+                  { id: "once", label: "تبرع لمرة واحدة" },
+                  { id: "monthly", label: "تبرع شهري منتظم" },
+                ].map((t) => (
                   <button
                     key={t.id}
                     type="button"
@@ -112,13 +129,18 @@ export function DonatePage() {
 
             {/* Amount */}
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>اختر مبلغ التبرع (ريال)</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+                اختر مبلغ التبرع (ريال)
+              </div>
               <div className="grid grid-cols-3 gap-2.5 mb-4">
                 {amounts.map((a) => (
                   <button
                     key={a}
                     type="button"
-                    onClick={() => { setAmount(a); setCustomAmount(""); }}
+                    onClick={() => {
+                      setAmount(a);
+                      setCustomAmount("");
+                    }}
                     className={`py-2.5 rounded-xl border-2 transition-all ${
                       amount === a && !customAmount
                         ? "border-[var(--brand-green)] bg-[var(--brand-green)] text-white"
@@ -133,7 +155,10 @@ export function DonatePage() {
               <input
                 type="number"
                 value={customAmount}
-                onChange={(e) => { setCustomAmount(e.target.value); setAmount(null); }}
+                onChange={(e) => {
+                  setCustomAmount(e.target.value);
+                  setAmount(null);
+                }}
                 placeholder="أو أدخل مبلغًا آخر..."
                 className="w-full px-4 py-2.5 border-2 border-[var(--border)] rounded-xl focus:outline-none focus:border-[var(--brand-green)] transition-colors bg-[var(--input-background)]"
                 style={{ fontSize: "0.9rem" }}
@@ -144,7 +169,9 @@ export function DonatePage() {
 
             {/* Project */}
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>وجهة التبرع</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+                وجهة التبرع
+              </div>
               <div className="space-y-2.5">
                 {projects.map((p) => (
                   <button
@@ -159,7 +186,9 @@ export function DonatePage() {
                   >
                     <div
                       className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${
-                        project === p.id ? "border-[var(--brand-green)] bg-[var(--brand-green)]" : "border-[var(--border)]"
+                        project === p.id
+                          ? "border-[var(--brand-green)] bg-[var(--brand-green)]"
+                          : "border-[var(--border)]"
                       }`}
                     >
                       {project === p.id && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -180,7 +209,9 @@ export function DonatePage() {
 
             {/* Donor Info */}
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>بيانات المتبرع</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+                بيانات المتبرع
+              </div>
               <div className="space-y-3">
                 <input
                   required
@@ -212,7 +243,9 @@ export function DonatePage() {
 
             {/* Payment Method */}
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>طريقة الدفع</div>
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
+                طريقة الدفع
+              </div>
               <div className="grid grid-cols-3 gap-2.5">
                 {[
                   { id: "card", label: "بطاقة بنكية", icon: CreditCard },
@@ -231,8 +264,21 @@ export function DonatePage() {
                           : "border-[var(--border)]"
                       }`}
                     >
-                      <Icon className="w-5 h-5" style={{ color: payMethod === m.id ? "var(--brand-green)" : "var(--muted-foreground)" }} />
-                      <span style={{ fontSize: "0.7rem", fontWeight: 600, color: payMethod === m.id ? "var(--brand-green)" : "var(--muted-foreground)" }}>
+                      <Icon
+                        className="w-5 h-5"
+                        style={{
+                          color:
+                            payMethod === m.id ? "var(--brand-green)" : "var(--muted-foreground)",
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "0.7rem",
+                          fontWeight: 600,
+                          color:
+                            payMethod === m.id ? "var(--brand-green)" : "var(--muted-foreground)",
+                        }}
+                      >
                         {m.label}
                       </span>
                     </button>
@@ -261,24 +307,34 @@ export function DonatePage() {
           {/* Summary */}
           <div className="lg:col-span-2 space-y-4">
             <div className="bg-white rounded-2xl p-5 border border-[var(--border)] sticky top-24">
-              <h3 style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "1rem" }}>ملخص تبرعك</h3>
+              <h3 style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "1rem" }}>
+                ملخص تبرعك
+              </h3>
               <div className="space-y-3 mb-5">
                 <div className="flex justify-between">
-                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>المبلغ</span>
-                  <span style={{ fontWeight: 700, fontSize: "0.88rem", color: "var(--brand-green)" }}>
+                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>
+                    المبلغ
+                  </span>
+                  <span
+                    style={{ fontWeight: 700, fontSize: "0.88rem", color: "var(--brand-green)" }}
+                  >
                     {finalAmount > 0 ? `${finalAmount.toLocaleString("ar-SA")} ريال` : "—"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>النوع</span>
+                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>
+                    النوع
+                  </span>
                   <span style={{ fontWeight: 600, fontSize: "0.82rem" }}>
                     {donationType === "once" ? "مرة واحدة" : "شهري"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>الوجهة</span>
+                  <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.82rem" }}>
+                    الوجهة
+                  </span>
                   <span style={{ fontWeight: 600, fontSize: "0.8rem" }}>
-                    {projects.find(p => p.id === project)?.label}
+                    {projects.find((p) => p.id === project)?.label}
                   </span>
                 </div>
               </div>
@@ -286,17 +342,23 @@ export function DonatePage() {
               <div className="border-t border-[var(--border)] pt-4">
                 <div className="flex justify-between items-center">
                   <span style={{ fontWeight: 700, fontSize: "0.9rem" }}>الإجمالي</span>
-                  <span style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--brand-green)" }}>
+                  <span
+                    style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--brand-green)" }}
+                  >
                     {finalAmount > 0 ? `${finalAmount.toLocaleString("ar-SA")} ريال` : "—"}
                   </span>
                 </div>
               </div>
 
               <div className="mt-5 p-3 rounded-xl bg-[var(--brand-green-pale)]">
-                <p className="text-[var(--brand-green)]" style={{ fontSize: "0.75rem", lineHeight: "1.6" }}>
-                  ✓ تبرعك محمي بأعلى معايير الأمان<br />
-                  ✓ ستصلك إيصالات إلكترونية<br />
-                  ✓ يمكن الإلغاء في أي وقت (للشهري)
+                <p
+                  className="text-[var(--brand-green)]"
+                  style={{ fontSize: "0.75rem", lineHeight: "1.6" }}
+                >
+                  ✓ تبرعك محمي بأعلى معايير الأمان
+                  <br />
+                  ✓ ستصلك إيصالات إلكترونية
+                  <br />✓ يمكن الإلغاء في أي وقت (للشهري)
                 </p>
               </div>
             </div>
@@ -327,7 +389,9 @@ export function DonatePage() {
                     >
                       {impact.amount.toLocaleString("ar-SA")}
                     </span>
-                    <span style={{ fontSize: "0.75rem", color: "var(--foreground)" }}>{impact.label}</span>
+                    <span style={{ fontSize: "0.75rem", color: "var(--foreground)" }}>
+                      {impact.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -338,5 +402,3 @@ export function DonatePage() {
     </div>
   );
 }
-
-

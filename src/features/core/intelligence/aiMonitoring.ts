@@ -5,7 +5,7 @@ interface AnomalyDetection {
   currentValue: number;
   expectedRange: { min: number; max: number };
   deviation: number;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: "low" | "medium" | "high" | "critical";
   timestamp: number;
 }
 
@@ -16,8 +16,8 @@ interface PredictionModel {
 }
 
 interface IntelligentInsight {
-  type: 'anomaly' | 'trend' | 'recommendation' | 'alert';
-  severity: 'info' | 'warning' | 'error' | 'critical';
+  type: "anomaly" | "trend" | "recommendation" | "alert";
+  severity: "info" | "warning" | "error" | "critical";
   message: string;
   data: Record<string, any>;
   timestamp: number;
@@ -40,14 +40,15 @@ class IntelligentMonitoring {
   recordMetric(metric: string, value: number) {
     const baseline = this.baselines.get(metric) || { mean: 0, stdDev: 0, samples: [] };
     baseline.samples.push(value);
-    
+
     if (baseline.samples.length > this.MAX_SAMPLES) {
       baseline.samples = baseline.samples.slice(-this.MAX_SAMPLES);
     }
 
     baseline.mean = baseline.samples.reduce((a, b) => a + b, 0) / baseline.samples.length;
     baseline.stdDev = Math.sqrt(
-      baseline.samples.reduce((sum, val) => sum + Math.pow(val - baseline.mean, 2), 0) / baseline.samples.length
+      baseline.samples.reduce((sum, val) => sum + Math.pow(val - baseline.mean, 2), 0) /
+        baseline.samples.length
     );
 
     this.baselines.set(metric, baseline);
@@ -60,7 +61,8 @@ class IntelligentMonitoring {
     if (baseline.stdDev === 0) return;
 
     const zScore = Math.abs((value - baseline.mean) / baseline.stdDev);
-    const deviation = zScore > 3 ? 'critical' : zScore > 2 ? 'high' : zScore > 1.5 ? 'medium' : 'low';
+    const deviation =
+      zScore > 3 ? "critical" : zScore > 2 ? "high" : zScore > 1.5 ? "medium" : "low";
 
     if (zScore > 1.5) {
       this.anomalies.push({
@@ -76,8 +78,9 @@ class IntelligentMonitoring {
       });
 
       this.insights.push({
-        type: 'anomaly',
-        severity: deviation === 'critical' ? 'critical' : deviation === 'high' ? 'error' : 'warning',
+        type: "anomaly",
+        severity:
+          deviation === "critical" ? "critical" : deviation === "high" ? "error" : "warning",
         message: `Anomaly detected in ${metric}: value ${value.toFixed(2)} is ${zScore.toFixed(2)} std deviations from mean`,
         data: { metric, value, zScore, mean: baseline.mean, stdDev: baseline.stdDev },
         timestamp: Date.now(),
@@ -120,24 +123,27 @@ class IntelligentMonitoring {
     const recommendations: IntelligentInsight[] = [];
 
     // Analyze memory usage
-    const memoryBaseline = this.baselines.get('memory.usage');
+    const memoryBaseline = this.baselines.get("memory.usage");
     if (memoryBaseline && memoryBaseline.mean > 80) {
       recommendations.push({
-        type: 'recommendation',
-        severity: 'warning',
-        message: 'Memory usage is consistently high. Consider optimizing or increasing limits.',
-        data: { current: memoryBaseline.mean, recommended: 'Increase heap size or optimize memory usage' },
+        type: "recommendation",
+        severity: "warning",
+        message: "Memory usage is consistently high. Consider optimizing or increasing limits.",
+        data: {
+          current: memoryBaseline.mean,
+          recommended: "Increase heap size or optimize memory usage",
+        },
         timestamp: Date.now(),
       });
     }
 
     // Analyze error rate
-    const errorBaseline = this.baselines.get('error.rate');
+    const errorBaseline = this.baselines.get("error.rate");
     if (errorBaseline && errorBaseline.mean > 5) {
       recommendations.push({
-        type: 'recommendation',
-        severity: 'error',
-        message: 'Error rate is elevated. Review recent changes and add monitoring.',
+        type: "recommendation",
+        severity: "error",
+        message: "Error rate is elevated. Review recent changes and add monitoring.",
         data: { current: errorBaseline.mean, threshold: 5 },
         timestamp: Date.now(),
       });
@@ -153,7 +159,9 @@ export const intelligentMonitoring = IntelligentMonitoring.getInstance();
 class CorrelationEngine {
   private correlations: Map<string, number> = new Map();
 
-  findCorrelations(metrics: Map<string, number[]>): Array<{ metric1: string; metric2: string; correlation: number }> {
+  findCorrelations(
+    metrics: Map<string, number[]>
+  ): Array<{ metric1: string; metric2: string; correlation: number }> {
     const results: Array<{ metric1: string; metric2: string; correlation: number }> = [];
     const metricNames = Array.from(metrics.keys());
 
@@ -195,4 +203,3 @@ class CorrelationEngine {
 }
 
 export const correlationEngine = new CorrelationEngine();
-

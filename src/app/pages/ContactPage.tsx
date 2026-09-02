@@ -1,6 +1,24 @@
 // Contact Page - صفحة التواصل enhanced
 import { motion } from "motion/react";
-import { Mail, Phone, MapPin, Clock, Send, Loader2, Shield, CheckCircle, Facebook, Twitter, Instagram, Youtube, Linkedin, Globe, Users, BarChart3, Heart } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  Loader2,
+  Shield,
+  CheckCircle,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Linkedin,
+  Globe,
+  Users,
+  BarChart3,
+  Heart,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { sendMessage } from "@/api/messages";
@@ -15,47 +33,53 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [contentSource, setContentSource] = useState<'static' | 'sanity'>('static');
+  const [contentSource, setContentSource] = useState<"static" | "sanity">("static");
   const [ticketNumber] = useState(() => Math.floor(Math.random() * 10000));
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
 
   useSEO({
-    title: 'تواصل معنا - رحماء بينهم',
-    description: 'تواصل مع رحماء بينهم - نحن هنا لمساعدتك في أي استفسار أو دعم إنساني',
-    type: 'website',
-    url: 'https://rbdcye.org/contact',
-    keywords: ['تواصل', 'اتصل بنا', 'استفسار', 'دعم', 'رحماء بينهم'],
+    title: "تواصل معنا - رحماء بينهم",
+    description: "تواصل مع رحماء بينهم - نحن هنا لمساعدتك في أي استفسار أو دعم إنساني",
+    type: "website",
+    url: "https://rbdcye.org/contact",
+    keywords: ["تواصل", "اتصل بنا", "استفسار", "دعم", "رحماء بينهم"],
   });
 
   // Enhanced storytelling content
-  const contactStory = "نسعى دائماً لربط بين أهل الخير والمحتاجين عبر قنوات اتصال فعالة ومتاحة. سواء كنت تتبرع، أو تستفسر عن مشروع، أو تتطوع بوقتك، فنحن هنا لنساعدك في كل خطوة من عملية التبرع والتواصل.";
+  const contactStory =
+    "نسعى دائماً لربط بين أهل الخير والمحتاجين عبر قنوات اتصال فعالة ومتاحة. سواء كنت تتبرع، أو تستفسر عن مشروع، أو تتطوع بوقتك، فنحن هنا لنساعدك في كل خطوة من عملية التبرع والتواصل.";
 
   // تحميل البيانات من content-bridge
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
+    contentManager
+      .getImpact()
       .then((result: any) => {
         if (!cancelled) {
-          setContentSource(result.source === 'sanity' || result.source === 'cache' ? 'sanity' : 'static');
+          setContentSource(
+            result.source === "sanity" || result.source === "cache" ? "sanity" : "static"
+          );
         }
       })
       .catch(() => {
-        if (!cancelled) setContentSource('static');
+        if (!cancelled) setContentSource("static");
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    
+
     try {
       const result = await sendMessage({
         name: formData.name,
@@ -64,15 +88,19 @@ export default function ContactPage() {
         subject: formData.subject,
         message: formData.message,
       });
-      
+
       if (result.success) {
         setSubmitted(true);
-        try { analyticsService.generateDonorReport(); } catch { /* non-critical */ }
+        try {
+          analyticsService.generateDonorReport();
+        } catch {
+          /* non-critical */
+        }
       } else {
-        setError(result.error || 'حدث خطأ في إرسال الرسالة');
+        setError(result.error || "حدث خطأ في إرسال الرسالة");
       }
     } catch (_err) {
-      setError('خطأ في الاتصال بالخادم');
+      setError("خطأ في الاتصال بالخادم");
     } finally {
       setIsSubmitting(false);
     }
@@ -86,37 +114,42 @@ export default function ContactPage() {
   };
 
   const socialLinks = [
-    { name: 'facebook', icon: Facebook, url: 'https://facebook.com/rbdcye', color: '#1877F2' },
-    { name: 'twitter', icon: Twitter, url: 'https://twitter.com/rbdcye', color: '#1DA1F2' },
-    { name: 'instagram', icon: Instagram, url: 'https://instagram.com/rbdcye', color: '#E4405F' },
-    { name: 'youtube', icon: Youtube, url: 'https://youtube.com/@rbdcye', color: '#FF0000' },
-    { name: 'linkedin', icon: Linkedin, url: 'https://linkedin.com/company/rbdcye', color: '#0077B5' },
+    { name: "facebook", icon: Facebook, url: "https://facebook.com/rbdcye", color: "#1877F2" },
+    { name: "twitter", icon: Twitter, url: "https://twitter.com/rbdcye", color: "#1DA1F2" },
+    { name: "instagram", icon: Instagram, url: "https://instagram.com/rbdcye", color: "#E4405F" },
+    { name: "youtube", icon: Youtube, url: "https://youtube.com/@rbdcye", color: "#FF0000" },
+    {
+      name: "linkedin",
+      icon: Linkedin,
+      url: "https://linkedin.com/company/rbdcye",
+      color: "#0077B5",
+    },
   ];
 
   const contactInfo = [
     {
       icon: Phone,
-      title: 'الهاتف',
-      details: ['+967 780 777 007'],
-      color: 'var(--brand-green)',
+      title: "الهاتف",
+      details: ["+967 780 777 007"],
+      color: "var(--brand-green)",
     },
     {
       icon: Mail,
-      title: 'البريد الإلكتروني',
-      details: ['info@rbdcye.org', 'donations@rbdcye.org'],
-      color: 'var(--brand-gold)',
+      title: "البريد الإلكتروني",
+      details: ["info@rbdcye.org", "donations@rbdcye.org"],
+      color: "var(--brand-gold)",
     },
     {
       icon: MapPin,
-      title: 'العنوان',
-      details: ['صنعاء - شارع الزبيري', 'اليمن'],
-      color: '#2563EB',
+      title: "العنوان",
+      details: ["صنعاء - شارع الزبيري", "اليمن"],
+      color: "#2563EB",
     },
     {
       icon: Clock,
-      title: 'ساعات العمل',
-      details: ['السبت - الخميس: 8 ص - 4 م', 'الجمعة: مغلق'],
-      color: '#7C3AED',
+      title: "ساعات العمل",
+      details: ["السبت - الخميس: 8 ص - 4 م", "الجمعة: مغلق"],
+      color: "#7C3AED",
     },
   ];
 
@@ -162,10 +195,10 @@ export default function ContactPage() {
       >
         <StatsGrid
           stats={[
-            { label: 'متطوع', value: 'متطوعون', icon: Users, color: 'green' },
-            { label: 'مشروع', value: 'مشاريع', icon: BarChart3, color: 'gold' },
-            { label: 'دولة', value: 'عدة', icon: Globe, color: 'blue' },
-            { label: 'مستفيد', value: '50K+', icon: Heart, color: 'purple' },
+            { label: "متطوع", value: "متطوعون", icon: Users, color: "green" },
+            { label: "مشروع", value: "مشاريع", icon: BarChart3, color: "gold" },
+            { label: "دولة", value: "عدة", icon: Globe, color: "blue" },
+            { label: "مستفيد", value: "50K+", icon: Heart, color: "purple" },
           ]}
           columns={4}
           variant="glass"
@@ -188,13 +221,19 @@ export default function ContactPage() {
                   className="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${info.color}15` }}>
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${info.color}15` }}
+                    >
                       <Icon className="w-6 h-6" style={{ color: info.color }} />
                     </div>
                     <div>
                       <h3 className="font-bold text-[var(--foreground)] mb-1">{info.title}</h3>
                       {info.details.map((detail, j) => (
-                        <p key={j} className="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        <p
+                          key={j}
+                          className="text-[var(--muted-foreground)] text-sm leading-relaxed"
+                        >
                           {detail}
                         </p>
                       ))}
@@ -278,25 +317,26 @@ export default function ContactPage() {
                   {error}
                 </motion.div>
               )}
-              
+
               {/* Story reminder above form */}
               <div className="mb-6 p-4 bg-[var(--brand-green-pale)] rounded-xl border border-[var(--brand-green)]/20">
                 <div className="flex items-start gap-3">
                   <Shield className="w-5 h-5 text-[var(--brand-green)] flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-[var(--foreground)]">
-                      {contactStory}
-                    </p>
+                    <p className="font-medium text-[var(--foreground)]">{contactStory}</p>
                     <p className="text-[var(--muted-foreground)] text-sm">
                       نحن هنا لاستقبال اتصالاتك واستفساراتك في أي وقت
                     </p>
                   </div>
                 </div>
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                  >
                     الاسم الكامل *
                   </label>
                   <input
@@ -311,7 +351,10 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                  >
                     البريد الإلكتروني *
                   </label>
                   <input
@@ -328,7 +371,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                >
                   رقم الهاتف
                 </label>
                 <input
@@ -343,7 +389,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                >
                   الموضوع *
                 </label>
                 <input
@@ -359,7 +408,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-semibold text-[var(--foreground)] mb-2"
+                >
                   الرسالة *
                 </label>
                 <textarea
@@ -384,7 +436,7 @@ export default function ContactPage() {
                 ) : (
                   <Send className="w-5 h-5" />
                 )}
-                {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
+                {isSubmitting ? "جاري الإرسال..." : "إرسال الرسالة"}
               </button>
 
               {/* Security Badge */}
@@ -398,8 +450,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
-

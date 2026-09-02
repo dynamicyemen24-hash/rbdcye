@@ -1,9 +1,16 @@
 // Endowment Page - الوقف الخيري
 import { motion } from "motion/react";
 import {
-  Building2, Heart, TrendingUp, Users, Shield,
-  Clock, Target, Award,
-  Infinity, Landmark
+  Building2,
+  Heart,
+  TrendingUp,
+  Users,
+  Shield,
+  Clock,
+  Target,
+  Award,
+  Infinity,
+  Landmark,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,8 +20,8 @@ export default function EndowmentPage() {
   const navigate = useNavigate();
 
   useSEO({
-    title: 'الوقف الخيري - رحماء بينهم',
-    description: 'الوقف الخيري المستدام لـ رحماء بينهم',
+    title: "الوقف الخيري - رحماء بينهم",
+    description: "الوقف الخيري المستدام لـ رحماء بينهم",
   });
 
   const endowmentFeatures = [
@@ -75,7 +82,7 @@ export default function EndowmentPage() {
           <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -86,25 +93,25 @@ export default function EndowmentPage() {
               <Landmark className="w-4 h-4 text-white" />
               <span className="text-white text-sm font-medium">الوقف الخيري</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
               الوقف الخيري <span className="text-[var(--brand-gold-light)]">المستدام</span>
             </h1>
-            
+
             <p className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
-              اجعل أثر عطائك مستمراً للأبد. ساهم في بناء وقف خيري يضمن استمرارية 
-              المشاريع الإنسانية والتنموية للأجيال القادمة.
+              اجعل أثر عطائك مستمراً للأبد. ساهم في بناء وقف خيري يضمن استمرارية المشاريع الإنسانية
+              والتنموية للأجيال القادمة.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
               <button
-                onClick={() => navigate('/donate')}
+                onClick={() => navigate("/donate")}
                 className="px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 ساهم في الوقف
               </button>
               <button
-                onClick={() => navigate('/contact')}
+                onClick={() => navigate("/contact")}
                 className="px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 transition-all"
               >
                 استفسر عن الوقف
@@ -220,7 +227,9 @@ export default function EndowmentPage() {
                 <div className="mb-4">
                   <div className="flex items-center justify-between text-sm mb-1.5">
                     <span className="text-[var(--muted-foreground)]">تم جمع</span>
-                    <span className="font-semibold text-[var(--brand-green)]">{project.raised}</span>
+                    <span className="font-semibold text-[var(--brand-green)]">
+                      {project.raised}
+                    </span>
                   </div>
                   <div className="h-2.5 bg-[var(--muted)] rounded-full overflow-hidden">
                     <motion.div
@@ -238,7 +247,7 @@ export default function EndowmentPage() {
                 </div>
 
                 <button
-                  onClick={() => navigate('/donate')}
+                  onClick={() => navigate("/donate")}
                   className="w-full py-3 bg-[var(--brand-green)] text-white rounded-xl font-semibold hover:bg-[var(--brand-green-light)] transition-colors"
                 >
                   ساهم الآن
@@ -264,7 +273,7 @@ export default function EndowmentPage() {
               انضم إلى الواقفين واجعل لك صدقة جارية إلى يوم القيامة
             </p>
             <button
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate("/contact")}
               className="px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
               تواصل معنا للاستفسار
@@ -275,4 +284,3 @@ export default function EndowmentPage() {
     </div>
   );
 }
-

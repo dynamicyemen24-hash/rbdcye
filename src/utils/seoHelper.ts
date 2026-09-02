@@ -4,36 +4,42 @@
 
 export const seoConfig = {
   // ????? ????? ?????
-  imageFallback: '/images/defaults/project-default.svg',
-  ogImage: '/og-image.png',
-  
+  imageFallback: "/images/defaults/project-default.svg",
+  ogImage: "/og-image.png",
+
   // ????? meta tags
-  generateMeta: (data: {
-    title?: string;
-    description?: string;
-    image?: string;
-    url?: string;
-  } = {}) => ({
-    title: data.title || 'Rahmaa Baynahum',
-    description: data.description || '?????? ?????????? ???????? ?????? ?? ????? ????? ??????? ???????? ??????',
-    image: data.image || '/og-image.png',
-    url: data.url || 'https://rbdcye.org',
+  generateMeta: (
+    data: {
+      title?: string;
+      description?: string;
+      image?: string;
+      url?: string;
+    } = {}
+  ) => ({
+    title: data.title || "Rahmaa Baynahum",
+    description:
+      data.description ||
+      "?????? ?????????? ???????? ?????? ?? ????? ????? ??????? ???????? ??????",
+    image: data.image || "/og-image.png",
+    url: data.url || "https://rbdcye.org",
   }),
-  
+
   // ????? ???????? JSON-LD
-  generateSchema: (data: {
-    name?: string;
-    url?: string;
-  } = {}) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: data.name || 'Rahmaa Baynahum',
-    url: data.url || 'https://rbdcye.org',
-    logo: '/logo.png',
+  generateSchema: (
+    data: {
+      name?: string;
+      url?: string;
+    } = {}
+  ) => ({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: data.name || "Rahmaa Baynahum",
+    url: data.url || "https://rbdcye.org",
+    logo: "/logo.png",
     sameAs: [
-      'https://facebook.com/rbdcye',
-      'https://twitter.com/rbdcye',
-      'https://youtube.com/rbdcye',
+      "https://facebook.com/rbdcye",
+      "https://twitter.com/rbdcye",
+      "https://youtube.com/rbdcye",
     ],
   }),
 };
@@ -43,21 +49,18 @@ export const seoConfig = {
  */
 export function generateOrganizationSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'NGO',
-    name: '????? ?????',
-    alternateName: 'rbdcye Foundation',
-    url: 'https://rbdcye.org',
-    logo: 'https://rbdcye.org/favicon.svg',
-    description: '????? ??????? ?????? ???? ??? ????? ?????? ??????? ?????? ??????? ?????????',
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    name: "????? ?????",
+    alternateName: "rbdcye Foundation",
+    url: "https://rbdcye.org",
+    logo: "https://rbdcye.org/favicon.svg",
+    description: "????? ??????? ?????? ???? ??? ????? ?????? ??????? ?????? ??????? ?????????",
     address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'YE'
+      "@type": "PostalAddress",
+      addressCountry: "YE",
     },
-    sameAs: [
-      'https://facebook.com/rbdcye',
-      'https://twitter.com/rbdcye'
-    ]
+    sameAs: ["https://facebook.com/rbdcye", "https://twitter.com/rbdcye"],
   };
 }
 
@@ -73,17 +76,16 @@ export function generateArticleSchema(data: {
   author?: string;
 }) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+    "@context": "https://schema.org",
+    "@type": "Article",
     headline: data.title,
     description: data.description,
-    image: data.image || '/og-image.png',
+    image: data.image || "/og-image.png",
     datePublished: data.datePublished,
     dateModified: data.dateModified || data.datePublished,
     author: {
-      '@type': 'Organization',
-      name: '????? ????? ?????'
-    }
+      "@type": "Organization",
+      name: "????? ????? ?????",
+    },
   };
 }
-

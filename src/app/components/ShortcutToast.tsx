@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'motion/react';
-import { Zap, X } from 'lucide-react';
+import { AnimatePresence, motion } from "motion/react";
+import { Zap, X } from "lucide-react";
 
 interface ShortcutToastProps {
   message: string | null;
@@ -42,5 +42,3 @@ export function ShortcutToast({ message, onDismiss }: ShortcutToastProps) {
 }
 
 export default ShortcutToast;
-
-

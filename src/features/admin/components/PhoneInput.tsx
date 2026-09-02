@@ -1,5 +1,5 @@
-import { ChevronDown, Search, X } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import { ChevronDown, Search, X } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface Country {
   code: string;
@@ -20,45 +20,45 @@ interface PhoneInputProps {
 
 // دول عربية افتراضية
 const DEFAULT_COUNTRIES: Country[] = [
-  { code: 'SA', name: 'السعودية', phone_code: '+966', flag: '🇸🇦' },
-  { code: 'AE', name: 'الإمارات', phone_code: '+971', flag: '🇦🇪' },
-  { code: 'KW', name: 'الكويت', phone_code: '+965', flag: '🇰🇼' },
-  { code: 'QA', name: 'قطر', phone_code: '+974', flag: '🇶🇦' },
-  { code: 'OM', name: 'عمان', phone_code: '+968', flag: '🇴🇲' },
-  { code: 'BH', name: 'البحرين', phone_code: '+973', flag: '🇧🇭' },
-  { code: 'JO', name: 'الأردن', phone_code: '+962', flag: '🇯🇴' },
-  { code: 'LB', name: 'لبنان', phone_code: '+961', flag: '🇱🇧' },
-  { code: 'EG', name: 'مصر', phone_code: '+20', flag: '🇪🇬' },
-  { code: 'SY', name: 'سوريا', phone_code: '+963', flag: '🇸🇾' },
-  { code: 'IQ', name: 'العراق', phone_code: '+964', flag: '🇮🇶' },
-  { code: 'YE', name: 'اليمن', phone_code: '+967', flag: '🇾🇪' },
-  { code: 'PS', name: 'فلسطين', phone_code: '+970', flag: '🇵🇸' },
-  { code: 'LY', name: 'ليبيا', phone_code: '+218', flag: '🇱🇾' },
-  { code: 'TN', name: 'تونس', phone_code: '+216', flag: '🇹🇳' },
-  { code: 'DZ', name: 'الجزائر', phone_code: '+213', flag: '🇩🇿' },
-  { code: 'MA', name: 'المغرب', phone_code: '+212', flag: '🇲🇦' },
-  { code: 'MR', name: 'موريتانيا', phone_code: '+222', flag: '🇲🇷' },
-  { code: 'SD', name: 'السودان', phone_code: '+249', flag: '🇸🇩' },
+  { code: "SA", name: "السعودية", phone_code: "+966", flag: "🇸🇦" },
+  { code: "AE", name: "الإمارات", phone_code: "+971", flag: "🇦🇪" },
+  { code: "KW", name: "الكويت", phone_code: "+965", flag: "🇰🇼" },
+  { code: "QA", name: "قطر", phone_code: "+974", flag: "🇶🇦" },
+  { code: "OM", name: "عمان", phone_code: "+968", flag: "🇴🇲" },
+  { code: "BH", name: "البحرين", phone_code: "+973", flag: "🇧🇭" },
+  { code: "JO", name: "الأردن", phone_code: "+962", flag: "🇯🇴" },
+  { code: "LB", name: "لبنان", phone_code: "+961", flag: "🇱🇧" },
+  { code: "EG", name: "مصر", phone_code: "+20", flag: "🇪🇬" },
+  { code: "SY", name: "سوريا", phone_code: "+963", flag: "🇸🇾" },
+  { code: "IQ", name: "العراق", phone_code: "+964", flag: "🇮🇶" },
+  { code: "YE", name: "اليمن", phone_code: "+967", flag: "🇾🇪" },
+  { code: "PS", name: "فلسطين", phone_code: "+970", flag: "🇵🇸" },
+  { code: "LY", name: "ليبيا", phone_code: "+218", flag: "🇱🇾" },
+  { code: "TN", name: "تونس", phone_code: "+216", flag: "🇹🇳" },
+  { code: "DZ", name: "الجزائر", phone_code: "+213", flag: "🇩🇿" },
+  { code: "MA", name: "المغرب", phone_code: "+212", flag: "🇲🇦" },
+  { code: "MR", name: "موريتانيا", phone_code: "+222", flag: "🇲🇷" },
+  { code: "SD", name: "السودان", phone_code: "+249", flag: "🇸🇩" },
 ];
 
 export function PhoneInput({
   value,
   onChange,
   countries = DEFAULT_COUNTRIES,
-  defaultCountry = 'SA',
-  placeholder = 'رقم الهاتف',
-  className = '',
+  defaultCountry = "SA",
+  placeholder = "رقم الهاتف",
+  className = "",
   error,
 }: PhoneInputProps) {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // تعيين الدولة الافتراضية
-    const defaultCountryData = countries.find(c => c.code === defaultCountry);
+    const defaultCountryData = countries.find((c) => c.code === defaultCountry);
     if (defaultCountryData) {
       setSelectedCountry(defaultCountryData);
     }
@@ -69,14 +69,14 @@ export function PhoneInput({
       if (match) {
         const code = match[1];
         const number = match[2];
-        const country = countries.find(c => c.phone_code === code);
+        const country = countries.find((c) => c.phone_code === code);
         if (country) {
           setSelectedCountry(country);
           setPhoneNumber(number);
         }
       } else {
         // إذا كان الرقم لا يحتوي على رمز الدولة
-        setPhoneNumber(value.replace(/\D/g, ''));
+        setPhoneNumber(value.replace(/\D/g, ""));
       }
     }
   }, [value, countries, defaultCountry]);
@@ -88,30 +88,31 @@ export function PhoneInput({
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredCountries = countries.filter(country =>
-    country.name.includes(searchTerm) ||
-    country.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    country.phone_code.includes(searchTerm)
+  const filteredCountries = countries.filter(
+    (country) =>
+      country.name.includes(searchTerm) ||
+      country.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      country.phone_code.includes(searchTerm)
   );
 
   const handleCountrySelect = (country: Country) => {
     setSelectedCountry(country);
     setIsOpen(false);
-    setSearchTerm('');
-    
+    setSearchTerm("");
+
     // تحديث القيمة الكاملة
     const fullNumber = `${country.phone_code}${phoneNumber}`;
     onChange(fullNumber, country.code);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newNumber = e.target.value.replace(/\D/g, '');
+    const newNumber = e.target.value.replace(/\D/g, "");
     setPhoneNumber(newNumber);
-    
+
     if (selectedCountry) {
       const fullNumber = `${selectedCountry.phone_code}${newNumber}`;
       onChange(fullNumber, selectedCountry.code);
@@ -135,7 +136,9 @@ export function PhoneInput({
           ) : (
             <span className="text-gray-500 text-sm">+966</span>
           )}
-          <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          />
         </button>
 
         {/* حقل رقم الهاتف */}
@@ -165,7 +168,7 @@ export function PhoneInput({
               />
               {searchTerm && (
                 <button
-                  onClick={() => setSearchTerm('')}
+                  onClick={() => setSearchTerm("")}
                   className="absolute left-3 top-1/2 -translate-y-1/2"
                 >
                   <X className="w-4 h-4 text-gray-400 hover:text-gray-600" />
@@ -198,10 +201,7 @@ export function PhoneInput({
       )}
 
       {/* رسالة الخطأ */}
-      {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
-      )}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
 // Performance Hook - Web Vitals Monitoring
 // Professional Performance Tracking for Production
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from "react";
 
 interface PerformanceMetrics {
   LCP: number | null; // Largest Contentful Paint
@@ -15,13 +15,13 @@ export function usePerformance() {
   const reportWebVitals = useCallback((metrics: PerformanceMetrics) => {
     if (import.meta.env.PROD) {
       // Send to analytics service
-      fetch('/api/analytics/performance', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      fetch("/api/analytics/performance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(metrics),
       }).catch(console.error);
     } else {
-      if (import.meta.env.DEV) console.log('Web Vitals:', metrics);
+      if (import.meta.env.DEV) console.log("Web Vitals:", metrics);
     }
   }, []);
 
@@ -41,7 +41,7 @@ export function usePerformance() {
       const lastEntry = entries[entries.length - 1];
       metrics.LCP = lastEntry.startTime;
     });
-    lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+    lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
 
     // FCP - First Contentful Paint
     const fcpObserver = new PerformanceObserver((entryList) => {
@@ -49,19 +49,19 @@ export function usePerformance() {
       const firstEntry = entries[0];
       metrics.FCP = firstEntry.startTime;
     });
-    fcpObserver.observe({ entryTypes: ['first-contentful-paint'] });
+    fcpObserver.observe({ entryTypes: ["first-contentful-paint"] });
 
     // TTFB - Time to First Byte
     const ttfbObserver = new PerformanceObserver((entryList) => {
       const entries = entryList.getEntries();
-      const navigationEntry = entries.find((e) => e.name === 'navigation');
+      const navigationEntry = entries.find((e) => e.name === "navigation");
       if (navigationEntry) {
         // Type assertion for browser-specific PerformanceNavigationTiming
         const navEntry = navigationEntry as PerformanceNavigationTiming;
         metrics.TTFB = navEntry.responseStart;
       }
     });
-    ttfbObserver.observe({ entryTypes: ['navigation'] });
+    ttfbObserver.observe({ entryTypes: ["navigation"] });
 
     // CLS - Cumulative Layout Shift
     let clsValue = 0;
@@ -73,7 +73,7 @@ export function usePerformance() {
       }
       metrics.CLS = clsValue;
     });
-    clsObserver.observe({ entryTypes: ['layout-shift'] });
+    clsObserver.observe({ entryTypes: ["layout-shift"] });
 
     // FID - First Input Delay
     const fidObserver = new PerformanceObserver((entryList) => {
@@ -86,7 +86,7 @@ export function usePerformance() {
         reportWebVitals(metrics);
       }
     });
-    fidObserver.observe({ entryTypes: ['first-input'] });
+    fidObserver.observe({ entryTypes: ["first-input"] });
 
     // Cleanup
     return () => {
@@ -103,16 +103,15 @@ export function usePerformance() {
 
 // Performance Marks Utility
 export function markPerformance(name: string) {
-  if (typeof performance !== 'undefined') {
+  if (typeof performance !== "undefined") {
     performance.mark(name);
   }
 }
 
 export function measurePerformance(name: string, startMark: string, endMark: string) {
-  if (typeof performance !== 'undefined') {
+  if (typeof performance !== "undefined") {
     performance.measure(name, startMark, endMark);
     return performance.getEntriesByName(name)[0]?.duration || 0;
   }
   return 0;
 }
-

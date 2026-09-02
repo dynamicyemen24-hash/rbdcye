@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
 interface SkipToContentProps {
   targetId?: string;
 }
 
-export function SkipToContent({ targetId = 'main-content' }: SkipToContentProps) {
+export function SkipToContent({ targetId = "main-content" }: SkipToContentProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const target = document.getElementById(targetId);
     if (target) {
       target.tabIndex = -1;
       target.focus();
-      target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -27,5 +27,3 @@ export function SkipToContent({ targetId = 'main-content' }: SkipToContentProps)
 }
 
 export default SkipToContent;
-
-

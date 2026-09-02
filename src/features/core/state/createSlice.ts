@@ -1,9 +1,7 @@
 // Advanced State Management - Enterprise-grade Redux-like implementation
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from "react";
 
-type Action<T extends string, P = void> = P extends void
-  ? { type: T }
-  : { type: T; payload: P };
+type Action<T extends string, P = void> = P extends void ? { type: T } : { type: T; payload: P };
 
 type Listener = () => void;
 
@@ -47,7 +45,7 @@ export function createSlice<S, A extends Action<string, any>>({
   const useSelector = <R>(selector: (state: S) => R): R => {
     const [, forceRender] = useState({});
     const selected = useMemo(() => selector(state), [state, selector]);
-    
+
     useCallback(() => {
       forceRender({});
     }, []);
@@ -61,10 +59,9 @@ export function createSlice<S, A extends Action<string, any>>({
 // Hook for using slices
 export function useSlice<S, A extends Action<string, any>>(slice: Slice<S, A>) {
   const state = slice.getState();
-  
+
   return {
     state,
     dispatch: slice.dispatch,
   };
 }
-

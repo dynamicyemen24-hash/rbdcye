@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion, Variants } from 'motion/react';
+import { motion, useReducedMotion, Variants } from "motion/react";
 
 interface PageTransitionProps {
   children: React.ReactNode;
@@ -50,5 +50,3 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
 };
 
 export default PageTransition;
-
-

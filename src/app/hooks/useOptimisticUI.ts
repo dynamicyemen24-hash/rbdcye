@@ -1,5 +1,5 @@
 // Optimistic UI Hook - Instant Feedback for Better UX
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from "react";
 
 interface OptimisticState<T> {
   data: T;
@@ -15,65 +15,70 @@ export function useOptimisticUI<T>(initialData: T) {
     error: null,
     isOptimistic: false,
   });
-  
-  const pendingOperations = useRef<Map<string, { previousData: T; rollback: () => void }>>(new Map());
 
-  const executeOptimistic = useCallback((
-    operationId: string,
-    optimisticData: T,
-    actualOperation: () => Promise<T>,
-    rollbackData?: T
-  ): Promise<T> => {
-    // Store previous data for rollback
-    pendingOperations.current.set(operationId, {
-      previousData: state.data,
-      rollback: () => {
-        if (rollbackData) {
-          setState(prev => ({ ...prev, data: rollbackData, isOptimistic: false }));
-        }
-      }
-    });
+  const pendingOperations = useRef<Map<string, { previousData: T; rollback: () => void }>>(
+    new Map()
+  );
 
-    // Immediately update UI with optimistic data
-    setState(prev => ({
-      ...prev,
-      data: optimisticData,
-      isLoading: true,
-      error: null,
-      isOptimistic: true,
-    }));
-
-    return actualOperation()
-      .then((result) => {
-        // Success - update with real data
-        pendingOperations.current.delete(operationId);
-        setState(prev => ({
-          ...prev,
-          data: result,
-          isLoading: false,
-          isOptimistic: false,
-        }));
-        return result;
-      })
-      .catch((error) => {
-        // Failure - rollback to previous state
-        const pending = pendingOperations.current.get(operationId);
-        if (pending) {
-          pending.rollback();
-          pendingOperations.current.delete(operationId);
-        }
-        setState(prev => ({
-          ...prev,
-          isLoading: false,
-          isOptimistic: false,
-          error,
-        }));
-        throw error;
+  const executeOptimistic = useCallback(
+    (
+      operationId: string,
+      optimisticData: T,
+      actualOperation: () => Promise<T>,
+      rollbackData?: T
+    ): Promise<T> => {
+      // Store previous data for rollback
+      pendingOperations.current.set(operationId, {
+        previousData: state.data,
+        rollback: () => {
+          if (rollbackData) {
+            setState((prev) => ({ ...prev, data: rollbackData, isOptimistic: false }));
+          }
+        },
       });
-  }, [state.data]);
+
+      // Immediately update UI with optimistic data
+      setState((prev) => ({
+        ...prev,
+        data: optimisticData,
+        isLoading: true,
+        error: null,
+        isOptimistic: true,
+      }));
+
+      return actualOperation()
+        .then((result) => {
+          // Success - update with real data
+          pendingOperations.current.delete(operationId);
+          setState((prev) => ({
+            ...prev,
+            data: result,
+            isLoading: false,
+            isOptimistic: false,
+          }));
+          return result;
+        })
+        .catch((error) => {
+          // Failure - rollback to previous state
+          const pending = pendingOperations.current.get(operationId);
+          if (pending) {
+            pending.rollback();
+            pendingOperations.current.delete(operationId);
+          }
+          setState((prev) => ({
+            ...prev,
+            isLoading: false,
+            isOptimistic: false,
+            error,
+          }));
+          throw error;
+        });
+    },
+    [state.data]
+  );
 
   const updateOptimistic = useCallback((operationId: string, optimisticData: T) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       data: optimisticData,
       isOptimistic: true,
@@ -82,7 +87,7 @@ export function useOptimisticUI<T>(initialData: T) {
 
   const confirmOptimistic = useCallback((operationId: string) => {
     pendingOperations.current.delete(operationId);
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       isOptimistic: false,
     }));
@@ -94,7 +99,7 @@ export function useOptimisticUI<T>(initialData: T) {
       pending.rollback();
       pendingOperations.current.delete(operationId);
     } else {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         data: rollbackData,
         isOptimistic: false,
@@ -103,7 +108,7 @@ export function useOptimisticUI<T>(initialData: T) {
   }, []);
 
   const clearError = useCallback(() => {
-    setState(prev => ({ ...prev, error: null }));
+    setState((prev) => ({ ...prev, error: null }));
   }, []);
 
   const reset = useCallback((newData: T) => {
@@ -144,8 +149,8 @@ export function useBatchOptimistic<T>(initialData: T[]) {
 
   const optimisticAdd = useCallback((item: T, operation: () => Promise<T>) => {
     const tempId = `temp_${Date.now()}_${Math.random()}`;
-    
-    setState(prev => ({
+
+    setState((prev) => ({
       ...prev,
       data: [...prev.data, { ...item, id: tempId } as any],
       pending: new Set(prev.pending).add(tempId),
@@ -153,24 +158,24 @@ export function useBatchOptimistic<T>(initialData: T[]) {
 
     return operation()
       .then((result) => {
-        setState(prev => {
+        setState((prev) => {
           const newPending = new Set(prev.pending);
           newPending.delete(tempId);
           return {
             ...prev,
-            data: prev.data.map(item => (item as any).id === tempId ? result : item),
+            data: prev.data.map((item) => ((item as any).id === tempId ? result : item)),
             pending: newPending,
           };
         });
         return result;
       })
       .catch((error) => {
-        setState(prev => {
+        setState((prev) => {
           const newErrors = new Map(prev.errors);
           newErrors.set(tempId, error);
           return {
             ...prev,
-            data: prev.data.filter(item => (item as any).id !== tempId),
+            data: prev.data.filter((item) => (item as any).id !== tempId),
             pending: new Set(prev.pending).delete(tempId) ? prev.pending : new Set(prev.pending),
             errors: newErrors,
           };
@@ -179,94 +184,97 @@ export function useBatchOptimistic<T>(initialData: T[]) {
       });
   }, []);
 
-  const optimisticUpdate = useCallback((
-    id: string,
-    updates: Partial<T>,
-    operation: () => Promise<T>
-  ) => {
-    const previousItem = state.data.find(item => (item as any).id === id);
-    
-    setState(prev => ({
-      ...prev,
-      data: prev.data.map(item => 
-        (item as any).id === id ? { ...item, ...updates } : item
-      ),
-      pending: new Set(prev.pending).add(id),
-    }));
+  const optimisticUpdate = useCallback(
+    (id: string, updates: Partial<T>, operation: () => Promise<T>) => {
+      const previousItem = state.data.find((item) => (item as any).id === id);
 
-    return operation()
-      .then((result) => {
-        setState(prev => {
-          const newPending = new Set(prev.pending);
-          newPending.delete(id);
-          return {
-            ...prev,
-            data: prev.data.map(item => (item as any).id === id ? result : item),
-            pending: newPending,
-          };
+      setState((prev) => ({
+        ...prev,
+        data: prev.data.map((item) => ((item as any).id === id ? { ...item, ...updates } : item)),
+        pending: new Set(prev.pending).add(id),
+      }));
+
+      return operation()
+        .then((result) => {
+          setState((prev) => {
+            const newPending = new Set(prev.pending);
+            newPending.delete(id);
+            return {
+              ...prev,
+              data: prev.data.map((item) => ((item as any).id === id ? result : item)),
+              pending: newPending,
+            };
+          });
+          return result;
+        })
+        .catch((error) => {
+          setState((prev) => {
+            const newPending = new Set(prev.pending);
+            newPending.delete(id);
+            return {
+              ...prev,
+              data: prev.data.map((item) =>
+                (item as any).id === id ? previousItem || item : item
+              ),
+              pending: newPending,
+              errors: new Map(prev.errors).set(id, error),
+            };
+          });
+          throw error;
         });
-        return result;
-      })
-      .catch((error) => {
-        setState(prev => {
-          const newPending = new Set(prev.pending);
-          newPending.delete(id);
-          return {
-            ...prev,
-            data: prev.data.map(item => 
-              (item as any).id === id ? previousItem || item : item
-            ),
-            pending: newPending,
-            errors: new Map(prev.errors).set(id, error),
-          };
+    },
+    [state.data]
+  );
+
+  const optimisticDelete = useCallback(
+    (id: string, operation: () => Promise<void>) => {
+      const previousItem = state.data.find((item) => (item as any).id === id);
+
+      setState((prev) => ({
+        ...prev,
+        data: prev.data.filter((item) => (item as any).id !== id),
+        pending: new Set(prev.pending).add(id),
+      }));
+
+      return operation()
+        .then(() => {
+          setState((prev) => {
+            const newPending = new Set(prev.pending);
+            newPending.delete(id);
+            return {
+              ...prev,
+              pending: newPending,
+            };
+          });
+        })
+        .catch((error) => {
+          setState((prev) => {
+            const newPending = new Set(prev.pending);
+            newPending.delete(id);
+            return {
+              ...prev,
+              data: previousItem ? [...prev.data, previousItem] : prev.data,
+              pending: newPending,
+              errors: new Map(prev.errors).set(id, error),
+            };
+          });
+          throw error;
         });
-        throw error;
-      });
-  }, [state.data]);
+    },
+    [state.data]
+  );
 
-  const optimisticDelete = useCallback((id: string, operation: () => Promise<void>) => {
-    const previousItem = state.data.find(item => (item as any).id === id);
-    
-    setState(prev => ({
-      ...prev,
-      data: prev.data.filter(item => (item as any).id !== id),
-      pending: new Set(prev.pending).add(id),
-    }));
+  const retry = useCallback(
+    (id: string) => {
+      const error = state.errors.get(id);
+      if (!error) return Promise.reject(new Error("No error to retry"));
 
-    return operation()
-      .then(() => {
-        setState(prev => {
-          const newPending = new Set(prev.pending);
-          newPending.delete(id);
-          return {
-            ...prev,
-            pending: newPending,
-          };
-        });
-      })
-      .catch((error) => {
-        setState(prev => {
-          const newPending = new Set(prev.pending);
-          newPending.delete(id);
-          return {
-            ...prev,
-            data: previousItem ? [...prev.data, previousItem] : prev.data,
-            pending: newPending,
-            errors: new Map(prev.errors).set(id, error),
-          };
-        });
-        throw error;
-      });
-  }, [state.data]);
-
-  const retry = useCallback((id: string) => {
-    const error = state.errors.get(id);
-    if (!error) return Promise.reject(new Error('No error to retry'));
-
-    state.errors.delete(id);
-    // Return a rejected promise to allow caller to handle retry
-    return Promise.reject(error);
-  }, [state.errors]);
+      state.errors.delete(id);
+      // Return a rejected promise to allow caller to handle retry
+      return Promise.reject(error);
+    },
+    [state.errors]
+  );
 
   return {
     data: state.data,
@@ -285,4 +293,3 @@ export function useBatchOptimistic<T>(initialData: T[]) {
     },
   };
 }
-

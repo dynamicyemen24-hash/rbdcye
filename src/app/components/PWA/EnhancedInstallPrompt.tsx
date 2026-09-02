@@ -1,11 +1,11 @@
 // Enhanced PWA Install Prompt - تثبيت التطبيق بذكاء
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Download, X, Smartphone, Check, Wifi, WifiOff, Bell, BellOff } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Download, X, Smartphone, Check, Wifi, WifiOff, Bell, BellOff } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
 export function EnhancedInstallPrompt() {
@@ -18,13 +18,13 @@ export function EnhancedInstallPrompt() {
 
   useEffect(() => {
     // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
       return;
     }
 
     // Check if dismissed recently
-    const lastDismissed = localStorage.getItem('rh_install_dismissed');
+    const lastDismissed = localStorage.getItem("rh_install_dismissed");
     if (lastDismissed) {
       const daysSinceDismissed = (Date.now() - parseInt(lastDismissed)) / (1000 * 60 * 60 * 24);
       if (daysSinceDismissed < 7) {
@@ -40,27 +40,27 @@ export function EnhancedInstallPrompt() {
       setTimeout(() => setShowPrompt(true), 30000);
     };
 
-    window.addEventListener('beforeinstallprompt', handler as EventListener);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    window.addEventListener("beforeinstallprompt", handler as EventListener);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
   useEffect(() => {
     const handleOffline = () => setIsOffline(true);
     const handleOnline = () => setIsOffline(false);
-    
-    window.addEventListener('offline', handleOffline);
-    window.addEventListener('online', handleOnline);
+
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
     setIsOffline(!navigator.onLine);
-    
+
     return () => {
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('online', handleOnline);
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
     };
   }, []);
 
   useEffect(() => {
-    if ('Notification' in window) {
-      setNotificationsEnabled(Notification.permission === 'granted');
+    if ("Notification" in window) {
+      setNotificationsEnabled(Notification.permission === "granted");
     }
   }, []);
 
@@ -68,7 +68,7 @@ export function EnhancedInstallPrompt() {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
+    if (outcome === "accepted") {
       setIsInstalled(true);
       setShowPrompt(false);
     }
@@ -78,17 +78,17 @@ export function EnhancedInstallPrompt() {
   const handleDismiss = () => {
     setShowPrompt(false);
     setDismissed(true);
-    localStorage.setItem('rh_install_dismissed', String(Date.now()));
+    localStorage.setItem("rh_install_dismissed", String(Date.now()));
   };
 
   const handleEnableNotifications = async () => {
-    if ('Notification' in window) {
+    if ("Notification" in window) {
       const permission = await Notification.requestPermission();
-      setNotificationsEnabled(permission === 'granted');
-      if (permission === 'granted') {
-        new Notification('رحماء بينهم', {
-          body: 'ستتلقى إشعارات بالأخبار والتحديثات',
-          icon: '/icons/icon-192.png',
+      setNotificationsEnabled(permission === "granted");
+      if (permission === "granted") {
+        new Notification("رحماء بينهم", {
+          body: "ستتلقى إشعارات بالأخبار والتحديثات",
+          icon: "/icons/icon-192.png",
         });
       }
     }
@@ -157,9 +157,9 @@ export function EnhancedInstallPrompt() {
             {/* Features */}
             <div className="space-y-2">
               {[
-                { icon: Bell, label: 'إشعارات فورية بالأخبار والبرامج' },
-                { icon: Wifi, label: 'عمل بدون إنترنت' },
-                { icon: Smartphone, label: 'تجربة أصلية как تطبيق' },
+                { icon: Bell, label: "إشعارات فورية بالأخبار والبرامج" },
+                { icon: Wifi, label: "عمل بدون إنترنت" },
+                { icon: Smartphone, label: "تجربة أصلية как تطبيق" },
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
                   <feature.icon className="w-4 h-4 text-[var(--brand-green)]" />
@@ -195,5 +195,3 @@ export function EnhancedInstallPrompt() {
     </AnimatePresence>
   );
 }
-
-

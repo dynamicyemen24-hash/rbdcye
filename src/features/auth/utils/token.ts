@@ -13,12 +13,12 @@ export interface TokenPayload {
 }
 
 export class TokenManager {
-  private static readonly TOKEN_KEY = 'auth_token';
-  private static readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private static readonly TOKEN_KEY = "auth_token";
+  private static readonly REFRESH_TOKEN_KEY = "refresh_token";
   private static readonly EXPIRY_BUFFER = 5 * 60 * 1000; // 5 minutes
 
   static generateMockToken(userId: string, email: string, role: string): string {
-    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
     const payload = btoa(
       JSON.stringify({
         userId,
@@ -28,7 +28,7 @@ export class TokenManager {
         exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,
       })
     );
-    const signature = btoa('mock_signature_' + Date.now());
+    const signature = btoa("mock_signature_" + Date.now());
     return `${header}.${payload}.${signature}`;
   }
 
@@ -64,12 +64,12 @@ export class TokenManager {
 
   static parseToken(token: string): TokenPayload {
     try {
-      const parts = token.split('.');
-      if (parts.length !== 3) throw new Error('Invalid token format');
+      const parts = token.split(".");
+      if (parts.length !== 3) throw new Error("Invalid token format");
       const payload = JSON.parse(atob(parts[1]));
       return payload as TokenPayload;
     } catch {
-      throw new Error('Failed to parse token');
+      throw new Error("Failed to parse token");
     }
   }
 
@@ -94,5 +94,3 @@ export class TokenManager {
     }
   }
 }
-
-

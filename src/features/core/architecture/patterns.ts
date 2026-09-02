@@ -23,7 +23,7 @@ class StrategyContext<T> {
 
   async execute(context: T): Promise<any> {
     if (!this.currentStrategy) {
-      throw new Error('No strategy selected');
+      throw new Error("No strategy selected");
     }
     const strategy = this.strategies.get(this.currentStrategy);
     if (!strategy) {
@@ -49,10 +49,8 @@ class Observable<T> {
   }
 
   async notify(data: T): Promise<void> {
-    const promises = Array.from(this.observers).map(observer => 
-      Promise.resolve(observer.update(data)).catch(err => 
-        console.error('Observer error:', err)
-      )
+    const promises = Array.from(this.observers).map((observer) =>
+      Promise.resolve(observer.update(data)).catch((err) => console.error("Observer error:", err))
     );
     await Promise.all(promises);
   }
@@ -67,7 +65,7 @@ interface Component {
 
 class ConcreteComponent implements Component {
   operation(): string {
-    return 'ConcreteComponent';
+    return "ConcreteComponent";
   }
 }
 
@@ -110,21 +108,21 @@ interface Product {
 }
 
 class ProductA implements Product {
-  name = 'Product A';
+  name = "Product A";
   price = 100;
 }
 
 class ProductB implements Product {
-  name = 'Product B';
+  name = "Product B";
   price = 200;
 }
 
 class ProductFactory {
-  static create(type: 'A' | 'B'): Product {
+  static create(type: "A" | "B"): Product {
     switch (type) {
-      case 'A':
+      case "A":
         return new ProductA();
-      case 'B':
+      case "B":
         return new ProductB();
       default:
         throw new Error(`Unknown product type: ${type}`);
@@ -141,7 +139,7 @@ interface Target {
 
 class Adaptee {
   specificRequest(): string {
-    return 'Adaptee specific request';
+    return "Adaptee specific request";
   }
 }
 
@@ -162,15 +160,18 @@ interface Service {
 
 class RealService implements Service {
   async request(): Promise<string> {
-    return 'Real service response';
+    return "Real service response";
   }
 }
 
 class ProxyService implements Service {
-  constructor(private realService: Service, private cache: Map<string, string>) {}
+  constructor(
+    private realService: Service,
+    private cache: Map<string, string>
+  ) {}
 
   async request(): Promise<string> {
-    const cacheKey = 'service_request';
+    const cacheKey = "service_request";
     if (this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey)!;
     }
@@ -204,8 +205,8 @@ abstract class Handler {
 
 class AuthHandler extends Handler {
   handle(request: string): string | undefined {
-    if (!request.includes('token')) {
-      return 'Auth failed';
+    if (!request.includes("token")) {
+      return "Auth failed";
     }
     return this.pass(request);
   }
@@ -214,7 +215,7 @@ class AuthHandler extends Handler {
 class ValidationHandler extends Handler {
   handle(request: string): string | undefined {
     if (request.length < 10) {
-      return 'Validation failed';
+      return "Validation failed";
     }
     return this.pass(request);
   }
@@ -222,7 +223,7 @@ class ValidationHandler extends Handler {
 
 class BusinessHandler extends Handler {
   handle(request: string): string | undefined {
-    return this.pass(request) || 'Business logic executed';
+    return this.pass(request) || "Business logic executed";
   }
 }
 
@@ -352,7 +353,7 @@ class Saga {
       try {
         await this.executedSteps[i].compensate();
       } catch (error) {
-        console.error('Compensation error:', error);
+        console.error("Compensation error:", error);
       }
     }
     this.executedSteps = [];
@@ -377,19 +378,19 @@ class ConcreteSpecification<T> implements Specification<T> {
   }
 
   and(spec: Specification<T>): Specification<T> {
-    return new ConcreteSpecification(entity => 
-      this.isSatisfiedBy(entity) && spec.isSatisfiedBy(entity)
+    return new ConcreteSpecification(
+      (entity) => this.isSatisfiedBy(entity) && spec.isSatisfiedBy(entity)
     );
   }
 
   or(spec: Specification<T>): Specification<T> {
-    return new ConcreteSpecification(entity => 
-      this.isSatisfiedBy(entity) || spec.isSatisfiedBy(entity)
+    return new ConcreteSpecification(
+      (entity) => this.isSatisfiedBy(entity) || spec.isSatisfiedBy(entity)
     );
   }
 
   not(): Specification<T> {
-    return new ConcreteSpecification(entity => !this.isSatisfiedBy(entity));
+    return new ConcreteSpecification((entity) => !this.isSatisfiedBy(entity));
   }
 }
 
@@ -414,12 +415,12 @@ class Mediator implements IMediator {
   async send<T>(message: T): Promise<any> {
     const messageType = (message as any).constructor.name;
     const handlers = this.handlers.get(messageType) || [];
-    
+
     for (const handler of handlers) {
       try {
         await handler(message);
       } catch (error) {
-        console.error('Handler error:', error);
+        console.error("Handler error:", error);
       }
     }
   }
@@ -430,5 +431,3 @@ class Mediator implements IMediator {
 }
 
 export const mediator = new Mediator();
-
-

@@ -26,7 +26,7 @@ class ErrorTrackingService {
     });
 
     if (import.meta.env.PROD) {
-      console.error('[ErrorTracking]', error, context);
+      console.error("[ErrorTracking]", error, context);
       // يمكن إضافة إرسال لـ Sentry / LogRocket هنا
       // Sentry.captureException(error, { extra: context });
     }
@@ -34,14 +34,14 @@ class ErrorTrackingService {
     this.persist();
   }
 
-  captureMessage(message: string, level: 'info' | 'warning' | 'error' = 'info') {
+  captureMessage(message: string, level: "info" | "warning" | "error" = "info") {
     if (import.meta.env.DEV) console.log(`[${level.toUpperCase()}]`, message);
   }
 
   private persist() {
     try {
       localStorage.setItem(
-        'error_log',
+        "error_log",
         JSON.stringify(this.errors.slice(-50)) // نحتفظ بآخر 50 خطأ فقط
       );
     } catch {
@@ -55,9 +55,8 @@ class ErrorTrackingService {
 
   clear() {
     this.errors = [];
-    localStorage.removeItem('error_log');
+    localStorage.removeItem("error_log");
   }
 }
 
 export const errorTracker = ErrorTrackingService.getInstance();
-

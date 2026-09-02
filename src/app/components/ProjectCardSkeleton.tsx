@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ProjectCardSkeletonProps {
   count?: number;
@@ -15,7 +15,7 @@ export function ProjectCardSkeleton({ count = 6 }: ProjectCardSkeletonProps) {
           {/* Image Placeholder */}
           <div className="relative h-48 sm:h-52 w-full bg-slate-200 flex items-center justify-center">
             <div className="w-10 h-10 rounded-full bg-slate-300" />
-            
+
             {/* Top Badges Overlay */}
             <div className="absolute top-3 right-3 left-3 flex items-center justify-between">
               <div className="h-6 w-20 bg-slate-300/80 rounded-full" />
@@ -76,5 +76,3 @@ export function ProjectCardSkeleton({ count = 6 }: ProjectCardSkeletonProps) {
 }
 
 export default ProjectCardSkeleton;
-
-

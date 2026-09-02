@@ -1,9 +1,6 @@
 // Media Page - معرض الوسائط
 import { motion, AnimatePresence } from "motion/react";
-import {
-  Image, Play, Grid3X3, List, Search, Camera, Video,
-  X, Calendar,
-} from "lucide-react";
+import { Image, Play, Grid3X3, List, Search, Camera, Video, X, Calendar } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
 import { SEED_MEDIA } from "@/content/website";
@@ -42,23 +39,30 @@ export default function MediaPage() {
   const [mediaItems, setMediaItems] = useState<MediaItem[]>(normalizeMedia());
 
   useSEO({
-    title: 'معرض الوسائط - رحماء بينهم',
-    description: 'معرض صور وفيديوهات من مشاريعنا الإنسانية والتنموية',
+    title: "معرض الوسائط - رحماء بينهم",
+    description: "معرض صور وفيديوهات من مشاريعنا الإنسانية والتنموية",
   });
 
   useEffect(() => {
     let cancelled = false;
-    contentManager.getImpact()
+    contentManager
+      .getImpact()
       .then(() => {
         if (!cancelled) {
-          try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
+          try {
+            analyticsService.generateImpactReport();
+          } catch {
+            /* non-critical */
+          }
           setMediaItems(normalizeMedia());
         }
       })
       .catch(() => {
         if (!cancelled) setMediaItems(normalizeMedia());
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filteredMedia = useMemo(() => {
@@ -130,7 +134,9 @@ export default function MediaPage() {
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2 rounded-full text-sm transition-all ${
-                    viewMode === "grid" ? "bg-[var(--brand-green)] text-white" : "text-[var(--muted-foreground)]"
+                    viewMode === "grid"
+                      ? "bg-[var(--brand-green)] text-white"
+                      : "text-[var(--muted-foreground)]"
                   }`}
                 >
                   <Grid3X3 className="w-4 h-4" />
@@ -138,7 +144,9 @@ export default function MediaPage() {
                 <button
                   onClick={() => setViewMode("list")}
                   className={`p-2 rounded-full text-sm transition-all ${
-                    viewMode === "list" ? "bg-[var(--brand-green)] text-white" : "text-[var(--muted-foreground)]"
+                    viewMode === "list"
+                      ? "bg-[var(--brand-green)] text-white"
+                      : "text-[var(--muted-foreground)]"
                   }`}
                 >
                   <List className="w-4 h-4" />
@@ -152,11 +160,13 @@ export default function MediaPage() {
       {/* Media Grid */}
       <section className="py-12 bg-[var(--secondary)]">
         <div className="container mx-auto px-4">
-          <div className={`grid gap-6 max-w-7xl mx-auto ${
-            viewMode === "grid"
-              ? "md:grid-cols-2 lg:grid-cols-3"
-              : "md:grid-cols-1 lg:grid-cols-2"
-          }`}>
+          <div
+            className={`grid gap-6 max-w-7xl mx-auto ${
+              viewMode === "grid"
+                ? "md:grid-cols-2 lg:grid-cols-3"
+                : "md:grid-cols-1 lg:grid-cols-2"
+            }`}
+          >
             {filteredMedia.map((item, i) => (
               <motion.div
                 key={item.id}
@@ -169,9 +179,11 @@ export default function MediaPage() {
                 }`}
                 onClick={() => setSelectedMedia(item)}
               >
-                <div className={`relative overflow-hidden ${
-                  viewMode === "list" ? "w-48 h-32 flex-shrink-0" : "h-48"
-                }`}>
+                <div
+                  className={`relative overflow-hidden ${
+                    viewMode === "list" ? "w-48 h-32 flex-shrink-0" : "h-48"
+                  }`}
+                >
                   <img
                     src={item.url}
                     alt={item.title}
@@ -214,7 +226,9 @@ export default function MediaPage() {
           {filteredMedia.length === 0 && (
             <div className="text-center py-16">
               <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد وسائط مطابقة</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد وسائط مطابقة
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث</p>
             </div>
           )}
@@ -273,5 +287,3 @@ export default function MediaPage() {
     </div>
   );
 }
-
-

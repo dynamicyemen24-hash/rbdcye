@@ -2,9 +2,9 @@
  * React Hook for Sanity Data Fetching - Generic Query Hook
  */
 
-import { useState, useEffect, type DependencyList } from 'react';
+import { useState, useEffect, type DependencyList } from "react";
 
-import { sanityService } from '../services/sanity.service';
+import { sanityService } from "../services/sanity.service";
 
 function useSanityQuery<T>(
   fetchFn: () => Promise<T>,
@@ -27,7 +27,7 @@ function useSanityQuery<T>(
       })
       .catch((err) => {
         if (mounted) {
-          setError(err instanceof Error ? err.message : 'Unknown error');
+          setError(err instanceof Error ? err.message : "Unknown error");
         }
       })
       .finally(() => {
@@ -45,51 +45,31 @@ function useSanityQuery<T>(
 }
 
 export function useSanityProjects() {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getProjects(),
-    []
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getProjects(), []);
   return { projects: data ?? [], loading, error };
 }
 
 export function useSanityNews(publishedOnly = true) {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getNews(),
-    [publishedOnly]
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getNews(), [publishedOnly]);
   return { news: data ?? [], loading, error };
 }
 
 export function useSanityPartners() {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getPartners(),
-    []
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getPartners(), []);
   return { partners: data ?? [], loading, error };
 }
 
 export function useSanitySuccessStories() {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getSuccessStories(),
-    []
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getSuccessStories(), []);
   return { stories: data ?? [], loading, error };
 }
 
 export function useSanityMedia() {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getMedia(),
-    []
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getMedia(), []);
   return { media: data ?? [], loading, error };
 }
 
 export function useSanityReports() {
-  const { data, loading, error } = useSanityQuery(
-    () => sanityService.getReports(),
-    []
-  );
+  const { data, loading, error } = useSanityQuery(() => sanityService.getReports(), []);
   return { reports: data ?? [], loading, error };
 }
-
-

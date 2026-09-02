@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { cn } from './ui/utils';
+import { cn } from "./ui/utils";
 
 interface FallbackImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -16,7 +16,7 @@ interface FallbackImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 export function FallbackImage({
   src,
   alt,
-  fallbackSrc = '/images/defaults/project-default.svg',
+  fallbackSrc = "/images/defaults/project-default.svg",
   className,
   containerClassName,
   ...props
@@ -57,4 +57,3 @@ export function FallbackImage({
     </div>
   );
 }
-

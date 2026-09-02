@@ -14,7 +14,8 @@ export const seoType = defineType({
       title: "عنوان Meta",
       type: "string",
       description: "عنوان مخصص لمحركات البحث (يُستخدم العنوان الرئيسي كبديل إذا تُرك فارغاً)",
-      validation: (Rule) => Rule.max(60).warning("يُفضل ألا يتجاوز 60 حرفاً لعرض أفضل في نتائج البحث"),
+      validation: (Rule) =>
+        Rule.max(60).warning("يُفضل ألا يتجاوز 60 حرفاً لعرض أفضل في نتائج البحث"),
     }),
     defineField({
       name: "metaDescription",
@@ -53,4 +54,3 @@ export const seoType = defineType({
     }),
   ],
 });
-

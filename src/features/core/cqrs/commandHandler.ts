@@ -95,12 +95,10 @@ class CommandBus {
     this.handlers.set(commandType, handler as CommandHandler<any>);
   }
 
-  async execute<TCommand extends AnyCommand, TResult = any>(
-    command: TCommand
-  ): Promise<TResult> {
-    const commandType = command.constructor.name || 'UnknownCommand';
+  async execute<TCommand extends AnyCommand, TResult = any>(command: TCommand): Promise<TResult> {
+    const commandType = command.constructor.name || "UnknownCommand";
     const handler = this.handlers.get(commandType);
-    
+
     if (!handler) {
       throw new Error(`No handler registered for command: ${commandType}`);
     }
@@ -128,12 +126,10 @@ class QueryBus {
     this.handlers.set(queryType, handler);
   }
 
-  async execute<TQuery extends AnyQuery, TResult = any>(
-    query: TQuery
-  ): Promise<TResult> {
-    const queryType = query.constructor.name || 'UnknownQuery';
+  async execute<TQuery extends AnyQuery, TResult = any>(query: TQuery): Promise<TResult> {
+    const queryType = query.constructor.name || "UnknownQuery";
     const handler = this.handlers.get(queryType);
-    
+
     if (!handler) {
       throw new Error(`No handler registered for query: ${queryType}`);
     }
@@ -152,19 +148,19 @@ export class CreateProjectCommand implements Command<{ id: string }> {
     public readonly title: string,
     public readonly description: string,
     public readonly budget: number,
-    public readonly category: string,
+    public readonly category: string
   ) {}
 
   async execute(): Promise<{ id: string }> {
     const id = `proj_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     unitOfWork.registerNew({
       id,
       title: this.title,
       description: this.description,
       budget: this.budget,
       category: this.category,
-      status: 'active',
+      status: "active",
       progress: 0,
       createdAt: new Date().toISOString(),
     });
@@ -177,7 +173,7 @@ export class CreateProjectCommand implements Command<{ id: string }> {
 export class UpdateProjectStatusCommand implements Command<void> {
   constructor(
     public readonly projectId: string,
-    public readonly status: string,
+    public readonly status: string
   ) {}
 
   async execute(): Promise<void> {
@@ -191,7 +187,7 @@ export class GetProjectsQuery implements Query<any[]> {
   constructor(
     public readonly filter?: { status?: string; category?: string },
     public readonly page = 1,
-    public readonly limit = 10,
+    public readonly limit = 10
   ) {}
 
   async execute(): Promise<any[]> {
@@ -216,7 +212,10 @@ export interface Repository<TEntity, TId> {
   delete(id: TId): Promise<void>;
 }
 
-export class InMemoryRepository<TEntity extends { id: string }> implements Repository<TEntity, string> {
+export class InMemoryRepository<TEntity extends { id: string }> implements Repository<
+  TEntity,
+  string
+> {
   private entities = new Map<string, TEntity>();
 
   async findById(id: string): Promise<TEntity | null> {
@@ -225,11 +224,11 @@ export class InMemoryRepository<TEntity extends { id: string }> implements Repos
 
   async findAll(options?: { filter?: any; page?: number; limit?: number }): Promise<TEntity[]> {
     let results = Array.from(this.entities.values());
-    
+
     if (options?.filter) {
-      results = results.filter(entity => 
-        Object.entries(options.filter).every(([key, value]) => 
-          entity[key as keyof TEntity] === value
+      results = results.filter((entity) =>
+        Object.entries(options.filter).every(
+          ([key, value]) => entity[key as keyof TEntity] === value
         )
       );
     }
@@ -264,4 +263,3 @@ export function getRepository<TEntity extends { id: string }>(
   }
   return repositories.get(name)!;
 }
-

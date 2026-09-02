@@ -19,7 +19,8 @@ export function FinalCTA() {
       dir="rtl"
       className="relative py-24 md:py-32 overflow-hidden"
       style={{
-        background: "linear-gradient(160deg, var(--brand-green-dark) 0%, var(--brand-green) 60%, var(--brand-green-dark) 100%)",
+        background:
+          "linear-gradient(160deg, var(--brand-green-dark) 0%, var(--brand-green) 60%, var(--brand-green-dark) 100%)",
       }}
     >
       {/* الزخارف */}
@@ -28,7 +29,9 @@ export function FinalCTA() {
       <div className="absolute bottom-0 inset-x-0 h-2 pattern-band-gold pointer-events-none z-10" />
       <div
         className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(var(--brand-gold-rgb),0.18), transparent 70%)" }}
+        style={{
+          background: "radial-gradient(circle, rgba(var(--brand-gold-rgb),0.18), transparent 70%)",
+        }}
       />
       <div
         className="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full pointer-events-none"
@@ -39,7 +42,11 @@ export function FinalCTA() {
         <Reveal>
           <div className="flex justify-center mb-8">
             <StarMedallion size={104} color="var(--brand-gold)">
-              <Heart className="w-11 h-11" fill="var(--brand-gold)" style={{ color: "var(--brand-gold)" }} />
+              <Heart
+                className="w-11 h-11"
+                fill="var(--brand-gold)"
+                style={{ color: "var(--brand-gold)" }}
+              />
             </StarMedallion>
           </div>
         </Reveal>
@@ -65,8 +72,8 @@ export function FinalCTA() {
               color: "rgba(255,255,255,0.8)",
             }}
           >
-            خلف كل مشروع قصة، وخلف كل قصة أسرة انتظرت يدًا ممدة.
-            مساهمتك اليوم — مهما صغرت — هي ما يحوّل النوايا إلى مياه تجري ودروسٍ تُتلقّى وأسرٍ تنتج.
+            خلف كل مشروع قصة، وخلف كل قصة أسرة انتظرت يدًا ممدة. مساهمتك اليوم — مهما صغرت — هي ما
+            يحوّل النوايا إلى مياه تجري ودروسٍ تُتلقّى وأسرٍ تنتج.
           </p>
         </Reveal>
 
@@ -98,7 +105,11 @@ export function FinalCTA() {
         <Reveal delay={0.3}>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 pt-8 border-t border-white/10 max-w-2xl mx-auto">
             {ASSURANCES.map((a) => (
-              <span key={a.label} className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
+              <span
+                key={a.label}
+                className="flex items-center gap-2 text-sm"
+                style={{ color: "rgba(255,255,255,0.65)" }}
+              >
                 <a.icon className="w-4 h-4" style={{ color: "var(--brand-gold-light)" }} />
                 {a.label}
               </span>
@@ -109,5 +120,3 @@ export function FinalCTA() {
     </section>
   );
 }
-
-

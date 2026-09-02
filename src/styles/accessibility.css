@@ -21,10 +21,20 @@
   font-size: 120% !important;
 }
 
-.large-text h1 { font-size: 2.5rem !important; }
-.large-text h2 { font-size: 2rem !important; }
-.large-text h3 { font-size: 1.75rem !important; }
-.large-text p, .large-text li { font-size: 1.125rem !important; line-height: 1.8 !important; }
+.large-text h1 {
+  font-size: 2.5rem !important;
+}
+.large-text h2 {
+  font-size: 2rem !important;
+}
+.large-text h3 {
+  font-size: 1.75rem !important;
+}
+.large-text p,
+.large-text li {
+  font-size: 1.125rem !important;
+  line-height: 1.8 !important;
+}
 
 /* Reduced motion mode */
 .reduced-motion *,
@@ -81,12 +91,3 @@
 .skip-link:focus {
   top: 0;
 }
-
-
-
-
-
-
-
-
-

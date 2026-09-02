@@ -1,10 +1,6 @@
 // Reports Page - التقارير السنوية والإصدارات
 import { motion } from "motion/react";
-import {
-    FileText, Download, Calendar, Search,
-  FileBarChart
-
-} from "lucide-react";
+import { FileText, Download, Calendar, Search, FileBarChart } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,9 +18,8 @@ const REPORTS = [
     category: "مالي",
     description: "التقرير المالي والإداري السنوي للعام 2025",
     highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
-        color: "emerald",
+    color: "emerald",
     available: false,
-
   },
   {
     id: 2,
@@ -36,9 +31,8 @@ const REPORTS = [
     category: "مالي",
     description: "التقرير المالي والإداري السنوي للعام 2024",
     highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
-        color: "blue",
+    color: "blue",
     available: false,
-
   },
   {
     id: 3,
@@ -50,9 +44,8 @@ const REPORTS = [
     category: "أثر",
     description: "تقرير قياس أثر البرامج والمشاريع للربع الأول",
     highlights: ["3,500 مستفيد", "8 مشاريع", "698K$ ميزانية"],
-        color: "amber",
+    color: "amber",
     available: false,
-
   },
   {
     id: 4,
@@ -64,9 +57,8 @@ const REPORTS = [
     category: "حوكمة",
     description: "تقرير الشفافية والحوكمة ومكافحة الفساد",
     highlights: ["تدقيق خارجي", "نسبة 96%", "امتثال كامل"],
-        color: "purple",
+    color: "purple",
     available: false,
-
   },
   {
     id: 5,
@@ -78,9 +70,8 @@ const REPORTS = [
     category: "إعلامي",
     description: "النشرة الشهرية لأخبار وفعالياتنا",
     highlights: ["أخبار", "قصص نجاح", "فعاليات قادمة"],
-        color: "rose",
+    color: "rose",
     available: false,
-
   },
   {
     id: 6,
@@ -92,9 +83,8 @@ const REPORTS = [
     category: "برامج",
     description: "تقرير متخصص عن برامج التعليم وتحفيظ القرآن",
     highlights: ["1,200 طالب", "50 حلقة", "15 مسجد"],
-        color: "cyan",
+    color: "cyan",
     available: false,
-
   },
 ];
 
@@ -106,13 +96,14 @@ export default function ReportsPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useSEO({
-    title: 'التقارير - رحماء بينهم',
-    description: 'التقارير السنوية والإصدارات الدورية لـ رحماء بينهم',
+    title: "التقارير - رحماء بينهم",
+    description: "التقارير السنوية والإصدارات الدورية لـ رحماء بينهم",
   });
 
   const filteredReports = REPORTS.filter((report) => {
     const matchesCategory = activeCategory === "الكل" || report.type === activeCategory;
-    const matchesSearch = report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       report.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -183,16 +174,20 @@ export default function ReportsPage() {
                 className="group bg-white rounded-2xl overflow-hidden border border-[var(--border)] shadow-md hover:shadow-2xl transition-all duration-500"
               >
                 <div className={`h-2 bg-gradient-to-r ${colorMap[report.color]}`} />
-                
+
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorMap[report.color]} flex items-center justify-center`}>
+                      <div
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorMap[report.color]} flex items-center justify-center`}
+                      >
                         <FileText className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h3 className="font-bold text-[var(--foreground)]">{report.title}</h3>
-                        <span className="text-xs text-[var(--muted-foreground)]">{report.category}</span>
+                        <span className="text-xs text-[var(--muted-foreground)]">
+                          {report.category}
+                        </span>
                       </div>
                     </div>
                     <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-[var(--muted)] text-[var(--muted-foreground)]">
@@ -206,7 +201,10 @@ export default function ReportsPage() {
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {report.highlights.map((h, j) => (
-                      <span key={j} className="text-xs px-2.5 py-1 rounded-full bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
+                      <span
+                        key={j}
+                        className="text-xs px-2.5 py-1 rounded-full bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
+                      >
                         {h}
                       </span>
                     ))}
@@ -221,17 +219,16 @@ export default function ReportsPage() {
                       <span>{report.pages} صفحة</span>
                       <span>{report.size}</span>
                     </div>
-                                        <button
+                    <button
                       type="button"
                       disabled={!report.available}
-                      onClick={() => navigate('/messages')}
+                      onClick={() => navigate("/messages")}
                       className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] transition-colors disabled:cursor-not-allowed disabled:text-[var(--muted-foreground)]"
-                      title={report.available ? 'تحميل التقرير' : 'اطلب نسخة من فريق المؤسسة'}
+                      title={report.available ? "تحميل التقرير" : "اطلب نسخة من فريق المؤسسة"}
                     >
                       <Download className="w-4 h-4" />
-                      {report.available ? 'تحميل' : 'اطلب نسخة'}
+                      {report.available ? "تحميل" : "اطلب نسخة"}
                     </button>
-
                   </div>
                 </div>
               </motion.div>
@@ -241,7 +238,9 @@ export default function ReportsPage() {
           {filteredReports.length === 0 && (
             <div className="text-center py-16">
               <FileBarChart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد تقارير مطابقة</h3>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+                لا توجد تقارير مطابقة
+              </h3>
               <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث</p>
             </div>
           )}
@@ -250,4 +249,3 @@ export default function ReportsPage() {
     </div>
   );
 }
-

@@ -1,11 +1,11 @@
 // Install Prompt Component - تثبيت التطبيق وتنزيل كـ PWA لسطح المكتب والموبايل
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Download, Smartphone, Monitor } from 'lucide-react';
-import { useState, useEffect, useCallback, memo } from 'react';
+import { motion, AnimatePresence } from "motion/react";
+import { X, Download, Smartphone, Monitor } from "lucide-react";
+import { useState, useEffect, useCallback, memo } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
 export const InstallPrompt = memo(function InstallPrompt() {
@@ -18,7 +18,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
 
   useEffect(() => {
     // Check if already installed as PWA
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsStandalone(true);
       return;
     }
@@ -28,7 +28,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
     setIsIOS(isIOSDevice);
 
     // Check localStorage dismissal
-    const dismissed = localStorage.getItem('pwa-install-dismissed') === 'true';
+    const dismissed = localStorage.getItem("pwa-install-dismissed") === "true";
     setBannerDismissed(dismissed);
 
     // Listen for install prompt
@@ -38,16 +38,16 @@ export const InstallPrompt = memo(function InstallPrompt() {
       if (!dismissed) setShowPrompt(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handler);
+    window.addEventListener("beforeinstallprompt", handler);
 
     // Listen for app installed
-    window.addEventListener('appinstalled', () => {
+    window.addEventListener("appinstalled", () => {
       setIsInstalled(true);
       setShowPrompt(false);
     });
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
+      window.removeEventListener("beforeinstallprompt", handler);
     };
   }, []);
 
@@ -55,21 +55,23 @@ export const InstallPrompt = memo(function InstallPrompt() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
+      if (outcome === "accepted") {
         setIsInstalled(true);
         setShowPrompt(false);
       }
       setDeferredPrompt(null);
     } else {
       // Fallback instruction for browser
-      alert('لتثبيت التطبيق على جهازك، استخدم خيار "إضافة إلى الشاشة الرئيسية" أو "تثبيت التطبيق" من قائمة المتصفح.');
+      alert(
+        'لتثبيت التطبيق على جهازك، استخدم خيار "إضافة إلى الشاشة الرئيسية" أو "تثبيت التطبيق" من قائمة المتصفح.'
+      );
     }
   }, [deferredPrompt]);
 
   const handleDismiss = useCallback(() => {
     setShowPrompt(false);
     setBannerDismissed(true);
-    localStorage.setItem('pwa-install-dismissed', 'true');
+    localStorage.setItem("pwa-install-dismissed", "true");
   }, []);
 
   if (isStandalone || isInstalled) return null;
@@ -81,7 +83,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
           className="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50"
           dir="rtl"
         >
@@ -92,12 +94,18 @@ export const InstallPrompt = memo(function InstallPrompt() {
             <div className="flex items-start justify-between gap-3 mb-3 relative z-10">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[var(--brand-gold)] to-amber-600 flex items-center justify-center shadow-md shrink-0">
-                  {isIOS ? <Smartphone className="w-6 h-6 text-white" /> : <Monitor className="w-6 h-6 text-white" />}
+                  {isIOS ? (
+                    <Smartphone className="w-6 h-6 text-white" />
+                  ) : (
+                    <Monitor className="w-6 h-6 text-white" />
+                  )}
                 </div>
                 <div>
                   <h3 className="font-bold text-base flex items-center gap-1.5">
                     تطبيق رحماء بينهم
-                    <span className="px-2 py-0.5 bg-amber-400/20 text-amber-300 text-[0.65rem] rounded-full border border-amber-300/30">مجاني</span>
+                    <span className="px-2 py-0.5 bg-amber-400/20 text-amber-300 text-[0.65rem] rounded-full border border-amber-300/30">
+                      مجاني
+                    </span>
                   </h3>
                   <p className="text-xs text-white/80">تثبيت سريع على الجوال وسطح المكتب</p>
                 </div>
@@ -114,7 +122,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
             <p className="text-xs text-white/85 mb-4 leading-relaxed relative z-10">
               {isIOS
                 ? 'اضغط على زر المشاركة 📤 في المتصفح ثم اختر "إضافة إلى الشاشة الرئيسية" لتثبيت التطبيق.'
-                : 'احصل على تجربة تصفح سريعة وتثبيت مباشر على جهازك دون الحاجة لمتجر التطبيقات.'}
+                : "احصل على تجربة تصفح سريعة وتثبيت مباشر على جهازك دون الحاجة لمتجر التطبيقات."}
             </p>
 
             <div className="flex items-center gap-2 relative z-10">
@@ -145,19 +153,18 @@ export function usePWA() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
-    setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
+    setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
   return { isStandalone, isOnline };
 }
-

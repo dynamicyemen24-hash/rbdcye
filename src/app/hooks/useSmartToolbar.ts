@@ -1,5 +1,5 @@
 // Smart Toolbar Hook - Performance Optimized Interactions
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from "react";
 
 interface ToolbarPreferences {
   position: { x: number; y: number };
@@ -8,7 +8,7 @@ interface ToolbarPreferences {
   usageStats: Record<string, number>;
 }
 
-const STORAGE_KEY = 'smart-toolbar-preferences';
+const STORAGE_KEY = "smart-toolbar-preferences";
 
 // Get stored preferences
 function getStoredPreferences(): ToolbarPreferences {
@@ -49,32 +49,38 @@ export function useSmartToolbar() {
       x: Math.max(-200, Math.min(window.innerWidth - 200, x)),
       y: Math.max(0, Math.min(window.innerHeight - 100, y)),
     };
-    
+
     positionRef.current = newPosition;
-    setPreferences(prev => ({ ...prev, position: newPosition }));
+    setPreferences((prev) => ({ ...prev, position: newPosition }));
     savePreferences({ position: newPosition });
   }, []);
 
   // Toggle visibility
-  const toggleVisibility = useCallback((visible?: boolean) => {
-    const newVisible = visible ?? !preferences.visible;
-    setPreferences(prev => ({ ...prev, visible: newVisible }));
-    savePreferences({ visible: newVisible });
-  }, [preferences.visible]);
+  const toggleVisibility = useCallback(
+    (visible?: boolean) => {
+      const newVisible = visible ?? !preferences.visible;
+      setPreferences((prev) => ({ ...prev, visible: newVisible }));
+      savePreferences({ visible: newVisible });
+    },
+    [preferences.visible]
+  );
 
   // Toggle expanded state
-  const toggleExpanded = useCallback((expanded?: boolean) => {
-    const newExpanded = expanded ?? !preferences.expanded;
-    setPreferences(prev => ({ ...prev, expanded: newExpanded }));
-    savePreferences({ expanded: newExpanded });
-  }, [preferences.expanded]);
+  const toggleExpanded = useCallback(
+    (expanded?: boolean) => {
+      const newExpanded = expanded ?? !preferences.expanded;
+      setPreferences((prev) => ({ ...prev, expanded: newExpanded }));
+      savePreferences({ expanded: newExpanded });
+    },
+    [preferences.expanded]
+  );
 
   // Track action usage
   const trackActionUsage = useCallback((actionId: string) => {
-    setPreferences(prev => {
-      const newStats = { 
-        ...prev.usageStats, 
-        [actionId]: (prev.usageStats[actionId] || 0) + 1 
+    setPreferences((prev) => {
+      const newStats = {
+        ...prev.usageStats,
+        [actionId]: (prev.usageStats[actionId] || 0) + 1,
       };
       savePreferences({ usageStats: newStats });
       return { ...prev, usageStats: newStats };
@@ -84,7 +90,7 @@ export function useSmartToolbar() {
   // Get most used actions
   const getTopActions = useMemo(() => {
     return Object.entries(preferences.usageStats)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 3)
       .map(([id]) => id);
   }, [preferences.usageStats]);
@@ -105,4 +111,3 @@ export function useSmartToolbar() {
     shouldShowBehaviorTip,
   };
 }
-

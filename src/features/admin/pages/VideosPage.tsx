@@ -1,5 +1,5 @@
 // VideosPage - إدارة الفيديوهات
-import { VideoManager } from '@/features/admin/components/VideoManager';
+import { VideoManager } from "@/features/admin/components/VideoManager";
 
 export default function VideosPage() {
   return (
@@ -15,4 +15,3 @@ export default function VideosPage() {
     </div>
   );
 }
-

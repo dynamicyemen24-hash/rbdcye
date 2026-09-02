@@ -9,20 +9,20 @@ interface SectionNavigatorProps {
 
 // Default sections for homepage
 const DEFAULT_SECTIONS = [
-  "hero", 
-  "impact-stats", 
-  "quick-donation", 
-  "zakat-calculator", 
-  "programs", 
-  "success-stories", 
+  "hero",
+  "impact-stats",
+  "quick-donation",
+  "zakat-calculator",
+  "programs",
+  "success-stories",
   "partners",
-  "news", 
-  "contact"
+  "news",
+  "contact",
 ];
 
-export function SectionNavigator({ 
-  sections = DEFAULT_SECTIONS, 
-  position = "bottom-right" 
+export function SectionNavigator({
+  sections = DEFAULT_SECTIONS,
+  position = "bottom-right",
 }: SectionNavigatorProps) {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [showNavigator, setShowNavigator] = useState(true);
@@ -31,7 +31,7 @@ export function SectionNavigator({
   useEffect(() => {
     const handleScroll = () => {
       const _scrollPosition = window.scrollY;
-      
+
       sections.forEach((sectionId, index) => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -45,7 +45,7 @@ export function SectionNavigator({
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sections]);
 
@@ -76,30 +76,32 @@ export function SectionNavigator({
     const handleResize = () => {
       setShowNavigator(window.innerWidth > 768);
     };
-    
+
     window.addEventListener("resize", handleResize);
     handleResize();
-    
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const positionClasses = {
     "bottom-left": "bottom-6 left-6",
     "bottom-right": "bottom-6 right-6",
-    "bottom-center": "bottom-6 left-1/2 -translate-x-1/2"
+    "bottom-center": "bottom-6 left-1/2 -translate-x-1/2",
   };
 
   if (!showNavigator) return null;
 
   return (
-    <div className={`fixed ${positionClasses[position]} z-50 flex flex-col items-center gap-2 bg-white/90 backdrop-blur-md rounded-full p-2 shadow-lg border border-[var(--border)]`}>
+    <div
+      className={`fixed ${positionClasses[position]} z-50 flex flex-col items-center gap-2 bg-white/90 backdrop-blur-md rounded-full p-2 shadow-lg border border-[var(--border)]`}
+    >
       {/* Previous Section Button */}
       <button
         onClick={scrollToPrevSection}
         disabled={currentSectionIndex === 0}
         className={`p-2 rounded-full transition-all ${
-          currentSectionIndex === 0 
-            ? "text-gray-300 cursor-not-allowed" 
+          currentSectionIndex === 0
+            ? "text-gray-300 cursor-not-allowed"
             : "text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)]"
         }`}
         aria-label="الانتقال إلى القسم السابق"
@@ -159,10 +161,9 @@ export function useSectionNavigation(sections: string[] = DEFAULT_SECTIONS) {
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sections]);
 
   return { currentSection, sections };
 }
-

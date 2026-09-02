@@ -9,7 +9,7 @@ interface PageHeaderProps {
   badge: string;
   title: string;
   subtitle: string;
-  align?: 'center' | 'right';
+  align?: "center" | "right";
   children?: React.ReactNode;
 }
 
@@ -20,32 +20,44 @@ export function PageHeader({
   badge,
   title,
   subtitle,
-  align = 'center',
-  children
+  align = "center",
+  children,
 }: PageHeaderProps) {
-  const isCenter = align === 'center';
-  
-  return (
-        <section className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20" aria-labelledby="page-header-title" style={{
+  const isCenter = align === "center";
 
-      background: 'linear-gradient(180deg, rgba(26, 92, 72, 0.06) 0%, rgba(255, 255, 255, 1) 100%)',
-    }}>
+  return (
+    <section
+      className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20"
+      aria-labelledby="page-header-title"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(26, 92, 72, 0.06) 0%, rgba(255, 255, 255, 1) 100%)",
+      }}
+    >
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <IslamicPattern variant="khatam" style={{ color: "var(--brand-green)", opacity: 0.05 }} />
-        <IslamicPattern variant="arabesque" style={{ color: "var(--brand-gold)", opacity: 0.06, maskImage: "linear-gradient(to bottom, black 0%, transparent 70%)", WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 70%)" }} />
+        <IslamicPattern
+          variant="arabesque"
+          style={{
+            color: "var(--brand-gold)",
+            opacity: 0.06,
+            maskImage: "linear-gradient(to bottom, black 0%, transparent 70%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 70%)",
+          }}
+        />
         <div
           className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-[0.03]"
           style={{
-            background: 'radial-gradient(circle, var(--brand-green) 0%, transparent 70%)',
-            filter: 'blur(60px)'
+            background: "radial-gradient(circle, var(--brand-green) 0%, transparent 70%)",
+            filter: "blur(60px)",
           }}
         />
-        <div 
+        <div
           className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.03]"
-          style={{ 
-            background: 'radial-gradient(circle, var(--brand-gold) 0%, transparent 70%)',
-            filter: 'blur(60px)'
+          style={{
+            background: "radial-gradient(circle, var(--brand-gold) 0%, transparent 70%)",
+            filter: "blur(60px)",
           }}
         />
       </div>
@@ -54,34 +66,34 @@ export function PageHeader({
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.6, 
-            ease: [0.22, 1, 0.36, 1] 
+          transition={{
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          className={`max-w-4xl ${isCenter ? 'mx-auto text-center' : 'ml-auto'}`}
+          className={`max-w-4xl ${isCenter ? "mx-auto text-center" : "ml-auto"}`}
         >
           {/* Unified Badge */}
-          <div 
+          <div
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 shadow-md"
             style={{
-              background: 'rgba(255, 255, 255, 0.9)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(26, 92, 72, 0.12)',
+              background: "rgba(255, 255, 255, 0.9)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(26, 92, 72, 0.12)",
             }}
           >
-            <div 
+            <div
               className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ 
-                background: 'linear-gradient(135deg, var(--brand-green), var(--brand-green-light))',
+              style={{
+                background: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
               }}
             >
               <Icon className="w-4 h-4 text-white" />
             </div>
-            <span 
+            <span
               className="text-sm font-semibold"
-              style={{ 
-                color: 'var(--brand-green)',
-                fontFamily: 'Cairo, sans-serif'
+              style={{
+                color: "var(--brand-green)",
+                fontFamily: "Cairo, sans-serif",
               }}
             >
               {badge}
@@ -89,32 +101,32 @@ export function PageHeader({
           </div>
 
           {/* Title with consistent typography */}
-                    <h1
+          <h1
             id="page-header-title"
             className="mb-6 max-w-3xl"
 
             style={{
-                            fontSize: 'clamp(2.15rem, 5vw, var(--fs-h1))',
+              fontSize: "clamp(2.15rem, 5vw, var(--fs-h1))",
 
               fontWeight: 800,
-              lineHeight: 'var(--lh-heading)',
-              color: 'var(--foreground)',
-              fontFamily: 'Cairo, sans-serif'
+              lineHeight: "var(--lh-heading)",
+              color: "var(--foreground)",
+              fontFamily: "Cairo, sans-serif",
             }}
           >
             {title}
           </h1>
 
-          <IslamicDivider tone="gold" className={`mb-6 ${isCenter ? '' : 'mr-0'}`} />
+          <IslamicDivider tone="gold" className={`mb-6 ${isCenter ? "" : "mr-0"}`} />
 
           {/* Subtitle with consistent styling */}
-          <p 
+          <p
             className="max-w-3xl leading-relaxed"
-            style={{ 
-              fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
-              color: 'var(--muted-foreground)',
-              fontFamily: 'Cairo, sans-serif',
-              lineHeight: 1.8
+            style={{
+              fontSize: "clamp(1rem, 1.8vw, 1.15rem)",
+              color: "var(--muted-foreground)",
+              fontFamily: "Cairo, sans-serif",
+              lineHeight: 1.8,
             }}
           >
             {subtitle}
@@ -127,4 +139,3 @@ export function PageHeader({
     </section>
   );
 }
-

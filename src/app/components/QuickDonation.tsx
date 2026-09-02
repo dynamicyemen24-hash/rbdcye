@@ -66,12 +66,42 @@ const IMPACT_MULTIPLIERS: Record<string, (amount: number) => ImpactResult> = {
 };
 
 const PROJECTS = [
-  { id: "general", label: "الصندوق العام", icon: Heart, description: "مساهمة عامة في جميع برامجنا التنموية" },
-  { id: "food", label: "السلال الغذائية", icon: Package, description: "توفير سلال غذائية للأسر المحتاجة" },
-  { id: "water", label: "مشروع الآبار", icon: Droplets, description: "حفر آبار وتوفير مياه شرب نظيفة" },
-  { id: "education", label: "التعليم والقرآن", icon: GraduationCap, description: "دعم التعليم وتحفيز القرآن" },
-  { id: "orphans", label: "كفالة الأيتام", icon: Users, description: "رعاية يتيم في التعليم والصحة" },
-  { id: "zakat", label: "زكاة المال", icon: Banknote, description: "صرف الزكاة في مصارفها الشرعية" },
+  {
+    id: "general",
+    label: "الصندوق العام",
+    icon: Heart,
+    description: "مساهمة عامة في جميع برامجنا التنموية",
+  },
+  {
+    id: "food",
+    label: "السلال الغذائية",
+    icon: Package,
+    description: "توفير سلال غذائية للأسر المحتاجة",
+  },
+  {
+    id: "water",
+    label: "مشروع الآبار",
+    icon: Droplets,
+    description: "حفر آبار وتوفير مياه شرب نظيفة",
+  },
+  {
+    id: "education",
+    label: "التعليم والقرآن",
+    icon: GraduationCap,
+    description: "دعم التعليم وتحفيز القرآن",
+  },
+  {
+    id: "orphans",
+    label: "كفالة الأيتام",
+    icon: Users,
+    description: "رعاية يتيم في التعليم والصحة",
+  },
+  {
+    id: "zakat",
+    label: "زكاة المال",
+    icon: Banknote,
+    description: "صرف الزكاة في مصارفها الشرعية",
+  },
 ];
 
 const PAYMENT_METHODS = [
@@ -96,7 +126,11 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPaymentResult, setShowPaymentResult] = useState(false);
-  const [paymentResult, setPaymentResult] = useState<{ success: boolean; message: string; transactionId?: string } | null>(null);
+  const [paymentResult, setPaymentResult] = useState<{
+    success: boolean;
+    message: string;
+    transactionId?: string;
+  } | null>(null);
 
   useSEO({
     title: "تبرع سريع - رحماء بينهم",
@@ -116,41 +150,41 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
       // استخدام payment gateway الحقيقي
       const result = await paymentGateway.initiatePayment({
         amount: amount,
-        currency: 'USD',
+        currency: "USD",
         method: paymentMethod as any,
-        type: selectedProject === 'zakat' ? 'zakat' : 'once',
+        type: selectedProject === "zakat" ? "zakat" : "once",
         projectId: selectedProject,
-        donorName: donorName || 'متبرع كريم',
+        donorName: donorName || "متبرع كريم",
         donorEmail: donorEmail,
         donorPhone: donorPhone,
-        description: `تبرع لمشروع ${PROJECTS.find(p => p.id === selectedProject)?.label || 'عام'}`,
+        description: `تبرع لمشروع ${PROJECTS.find((p) => p.id === selectedProject)?.label || "عام"}`,
       });
 
-      if (result.status === 'completed' || result.status === 'processing') {
+      if (result.status === "completed" || result.status === "processing") {
         setPaymentResult({
           success: true,
-          message: 'تم إنشاء طلب التبرع بنجاح!',
+          message: "تم إنشاء طلب التبرع بنجاح!",
           transactionId: result.transactionId,
         });
         setShowPaymentResult(true);
-      } else if (result.status === 'pending') {
+      } else if (result.status === "pending") {
         setPaymentResult({
           success: true,
-          message: 'تم إنشاء طلب التبرع — سيتواصل فريقنا معك لتفاصيل التحويل',
+          message: "تم إنشاء طلب التبرع — سيتواصل فريقنا معك لتفاصيل التحويل",
           transactionId: result.transactionId,
         });
         setShowPaymentResult(true);
       } else {
         setPaymentResult({
           success: false,
-          message: result.confirmationCode || 'فشل في إنشاء طلب التبرع',
+          message: result.confirmationCode || "فشل في إنشاء طلب التبرع",
         });
         setShowPaymentResult(true);
       }
     } catch (error) {
       setPaymentResult({
         success: false,
-        message: error instanceof Error ? error.message : 'حدث خطأ أثناء معالجة الدفع',
+        message: error instanceof Error ? error.message : "حدث خطأ أثناء معالجة الدفع",
       });
       setShowPaymentResult(true);
     } finally {
@@ -168,11 +202,13 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className={`mb-6 p-6 rounded-xl text-center ${
-            paymentResult.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+            paymentResult.success
+              ? "bg-green-50 border border-green-200"
+              : "bg-red-50 border border-red-200"
           }`}
         >
           <div className="text-lg font-semibold mb-2">
-            {paymentResult.success ? '✅ نجح التبرع!' : '❌ فشل التبرع'}
+            {paymentResult.success ? "✅ نجح التبرع!" : "❌ فشل التبرع"}
           </div>
           <p className="text-gray-600 mb-3">{paymentResult.message}</p>
           {paymentResult.transactionId && (
@@ -385,4 +421,3 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
     </div>
   );
 }
-

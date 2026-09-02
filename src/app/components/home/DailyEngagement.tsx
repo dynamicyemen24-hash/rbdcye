@@ -1,22 +1,46 @@
 // Daily Engagement Widget - الذكر اليومي والتذكير بالخير
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Share2, Copy, Check, Sparkles, Clock, Bell, X } from 'lucide-react';
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Heart, Share2, Copy, Check, Sparkles, Clock, Bell, X } from "lucide-react";
 
 const DAILY_VERSES = [
-  { text: 'وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا', ref: 'المائدة: 32', action: 'aktah.exe' },
-  { text: 'وَمَن تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ', ref: 'البقرة: 158', action: 'share' },
-  { text: 'إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ', ref: 'هود: 115', action: 'donate' },
-  { text: 'وَمَا تُقَدِّمُوا لِأَنفُسِكُم مِّنْ خَيْرٍ تَجِدُوهُ عِندَ اللَّهِ', ref: 'المزمل: 20', action: 'share' },
-  { text: 'مَّن جَاءَ بِالْحَسَنَةِ فَلَهُ عَشْرُ أَمْثَالِهَا', ref: 'الأنعام: 160', action: 'donate' },
-  { text: 'الصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ', ref: 'الترمذي', action: 'share' },
-  { text: 'إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ', ref: 'البقرة: 222', action: 'donate' },
+  {
+    text: "وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا",
+    ref: "المائدة: 32",
+    action: "aktah.exe",
+  },
+  {
+    text: "وَمَن تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ",
+    ref: "البقرة: 158",
+    action: "share",
+  },
+  { text: "إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ", ref: "هود: 115", action: "donate" },
+  {
+    text: "وَمَا تُقَدِّمُوا لِأَنفُسِكُم مِّنْ خَيْرٍ تَجِدُوهُ عِندَ اللَّهِ",
+    ref: "المزمل: 20",
+    action: "share",
+  },
+  {
+    text: "مَّن جَاءَ بِالْحَسَنَةِ فَلَهُ عَشْرُ أَمْثَالِهَا",
+    ref: "الأنعام: 160",
+    action: "donate",
+  },
+  {
+    text: "الصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ",
+    ref: "الترمذي",
+    action: "share",
+  },
+  {
+    text: "إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ",
+    ref: "البقرة: 222",
+    action: "donate",
+  },
 ];
 
 const DAILY_ACTIONS = [
-  { time: '06:00', label: 'صبح بالخير', icon: '🌅', message: 'ابدأ يومك بصدقة' },
-  { time: '12:00', label: '暂停 و تذكر', icon: '☀️', message: 'هل تبرعت اليوم؟' },
-  { time: '18:00', label: 'مساء الخير', icon: '🌙', message: '.randrange opportunity' },
+  { time: "06:00", label: "صبح بالخير", icon: "🌅", message: "ابدأ يومك بصدقة" },
+  { time: "12:00", label: "暂停 و تذكر", icon: "☀️", message: "هل تبرعت اليوم؟" },
+  { time: "18:00", label: "مساء الخير", icon: "🌙", message: ".randrange opportunity" },
 ];
 
 interface DailyEngagementProps {
@@ -35,8 +59,8 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
     setVerse(DAILY_VERSES[dayIndex]);
 
     // Check streak from localStorage
-    const savedStreak = localStorage.getItem('rh_daily_streak');
-    const lastVisit = localStorage.getItem('rh_last_visit');
+    const savedStreak = localStorage.getItem("rh_daily_streak");
+    const lastVisit = localStorage.getItem("rh_last_visit");
     const todayStr = today.toDateString();
 
     if (lastVisit === todayStr) {
@@ -47,12 +71,12 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
       if (lastVisit === yesterday.toDateString()) {
         const newStreak = (savedStreak ? parseInt(savedStreak) : 0) + 1;
         setStreak(newStreak);
-        localStorage.setItem('rh_daily_streak', String(newStreak));
-        localStorage.setItem('rh_last_visit', todayStr);
+        localStorage.setItem("rh_daily_streak", String(newStreak));
+        localStorage.setItem("rh_last_visit", todayStr);
       } else {
         setStreak(1);
-        localStorage.setItem('rh_daily_streak', '1');
-        localStorage.setItem('rh_last_visit', todayStr);
+        localStorage.setItem("rh_daily_streak", "1");
+        localStorage.setItem("rh_last_visit", todayStr);
       }
     }
 
@@ -94,7 +118,7 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
       >
         {/* Decorative pattern */}
         <div className="absolute inset-0 opacity-10 pattern-khatam-white pointer-events-none" />
-        
+
         {/* Streak badge */}
         {streak > 1 && (
           <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--brand-gold)]/20 backdrop-blur-sm border border-[var(--brand-gold)]/30">
@@ -111,7 +135,10 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
           </div>
 
           {/* Verse */}
-          <blockquote className="text-xl md:text-2xl font-bold leading-relaxed mb-3" style={{ fontFamily: "'Noto Naskh Arabic', serif" }}>
+          <blockquote
+            className="text-xl md:text-2xl font-bold leading-relaxed mb-3"
+            style={{ fontFamily: "'Noto Naskh Arabic', serif" }}
+          >
             {verse.text}
           </blockquote>
           <cite className="text-sm text-white/60 not-italic">— {verse.ref}</cite>
@@ -161,10 +188,15 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
               </div>
               <div className="flex-1">
                 <h4 className="font-bold text-gray-900 text-sm mb-1">تذكير بالخير</h4>
-                <p className="text-gray-600 text-xs mb-3">هل تبرعت اليوم؟ كل ريال يصل إلى من يحتاجه</p>
+                <p className="text-gray-600 text-xs mb-3">
+                  هل تبرعت اليوم؟ كل ريال يصل إلى من يحتاجه
+                </p>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => { onDonate(); setShowReminder(false); }}
+                    onClick={() => {
+                      onDonate();
+                      setShowReminder(false);
+                    }}
                     className="flex-1 py-2 rounded-lg bg-[var(--brand-green)] text-white text-xs font-bold"
                   >
                     تبرع الآن
@@ -190,5 +222,3 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
     </>
   );
 }
-
-

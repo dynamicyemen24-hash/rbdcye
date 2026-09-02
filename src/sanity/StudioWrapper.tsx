@@ -3,7 +3,7 @@
  * مكوّن لعرض Sanity Studio داخل التطبيق
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function SanityStudioWrapper() {
   const [loading, setLoading] = useState(true);
@@ -11,13 +11,15 @@ export function SanityStudioWrapper() {
 
   useEffect(() => {
     // تحميل Sanity Studio ديناميكياً
-    import('sanity').then(() => {
-      // Studio will be loaded dynamically
-      setLoading(false);
-    }).catch(() => {
-      setError('Sanity Studio غير متوفر - تأكد من تثبيت الحزم');
-      setLoading(false);
-    });
+    import("sanity")
+      .then(() => {
+        // Studio will be loaded dynamically
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Sanity Studio غير متوفر - تأكد من تثبيت الحزم");
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {
@@ -37,9 +39,9 @@ export function SanityStudioWrapper() {
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md">
           <h2 className="text-red-600 font-bold mb-2">خطأ في التحميل</h2>
           <p className="text-muted-foreground mb-4">{error}</p>
-          <a 
-            href="https://rbdcye.sanity.studio" 
-            target="_blank" 
+          <a
+            href="https://rbdcye.sanity.studio"
+            target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-brand-green text-white px-4 py-2 rounded-lg"
           >
@@ -55,12 +57,10 @@ export function SanityStudioWrapper() {
     <div className="flex items-center justify-center min-h-screen p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md">
         <h2 className="text-brand-green font-bold mb-2">لوحة التحكم</h2>
-        <p className="text-muted-foreground mb-4">
-          اضغط على الزر للذهاب إلى لوحة التحكم في Sanity
-        </p>
-        <a 
-          href="https://rbdcye.sanity.studio" 
-          target="_blank" 
+        <p className="text-muted-foreground mb-4">اضغط على الزر للذهاب إلى لوحة التحكم في Sanity</p>
+        <a
+          href="https://rbdcye.sanity.studio"
+          target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-brand-green text-white px-4 py-2 rounded-lg"
         >
@@ -78,7 +78,7 @@ export function useSanityStudioAvailable(): boolean {
   useEffect(() => {
     const checkAvailable = async () => {
       try {
-        await import('sanity');
+        await import("sanity");
         setAvailable(true);
       } catch {
         setAvailable(false);
@@ -89,4 +89,3 @@ export function useSanityStudioAvailable(): boolean {
 
   return available;
 }
-

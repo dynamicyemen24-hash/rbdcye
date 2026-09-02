@@ -1,8 +1,8 @@
 // Sanity Service - Client for fetching content from Sanity CMS
-import { sanityClient } from '@/sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+import { sanityClient } from "@/sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
 
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 const client = sanityClient;
 
@@ -177,4 +177,3 @@ export const sanityService = {
     }
   },
 };
-

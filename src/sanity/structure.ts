@@ -6,17 +6,11 @@ import type { StructureResolver } from "sanity/structure";
 
 const SINGLETONS = ["siteSettings", "dashboard"];
 
-function singletonListItem(
-  S: Parameters<StructureResolver>[0],
-  typeName: string,
-  title: string
-) {
+function singletonListItem(S: Parameters<StructureResolver>[0], typeName: string, title: string) {
   return S.listItem()
     .title(title)
     .id(typeName)
-    .child(
-      S.document().schemaType(typeName).documentId(typeName).title(title)
-    );
+    .child(S.document().schemaType(typeName).documentId(typeName).title(title));
 }
 
 export const structure: StructureResolver = (S) =>
@@ -28,15 +22,10 @@ export const structure: StructureResolver = (S) =>
         .title("إعدادات الموقع")
         .id("siteSettings")
         .child(
-          S.document()
-            .schemaType("siteSettings")
-            .documentId("siteSettings")
-            .title("إعدادات الموقع")
+          S.document().schemaType("siteSettings").documentId("siteSettings").title("إعدادات الموقع")
         ),
 
-      S.listItem()
-        .title("لوحة التحكم")
-        .child(S.documentTypeList("dashboard")),
+      S.listItem().title("لوحة التحكم").child(S.documentTypeList("dashboard")),
 
       S.divider(),
 
@@ -107,4 +96,3 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
     ]);
-

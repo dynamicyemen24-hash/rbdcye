@@ -51,13 +51,23 @@ export function StickyDonateBar() {
               className="hidden sm:flex w-10 h-10 shrink-0 rounded-xl items-center justify-center"
               style={{ background: "var(--brand-green-pale)" }}
             >
-              <Heart className="w-5 h-5" fill="var(--brand-green)" style={{ color: "var(--brand-green)" }} />
+              <Heart
+                className="w-5 h-5"
+                fill="var(--brand-green)"
+                style={{ color: "var(--brand-green)" }}
+              />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="font-bold leading-snug truncate" style={{ fontSize: "0.88rem", color: "var(--foreground)" }}>
+              <div
+                className="font-bold leading-snug truncate"
+                style={{ fontSize: "0.88rem", color: "var(--foreground)" }}
+              >
                 مساهمتك تصنع الفرق الآن
               </div>
-              <div className="truncate" style={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}>
+              <div
+                className="truncate"
+                style={{ fontSize: "0.72rem", color: "var(--muted-foreground)" }}
+              >
                 تبرع آمن · إيصال فوري · وصول مضمون للمستحقين
               </div>
             </div>
@@ -86,5 +96,3 @@ export function StickyDonateBar() {
     </AnimatePresence>
   );
 }
-
-

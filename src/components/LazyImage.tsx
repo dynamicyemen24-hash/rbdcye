@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 
 interface LazyImageProps {
   src: string;
@@ -14,8 +14,8 @@ export function LazyImage({
   alt,
   width,
   height,
-  className = '',
-  placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmM2Y0ZjYiLz48L3N2Zz4=',
+  className = "",
+  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmM2Y0ZjYiLz48L3N2Zz4=",
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -32,7 +32,7 @@ export function LazyImage({
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' }
+      { rootMargin: "200px" }
     );
 
     observer.observe(imgRef.current);
@@ -49,14 +49,14 @@ export function LazyImage({
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-200 to-gray-300" />
       )}
-      
+
       {/* Error state */}
       {hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <span className="text-gray-400 text-4xl">No Image</span>
         </div>
       )}
-      
+
       {/* Actual image */}
       {isInView && (
         <img
@@ -67,13 +67,10 @@ export function LazyImage({
           loading="lazy"
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}
-          className={`transition-opacity duration-500 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ objectFit: 'cover' }}
+          className={`transition-opacity duration-500 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+          style={{ objectFit: "cover" }}
         />
       )}
     </div>
   );
 }
-

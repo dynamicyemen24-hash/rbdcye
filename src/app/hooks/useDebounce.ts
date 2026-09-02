@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -33,12 +33,13 @@ export function useThrottle<T extends (...args: any[]) => any>(
       func(...args);
     } else {
       clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        lastRun.current = Date.now();
-        func(...args);
-      }, delay - (now - lastRun.current));
+      timeoutRef.current = setTimeout(
+        () => {
+          lastRun.current = Date.now();
+          func(...args);
+        },
+        delay - (now - lastRun.current)
+      );
     }
   };
 }
-
-

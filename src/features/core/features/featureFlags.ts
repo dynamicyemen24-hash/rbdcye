@@ -35,7 +35,8 @@ interface ABTest {
 class FeatureFlagService {
   private static instance: FeatureFlagService;
   private flags: Map<string, FeatureFlag> = new Map();
-  private userContexts: Map<string, { userId?: string; country?: string; device?: string }> = new Map();
+  private userContexts: Map<string, { userId?: string; country?: string; device?: string }> =
+    new Map();
 
   static getInstance(): FeatureFlagService {
     if (!FeatureFlagService.instance) {
@@ -48,7 +49,10 @@ class FeatureFlagService {
     this.flags.set(flag.key, flag);
   }
 
-  isEnabled(key: string, context?: { userId?: string; country?: string; device?: string }): boolean {
+  isEnabled(
+    key: string,
+    context?: { userId?: string; country?: string; device?: string }
+  ): boolean {
     const flag = this.flags.get(key);
     if (!flag) return false;
 
@@ -56,7 +60,11 @@ class FeatureFlagService {
       return false;
     }
 
-    if (context?.country && flag.rules.countries && !flag.rules.countries.includes(context.country)) {
+    if (
+      context?.country &&
+      flag.rules.countries &&
+      !flag.rules.countries.includes(context.country)
+    ) {
       return false;
     }
 
@@ -76,7 +84,7 @@ class FeatureFlagService {
   private hashCode(str: string): number {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = (hash << 5) - hash + str.charCodeAt(i);
       hash = hash & hash;
     }
     return hash;
@@ -93,27 +101,26 @@ export function useFeatureFlag(_key: string) {
 // Initialize default flags
 export const initializeDefaultFlags = () => {
   featureFlags.registerFlag({
-    key: 'new_design',
+    key: "new_design",
     enabled: false,
     rules: { percentage: 10 },
     metadata: {
-      description: 'Enable new homepage design',
-      owner: 'design-team',
+      description: "Enable new homepage design",
+      owner: "design-team",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     },
   });
 
   featureFlags.registerFlag({
-    key: 'enhanced_donation',
+    key: "enhanced_donation",
     enabled: true,
     rules: {},
     metadata: {
-      description: 'Enhanced donation flow',
-      owner: 'product-team',
+      description: "Enhanced donation flow",
+      owner: "product-team",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     },
   });
 };
-

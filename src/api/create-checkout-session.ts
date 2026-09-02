@@ -42,7 +42,7 @@ export default async function handler(req: any, res: any) {
     // return res.status(200).json({ url: session.url, sessionId: session.id });
 
     // ⚠️ Fallback for production without Stripe keys
-    console.warn('[payment-gateway] Stripe keys not configured — using mock mode');
+    console.warn("[payment-gateway] Stripe keys not configured — using mock mode");
     const mockSessionUrl = `https://checkout.stripe.com/pay/cs_test_${Date.now()}?amount=${amount * 100}&currency=${currency}`;
 
     return res.status(200).json({
@@ -51,7 +51,7 @@ export default async function handler(req: any, res: any) {
       published: true,
     });
   } catch (error) {
-    console.error('[payment-gateway] Error creating checkout session:', error);
-    return res.status(500).json({ error: 'فشل إنشاء جلسة الدفع' });
+    console.error("[payment-gateway] Error creating checkout session:", error);
+    return res.status(500).json({ error: "فشل إنشاء جلسة الدفع" });
   }
 }

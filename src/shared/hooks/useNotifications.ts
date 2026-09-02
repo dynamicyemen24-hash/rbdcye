@@ -1,7 +1,7 @@
 // React Hook for notifications - useNotifications.ts
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { notificationService } from '@/shared/services/notification.service';
+import { notificationService } from "@/shared/services/notification.service";
 
 interface NotificationOptions {
   title: string;
@@ -15,7 +15,7 @@ interface NotificationOptions {
 }
 
 export function useNotifications() {
-  const [permission, setPermission] = useState<NotificationPermission>('default');
+  const [permission, setPermission] = useState<NotificationPermission>("default");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ export function useNotifications() {
         setIsSubscribed(true);
       }
     } catch (error) {
-      console.error('Subscription failed:', error);
+      console.error("Subscription failed:", error);
     } finally {
       setLoading(false);
     }
@@ -53,4 +53,3 @@ export function useNotifications() {
 
   return { permission, isSubscribed, loading, subscribe, unsubscribe, notify };
 }
-

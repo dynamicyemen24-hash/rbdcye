@@ -9,7 +9,7 @@ interface HeroActionsProps {
 
 export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroActionsProps) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.25 }}
@@ -17,10 +17,9 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
     >
       {/* High-Impact Interactive Control Deck with Refined Background and Border Optics */}
       <div className="relative p-2.5 sm:p-3.5 rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200/90 shadow-lg shadow-emerald-950/5">
-        
-        <div 
-          className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3" 
-          role="group" 
+        <div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3"
+          role="group"
           aria-label="خيارات التفاعل والإسناد الإنساني"
         >
           {/* 1. Primary Action: Direct Urgent Donation */}
@@ -30,13 +29,15 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
           >
             {/* Shimmer Light Ray */}
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
-            
+
             <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0 border border-white/20">
               <HeartHandshake className="w-5 h-5 text-[#F6E05E]" aria-hidden="true" />
             </div>
             <div className="text-right">
               <div className="leading-tight font-black">تبرع الآن</div>
-              <div className="text-[11px] font-normal text-emerald-100 font-cairo">للمشاريع الإغاثية العاجلة</div>
+              <div className="text-[11px] font-normal text-emerald-100 font-cairo">
+                للمشاريع الإغاثية العاجلة
+              </div>
             </div>
           </button>
 
@@ -52,8 +53,12 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
               <Film className="w-5 h-5 text-[#8F6A1A]" aria-hidden="true" />
             </div>
             <div className="text-right">
-              <div className="font-extrabold text-sm sm:text-base leading-tight">الفيلم التعريفي</div>
-              <div className="text-[11px] font-medium text-slate-500 font-cairo">شاهد الأثر والتوثيق</div>
+              <div className="font-extrabold text-sm sm:text-base leading-tight">
+                الفيلم التعريفي
+              </div>
+              <div className="text-[11px] font-medium text-slate-500 font-cairo">
+                شاهد الأثر والتوثيق
+              </div>
             </div>
           </button>
 
@@ -64,13 +69,23 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
             className="group min-h-[58px] sm:min-h-[64px] px-5 py-3 rounded-2xl bg-slate-50/90 hover:bg-emerald-900 hover:text-white border border-slate-200/90 hover:border-emerald-900 text-slate-800 flex items-center justify-center gap-3 font-cairo transition-all duration-300 shadow-2xs hover:shadow-lg cursor-pointer"
           >
             <div className="w-9 h-9 rounded-xl bg-white group-hover:bg-white/20 border border-slate-200 group-hover:border-white/30 flex items-center justify-center shrink-0 transition-colors">
-              <Compass className="w-5 h-5 text-[#0F4C3A] group-hover:text-[#F6E05E] transition-colors" aria-hidden="true" />
+              <Compass
+                className="w-5 h-5 text-[#0F4C3A] group-hover:text-[#F6E05E] transition-colors"
+                aria-hidden="true"
+              />
             </div>
             <div className="text-right flex-1">
-              <div className="font-extrabold text-sm sm:text-base leading-tight group-hover:text-white transition-colors">استكشف المشاريع</div>
-              <div className="text-[11px] font-medium text-slate-500 group-hover:text-emerald-100 transition-colors font-cairo">المجالات الجارية والمنجزة</div>
+              <div className="font-extrabold text-sm sm:text-base leading-tight group-hover:text-white transition-colors">
+                استكشف المشاريع
+              </div>
+              <div className="text-[11px] font-medium text-slate-500 group-hover:text-emerald-100 transition-colors font-cairo">
+                المجالات الجارية والمنجزة
+              </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:-translate-x-1 transition-all" aria-hidden="true" />
+            <ArrowLeft
+              className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:-translate-x-1 transition-all"
+              aria-hidden="true"
+            />
           </button>
         </div>
 
@@ -85,12 +100,9 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
             <span>توثيق وتقارير دورية للمانحين</span>
           </div>
         </div>
-
       </div>
     </motion.div>
   );
 }
 
 export default HeroActions;
-
-

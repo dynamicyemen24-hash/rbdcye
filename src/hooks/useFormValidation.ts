@@ -1,7 +1,7 @@
 // Form Validation Hook - Professional Form Handling
 // Lightweight Validation Without External Dependencies
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 type Validator = (value: any) => string | undefined;
 
@@ -23,35 +23,38 @@ export function useFormValidation<T extends Record<string, any>>(
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-  const validate = useCallback((values: T): ValidationResult<T> => {
-    const fieldErrors: Record<string, string> = {};
-    
-    for (const field in schema) {
-      const value = values[field];
-      const config = schema[field];
-      
-      for (const validator of config.validators) {
-        const error = validator(value);
-        if (error) {
-          fieldErrors[field] = error;
-          break;
+  const validate = useCallback(
+    (values: T): ValidationResult<T> => {
+      const fieldErrors: Record<string, string> = {};
+
+      for (const field in schema) {
+        const value = values[field];
+        const config = schema[field];
+
+        for (const validator of config.validators) {
+          const error = validator(value);
+          if (error) {
+            fieldErrors[field] = error;
+            break;
+          }
         }
       }
-    }
 
-    const isValid = Object.keys(fieldErrors).length === 0;
-    return { isValid, errors: fieldErrors, data: isValid ? values : null };
-  }, [schema]);
+      const isValid = Object.keys(fieldErrors).length === 0;
+      return { isValid, errors: fieldErrors, data: isValid ? values : null };
+    },
+    [schema]
+  );
 
   const handleChange = useCallback(
     (field: keyof T) => (value: any) => {
       setData((prev) => ({ ...prev, [field]: value }));
       setTouched((prev) => ({ ...prev, [field]: true }));
-      
+
       if (touched[field as string]) {
         const result = validate({ ...data, [field]: value } as T);
         if (!result.isValid) {
-          setErrors((prev) => ({ ...prev, [field]: result.errors[field as string] || '' }));
+          setErrors((prev) => ({ ...prev, [field]: result.errors[field as string] || "" }));
         } else {
           setErrors((prev) => {
             const newErrors = { ...prev };
@@ -67,7 +70,7 @@ export function useFormValidation<T extends Record<string, any>>(
   const handleSubmit = useCallback(
     async (onSubmit: (data: T) => Promise<void> | void) => {
       const result = validate(data);
-      
+
       if (result.isValid && result.data) {
         await onSubmit(result.data);
         return { success: true };
@@ -104,41 +107,56 @@ export function useFormValidation<T extends Record<string, any>>(
 
 // Pre-defined validators
 export const validators = {
-  required: (message = 'هذا الحقل مطلوب'): Validator => (value) => 
-    !value || (typeof value === 'string' && !value.trim()) ? message : undefined,
-  
-  email: (message = 'البريد الإلكتروني غير صالح'): Validator => (value) =>
-    value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? message : undefined,
-  
-  minLength: (length: number, message?: string): Validator => (value) =>
-    value && typeof value === 'string' && value.length < length 
-      ? (message || `يجب أن يكون ${length} أحرف على الأقل`) 
-      : undefined,
-  
-  number: (message = 'يجب إدخال رقماً'): Validator => (value) =>
-    value !== undefined && value !== null && isNaN(Number(value)) ? message : undefined,
-  
-  min: (minValue: number, message?: string): Validator => (value) =>
-    value !== undefined && value !== null && Number(value) < minValue 
-      ? (message || `يجب أن يكون أكبر من ${minValue}`) 
-      : undefined,
+  required:
+    (message = "هذا الحقل مطلوب"): Validator =>
+    (value) =>
+      !value || (typeof value === "string" && !value.trim()) ? message : undefined,
+
+  email:
+    (message = "البريد الإلكتروني غير صالح"): Validator =>
+    (value) =>
+      value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? message : undefined,
+
+  minLength:
+    (length: number, message?: string): Validator =>
+    (value) =>
+      value && typeof value === "string" && value.length < length
+        ? message || `يجب أن يكون ${length} أحرف على الأقل`
+        : undefined,
+
+  number:
+    (message = "يجب إدخال رقماً"): Validator =>
+    (value) =>
+      value !== undefined && value !== null && isNaN(Number(value)) ? message : undefined,
+
+  min:
+    (minValue: number, message?: string): Validator =>
+    (value) =>
+      value !== undefined && value !== null && Number(value) < minValue
+        ? message || `يجب أن يكون أكبر من ${minValue}`
+        : undefined,
 };
 
 // Pre-defined schemas
 export const contactFormSchema = {
-  name: { validators: [validators.required('الاسم مطلوب'), validators.minLength(2)] },
+  name: { validators: [validators.required("الاسم مطلوب"), validators.minLength(2)] },
   email: { validators: [validators.required(), validators.email()] },
   phone: { validators: [] },
-  subject: { validators: [validators.required('الموضوع مطلوب'), validators.minLength(5)] },
-  message: { validators: [validators.required('الرسالة مطلوبة'), validators.minLength(10)] },
+  subject: { validators: [validators.required("الموضوع مطلوب"), validators.minLength(5)] },
+  message: { validators: [validators.required("الرسالة مطلوبة"), validators.minLength(10)] },
 };
 
 export const donationFormSchema = {
-  donor: { validators: [validators.required('اسم المتبرع مطلوب'), validators.minLength(2)] },
+  donor: { validators: [validators.required("اسم المتبرع مطلوب"), validators.minLength(2)] },
   email: { validators: [validators.required(), validators.email()] },
   phone: { validators: [] },
-  amount: { validators: [validators.required(), validators.number(), validators.min(1, 'المبلغ يجب أن يكون أكبر من 0')] },
+  amount: {
+    validators: [
+      validators.required(),
+      validators.number(),
+      validators.min(1, "المبلغ يجب أن يكون أكبر من 0"),
+    ],
+  },
   project: { validators: [] },
   type: { validators: [validators.required()] },
 };
-

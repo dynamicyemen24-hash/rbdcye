@@ -86,9 +86,7 @@ export function generateSeoMeta({
 
   // Charset and viewport
   meta.push(<meta charSet="utf-8" key="charset" />);
-  meta.push(
-    <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
-  );
+  meta.push(<meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />);
 
   // Title and description
   meta.push(<title key="title">{title}</title>);
@@ -113,32 +111,20 @@ export function generateSeoMeta({
   meta.push(<meta property="og:type" content={type} key="ogtype" />);
   meta.push(<meta property="og:site_name" content={siteName} key="ogsite" />);
   meta.push(<meta property="og:title" content={ogTitle || title} key="ogtitle" />);
-  meta.push(
-    <meta property="og:description" content={ogDescription || description} key="ogdesc" />
-  );
+  meta.push(<meta property="og:description" content={ogDescription || description} key="ogdesc" />);
   meta.push(<meta property="og:image" content={ogImage} key="ogimage" />);
-  meta.push(
-    <meta property="og:image:width" content="1200" key="ogiw" />
-  );
-  meta.push(
-    <meta property="og:image:height" content="630" key="ogih" />
-  );
+  meta.push(<meta property="og:image:width" content="1200" key="ogiw" />);
+  meta.push(<meta property="og:image:height" content="630" key="ogih" />);
 
   // Article-specific OG tags
   if (type === "article" && publishedTime) {
-    meta.push(
-      <meta property="article:published_time" content={publishedTime} key="articlept" />
-    );
+    meta.push(<meta property="article:published_time" content={publishedTime} key="articlept" />);
   }
   if (type === "article" && modifiedTime) {
-    meta.push(
-      <meta property="article:modified_time" content={modifiedTime} key="articlemt" />
-    );
+    meta.push(<meta property="article:modified_time" content={modifiedTime} key="articlemt" />);
   }
   if (type === "article" && author) {
-    meta.push(
-      <meta property="article:author" content={author} key="articleauthor" />
-    );
+    meta.push(<meta property="article:author" content={author} key="articleauthor" />);
   }
 
   // Twitter Card
@@ -164,4 +150,3 @@ export function getAnalyticsScript(): React.ReactNode {
     />
   );
 }
-

@@ -3,10 +3,12 @@
 // Supports: Stripe, PayPal, Bank Transfer, Local Methods
 // ============================================================
 
-export type PaymentMethod = 'card' | 'bank' | 'cash' | 'stripe' | 'paypal' | 'moyasar' | 'tabby' | 'tamara';
-export type PaymentCurrency = 'YER' | 'SAR' | 'USD' | 'AED' | 'OMR';
-export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'refunded' | 'cancelled';
-export type PaymentType = 'once' | 'monthly' | 'yearly' | 'zakat' | 'sadaqah' | 'waqf';
+export type PaymentMethod =
+  "card" | "bank" | "cash" | "stripe" | "paypal" | "moyasar" | "tabby" | "tamara";
+export type PaymentCurrency = "YER" | "SAR" | "USD" | "AED" | "OMR";
+export type PaymentStatus =
+  "pending" | "processing" | "completed" | "failed" | "refunded" | "cancelled";
+export type PaymentType = "once" | "monthly" | "yearly" | "zakat" | "sadaqah" | "waqf";
 
 interface PaymentRequest {
   amount: number;
@@ -20,7 +22,7 @@ interface PaymentRequest {
   description?: string;
   metadata?: Record<string, unknown>;
   recurring?: boolean;
-  recurringInterval?: 'monthly' | 'yearly';
+  recurringInterval?: "monthly" | "yearly";
 }
 
 interface PaymentResponse {
@@ -53,86 +55,86 @@ interface PaymentMethodInfo {
 // Payment methods configuration
 const PAYMENT_METHODS: PaymentMethodInfo[] = [
   {
-    id: 'card',
-    name: 'Credit/Debit Card',
-    nameAr: 'بطاقة ائتمان/خصم',
-    icon: 'credit-card',
+    id: "card",
+    name: "Credit/Debit Card",
+    nameAr: "بطاقة ائتمان/خصم",
+    icon: "credit-card",
     fee: 2.5,
     minAmount: 1,
     maxAmount: 50000,
-    processingTime: 'فوري',
+    processingTime: "فوري",
     supported: true,
     requiresKYC: false,
   },
   {
-    id: 'bank',
-    name: 'Bank Transfer',
-    nameAr: 'تحويل بنكي',
-    icon: 'bank',
+    id: "bank",
+    name: "Bank Transfer",
+    nameAr: "تحويل بنكي",
+    icon: "bank",
     fee: 0,
     minAmount: 100,
     maxAmount: 1000000,
-    processingTime: '1-3 أيام',
+    processingTime: "1-3 أيام",
     supported: true,
     requiresKYC: true,
   },
   {
-    id: 'stripe',
-    name: 'Stripe',
-    nameAr: 'Stripe',
-    icon: 'stripe',
+    id: "stripe",
+    name: "Stripe",
+    nameAr: "Stripe",
+    icon: "stripe",
     fee: 2.9,
     minAmount: 1,
     maxAmount: 50000,
-    processingTime: 'فوري',
+    processingTime: "فوري",
     supported: true,
     requiresKYC: false,
   },
   {
-    id: 'moyasar',
-    name: 'Moyasar',
-    nameAr: 'Moyasar - مدى/فيزا',
-    icon: 'credit-card',
+    id: "moyasar",
+    name: "Moyasar",
+    nameAr: "Moyasar - مدى/فيزا",
+    icon: "credit-card",
     fee: 2.7,
     minAmount: 1,
     maxAmount: 50000,
-    processingTime: 'فوري',
+    processingTime: "فوري",
     supported: true,
     requiresKYC: false,
   },
   {
-    id: 'cash',
-    name: 'Cash',
-    nameAr: 'نقدي',
-    icon: 'cash',
+    id: "cash",
+    name: "Cash",
+    nameAr: "نقدي",
+    icon: "cash",
     fee: 0,
     minAmount: 1,
     maxAmount: 100000,
-    processingTime: 'حسب التنسيق',
+    processingTime: "حسب التنسيق",
     supported: true,
     requiresKYC: true,
   },
   {
-    id: 'paypal',
-    name: 'PayPal',
-    nameAr: 'PayPal',
-    icon: 'paypal',
+    id: "paypal",
+    name: "PayPal",
+    nameAr: "PayPal",
+    icon: "paypal",
     fee: 3.4,
     minAmount: 1,
     maxAmount: 10000,
-    processingTime: 'فوري',
+    processingTime: "فوري",
     supported: false,
     requiresKYC: false,
   },
   {
-    id: 'tabby',
-    name: 'Tabby (BNPL)',
-    nameAr: 'تابي - اشتر الآن',
-    icon: 'credit-card',
+    id: "tabby",
+    name: "Tabby (BNPL)",
+    nameAr: "تابي - اشتر الآن",
+    icon: "credit-card",
     fee: 0,
     minAmount: 100,
     maxAmount: 5000,
-    processingTime: 'فوري',
+    processingTime: "فوري",
     supported: false,
     requiresKYC: true,
   },
@@ -151,21 +153,23 @@ class PaymentGatewayService {
   }
 
   getAvailableMethods(): PaymentMethodInfo[] {
-    return PAYMENT_METHODS.filter(m => m.supported);
+    return PAYMENT_METHODS.filter((m) => m.supported);
   }
 
   async initiatePayment(request: PaymentRequest): Promise<PaymentResponse> {
     // Validate amount
-    const method = PAYMENT_METHODS.find(m => m.id === request.method);
+    const method = PAYMENT_METHODS.find((m) => m.id === request.method);
     if (!method) throw new Error(`طريقة الدفع ${request.method} غير مدعومة`);
-    if (request.amount < method.minAmount) throw new Error(`الحد الأدنى للتبرع ${method.minAmount} ${request.currency}`);
-    if (request.amount > method.maxAmount) throw new Error(`الحد الأقصى للتبرع ${method.maxAmount} ${request.currency}`);
+    if (request.amount < method.minAmount)
+      throw new Error(`الحد الأدنى للتبرع ${method.minAmount} ${request.currency}`);
+    if (request.amount > method.maxAmount)
+      throw new Error(`الحد الأقصى للتبرع ${method.maxAmount} ${request.currency}`);
 
     const transactionId = `TXN_${Date.now()}_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     const response: PaymentResponse = {
       id: `pay_${Date.now()}`,
       transactionId,
-      status: 'pending',
+      status: "pending",
       amount: request.amount,
       currency: request.currency,
       method: request.method,
@@ -177,32 +181,35 @@ class PaymentGatewayService {
 
     // Route to appropriate handler
     switch (request.method) {
-      case 'stripe':
+      case "stripe":
         return this.handleStripePayment(request, response);
-      case 'moyasar':
+      case "moyasar":
         return this.handleMoyasarPayment(request, response);
-      case 'card':
+      case "card":
         return this.handleCardPayment(request, response);
-      case 'bank':
+      case "bank":
         return this.handleBankTransfer(request, response);
-      case 'cash':
+      case "cash":
         return this.handleCashPayment(request, response);
       default:
-        response.status = 'processing';
+        response.status = "processing";
         response.confirmationCode = transactionId;
         return response;
     }
   }
 
-  private async handleStripePayment(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
+  private async handleStripePayment(
+    request: PaymentRequest,
+    base: PaymentResponse
+  ): Promise<PaymentResponse> {
     try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: request.amount * 100, // Convert to cents
           currency: request.currency.toLowerCase(),
-          description: request.description || 'تبرع لمؤسسة رحماء بينهم',
+          description: request.description || "تبرع لمؤسسة رحماء بينهم",
           metadata: {
             projectId: request.projectId,
             donorName: request.donorName,
@@ -211,72 +218,84 @@ class PaymentGatewayService {
         }),
       });
 
-      if (!response.ok) throw new Error('فشل إنشاء جلسة الدفع');
+      if (!response.ok) throw new Error("فشل إنشاء جلسة الدفع");
 
       const data = await response.json();
       return {
         ...base,
-        status: 'processing',
+        status: "processing",
         paymentUrl: data.url,
         transactionId: data.sessionId || base.transactionId,
       };
     } catch (error) {
       return {
         ...base,
-        status: 'failed',
-        confirmationCode: error instanceof Error ? error.message : 'خطأ في الدفع',
+        status: "failed",
+        confirmationCode: error instanceof Error ? error.message : "خطأ في الدفع",
       };
     }
   }
 
-  private async handleMoyasarPayment(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
+  private async handleMoyasarPayment(
+    request: PaymentRequest,
+    base: PaymentResponse
+  ): Promise<PaymentResponse> {
     // Moyasar handles Mada/Visa/MasterCard in Saudi Arabia
     return {
       ...base,
-      status: 'processing',
-      paymentUrl: `https://api.moyasar.com/v1/payments?amount=${request.amount * 100}&currency=${request.currency}&description=${encodeURIComponent(request.description || 'تبرع')}`,
+      status: "processing",
+      paymentUrl: `https://api.moyasar.com/v1/payments?amount=${request.amount * 100}&currency=${request.currency}&description=${encodeURIComponent(request.description || "تبرع")}`,
     };
   }
 
-  private async handleCardPayment(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
+  private async handleCardPayment(
+    request: PaymentRequest,
+    base: PaymentResponse
+  ): Promise<PaymentResponse> {
     // Simulate card processing - in production, integrate with real gateway
     return {
       ...base,
-      status: 'completed',
+      status: "completed",
       receiptUrl: `/receipts/${base.transactionId}.pdf`,
       confirmationCode: base.transactionId,
       createdAt: new Date().toISOString(),
     };
   }
 
-  private async handleBankTransfer(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
+  private async handleBankTransfer(
+    request: PaymentRequest,
+    base: PaymentResponse
+  ): Promise<PaymentResponse> {
     // ⚠️ بيانات الحساب البنكي يجب أن تأتي من الخادم فقط — لا تُخزَّن في الكود الأمامي
     return {
       ...base,
-      status: 'pending',
+      status: "pending",
       confirmationCode: `BNK_${base.transactionId}`,
       metadata: {
-        message: 'يرجى التواصل مع المؤسسة للحصول على التفاصيل البنكية',
-        contactEmail: 'info@rbdcye.org',
+        message: "يرجى التواصل مع المؤسسة للحصول على التفاصيل البنكية",
+        contactEmail: "info@rbdcye.org",
       },
     };
   }
 
-  private async handleCashPayment(request: PaymentRequest, base: PaymentResponse): Promise<PaymentResponse> {
+  private async handleCashPayment(
+    request: PaymentRequest,
+    base: PaymentResponse
+  ): Promise<PaymentResponse> {
     return {
       ...base,
-      status: 'pending',
+      status: "pending",
       confirmationCode: `CSH_${base.transactionId}`,
       metadata: {
-        message: 'يرجى التواصل مع المؤسسة لتنسيق استلام التبرع النقدي',
-        contactEmail: 'info@rbdcye.org',
+        message: "يرجى التواصل مع المؤسسة لتنسيق استلام التبرع النقدي",
+        contactEmail: "info@rbdcye.org",
       },
     };
   }
 
   async confirmPayment(transactionId: string, status: PaymentStatus): Promise<PaymentResponse> {
     const request = this.pendingTransactions.get(transactionId);
-    if (!request) throw new Error('المعاملة غير موجودة');
+    if (!request) throw new Error("المعاملة غير موجودة");
 
     const response: PaymentResponse = {
       id: `pay_${Date.now()}`,
@@ -285,7 +304,7 @@ class PaymentGatewayService {
       amount: request.amount,
       currency: request.currency,
       method: request.method,
-      receiptUrl: status === 'completed' ? `/receipts/${transactionId}.pdf` : undefined,
+      receiptUrl: status === "completed" ? `/receipts/${transactionId}.pdf` : undefined,
       confirmationCode: transactionId,
       createdAt: new Date().toISOString(),
     };
@@ -297,7 +316,7 @@ class PaymentGatewayService {
   }
 
   async getTransaction(transactionId: string): Promise<PaymentResponse | null> {
-    const completed = this.completedTransactions.find(t => t.transactionId === transactionId);
+    const completed = this.completedTransactions.find((t) => t.transactionId === transactionId);
     if (completed) return completed;
 
     const pending = this.pendingTransactions.get(transactionId);
@@ -305,7 +324,7 @@ class PaymentGatewayService {
       return {
         id: `pay_${Date.now()}`,
         transactionId,
-        status: 'pending',
+        status: "pending",
         amount: pending.amount,
         currency: pending.currency,
         method: pending.method,
@@ -317,30 +336,34 @@ class PaymentGatewayService {
   }
 
   async refundPayment(transactionId: string, reason?: string): Promise<PaymentResponse> {
-    const transaction = this.completedTransactions.find(t => t.transactionId === transactionId);
-    if (!transaction) throw new Error('المعاملة غير موجودة');
+    const transaction = this.completedTransactions.find((t) => t.transactionId === transactionId);
+    if (!transaction) throw new Error("المعاملة غير موجودة");
 
-    transaction.status = 'refunded';
-    transaction.metadata = { ...transaction.metadata, refundReason: reason, refundedAt: new Date().toISOString() };
+    transaction.status = "refunded";
+    transaction.metadata = {
+      ...transaction.metadata,
+      refundReason: reason,
+      refundedAt: new Date().toISOString(),
+    };
 
     return transaction;
   }
 
   getPaymentHistory(): PaymentResponse[] {
-    return [...this.completedTransactions].sort((a, b) => 
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    return [...this.completedTransactions].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
 
   async generateReceipt(transactionId: string): Promise<string> {
-    const transaction = this.completedTransactions.find(t => t.transactionId === transactionId);
-    if (!transaction) throw new Error('المعاملة غير موجودة');
+    const transaction = this.completedTransactions.find((t) => t.transactionId === transactionId);
+    if (!transaction) throw new Error("المعاملة غير موجودة");
 
     return `/receipts/${transactionId}.pdf`;
   }
 
   getStats() {
-    const completed = this.completedTransactions.filter(t => t.status === 'completed');
+    const completed = this.completedTransactions.filter((t) => t.status === "completed");
     const totalRevenue = completed.reduce((sum, t) => sum + t.amount, 0);
     const byMethod = completed.reduce((acc: Record<string, number>, t) => {
       acc[t.method] = (acc[t.method] || 0) + t.amount;
@@ -359,7 +382,10 @@ class PaymentGatewayService {
 }
 
 // Zakat calculation
-export function calculateZakat(amount: number, assetType: 'cash' | 'gold' | 'silver' | 'business' | 'stocks' = 'cash'): number {
+export function calculateZakat(
+  amount: number,
+  assetType: "cash" | "gold" | "silver" | "business" | "stocks" = "cash"
+): number {
   const nisabThresholds = {
     cash: 5000, // Approximate SAR
     gold: 850, // Grams
@@ -375,4 +401,3 @@ export function calculateZakat(amount: number, assetType: 'cash' | 'gold' | 'sil
 }
 
 export const paymentGateway = PaymentGatewayService.getInstance();
-

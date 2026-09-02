@@ -1,35 +1,31 @@
-import { 
-  Sparkles, 
-  Type, 
-  ZoomIn, 
-  ZoomOut, 
-  RotateCcw, 
-  BookOpen, 
-  Sliders, 
-  ChevronLeft, 
-  ChevronRight 
+import {
+  Sparkles,
+  Type,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  BookOpen,
+  Sliders,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
-import { 
-  TypographyFamily, 
-  FONT_OPTIONS, 
-  ISLAMIC_TEXTS 
-} from "./types";
+import { TypographyFamily, FONT_OPTIONS, ISLAMIC_TEXTS } from "./types";
 
 export function HeroWisdomCard() {
   const [verseIndex, setVerseIndex] = useState(0);
-  const [selectedFont, setSelectedFont] = useState<TypographyFamily>('sans-cairo');
+  const [selectedFont, setSelectedFont] = useState<TypographyFamily>("sans-cairo");
   const [fontSizeOffset, setFontSizeOffset] = useState<number>(0);
   const [showFontToolbar, setShowFontToolbar] = useState<boolean>(false);
 
   useEffect(() => {
     try {
-      const savedFont = localStorage.getItem('rbdcye_reading_font') as TypographyFamily;
-      if (savedFont && FONT_OPTIONS.some(f => f.id === savedFont)) {
+      const savedFont = localStorage.getItem("rbdcye_reading_font") as TypographyFamily;
+      if (savedFont && FONT_OPTIONS.some((f) => f.id === savedFont)) {
         setSelectedFont(savedFont);
       }
-      const savedSize = localStorage.getItem('rbdcye_reading_size');
+      const savedSize = localStorage.getItem("rbdcye_reading_size");
       if (savedSize !== null) {
         setFontSizeOffset(Number(savedSize));
       }
@@ -39,7 +35,7 @@ export function HeroWisdomCard() {
   }, []);
 
   const triggerHaptic = () => {
-    if (typeof window !== 'undefined' && 'navigator' in window && 'vibrate' in navigator) {
+    if (typeof window !== "undefined" && "navigator" in window && "vibrate" in navigator) {
       try {
         navigator.vibrate(12);
       } catch {
@@ -52,7 +48,7 @@ export function HeroWisdomCard() {
     triggerHaptic();
     setSelectedFont(fontId);
     try {
-      localStorage.setItem('rbdcye_reading_font', fontId);
+      localStorage.setItem("rbdcye_reading_font", fontId);
     } catch {
       // Ignore
     }
@@ -60,10 +56,10 @@ export function HeroWisdomCard() {
 
   const handleSizeChange = (delta: number) => {
     triggerHaptic();
-    setFontSizeOffset(prev => {
+    setFontSizeOffset((prev) => {
       const next = Math.max(-2, Math.min(6, prev + delta));
       try {
-        localStorage.setItem('rbdcye_reading_size', String(next));
+        localStorage.setItem("rbdcye_reading_size", String(next));
       } catch {
         // Ignore
       }
@@ -73,11 +69,11 @@ export function HeroWisdomCard() {
 
   const handleResetTypography = () => {
     triggerHaptic();
-    setSelectedFont('sans-cairo');
+    setSelectedFont("sans-cairo");
     setFontSizeOffset(0);
     try {
-      localStorage.removeItem('rbdcye_reading_font');
-      localStorage.removeItem('rbdcye_reading_size');
+      localStorage.removeItem("rbdcye_reading_font");
+      localStorage.removeItem("rbdcye_reading_size");
     } catch {
       // Ignore
     }
@@ -85,19 +81,19 @@ export function HeroWisdomCard() {
 
   const nextVerse = () => {
     triggerHaptic();
-    setVerseIndex(prev => (prev + 1) % ISLAMIC_TEXTS.length);
+    setVerseIndex((prev) => (prev + 1) % ISLAMIC_TEXTS.length);
   };
   const prevVerse = () => {
     triggerHaptic();
-    setVerseIndex(prev => (prev - 1 + ISLAMIC_TEXTS.length) % ISLAMIC_TEXTS.length);
+    setVerseIndex((prev) => (prev - 1 + ISLAMIC_TEXTS.length) % ISLAMIC_TEXTS.length);
   };
 
   const current = ISLAMIC_TEXTS[verseIndex];
-  const currentFontConfig = FONT_OPTIONS.find(f => f.id === selectedFont) || FONT_OPTIONS[0];
+  const currentFontConfig = FONT_OPTIONS.find((f) => f.id === selectedFont) || FONT_OPTIONS[0];
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div 
+      <div
         className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-8 bg-white border border-emerald-200/80 shadow-xs flex flex-col justify-between overflow-hidden text-center transition-all duration-300"
         role="region"
         aria-label="قبس من الهدي القرآني والنبوي مع خيارات القراءة المريحة"
@@ -112,7 +108,7 @@ export function HeroWisdomCard() {
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 text-amber-950 text-xs sm:text-sm font-extrabold font-cairo border border-amber-300 shadow-2xs">
                 <Sparkles className="w-4 h-4 text-[#8F6A1A]" aria-hidden="true" />
-                <span>{current.type === 'ayah' ? 'من الهدي القرآني' : 'من القبس النبوي'}</span>
+                <span>{current.type === "ayah" ? "من الهدي القرآني" : "من القبس النبوي"}</span>
               </span>
 
               <span className="text-slate-700 text-xs sm:text-sm md:text-base font-bold font-cairo">
@@ -127,14 +123,16 @@ export function HeroWisdomCard() {
                 aria-expanded={showFontToolbar}
                 aria-controls="reading-typography-toolbar"
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-cairo transition-all border ${
-                  showFontToolbar 
-                    ? 'bg-emerald-800 text-white border-emerald-900 shadow-sm' 
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                  showFontToolbar
+                    ? "bg-emerald-800 text-white border-emerald-900 shadow-sm"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
                 }`}
                 title="تخصيص خط ونمط القراءة المريحة"
               >
                 <Sliders className="w-3.5 h-3.5 text-[#8F6A1A]" aria-hidden="true" />
-                <span>تخصيص القراءة ({currentFontConfig.category === 'serif' ? 'Serif' : 'Sans'})</span>
+                <span>
+                  تخصيص القراءة ({currentFontConfig.category === "serif" ? "Serif" : "Sans"})
+                </span>
               </button>
             </div>
           </div>
@@ -145,13 +143,12 @@ export function HeroWisdomCard() {
               <motion.div
                 id="reading-typography-toolbar"
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden mb-6"
               >
                 <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 text-right space-y-4 shadow-inner">
-                  
                   {/* Serif vs Sans-serif Quick Selector Tabs */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -164,7 +161,11 @@ export function HeroWisdomCard() {
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2" role="radiogroup" aria-label="أنماط الخطوط المتاحة">
+                    <div
+                      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2"
+                      role="radiogroup"
+                      aria-label="أنماط الخطوط المتاحة"
+                    >
                       {FONT_OPTIONS.map((font) => {
                         const isSelected = selectedFont === font.id;
                         return (
@@ -174,23 +175,27 @@ export function HeroWisdomCard() {
                             aria-checked={isSelected}
                             onClick={() => handleFontChange(font.id)}
                             className={`flex flex-col items-center justify-center p-2.5 rounded-xl border-2 transition-all text-center ${
-                              isSelected 
-                                ? 'bg-white border-emerald-700 shadow-sm text-emerald-950 font-bold' 
-                                : 'bg-white/80 hover:bg-white border-slate-300 text-slate-700 hover:text-slate-900'
+                              isSelected
+                                ? "bg-white border-emerald-700 shadow-sm text-emerald-950 font-bold"
+                                : "bg-white/80 hover:bg-white border-slate-300 text-slate-700 hover:text-slate-900"
                             }`}
                           >
-                            <span 
+                            <span
                               className="text-lg sm:text-xl font-bold mb-1"
                               style={{ fontFamily: font.fontFamily }}
                             >
-                              {font.category === 'serif' ? 'اقْرَأْ' : 'اقرأ'}
+                              {font.category === "serif" ? "اقْرَأْ" : "اقرأ"}
                             </span>
                             <span className="text-xs font-bold leading-tight font-cairo">
-                              {font.name.split(' (')[0]}
+                              {font.name.split(" (")[0]}
                             </span>
-                            <span className={`text-[10px] mt-0.5 px-1.5 py-0.2 rounded font-mono ${
-                              font.category === 'serif' ? 'bg-amber-100 text-amber-900' : 'bg-slate-200 text-slate-800'
-                            }`}>
+                            <span
+                              className={`text-[10px] mt-0.5 px-1.5 py-0.2 rounded font-mono ${
+                                font.category === "serif"
+                                  ? "bg-amber-100 text-amber-900"
+                                  : "bg-slate-200 text-slate-800"
+                              }`}
+                            >
                               {font.category.toUpperCase()}
                             </span>
                           </button>
@@ -202,7 +207,9 @@ export function HeroWisdomCard() {
                   {/* Font Size & Reset Controls */}
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs sm:text-sm font-bold text-slate-800 font-cairo">حجم الخط:</span>
+                      <span className="text-xs sm:text-sm font-bold text-slate-800 font-cairo">
+                        حجم الخط:
+                      </span>
                       <button
                         onClick={() => handleSizeChange(-1)}
                         disabled={fontSizeOffset <= -2}
@@ -235,7 +242,6 @@ export function HeroWisdomCard() {
                       <span>إعادة ضبط الخط</span>
                     </button>
                   </div>
-
                 </div>
               </motion.div>
             )}
@@ -245,8 +251,8 @@ export function HeroWisdomCard() {
           <div className="w-16 h-1 bg-[#8F6A1A] mx-auto mb-6 rounded-full" />
 
           {/* Verse Arabic Text - Configurable Font & Size */}
-          <div 
-            className="min-h-[120px] sm:min-h-[145px] flex items-center justify-center my-3 px-2 sm:px-6 transition-all duration-200" 
+          <div
+            className="min-h-[120px] sm:min-h-[145px] flex items-center justify-center my-3 px-2 sm:px-6 transition-all duration-200"
             aria-live="polite"
           >
             <AnimatePresence mode="wait">
@@ -258,11 +264,11 @@ export function HeroWisdomCard() {
                 transition={{ duration: 0.25 }}
                 className="w-full text-center"
               >
-                <p 
+                <p
                   className="text-slate-950 font-medium leading-[2.2] sm:leading-[2.4] text-center"
-                  style={{ 
+                  style={{
                     fontFamily: currentFontConfig.fontFamily,
-                    fontSize: `clamp(${1.25 + fontSizeOffset * 0.1}rem, ${3 + fontSizeOffset * 0.25}vw, ${2.15 + fontSizeOffset * 0.2}rem)`
+                    fontSize: `clamp(${1.25 + fontSizeOffset * 0.1}rem, ${3 + fontSizeOffset * 0.25}vw, ${2.15 + fontSizeOffset * 0.2}rem)`,
                   }}
                 >
                   « {current.arabic} »
@@ -282,8 +288,13 @@ export function HeroWisdomCard() {
               >
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-800" aria-hidden="true" />
               </button>
-              
-              <div className="flex gap-2 items-center" dir="ltr" role="tablist" aria-label="مؤشرات التصفح">
+
+              <div
+                className="flex gap-2 items-center"
+                dir="ltr"
+                role="tablist"
+                aria-label="مؤشرات التصفح"
+              >
                 {ISLAMIC_TEXTS.map((_, i) => (
                   <button
                     key={i}
@@ -293,9 +304,13 @@ export function HeroWisdomCard() {
                     onClick={() => setVerseIndex(i)}
                     className="p-1"
                   >
-                    <span className={`block h-2.5 rounded-full transition-all duration-200 ${
-                      i === verseIndex ? 'w-8 bg-[#8F6A1A]' : 'w-2.5 bg-slate-400 hover:bg-slate-600'
-                    }`} />
+                    <span
+                      className={`block h-2.5 rounded-full transition-all duration-200 ${
+                        i === verseIndex
+                          ? "w-8 bg-[#8F6A1A]"
+                          : "w-2.5 bg-slate-400 hover:bg-slate-600"
+                      }`}
+                    />
                   </button>
                 ))}
               </div>
@@ -313,7 +328,7 @@ export function HeroWisdomCard() {
             <div className="flex items-center gap-2">
               <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-600 font-cairo font-bold">
                 <BookOpen className="w-3.5 h-3.5 text-emerald-800" />
-                <span>نمط الخط: {currentFontConfig.name.split(' (')[0]}</span>
+                <span>نمط الخط: {currentFontConfig.name.split(" (")[0]}</span>
               </span>
               <span className="text-slate-400 font-bold">•</span>
               <span className="text-slate-700 text-xs sm:text-sm font-bold font-cairo">
@@ -328,5 +343,3 @@ export function HeroWisdomCard() {
 }
 
 export default HeroWisdomCard;
-
-

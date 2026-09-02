@@ -1,12 +1,4 @@
-import { 
-  Sparkles, 
-  Droplets, 
-  Heart, 
-  BookOpen, 
-  Stethoscope, 
-  ArrowLeft,
-  Layers
-} from "lucide-react";
+import { Sparkles, Droplets, Heart, BookOpen, Stethoscope, ArrowLeft, Layers } from "lucide-react";
 import { motion } from "motion/react";
 
 interface HeroSectorsProps {
@@ -24,7 +16,7 @@ const SECTORS_DATA = [
     badgeBg: "bg-amber-400/20 text-amber-200 border-amber-400/30",
     badge: "إغاثة عاجلة",
     hoverBorder: "hover:border-amber-400/60 hover:shadow-amber-500/10",
-    page: "projects"
+    page: "projects",
   },
   {
     id: "water",
@@ -36,7 +28,7 @@ const SECTORS_DATA = [
     badgeBg: "bg-sky-400/20 text-sky-200 border-sky-400/30",
     badge: "مياه مستدامة",
     hoverBorder: "hover:border-sky-400/60 hover:shadow-sky-500/10",
-    page: "projects"
+    page: "projects",
   },
   {
     id: "orphans",
@@ -48,7 +40,7 @@ const SECTORS_DATA = [
     badgeBg: "bg-rose-400/20 text-rose-200 border-rose-400/30",
     badge: "رعاية مستمرة",
     hoverBorder: "hover:border-rose-400/60 hover:shadow-rose-500/10",
-    page: "projects"
+    page: "projects",
   },
   {
     id: "education",
@@ -60,7 +52,7 @@ const SECTORS_DATA = [
     badgeBg: "bg-emerald-400/20 text-emerald-200 border-emerald-400/30",
     badge: "تنمية وتمكين",
     hoverBorder: "hover:border-emerald-400/60 hover:shadow-emerald-500/10",
-    page: "projects"
+    page: "projects",
   },
   {
     id: "health",
@@ -72,14 +64,13 @@ const SECTORS_DATA = [
     badgeBg: "bg-teal-400/20 text-teal-200 border-teal-400/30",
     badge: "صحة وعافية",
     hoverBorder: "hover:border-teal-400/60 hover:shadow-teal-500/10",
-    page: "projects"
-  }
+    page: "projects",
+  },
 ];
 
 export function HeroSectors({ setCurrentPage }: HeroSectorsProps) {
   return (
     <div className="w-full mt-16 sm:mt-20 pt-12 border-t border-white/15 relative">
-      
       {/* Background Glow Accent for Sectors Area */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-white/10 to-transparent blur-2xl pointer-events-none" />
 
@@ -94,7 +85,8 @@ export function HeroSectors({ setCurrentPage }: HeroSectorsProps) {
             قطاعات التدخل الميداني في اليمن
           </h2>
           <p className="text-emerald-100/80 text-xs sm:text-sm font-cairo mt-1 font-normal max-w-xl">
-            برامج متكاملة تصنع أثراً مباشراً ومستداماً لتخفيف المعاناة وصون كرامة الأسر الأكثر احتياجاً
+            برامج متكاملة تصنع أثراً مباشراً ومستداماً لتخفيف المعاناة وصون كرامة الأسر الأكثر
+            احتياجاً
           </p>
         </div>
 
@@ -124,10 +116,14 @@ export function HeroSectors({ setCurrentPage }: HeroSectorsProps) {
               <div>
                 {/* Header: Icon + Badge */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`w-11 h-11 rounded-2xl ${sector.iconBg} border flex items-center justify-center shadow-2xs group-hover:scale-108 transition-transform duration-300`}>
+                  <div
+                    className={`w-11 h-11 rounded-2xl ${sector.iconBg} border flex items-center justify-center shadow-2xs group-hover:scale-108 transition-transform duration-300`}
+                  >
                     <Icon className={`w-5 h-5 ${sector.iconColor}`} aria-hidden="true" />
                   </div>
-                  <span className={`text-[10px] font-bold font-cairo px-2.5 py-0.5 rounded-full border ${sector.badgeBg}`}>
+                  <span
+                    className={`text-[10px] font-bold font-cairo px-2.5 py-0.5 rounded-full border ${sector.badgeBg}`}
+                  >
                     {sector.badge}
                   </span>
                 </div>
@@ -157,5 +153,3 @@ export function HeroSectors({ setCurrentPage }: HeroSectorsProps) {
 }
 
 export default HeroSectors;
-
-

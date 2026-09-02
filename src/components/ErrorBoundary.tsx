@@ -1,5 +1,5 @@
-import { AlertTriangle, RefreshCw } from 'lucide-react';
-import { Component, ReactNode } from 'react';
+import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Component, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -35,12 +35,8 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({ errorInfo });
     this.props.onError?.(error, errorInfo);
 
-    if (process.env.NODE_ENV === 'production') {
-      console.error(
-        `[ErrorBoundary:${this.requestId}]`,
-        error.message,
-        errorInfo.componentStack
-      );
+    if (process.env.NODE_ENV === "production") {
+      console.error(`[ErrorBoundary:${this.requestId}]`, error.message, errorInfo.componentStack);
     }
   }
 
@@ -60,14 +56,17 @@ export class ErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
       return (
-        <div className="min-h-screen flex items-center justify-center bg-[var(--secondary)]" dir="rtl">
+        <div
+          className="min-h-screen flex items-center justify-center bg-[var(--secondary)]"
+          dir="rtl"
+        >
           <div className="text-center p-8 max-w-md">
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] mb-2">
               عذراً، حدث خطأ غير متوقع
             </h2>
             <p className="text-[var(--muted-foreground)] mb-2">
-              {this.state.error?.message || 'نعمل على إصلاح هذا الخطأ.'}
+              {this.state.error?.message || "نعمل على إصلاح هذا الخطأ."}
             </p>
             <p className="text-xs text-[var(--muted-foreground)]/60 mb-6">
               معرّف الطلب: {this.requestId}
@@ -102,5 +101,3 @@ export class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-
-

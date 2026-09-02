@@ -6,42 +6,42 @@
   /* ============================================================
      Core Color Palette - Premium Humanitarian Design System
      ============================================================ */
-  --background: #F8F5EC;
-  --foreground: #17202A;
-   --foreground-rgb: 23, 32, 42;
-   --primary-foreground-rgb: 255, 255, 255;
-  --card: #FFFFFF;
-  --card-foreground: #17202A;
-  --popover: #FFFFFF;
-  --popover-foreground: #17202A;
-  --primary: #0F4C3A;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F0EAD6;
-  --secondary-foreground: #17202A;
-  --muted: #EDE8DC;
-  --muted-foreground: #6B6878;
-  --accent: #C69E5A;
-  --accent-foreground: #FFFFFF;
-  --destructive: #C0392B;
-  --destructive-foreground: #FFFFFF;
+  --background: #f8f5ec;
+  --foreground: #17202a;
+  --foreground-rgb: 23, 32, 42;
+  --primary-foreground-rgb: 255, 255, 255;
+  --card: #ffffff;
+  --card-foreground: #17202a;
+  --popover: #ffffff;
+  --popover-foreground: #17202a;
+  --primary: #0f4c3a;
+  --primary-foreground: #ffffff;
+  --secondary: #f0ead6;
+  --secondary-foreground: #17202a;
+  --muted: #ede8dc;
+  --muted-foreground: #6b6878;
+  --accent: #c69e5a;
+  --accent-foreground: #ffffff;
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
   --border: rgba(23, 32, 42, 0.12);
   --input: transparent;
-  --input-background: #F4F1E8;
-  --switch-background: #C0BEB4;
+  --input-background: #f4f1e8;
+  --switch-background: #c0beb4;
   --font-weight-medium: 600;
   --font-weight-normal: 400;
-  --ring: #0F4C3A;
+  --ring: #0f4c3a;
 
-   /* Chart colors */
-   --chart-1: #0F4C3A;
-   --chart-2: #C69E5A;
-   --chart-3: #17694F;
-   --chart-4: #D6B274;
-   --chart-5: #4E8D74;
+  /* Chart colors */
+  --chart-1: #0f4c3a;
+  --chart-2: #c69e5a;
+  --chart-3: #17694f;
+  --chart-4: #d6b274;
+  --chart-5: #4e8d74;
 
-   /* Semantic success/accent tokens */
-   --success: #17694F;
-   --success-dark: #0F4C3A;
+  /* Semantic success/accent tokens */
+  --success: #17694f;
+  --success-dark: #0f4c3a;
 
   /* Border radius system */
   --radius: 0.5rem;
@@ -53,32 +53,32 @@
   --radius-3xl: calc(var(--radius) + 12px);
 
   /* Sidebar */
-  --sidebar: #F0EAD6;
-  --sidebar-foreground: #17202A;
-  --sidebar-primary: #0F4C3A;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #EDE8DC;
-  --sidebar-accent-foreground: #17202A;
+  --sidebar: #f0ead6;
+  --sidebar-foreground: #17202a;
+  --sidebar-primary: #0f4c3a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ede8dc;
+  --sidebar-accent-foreground: #17202a;
   --sidebar-border: rgba(23, 32, 42, 0.1);
-  --sidebar-ring: #0F4C3A;
+  --sidebar-ring: #0f4c3a;
 
   /* ============================================================
      Brand Tokens - The Heart of the Design System
      Constitution palette: Emerald #0F4C3A · Gold #C69E5A
      ============================================================ */
-  --brand-green: #0F4C3A;
-  --brand-green-light: #17694F;
---brand-green-dark: #0A3527;
-   --brand-green-rgb: 15, 76, 58;
-   --brand-green-pale: #E9F1EC;
---brand-gold: #C69E5A;
-   --brand-gold-rgb: 198, 158, 90;
-   --brand-gold-light: #D6B274;
-   --brand-gold-light-rgb: 214, 178, 116;
-  --brand-gold-pale: #F7EFE0;
-  --brand-parchment: #F8F5EC;
-  --brand-ink: #17202A;
-  --brand-ink-light: #3A3A5C;
+  --brand-green: #0f4c3a;
+  --brand-green-light: #17694f;
+  --brand-green-dark: #0a3527;
+  --brand-green-rgb: 15, 76, 58;
+  --brand-green-pale: #e9f1ec;
+  --brand-gold: #c69e5a;
+  --brand-gold-rgb: 198, 158, 90;
+  --brand-gold-light: #d6b274;
+  --brand-gold-light-rgb: 214, 178, 116;
+  --brand-gold-pale: #f7efe0;
+  --brand-parchment: #f8f5ec;
+  --brand-ink: #17202a;
+  --brand-ink-light: #3a3a5c;
 
   /* ============================================================
      Enhanced Shadows - Layered for Depth
@@ -86,8 +86,8 @@
   --shadow-xs: 0 1px 2px rgba(23, 32, 42, 0.04);
   --shadow-sm: 0 1px 3px rgba(23, 32, 42, 0.06), 0 1px 2px rgba(23, 32, 42, 0.04);
   --shadow-md: 0 4px 6px rgba(23, 32, 42, 0.08), 0 2px 4px rgba(23, 32, 42, 0.06);
-  --shadow-lg: 0 8px 25px rgba(23, 32, 42, 0.10), 0 4px 12px rgba(23, 32, 42, 0.08);
-  --shadow-xl: 0 20px 40px rgba(23, 32, 42, 0.12), 0 8px 24px rgba(23, 32, 42, 0.10);
+  --shadow-lg: 0 8px 25px rgba(23, 32, 42, 0.1), 0 4px 12px rgba(23, 32, 42, 0.08);
+  --shadow-xl: 0 20px 40px rgba(23, 32, 42, 0.12), 0 8px 24px rgba(23, 32, 42, 0.1);
   --shadow-2xl: 0 30px 60px rgba(23, 32, 42, 0.15), 0 12px 30px rgba(23, 32, 42, 0.12);
   --shadow-inner: inset 0 2px 4px rgba(23, 32, 42, 0.04);
   --shadow-glow: 0 0 20px rgba(var(--brand-green-rgb), 0.18);
@@ -153,55 +153,64 @@
   --gradient-text-green: linear-gradient(135deg, var(--brand-green), var(--brand-green-light));
   --gradient-text-gold: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
   --gradient-subtle-green: linear-gradient(180deg, var(--brand-green-pale) 0%, transparent 100%);
-  --gradient-overlay-dark: linear-gradient(180deg, rgba(var(--brand-green-rgb), 0.88) 0%, rgba(10, 53, 39, 0.45) 100%);
+  --gradient-overlay-dark: linear-gradient(
+    180deg,
+    rgba(var(--brand-green-rgb), 0.88) 0%,
+    rgba(10, 53, 39, 0.45) 100%
+  );
 }
 
 /* ============================================================
    Dark Mode - Refined Palette
    ============================================================ */
 .dark {
-  --background: #0A0F15;
-  --foreground: #F5F0E4;
-  --card: #141A22;
-  --card-foreground: #F5F0E4;
-  --popover: #141A22;
-  --popover-foreground: #F5F0E4;
+  --background: #0a0f15;
+  --foreground: #f5f0e4;
+  --card: #141a22;
+  --card-foreground: #f5f0e4;
+  --popover: #141a22;
+  --popover-foreground: #f5f0e4;
   --primary: var(--brand-green);
-  --primary-foreground: #FFFFFF;
-  --secondary: #1E2A20;
-  --secondary-foreground: #F8F5EC;
-  --muted: #1E2A20;
-  --muted-foreground: #9A9AAD;
-  --accent: #D6B274;
+  --primary-foreground: #ffffff;
+  --secondary: #1e2a20;
+  --secondary-foreground: #f8f5ec;
+  --muted: #1e2a20;
+  --muted-foreground: #9a9aad;
+  --accent: #d6b274;
   --accent-foreground: #111118;
-  --destructive: #E74C3C;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #e74c3c;
+  --destructive-foreground: #ffffff;
   --border: rgba(245, 240, 228, 0.1);
   --input: rgba(245, 240, 228, 0.1);
---ring: var(--brand-green);
-   --font-weight-medium: 600;
+  --ring: var(--brand-green);
+  --font-weight-medium: 600;
   --font-weight-normal: 400;
   --chart-1: var(--brand-green);
-  --chart-2: #D6B274;
-  --chart-3: #4E8D74;
-  --chart-4: #B0854A;
-  --chart-5: #1A5C48;
-  --sidebar: #141A22;
-  --sidebar-foreground: #F5F0E4;
---sidebar-primary: var(--brand-green);
-   --sidebar-primary-foreground: #FFFFFF;
-   --sidebar-accent: #1E2A20;
-   --sidebar-accent-foreground: #F5F0E4;
-   --sidebar-border: rgba(245, 240, 228, 0.1);
-   --sidebar-ring: var(--brand-green);
---shadow-xs: 0 1px 2px rgba(var(--foreground-rgb), 0.2);
-   --shadow-sm: 0 1px 3px rgba(var(--foreground-rgb), 0.25), 0 1px 2px rgba(var(--foreground-rgb), 0.2);
-   --shadow-md: 0 4px 6px rgba(var(--foreground-rgb), 0.3), 0 2px 4px rgba(var(--foreground-rgb), 0.25);
-   --shadow-lg: 0 8px 25px rgba(var(--foreground-rgb), 0.35), 0 4px 12px rgba(var(--foreground-rgb), 0.3);
-   --shadow-xl: 0 20px 40px rgba(var(--foreground-rgb), 0.4), 0 8px 24px rgba(var(--foreground-rgb), 0.35);
-   --shadow-2xl: 0 30px 60px rgba(var(--foreground-rgb), 0.5), 0 12px 30px rgba(var(--foreground-rgb), 0.4);
-  --brand-green-pale: #0F3D2E;
-  --brand-gold-pale: #2D1F0A;
+  --chart-2: #d6b274;
+  --chart-3: #4e8d74;
+  --chart-4: #b0854a;
+  --chart-5: #1a5c48;
+  --sidebar: #141a22;
+  --sidebar-foreground: #f5f0e4;
+  --sidebar-primary: var(--brand-green);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1e2a20;
+  --sidebar-accent-foreground: #f5f0e4;
+  --sidebar-border: rgba(245, 240, 228, 0.1);
+  --sidebar-ring: var(--brand-green);
+  --shadow-xs: 0 1px 2px rgba(var(--foreground-rgb), 0.2);
+  --shadow-sm:
+    0 1px 3px rgba(var(--foreground-rgb), 0.25), 0 1px 2px rgba(var(--foreground-rgb), 0.2);
+  --shadow-md:
+    0 4px 6px rgba(var(--foreground-rgb), 0.3), 0 2px 4px rgba(var(--foreground-rgb), 0.25);
+  --shadow-lg:
+    0 8px 25px rgba(var(--foreground-rgb), 0.35), 0 4px 12px rgba(var(--foreground-rgb), 0.3);
+  --shadow-xl:
+    0 20px 40px rgba(var(--foreground-rgb), 0.4), 0 8px 24px rgba(var(--foreground-rgb), 0.35);
+  --shadow-2xl:
+    0 30px 60px rgba(var(--foreground-rgb), 0.5), 0 12px 30px rgba(var(--foreground-rgb), 0.4);
+  --brand-green-pale: #0f3d2e;
+  --brand-gold-pale: #2d1f0a;
   --section-bg-primary: var(--background);
   --section-bg-secondary: var(--secondary);
   --section-divider: rgba(245, 240, 228, 0.06);
@@ -211,24 +220,24 @@
    Sepia Mode - Warm reading experience
    ============================================================ */
 .sepia {
-  --background: #F5EDD8;
-  --foreground: #3A2F1D;
-  --card: #FAF5E8;
-  --card-foreground: #3A2F1D;
-  --popover: #FAF5E8;
-  --popover-foreground: #3A2F1D;
-  --primary: #0F4C3A;
-  --primary-foreground: #FFFFFF;
-  --secondary: #EFE6D1;
-  --secondary-foreground: #3A2F1D;
-  --muted: #E8DFC8;
-  --muted-foreground: #6B5D4F;
-  --accent: #C69E5A;
-  --accent-foreground: #FFFFFF;
+  --background: #f5edd8;
+  --foreground: #3a2f1d;
+  --card: #faf5e8;
+  --card-foreground: #3a2f1d;
+  --popover: #faf5e8;
+  --popover-foreground: #3a2f1d;
+  --primary: #0f4c3a;
+  --primary-foreground: #ffffff;
+  --secondary: #efe6d1;
+  --secondary-foreground: #3a2f1d;
+  --muted: #e8dfc8;
+  --muted-foreground: #6b5d4f;
+  --accent: #c69e5a;
+  --accent-foreground: #ffffff;
   --border: rgba(58, 47, 29, 0.12);
-  --ring: #0F4C3A;
-  --brand-green-pale: #E0EDE5;
-  --brand-gold-pale: #F0E0C0;
+  --ring: #0f4c3a;
+  --brand-green-pale: #e0ede5;
+  --brand-gold-pale: #f0e0c0;
 }
 
 /* ============================================================
@@ -236,23 +245,23 @@
    ============================================================ */
 .contrast {
   --background: #000000;
-  --foreground: #FACC15;
+  --foreground: #facc15;
   --card: #111111;
-  --card-foreground: #FACC15;
+  --card-foreground: #facc15;
   --popover: #111111;
-  --popover-foreground: #FACC15;
-  --primary: #22C55E;
+  --popover-foreground: #facc15;
+  --primary: #22c55e;
   --primary-foreground: #000000;
-  --secondary: #1A1A1A;
-  --secondary-foreground: #FACC15;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #facc15;
   --muted: #222222;
-  --muted-foreground: #FACC15;
-  --accent: #FACC15;
+  --muted-foreground: #facc15;
+  --accent: #facc15;
   --accent-foreground: #000000;
   --border: rgba(250, 204, 21, 0.3);
-  --ring: #22C55E;
-  --brand-green-pale: #1A2E1A;
-  --brand-gold-pale: #2E2A1A;
+  --ring: #22c55e;
+  --brand-green-pale: #1a2e1a;
+  --brand-gold-pale: #2e2a1a;
 }
 
 /* ============================================================
@@ -311,7 +320,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: "Cairo", "Plus Jakarta Sans", system-ui, sans-serif;
     direction: rtl;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -368,7 +377,7 @@
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.5;
-    font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: "Cairo", "Plus Jakarta Sans", system-ui, sans-serif;
     cursor: pointer;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -377,15 +386,21 @@
     transform: scale(0.97);
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 0.95rem;
     font-weight: 400;
     line-height: 1.5;
-    font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, sans-serif;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: "Cairo", "Plus Jakarta Sans", system-ui, sans-serif;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     border-color: var(--brand-green);
     box-shadow: 0 0 0 3px rgba(var(--brand-green-rgb), 0.15);
   }
@@ -531,7 +546,9 @@
 
 /* Card hover effect */
 .card-hover {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
@@ -567,7 +584,10 @@
   color: var(--primary-foreground);
   border-radius: var(--radius-xl);
   font-weight: 600;
-  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
   box-shadow: var(--shadow-md);
@@ -594,7 +614,10 @@
   border: 2px solid var(--brand-green);
   border-radius: var(--radius-xl);
   font-weight: 600;
-  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
@@ -614,7 +637,10 @@
   color: var(--primary-foreground);
   border-radius: var(--radius-xl);
   font-weight: 600;
-  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
   box-shadow: var(--shadow-md);
@@ -677,8 +703,12 @@
 }
 
 @keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Focus visible for keyboard navigation */
@@ -703,13 +733,3 @@
 .bg-brand-green-dark {
   background-color: var(--brand-green-dark);
 }
-
-
-
-
-
-
-
-
-
-

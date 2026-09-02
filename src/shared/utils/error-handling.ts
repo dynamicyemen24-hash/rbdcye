@@ -7,11 +7,16 @@ export interface ApiError {
 }
 
 // Create a standardized API error
-export function createApiError(message: string, status?: number, code?: string, details?: any): ApiError {
+export function createApiError(
+  message: string,
+  status?: number,
+  code?: string,
+  details?: any
+): ApiError {
   return {
     message,
     status,
-    code: code || status?.toString() || 'UNKNOWN_ERROR',
+    code: code || status?.toString() || "UNKNOWN_ERROR",
     details,
   };
 }
@@ -42,15 +47,15 @@ export async function withRetry<T>(
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      
+
       if (attempt < maxRetries - 1) {
         const delay = baseDelay * Math.pow(2, attempt);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
 
-  throw lastError || new Error('Operation failed after retries');
+  throw lastError || new Error("Operation failed after retries");
 }
 
 // Log error for monitoring
@@ -61,10 +66,10 @@ export function logError(error: Error | ApiError, context?: string) {
     context,
     timestamp: new Date().toISOString(),
   };
-  
+
   // Send to monitoring service if available
-  if (typeof console !== 'undefined') {
-    console.error('[Error]', errorInfo);
+  if (typeof console !== "undefined") {
+    console.error("[Error]", errorInfo);
   }
 }
 
@@ -73,9 +78,8 @@ export function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
     return error.message;
   }
-  if (typeof error === 'string') {
+  if (typeof error === "string") {
     return error;
   }
-  return 'حدث خطأ غير متوقع';
+  return "حدث خطأ غير متوقع";
 }
-

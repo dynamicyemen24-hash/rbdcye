@@ -1,8 +1,8 @@
 // UpdatePrompt - مكون إشعار التحديثات للـ PWA
-import { RefreshCw, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { RefreshCw, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
 export default function UpdatePrompt() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
@@ -10,9 +10,9 @@ export default function UpdatePrompt() {
 
   useEffect(() => {
     // Check for service worker updates
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then((registration) => {
-        registration.addEventListener('updatefound', () => {
+        registration.addEventListener("updatefound", () => {
           setUpdateAvailable(true);
         });
       });
@@ -24,10 +24,10 @@ export default function UpdatePrompt() {
       setDismissed(false);
     };
 
-    window.addEventListener('pwa-update-available', handleUpdate);
+    window.addEventListener("pwa-update-available", handleUpdate);
 
     return () => {
-      window.removeEventListener('pwa-update-available', handleUpdate);
+      window.removeEventListener("pwa-update-available", handleUpdate);
     };
   }, []);
 
@@ -49,19 +49,14 @@ export default function UpdatePrompt() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button 
+            <Button
               onClick={() => window.location.reload()}
               size="sm"
               className="bg-[var(--brand-green)] hover:bg-[var(--brand-green-light)]"
             >
               تحديث الآن
             </Button>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => setDismissed(true)}
-              className="px-2"
-            >
+            <Button variant="ghost" size="sm" onClick={() => setDismissed(true)} className="px-2">
               <X className="w-4 h-4" />
             </Button>
           </div>
@@ -70,4 +65,3 @@ export default function UpdatePrompt() {
     </div>
   );
 }
-

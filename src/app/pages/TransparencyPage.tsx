@@ -1,9 +1,20 @@
 // Transparency Page - صفحة الشفافية
 import { motion } from "motion/react";
 import {
-  Shield, FileText, BarChart3, Eye, Award, TrendingUp, 
-  Users, DollarSign, CheckCircle, Download, Search,
-  ExternalLink, Calendar, ArrowLeft
+  Shield,
+  FileText,
+  BarChart3,
+  Eye,
+  Award,
+  TrendingUp,
+  Users,
+  DollarSign,
+  CheckCircle,
+  Download,
+  Search,
+  ExternalLink,
+  Calendar,
+  ArrowLeft,
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +29,7 @@ const REPORTS = [
     type: "سنوي",
     size: "4.2 MB",
     pages: 48,
-    highlights: [
-      "أكثر من 12,000 مستفيد",
-      "25 مشروع منفذ",
-      "ميزانية 2.5 مليون دولار",
-    ],
+    highlights: ["أكثر من 12,000 مستفيد", "25 مشروع منفذ", "ميزانية 2.5 مليون دولار"],
   },
   {
     id: 2,
@@ -31,11 +38,7 @@ const REPORTS = [
     type: "سنوي",
     size: "3.8 MB",
     pages: 42,
-    highlights: [
-      "أكثر من 10,000 مستفيد",
-      "20 مشروع منفذ",
-      "ميزانية 2 مليون دولار",
-    ],
+    highlights: ["أكثر من 10,000 مستفيد", "20 مشروع منفذ", "ميزانية 2 مليون دولار"],
   },
   {
     id: 3,
@@ -44,11 +47,7 @@ const REPORTS = [
     type: "ربعي",
     size: "1.5 MB",
     pages: 18,
-    highlights: [
-      "3,500 مستفيد",
-      "8 مشاريع نشطة",
-      "698,000 دولار ميزانية",
-    ],
+    highlights: ["3,500 مستفيد", "8 مشاريع نشطة", "698,000 دولار ميزانية"],
   },
   {
     id: 4,
@@ -57,11 +56,7 @@ const REPORTS = [
     type: "ربعي",
     size: "1.2 MB",
     pages: 15,
-    highlights: [
-      "2,800 مستفيد",
-      "6 مشاريع مكتملة",
-      "540,000 دولار ميزانية",
-    ],
+    highlights: ["2,800 مستفيد", "6 مشاريع مكتملة", "540,000 دولار ميزانية"],
   },
 ];
 
@@ -120,16 +115,16 @@ const TRANSPARENCY_PILLARS = [
 
 export default function TransparencyPage() {
   const navigate = useNavigate();
-  const [activeFilter, setActiveFilter] = useState<'all' | 'سنوي' | 'ربعي'>('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState<"all" | "سنوي" | "ربعي">("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useSEO({
-    title: 'الشفافية - رحماء بينهم',
-    description: 'الشفافية والحوكمة في رحماء بينهم - التقارير المالية والإدارية',
+    title: "الشفافية - رحماء بينهم",
+    description: "الشفافية والحوكمة في رحماء بينهم - التقارير المالية والإدارية",
   });
 
   const filteredReports = REPORTS.filter((report) => {
-    const matchesType = activeFilter === 'all' || report.type === activeFilter;
+    const matchesType = activeFilter === "all" || report.type === activeFilter;
     const matchesSearch = report.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesType && matchesSearch;
   });
@@ -142,7 +137,7 @@ export default function TransparencyPage() {
           <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -151,17 +146,19 @@ export default function TransparencyPage() {
           >
             <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
               <Shield className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">الشفافية والنزاهة</span>
+              <span className="text-[var(--brand-green)] text-sm font-medium">
+                الشفافية والنزاهة
+              </span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="text-[var(--foreground)]">الشفافية </span>
               <span className="text-[var(--brand-green)]">ركن أساسي</span>
             </h1>
-            
+
             <p className="text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto leading-relaxed mb-8">
-               نؤمن في رحماء بينهم بأن الشفافية هي أساس الثقة.
-              نلتزم بأعلى معايير الإفصاح والحوكمة لضمان وصول تبرعاتكم إلى مستحقيها.
+              نؤمن في رحماء بينهم بأن الشفافية هي أساس الثقة. نلتزم بأعلى معايير الإفصاح والحوكمة
+              لضمان وصول تبرعاتكم إلى مستحقيها.
             </p>
 
             {/* Quick Stats */}
@@ -176,7 +173,9 @@ export default function TransparencyPage() {
                 >
                   <div className="text-2xl font-bold text-[var(--foreground)]">{stat.value}</div>
                   <div className="text-sm text-[var(--muted-foreground)] mt-1">{stat.label}</div>
-                  <div className={`text-xs font-semibold mt-1 ${stat.positive ? 'text-[var(--success)]' : 'text-[var(--warning)]'}`}>
+                  <div
+                    className={`text-xs font-semibold mt-1 ${stat.positive ? "text-[var(--success)]" : "text-[var(--warning)]"}`}
+                  >
                     {stat.change}
                   </div>
                 </motion.div>
@@ -257,7 +256,9 @@ export default function TransparencyPage() {
                     {body.members}
                   </span>
                 </div>
-                <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">{body.desc}</p>
+                <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">
+                  {body.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -285,17 +286,17 @@ export default function TransparencyPage() {
           <div className="max-w-4xl mx-auto mb-8">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div className="flex gap-2">
-                {['all', 'سنوي', 'ربعي'].map((filter) => (
+                {["all", "سنوي", "ربعي"].map((filter) => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter as any)}
                     className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                       activeFilter === filter
-                        ? 'bg-[var(--brand-green)] text-white'
-                        : 'bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]'
+                        ? "bg-[var(--brand-green)] text-white"
+                        : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                     }`}
                   >
-                    {filter === 'all' ? 'الكل' : filter}
+                    {filter === "all" ? "الكل" : filter}
                   </button>
                 ))}
               </div>
@@ -331,9 +332,13 @@ export default function TransparencyPage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-[var(--foreground)]">{report.title}</h3>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        report.type === 'سنوي' ? 'bg-[var(--info-bg)] text-[var(--info)]' : 'bg-[var(--warning-bg)] text-[var(--warning)]'
-                      }`}>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                          report.type === "سنوي"
+                            ? "bg-[var(--info-bg)] text-[var(--info)]"
+                            : "bg-[var(--warning-bg)] text-[var(--warning)]"
+                        }`}
+                      >
                         {report.type}
                       </span>
                     </div>
@@ -356,7 +361,10 @@ export default function TransparencyPage() {
                     <span>•</span>
                     <span>{report.pages} صفحة</span>
                   </div>
-                  <button onClick={() => alert('سيتم إضافة رابط التحميل قريباً')} className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors">
+                  <button
+                    onClick={() => alert("سيتم إضافة رابط التحميل قريباً")}
+                    className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
+                  >
                     <Download className="w-4 h-4" />
                     تحميل
                   </button>
@@ -388,7 +396,7 @@ export default function TransparencyPage() {
               يمكنك التواصل معنا لأي استفسار حول تقاريرنا المالية أو الإدارية
             </p>
             <button
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate("/contact")}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
               تواصل معنا
@@ -400,4 +408,3 @@ export default function TransparencyPage() {
     </div>
   );
 }
-

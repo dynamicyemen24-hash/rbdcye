@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 interface ThemeContextType {
   theme: ThemeMode;
@@ -14,64 +14,64 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'rh_theme_mode';
-const HIGH_CONTRAST_STORAGE_KEY = 'rh_high_contrast';
+const THEME_STORAGE_KEY = "rh_theme_mode";
+const HIGH_CONTRAST_STORAGE_KEY = "rh_high_contrast";
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') return 'system';
+    if (typeof window === "undefined") return "system";
     const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
-    return saved && ['light', 'dark', 'system'].includes(saved) ? saved : 'system';
+    return saved && ["light", "dark", "system"].includes(saved) ? saved : "system";
   });
 
   const [isHighContrast, setIsHighContrastState] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return localStorage.getItem(HIGH_CONTRAST_STORAGE_KEY) === 'true';
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(HIGH_CONTRAST_STORAGE_KEY) === "true";
   });
 
   const [isSystemDark, setIsSystemDark] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
   // Listen to system preference changes
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
     const handleChange = (e: MediaQueryListEvent) => {
       setIsSystemDark(e.matches);
     };
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  const isDark = theme === 'dark' || (theme === 'system' && isSystemDark);
+  const isDark = theme === "dark" || (theme === "system" && isSystemDark);
 
   // Apply root DOM classes and data attributes
   useEffect(() => {
     const root = document.documentElement;
 
     // Remove theme classes
-    root.classList.remove('light', 'dark');
+    root.classList.remove("light", "dark");
 
     if (isDark) {
-      root.classList.add('dark');
-      root.setAttribute('data-theme', 'dark');
-      root.style.colorScheme = 'dark';
+      root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
+      root.style.colorScheme = "dark";
     } else {
-      root.classList.add('light');
-      root.setAttribute('data-theme', 'light');
-      root.style.colorScheme = 'light';
+      root.classList.add("light");
+      root.setAttribute("data-theme", "light");
+      root.style.colorScheme = "light";
     }
 
     if (isHighContrast) {
-      root.classList.add('high-contrast');
-      root.setAttribute('data-high-contrast', 'true');
+      root.classList.add("high-contrast");
+      root.setAttribute("data-high-contrast", "true");
     } else {
-      root.classList.remove('high-contrast');
-      root.removeAttribute('data-high-contrast');
+      root.classList.remove("high-contrast");
+      root.removeAttribute("data-high-contrast");
     }
   }, [isDark, isHighContrast]);
 
@@ -86,7 +86,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const toggleTheme = useCallback(() => {
     setThemeState((prev) => {
-      const nextTheme: ThemeMode = prev === 'light' ? 'dark' : prev === 'dark' ? 'system' : 'light';
+      const nextTheme: ThemeMode = prev === "light" ? "dark" : prev === "dark" ? "system" : "light";
       try {
         localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
       } catch {
@@ -130,19 +130,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     [theme, setTheme, isDark, toggleTheme, isHighContrast, toggleHighContrast, setHighContrast]
   );
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
 };
-
-

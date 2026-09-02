@@ -1,7 +1,7 @@
 // ============================================================
 // PostgreSQL Service - الاتصال المباشر بقاعدة البيانات
 // ============================================================
-import { supabase } from './supabase.client';
+import { supabase } from "./supabase.client";
 
 // أنواع البيانات
 export interface PostgresProject {
@@ -9,7 +9,7 @@ export interface PostgresProject {
   title: string;
   description: string;
   category: string;
-  status: 'active' | 'completed' | 'pending';
+  status: "active" | "completed" | "pending";
   progress: number;
   budget?: number;
   beneficiaries: number;
@@ -27,7 +27,7 @@ export interface PostgresNews {
   category: string;
   category_color?: string;
   category_bg?: string;
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   image?: string;
   date: string;
   views: number;
@@ -41,9 +41,9 @@ export interface PostgresDonation {
   phone: string;
   amount: number;
   project: string;
-  method: 'card' | 'bank' | 'cash';
-  type: 'once' | 'monthly' | 'yearly';
-  status: 'pending' | 'completed' | 'failed' | 'refunded';
+  method: "card" | "bank" | "cash";
+  type: "once" | "monthly" | "yearly";
+  status: "pending" | "completed" | "failed" | "refunded";
   date: string;
 }
 
@@ -55,7 +55,7 @@ export interface PostgresRequest {
   type: string;
   subject: string;
   message: string;
-  status: 'new' | 'read' | 'replied';
+  status: "new" | "read" | "replied";
   date: string;
 }
 
@@ -66,7 +66,7 @@ export interface PostgresVolunteer {
   phone: string;
   field: string;
   motivation?: string;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   hours: number;
   date: string;
 }
@@ -77,13 +77,13 @@ export interface PostgresPartner {
   type: string;
   description?: string;
   logo?: string;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
 }
 
 export interface PostgresMedia {
   id: string;
   title: string;
-  type: 'صورة' | 'فيديو' | 'وثيقة';
+  type: "صورة" | "فيديو" | "وثيقة";
   url: string;
   size?: string;
   date: string;
@@ -95,7 +95,7 @@ export interface PostgresReport {
   type: string;
   file_url: string;
   size?: string;
-  status: 'published' | 'draft';
+  status: "published" | "draft";
   date: string;
 }
 
@@ -103,8 +103,8 @@ export interface PostgresUser {
   id: string;
   name: string;
   email: string;
-  role: 'ADMIN' | 'MANAGER' | 'EDITOR' | 'VIEWER';
-  status: 'active' | 'inactive';
+  role: "ADMIN" | "MANAGER" | "EDITOR" | "VIEWER";
+  status: "active" | "inactive";
   created_at: string;
   last_login: string;
 }
@@ -114,8 +114,8 @@ export interface PostgresSubscriber {
   name: string;
   email: string;
   phone?: string;
-  source: 'contact' | 'donation' | 'volunteer';
-  status: 'pending' | 'active';
+  source: "contact" | "donation" | "volunteer";
+  status: "pending" | "active";
   last_request_id?: string;
   created_at: string;
   updated_at: string;
@@ -134,9 +134,9 @@ class PostgresService {
   // ============ PROJECTS ============
   async getProjects(): Promise<PostgresProject[]> {
     const { data, error } = await this.supabase
-      .from('projects')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
@@ -144,18 +144,20 @@ class PostgresService {
 
   async getProjectById(id: string): Promise<PostgresProject | null> {
     const { data, error } = await this.supabase
-      .from('projects')
-      .select('*')
-      .eq('id', id)
+      .from("projects")
+      .select("*")
+      .eq("id", id)
       .maybeSingle();
 
     if (error) throw error;
     return data;
   }
 
-  async createProject(project: Omit<PostgresProject, 'id' | 'created_at' | 'updated_at'>): Promise<PostgresProject> {
+  async createProject(
+    project: Omit<PostgresProject, "id" | "created_at" | "updated_at">
+  ): Promise<PostgresProject> {
     const { data, error } = await this.supabase
-      .from('projects')
+      .from("projects")
       .insert([{ ...project, id: `proj_${Date.now()}` }])
       .select()
       .single();
@@ -166,9 +168,9 @@ class PostgresService {
 
   async updateProject(id: string, updates: Partial<PostgresProject>): Promise<PostgresProject> {
     const { data, error } = await this.supabase
-      .from('projects')
+      .from("projects")
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -177,10 +179,7 @@ class PostgresService {
   }
 
   async deleteProject(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('projects')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("projects").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -188,9 +187,9 @@ class PostgresService {
   // ============ NEWS ============
   async getNews(): Promise<PostgresNews[]> {
     const { data, error } = await this.supabase
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
@@ -198,24 +197,26 @@ class PostgresService {
 
   async getPublishedNews(): Promise<PostgresNews[]> {
     const { data, error } = await this.supabase
-      .from('posts')
-      .select('*')
-      .eq('status', 'PUBLISHED')
-      .order('published_at', { ascending: false });
+      .from("posts")
+      .select("*")
+      .eq("status", "PUBLISHED")
+      .order("published_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createNews(news: Omit<PostgresNews, 'id' | 'date' | 'views'>): Promise<PostgresNews> {
+  async createNews(news: Omit<PostgresNews, "id" | "date" | "views">): Promise<PostgresNews> {
     const { data, error } = await this.supabase
-      .from('posts')
-      .insert([{
-        ...news,
-        id: `news_${Date.now()}`,
-        date: new Date().toISOString().split('T')[0],
-        views: 0,
-      }])
+      .from("posts")
+      .insert([
+        {
+          ...news,
+          id: `news_${Date.now()}`,
+          date: new Date().toISOString().split("T")[0],
+          views: 0,
+        },
+      ])
       .select()
       .single();
 
@@ -225,9 +226,9 @@ class PostgresService {
 
   async updateNews(id: string, updates: Partial<PostgresNews>): Promise<PostgresNews> {
     const { data, error } = await this.supabase
-      .from('posts')
+      .from("posts")
       .update(updates)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -236,10 +237,7 @@ class PostgresService {
   }
 
   async deleteNews(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('posts')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("posts").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -247,18 +245,20 @@ class PostgresService {
   // ============ DONATIONS ============
   async getDonations(): Promise<PostgresDonation[]> {
     const { data, error } = await this.supabase
-      .from('donations')
-      .select('*')
-      .order('date', { ascending: false });
+      .from("donations")
+      .select("*")
+      .order("date", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createDonation(donation: Omit<PostgresDonation, 'id' | 'date'>): Promise<PostgresDonation> {
+  async createDonation(donation: Omit<PostgresDonation, "id" | "date">): Promise<PostgresDonation> {
     const { data, error } = await this.supabase
-      .from('donations')
-      .insert([{ ...donation, id: `don_${Date.now()}`, date: new Date().toISOString().split('T')[0] }])
+      .from("donations")
+      .insert([
+        { ...donation, id: `don_${Date.now()}`, date: new Date().toISOString().split("T")[0] },
+      ])
       .select()
       .single();
 
@@ -266,11 +266,8 @@ class PostgresService {
     return data;
   }
 
-  async updateDonationStatus(id: string, status: PostgresDonation['status']): Promise<void> {
-    const { error } = await this.supabase
-      .from('donations')
-      .update({ status })
-      .eq('id', id);
+  async updateDonationStatus(id: string, status: PostgresDonation["status"]): Promise<void> {
+    const { error } = await this.supabase.from("donations").update({ status }).eq("id", id);
 
     if (error) throw error;
   }
@@ -278,23 +275,27 @@ class PostgresService {
   // ============ REQUESTS ============
   async getRequests(): Promise<PostgresRequest[]> {
     const { data, error } = await this.supabase
-      .from('service_requests')
-      .select('*')
-      .order('date', { ascending: false });
+      .from("service_requests")
+      .select("*")
+      .order("date", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createRequest(request: Omit<PostgresRequest, 'id' | 'date' | 'status'>): Promise<PostgresRequest> {
+  async createRequest(
+    request: Omit<PostgresRequest, "id" | "date" | "status">
+  ): Promise<PostgresRequest> {
     const { data, error } = await this.supabase
-      .from('service_requests')
-      .insert([{
-        ...request,
-        id: `req_${Date.now()}`,
-        status: 'new',
-        date: new Date().toISOString().split('T')[0],
-      }])
+      .from("service_requests")
+      .insert([
+        {
+          ...request,
+          id: `req_${Date.now()}`,
+          status: "new",
+          date: new Date().toISOString().split("T")[0],
+        },
+      ])
       .select()
       .single();
 
@@ -302,11 +303,8 @@ class PostgresService {
     return data;
   }
 
-  async updateRequestStatus(id: string, status: PostgresRequest['status']): Promise<void> {
-    const { error } = await this.supabase
-      .from('service_requests')
-      .update({ status })
-      .eq('id', id);
+  async updateRequestStatus(id: string, status: PostgresRequest["status"]): Promise<void> {
+    const { error } = await this.supabase.from("service_requests").update({ status }).eq("id", id);
 
     if (error) throw error;
   }
@@ -314,24 +312,28 @@ class PostgresService {
   // ============ VOLUNTEERS ============
   async getVolunteers(): Promise<PostgresVolunteer[]> {
     const { data, error } = await this.supabase
-      .from('volunteers')
-      .select('*')
-      .order('date', { ascending: false });
+      .from("volunteers")
+      .select("*")
+      .order("date", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createVolunteer(volunteer: Omit<PostgresVolunteer, 'id' | 'date' | 'hours' | 'status'>): Promise<PostgresVolunteer> {
+  async createVolunteer(
+    volunteer: Omit<PostgresVolunteer, "id" | "date" | "hours" | "status">
+  ): Promise<PostgresVolunteer> {
     const { data, error } = await this.supabase
-      .from('volunteers')
-      .insert([{
-        ...volunteer,
-        id: `vol_${Date.now()}`,
-        status: 'pending',
-        hours: 0,
-        date: new Date().toISOString().split('T')[0],
-      }])
+      .from("volunteers")
+      .insert([
+        {
+          ...volunteer,
+          id: `vol_${Date.now()}`,
+          status: "pending",
+          hours: 0,
+          date: new Date().toISOString().split("T")[0],
+        },
+      ])
       .select()
       .single();
 
@@ -339,11 +341,8 @@ class PostgresService {
     return data;
   }
 
-  async updateVolunteerStatus(id: string, status: PostgresVolunteer['status']): Promise<void> {
-    const { error } = await this.supabase
-      .from('volunteers')
-      .update({ status })
-      .eq('id', id);
+  async updateVolunteerStatus(id: string, status: PostgresVolunteer["status"]): Promise<void> {
+    const { error } = await this.supabase.from("volunteers").update({ status }).eq("id", id);
 
     if (error) throw error;
   }
@@ -351,17 +350,17 @@ class PostgresService {
   // ============ PARTNERS ============
   async getPartners(): Promise<PostgresPartner[]> {
     const { data, error } = await this.supabase
-      .from('partners')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("partners")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createPartner(partner: Omit<PostgresPartner, 'id'>): Promise<PostgresPartner> {
+  async createPartner(partner: Omit<PostgresPartner, "id">): Promise<PostgresPartner> {
     const { data, error } = await this.supabase
-      .from('partners')
+      .from("partners")
       .insert([{ ...partner, id: `par_${Date.now()}` }])
       .select()
       .single();
@@ -372,9 +371,9 @@ class PostgresService {
 
   async updatePartner(id: string, updates: Partial<PostgresPartner>): Promise<PostgresPartner> {
     const { data, error } = await this.supabase
-      .from('partners')
+      .from("partners")
       .update(updates)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -383,10 +382,7 @@ class PostgresService {
   }
 
   async deletePartner(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('partners')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("partners").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -394,17 +390,17 @@ class PostgresService {
   // ============ MEDIA ============
   async getMedia(): Promise<PostgresMedia[]> {
     const { data, error } = await this.supabase
-      .from('media_library')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("media_library")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createMedia(media: Omit<PostgresMedia, 'id'>): Promise<PostgresMedia> {
+  async createMedia(media: Omit<PostgresMedia, "id">): Promise<PostgresMedia> {
     const { data, error } = await this.supabase
-      .from('media_library')
+      .from("media_library")
       .insert([{ ...media, id: `med_${Date.now()}` }])
       .select()
       .single();
@@ -414,10 +410,7 @@ class PostgresService {
   }
 
   async deleteMedia(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('media_library')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("media_library").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -425,18 +418,20 @@ class PostgresService {
   // ============ REPORTS ============
   async getReports(): Promise<PostgresReport[]> {
     const { data, error } = await this.supabase
-      .from('reports')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("reports")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createReport(report: Omit<PostgresReport, 'id' | 'date'>): Promise<PostgresReport> {
+  async createReport(report: Omit<PostgresReport, "id" | "date">): Promise<PostgresReport> {
     const { data, error } = await this.supabase
-      .from('reports')
-      .insert([{ ...report, id: `rep_${Date.now()}`, date: new Date().toISOString().split('T')[0] }])
+      .from("reports")
+      .insert([
+        { ...report, id: `rep_${Date.now()}`, date: new Date().toISOString().split("T")[0] },
+      ])
       .select()
       .single();
 
@@ -446,9 +441,9 @@ class PostgresService {
 
   async updateReport(id: string, updates: Partial<PostgresReport>): Promise<PostgresReport> {
     const { data, error } = await this.supabase
-      .from('reports')
+      .from("reports")
       .update(updates)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -457,10 +452,7 @@ class PostgresService {
   }
 
   async deleteReport(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('reports')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("reports").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -468,23 +460,27 @@ class PostgresService {
   // ============ USERS ============
   async getUsers(): Promise<PostgresUser[]> {
     const { data, error } = await this.supabase
-      .from('dashboard_users')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("dashboard_users")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async createUser(user: Omit<PostgresUser, 'id' | 'created_at' | 'last_login'>): Promise<PostgresUser> {
+  async createUser(
+    user: Omit<PostgresUser, "id" | "created_at" | "last_login">
+  ): Promise<PostgresUser> {
     const { data, error } = await this.supabase
-      .from('dashboard_users')
-      .insert([{
-        ...user,
-        id: `usr_${Date.now()}`,
-        created_at: new Date().toISOString(),
-        last_login: 'جديد',
-      }])
+      .from("dashboard_users")
+      .insert([
+        {
+          ...user,
+          id: `usr_${Date.now()}`,
+          created_at: new Date().toISOString(),
+          last_login: "جديد",
+        },
+      ])
       .select()
       .single();
 
@@ -492,20 +488,14 @@ class PostgresService {
     return data;
   }
 
-  async updateUserRole(id: string, role: PostgresUser['role']): Promise<void> {
-    const { error } = await this.supabase
-      .from('dashboard_users')
-      .update({ role })
-      .eq('id', id);
+  async updateUserRole(id: string, role: PostgresUser["role"]): Promise<void> {
+    const { error } = await this.supabase.from("dashboard_users").update({ role }).eq("id", id);
 
     if (error) throw error;
   }
 
-  async updateUserStatus(id: string, status: PostgresUser['status']): Promise<void> {
-    const { error } = await this.supabase
-      .from('dashboard_users')
-      .update({ status })
-      .eq('id', id);
+  async updateUserStatus(id: string, status: PostgresUser["status"]): Promise<void> {
+    const { error } = await this.supabase.from("dashboard_users").update({ status }).eq("id", id);
 
     if (error) throw error;
   }
@@ -513,19 +503,16 @@ class PostgresService {
   // ============ SUBSCRIBERS ============
   async getSubscribers(): Promise<PostgresSubscriber[]> {
     const { data, error } = await this.supabase
-      .from('subscribers')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("subscribers")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  async updateSubscriberStatus(id: string, status: PostgresSubscriber['status']): Promise<void> {
-    const { error } = await this.supabase
-      .from('subscribers')
-      .update({ status })
-      .eq('id', id);
+  async updateSubscriberStatus(id: string, status: PostgresSubscriber["status"]): Promise<void> {
+    const { error } = await this.supabase.from("subscribers").update({ status }).eq("id", id);
 
     if (error) throw error;
   }
@@ -533,9 +520,9 @@ class PostgresService {
   // ============ SUCCESS STORIES ============
   async getSuccessStories(): Promise<any[]> {
     const { data, error } = await this.supabase
-      .from('success_stories')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("success_stories")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data || [];
@@ -543,7 +530,7 @@ class PostgresService {
 
   async createSuccessStory(story: any): Promise<any> {
     const { data, error } = await this.supabase
-      .from('success_stories')
+      .from("success_stories")
       .insert([{ ...story, id: `story_${Date.now()}` }])
       .select()
       .single();
@@ -554,9 +541,9 @@ class PostgresService {
 
   async updateSuccessStory(id: string, updates: any): Promise<any> {
     const { data, error } = await this.supabase
-      .from('success_stories')
+      .from("success_stories")
       .update(updates)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -565,10 +552,7 @@ class PostgresService {
   }
 
   async deleteSuccessStory(id: string): Promise<void> {
-    const { error } = await this.supabase
-      .from('success_stories')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from("success_stories").delete().eq("id", id);
 
     if (error) throw error;
   }
@@ -586,22 +570,22 @@ class PostgresService {
     ]);
 
     const totalDonations = donations
-      .filter(d => d.status === 'completed')
+      .filter((d) => d.status === "completed")
       .reduce((sum, d) => sum + d.amount, 0);
 
     const totalBeneficiaries = projects.reduce((sum, p) => sum + p.beneficiaries, 0);
 
     return {
       totalBeneficiaries,
-      activeProjects: projects.filter(p => p.status === 'active').length,
-      totalPartners: partners.filter(p => p.status === 'active').length,
-      totalVolunteers: volunteers.filter(v => v.status === 'active').length,
-      newMessages: requests.filter(r => r.status === 'new').length,
+      activeProjects: projects.filter((p) => p.status === "active").length,
+      totalPartners: partners.filter((p) => p.status === "active").length,
+      totalVolunteers: volunteers.filter((v) => v.status === "active").length,
+      newMessages: requests.filter((r) => r.status === "new").length,
       totalDonations,
       monthlyDonations: totalDonations,
       donationGrowth: 0,
-      newsCount: news.filter(n => n.status === 'PUBLISHED').length,
-      storiesCount: stories.filter(s => s.status === 'published').length,
+      newsCount: news.filter((n) => n.status === "PUBLISHED").length,
+      storiesCount: stories.filter((s) => s.status === "published").length,
     };
   }
 
@@ -609,9 +593,9 @@ class PostgresService {
     const donations = await this.getDonations();
     const projects = await this.getProjects();
 
-    const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'];
+    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"];
     const donationsOverYear = months.map((month) => ({ month, amount: 0, count: 0 }));
-    
+
     donations.forEach((donation, index) => {
       const slot = donationsOverYear[index % donationsOverYear.length];
       slot.amount += donation.amount;
@@ -620,14 +604,14 @@ class PostgresService {
 
     const projectsByCategory = Object.values(
       projects.reduce((acc: Record<string, { category: string; count: number }>, project) => {
-        const category = project.category || 'غير مصنف';
+        const category = project.category || "غير مصنف";
         acc[category] = acc[category] || { category, count: 0 };
         acc[category].count += 1;
         return acc;
       }, {})
     );
 
-    const days = ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+    const days = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
     return {
       donationsOverYear,
@@ -643,4 +627,3 @@ class PostgresService {
 
 // Export singleton instance
 export const postgresService = new PostgresService();
-

@@ -1,12 +1,4 @@
-import { 
-  Sparkles, 
-  ChevronLeft, 
-  ChevronRight,
-  Quote,
-  Play,
-  Film,
-  Heart
-} from "lucide-react";
+import { Sparkles, ChevronLeft, ChevronRight, Quote, Play, Film, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { ISLAMIC_TEXTS } from "./types";
@@ -20,18 +12,21 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
   const [verseIndex, setVerseIndex] = useState(0);
 
   const nextVerse = () => {
-    setVerseIndex(prev => (prev + 1) % ISLAMIC_TEXTS.length);
+    setVerseIndex((prev) => (prev + 1) % ISLAMIC_TEXTS.length);
   };
   const prevVerse = () => {
-    setVerseIndex(prev => (prev - 1 + ISLAMIC_TEXTS.length) % ISLAMIC_TEXTS.length);
+    setVerseIndex((prev) => (prev - 1 + ISLAMIC_TEXTS.length) % ISLAMIC_TEXTS.length);
   };
 
   const current = ISLAMIC_TEXTS[verseIndex];
 
   return (
-    <aside className="w-full flex flex-col gap-4" aria-label="??? ?? ????? ?????? ???????? ??????? ???????? ????????">
+    <aside
+      className="w-full flex flex-col gap-4"
+      aria-label="??? ?? ????? ?????? ???????? ??????? ???????? ????????"
+    >
       {/* 1. Pure Quranic & Hadith Card */}
-      <motion.div 
+      <motion.div
         whileHover={{ y: -3 }}
         transition={{ duration: 0.3 }}
         className="relative rounded-3xl p-6 sm:p-7 bg-slate-950 text-white shadow-xl shadow-slate-900/20 flex flex-col justify-between overflow-hidden text-right border border-emerald-500/30 group transition-all duration-500 hover:border-[#C69E5A]/60"
@@ -48,14 +43,13 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
 
         {/* Foreground Content */}
         <div className="relative z-10 flex flex-col h-full justify-between space-y-5">
-          
           {/* Pure Quranic Header Bar */}
           <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-white/15">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/15 border border-amber-300/30 text-[#E6C875] text-xs font-black font-cairo shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-[#E6C875]" aria-hidden="true" />
-              <span>{current.type === 'ayah' ? '??? ????? ????' : '??? ???? ????'}</span>
+              <span>{current.type === "ayah" ? "??? ????? ????" : "??? ???? ????"}</span>
             </div>
-            
+
             <span className="text-emerald-100/90 text-xs font-extrabold font-cairo bg-white/10 px-3 py-1 rounded-lg border border-white/15 backdrop-blur-md">
               {current.reference}
             </span>
@@ -73,7 +67,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
                 className="space-y-3"
               >
                 <p className="font-amiri text-xl sm:text-2xl text-amber-50 leading-[2.2] font-extrabold text-center drop-shadow-md">
-                  « {current.arabic} »
+                  ï¿½ {current.arabic} ï¿½
                 </p>
                 {current.meaning && (
                   <p className="text-xs sm:text-sm text-emerald-100/90 font-cairo leading-relaxed text-center font-medium max-w-xl mx-auto">
@@ -119,13 +113,12 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
               <span>??? ??????? ?????????</span>
             </button>
           </div>
-
         </div>
       </motion.div>
 
       {/* 2. Intelligent Dedicated Video & Documentary Showcase Card */}
       {onOpenVideo && (
-        <motion.div 
+        <motion.div
           whileHover={{ y: -2 }}
           transition={{ duration: 0.3 }}
           onClick={onOpenVideo}
@@ -134,7 +127,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           tabIndex={0}
           aria-label="?????? ?????? ???????? ????????? ???????? ?????? ????? ?????"
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               onOpenVideo();
             }
@@ -150,7 +143,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
               poster="/images/defaults/about-hero.svg"
               className="w-full h-full object-cover scale-105 filter brightness-[0.5] contrast-[1.1] transition-all duration-700 group-hover:scale-110"
               onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
+                (e.target as HTMLElement).style.display = "none";
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-[#0F4C3A]/80" />
@@ -189,5 +182,3 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
 }
 
 export default HeroWisdomSideCard;
-
-

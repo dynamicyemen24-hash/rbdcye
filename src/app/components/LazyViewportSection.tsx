@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef, ReactNode } from "react";
+import { Loader2 } from "lucide-react";
 
 interface LazyViewportSectionProps {
   children: ReactNode;
@@ -15,9 +15,9 @@ export function LazyViewportSection({
   children,
   fallback,
   threshold = 0.01,
-  rootMargin = '600px 0px',
-  minHeight = '120px',
-  className = '',
+  rootMargin = "600px 0px",
+  minHeight = "120px",
+  className = "",
   id,
 }: LazyViewportSectionProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +27,7 @@ export function LazyViewportSection({
     const element = sectionRef.current;
     if (!element) return;
 
-    if (!('IntersectionObserver' in window)) {
+    if (!("IntersectionObserver" in window)) {
       setIsVisible(true);
       return;
     }
@@ -53,7 +53,7 @@ export function LazyViewportSection({
   }, [threshold, rootMargin]);
 
   const defaultFallback = (
-    <div 
+    <div
       className="flex items-center justify-center w-full transition-opacity duration-300"
       style={{ minHeight }}
     >
@@ -65,12 +65,15 @@ export function LazyViewportSection({
   );
 
   return (
-    <div ref={sectionRef} id={id} className={`w-full relative ${className}`} style={{ minHeight: isVisible ? 'auto' : minHeight }}>
-      {isVisible ? children : (fallback || defaultFallback)}
+    <div
+      ref={sectionRef}
+      id={id}
+      className={`w-full relative ${className}`}
+      style={{ minHeight: isVisible ? "auto" : minHeight }}
+    >
+      {isVisible ? children : fallback || defaultFallback}
     </div>
   );
 }
 
 export default LazyViewportSection;
-
-

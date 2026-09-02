@@ -20,7 +20,8 @@ const RECENT_DONORS = [
 // شهادات محاكاة — أسماء عامة غير حقيقية
 const TESTIMONIALS = [
   {
-    quote: "من أرقى المؤسسات التي عملت معها — شفافية مطلقة واحترافية في التنفيذ. كل ريال يصل لمن يستحقه.",
+    quote:
+      "من أرقى المؤسسات التي عملت معها — شفافية مطلقة واحترافية في التنفيذ. كل ريال يصل لمن يستحقه.",
     author: "مستخدم",
     role: "مستفيد من خدماتنا",
     rating: 5,
@@ -32,7 +33,8 @@ const TESTIMONIALS = [
     rating: 5,
   },
   {
-    quote: "التعاون مع رحماء بينهم كان من أفضل القرارات. نهجهم الشامل للتنمية يحدث فرقاً حقيقياً في حياة المجتمعات المستهدفة.",
+    quote:
+      "التعاون مع رحماء بينهم كان من أفضل القرارات. نهجهم الشامل للتنمية يحدث فرقاً حقيقياً في حياة المجتمعات المستهدفة.",
     author: "شريك مؤسسي",
     role: "شريك في العمل التطوعي",
     rating: 5,
@@ -73,7 +75,9 @@ export function SocialProofTicker() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-green)] opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--brand-green)]" />
             </span>
-            <span className="text-[var(--brand-green)] text-xs font-bold hidden sm:inline">مباشر</span>
+            <span className="text-[var(--brand-green)] text-xs font-bold hidden sm:inline">
+              مباشر
+            </span>
           </div>
 
           {/* Content ticker */}
@@ -99,13 +103,21 @@ export function SocialProofTicker() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
-                      <span className="font-bold text-[var(--foreground)]">{(currentItem as typeof RECENT_DONORS[0]).label}</span>
+                      <span className="font-bold text-[var(--foreground)]">
+                        {(currentItem as (typeof RECENT_DONORS)[0]).label}
+                      </span>
                       <span className="text-[var(--muted-foreground)]">تبرع بمبلغ</span>
-                      <span className="font-bold text-[var(--brand-green)]">{(currentItem as typeof RECENT_DONORS[0]).amount} ر.ي</span>
+                      <span className="font-bold text-[var(--brand-green)]">
+                        {(currentItem as (typeof RECENT_DONORS)[0]).amount} ر.ي
+                      </span>
                       <span className="text-[var(--muted-foreground)]">لـ</span>
-                      <span className="font-semibold text-[var(--foreground)]">{(currentItem as typeof RECENT_DONORS[0]).project}</span>
+                      <span className="font-semibold text-[var(--foreground)]">
+                        {(currentItem as (typeof RECENT_DONORS)[0]).project}
+                      </span>
                     </div>
-                    <div className="text-xs text-[var(--muted-foreground)] mt-0.5">{(currentItem as typeof RECENT_DONORS[0]).time}</div>
+                    <div className="text-xs text-[var(--muted-foreground)] mt-0.5">
+                      {(currentItem as (typeof RECENT_DONORS)[0]).time}
+                    </div>
                   </div>
                 </motion.div>
               ) : (
@@ -122,14 +134,24 @@ export function SocialProofTicker() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm text-[var(--foreground)] font-medium line-clamp-2 leading-relaxed">
-                      {(currentItem as typeof TESTIMONIALS[0]).quote}
+                      {(currentItem as (typeof TESTIMONIALS)[0]).quote}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs font-bold text-[var(--brand-green)]">{(currentItem as typeof TESTIMONIALS[0]).author}</span>
-                      <span className="text-xs text-[var(--muted-foreground)]">— {(currentItem as typeof TESTIMONIALS[0]).role}</span>
+                      <span className="text-xs font-bold text-[var(--brand-green)]">
+                        {(currentItem as (typeof TESTIMONIALS)[0]).author}
+                      </span>
+                      <span className="text-xs text-[var(--muted-foreground)]">
+                        — {(currentItem as (typeof TESTIMONIALS)[0]).role}
+                      </span>
                       <div className="flex gap-0.5 mr-1">
-                        {Array.from({ length: (currentItem as typeof TESTIMONIALS[0]).rating }).map((_, j) => (
-                          <Star key={j} className="w-3 h-3 text-[var(--brand-gold)]" fill="var(--brand-gold)" />
+                        {Array.from({
+                          length: (currentItem as (typeof TESTIMONIALS)[0]).rating,
+                        }).map((_, j) => (
+                          <Star
+                            key={j}
+                            className="w-3 h-3 text-[var(--brand-gold)]"
+                            fill="var(--brand-gold)"
+                          />
                         ))}
                       </div>
                     </div>
@@ -142,26 +164,30 @@ export function SocialProofTicker() {
           {/* Counter */}
           <div className="flex-shrink-0 hidden md:flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
             <TrendingUp className="w-3.5 h-3.5 text-[var(--brand-green)]" />
-            <span>{currentIndex + 1}/{RECENT_DONORS.length + TESTIMONIALS.length}</span>
+            <span>
+              {currentIndex + 1}/{RECENT_DONORS.length + TESTIMONIALS.length}
+            </span>
           </div>
         </div>
 
         {/* Progress dots */}
         <div className="flex justify-center gap-1 mt-3" dir="ltr">
-          {Array.from({ length: Math.min(RECENT_DONORS.length + TESTIMONIALS.length, 12) }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              className={`h-1 rounded-full transition-all duration-300 ${
-                i === currentIndex ? 'w-6 bg-[var(--brand-green)]' : 'w-1 bg-[var(--brand-green)]/25 hover:bg-[var(--brand-green)]/50'
-              }`}
-              aria-label={`إثبات ${i + 1}`}
-            />
-          ))}
+          {Array.from({ length: Math.min(RECENT_DONORS.length + TESTIMONIALS.length, 12) }).map(
+            (_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  i === currentIndex
+                    ? "w-6 bg-[var(--brand-green)]"
+                    : "w-1 bg-[var(--brand-green)]/25 hover:bg-[var(--brand-green)]/50"
+                }`}
+                aria-label={`إثبات ${i + 1}`}
+              />
+            )
+          )}
         </div>
       </div>
     </section>
   );
 }
-
-

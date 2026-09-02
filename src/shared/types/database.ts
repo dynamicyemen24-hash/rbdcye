@@ -6,7 +6,7 @@ export interface AdminNotification {
   id: string;
   title: string;
   message: string;
-  type: 'info' | 'warning' | 'success' | 'error';
+  type: "info" | "warning" | "success" | "error";
   is_read: boolean;
   user_id?: string;
   created_at: string;
@@ -30,8 +30,8 @@ export interface Career {
   description: string;
   department: string;
   location: string;
-  type: 'full_time' | 'part_time' | 'contract' | 'remote';
-  status: 'active' | 'closed' | 'draft';
+  type: "full_time" | "part_time" | "contract" | "remote";
+  status: "active" | "closed" | "draft";
   requirements?: string;
   salary_range?: string;
   application_email?: string;
@@ -48,7 +48,7 @@ export interface CaseStudy {
   solution: string;
   results: string;
   image?: string;
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   created_at: string;
   updated_at: string;
 }
@@ -59,10 +59,10 @@ export interface Category {
   slug: string;
   description?: string;
   parent_id?: string;
-  type: 'post' | 'project' | 'product' | 'media' | 'knowledge';
+  type: "post" | "project" | "product" | "media" | "knowledge";
   icon?: string;
   order_index: number;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   created_at: string;
 }
 
@@ -72,8 +72,8 @@ export interface ContentItem {
   slug: string;
   content: string;
   excerpt?: string;
-  type: 'post' | 'page' | 'project' | 'product' | 'case_study';
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  type: "post" | "page" | "project" | "product" | "case_study";
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   author_id?: string;
   featured_image?: string;
   is_featured: boolean;
@@ -90,9 +90,9 @@ export interface Donation {
   phone?: string;
   amount: number;
   project?: string;
-  method: 'card' | 'bank' | 'cash' | 'other';
-  type: 'once' | 'monthly' | 'yearly';
-  status: 'pending' | 'completed' | 'failed' | 'refunded';
+  method: "card" | "bank" | "cash" | "other";
+  type: "once" | "monthly" | "yearly";
+  status: "pending" | "completed" | "failed" | "refunded";
   notes?: string;
   created_at: string;
 }
@@ -104,10 +104,10 @@ export interface Event {
   start_date: string;
   end_date?: string;
   location: string;
-  type: 'online' | 'offline' | 'hybrid';
+  type: "online" | "offline" | "hybrid";
   image?: string;
   max_participants?: number;
-  status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled';
+  status: "upcoming" | "ongoing" | "completed" | "cancelled";
   created_at: string;
 }
 
@@ -117,7 +117,7 @@ export interface FAQ {
   answer: string;
   category?: string;
   order_index: number;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   created_at: string;
 }
 
@@ -127,7 +127,7 @@ export interface KnowledgeBase {
   content: string;
   category_id?: string;
   keywords?: string[];
-  status: 'PUBLISHED' | 'DRAFT';
+  status: "PUBLISHED" | "DRAFT";
   view_count: number;
   created_at: string;
   updated_at: string;
@@ -137,7 +137,7 @@ export interface MediaItem {
   id: string;
   title: string;
   url: string;
-  type: 'image' | 'video' | 'document' | 'audio';
+  type: "image" | "video" | "document" | "audio";
   size?: string;
   mime_type?: string;
   alt_text?: string;
@@ -152,7 +152,7 @@ export interface Page {
   meta_description?: string;
   meta_keywords?: string;
   template?: string;
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   is_homepage: boolean;
   created_at: string;
   updated_at: string;
@@ -168,7 +168,7 @@ export interface Post {
   category_id?: string;
   featured_image?: string;
   tags?: string[];
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   is_featured: boolean;
   view_count: number;
   published_at?: string;
@@ -182,7 +182,7 @@ export interface Project {
   slug: string;
   description: string;
   category: string;
-  status: 'active' | 'completed' | 'pending' | 'cancelled';
+  status: "active" | "completed" | "pending" | "cancelled";
   progress: number;
   budget?: string;
   beneficiaries?: number;
@@ -216,10 +216,10 @@ export interface ServiceRequest {
   name: string;
   email: string;
   phone?: string;
-  type: 'contact' | 'donation' | 'volunteer' | 'support' | 'partnership';
+  type: "contact" | "donation" | "volunteer" | "support" | "partnership";
   subject: string;
   message: string;
-  status: 'new' | 'read' | 'replied' | 'closed';
+  status: "new" | "read" | "replied" | "closed";
   assigned_to?: string;
   response?: string;
   created_at: string;
@@ -231,8 +231,8 @@ export interface Subscriber {
   email: string;
   name?: string;
   phone?: string;
-  source: 'website' | 'contact' | 'donation' | 'volunteer' | 'manual';
-  status: 'active' | 'pending' | 'unsubscribed';
+  source: "website" | "contact" | "donation" | "volunteer" | "manual";
+  status: "active" | "pending" | "unsubscribed";
   last_request_id?: string;
   created_at: string;
   updated_at: string;
@@ -251,7 +251,7 @@ export interface SuccessStory {
   location?: string;
   image?: string;
   rating: number;
-  status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
+  status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   created_at: string;
   updated_at: string;
 }
@@ -272,7 +272,7 @@ export interface Testimonial {
   content: string;
   avatar?: string;
   rating: number;
-  status: 'PUBLISHED' | 'DRAFT';
+  status: "PUBLISHED" | "DRAFT";
   created_at: string;
 }
 
@@ -286,7 +286,7 @@ export interface Volunteer {
   availability?: string;
   motivation?: string;
   hours: number;
-  status: 'pending' | 'active' | 'inactive' | 'rejected';
+  status: "pending" | "active" | "inactive" | "rejected";
   created_at: string;
   updated_at: string;
 }
@@ -295,9 +295,8 @@ export interface WebsiteSetting {
   id: string;
   key: string;
   value: any;
-  type: 'text' | 'json' | 'image' | 'boolean' | 'array';
+  type: "text" | "json" | "image" | "boolean" | "array";
   group: string;
   description?: string;
   updated_at: string;
 }
-

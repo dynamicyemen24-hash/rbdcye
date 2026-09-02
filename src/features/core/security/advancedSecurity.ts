@@ -1,6 +1,6 @@
 // Enterprise Advanced Security System
 
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 
 // ============================================================
 // 1. Input Sanitization
@@ -8,8 +8,24 @@ import DOMPurify from 'dompurify';
 class InputSanitizer {
   static sanitizeHTML(html: string): string {
     return DOMPurify.sanitize(html, {
-      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'blockquote'],
-      ALLOWED_ATTR: ['href', 'target', 'rel'],
+      ALLOWED_TAGS: [
+        "b",
+        "i",
+        "em",
+        "strong",
+        "a",
+        "p",
+        "br",
+        "ul",
+        "ol",
+        "li",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "blockquote",
+      ],
+      ALLOWED_ATTR: ["href", "target", "rel"],
     });
   }
 
@@ -19,9 +35,9 @@ class InputSanitizer {
 
   static sanitizeText(input: string): string {
     return input
-      .replace(/[<>{}[\]\\]/g, '')
-      .replace(/javascript:/gi, '')
-      .replace(/on\w+\s*=/gi, '')
+      .replace(/[<>{}[\]\\]/g, "")
+      .replace(/javascript:/gi, "")
+      .replace(/on\w+\s*=/gi, "")
       .trim();
   }
 }
@@ -32,12 +48,12 @@ class InputSanitizer {
 class SecurityHeadersManager {
   static generateHeaders() {
     return {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
+      "X-XSS-Protection": "1; mode=block",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
     };
   }
 }
@@ -104,8 +120,8 @@ class RateLimiter {
   checkLimit(identifier: string): { allowed: boolean; remaining: number; resetTime: number } {
     const now = Date.now();
     const requests = this.requests.get(identifier) || [];
-    
-    const validRequests = requests.filter(time => now - time < this.windowMs);
+
+    const validRequests = requests.filter((time) => now - time < this.windowMs);
     this.requests.set(identifier, validRequests);
 
     if (validRequests.length >= this.maxRequests) {
@@ -175,7 +191,7 @@ class AuditLogger {
       this.logs.shift();
     }
 
-    if (import.meta.env.DEV) console.log('[AUDIT]', log);
+    if (import.meta.env.DEV) console.log("[AUDIT]", log);
   }
 
   getLogs() {
@@ -184,7 +200,7 @@ class AuditLogger {
 
   private getUserId(): string | undefined {
     try {
-      const userStr = localStorage.getItem('auth_user');
+      const userStr = localStorage.getItem("auth_user");
       if (userStr) {
         const user = JSON.parse(userStr);
         return user.id;
@@ -197,4 +213,3 @@ class AuditLogger {
 }
 
 export const auditLogger = AuditLogger.getInstance();
-

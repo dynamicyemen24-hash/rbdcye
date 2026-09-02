@@ -10,7 +10,7 @@ export function HeroVideoModal({ isOpen, onClose }: HeroVideoModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
           role="dialog"
           aria-modal="true"
@@ -42,5 +42,3 @@ export function HeroVideoModal({ isOpen, onClose }: HeroVideoModalProps) {
 }
 
 export default HeroVideoModal;
-
-

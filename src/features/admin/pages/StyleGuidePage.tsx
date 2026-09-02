@@ -1,7 +1,19 @@
 // StyleGuidePage.tsx - دليل أنماط الزخارف والخلفيات الإسلامية لـ مؤسسة رحماء بينهم
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Copy, Check, Sparkles, Code, Palette, Layers, Eye, FileCode2, Info, Compass, ShieldCheck } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "motion/react";
+import {
+  Copy,
+  Check,
+  Sparkles,
+  Code,
+  Palette,
+  Layers,
+  Eye,
+  FileCode2,
+  Info,
+  Compass,
+  ShieldCheck,
+} from "lucide-react";
 
 interface PatternItem {
   id: string;
@@ -18,15 +30,16 @@ interface PatternItem {
 
 const PATTERNS: PatternItem[] = [
   {
-    id: 'geometric-islamic',
-    name: 'النمط الهندسي الإسلامي الثماني',
-    englishName: 'Geometric 8-Fold Islamic Pattern',
-    className: 'pattern-geometric-islamic',
-    description: 'زخرفة هندسية إسلامية ثمانية الأضلاع مصممة بخطوط زاوية دقيقة وتداخل لوني رزين بين الذهبي والزمردي، مثالية للخلفيات العريضة والبانرات الأساسية.',
+    id: "geometric-islamic",
+    name: "النمط الهندسي الإسلامي الثماني",
+    englishName: "Geometric 8-Fold Islamic Pattern",
+    className: "pattern-geometric-islamic",
+    description:
+      "زخرفة هندسية إسلامية ثمانية الأضلاع مصممة بخطوط زاوية دقيقة وتداخل لوني رزين بين الذهبي والزمردي، مثالية للخلفيات العريضة والبانرات الأساسية.",
     useCases: [
-      'القسم الرئيسي للموقع (Hero Banner)',
-      'بطاقات التبرع المتميزة والرؤية الاستراتيجية',
-      'خلفيات الترويسات والعناوين الكبرى',
+      "القسم الرئيسي للموقع (Hero Banner)",
+      "بطاقات التبرع المتميزة والرؤية الاستراتيجية",
+      "خلفيات الترويسات والعناوين الكبرى",
     ],
     cssCode: `.pattern-geometric-islamic {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L48.28 11.72L60 0L60 11.72L71.72 20L60 28.28L71.72 40L60 51.72L71.72 60L60 68.28L48.28 80L40 68.28L31.72 80L20 68.28L8.28 60L20 51.72L8.28 40L20 28.28L8.28 20L20 11.72L8.28 0L20 11.72L31.72 0Z' fill='none' stroke='%23C69E5A' stroke-width='0.75' stroke-opacity='0.25'/%3E%3Cpath d='M40 20L45.86 25.86L54.14 20L54.14 28.28L60 34.14L54.14 40L60 45.86L54.14 54.14L45.86 60L40 54.14L34.14 60L25.86 54.14L20 45.86L25.86 40L20 34.14L25.86 28.28L20 20L25.86 20L34.14 25.86Z' fill='none' stroke='%230D5C3E' stroke-width='0.5' stroke-opacity='0.2'/%3E%3C/svg%3E");
@@ -48,15 +61,16 @@ const PATTERNS: PatternItem[] = [
 </svg>`,
   },
   {
-    id: 'islamic-stars',
-    name: 'نمط النجوم الثمانية الإسلامية',
-    englishName: 'Islamic 8-Pointed Stars Pattern',
-    className: 'pattern-islamic-stars',
-    description: 'زخرفة النجمة الثمانية التقليدية (Islamic Octagram Ornament) بلون ذهبي هادئ وشفافية متزنة تزين البطاقات والتقارير الرسمية بلمسة عربية أصيلة.',
+    id: "islamic-stars",
+    name: "نمط النجوم الثمانية الإسلامية",
+    englishName: "Islamic 8-Pointed Stars Pattern",
+    className: "pattern-islamic-stars",
+    description:
+      "زخرفة النجمة الثمانية التقليدية (Islamic Octagram Ornament) بلون ذهبي هادئ وشفافية متزنة تزين البطاقات والتقارير الرسمية بلمسة عربية أصيلة.",
     useCases: [
-      'بطاقات المشاريع وقصص النجاح',
-      'شارات التكريم والشفافية والتراخيص',
-      'مربعات الإحصائيات والأرقام الميدانية',
+      "بطاقات المشاريع وقصص النجاح",
+      "شارات التكريم والشفافية والتراخيص",
+      "مربعات الإحصائيات والأرقام الميدانية",
     ],
     cssCode: `.pattern-islamic-stars {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C69E5A' fill-opacity='0.12'%3E%3Cpath d='M30 0l3 9 9-3-3 9 9 3-9 3 3 9-9-3-3 9-3-9-9 3 3-9-9-3 9-3-3-9 9 3z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -81,15 +95,16 @@ const PATTERNS: PatternItem[] = [
 </svg>`,
   },
   {
-    id: 'sanaani-brick',
-    name: 'طراز الآجر الصنعاني الزُخرفي',
+    id: "sanaani-brick",
+    name: "طراز الآجر الصنعاني الزُخرفي",
     englishName: "Sana'ani Traditional Brick Pattern",
-    className: 'pattern-sanaani-brick',
-    description: 'نمط مهندس مستوحى من الطراز المعماري اليمني العريق لمدينة صنعاء القديمة، يعتمد على التدرجات الخطية المتصالبة بزاويتي (335° و 155°).',
+    className: "pattern-sanaani-brick",
+    description:
+      "نمط مهندس مستوحى من الطراز المعماري اليمني العريق لمدينة صنعاء القديمة، يعتمد على التدرجات الخطية المتصالبة بزاويتي (335° و 155°).",
     useCases: [
-      'أقسام الهوية المؤسسية والتراث والتاريخ',
-      'فواصل الأقسام الإغاثية والتنموية الميدانية',
-      'خلفيات التذييل وخريطة الموقع',
+      "أقسام الهوية المؤسسية والتراث والتاريخ",
+      "فواصل الأقسام الإغاثية والتنموية الميدانية",
+      "خلفيات التذييل وخريطة الموقع",
     ],
     cssCode: `.pattern-sanaani-brick {
   background-image: 
@@ -117,24 +132,24 @@ background-size: 58px 58px;`,
 
 const GLASS_UTILITIES = [
   {
-    name: 'Hero Glass Panel',
-    className: 'hero-glass-panel',
+    name: "Hero Glass Panel",
+    className: "hero-glass-panel",
     css: `background: rgba(255, 255, 255, 0.08);
 backdrop-filter: blur(18px);
 border: 1px solid rgba(255, 255, 255, 0.18);
 box-shadow: 0 20px 50px rgba(var(--foreground-rgb), 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);`,
   },
   {
-    name: 'Hero Glass Card',
-    className: 'hero-glass-card',
+    name: "Hero Glass Card",
+    className: "hero-glass-card",
     css: `background: rgba(255, 255, 255, 0.06);
 backdrop-filter: blur(14px);
 border: 1px solid rgba(255, 255, 255, 0.15);
 box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);`,
   },
   {
-    name: 'Glass Badge',
-    className: 'glass-badge',
+    name: "Glass Badge",
+    className: "glass-badge",
     css: `background: rgba(255, 255, 255, 0.12);
 backdrop-filter: blur(8px);
 border: 1px solid rgba(255, 255, 255, 0.2);`,
@@ -143,10 +158,12 @@ border: 1px solid rgba(255, 255, 255, 0.2);`,
 
 export default function StyleGuidePage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [bgPreviewTheme, setBgPreviewTheme] = useState<Record<string, 'emerald' | 'gold' | 'dark' | 'white'>>({
-    'geometric-islamic': 'emerald',
-    'islamic-stars': 'white',
-    'sanaani-brick': 'dark',
+  const [bgPreviewTheme, setBgPreviewTheme] = useState<
+    Record<string, "emerald" | "gold" | "dark" | "white">
+  >({
+    "geometric-islamic": "emerald",
+    "islamic-stars": "white",
+    "sanaani-brick": "dark",
   });
 
   const handleCopy = (text: string, id: string) => {
@@ -155,18 +172,18 @@ export default function StyleGuidePage() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const getThemeBackgroundClass = (theme: 'emerald' | 'gold' | 'dark' | 'white') => {
+  const getThemeBackgroundClass = (theme: "emerald" | "gold" | "dark" | "white") => {
     switch (theme) {
-      case 'emerald':
-        return 'bg-[#0F4C3A] text-white';
-      case 'gold':
-        return 'bg-[#FDF8EE] text-slate-900 border border-amber-200/80';
-      case 'dark':
-        return 'bg-[#090D16] text-white border border-slate-800';
-      case 'white':
-        return 'bg-white text-slate-900 border border-slate-200';
+      case "emerald":
+        return "bg-[#0F4C3A] text-white";
+      case "gold":
+        return "bg-[#FDF8EE] text-slate-900 border border-amber-200/80";
+      case "dark":
+        return "bg-[#090D16] text-white border border-slate-800";
+      case "white":
+        return "bg-white text-slate-900 border border-slate-200";
       default:
-        return 'bg-[#0F4C3A] text-white';
+        return "bg-[#0F4C3A] text-white";
     }
   };
 
@@ -174,8 +191,11 @@ export default function StyleGuidePage() {
     <div className="space-y-8 font-cairo" dir="rtl">
       {/* Header Banner */}
       <div className="relative bg-gradient-to-br from-[var(--brand-green)] via-[var(--brand-green-light)] to-[var(--brand-green-dark)] text-white p-8 sm:p-10 rounded-3xl shadow-xl overflow-hidden border border-emerald-800/50">
-        <div className="absolute inset-0 pattern-geometric-islamic opacity-20 pointer-events-none" aria-hidden="true" />
-        
+        <div
+          className="absolute inset-0 pattern-geometric-islamic opacity-20 pointer-events-none"
+          aria-hidden="true"
+        />
+
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold mb-4">
             <Sparkles className="w-4 h-4" />
@@ -186,7 +206,9 @@ export default function StyleGuidePage() {
             دليل أنماط الزخارف والخلفيات الإسلامية
           </h1>
           <p className="mt-3 text-emerald-100 text-sm sm:text-base leading-relaxed">
-            دليل أسلوب العمل لزخارف وأكواد الخلفيات الرسمية لمؤسسة «رحماء بينهم للإغاثة والتنمية باليمن». يتيح للمطورين والمصممين استدعاء الأنماط بدقة عالية لضمان التوافق البصري والهوية المؤسسية الموحدة.
+            دليل أسلوب العمل لزخارف وأكواد الخلفيات الرسمية لمؤسسة «رحماء بينهم للإغاثة والتنمية
+            باليمن». يتيح للمطورين والمصممين استدعاء الأنماط بدقة عالية لضمان التوافق البصري والهوية
+            المؤسسية الموحدة.
           </p>
         </div>
       </div>
@@ -200,14 +222,17 @@ export default function StyleGuidePage() {
               <span>أنماط الزخارف والخلفيات (Islamic Background Patterns)</span>
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              جميع الأنماط أدناه معرفة في المورد العالمي للأنماط <code className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded font-mono text-[11px]">src/index.css</code>
+              جميع الأنماط أدناه معرفة في المورد العالمي للأنماط{" "}
+              <code className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded font-mono text-[11px]">
+                src/index.css
+              </code>
             </p>
           </div>
         </div>
 
         <div className="space-y-10">
           {PATTERNS.map((pattern) => {
-            const currentTheme = bgPreviewTheme[pattern.id] || 'emerald';
+            const currentTheme = bgPreviewTheme[pattern.id] || "emerald";
             const themeClass = getThemeBackgroundClass(currentTheme);
 
             return (
@@ -223,7 +248,9 @@ export default function StyleGuidePage() {
                       <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                         {pattern.name}
                       </h3>
-                      <span className="text-xs text-slate-400 font-mono">({pattern.englishName})</span>
+                      <span className="text-xs text-slate-400 font-mono">
+                        ({pattern.englishName})
+                      </span>
                     </div>
                     <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                       {pattern.description}
@@ -232,21 +259,23 @@ export default function StyleGuidePage() {
 
                   {/* Theme Selector Controls for Interactive Preview */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">معاينة الخلفية:</span>
-                    {(['emerald', 'gold', 'dark', 'white'] as const).map((t) => (
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">
+                      معاينة الخلفية:
+                    </span>
+                    {(["emerald", "gold", "dark", "white"] as const).map((t) => (
                       <button
                         key={t}
                         onClick={() => setBgPreviewTheme((prev) => ({ ...prev, [pattern.id]: t }))}
                         className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           currentTheme === t
-                            ? 'bg-[var(--brand-green)] text-white shadow-xs'
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
+                            ? "bg-[var(--brand-green)] text-white shadow-xs"
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
                         }`}
                       >
-                        {t === 'emerald' && 'زمردي'}
-                        {t === 'gold' && 'ذهبي'}
-                        {t === 'dark' && 'داكن'}
-                        {t === 'white' && 'أبيض'}
+                        {t === "emerald" && "زمردي"}
+                        {t === "gold" && "ذهبي"}
+                        {t === "dark" && "داكن"}
+                        {t === "white" && "أبيض"}
                       </button>
                     ))}
                   </div>
@@ -261,9 +290,14 @@ export default function StyleGuidePage() {
                       <span>المعاينة المباشرة على الصفحة:</span>
                     </div>
 
-                    <div className={`relative min-h-[220px] rounded-2xl p-6 flex flex-col justify-between overflow-hidden shadow-inner transition-all ${themeClass}`}>
+                    <div
+                      className={`relative min-h-[220px] rounded-2xl p-6 flex flex-col justify-between overflow-hidden shadow-inner transition-all ${themeClass}`}
+                    >
                       {/* Islamic Pattern Background layer */}
-                      <div className={`absolute inset-0 ${pattern.className} opacity-40 pointer-events-none`} aria-hidden="true" />
+                      <div
+                        className={`absolute inset-0 ${pattern.className} opacity-40 pointer-events-none`}
+                        aria-hidden="true"
+                      />
 
                       <div className="relative z-10 space-y-2">
                         <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 inline-block">
@@ -273,12 +307,15 @@ export default function StyleGuidePage() {
                           مؤسسة رحماء بينهم للإغاثة والتنمية
                         </h4>
                         <p className="text-xs opacity-90 leading-relaxed">
-                          نُترجم كل تبرع ومساهمة إنسانية إلى أثرٍ وإنجازاتٍ ملموسة في أوساط الفئات الأكثر احتياجاً.
+                          نُترجم كل تبرع ومساهمة إنسانية إلى أثرٍ وإنجازاتٍ ملموسة في أوساط الفئات
+                          الأكثر احتياجاً.
                         </p>
                       </div>
 
                       <div className="relative z-10 pt-4 flex items-center justify-between border-t border-current/10">
-                        <span className="text-[11px] font-mono opacity-80">Class: .{pattern.className}</span>
+                        <span className="text-[11px] font-mono opacity-80">
+                          Class: .{pattern.className}
+                        </span>
                         <button className="px-3 py-1.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs shadow-xs">
                           تبرع الآن
                         </button>
@@ -287,10 +324,15 @@ export default function StyleGuidePage() {
 
                     {/* Use Cases List */}
                     <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <span className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-2">أبرز حالات الاستخدام الموصى بها:</span>
+                      <span className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-2">
+                        أبرز حالات الاستخدام الموصى بها:
+                      </span>
                       <ul className="space-y-1.5">
                         {pattern.useCases.map((uc, i) => (
-                          <li key={i} className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-2">
+                          <li
+                            key={i}
+                            className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-2"
+                          >
                             <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-green)]" />
                             <span>{uc}</span>
                           </li>
@@ -381,20 +423,28 @@ export default function StyleGuidePage() {
           {GLASS_UTILITIES.map((glass) => (
             <div key={glass.className} className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-800 dark:text-slate-200">.{glass.className}</span>
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  .{glass.className}
+                </span>
                 <button
                   onClick={() => handleCopy(glass.css, glass.className)}
                   className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 hover:text-emerald-600 text-xs transition-colors cursor-pointer"
                   title="نسخ CSS"
                 >
-                  {copiedId === glass.className ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copiedId === glass.className ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                  )}
                 </button>
               </div>
 
               {/* Glass live demo on emerald background */}
               <div className="relative bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-dark)] p-6 rounded-2xl overflow-hidden min-h-[120px] flex items-center justify-center">
                 <div className="absolute inset-0 pattern-geometric-islamic opacity-20 pointer-events-none" />
-                <div className={`relative z-10 p-4 rounded-xl text-center text-white text-xs font-bold font-cairo ${glass.className}`}>
+                <div
+                  className={`relative z-10 p-4 rounded-xl text-center text-white text-xs font-bold font-cairo ${glass.className}`}
+                >
                   {glass.name} (.
                   {glass.className})
                 </div>
@@ -444,5 +494,3 @@ export default function StyleGuidePage() {
     </div>
   );
 }
-
-

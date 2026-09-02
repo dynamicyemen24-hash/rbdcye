@@ -1,7 +1,7 @@
 // Offline & PWA Manager - إدارة وضع التصفح دون إنترنت والمحتوى المخزن مسبقاً وتتبع التثبيت
-import { useState, useEffect, useCallback, memo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useCallback, memo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 import {
   WifiOff,
   Wifi,
@@ -16,8 +16,8 @@ import {
   ExternalLink,
   ShieldCheck,
   AlertTriangle,
-  Compass
-} from 'lucide-react';
+  Compass,
+} from "lucide-react";
 
 export interface VisitedPageMeta {
   path: string;
@@ -28,27 +28,27 @@ export interface VisitedPageMeta {
 
 // Map of predefined known paths and Arabic metadata
 export const ROUTE_METADATA: Record<string, { title: string; category: string }> = {
-  '/': { title: 'الصفحة الرئيسية', category: 'الرئيسية' },
-  '/about': { title: 'عن رحماء بينهم ورؤيتنا', category: 'عن رحماء بينهم' },
-  '/programs': { title: 'البرامج التنموية والإغاثية', category: 'البرامج' },
-  '/projects': { title: 'المشاريع الميدانية', category: 'المشاريع' },
-  '/success': { title: 'قصص النجاح والأثر الميداني', category: 'الأثر' },
-  '/news': { title: 'المركز الإعلامي والأخبار', category: 'الإعلام' },
-  '/media': { title: 'معرض الصور والتقارير المرئية', category: 'الإعلام' },
-  '/reports': { title: 'التقارير السنوية والشفافية', category: 'التقارير' },
-  '/transparency': { title: 'الحوكمة ومعايير النزاهة', category: 'الشفافية' },
-  '/volunteer': { title: 'بوابة التطوع والميدان', category: 'المشاركة' },
-  '/zakat': { title: 'حاسبة الزكاة الشرعية', category: 'الخدمات' },
-  '/endowment': { title: 'الوقف الخيري التنموي', category: 'الأوقاف' },
-  '/donate': { title: 'بوابة العطاء والتبرع السريع', category: 'التبرع' },
-  '/contact': { title: 'تواصل معنا وقنوات الدعم', category: 'الاتصال' },
-  '/partners': { title: 'الشركاء والتحالفات الإستراتيجية', category: 'الشركاء' },
-  '/donor': { title: 'بوابة المانحين والتقارير المباشرة', category: 'المانحين' },
-  '/privacy-policy': { title: 'سياسة الخصوصية وحماية البيانات', category: 'القانونية' },
+  "/": { title: "الصفحة الرئيسية", category: "الرئيسية" },
+  "/about": { title: "عن رحماء بينهم ورؤيتنا", category: "عن رحماء بينهم" },
+  "/programs": { title: "البرامج التنموية والإغاثية", category: "البرامج" },
+  "/projects": { title: "المشاريع الميدانية", category: "المشاريع" },
+  "/success": { title: "قصص النجاح والأثر الميداني", category: "الأثر" },
+  "/news": { title: "المركز الإعلامي والأخبار", category: "الإعلام" },
+  "/media": { title: "معرض الصور والتقارير المرئية", category: "الإعلام" },
+  "/reports": { title: "التقارير السنوية والشفافية", category: "التقارير" },
+  "/transparency": { title: "الحوكمة ومعايير النزاهة", category: "الشفافية" },
+  "/volunteer": { title: "بوابة التطوع والميدان", category: "المشاركة" },
+  "/zakat": { title: "حاسبة الزكاة الشرعية", category: "الخدمات" },
+  "/endowment": { title: "الوقف الخيري التنموي", category: "الأوقاف" },
+  "/donate": { title: "بوابة العطاء والتبرع السريع", category: "التبرع" },
+  "/contact": { title: "تواصل معنا وقنوات الدعم", category: "الاتصال" },
+  "/partners": { title: "الشركاء والتحالفات الإستراتيجية", category: "الشركاء" },
+  "/donor": { title: "بوابة المانحين والتقارير المباشرة", category: "المانحين" },
+  "/privacy-policy": { title: "سياسة الخصوصية وحماية البيانات", category: "القانونية" },
 };
 
-const VISITED_PAGES_STORAGE_KEY = 'rbdcye_offline_visited_pages';
-const INSTALL_STATS_STORAGE_KEY = 'rbdcye_pwa_install_stats';
+const VISITED_PAGES_STORAGE_KEY = "rbdcye_offline_visited_pages";
+const INSTALL_STATS_STORAGE_KEY = "rbdcye_pwa_install_stats";
 
 export const OfflineManager = memo(function OfflineManager() {
   const location = useLocation();
@@ -76,14 +76,14 @@ export const OfflineManager = memo(function OfflineManager() {
       setIsOnline(false);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     // Standalone / PWA detection
     const standalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as any).standalone === true ||
-      document.referrer.includes('android-app://');
+      document.referrer.includes("android-app://");
     setIsStandalone(standalone);
 
     // Read install attempts
@@ -98,8 +98,8 @@ export const OfflineManager = memo(function OfflineManager() {
     }
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -111,8 +111,8 @@ export const OfflineManager = memo(function OfflineManager() {
 
       const currentPath = location.pathname;
       const meta = ROUTE_METADATA[currentPath] || {
-        title: document.title || 'صفحة تفاعلية',
-        category: 'تصفح سابق',
+        title: document.title || "صفحة تفاعلية",
+        category: "تصفح سابق",
       };
 
       // Filter out duplicate of same path
@@ -165,7 +165,7 @@ export const OfflineManager = memo(function OfflineManager() {
     (path: string) => {
       setIsOfflineDrawerOpen(false);
       navigate(path);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     [navigate]
   );
@@ -179,7 +179,7 @@ export const OfflineManager = memo(function OfflineManager() {
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -40 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
             className="fixed top-0 left-0 right-0 z-[60] bg-amber-600/95 backdrop-blur-md text-white text-xs sm:text-sm font-cairo shadow-lg border-b border-amber-400/30"
             dir="rtl"
           >
@@ -252,7 +252,7 @@ export const OfflineManager = memo(function OfflineManager() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
               className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden font-cairo z-10 max-h-[85vh] flex flex-col"
             >
               {/* Header */}
@@ -308,16 +308,17 @@ export const OfflineManager = memo(function OfflineManager() {
                     <Compass className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                     <p className="font-semibold text-sm">لا توجد صفحات مخزنة بعد</p>
                     <p className="text-xs text-slate-400 mt-1">
-                      عند تصفحك لأي قسم من أقسام الموقع، سيتم حفظه تلقائياً لتتمكن من الرجوع إليه دون إنترنت.
+                      عند تصفحك لأي قسم من أقسام الموقع، سيتم حفظه تلقائياً لتتمكن من الرجوع إليه
+                      دون إنترنت.
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-2">
                     {visitedPages.map((page) => {
                       const isCurrent = location.pathname === page.path;
-                      const timeAgo = new Date(page.timestamp).toLocaleTimeString('ar-YE', {
-                        hour: '2-digit',
-                        minute: '2-digit',
+                      const timeAgo = new Date(page.timestamp).toLocaleTimeString("ar-YE", {
+                        hour: "2-digit",
+                        minute: "2-digit",
                       });
 
                       return (
@@ -327,16 +328,16 @@ export const OfflineManager = memo(function OfflineManager() {
                           onClick={() => handleNavigateToCachedPage(page.path)}
                           className={`w-full text-right p-3.5 rounded-2xl transition-all cursor-pointer flex items-center justify-between gap-3 border ${
                             isCurrent
-                              ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950 shadow-2xs'
-                              : 'bg-white hover:bg-slate-50 border-slate-200/80 hover:border-[#0F4C3A]/30 text-slate-800'
+                              ? "bg-emerald-50/90 border-emerald-300 text-emerald-950 shadow-2xs"
+                              : "bg-white hover:bg-slate-50 border-slate-200/80 hover:border-[#0F4C3A]/30 text-slate-800"
                           }`}
                         >
                           <div className="flex items-center gap-3 min-w-0">
                             <div
                               className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
                                 isCurrent
-                                  ? 'bg-[#0F4C3A] text-white'
-                                  : 'bg-slate-100 text-slate-600'
+                                  ? "bg-[#0F4C3A] text-white"
+                                  : "bg-slate-100 text-slate-600"
                               }`}
                             >
                               <HardDrive className="w-4 h-4" />
@@ -394,5 +395,3 @@ export const OfflineManager = memo(function OfflineManager() {
 });
 
 export default OfflineManager;
-
-

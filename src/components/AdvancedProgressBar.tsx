@@ -1,6 +1,6 @@
 // Advanced Progress Bar - Thin, non-blocking top indicator
-import { motion, AnimatePresence, useScroll, useSpring as useFramerSpring } from 'motion/react';
-import { useMemo } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring as useFramerSpring } from "motion/react";
+import { useMemo } from "react";
 
 interface AdvancedProgressBarProps {
   readonly percentage: number | { get: () => number };
@@ -12,11 +12,11 @@ interface AdvancedProgressBarProps {
 
 function extractProgress(percentage: number | { get: () => number }, isReady: boolean): number {
   if (isReady) return 100;
-  if (typeof percentage === 'object' && percentage !== null && 'get' in percentage) {
+  if (typeof percentage === "object" && percentage !== null && "get" in percentage) {
     const value = percentage.get();
     return Math.max(0, Math.min(100, value));
   }
-  if (typeof percentage === 'number') {
+  if (typeof percentage === "number") {
     return Math.max(0, Math.min(100, percentage));
   }
   return 0;
@@ -44,7 +44,7 @@ export default function AdvancedProgressBar({
             <motion.div
               className="h-full bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-gold)] to-[var(--brand-green)]"
               animate={{ width: progressWidth }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             />
           </div>
         </motion.div>
@@ -68,11 +68,9 @@ export function ScrollProgressIndicator() {
         className="h-full bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-gold)] to-[var(--brand-green)]"
         style={{
           scaleX: smoothProgress,
-          transformOrigin: 'left center',
+          transformOrigin: "left center",
         }}
       />
     </div>
   );
 }
-
-

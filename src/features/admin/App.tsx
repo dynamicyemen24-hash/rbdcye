@@ -1,13 +1,13 @@
 // Admin App - لوحة التحكم الموحدة
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import AdminLayout from '@/features/admin/components/AdminLayout';
-import DashboardPage from '@/features/admin/pages/DashboardPage';
-import DonationsPage from '@/features/admin/pages/DonationsPage';
-import MessagesPage from '@/features/admin/pages/MessagesPage';
-import SettingsPage from '@/features/admin/pages/SettingsPage';
-import VideosPage from '@/features/admin/pages/VideosPage';
-import VolunteersPage from '@/features/admin/pages/VolunteersPage';
+import AdminLayout from "@/features/admin/components/AdminLayout";
+import DashboardPage from "@/features/admin/pages/DashboardPage";
+import DonationsPage from "@/features/admin/pages/DonationsPage";
+import MessagesPage from "@/features/admin/pages/MessagesPage";
+import SettingsPage from "@/features/admin/pages/SettingsPage";
+import VideosPage from "@/features/admin/pages/VideosPage";
+import VolunteersPage from "@/features/admin/pages/VolunteersPage";
 
 export default function AdminApp() {
   return (
@@ -26,4 +26,3 @@ export default function AdminApp() {
     </Router>
   );
 }
-

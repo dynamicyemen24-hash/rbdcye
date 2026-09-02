@@ -22,54 +22,56 @@ interface DonationData {
   email?: string;
   phone?: string;
   project?: string;
-  type?: 'once' | 'monthly' | 'yearly';
+  type?: "once" | "monthly" | "yearly";
   message?: string;
 }
 
 // تكوين Stripe (يجب إضافة المفاتيح في .env)
 const getStripeConfig = (): PaymentConfig => ({
-  publicKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY || '',
-  currency: 'usd',
-  country: 'YE', // اليمن
+  publicKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY || "",
+  currency: "usd",
+  country: "YE", // اليمن
 });
 
 // تحميل Stripe.js
 const loadStripe = async () => {
   const config = getStripeConfig();
   if (!config.publicKey) {
-    throw new Error('Stripe public key not configured. Please add VITE_STRIPE_PUBLIC_KEY to your .env file');
+    throw new Error(
+      "Stripe public key not configured. Please add VITE_STRIPE_PUBLIC_KEY to your .env file"
+    );
   }
-  
+
   // تحقق من التحميل مسبقاً
   if (window.Stripe) {
     return window.Stripe;
   }
-  
+
   // تحميل Stripe من CDN
   return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://js.stripe.com/v3/';
+    const script = document.createElement("script");
+    script.src = "https://js.stripe.com/v3/";
     script.async = true;
-    
+
     script.onload = () => {
       if (window.Stripe) {
         resolve(window.Stripe);
       } else {
-        reject(new Error('Failed to load Stripe from window'));
+        reject(new Error("Failed to load Stripe from window"));
       }
     };
-    script.onerror = () => reject(new Error('Failed to load Stripe script'));
-    
+    script.onerror = () => reject(new Error("Failed to load Stripe script"));
+
     document.head.appendChild(script);
   });
 };
 
 // إنشاء Checkout Session على الخادم
 export async function createCheckoutSession(data: DonationData): Promise<string> {
-  const response = await fetch('/api/create-checkout-session', {
-    method: 'POST',
+  const response = await fetch("/api/create-checkout-session", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       amount: Math.round(data.amount * 100), // Stripe يستخدم السنتات
@@ -100,10 +102,10 @@ export async function openPaymentModal(data: DonationData): Promise<void> {
 
   // إنشاء Checkout Session
   const sessionId = await createCheckoutSession(data);
-  
+
   // التوجه إلى Stripe Checkout
   const result = await stripe.redirectToCheckout({ sessionId });
-  
+
   if (result.error) {
     throw new Error(result.error.message);
   }
@@ -125,7 +127,7 @@ export function usePayment() {
     try {
       await processDonation(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Payment failed');
+      setError(err instanceof Error ? err.message : "Payment failed");
     } finally {
       setLoading(false);
     }
@@ -133,4 +135,3 @@ export function usePayment() {
 
   return { donate, loading, error };
 }
-

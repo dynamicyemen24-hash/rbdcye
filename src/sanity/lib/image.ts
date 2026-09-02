@@ -43,10 +43,11 @@ export function urlForLqip(source: SanityImageSource): string | undefined {
  * Get image dimensions from Sanity asset metadata
  */
 export function getImageDimensions(
-  source: SanityImageSource & { asset?: { metadata?: { dimensions?: { width: number; height: number } } } }
+  source: SanityImageSource & {
+    asset?: { metadata?: { dimensions?: { width: number; height: number } } };
+  }
 ): { width: number; height: number } | null {
   const dimensions = source?.asset?.metadata?.dimensions;
   if (!dimensions) return null;
   return { width: dimensions.width, height: dimensions.height };
 }
-

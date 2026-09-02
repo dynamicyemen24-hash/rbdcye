@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  MapPin, CheckCircle2, FolderOpen, 
-  Search, ShieldCheck
-} from 'lucide-react';
-import { map as createMap, tileLayer, control, circleMarker, CircleMarker, Map as LeafletMap } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { MapPin, CheckCircle2, FolderOpen, Search, ShieldCheck } from "lucide-react";
+import {
+  map as createMap,
+  tileLayer,
+  control,
+  circleMarker,
+  CircleMarker,
+  Map as LeafletMap,
+} from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 export interface GovernorateProjectData {
   id: string;
@@ -30,16 +34,34 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     id: "sanaa-city",
     name: "أمانة العاصمة - صنعاء",
     lat: 15.3694,
-    lng: 44.1910,
+    lng: 44.191,
     projectsCount: 0,
     beneficiaries: 0,
     sector: "الإغاثة والأمن الغذائي",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "مشروع السلال الغذائية الشهرية الدورية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٥-٢٠٢٦" },
-      { title: "مركز كفالة ورعاية الأيتام والأسر المعيلة", category: "كفالات", beneficiaries: "أسر مستفيدة", status: "منجز", year: "٢٠٢٥" },
-      { title: "توزيع المساعدات الطبية الطارئة للمستشفيات", category: "صحة", beneficiaries: "حالات علاجية", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "مشروع السلال الغذائية الشهرية الدورية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٥-٢٠٢٦",
+      },
+      {
+        title: "مركز كفالة ورعاية الأيتام والأسر المعيلة",
+        category: "كفالات",
+        beneficiaries: "أسر مستفيدة",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "توزيع المساعدات الطبية الطارئة للمستشفيات",
+        category: "صحة",
+        beneficiaries: "حالات علاجية",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "taiz",
@@ -51,10 +73,28 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "المياه والإصلاح البيئي",
     sectorColor: "#0284C7",
     projects: [
-      { title: "حفر وتجهيز آبار المياه بالطاقة الشمسية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "برنامج التمكين الاقتصادي للأسر المنتجة", category: "تمكين", beneficiaries: "أسر مستفيدة", status: "مستمر", year: "٢٠٢٦" },
-      { title: "شاحنات سقيا الماء للمناطق الأشد عطشاً", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "حفر وتجهيز آبار المياه بالطاقة الشمسية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "برنامج التمكين الاقتصادي للأسر المنتجة",
+        category: "تمكين",
+        beneficiaries: "أسر مستفيدة",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+      {
+        title: "شاحنات سقيا الماء للمناطق الأشد عطشاً",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "hodeidah",
@@ -66,10 +106,28 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الصحة والاستجابة الطارئة",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "دعم مراكز سوء التغذية والأمومة", category: "صحة", beneficiaries: "حالات علاجية", status: "مستمر", year: "٢٠٢٥" },
-      { title: "الوجبات الساخنة والسلال الإغاثية للنازحين", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "خزانات المياه النقية الشاملة", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "دعم مراكز سوء التغذية والأمومة",
+        category: "صحة",
+        beneficiaries: "حالات علاجية",
+        status: "مستمر",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "الوجبات الساخنة والسلال الإغاثية للنازحين",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "خزانات المياه النقية الشاملة",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "hajjah",
@@ -81,9 +139,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الإغاثة وسقيا الماء",
     sectorColor: "#C69E5A",
     projects: [
-      { title: "تأسيس محطات تحلية وسقيا المياه", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "السلال الغذائية للأسر المتعففة في الأرياف", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "تأسيس محطات تحلية وسقيا المياه",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "السلال الغذائية للأسر المتعففة في الأرياف",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "ibb",
@@ -95,9 +165,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "التعليم والتنمية",
     sectorColor: "#7C3AED",
     projects: [
-      { title: "كفالة الطلاب المتميزين وطباعة الكتب", category: "تعليم", beneficiaries: "آلاف الطلاب", status: "مستمر", year: "٢٠٢٦" },
-      { title: "تمليك وسائل الكسب والحرف اليدوية", category: "تمكين", beneficiaries: "أسر مستفيدة", status: "منجز", year: "٢٠٢٥" },
-    ]
+      {
+        title: "كفالة الطلاب المتميزين وطباعة الكتب",
+        category: "تعليم",
+        beneficiaries: "آلاف الطلاب",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+      {
+        title: "تمليك وسائل الكسب والحرف اليدوية",
+        category: "تمكين",
+        beneficiaries: "أسر مستفيدة",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+    ],
   },
   {
     id: "aden",
@@ -109,9 +191,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "التمكين والخدمات الصحية",
     sectorColor: "#C69E5A",
     projects: [
-      { title: "منح المشاريع الصغرى للأرامل والمعيلات", category: "تمكين", beneficiaries: "أسر مستفيدة", status: "مستمر", year: "٢٠٢٦" },
-      { title: "القوافل الطبية المعاينة والأدوية المجانية", category: "صحة", beneficiaries: "حالات علاجية", status: "منجز", year: "٢٠٢٥" },
-    ]
+      {
+        title: "منح المشاريع الصغرى للأرامل والمعيلات",
+        category: "تمكين",
+        beneficiaries: "أسر مستفيدة",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+      {
+        title: "القوافل الطبية المعاينة والأدوية المجانية",
+        category: "صحة",
+        beneficiaries: "حالات علاجية",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+    ],
   },
   {
     id: "hadramaut",
@@ -123,23 +217,47 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "التعليم والتنمية المستدامة",
     sectorColor: "#7C3AED",
     projects: [
-      { title: "دعم وتجهيز المدارس والمراكز التعليمية", category: "تعليم", beneficiaries: "آلاف الطلاب", status: "مستمر", year: "٢٠٢٦" },
-      { title: "المساعدات الغذائية للأسر النائية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-    ]
+      {
+        title: "دعم وتجهيز المدارس والمراكز التعليمية",
+        category: "تعليم",
+        beneficiaries: "آلاف الطلاب",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+      {
+        title: "المساعدات الغذائية للأسر النائية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+    ],
   },
   {
     id: "marib",
     name: "مأرب",
     lat: 15.4633,
-    lng: 45.3250,
+    lng: 45.325,
     projectsCount: 0,
     beneficiaries: 0,
     sector: "إغاثة مخيمات النازحين",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "إغاثة وإيواء مخيمات النازحين الأشد احتياجاً", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-      { title: "خزانات المياه الصالحة للشرب اليومية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "إغاثة وإيواء مخيمات النازحين الأشد احتياجاً",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+      {
+        title: "خزانات المياه الصالحة للشرب اليومية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "dhamar",
@@ -151,9 +269,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الأمن الغذائي والسقيا",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "السلال الغذائية الموسمية والدورية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "مشاريع السقيا وحفر الآبار المحلية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "السلال الغذائية الموسمية والدورية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "مشاريع السقيا وحفر الآبار المحلية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "amran",
@@ -165,9 +295,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الرعاية الاجتماعية والإغاثة",
     sectorColor: "#C69E5A",
     projects: [
-      { title: "كسوة العيد وحقيبة المدرسة للأيتام", category: "كفالات", beneficiaries: "أيتام مكفولون", status: "منجز", year: "٢٠٢٥" },
-      { title: "توزيع الدقيق والمواد الأساسية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "كسوة العيد وحقيبة المدرسة للأيتام",
+        category: "كفالات",
+        beneficiaries: "أيتام مكفولون",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "توزيع الدقيق والمواد الأساسية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "saada",
@@ -179,9 +321,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الإغاثة الطارئة والمياه",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "قافلة الإغاثة الغذائية والطبية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "توفير صهاريج المياه النقية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "قافلة الإغاثة الغذائية والطبية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "توفير صهاريج المياه النقية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "abyan",
@@ -193,9 +347,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "التمكين الزراعي والأنشطة الإغاثية",
     sectorColor: "#C69E5A",
     projects: [
-      { title: "دعم الصيادين والمزارعين الصغار", category: "تمكين", beneficiaries: "أسر مستفيدة", status: "منجز", year: "٢٠٢٥" },
-      { title: "توزيع الطرود الغذائية للأسر المعيلة", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "دعم الصيادين والمزارعين الصغار",
+        category: "تمكين",
+        beneficiaries: "أسر مستفيدة",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "توزيع الطرود الغذائية للأسر المعيلة",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "shabwah",
@@ -207,9 +373,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "سقيا الماء والدعم الاجتماعي",
     sectorColor: "#0284C7",
     projects: [
-      { title: "تأهيل شبكات المياه القروية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "كفالات الأسر والمساعدات الطارئة", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "تأهيل شبكات المياه القروية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "كفالات الأسر والمساعدات الطارئة",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "lahj",
@@ -221,9 +399,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الإغاثة والتمكين الحرفي",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "تأهيل مشاتل ومشاريع الحرف اليدوية", category: "تمكين", beneficiaries: "أسر مستفيدة", status: "منجز", year: "٢٠٢٥" },
-      { title: "المساعدات الغذائية المباشرة", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "تأهيل مشاتل ومشاريع الحرف اليدوية",
+        category: "تمكين",
+        beneficiaries: "أسر مستفيدة",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "المساعدات الغذائية المباشرة",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "al-mahrah",
@@ -235,9 +425,21 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "المساعدات الغذائية والتعليم",
     sectorColor: "#7C3AED",
     projects: [
-      { title: "دعم الطلاب والطالبات بالحقيبة المدرسية", category: "تعليم", beneficiaries: "آلاف الطلاب", status: "منجز", year: "٢٠٢٥" },
-      { title: "السلال الغذائية للأسر النائية", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
+      {
+        title: "دعم الطلاب والطالبات بالحقيبة المدرسية",
+        category: "تعليم",
+        beneficiaries: "آلاف الطلاب",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "السلال الغذائية للأسر النائية",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
   },
   {
     id: "socotra",
@@ -249,10 +451,22 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     sector: "الإغاثة الموسمية والسقيا",
     sectorColor: "#0F4C3A",
     projects: [
-      { title: "إغاثة القرى النائية بالأغذية والبطانيات", category: "إغاثة", beneficiaries: "آلاف المستفيدين", status: "منجز", year: "٢٠٢٥" },
-      { title: "تأمين خزان المياه ومحطة التحلية", category: "مياه", beneficiaries: "آلاف المستفيدين", status: "مستمر", year: "٢٠٢٦" },
-    ]
-  }
+      {
+        title: "إغاثة القرى النائية بالأغذية والبطانيات",
+        category: "إغاثة",
+        beneficiaries: "آلاف المستفيدين",
+        status: "منجز",
+        year: "٢٠٢٥",
+      },
+      {
+        title: "تأمين خزان المياه ومحطة التحلية",
+        category: "مياه",
+        beneficiaries: "آلاف المستفيدين",
+        status: "مستمر",
+        year: "٢٠٢٦",
+      },
+    ],
+  },
 ];
 
 export function InteractiveMap() {
@@ -260,18 +474,23 @@ export function InteractiveMap() {
   const mapInstanceRef = useRef<LeafletMap | null>(null);
   const markersRef = useRef<{ [key: string]: CircleMarker }>({});
 
-  const [selectedGovernorate, setSelectedGovernorate] = useState<GovernorateProjectData>(YEMEN_MAP_GOVERNORATES[0]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedGovernorate, setSelectedGovernorate] = useState<GovernorateProjectData>(
+    YEMEN_MAP_GOVERNORATES[0]
+  );
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedSector, setSelectedSector] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<'2025' | '2026' | 'both'>('both');
+  const [selectedYear, setSelectedYear] = useState<"2025" | "2026" | "both">("both");
 
   // Filter governorates for search and sector/year
   const filteredGovernorates = YEMEN_MAP_GOVERNORATES.filter((gov) => {
     const matchesSearch = gov.name.includes(searchTerm) || gov.sector.includes(searchTerm);
     const matchesSector = !selectedSector || gov.sector === selectedSector;
-    const has2025 = gov.projects.some(p => p.year.includes('2025'));
-    const has2026 = gov.projects.some(p => p.year.includes('2026'));
-    const matchesYear = selectedYear === 'both' || (selectedYear === '2025' && has2025) || (selectedYear === '2026' && has2026);
+    const has2025 = gov.projects.some((p) => p.year.includes("2025"));
+    const has2026 = gov.projects.some((p) => p.year.includes("2026"));
+    const matchesYear =
+      selectedYear === "both" ||
+      (selectedYear === "2025" && has2025) ||
+      (selectedYear === "2026" && has2026);
     return matchesSearch && matchesSector && matchesYear;
   });
 
@@ -280,20 +499,20 @@ export function InteractiveMap() {
 
     // Center of Yemen: [15.5527, 47.5160] zoom level 6
     const map = createMap(mapContainerRef.current, {
-      center: [15.3500, 46.5000],
+      center: [15.35, 46.5],
       zoom: 6,
       zoomControl: false,
       scrollWheelZoom: false,
     });
 
     // Custom OpenStreetMap Tile Layer with clean light aesthetics
-    tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 18,
     }).addTo(map);
 
     // Zoom control on top left
-    control.zoom({ position: 'topleft' }).addTo(map);
+    control.zoom({ position: "topleft" }).addTo(map);
 
     mapInstanceRef.current = map;
 
@@ -302,7 +521,7 @@ export function InteractiveMap() {
       const marker = circleMarker([gov.lat, gov.lng], {
         radius: 12,
         fillColor: gov.sectorColor,
-        color: '#FFFFFF',
+        color: "#FFFFFF",
         weight: 3,
         opacity: 1,
         fillOpacity: 0.85,
@@ -319,7 +538,7 @@ export function InteractiveMap() {
 
       marker.bindPopup(popupContent, { closeButton: false });
 
-      marker.on('click', () => {
+      marker.on("click", () => {
         setSelectedGovernorate(gov);
       });
 
@@ -344,11 +563,14 @@ export function InteractiveMap() {
   };
 
   return (
-    <div className="w-full font-cairo bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden" dir="rtl">
+    <div
+      className="w-full font-cairo bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden"
+      dir="rtl"
+    >
       {/* Map Section Header Bar */}
       <div className="p-6 sm:p-8 bg-gradient-to-r from-[var(--brand-green)] via-[var(--brand-green-light)] to-[var(--brand-green-dark)] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
         <div className="absolute inset-0 pattern-geometric-islamic opacity-10 pointer-events-none" />
-        
+
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold border border-white/20 mb-2">
             <MapPin className="w-3.5 h-3.5" />
@@ -374,10 +596,12 @@ export function InteractiveMap() {
 
       {/* Main Grid: Leaflet Canvas + Details Sidebar */}
       <div className="grid lg:grid-cols-12 min-h-[520px]">
-        
         {/* Left Col (Map Canvas) */}
         <div className="lg:col-span-7 relative min-h-[380px] lg:min-h-[520px] bg-slate-100">
-          <div ref={mapContainerRef} className="w-full h-full min-h-[380px] lg:min-h-[520px] z-10" />
+          <div
+            ref={mapContainerRef}
+            className="w-full h-full min-h-[380px] lg:min-h-[520px] z-10"
+          />
 
           {/* Quick Legend Overlay */}
           <div className="absolute bottom-4 right-4 z-20 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-lg border border-slate-200/80 text-xs font-bold text-slate-700 space-y-2 hidden sm:block">
@@ -403,7 +627,6 @@ export function InteractiveMap() {
 
         {/* Right Col (Governorate Details & Project List Panel) */}
         <div className="lg:col-span-5 p-6 bg-slate-50 border-t lg:border-t-0 lg:border-r border-slate-200 flex flex-col justify-between">
-          
           <div>
             {/* Search Input for Governorates */}
             <div className="relative mb-5">
@@ -432,14 +655,21 @@ export function InteractiveMap() {
                 >
                   الكل
                 </button>
-                {['إغاثة وأمن غذائي', 'مياه وإصحاح بيئي', 'صحة واستجابة طارئة', 'إغاثة وسقيا الماء', 'تعليم وتنمية', 'تمكين اقتصادي'].map((sector) => {
+                {[
+                  "إغاثة وأمن غذائي",
+                  "مياه وإصحاح بيئي",
+                  "صحة واستجابة طارئة",
+                  "إغاثة وسقيا الماء",
+                  "تعليم وتنمية",
+                  "تمكين اقتصادي",
+                ].map((sector) => {
                   const sectorMap: Record<string, string> = {
-                    'إغاثة وأمن غذائي': '#0F4C3A',
-                    'مياه وإصحاح بيئي': '#0284C7',
-                    'صحة واستجابة طارئة': '#0F4C3A',
-                    'إغاثة وسقيا الماء': '#C69E5A',
-                    'تعليم وتنمية': '#7C3AED',
-                    'تمكين اقتصادي': '#C69E5A',
+                    "إغاثة وأمن غذائي": "#0F4C3A",
+                    "مياه وإصحاح بيئي": "#0284C7",
+                    "صحة واستجابة طارئة": "#0F4C3A",
+                    "إغاثة وسقيا الماء": "#C69E5A",
+                    "تعليم وتنمية": "#7C3AED",
+                    "تمكين اقتصادي": "#C69E5A",
                   };
                   const isSelected = selectedSector === sector;
                   return (
@@ -448,15 +678,25 @@ export function InteractiveMap() {
                       onClick={() => setSelectedSector(sector)}
                       className={`
                         px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1.5
-                        ${isSelected
-                          ? 'text-white shadow-md scale-105'
-                          : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                        ${
+                          isSelected
+                            ? "text-white shadow-md scale-105"
+                            : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
                         }`}
-                      style={isSelected ? { backgroundColor: sectorMap[sector] ?? '#0F4C3A' } : undefined}
+                      style={
+                        isSelected ? { backgroundColor: sectorMap[sector] ?? "#0F4C3A" } : undefined
+                      }
                     >
                       {sector}
-                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-[var(--brand-gold)] text-slate-950' : 'bg-slate-100 text-slate-600'}`}>
-                        {isSelected ? YEMEN_MAP_GOVERNORATES.filter((item) => item.sector === sector).reduce((total, item) => total + item.projects.length, 0) : ''}
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-[var(--brand-gold)] text-slate-950" : "bg-slate-100 text-slate-600"}`}
+                      >
+                        {isSelected
+                          ? YEMEN_MAP_GOVERNORATES.filter((item) => item.sector === sector).reduce(
+                              (total, item) => total + item.projects.length,
+                              0
+                            )
+                          : ""}
                       </span>
                     </button>
                   );
@@ -469,28 +709,34 @@ export function InteractiveMap() {
               <p className="text-xs text-slate-500 font-medium mb-2">العامل السنوي</p>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setSelectedYear('2025')}
+                  onClick={() => setSelectedYear("2025")}
                   className={`
                     px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedYear === '2025' ? 'bg-[var(--brand-green)] text-white shadow-md' : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                      selectedYear === "2025"
+                        ? "bg-[var(--brand-green)] text-white shadow-md"
+                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
                     }`}
                 >
                   ٢٠٢٥
                 </button>
                 <button
-                  onClick={() => setSelectedYear('2026')}
+                  onClick={() => setSelectedYear("2026")}
                   className={`
                     px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedYear === '2026' ? 'bg-[var(--brand-green)] text-white shadow-md' : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                      selectedYear === "2026"
+                        ? "bg-[var(--brand-green)] text-white shadow-md"
+                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
                     }`}
                 >
                   ٢٠٢٦
                 </button>
                 <button
-                  onClick={() => setSelectedYear('both')}
+                  onClick={() => setSelectedYear("both")}
                   className={`
                     px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedYear === 'both' ? 'bg-[var(--brand-green)] text-white shadow-md' : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                      selectedYear === "both"
+                        ? "bg-[var(--brand-green)] text-white shadow-md"
+                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
                     }`}
                 >
                   كافة السنوات
@@ -508,14 +754,17 @@ export function InteractiveMap() {
                     onClick={() => handleSelectGovernorate(gov)}
                     className={`
                       px-3 py-1.5 rounded-xl text-xs font-extrabold shrink-0 transition-all cursor-pointer flex items-center gap-1.5
-                      ${isSelected
-                        ? "bg-[var(--brand-green)] text-white shadow-md scale-105"
-                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
+                      ${
+                        isSelected
+                          ? "bg-[var(--brand-green)] text-white shadow-md scale-105"
+                          : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
                       }
                     `}
                   >
                     <span>{gov.name}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-[var(--brand-gold)] text-slate-950" : "bg-slate-100 text-slate-600"}`}>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-[var(--brand-gold)] text-slate-950" : "bg-slate-100 text-slate-600"}`}
+                    >
                       {gov.projectsCount}
                     </span>
                   </button>
@@ -609,14 +858,10 @@ export function InteractiveMap() {
               <span>مشاريع موثقة ومحدثة دورياً عبر فرق الرقابة الميدانية</span>
             </p>
           </div>
-
         </div>
-
       </div>
     </div>
   );
 }
 
 export default InteractiveMap;
-
-

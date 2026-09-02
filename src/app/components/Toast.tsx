@@ -74,10 +74,16 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) =
         direction: "rtl",
       }}
     >
-      <div style={{ color: style.iconColor, flexShrink: 0, marginTop: 2 }}>
-        {ICONS[toast.type]}
-      </div>
-      <p style={{ fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", flex: 1, lineHeight: 1.5 }}>
+      <div style={{ color: style.iconColor, flexShrink: 0, marginTop: 2 }}>{ICONS[toast.type]}</div>
+      <p
+        style={{
+          fontSize: "0.82rem",
+          fontWeight: 500,
+          color: "var(--foreground)",
+          flex: 1,
+          lineHeight: 1.5,
+        }}
+      >
         {toast.message}
       </p>
       <button
@@ -94,12 +100,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const removeToast = useCallback((id: string) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
   const addToast = useCallback((message: string, type: ToastType = "info", duration?: number) => {
     const id = `toast_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-    setToasts(prev => [...prev, { id, message, type, duration }]);
+    setToasts((prev) => [...prev, { id, message, type, duration }]);
   }, []);
 
   const success = useCallback((message: string) => addToast(message, "success"), [addToast]);
@@ -110,8 +116,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ addToast, removeToast, success, error, warning, info }}>
       {children}
-      <div className="fixed bottom-4 left-4 z-[9999] flex flex-col gap-2" style={{ direction: "rtl" }}>
-        {toasts.map(toast => (
+      <div
+        className="fixed bottom-4 left-4 z-[9999] flex flex-col gap-2"
+        style={{ direction: "rtl" }}
+      >
+        {toasts.map((toast) => (
           <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
         ))}
       </div>
@@ -143,13 +152,27 @@ export function useConfirm() {
   } | null>(null);
 
   const confirm = useCallback(
-    (message: string, options?: { title?: string; confirmLabel?: string; cancelLabel?: string; variant?: "danger" | "warning" | "info" }) => {
+    (
+      message: string,
+      options?: {
+        title?: string;
+        confirmLabel?: string;
+        cancelLabel?: string;
+        variant?: "danger" | "warning" | "info";
+      }
+    ) => {
       return new Promise<boolean>((resolve) => {
         setState({
           isOpen: true,
           message,
-          onConfirm: () => { resolve(true); setState(null); },
-          onCancel: () => { resolve(false); setState(null); },
+          onConfirm: () => {
+            resolve(true);
+            setState(null);
+          },
+          onCancel: () => {
+            resolve(false);
+            setState(null);
+          },
           ...options,
         });
       });
@@ -159,37 +182,66 @@ export function useConfirm() {
 
   const ConfirmDialogComponent = state ? (
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer" 
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
         onClick={state.onCancel}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') state.onCancel(); }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") state.onCancel();
+        }}
         aria-label="إلغاء"
       />
-      <div className="relative bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl" style={{ direction: "rtl" }}>
+      <div
+        className="relative bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl"
+        style={{ direction: "rtl" }}
+      >
         <div className="text-center mb-5">
-          <div className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3 ${
-            state.variant === 'danger' ? 'bg-red-50' : state.variant === 'warning' ? 'bg-amber-50' : 'bg-blue-50'
-          }`}>
-            <AlertTriangle className={`w-6 h-6 ${
-              state.variant === 'danger' ? 'text-red-500' : state.variant === 'warning' ? 'text-amber-500' : 'text-blue-500'
-            }`} />
+          <div
+            className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3 ${
+              state.variant === "danger"
+                ? "bg-red-50"
+                : state.variant === "warning"
+                  ? "bg-amber-50"
+                  : "bg-blue-50"
+            }`}
+          >
+            <AlertTriangle
+              className={`w-6 h-6 ${
+                state.variant === "danger"
+                  ? "text-red-500"
+                  : state.variant === "warning"
+                    ? "text-amber-500"
+                    : "text-blue-500"
+              }`}
+            />
           </div>
-          <h3 style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.25rem" }}>{state.title || "تأكيد العملية"}</h3>
-          <p style={{ fontSize: "0.82rem", color: "var(--muted-foreground)", lineHeight: 1.6 }}>{state.message}</p>
+          <h3 style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.25rem" }}>
+            {state.title || "تأكيد العملية"}
+          </h3>
+          <p style={{ fontSize: "0.82rem", color: "var(--muted-foreground)", lineHeight: 1.6 }}>
+            {state.message}
+          </p>
         </div>
         <div className="flex gap-3">
-          <button onClick={state.onConfirm}
+          <button
+            onClick={state.onConfirm}
             className={`flex-1 py-2.5 rounded-lg text-white transition-colors ${
-              state.variant === 'danger' ? 'bg-red-500 hover:bg-red-600' : state.variant === 'warning' ? 'bg-amber-500 hover:bg-amber-600' : 'bg-[var(--brand-green)] hover:bg-[var(--brand-green-light)]'
+              state.variant === "danger"
+                ? "bg-red-500 hover:bg-red-600"
+                : state.variant === "warning"
+                  ? "bg-amber-500 hover:bg-amber-600"
+                  : "bg-[var(--brand-green)] hover:bg-[var(--brand-green-light)]"
             }`}
-            style={{ fontSize: "0.85rem", fontWeight: 600 }}>
+            style={{ fontSize: "0.85rem", fontWeight: 600 }}
+          >
             {state.confirmLabel || "تأكيد"}
           </button>
-          <button onClick={state.onCancel}
+          <button
+            onClick={state.onCancel}
             className="flex-1 py-2.5 border border-[var(--border)] rounded-lg hover:bg-[var(--muted)] transition-colors"
-            style={{ fontSize: "0.85rem" }}>
+            style={{ fontSize: "0.85rem" }}
+          >
             {state.cancelLabel || "إلغاء"}
           </button>
         </div>
@@ -199,4 +251,3 @@ export function useConfirm() {
 
   return { confirm, ConfirmDialog: ConfirmDialogComponent };
 }
-
