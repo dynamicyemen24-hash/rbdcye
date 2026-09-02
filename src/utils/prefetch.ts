@@ -86,3 +86,5 @@ export function initIdlePrefetching(): void {
     window.addEventListener('load', schedulePrefetch, { once: true });
   }
 }
+
+

@@ -1,33 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0A372A"/><stop offset=".55" stop-color="#0F4C3A"/><stop offset="1" stop-color="#155A45"/>
-    </linearGradient>
-    <pattern id="khatam" width="96" height="96" patternUnits="userSpaceOnUse">
-      <g fill="none" stroke="#C69E5A" stroke-opacity=".16"><rect x="27" y="27" width="42" height="42"/><rect x="27" y="27" width="42" height="42" transform="rotate(45 48 48)"/></g>
-    </pattern>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#D9B87C"/><stop offset="1" stop-color="#B07A2A"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="600" fill="url(#bg)"/>
-  <rect width="800" height="600" fill="url(#khatam)"/>
-  <path d="M400 78 C 515 78 572 160 572 250 L572 482 L228 482 L228 250 C228 160 285 78 400 78 Z" fill="#FDFBF6" opacity=".97"/>
-  <path d="M400 66 C 525 66 584 154 584 250 L584 494 L216 494 L216 250 C216 154 275 66 400 66 Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
-  <!-- مسجد: قبة ومئذنة -->
-  <g fill="none" stroke="#0F4C3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M340 330 C 340 296 368 276 400 258 C 432 276 460 296 460 330 L460 420 L340 420 Z" fill="#F6EFDD"/>
-    <path d="M400 258 L400 238 M392 246 L400 236 L408 246"/>
-    <path d="M318 420 L318 350 C 318 334 306 326 296 320 C 286 326 274 334 274 350 L274 420 M274 300 L274 288 M268 294 L274 286 L280 294"/>
-    <path d="M482 420 L482 350 C 482 334 494 326 504 320 C 514 326 526 334 526 350 L526 420 M526 300 L526 288 M520 294 L526 286 L532 294"/>
-    <path d="M256 420 L544 420"/>
-    <path d="M384 420 L384 384 C 384 372 391 366 400 366 C 409 366 416 372 416 384 L416 420" fill="#ECFDF5"/>
-  </g>
-  <!-- مصحف مفتوح -->
-  <g fill="none" stroke="#B07A2A" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M400 452 C 384 442 358 438 336 442 L336 474 C 358 470 384 474 400 484 C 416 474 442 470 464 474 L464 442 C 442 438 416 442 400 452 Z" fill="#FDFBF6"/>
-    <path d="M400 452 L400 484"/>
-  </g>
-  <rect y="520" width="800" height="80" fill="#071F17"/>
-  <rect y="520" width="800" height="4" fill="url(#gold)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <rect x="120" y="80" width="160" height="140" rx="8" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
+  <path d="M160 80 L160 120 M200 80 L200 120 M240 80 L240 120" stroke="#C69E5A" stroke-width="2" opacity=".6"/>
+  <circle cx="200" cy="150" r="20" fill="#C69E5A" opacity=".3"/>
+  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">الدعوة</text>
 </svg>

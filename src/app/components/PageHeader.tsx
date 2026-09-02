@@ -26,7 +26,7 @@ export function PageHeader({
   const isCenter = align === 'center';
   
   return (
-        <section className="relative overflow-hidden bg-[#F7F8F5] py-14 sm:py-20" aria-labelledby="page-header-title" style={{
+        <section className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20" aria-labelledby="page-header-title" style={{
 
       background: 'linear-gradient(180deg, rgba(26, 92, 72, 0.06) 0%, rgba(255, 255, 255, 1) 100%)',
     }}>
@@ -127,3 +127,4 @@ export function PageHeader({
     </section>
   );
 }
+

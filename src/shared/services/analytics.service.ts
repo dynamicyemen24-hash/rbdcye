@@ -448,3 +448,4 @@ export function getDashboardKPIs(): DashboardKPI[] {
     { id: 'kpi-volunteers', name: 'Volunteer Hours', nameAr: 'ساعات التطوع', value: 24800, previousValue: 19600, changePercent: 26.5, trend: 'up', format: 'hours', icon: 'clock' },
   ];
 }
+

@@ -165,3 +165,4 @@ export function useSectionNavigation(sections: string[] = DEFAULT_SECTIONS) {
 
   return { currentSection, sections };
 }
+

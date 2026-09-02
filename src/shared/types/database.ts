@@ -300,3 +300,4 @@ export interface WebsiteSetting {
   description?: string;
   updated_at: string;
 }
+

@@ -14,3 +14,5 @@ export const sanityClient = createClient({
 });
 
 export default sanityClient;
+
+

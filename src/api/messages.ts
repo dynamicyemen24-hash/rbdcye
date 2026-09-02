@@ -62,3 +62,4 @@ export async function getMessages(): Promise<MessagePayload[]> {
     return JSON.parse(localStorage.getItem('contact_messages') || '[]');
   }
 }
+

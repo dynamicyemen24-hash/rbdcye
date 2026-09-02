@@ -127,3 +127,4 @@ export function preloadImage(src: string): Promise<void> {
     img.src = src;
   });
 }
+

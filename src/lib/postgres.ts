@@ -157,3 +157,5 @@ export async function query(text: string, params?: any[]) {
   console.warn('[postgres.ts] Direct SQL queries are deprecated. Use apiQuery() instead.');
   return { rows: [], rowCount: 0 };
 }
+
+

@@ -150,3 +150,5 @@ export const newsService = {
     return updated ? mapToNewsItem(updated) : null;
   },
 };
+
+

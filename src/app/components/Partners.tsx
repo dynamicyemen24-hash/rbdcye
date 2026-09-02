@@ -1,4 +1,4 @@
-﻿import { motion } from "motion/react";
+import { motion } from "motion/react";
 import { Handshake } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -62,14 +62,14 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
           className="text-center mb-14"
         >
           <span className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full" style={{ fontSize: "0.8rem", fontWeight: 600 }}>
-            شركاء النجاح
+            ????? ??????
           </span>
           <h2 className="text-[var(--foreground)]">
-            شركاؤنا في{" "}
-            <span className="text-[var(--brand-green)]">العمل الإنساني</span>
+            ??????? ??{" "}
+            <span className="text-[var(--brand-green)]">????? ????????</span>
           </h2>
           <p className="text-[var(--muted-foreground)] mt-2 max-w-xl mx-auto" style={{ fontSize: "0.9rem", lineHeight: "1.7" }}>
-            نعمل مع شركاء إستراتيجيين ومؤسسات داعمة لتحقيق أثر أوسع وأدوم
+            ???? ?? ????? ??????????? ??????? ????? ?????? ??? ???? ?????
           </p>
         </motion.div>
 
@@ -100,3 +100,5 @@ export function Partners({ setCurrentPage: _setCurrentPage }: { setCurrentPage: 
     </section>
   );
 }
+
+

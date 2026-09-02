@@ -88,3 +88,4 @@ export interface DashboardMetrics {
   newsCount: number;
   storiesCount: number;
 }
+

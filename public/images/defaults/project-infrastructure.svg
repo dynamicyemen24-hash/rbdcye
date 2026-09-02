@@ -9,17 +9,10 @@
   </defs>
   <rect width="800" height="600" fill="url(#bg)"/>
   <rect width="800" height="600" fill="url(#kh)"/>
-  <path d="M282 388 V246 Q282 152 400 116 Q518 152 518 246 V388 Z" fill="#FDFBF6" stroke="#C69E5A" stroke-width="5"/>
-  <path d="M300 388 V252 Q300 172 400 140 Q500 172 500 252 V388 Z" fill="none" stroke="#C69E5A" stroke-width="2" opacity=".5"/>
-  <path d="M400 196 a52 52 0 0 1 52 52 v18 h-104 v-18 a52 52 0 0 1 52 -52 Z" fill="#0F4C3A"/>
-  <rect x="330" y="266" width="140" height="66" rx="8" fill="#0F4C3A"/>
-  <path d="M394 158 h12 v24 h-12 z M400 148 a7 7 0 1 1 -.01 0 Z" fill="#C69E5A"/>
-  <path d="M400 148 c8 -8 20 -6 24 2 -10 -2 -16 0 -20 6 Z" fill="#C69E5A"/>
-  <rect x="306" y="238" width="12" height="94" rx="4" fill="#17694F"/>
-  <circle cx="312" cy="230" r="9" fill="#C69E5A"/>
-  <rect x="482" y="238" width="12" height="94" rx="4" fill="#17694F"/>
-  <circle cx="488" cy="230" r="9" fill="#C69E5A"/>
-  <path d="M368 332 v-40 a32 32 0 0 1 64 0 v40 Z" fill="#FDFBF6" opacity=".9"/>
+  <path d="M200 180 L200 420 M600 180 L600 420 M200 300 L600 300" stroke="#C69E5A" stroke-width="4" opacity=".5" fill="none"/>
+  <rect x="280" y="240" width="240" height="120" rx="16" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".6"/>
+  <path d="M340 270 L380 240 L420 270" stroke="#C69E5A" stroke-width="3" fill="none"/>
+  <circle cx="400" cy="300" r="30" fill="none" stroke="#C69E5A" stroke-width="2" opacity=".4"/>
   <rect y="540" width="800" height="60" fill="#08251B"/>
   <g fill="#C69E5A"><path d="M60 570 l10 -10 10 10 -10 10 Z M730 570 l10 -10 10 10 -10 10 Z"/><rect x="340" y="566" width="120" height="4" rx="2" opacity=".6"/></g>
 </svg>

@@ -16,7 +16,7 @@
 }
 
 .icon-hover-pulse:hover {
-  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+  filter: drop-shadow(0 0 8px rgba(var(--brand-green-rgb, 15, 76, 58), 0.6));
   transform: scale(1.1);
 }
 
@@ -64,13 +64,13 @@
 }
 
 .interactive-icon.liked {
-  color: #ef4444;
-  fill: #ef4444;
+  color: var(--destructive);
+  fill: var(--destructive);
 }
 
 .interactive-icon.bookmarked {
-  color: #10b981;
-  fill: #10b981;
+  color: var(--brand-green);
+  fill: var(--brand-green);
 }
 
 /* أيقونات الفيديو - Video Player Icons */
@@ -81,7 +81,7 @@
 
 .video-control-icon:hover {
   transform: scale(1.15);
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(var(--primary-foreground-rgb), 0.3);
 }
 
 /* أيقونات الإحصائيات - Stats Icons */
@@ -91,18 +91,18 @@
 
 .stats-icon:hover {
   transform: scale(1.2) rotate(10deg);
-  filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.4));
+  filter: drop-shadow(0 4px 12px rgba(var(--brand-green-rgb, 15, 76, 58), 0.4));
 }
 
 /* أيقونات الفئة - Category Icons */
 .category-icon-badge {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(var(--foreground-rgb), 0.1);
 }
 
 .category-icon-badge:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(var(--foreground-rgb), 0.15);
 }
 
 /* تأثيرات الأيقونات المتقدمة - Advanced Icon Effects */
@@ -159,7 +159,7 @@
 /* حالة التركيز - Focus States */
 .icon-focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 0 3px rgba(var(--brand-green-rgb, 15, 76, 58), 0.4);
   border-radius: 8px;
 }
 
@@ -258,13 +258,22 @@
 /* تأثيرات اللمعان على الشارات - Badge Glow Effects */
 @keyframes badge-glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 5px rgba(var(--brand-green-rgb, 15, 76, 58), 0.5);
   }
   50% {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    box-shadow: 0 0 15px rgba(var(--brand-green-rgb, 15, 76, 58), 0.8);
   }
 }
 
 .badge-glow {
   animation: badge-glow 2s ease-in-out infinite;
 }
+
+
+
+
+
+
+
+
+

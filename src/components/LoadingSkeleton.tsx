@@ -3,7 +3,7 @@
 // Hero section skeleton - matches actual hero layout
 export function HeroSkeleton() {
   return (
-    <div className="min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a2e1f 0%, #0F4C3A 30%, #0d3b2a 60%, #0a2e1f 100%)' }}>
+    <div className="min-h-screen flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 30%, var(--brand-green-dark) 60%, var(--brand-green-dark) 100%)' }}>
       <div className="w-full py-28 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
@@ -224,3 +224,5 @@ export default {
   Hero: HeroSkeleton,
   Page: PageSkeleton,
 };
+
+

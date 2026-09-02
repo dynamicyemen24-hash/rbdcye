@@ -109,7 +109,7 @@ class Logger {
 
   info(message: string, data?: any) {
     const entry = this.format('info', message, data);
-    console.log(entry);
+    if (import.meta.env.DEV) console.log(entry);
     this.persist(entry);
   }
 
@@ -230,3 +230,4 @@ export const logger = new Logger();
 
 // تصدير أنواع
 export type { LogLevel, LogEntry };
+

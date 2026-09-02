@@ -89,3 +89,4 @@ export function useSanityStudioAvailable(): boolean {
 
   return available;
 }
+

@@ -103,7 +103,7 @@ const VideoBackground = memo(function VideoBackground() {
     return (
       <div className="absolute inset-0">
         <div className="w-full h-full" style={{
-          background: "linear-gradient(135deg, #0a2e1f 0%, var(--brand-green) 30%, #0d3b2a 60%, #0a2e1f 100%)",
+          background: "linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 30%, var(--brand-green-dark) 60%, var(--brand-green-dark) 100%)",
           backgroundSize: '400% 400%', animation: 'gradientShift 20s ease infinite',
         }} />
         <div className="absolute inset-0 opacity-5 pattern-bg" />
@@ -114,7 +114,7 @@ const VideoBackground = memo(function VideoBackground() {
   return (
     <div className="absolute inset-0" onMouseMove={handleMouseMove} onMouseEnter={() => setShowControls(true)}>
       {videoLoading && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#0a2e1f]">
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-[var(--brand-green-dark)]">
           <div className="relative">
             <div className="w-16 h-16 border-4 border-[var(--brand-gold)]/30 border-t-[var(--brand-gold)] rounded-full animate-spin" />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -376,7 +376,7 @@ export function Hero({ setCurrentPage }: HeroProps) {
                 <div className="relative rounded-2xl p-6 md:p-8 overflow-hidden hero-verse-card" style={{
                   background: "rgba(255,255,255,0.08)",
                   border: "1px solid rgba(255,255,255,0.15)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                  boxShadow: "0 20px 60px rgba(var(--foreground-rgb),0.2)",
                 }}>
                   {/* Glow */}
                   <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-20" style={{ background: "radial-gradient(circle, var(--brand-gold), transparent 70%)" }} />
@@ -409,7 +409,7 @@ export function Hero({ setCurrentPage }: HeroProps) {
                       <p className="text-white leading-relaxed" style={{
                         fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)",
                         fontWeight: 600,
-                        textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                        textShadow: "0 2px 10px rgba(var(--foreground-rgb),0.3)",
                         lineHeight: 2,
                         fontFamily: "'Noto Naskh Arabic', 'Traditional Arabic', serif",
                       }}>
@@ -456,3 +456,4 @@ export function Hero({ setCurrentPage }: HeroProps) {
     </section>
   );
 }
+

@@ -1981,3 +1981,4 @@ export const schemaTypes = [
   testimonial,
   faq,
 ];
+

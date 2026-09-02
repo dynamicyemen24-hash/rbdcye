@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from './ui/utils';
 
@@ -11,7 +11,7 @@ interface FallbackImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 /**
- * مكون صورة يدعم Fallback عند حدوث خطأ في التحميل
+ * ???? ???? ???? Fallback ??? ???? ??? ?? ???????
  */
 export function FallbackImage({
   src,
@@ -57,3 +57,4 @@ export function FallbackImage({
     </div>
   );
 }
+

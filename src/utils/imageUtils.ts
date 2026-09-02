@@ -221,3 +221,4 @@ export default {
   getThumbnail,
   RECOMMENDED_IMAGES,
 };
+

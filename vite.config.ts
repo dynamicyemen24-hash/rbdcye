@@ -24,8 +24,8 @@ export default defineConfig({
         name: 'رحماء بينهم',
         short_name: 'رحماء بينهم',
         description: 'الموقع الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن',
-        theme_color: '#059669',
-        background_color: '#f8fafc',
+        theme_color: '#0F4C3A',
+        background_color: '#0F4C3A',
         display: 'standalone',
         orientation: 'any',
         start_url: '/',
@@ -35,7 +35,11 @@ export default defineConfig({
         icons: [
           { src: '/icons/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/pwa-512x512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: '/icons/pwa-512x512-maskable.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'maskable' },
+          { src: '/icons/pwa-64x64.svg', sizes: '64x64', type: 'image/svg+xml' },
+          { src: '/icons/pwa-128x128.svg', sizes: '128x128', type: 'image/svg+xml' },
+          { src: '/icons/pwa-256x256.svg', sizes: '256x256', type: 'image/svg+xml' },
+          { src: '/icons/pwa-384x384.svg', sizes: '384x384', type: 'image/svg+xml' },
         ],
         categories: ['charity', 'donation', 'social'],
         shortcuts: [

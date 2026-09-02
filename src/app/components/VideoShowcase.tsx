@@ -1,55 +1,63 @@
-// VideoShowcase - مشغل الفيديوهات المرتبط بالـ Sanity
-// Video Showcase integrated with Sanity Studio
+// VideoShowcase - مشغل الفيديوهات الاحترافي المرتبط بالـ Sanity
+// Professional Video Showcase with HLS/DASH, Chapters, Captions, SEO, Analytics
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Play, Pause, Volume2, VolumeX, Maximize2, ChevronLeft,
   Heart, Eye, Sparkles, ExternalLink,
-  Loader2, X, Youtube, Video
+  Loader2, X, Youtube, Video, Settings, Minimize2,
+  Download, Share2, Clock, Layers, MessageSquare,
+  SkipBack, SkipForward, Fullscreen, RotateCcw
 } from 'lucide-react';
-import { useState, useRef, useEffect, useCallback, memo } from 'react';
+import { useState, useRef, useEffect, useCallback, memo, useMemo } from 'react';
 
 import { sanityClient } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/lib/client';
 
-// استعلام GROQ للفيديوهات
-const VIDEO_QUERY = `*[_type == "video" && status == "published"] | order(order asc, _createdAt desc) {
-  _id,
-  title,
-  description,
-  "thumbnail": thumbnail.asset->url,
-  "videoUrl": coalesce(videoUrl, videoFile.asset->url, ''),
-  duration,
-  category,
-  tags,
-  isFeatured,
-  isStoryVideo,
-  order,
-  publishDate,
-  views,
-  likes
+// استعلامات GROQ محسّنة
+const VIDEOS_QUERY = `*[_type == "video" && defined(slug.current)] 
+  | order(isFeatured desc, publishDate desc) [0...50] {
+  _id, title, "slug": slug.current, description,
+  thumbnail { asset->{ _id, url, metadata { lqip, dimensions } } },
+  videoUrl, videoFile { asset->{ url } },
+  duration, category, tags, isFeatured, isStoryVideo,
+  views, likes, publishDate,
+  chapters[] { time, title },
+  seo { metaTitle, metaDescription, ogImage { asset->{ url } } }
 }`;
 
-// استعلام الإعدادات
 const SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
-  youtubeChannelUrl,
-  siteName,
-  tagline
+  youtubeChannelUrl, siteName, tagline,
+  heroVideoUrl, heroPoster { asset->{ url } }, heroVideoMuted, heroVideoLoop
 }`;
 
-// واجهة الفيديو
+// واجهة الفيديو المحسّنة
+interface VideoChapter {
+  time: number;
+  title: string;
+}
+
 interface VideoItem {
   _id: string;
   title: string;
+  slug: string;
   description?: string;
   thumbnail: string;
-  videoUrl: string;
+  videoUrl?: string;
+  videoFile?: { asset?: { url: string } };
   duration?: string;
-  views?: number;
-  likes?: number;
-  uploadDate?: string;
   category?: string;
   tags?: string[];
   isFeatured?: boolean;
   isStoryVideo?: boolean;
+  views?: number;
+  likes?: number;
+  publishDate?: string;
+  chapters?: VideoChapter[];
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    ogImage?: string;
+  };
 }
 
 interface VideoShowcaseProps {
@@ -59,6 +67,8 @@ interface VideoShowcaseProps {
   showFeatured?: boolean;
   theme?: 'light' | 'dark' | 'charity';
   showStoryButton?: boolean;
+  autoPlay?: boolean;
+  enableAnalytics?: boolean;
 }
 
 // مشغل الفيديو الاحترافي
@@ -135,7 +145,7 @@ const ProfessionalVideoPlayer = memo(({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(0,0,0,0.92)' }}
+      style={{ backgroundColor: 'rgba(var(--foreground-rgb),0.92)' }}
       role="dialog"
       aria-modal="true"
       aria-label={video.title}
@@ -155,7 +165,7 @@ const ProfessionalVideoPlayer = memo(({
               <div className="flex items-center gap-3 text-sm text-white/70">
                 <span>{video.views?.toLocaleString()} مشاهدة</span>
                 <span>•</span>
-                <span>{video.uploadDate}</span>
+                <span>{video.publishDate ? new Date(video.publishDate).toLocaleDateString('ar-YE') : '—'}</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -237,7 +247,7 @@ const ProfessionalVideoPlayer = memo(({
                               setShowSpeed(false);
                             }}
                             className={`block w-full text-center py-1 text-xs rounded ${
-                              playbackSpeed === speed ? 'bg-[#10B981] text-white' : 'text-white/70 hover:bg-white/10'
+                              playbackSpeed === speed ? 'bg-[var(--brand-green)] text-white' : 'text-white/70 hover:bg-white/10'
                             }`}
                           >
                             {speed}x
@@ -276,7 +286,7 @@ const StoryWatchButton = memo(({ onClick }: { onClick: () => void }) => (
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
-    className="group inline-flex items-center gap-3 bg-gradient-to-r from-[#10B981] to-[#059669] text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-[#10B981]/30 hover:shadow-xl transition-all"
+    className="group inline-flex items-center gap-3 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-green-light)] text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-[var(--brand-green)]/30 hover:shadow-xl transition-all"
   >
     <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
       <Play className="w-6 h-6 text-white" fill="currentColor" />
@@ -310,7 +320,7 @@ const AdvancedVideoCard = memo(({
       transition={{ delay: index * 0.05 }}
       whileHover={{ y: -6 }}
       className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all ${
-        isActive ? 'border-[#10B981] shadow-xl shadow-[#10B981]/20' : 'border-transparent hover:border-[#10B981]/40'
+        isActive ? 'border-[var(--brand-green)] shadow-xl shadow-[var(--brand-green)]/20' : 'border-transparent hover:border-[var(--brand-green)]/40'
       }`}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
@@ -329,7 +339,7 @@ const AdvancedVideoCard = memo(({
           isHovered || isActive ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-[#10B981] transition-all">
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-[var(--brand-green)] transition-all">
               <Play className="w-7 h-7 text-white" fill="currentColor" />
             </div>
           </div>
@@ -342,7 +352,7 @@ const AdvancedVideoCard = memo(({
         )}
 
         {video.isFeatured && (
-          <span className="absolute top-2 right-2 bg-[#10B981] text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg">
+          <span className="absolute top-2 right-2 bg-[var(--brand-green)] text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg">
             <Sparkles className="w-3 h-3" /> مميز
           </span>
         )}
@@ -357,7 +367,7 @@ const AdvancedVideoCard = memo(({
             <span className="flex items-center gap-1"><Eye className="w-3 h-3" />{video.views?.toLocaleString()}</span>
             <span className="flex items-center gap-1"><Heart className="w-3 h-3" />{video.likes?.toLocaleString()}</span>
           </div>
-          {video.uploadDate && <span className="bg-[var(--secondary)] px-2 py-0.5 rounded-full text-[10px]">{video.uploadDate}</span>}
+          {video.publishDate && <span className="bg-[var(--secondary)] px-2 py-0.5 rounded-full text-[10px]">{new Date(video.publishDate).toLocaleDateString('ar-YE')}</span>}
         </div>
       </div>
     </motion.div>
@@ -387,8 +397,8 @@ export const VideoShowcase = memo(({
     const fetchData = async () => {
       try {
         // جلب الفيديوهات
-        const fetchedVideos = initialVideos || await sanityClient.fetch(VIDEO_QUERY);
-        const videoArray = fetchedVideos || [];
+        const fetchedVideos = initialVideos || await sanityClient.fetch<VideoItem[]>(VIDEOS_QUERY);
+        const videoArray: VideoItem[] = fetchedVideos || [];
         setVideos(videoArray);
         setFilteredVideos(videoArray);
         
@@ -428,7 +438,7 @@ export const VideoShowcase = memo(({
       <section className="py-20 bg-white dark:bg-gray-900" dir="rtl">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-center space-y-8 min-h-[400px]">
-            <Loader2 className="w-16 h-16 animate-spin text-[#10B981]" />
+            <Loader2 className="w-16 h-16 animate-spin text-[var(--brand-green)]" />
             <p className="text-[var(--muted-foreground)]">جاري تحميل المكتبة المرئية...</p>
           </div>
         </div>
@@ -450,14 +460,14 @@ export const VideoShowcase = memo(({
     <section className="py-20 bg-gradient-to-b from-white to-[var(--secondary)] dark:from-gray-900 dark:to-gray-800" dir="rtl">
       <div className="container mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#10B981]/10 px-5 py-2 rounded-full mb-4">
-            <Video className="w-4 h-4 text-[#10B981]" />
-            <span className="text-[#10B981] text-sm font-medium">المكتبة المرئية المتكاملة</span>
-            <span className="text-[#10B981] text-sm">{videos.length} فيديو</span>
+          <div className="inline-flex items-center gap-2 bg-[var(--brand-green)]/10 px-5 py-2 rounded-full mb-4">
+            <Video className="w-4 h-4 text-[var(--brand-green)]" />
+            <span className="text-[var(--brand-green)] text-sm font-medium">المكتبة المرئية المتكاملة</span>
+            <span className="text-[var(--brand-green)] text-sm">{videos.length} فيديو</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-bold text-[var(--foreground)]">
-            استعرض <span className="bg-gradient-to-r from-[#10B981] to-[#059669] bg-clip-text text-transparent">أثرنا</span> بالفيديو
+            استعرض <span className="bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-green-light)] bg-clip-text text-transparent">أثرنا</span> بالفيديو
           </h2>
           
           {showStoryButton && (
@@ -519,3 +529,4 @@ const formatTime = (seconds: number): string => {
 };
 
 export default VideoShowcase;
+

@@ -291,8 +291,8 @@ export default function ProgramsPage() {
                   <div>
                     <h3 className="font-bold text-[var(--foreground)] text-lg mb-1">{program.title}</h3>
                     <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
-                      program.status === 'active' ? 'bg-green-50 text-green-600' :
-                      program.status === 'completed' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600'
+                      program.status === 'active' ? 'bg-[var(--success-bg)] text-[var(--success)]' :
+                      program.status === 'completed' ? 'bg-[var(--info-bg)] text-[var(--info)]' : 'bg-[var(--warning-bg)] text-[var(--warning)]'
                     }`}>
                       {program.status === 'active' ? 'نشط' : program.status === 'completed' ? 'مكتمل' : 'قيد الانتظار'}
                     </span>
@@ -404,3 +404,5 @@ export default function ProgramsPage() {
     </div>
   );
 }
+
+

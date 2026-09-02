@@ -18,7 +18,9 @@ import { useSEO } from '@/utils/seoAdvanced';
 export default function AboutPage() {
   useSEO({
     title: 'من نحن - رحماء بينهم',
-    description: 'تعرف على حملة رحماء بينهم الخيرية وإنجازاتها منذ 2014',
+    description: 'حملة رحماء بينهم الخيرية؛ تضامن إنساني وتنموي متكامل منذ 2014م. نعرفكم على هويتنا ورؤيتنا ورسالتنا وقيمنا، ونستعرض أهدافنا وفئاتنا المستهدفة وشركاء النجاح.',
+    keywords: ['من نحن', 'رحماء بينهم', 'حملة خيرية', 'يمن', 'إغاثة', 'تنمية'],
+    url: 'https://rbdcye.org/about',
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,7 +73,7 @@ export default function AboutPage() {
       {/* تعريف بالحمعرة */}
       {/* ============================================ */}
       <section id="definition" className="section bg-white">
-        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(26,92,72,0.3), transparent)' }} />
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(15,76,58,0.3), transparent)' }} />
         
         <div className="section-container">
           <div className="max-w-5xl mx-auto">
@@ -93,7 +95,7 @@ export default function AboutPage() {
             </motion.div>
 
              <div className="relative">
-                <div className="absolute -inset-4 rounded-3xl blur-2xl" style={{ background: 'linear-gradient(135deg, rgba(26,92,72,0.05), transparent, rgba(26,92,72,0.05))' }} />
+                <div className="absolute -inset-4 rounded-3xl blur-2xl" style={{ background: 'linear-gradient(135deg, rgba(15,76,58,0.05), transparent, rgba(15,76,58,0.05))' }} />
                 
                 <motion.div 
                   className="card card--xl relative overflow-hidden"
@@ -104,12 +106,12 @@ export default function AboutPage() {
                   whileHover={{ boxShadow: '0 25px 50px -12px rgba(26, 92, 72, 0.25)' }}
                 >
                   {/* Decorative circles */}
-                  <div className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
-                  <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full" style={{ background: 'rgba(26,92,72,0.02)' }} />
+                  <div className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(15,76,58,0.05)' }} />
+                  <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(15,76,58,0.05)' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full" style={{ background: 'rgba(15,76,58,0.02)' }} />
 
                   <div className="relative z-10">
-                    <Quote className="w-12 h-12 mb-6" style={{ color: 'rgba(26,92,72,0.2)' }} />
+                    <Quote className="w-12 h-12 mb-6" style={{ color: 'rgba(15,76,58,0.2)' }} />
                     
                     <p className="text-xl md:text-2xl leading-[1.8] font-light" style={{ color: 'var(--foreground)' }}>
                       {aboutText}
@@ -139,10 +141,10 @@ export default function AboutPage() {
         {/* ============================================ */}
         <section id="supervisor" className="section-secondary relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))' }} />
             <motion.div 
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl"
-              style={{ background: 'rgba(26,92,72,0.05)' }}
+              style={{ background: 'rgba(15,76,58,0.05)' }}
               animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
               transition={{ duration: 30, repeat: -1 }}
             />
@@ -177,8 +179,8 @@ export default function AboutPage() {
                 whileHover={{ boxShadow: '0 30px 60px -20px rgba(26, 92, 72, 0.3)' }}
               >
                 {/* Decorative bg */}
-                <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full" style={{ background: 'rgba(26,92,72,0.05)' }} />
-                <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full" style={{ background: 'rgba(15,76,58,0.05)' }} />
+                <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full" style={{ background: 'rgba(15,76,58,0.05)' }} />
                 
                 <div className="relative z-10">
                   <motion.div
@@ -188,8 +190,8 @@ export default function AboutPage() {
                     transition={{ delay: 0.3, duration: 0.5 }}
                     className="mb-6"
                   >
-                    <Quote className="w-12 h-12" style={{ color: 'rgba(26,92,72,0.2)' }} />
-                    <div className="w-16 h-1 mt-2 rounded-full" style={{ background: 'rgba(26,92,72,0.3)' }} />
+                    <Quote className="w-12 h-12" style={{ color: 'rgba(15,76,58,0.2)' }} />
+                    <div className="w-16 h-1 mt-2 rounded-full" style={{ background: 'rgba(15,76,58,0.3)' }} />
                   </motion.div>
                    
                    {supervisorMessage.split('\n\n').map((paragraph, index) => (
@@ -267,9 +269,9 @@ export default function AboutPage() {
                   className="card card--xl hover-lift relative overflow-hidden group"
                   whileHover={{ y: -8 }}
                 >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)' }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(15,76,58,0.05), transparent)' }} />
                   <div className="relative z-10">
-                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
+                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(15,76,58,0.2)' }}>
                       <Globe className="w-10 h-10" />
                     </div>
                     <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>رؤيتنا</h3>
@@ -288,9 +290,9 @@ export default function AboutPage() {
                   className="card card--xl hover-lift relative overflow-hidden group"
                   whileHover={{ y: -8 }}
                 >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)' }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(135deg, transparent, rgba(15,76,58,0.05), transparent)' }} />
                   <div className="relative z-10">
-                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
+                    <div className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg" style={{ boxShadow: '0 0 20px rgba(15,76,58,0.2)' }}>
                       <Heart className="w-10 h-10" />
                     </div>
                     <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--foreground)' }}>رسالتنا</h3>
@@ -319,11 +321,11 @@ export default function AboutPage() {
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                   {[
-                    { icon: Star, label: 'الإخلاص', color: '#F59E0B', desc: 'نية صادقة' },
-                    { icon: Shield, label: 'الشفافية', color: '#3B82F6', desc: 'وضوح تام' },
+                    { icon: Star, label: 'الإخلاص', color: 'var(--brand-gold)', desc: 'نية صادقة' },
+                    { icon: Shield, label: 'الشفافية', color: 'var(--primary)', desc: 'وضوح تام' },
                     { icon: Award, label: 'الإتقان', color: 'var(--brand-green)', desc: 'إتقان العمل' },
-                    { icon: Users, label: 'المسؤولية', color: '#8B5CF6', desc: 'تحمل المسؤولية' },
-                    { icon: Sparkles, label: 'المبادرة', color: '#F97316', desc: 'روح المبادرة' },
+                    { icon: Users, label: 'المسؤولية', color: 'var(--chart-3)', desc: 'تحمل المسؤولية' },
+                    { icon: Sparkles, label: 'المبادرة', color: 'var(--chart-4)', desc: 'روح المبادرة' },
                   ].map((value) => (
                     <motion.div
                       key={value.label}
@@ -350,7 +352,7 @@ export default function AboutPage() {
         {/* أهدافنا */}
         {/* ============================================ */}
         <section id="goals" className="section-secondary relative overflow-hidden">
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))' }} />
           
           <div className="section-container relative z-10">
             <div className="max-w-5xl mx-auto">
@@ -388,18 +390,18 @@ export default function AboutPage() {
                     whileHover={{ x: 10 }}
                   >
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg" style={{ background: 'var(--brand-green)', color: 'white', boxShadow: '0 0 20px rgba(26,92,72,0.2)' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg" style={{ background: 'var(--brand-green)', color: 'white', boxShadow: '0 0 20px rgba(15,76,58,0.2)' }}>
                         {index + 1}
                       </div>
                     </div>
                     <div className="flex-1">
                       <p className="text-lg leading-relaxed" style={{ color: 'var(--foreground)' }}>{goal}</p>
                       <div className="mt-2 flex items-center gap-2">
-                        <div className="w-16 h-0.5 rounded-full" style={{ background: 'rgba(26,92,72,0.3)' }} />
+                        <div className="w-16 h-0.5 rounded-full" style={{ background: 'rgba(15,76,58,0.3)' }} />
                         <span className="text-xs" style={{ color: 'var(--brand-green)' }}>هدف استراتيجي</span>
                       </div>
                     </div>
-                    <CheckCircle2 className="w-5 h-5 flex-shrink-0 transition-colors" style={{ color: 'rgba(26,92,72,0.3)' }} />
+                    <CheckCircle2 className="w-5 h-5 flex-shrink-0 transition-colors" style={{ color: 'rgba(15,76,58,0.3)' }} />
                   </motion.div>
                 ))}
               </div>
@@ -432,11 +434,11 @@ export default function AboutPage() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
-                  { icon: Heart, title: 'الأيتام والأرامل والأسر المتعففة', desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين', color: '#F43F5E', count: 'آلاف' },
-                  { icon: HandHeart, title: 'المحتاجون والنازحون', desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين', color: '#F59E0B', count: 'عشرات آلاف' },
-                  { icon: BookOpen, title: 'طلاب وحفظة القرآن والمعلمون', desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية', color: '#3B82F6', count: 'آلاف' },
+                  { icon: Heart, title: 'الأيتام والأرامل والأسر المتعففة', desc: 'مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين', color: 'var(--destructive)', count: 'آلاف' },
+                  { icon: HandHeart, title: 'المحتاجون والنازحون', desc: 'مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين', color: 'var(--brand-gold)', count: 'عشرات آلاف' },
+                  { icon: BookOpen, title: 'طلاب وحفظة القرآن والمعلمون', desc: 'مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية', color: 'var(--primary)', count: 'آلاف' },
                   { icon: Compass, title: 'سكان المناطق النائية والجافة', desc: 'مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن', color: 'var(--brand-green)', count: 'آلاف' },
-                  { icon: TrendingUp, title: 'الأسر الباحثة عن الدخل', desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحوؤل إلى أسر منتجة', color: '#8B5CF6', count: 'مئات' },
+                  { icon: TrendingUp, title: 'الأسر الباحثة عن الدخل', desc: 'مستفيدو تمليك الأدوات الإنتاجية للتحوؤل إلى أسر منتجة', color: 'var(--chart-3)', count: 'مئات' },
                  ].map((group, index) => (
                     <motion.div
                       key={group.title}
@@ -478,10 +480,10 @@ export default function AboutPage() {
         {/* ============================================ */}
         <section id="partners" className="section-secondary relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(26,92,72,0.05), rgba(26,92,72,0.1), rgba(26,92,72,0.05))' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))' }} />
             <motion.div 
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
-              style={{ background: 'rgba(26,92,72,0.05)' }}
+              style={{ background: 'rgba(15,76,58,0.05)' }}
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 15, repeat: Infinity }}
             />
@@ -520,8 +522,8 @@ export default function AboutPage() {
                   whileHover={{ boxShadow: '0 30px 60px -20px rgba(26, 92, 72, 0.25)' }}
                 >
                   {/* Decorative bg */}
-                  <div className="absolute top-0 right-0 w-48 h-48 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(26,92,72,0.05)' }} />
+                  <div className="absolute top-0 right-0 w-48 h-48 rounded-full -translate-y-1/2 translate-x-1/2" style={{ background: 'rgba(15,76,58,0.05)' }} />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full translate-y-1/2 -translate-x-1/2" style={{ background: 'rgba(15,76,58,0.05)' }} />
                    
                   <div className="relative z-10">
                     <motion.div
@@ -530,7 +532,7 @@ export default function AboutPage() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 }}
                     >
-                      <Quote className="w-14 h-14 mx-auto mb-6" style={{ color: 'rgba(26,92,72,0.1)' }} />
+                      <Quote className="w-14 h-14 mx-auto mb-6" style={{ color: 'rgba(15,76,58,0.1)' }} />
                     </motion.div>
                     
                     <p className="text-xl md:text-2xl leading-[1.8] font-light" style={{ color: 'var(--foreground)' }}>
@@ -568,8 +570,8 @@ export default function AboutPage() {
         {/* ============================================ */}
         <footer className="relative overflow-hidden" style={{ background: 'var(--foreground)', color: 'white' }}>
           <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(26,92,72,0.1)' }} />
-            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(26,92,72,0.1)' }} />
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(15,76,58,0.1)' }} />
+            <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ background: 'rgba(15,76,58,0.1)' }} />
           </div>
 
           <div className="relative z-10 section-container py-16">
@@ -639,3 +641,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

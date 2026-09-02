@@ -368,9 +368,14 @@ export const authService = {
     return session.user();
   },
 
+  getToken(): string | null {
+    return session.token();
+  },
+
   isAuthenticated(): boolean {
     const token = session.token();
     const user = session.user();
     return !!token && !!user && !isTokenExpired(token);
   },
 };
+

@@ -302,3 +302,5 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
     </section>
   );
 }
+
+

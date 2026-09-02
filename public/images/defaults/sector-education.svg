@@ -1,37 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0A372A"/><stop offset=".55" stop-color="#0F4C3A"/><stop offset="1" stop-color="#155A45"/>
-    </linearGradient>
-    <pattern id="khatam" width="96" height="96" patternUnits="userSpaceOnUse">
-      <g fill="none" stroke="#C69E5A" stroke-opacity=".16"><rect x="27" y="27" width="42" height="42"/><rect x="27" y="27" width="42" height="42" transform="rotate(45 48 48)"/></g>
-    </pattern>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#D9B87C"/><stop offset="1" stop-color="#B07A2A"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="600" fill="url(#bg)"/>
-  <rect width="800" height="600" fill="url(#khatam)"/>
-  <path d="M400 78 C 515 78 572 160 572 250 L572 482 L228 482 L228 250 C228 160 285 78 400 78 Z" fill="#FDFBF6" opacity=".97"/>
-  <path d="M400 66 C 525 66 584 154 584 250 L584 494 L216 494 L216 250 C216 154 275 66 400 66 Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
-  <!-- نجمة ثمانية -->
-  <g fill="none" stroke="url(#gold)" stroke-width="3.5">
-    <rect x="376" y="128" width="48" height="48"/>
-    <rect x="376" y="128" width="48" height="48" transform="rotate(45 400 152)"/>
-  </g>
-  <circle cx="400" cy="152" r="4" fill="#B07A2A"/>
-  <!-- كتاب مفتوح -->
-  <g fill="none" stroke="#0F4C3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M400 260 C 372 240 330 234 292 240 L292 372 C 330 366 372 372 400 392 C 428 372 470 366 508 372 L508 240 C 470 234 428 240 400 260 Z" fill="#F6EFDD"/>
-    <path d="M400 260 L400 392"/>
-    <path d="M318 272 C 340 269 362 272 380 280 M318 304 C 340 301 362 304 380 312 M318 336 C 340 333 362 336 380 344"/>
-    <path d="M482 272 C 460 269 438 272 420 280 M482 304 C 460 301 438 304 420 312 M482 336 C 460 333 438 336 420 344"/>
-  </g>
-  <!-- قلم -->
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <path d="M520 210 L556 174 L572 190 L536 226 L516 232 Z" fill="#F6EFDD" stroke="#0F4C3A" stroke-width="5"/>
-    <path d="M516 232 L524 224" stroke="#B07A2A" stroke-width="5"/>
-  </g>
-  <rect y="520" width="800" height="80" fill="#071F17"/>
-  <rect y="520" width="800" height="4" fill="url(#gold)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <path d="M200 60 L280 110 L280 240 L200 210 L120 240 L120 110 Z" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
+  <line x1="200" y1="60" x2="200" y2="210" stroke="#C69E5A" stroke-width="2" opacity=".6"/>
+  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">التعليم</text>
 </svg>

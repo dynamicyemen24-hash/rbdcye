@@ -130,3 +130,4 @@ export interface NavigationState {
   canPrevious: boolean;
   canNext: boolean;
 }
+

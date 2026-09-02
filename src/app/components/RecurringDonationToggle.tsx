@@ -48,7 +48,7 @@ export function RecurringDonationToggle({
       {/* Header Label */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[#0F4C3A] flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-xl bg-emerald-100 text-[var(--brand-green)] flex items-center justify-center font-bold">
             <RefreshCw className="w-4 h-4" />
           </div>
           <div>
@@ -80,7 +80,7 @@ export function RecurringDonationToggle({
               onClick={() => onChange(opt.id)}
               className={`relative py-3.5 px-2 sm:px-4 rounded-xl text-right transition-all duration-300 cursor-pointer flex flex-col items-center sm:items-start justify-center gap-1 border ${
                 isActive
-                  ? 'bg-[#0F4C3A] text-white border-[#0F4C3A] shadow-md'
+                  ? 'bg-[var(--brand-green)] text-white border-[var(--brand-green)] shadow-md'
                   : 'bg-white/60 hover:bg-white text-slate-700 border-transparent hover:border-slate-200'
               }`}
             >
@@ -90,7 +90,7 @@ export function RecurringDonationToggle({
                   className={`text-[10px] font-black px-2 py-0.5 rounded-full mb-0.5 ${
                     isActive
                       ? 'bg-[var(--brand-gold)] text-slate-950'
-                      : 'bg-emerald-100 text-[#0F4C3A]'
+                      : 'bg-emerald-100 text-[var(--brand-green)]'
                   }`}
                 >
                   {opt.badge}
@@ -131,14 +131,14 @@ export function RecurringDonationToggle({
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div className="space-y-1">
-            <div className="font-extrabold text-sm text-[#0F4C3A] flex items-center gap-1.5">
+            <div className="font-extrabold text-sm text-[var(--brand-green)] flex items-center gap-1.5">
               <span>
                 {frequency === 'monthly'
                   ? 'الاشتراك الدوري الشهري (صدقة جارية)'
                   : 'الاشتراك الدوري السنوي (كفالة مستدامة)'}
               </span>
               {amount && amount > 0 && (
-                <span className="px-2 py-0.5 rounded-md bg-emerald-200/80 text-[#0F4C3A] font-black text-xs">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-200/80 text-[var(--brand-green)] font-black text-xs">
                   {amount.toLocaleString('ar-SA')} {currencySymbol} / {frequency === 'monthly' ? 'شهرياً' : 'سنوياً'}
                 </span>
               )}
@@ -155,3 +155,5 @@ export function RecurringDonationToggle({
 }
 
 export default RecurringDonationToggle;
+
+

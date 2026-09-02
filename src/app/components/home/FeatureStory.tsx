@@ -1,4 +1,4 @@
-// Feature Story - قصة نجاح واحدة بارزة (الذروة العاطفية للصفحة)
+// Feature Story - نموذج المعرفة والأثر (الذروة العاطفية للصفحة)
 import { Quote, MapPin, ArrowLeft, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,20 +17,19 @@ export function FeatureStory() {
   return (
     <Section tone="cream" pattern="zellij">
       <SectionHeader
-        badge="قصة من الميدان"
+        badge="معرفة من الميدان"
         badgeIcon={Star}
-        title="حين تتحول المساعدة إلى"
-        highlight="بداية جديدة"
-        subtitle="نؤمن أن أسمى غايات العمل الخيري أن يستغني المستفيد عن المساعدة؛ هذه قصة إنسانة عبرت من صفوف الانتظار إلى صفوف الإنتاج"
+        title="حين تتحول المعرفة إلى"
+        highlight="أثر دائم"
+        subtitle="نؤمن أن أسمى غايات العمل الخيري أن نشارك ما توصلنا إليه من معرفة وأثر؛ هذه دراسة توثّق تحوّل المساعدة إلى نتائج قابلة للقياس"
       />
 
       <Reveal>
         <article className="grid lg:grid-cols-5 rounded-3xl overflow-hidden border border-[var(--border)] shadow-xl bg-white">
-          {/* الصورة + الاقتباس */}
           <div className="relative lg:col-span-2 min-h-[320px] lg:min-h-[460px]">
             <img
               src={story.image || FALLBACK_IMAGE}
-              alt={story.name}
+              alt={story.title}
               loading="lazy"
               onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
               className="absolute inset-0 w-full h-full object-cover"
@@ -47,7 +46,6 @@ export function FeatureStory() {
             </blockquote>
           </div>
 
-          {/* المحتوى */}
           <div className="lg:col-span-3 p-8 md:p-12 flex flex-col justify-center">
             <div className="flex flex-wrap items-center gap-2 mb-5">
               <span
@@ -58,7 +56,7 @@ export function FeatureStory() {
               </span>
               <span
                 className="px-3 py-1 rounded-full text-xs font-bold"
-                style={{ background: "var(--brand-gold-pale)", color: "#B07A2A" }}
+                style={{ background: "var(--brand-gold-pale)", color: "var(--brand-gold)" }}
               >
                 {story.category}
               </span>
@@ -109,7 +107,7 @@ export function FeatureStory() {
                   color: "var(--brand-green)",
                 }}
               >
-                المزيد من القصص الملهمة
+                المزيد من الأبحاث
                 <ArrowLeft className="w-4 h-4" />
               </button>
             </div>
@@ -119,3 +117,4 @@ export function FeatureStory() {
     </Section>
   );
 }
+

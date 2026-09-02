@@ -43,7 +43,7 @@ export function DevOverlay() {
   const lastTimeRef = useRef(0);
   const fpsHistoryRef = useRef<number[]>([]);
 
-  if (!import.meta.env.DEV) return null;
+  const isDevelopment = import.meta.env.DEV;
 
   // Keyboard Combination Handler (Ctrl+Shift+D or Cmd+Shift+D)
   useEffect(() => {
@@ -183,6 +183,8 @@ Timestamp: ${new Date().toISOString()}
     });
   };
 
+  if (!isDevelopment) return null;
+
   return (
     <>
       {/* Hidden floating activator pill (Visible on mouse hover in corner, or when triggered) */}
@@ -192,7 +194,7 @@ Timestamp: ${new Date().toISOString()}
           title="Developer Dashboard (Ctrl+Shift+D)"
           className="px-2.5 py-1 rounded-full bg-slate-900/90 text-emerald-400 text-[10px] font-mono border border-slate-700/80 shadow-lg hover:bg-slate-800 transition-all opacity-40 hover:opacity-100 flex items-center gap-1.5 cursor-pointer"
         >
-          <Terminal className="w-3 h-3 text-[#C69E5A]" />
+          <Terminal className="w-3 h-3 text-[var(--brand-gold)]" />
           <span>DevOps</span>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </button>
@@ -427,3 +429,5 @@ Timestamp: ${new Date().toISOString()}
 }
 
 export default DevOverlay;
+
+

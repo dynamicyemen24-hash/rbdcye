@@ -127,7 +127,7 @@ const InlineVideoPlayer = memo(({
     <div 
       ref={containerRef}
       className={getContainerClasses()}
-      style={{ backgroundColor: '#0A1A0F' }}
+      style={{ backgroundColor: 'var(--brand-green-dark)' }}
       onMouseMove={handleMouseMove}
     >
       {/* شريط العنوان */}
@@ -332,7 +332,7 @@ const InlineVideoPlayer = memo(({
                               setShowSpeed(false);
                             }}
                             className={`block w-full text-center py-1 text-xs rounded ${
-                              playbackSpeed === speed ? 'bg-[#10B981] text-white' : 'text-white/70 hover:bg-white/10'
+                              playbackSpeed === speed ? 'bg-[var(--brand-green)] text-white' : 'text-white/70 hover:bg-white/10'
                             }`}
                           >
                             {speed}x
@@ -381,7 +381,7 @@ const StoryWatchButton = memo(({ onClick }: { onClick: () => void }) => (
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
-    className="group inline-flex items-center gap-3 bg-gradient-to-r from-[#10B981] to-[#059669] text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-[#10B981]/30 hover:shadow-xl transition-all"
+    className="group inline-flex items-center gap-3 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-green-light)] text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-[var(--brand-green)]/30 hover:shadow-xl transition-all"
   >
     <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
       <Play className="w-6 h-6 text-white" fill="currentColor" />
@@ -430,3 +430,4 @@ export const IntroVideoPlayer = memo(({
 IntroVideoPlayer.displayName = 'IntroVideoPlayer';
 
 export default IntroVideoPlayer;
+

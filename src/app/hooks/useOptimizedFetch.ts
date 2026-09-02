@@ -133,3 +133,5 @@ export function createOptimizedComponent<T extends object>(
 ) {
   return memo(Component, areEqual);
 }
+
+

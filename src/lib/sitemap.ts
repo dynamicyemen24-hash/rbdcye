@@ -33,3 +33,5 @@ export function getStaticUrls(): SitemapUrl[] {
     { loc: `${baseUrl}/volunteer`, lastmod: now, changefreq: 'monthly', priority: 0.7 },
   ];
 }
+
+

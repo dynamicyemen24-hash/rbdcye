@@ -10,7 +10,7 @@ interface InteractiveChartProps {
 
 export function InteractiveChart({ data, height = 240, type = "line" }: InteractiveChartProps) {
   return (
-    <div className="bg-white/80 dark:bg-[#07101a]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
+    <div className="bg-white/80 dark:bg-[var(--brand-green-dark)]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
       <div style={{ width: "100%", height }}>
         <ResponsiveContainer width="100%" height="100%">
           {type === "area" ? (
@@ -43,3 +43,5 @@ export function InteractiveChart({ data, height = 240, type = "line" }: Interact
 }
 
 export default InteractiveChart;
+
+

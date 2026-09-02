@@ -30,7 +30,7 @@ const METRICS: Metric[] = [
     suffix: "",
     icon: Home,
     color: "var(--brand-gold)",
-    bgGradient: "linear-gradient(135deg, rgba(198,158,90,0.08), rgba(214,178,116,0.04))",
+    bgGradient: "linear-gradient(135deg, rgba(var(--brand-gold-rgb),0.08), rgba(var(--brand-gold-light-rgb),0.04))",
     description: "مشاريع تنموية وإغاثية باليمن",
   },
   {
@@ -221,3 +221,5 @@ export function ImpactDashboard() {
     </section>
   );
 }
+
+

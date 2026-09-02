@@ -11,21 +11,22 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="رحماء بينهم" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/pwa-32x32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/icons/pwa-48x48.png" />
+    <link rel="icon" type="image/svg+xml" href="/icons/pwa-64x64.svg" sizes="64x64" />
+    <link rel="icon" type="image/svg+xml" href="/icons/pwa-128x128.svg" sizes="128x128" />
+    <link rel="icon" type="image/svg+xml" href="/icons/pwa-256x256.svg" sizes="256x256" />
+    <link rel="icon" type="image/svg+xml" href="/icons/pwa-384x384.svg" sizes="384x384" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/pwa-512x512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+    <link rel="mask-icon" href="/icons/pwa-512x512-maskable.svg" color="#0F4C3A" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="msapplication-TileColor" content="#0F4C3A" />
     <meta name="msapplication-TileImage" content="/icons/pwa-512x512.png" />
-    <meta name="msapplication-config" content="/browserconfig.xml" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="browserconfig.xml" content="/none" />
     <meta name="breadcrumbs" content="رحماء بينهم" />
 
     <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-    <meta name="format-detection" content="telephone=no" />
 
     <!-- SEO Meta -->
     <title>رحماء بينهم | rbdcye.org</title>
@@ -41,7 +42,7 @@
         <meta property="og:title" content="رحماء بينهم | أثرٌ يحفظ الكرامة ويبني المستقبل" />
     <meta property="og:description" content="عمل إنساني تنموي في اليمن يخفف المعاناة اليوم ويبني قدرة المجتمع على الغد." />
 
-    <meta property="og:image" content="https://rbdcye.org/og-image.png" />
+    <meta property="og:image" content="https://rbdcye.org/og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="رحماء بينهم" />
@@ -53,7 +54,7 @@
         <meta name="twitter:title" content="رحماء بينهم | أثرٌ يحفظ الكرامة ويبني المستقبل" />
     <meta name="twitter:description" content="عمل إنساني تنموي في اليمن يخفف المعاناة اليوم ويبني قدرة المجتمع على الغد." />
 
-    <meta name="twitter:image" content="https://rbdcye.org/og-image.png" />
+    <meta name="twitter:image" content="https://rbdcye.org/og-image.svg" />
     <meta name="twitter:image:alt" content="رحماء بينهم" />
 
     <!-- Icons -->
@@ -61,22 +62,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#059669" />
+    <link rel="mask-icon" href="/icons/pwa-512x512-maskable.svg" color="#0F4C3A" />
     <link rel="manifest" href="/manifest.json" />
 
     <!-- Preconnect & Preload critical origins -->
-    <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
-    <link rel="preconnect" href="https://xd0ohyiz.apicdn.sanity.io" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.sanity.io" />
     <link rel="dns-prefetch" href="https://xd0ohyiz.apicdn.sanity.io" />
     <link rel="dns-prefetch" href="https://js.stripe.com" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
     <!-- Preload critical assets for instant first paint -->
-    <link rel="modulepreload" href="/src/main.tsx" />
-    <link rel="preload" href="/src/styles/index.css" as="style" />
+    <link rel="preload" href="/fonts/cairo-var-arabic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/cairo-var-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href="/images/defaults/about-hero.svg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/defaults/story-community.svg" fetchpriority="high" />
 
     <!-- Critical CSS: Prevent FOUC - minimal, non-blocking -->
     <style>
@@ -101,7 +101,7 @@
         "url": "https://rbdcye.org",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://rbdcye.org/logo.png",
+          "url": "https://rbdcye.org/logo.svg",
           "width": 512,
           "height": 512
         },

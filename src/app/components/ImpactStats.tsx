@@ -75,10 +75,10 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
       }}
     >
       {/* زخرفة النجمة الثمانية */}
-      <IslamicPattern variant="khatam" style={{ color: "#C69E5A", opacity: 0.16 }} />
+      <IslamicPattern variant="khatam" style={{ color: "var(--brand-gold)", opacity: 0.16 }} />
       <div
         className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(198,158,90,0.25), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(var(--brand-gold-rgb, 198, 158, 90), 0.25), transparent 70%)" }}
       />
 
       <div className="relative z-10">
@@ -94,7 +94,7 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
             fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
             fontWeight: 800,
             color: "#FFFFFF",
-            textShadow: "0 2px 12px rgba(0,0,0,0.18)",
+            textShadow: "0 2px 12px rgba(var(--foreground-rgb),0.18)",
           }}
         >
           {inView ? `+${fmt(count)}` : "٠"}
@@ -134,8 +134,8 @@ function FeatureMetric({ metric, inView }: { metric: Metric; inView: boolean }) 
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-5"
           style={{
             color: "var(--brand-gold)",
-            background: "rgba(198,158,90,0.12)",
-            border: "1px solid rgba(198,158,90,0.3)",
+            background: "rgba(var(--brand-gold-rgb),0.12)",
+            border: "1px solid rgba(var(--brand-gold-rgb),0.3)",
           }}
         >
           <DollarSign className="w-3.5 h-3.5" />
@@ -325,7 +325,7 @@ export function ImpactStats() {
       value: metrics?.productiveFamilies ?? 0,
       label: "أسرة منتجة",
       story: "أسر انتقلت من صفوف الانتظار إلى صفوف الإنتاج، بفضل رواتب الأعمال وبرامج التمكين الاقتصادي.",
-      color: "#B07A2A",
+      color: "var(--brand-gold-dark)",
     },
   ];
 
@@ -334,7 +334,7 @@ export function ImpactStats() {
     { label: "الإغاثة الإنسانية", pct: 38, color: "var(--brand-green)" },
     { label: "التعليم والتأهيل", pct: 28, color: "var(--brand-gold)" },
     { label: "التنمية المجتمعية", pct: 22, color: "var(--brand-green-light)" },
-    { label: "الدعوة والإرشاد", pct: 12, color: "#B07A2A" },
+    { label: "الدعوة والإرشاد", pct: 12, color: "var(--brand-gold)" },
   ];
 
   return (
@@ -377,8 +377,8 @@ export function ImpactStats() {
             className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-sm font-semibold"
             style={{
               color: "var(--brand-gold)",
-              background: "rgba(198,158,90,0.1)",
-              border: "1px solid rgba(198,158,90,0.25)",
+              background: "rgba(var(--brand-gold-rgb),0.1)",
+              border: "1px solid rgba(var(--brand-gold-rgb),0.25)",
             }}
           >
             <Award className="w-4 h-4" />
@@ -519,3 +519,5 @@ export function ImpactStats() {
     </section>
   );
 }
+
+

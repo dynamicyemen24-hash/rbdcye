@@ -63,3 +63,4 @@ export const getUserFriendlyMessage = (error: AppError): string => {
       return 'حدث خطأ ما، يرجى المحاولة لاحقاً';
   }
 };
+

@@ -80,3 +80,4 @@ class IndexedDBFallback {
 }
 
 export const idbFallback = new IndexedDBFallback();
+

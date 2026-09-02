@@ -31,6 +31,7 @@ import { AdminAnalytics } from "./AdminAnalytics";
 import AdminDashboardExtras from "./AdminDashboardExtras";
 import NotificationsPanel from "./NotificationsPanel";
 import { useToast, useConfirm } from "./Toast";
+import SettingsPage from "@/features/admin/pages/SettingsPage";
 
 
 
@@ -212,7 +213,7 @@ function DataTable({ data, columns, loading, onView, onEdit, onDelete, onToggle,
                         </button>
                       )}
                       {onDelete && (
-                        <button onClick={() => { if (confirm('هل أنت متأكد من الحذف؟')) onDelete(item); }} className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 hover:text-red-600 transition-colors" title="حذف">
+                        <button onClick={() => { if (confirm('هل أنت متأكد من الحذف؟')) onDelete(item); }} className="p-1.5 rounded-lg hover:bg-[var(--danger-bg)] text-[var(--destructive)] hover:text-[var(--destructive)] transition-colors" title="حذف">
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       )}
@@ -724,7 +725,8 @@ const SIDEBAR_ITEMS = [
   { id: "requests", label: "طلبات التواصل", icon: MessageSquare },
   { id: "volunteers", label: "المتطوعون", icon: Users },
   { id: "subscribers", label: "حسابات المشتركين", icon: UserCheck },
-  { id: "users", label: "المستخدمين والصلاحيات", icon: Settings },
+  { id: "users", label: "المستخدمين والصلاحيات", icon: Users },
+  { id: "settings", label: "إعدادات الموقع", icon: Settings },
 ];
 
 // ============================================================
@@ -1023,7 +1025,7 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
               <button onClick={() => handleDonationApproval(d, 'completed')} className="p-1.5 rounded-lg hover:bg-green-50 text-green-600 hover:text-green-700 transition-colors" title="قبول">
                 <CheckCircle className="w-4 h-4" />
               </button>
-              <button onClick={() => handleDonationApproval(d, 'failed')} className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 hover:text-red-600 transition-colors" title="رفض">
+              <button onClick={() => handleDonationApproval(d, 'failed')} className="p-1.5 rounded-lg hover:bg-[var(--danger-bg)] text-[var(--destructive)] hover:text-[var(--destructive)] transition-colors" title="رفض">
                 <Trash2 className="w-4 h-4" />
               </button>
             </>
@@ -1310,7 +1312,7 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
                         <button onClick={() => setViewModal({ item: m, title: m.title })}
                           className="flex-1 py-1 text-xs rounded-lg text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)] transition-colors">عرض</button>
                         <button onClick={async () => { await mediaService.delete(m.id); await loadMedia(); }}
-                          className="flex-1 py-1 text-xs rounded-lg text-red-400 hover:bg-red-50 transition-colors">حذف</button>
+                          className="flex-1 py-1 text-xs rounded-lg text-[var(--destructive)] hover:bg-[var(--danger-bg)] transition-colors">حذف</button>
                       </div>
                     </div>
                   </div>
@@ -1490,7 +1492,7 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
                   ])}
                   <div className="flex gap-3 pt-3">
                     <button onClick={() => handleUserToggleStatus(editModal.item)}
-                      className="flex-1 py-2.5 border border-amber-400 text-amber-600 rounded-lg hover:bg-amber-50 transition-colors"
+                      className="flex-1 py-2.5 border border-[var(--warning)] text-[var(--warning)] rounded-lg hover:bg-[var(--warning-bg)] transition-colors"
                       style={{ fontSize: "0.85rem", fontWeight: 600 }}>
                       {editModal.item.status === 'active' ? 'تعطيل الحساب' : 'تفعيل الحساب'}
                     </button>
@@ -1520,8 +1522,10 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
           </div>
         );
 
+      case "settings":
+        return <SettingsPage />;
       default:
-        return <EmptyState icon={Settings} title="قيد التطوير" message="هذا القسم سيكون متاحاً قريباً" />;
+        return <EmptyState icon={AlertTriangle} title="قسم غير معروف" message="تعذر تحديد القسم المطلوب. حدّث الصفحة أو اختر قسماً من القائمة." />;
     }
   };
 
@@ -1582,7 +1586,7 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
             <div className="flex items-center gap-3">
               <button onClick={() => setShowNotifications(true)} className="relative p-2 rounded-lg hover:bg-[var(--muted)] transition-colors">
                 <Bell className="w-4 h-4 text-[var(--muted-foreground)]" />
-                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
+                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--danger-bg)]0" />
               </button>
               <button onClick={() => setActiveSection("dashboard")}
                 className="flex items-center gap-2 px-3 py-1.5 bg-[var(--brand-green-pale)] rounded-lg hover:bg-[var(--brand-green)] hover:text-white transition-all group">
@@ -1590,7 +1594,7 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
                   style={{ fontSize: "0.6rem", fontWeight: 700 }}>م</div>
                 {!sidebarCollapsed && <span style={{ fontSize: "0.78rem", fontWeight: 600 }} className="group-hover:text-white">المدير</span>}
               </button>
-              <button onClick={onClose} className="p-2 rounded-lg hover:bg-red-50 text-red-400 hover:text-red-600 transition-colors">
+              <button onClick={onClose} className="p-2 rounded-lg hover:bg-[var(--danger-bg)] text-[var(--destructive)] hover:text-[var(--destructive)] transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -1606,3 +1610,5 @@ export function AdminDashboard({ onClose, isFullPage = false }: { onClose: () =>
     </div>
   );
 }
+
+

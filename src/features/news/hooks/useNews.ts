@@ -30,3 +30,5 @@ export function useNews(params: NewsQueryParams = {}) {
 
   return { data, loading, error, refetch: fetchNews };
 }
+
+

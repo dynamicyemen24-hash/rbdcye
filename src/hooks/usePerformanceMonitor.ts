@@ -2,12 +2,12 @@ import { useEffect, useRef } from 'react';
 
 export function usePerformanceMonitor(componentName: string) {
   const renderCount = useRef(0);
-  const lastRenderTime = useRef(Date.now());
+  const lastRenderTime = useRef<number | null>(null);
 
   useEffect(() => {
     renderCount.current++;
     const now = Date.now();
-    const timeSinceLastRender = now - lastRenderTime.current;
+    const timeSinceLastRender = lastRenderTime.current === null ? 0 : now - lastRenderTime.current;
 
     if (import.meta.env.DEV) {
       if (renderCount.current > 10 && timeSinceLastRender < 100) {
@@ -37,3 +37,5 @@ export function usePerformanceMonitor(componentName: string) {
     return undefined;
   }, [componentName]);
 }
+
+

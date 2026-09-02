@@ -127,3 +127,4 @@ export function MessageModal({ isOpen, message, onClose, onReply }: MessageModal
     </div>
   );
 }
+

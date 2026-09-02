@@ -93,7 +93,7 @@ class EnvValidator {
     this.config = config;
     this.validated = true;
     
-    console.log('✅ تم التحقق من متغيرات البيئة بنجاح');
+    if (import.meta.env.DEV) console.log('✅ تم التحقق من متغيرات البيئة بنجاح');
     return config as EnvConfig;
   }
 
@@ -137,3 +137,5 @@ if (typeof window !== 'undefined') {
 }
 
 export default envValidator;
+
+

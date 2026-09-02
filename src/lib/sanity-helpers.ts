@@ -61,3 +61,4 @@ export default {
   getSanityImageUrl,
   processProjectData,
 };
+

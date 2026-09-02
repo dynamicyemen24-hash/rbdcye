@@ -106,7 +106,7 @@ export default function MediaPage() {
                   className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                     activeType === type
                       ? "bg-[var(--brand-green)] text-white shadow-lg"
-                      : "bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200"
+                      : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                   }`}
                 >
                   {type === "الكل" ? "الكل" : TYPE_LABELS[type as keyof typeof TYPE_LABELS]}
@@ -116,7 +116,7 @@ export default function MediaPage() {
 
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" />
                 <input
                   type="text"
                   value={searchQuery}
@@ -126,7 +126,7 @@ export default function MediaPage() {
                 />
               </div>
 
-              <div className="flex items-center gap-1 bg-gray-100 rounded-full p-1">
+              <div className="flex items-center gap-1 bg-[var(--muted)] rounded-full p-1">
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2 rounded-full text-sm transition-all ${
@@ -184,9 +184,9 @@ export default function MediaPage() {
                   )}
                   <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
                     {item.type === "image" ? (
-                      <Image className="w-3.5 h-3.5 text-blue-600" />
+                      <Image className="w-3.5 h-3.5 text-[var(--info)]" />
                     ) : (
-                      <Video className="w-3.5 h-3.5 text-red-600" />
+                      <Video className="w-3.5 h-3.5 text-[var(--destructive)]" />
                     )}
                     <span className="text-xs font-medium text-[var(--foreground)]">
                       {TYPE_LABELS[item.type]}
@@ -203,7 +203,7 @@ export default function MediaPage() {
                       <Calendar className="w-3.5 h-3.5" />
                       {item.date}
                     </div>
-                    <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                    <span className="w-1 h-1 bg-[var(--muted)] rounded-full" />
                     <span>{item.size}</span>
                   </div>
                 </div>
@@ -273,3 +273,5 @@ export default function MediaPage() {
     </div>
   );
 }
+
+

@@ -33,23 +33,23 @@ export default function PrivacyPolicyPage() {
               <Shield className="w-3.5 h-3.5" />
               <span>الحوكمة والامتثال القانوني</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold font-alexandria text-gray-900">
+            <h1 className="text-3xl sm:text-4xl font-extrabold font-alexandria text-[var(--foreground)]">
               السياسات والشروط والخصوصية
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base font-cairo max-w-xl mx-auto leading-relaxed">
+            <p className="text-[var(--muted-foreground)] text-sm sm:text-base font-cairo max-w-xl mx-auto leading-relaxed">
               التزامنا الصارم بالشفافية المطلقة، حماية بيانات المتبرعين، وتطبيق أعلى المعايير القانونية والأخلاقية.
             </p>
           </div>
         </div>
 
         {/* Tab Selector */}
-        <div className="flex justify-center border-b border-gray-200 gap-2 sm:gap-4 overflow-x-auto pb-1">
+        <div className="flex justify-center border-b border-[var(--border)] gap-2 sm:gap-4 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveTab('privacy')}
             className={`flex items-center gap-2 px-4 py-3 text-sm font-bold font-cairo border-b-2 transition-colors whitespace-nowrap ${
               activeTab === 'privacy'
                 ? 'border-[var(--brand-green)] text-[var(--brand-green)]'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-[var(--muted-foreground)] hover:text-[var(--muted-foreground)]'
             }`}
           >
             <Lock className="w-4 h-4" />
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
             className={`flex items-center gap-2 px-4 py-3 text-sm font-bold font-cairo border-b-2 transition-colors whitespace-nowrap ${
               activeTab === 'terms'
                 ? 'border-[var(--brand-green)] text-[var(--brand-green)]'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-[var(--muted-foreground)] hover:text-[var(--muted-foreground)]'
             }`}
           >
             <Scale className="w-4 h-4" />
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
             className={`flex items-center gap-2 px-4 py-3 text-sm font-bold font-cairo border-b-2 transition-colors whitespace-nowrap ${
               activeTab === 'donor-rights'
                 ? 'border-[var(--brand-green)] text-[var(--brand-green)]'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-[var(--muted-foreground)] hover:text-[var(--muted-foreground)]'
             }`}
           >
             <UserCheck className="w-4 h-4" />
@@ -87,11 +87,11 @@ export default function PrivacyPolicyPage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-gray-100 space-y-6 font-cairo text-gray-700 leading-relaxed text-sm sm:text-base"
+          className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-[var(--border)] space-y-6 font-cairo text-[var(--muted-foreground)] leading-relaxed text-sm sm:text-base"
         >
           {activeTab === 'privacy' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold font-cairo text-gray-900 flex items-center gap-2">
+              <h2 className="text-xl font-bold font-cairo text-[var(--foreground)] flex items-center gap-2">
                 <Lock className="w-5 h-5 text-[var(--brand-green)]" />
                 سياسة حماية البيانات والخصوصية
               </h2>
@@ -100,23 +100,23 @@ export default function PrivacyPolicyPage() {
               </p>
 
               <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-1">1. البيانات التي نجمعها</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                <div className="p-4 bg-[var(--secondary)] rounded-2xl border border-[var(--border)]">
+                  <h3 className="font-bold text-[var(--foreground)] mb-1">1. البيانات التي نجمعها</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted-foreground)]">
                     نجمع البيانات الأساسية المقدمة طواعية عند التبرع أو التطوع (الاسم، البريد الإلكتروني، رقم الهاتف، والمساهمات). لا نقوم بتخزين أي معلومات بطاقات ائتمانية على خوادمنا بل تتم معالجتها مشفرة عبر بوابات الدفع العالمية المعتمدة.
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-1">2. الغرض من استخدام البيانات</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                <div className="p-4 bg-[var(--secondary)] rounded-2xl border border-[var(--border)]">
+                  <h3 className="font-bold text-[var(--foreground)] mb-1">2. الغرض من استخدام البيانات</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted-foreground)]">
                     تُستخدم البيانات فقط لإصدار السندات المالية الرسمية، إرسال تقارير الأثر الميداني للمشاريع، والرد على الاستفسارات والتواصل مع المتطوعين.
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-1">3. عدم مشاركة البيانات</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                <div className="p-4 bg-[var(--secondary)] rounded-2xl border border-[var(--border)]">
+                  <h3 className="font-bold text-[var(--foreground)] mb-1">3. عدم مشاركة البيانات</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted-foreground)]">
                     نتعهد بعدم بيع أو تأجير أو مشاركة أي بيانات للمتبرعين أو المتطوعين مع أي طرف ثالث لأغراض تجارية، وتخضع كافة السجلات لمعايير السرية التامة.
                   </p>
                 </div>
@@ -126,7 +126,7 @@ export default function PrivacyPolicyPage() {
 
           {activeTab === 'terms' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold font-cairo text-gray-900 flex items-center gap-2">
+              <h2 className="text-xl font-bold font-cairo text-[var(--foreground)] flex items-center gap-2">
                 <Scale className="w-5 h-5 text-[var(--brand-green)]" />
                 الشروط والأحكام العامة
               </h2>
@@ -153,7 +153,7 @@ export default function PrivacyPolicyPage() {
 
           {activeTab === 'donor-rights' && (
             <div className="space-y-6">
-              <h2 className="text-xl font-bold font-cairo text-gray-900 flex items-center gap-2">
+              <h2 className="text-xl font-bold font-cairo text-[var(--foreground)] flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-[var(--brand-gold)]" />
                 ميثاق حقوق المتبرعين
               </h2>
@@ -162,24 +162,24 @@ export default function PrivacyPolicyPage() {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm">حق المعرفة والاطلاع</h4>
-                  <p className="text-xs text-gray-600">معرفة أهدافنا، هوية مجلس الإدارة، واستراتيجيات تنفيذ المشاريع الميدانية.</p>
+                <div className="p-4 rounded-2xl bg-[var(--warning-bg)]/50 border border-[var(--warning)]">
+                  <h4 className="font-bold text-[var(--foreground)] mb-1 text-sm">حق المعرفة والاطلاع</h4>
+                  <p className="text-xs text-[var(--muted-foreground)]">معرفة أهدافنا، هوية مجلس الإدارة، واستراتيجيات تنفيذ المشاريع الميدانية.</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm">حق التوجيه والأمانة</h4>
-                  <p className="text-xs text-gray-600">التأكد من أن تبرعه يُصرف وفق الغرض الذي تبرع من أجله بدقة وشفافية.</p>
+                <div className="p-4 rounded-2xl bg-[var(--warning-bg)]/50 border border-[var(--warning)]">
+                  <h4 className="font-bold text-[var(--foreground)] mb-1 text-sm">حق التوجيه والأمانة</h4>
+                  <p className="text-xs text-[var(--muted-foreground)]">التأكد من أن تبرعه يُصرف وفق الغرض الذي تبرع من أجله بدقة وشفافية.</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm">حق السرية التامة</h4>
-                  <p className="text-xs text-gray-600">الحفاظ على سرية هويته ومعلوماته الشخصية وحجم تبرعاته ما لم يطلب خلاف ذلك.</p>
+                <div className="p-4 rounded-2xl bg-[var(--warning-bg)]/50 border border-[var(--warning)]">
+                  <h4 className="font-bold text-[var(--foreground)] mb-1 text-sm">حق السرية التامة</h4>
+                  <p className="text-xs text-[var(--muted-foreground)]">الحفاظ على سرية هويته ومعلوماته الشخصية وحجم تبرعاته ما لم يطلب خلاف ذلك.</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm">حق التوثيق والمساءلة</h4>
-                  <p className="text-xs text-gray-600">استلام سندات التبرع الرسمية والتقارير الدورية المصورة للمشاريع المنجزة.</p>
+                <div className="p-4 rounded-2xl bg-[var(--warning-bg)]/50 border border-[var(--warning)]">
+                  <h4 className="font-bold text-[var(--foreground)] mb-1 text-sm">حق التوثيق والمساءلة</h4>
+                  <p className="text-xs text-[var(--muted-foreground)]">استلام سندات التبرع الرسمية والتقارير الدورية المصورة للمشاريع المنجزة.</p>
                 </div>
               </div>
             </div>
@@ -189,3 +189,5 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
+
+

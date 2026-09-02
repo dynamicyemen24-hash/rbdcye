@@ -231,3 +231,4 @@ export async function getHealthStatus(): Promise<HealthStatus> {
   const service = healthCheckService;
   return service.runChecks();
 }
+

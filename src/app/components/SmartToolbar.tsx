@@ -583,3 +583,4 @@ export const SmartToolbar = memo(function SmartToolbar({ setCurrentPage = () => 
     </AnimatePresence>
   );
 });
+

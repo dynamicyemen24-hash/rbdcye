@@ -137,8 +137,8 @@ function checkHasDarkBg(element: HTMLElement): boolean {
         curr.classList.contains("bg-slate-800") ||
         curr.classList.contains("bg-emerald-900") ||
         curr.classList.contains("bg-emerald-950") ||
-        curr.classList.contains("bg-[#0F4C3A]") ||
-        curr.classList.contains("bg-[#0A372A]")
+curr.classList.contains("bg-brand-green") ||
+        curr.classList.contains("bg-brand-green-dark")
       ) {
         return true;
       }
@@ -181,3 +181,5 @@ export function applyDynamicAAAContrast(element: HTMLElement): void {
   element.setAttribute("data-wcag-aaa", "true");
   element.setAttribute("data-contrast-ratio", optimal.contrastRatio.toFixed(2));
 }
+
+

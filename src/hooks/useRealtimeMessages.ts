@@ -50,3 +50,4 @@ export function useRealtimeMessages() {
 
   return { newMessage, updatedMessage };
 }
+

@@ -89,3 +89,4 @@ export function FilterBar({ filters, onFilterChange, onClear }: FilterBarProps) 
     </div>
   );
 }
+

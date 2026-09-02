@@ -49,7 +49,7 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           aria-label="التوجه لصفحة التبرع السريع ودعم المشاريع الإغاثية والعاجلة"
-          className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#0F4C3A] hover:bg-[#0A372A] text-white font-black text-base font-cairo shadow-lg shadow-[#0F4C3A]/25 hover:shadow-xl transition-all cursor-pointer border-2 border-[#062317] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0F4C3A] focus-visible:ring-offset-2"
+          className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[var(--brand-green)] hover:bg-[var(--brand-green-dark)] text-white font-black text-base font-cairo shadow-lg shadow-[var(--brand-green)]/25 hover:shadow-xl transition-all cursor-pointer border-2 border-[var(--brand-green-dark)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2"
         >
           <Heart className="w-5 h-5 fill-white" />
           <span>تبرع الآن</span>
@@ -60,10 +60,10 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           aria-label="استكشف جميع برامج التنمية والإغاثة المستدامة لـ رحماء بينهم"
-          className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white hover:bg-slate-100/90 border-2 border-[#0A372A] text-[#0A372A] font-extrabold text-base font-cairo shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0A372A] focus-visible:ring-offset-2"
+          className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white hover:bg-slate-100/90 border-2 border-[var(--brand-green-dark)] text-[var(--brand-green-dark)] font-extrabold text-base font-cairo shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand-green-dark)] focus-visible:ring-offset-2"
         >
           <span>استكشف البرامج والتنمية</span>
-          <ChevronLeft className="w-5 h-5 text-[#0A372A]" />
+          <ChevronLeft className="w-5 h-5 text-[var(--brand-green-dark)]" />
         </motion.button>
       </motion.div>
 
@@ -72,3 +72,5 @@ export function HeroMainColumn({ setCurrentPage }: HeroMainColumnProps) {
 }
 
 export default HeroMainColumn;
+
+

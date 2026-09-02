@@ -85,7 +85,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
           className="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50"
           dir="rtl"
         >
-          <div className="bg-gradient-to-br from-[#0F3D2E] via-[var(--brand-green)] to-[#0A2A1F] rounded-3xl p-5 shadow-2xl border border-white/20 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-[var(--brand-green-dark)] via-[var(--brand-green)] to-[var(--brand-green-dark)] rounded-3xl p-5 shadow-2xl border border-white/20 text-white relative overflow-hidden">
             {/* Background Decorative Element */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-[var(--brand-gold)]/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -160,3 +160,4 @@ export function usePWA() {
 
   return { isStandalone, isOnline };
 }
+

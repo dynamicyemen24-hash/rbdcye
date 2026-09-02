@@ -67,7 +67,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
       className="pt-16 pb-8 relative overflow-hidden"
       style={{
         direction: "rtl",
-        background: "linear-gradient(180deg, var(--brand-green-dark) 0%, #071F17 100%)",
+        background: "linear-gradient(180deg, var(--brand-green-dark) 0%, var(--brand-green) 100%)",
       }}
     >
       <div className="absolute inset-0 pattern-khatam-white opacity-[0.06] pointer-events-none" />
@@ -97,7 +97,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
             {/* Trust Badges */}
             <div className="flex flex-wrap gap-2 mb-6">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                <Shield className="w-3.5 h-3.5 text-[var(--success)]" />
                 <span className="text-white/70 text-[0.65rem]">عمل إنساني موثوق وشفاف</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
@@ -208,7 +208,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
               </div>
               <div className="w-px h-4 bg-white/10 mx-1" />
               <div title="SSL مشفر">
-                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                <Shield className="w-3.5 h-3.5 text-[var(--success)]" />
               </div>
               <span className="text-white/60 text-[0.6rem] font-medium">SSL آمن</span>
             </div>
@@ -239,3 +239,4 @@ export function Footer({ setCurrentPage }: FooterProps) {
     </footer>
   );
 }
+

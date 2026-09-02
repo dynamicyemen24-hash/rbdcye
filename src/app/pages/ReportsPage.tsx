@@ -147,7 +147,7 @@ export default function ReportsPage() {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeCategory === cat
                       ? "bg-[var(--brand-green)] text-white shadow-lg"
-                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                      : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                   }`}
                 >
                   {cat}
@@ -156,13 +156,13 @@ export default function ReportsPage() {
             </div>
 
             <div className="relative">
-              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="بحث في التقارير..."
-                className="w-64 pr-10 pl-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30"
+                className="w-64 pr-10 pl-4 py-2 border border-[var(--border)] rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30"
               />
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function ReportsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="group bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-md hover:shadow-2xl transition-all duration-500"
+                className="group bg-white rounded-2xl overflow-hidden border border-[var(--border)] shadow-md hover:shadow-2xl transition-all duration-500"
               >
                 <div className={`h-2 bg-gradient-to-r ${colorMap[report.color]}`} />
                 
@@ -191,16 +191,16 @@ export default function ReportsPage() {
                         <FileText className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-800">{report.title}</h3>
-                        <span className="text-xs text-gray-500">{report.category}</span>
+                        <h3 className="font-bold text-[var(--foreground)]">{report.title}</h3>
+                        <span className="text-xs text-[var(--muted-foreground)]">{report.category}</span>
                       </div>
                     </div>
-                    <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-gray-100 text-gray-600">
+                    <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-[var(--muted)] text-[var(--muted-foreground)]">
                       {report.type}
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                  <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed">
                     {report.description}
                   </p>
 
@@ -212,8 +212,8 @@ export default function ReportsPage() {
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                  <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
+                    <div className="flex items-center gap-3 text-xs text-[var(--muted-foreground)]">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5" />
                         {report.year}
@@ -241,8 +241,8 @@ export default function ReportsPage() {
           {filteredReports.length === 0 && (
             <div className="text-center py-16">
               <FileBarChart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">لا توجد تقارير مطابقة</h3>
-              <p className="text-gray-500">جرب تغيير معايير البحث</p>
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد تقارير مطابقة</h3>
+              <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث</p>
             </div>
           )}
         </div>
@@ -250,3 +250,4 @@ export default function ReportsPage() {
     </div>
   );
 }
+

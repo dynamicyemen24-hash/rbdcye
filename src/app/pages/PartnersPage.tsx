@@ -99,7 +99,7 @@ export default function PartnersPage() {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                   activeType === type
                     ? "bg-[var(--brand-green)] text-white shadow-lg"
-                    : "bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200"
+                    : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                 }`}
               >
                 {type}
@@ -126,7 +126,7 @@ export default function PartnersPage() {
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="w-24 h-24 mx-auto rounded-2xl object-cover border-2 border-gray-100 group-hover:border-[var(--brand-green)]/30 transition-colors"
+                    className="w-24 h-24 mx-auto rounded-2xl object-cover border-2 border-[var(--border)] group-hover:border-[var(--brand-green)]/30 transition-colors"
                   />
                 </div>
 
@@ -143,7 +143,7 @@ export default function PartnersPage() {
                 </p>
 
                 <div className="flex items-center justify-center gap-2 pt-4 border-t border-[var(--border)]">
-                  <span className={`w-2 h-2 rounded-full ${partner.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} />
+                  <span className={`w-2 h-2 rounded-full ${partner.status === 'active' ? 'bg-[var(--success-bg)]0' : 'bg-gray-400'}`} />
                   <span className="text-xs text-[var(--muted-foreground)]">
                     {partner.status === 'active' ? 'نشط' : 'غير نشط'}
                   </span>
@@ -197,3 +197,5 @@ export default function PartnersPage() {
     </div>
   );
 }
+
+

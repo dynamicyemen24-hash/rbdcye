@@ -18,3 +18,4 @@ export function PageProgress() {
     </div>
   );
 }
+

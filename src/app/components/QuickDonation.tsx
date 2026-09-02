@@ -385,3 +385,4 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
     </div>
   );
 }
+

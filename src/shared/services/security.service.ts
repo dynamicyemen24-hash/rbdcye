@@ -335,3 +335,4 @@ export function applySecurityHeaders(): void {
   // Generate session fingerprint
   SessionFingerprint.generate();
 }
+

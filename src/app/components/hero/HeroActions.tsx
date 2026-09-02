@@ -92,3 +92,5 @@ export function HeroActions({ setCurrentPage, onOpenVideo, isVideoOpen }: HeroAc
 }
 
 export default HeroActions;
+
+

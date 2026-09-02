@@ -332,3 +332,4 @@ export const MediaSidebar = memo(({
 MediaSidebar.displayName = 'MediaSidebar';
 
 export default MediaSidebar;
+

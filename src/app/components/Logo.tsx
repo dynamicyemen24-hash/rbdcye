@@ -114,3 +114,4 @@ export function LogoBadge({ onClick }: LogoBadgeProps) {
     </motion.button>
   );
 }
+

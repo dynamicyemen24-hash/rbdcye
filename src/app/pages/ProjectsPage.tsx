@@ -61,9 +61,9 @@ const STATUS_FILTERS = [
 ];
 
 const statusConfig = {
-  active: { label: "نشط", bg: "bg-green-50", text: "text-green-600", dot: "bg-green-500" },
-  completed: { label: "مكتمل", bg: "bg-blue-50", text: "text-blue-600", dot: "bg-blue-500" },
-  planning: { label: "قيد التخطيط", bg: "bg-amber-50", text: "text-amber-600", dot: "bg-amber-500" },
+  active: { label: "نشط", bg: "bg-[var(--success-bg)]", text: "text-[var(--success)]", dot: "bg-[var(--success-bg)]0" },
+  completed: { label: "مكتمل", bg: "bg-[var(--info-bg)]", text: "text-[var(--info)]", dot: "bg-[var(--info-bg)]0" },
+  planning: { label: "قيد التخطيط", bg: "bg-[var(--warning-bg)]", text: "text-[var(--warning)]", dot: "bg-[var(--warning-bg)]0" },
 };
 
 const PROJECT_IMAGES: Record<string, string> = {
@@ -149,7 +149,11 @@ export default function ProjectsPage() {
         setProjects(normalizeSeedProjects());
         setContentSource('static');
       }
-      try { analyticsService.generateProjectReport(); } catch {}
+      try {
+        analyticsService.generateProjectReport();
+      } catch {
+        // Reporting is optional; the projects page remains usable if analytics is unavailable.
+      }
     }).catch(() => {
       if (!cancelled) setProjects(normalizeSeedProjects());
     });
@@ -211,7 +215,7 @@ export default function ProjectsPage() {
               <span className="text-[var(--muted-foreground)]">النشطة: <strong className="text-[var(--foreground)]">{activeProjects}</strong></span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              <div className="w-2 h-2 rounded-full bg-[var(--info-bg)]0" />
               <span className="text-[var(--muted-foreground)]">المستفيدون: <strong className="text-[var(--foreground)]">{totalBeneficiaries.toLocaleString('ar-SA')}</strong></span>
             </div>
           </div>
@@ -230,7 +234,7 @@ export default function ProjectsPage() {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeCategory === cat
                       ? "bg-[var(--brand-green)] text-white shadow-lg"
-                      : "bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200"
+                      : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                   }`}
                 >
                   {cat}
@@ -246,7 +250,7 @@ export default function ProjectsPage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                     activeStatus === status.value
                       ? "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
-                      : "text-[var(--muted-foreground)] hover:bg-gray-100"
+                      : "text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                   }`}
                 >
                   {status.label}
@@ -255,7 +259,7 @@ export default function ProjectsPage() {
             </div>
 
             <div className="relative">
-              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" />
               <input
                 type="text"
                 value={searchQuery}
@@ -325,7 +329,7 @@ export default function ProjectsPage() {
                         <span className="text-[var(--muted-foreground)]">نسبة الإنجاز</span>
                         <span className="font-semibold text-[var(--brand-green)]">{project.progress}%</span>
                       </div>
-                      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-2.5 bg-[var(--muted)] rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${project.progress}%` }}
@@ -346,7 +350,7 @@ export default function ProjectsPage() {
                         <div className="font-bold text-sm text-[var(--foreground)]">{project.budget}</div>
                         <div className="text-xs text-[var(--muted-foreground)]">الميزانية</div>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-gray-50 border border-[var(--border)]">
+                      <div className="text-center p-2 rounded-lg bg-[var(--secondary)] border border-[var(--border)]">
                         <div className="font-bold text-sm text-[var(--foreground)]">{project.raised}</div>
                         <div className="text-xs text-[var(--muted-foreground)]">تم جمعه</div>
                       </div>
@@ -417,3 +421,5 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+

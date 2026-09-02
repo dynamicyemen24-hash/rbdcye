@@ -67,3 +67,4 @@ export function useSlice<S, A extends Action<string, any>>(slice: Slice<S, A>) {
     dispatch: slice.dispatch,
   };
 }
+

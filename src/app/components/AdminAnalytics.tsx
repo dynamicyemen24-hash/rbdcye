@@ -262,7 +262,7 @@ function StatCard({ label, value, trend, icon: Icon, color }: any) {
           <Icon className="w-5 h-5" style={{ color }} />
         </div>
         {trend && (
-          <span className="px-2 py-0.5 rounded-full bg-green-50 text-green-600" style={{ fontSize: "0.62rem", fontWeight: 600 }}>
+          <span className="px-2 py-0.5 rounded-full bg-[var(--success-bg)] text-[var(--success)]" style={{ fontSize: "0.62rem", fontWeight: 600 }}>
             {trend}
           </span>
         )}
@@ -272,3 +272,4 @@ function StatCard({ label, value, trend, icon: Icon, color }: any) {
     </div>
   );
 }
+

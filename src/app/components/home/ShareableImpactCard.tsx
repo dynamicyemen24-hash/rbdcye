@@ -24,7 +24,9 @@ export function ShareableImpactCard({
     if (navigator.share) {
       try {
         await navigator.share({ text });
-      } catch {}
+      } catch {
+        // Sharing can be cancelled by the user without requiring an error state.
+      }
     } else {
       navigator.clipboard.writeText(text);
       setCopied(true);
@@ -167,3 +169,5 @@ export function ShareableImpactCard({
     </div>
   );
 }
+
+

@@ -151,3 +151,5 @@ export function DonationTracker({ onDonate }: DonationTrackerProps) {
     </div>
   );
 }
+
+

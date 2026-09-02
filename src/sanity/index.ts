@@ -11,3 +11,4 @@ export { schemaTypes } from './schema';
 
 // Build utilities (alias for compatibility)
 export const buildFileUrl = (source: { asset?: { url?: string } }) => source?.asset?.url || '';
+

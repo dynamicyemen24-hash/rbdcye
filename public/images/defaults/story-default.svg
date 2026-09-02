@@ -9,11 +9,9 @@
   </defs>
   <rect width="800" height="600" fill="url(#bg)"/>
   <rect width="800" height="600" fill="url(#kh)"/>
-  <path d="M282 388 V246 Q282 152 400 116 Q518 152 518 246 V388 Z" fill="#FDFBF6" stroke="#C69E5A" stroke-width="5"/>
-  <path d="M300 388 V252 Q300 172 400 140 Q500 172 500 252 V388 Z" fill="none" stroke="#C69E5A" stroke-width="2" opacity=".5"/>
-  <circle cx="400" cy="234" r="40" fill="#17694F"/>
-  <path d="M310 388 c8 -46 46 -66 90 -66 s82 20 90 66 Z" fill="#0F4C3A"/>
-  <g fill="#C69E5A"><path d="M400 178 l5 10 11 2 -8 8 2 11 -10 -5 -10 5 2 -11 -8 -8 11 -2 Z"/></g>
+  <circle cx="400" cy="240" r="60" fill="none" stroke="#C69E5A" stroke-width="4" opacity=".5"/>
+  <path d="M340 240 A120 120 0 1 1 460 240" fill="#E9F1EC" stroke="#C69E5A" stroke-width="3"/>
+  <path d="M360 240 A100 100 0 1 1 440 240" fill="none" stroke="#C69E5A" stroke-width="2" opacity=".5"/>
   <rect y="540" width="800" height="60" fill="#08251B"/>
   <g fill="#C69E5A"><path d="M60 570 l10 -10 10 10 -10 10 Z M730 570 l10 -10 10 10 -10 10 Z"/><rect x="340" y="566" width="120" height="4" rx="2" opacity=".6"/></g>
 </svg>

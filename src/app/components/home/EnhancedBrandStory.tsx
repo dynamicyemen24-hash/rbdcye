@@ -127,3 +127,4 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
     </section>
   );
 }
+

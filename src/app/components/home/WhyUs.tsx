@@ -88,3 +88,5 @@ export function WhyUs({ setCurrentPage = () => {} }: WhyUsProps) {
     </Section>
   );
 }
+
+

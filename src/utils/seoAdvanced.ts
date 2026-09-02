@@ -296,3 +296,4 @@ export function useSEO(data: SEOData) {
 export const SITE_URL = 'https://rbdcye.org';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 export const ORGANIZATION_NAME = 'رحماء بينهم';
+

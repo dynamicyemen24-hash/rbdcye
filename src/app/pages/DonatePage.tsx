@@ -580,7 +580,7 @@ export default function DonatePage() {
                       })}
                     </div>
                     {availablePaymentMethods.length === 0 && (
-                      <p className="text-xs text-orange-600 mt-2">لا توجد طرق دفع متاحة لهذه العملة — جرّب تحويل بنكي</p>
+                      <p className="text-xs text-[var(--warning)] mt-2">لا توجد طرق دفع متاحة لهذه العملة — جرّب تحويل بنكي</p>
                     )}
                   </div>
                 )}
@@ -645,7 +645,7 @@ export default function DonatePage() {
                 </div>
 
                 {/* زر الإرسال */}
-                {submitError && <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{submitError}</div>}
+                {submitError && <div role="alert" className="mb-4 rounded-xl border border-[var(--danger)] bg-[var(--danger-bg)] px-4 py-3 text-sm font-semibold text-[var(--destructive)]">{submitError}</div>}
                 <button type="submit" disabled={isSubmitting}
                   className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50">
                   <Heart className="w-6 h-6" fill="white" />
@@ -676,3 +676,5 @@ export default function DonatePage() {
     </div>
   );
 }
+
+

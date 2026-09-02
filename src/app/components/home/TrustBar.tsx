@@ -43,7 +43,7 @@ export function TrustBar() {
                   className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{
                     background: "var(--brand-green-pale)",
-                    border: "1px solid rgba(198,158,90,0.25)",
+                    border: "1px solid rgba(var(--brand-gold-rgb),0.25)",
                   }}
                 >
                   <item.icon className="w-5 h-5" style={{ color: "var(--brand-gold)" }} />
@@ -70,3 +70,5 @@ export function TrustBar() {
     </div>
   );
 }
+
+

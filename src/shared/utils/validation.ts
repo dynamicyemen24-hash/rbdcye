@@ -43,3 +43,4 @@ export const generateSlug = (text: string): string => {
 export const formatCurrency = (amount: number, currency = 'YER'): string => {
   return `${amount.toLocaleString('ar-SA')} ${currency}`;
 };
+

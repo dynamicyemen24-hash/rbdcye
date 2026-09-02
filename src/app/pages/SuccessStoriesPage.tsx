@@ -1,10 +1,9 @@
-// Success Stories Page - قصص النجاح (محسّنة بدمج SEED_SUCCESS_STORIES)
+// الأثر والمعرفة - صفحة المعرفة والبحوث والأثر
 import { motion } from "motion/react";
 import {
-  Star, Heart, Quote, Users, BookOpen, Droplets,
-  ArrowLeft, Sparkles, Award, Calendar, MapPin,
-    Play, ExternalLink, Filter, BarChart3, TrendingUp, Search,
-
+  BookOpen, Quote, Users, BarChart3, TrendingUp, Search,
+  ArrowLeft, Calendar, MapPin, FileText, FolderOpen,
+  Award, Star, Download,
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +15,7 @@ import { analyticsService } from "@/shared/services/analytics.service";
 import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
-interface Story {
+interface KnowledgeItem {
   id: string;
   title: string;
   excerpt: string;
@@ -34,9 +33,9 @@ interface Story {
   searchTags?: string[];
 }
 
-const CATEGORIES = ["الكل", "تعليم", "تنمية مجتمعية", "إغاثة", "دعوة"];
+const CATEGORIES = ["الكل", "بحث", "تقرير", "دراسة", "تقييم"];
 
-function normalizeStories(): Story[] {
+function normalizeStories(): KnowledgeItem[] {
   return SEED_SUCCESS_STORIES.map((s: any) => ({
     id: s.id,
     title: s.title,
@@ -60,12 +59,12 @@ export default function SuccessStoriesPage() {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
-  const [stories, setStories] = useState<Story[]>(normalizeStories());
+  const [selectedItem, setSelectedItem] = useState<KnowledgeItem | null>(null);
+  const [items, setItems] = useState<KnowledgeItem[]>(normalizeStories());
 
   useSEO({
-    title: 'قصص النجاح - رحماء بينهم',
-    description: 'قصص نجاح ملهمة للمستفيدين الذين غيرت حياتهم برامجنا التنموية',
+    title: 'الأثر والمعرفة - رحماء بينهم',
+    description: 'نتائج أبحاثنا وتقارير أثرنا ودراساتنا التنموية في اليمن',
   });
 
   useEffect(() => {
@@ -74,40 +73,49 @@ export default function SuccessStoriesPage() {
       .then(() => {
         if (!cancelled) {
           try { analyticsService.generateImpactReport(); } catch { /* non-critical */ }
-          setStories(normalizeStories());
+          setItems(normalizeStories());
         }
       })
       .catch(() => {
-        if (!cancelled) setStories(normalizeStories());
+        if (!cancelled) setItems(normalizeStories());
       });
     return () => { cancelled = true; };
   }, []);
 
-  const filteredStories = useMemo(() => {
-    if (activeCategory === "الكل" && !searchQuery) return stories;
-    if (activeCategory !== "الكل" && !searchQuery) return stories.filter(s => s.category === activeCategory);
-    if (activeCategory === "الكل" && searchQuery) return stories.filter(s => 
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "الكل" && !searchQuery) return items;
+    if (activeCategory !== "الكل" && !searchQuery) return items.filter(s => s.category === activeCategory);
+    if (activeCategory === "الكل" && searchQuery) return items.filter(s =>
       s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase()))
     );
-    return stories.filter(s => s.category === activeCategory && s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase())));
-  }, [stories, activeCategory, searchQuery]);
+    return items.filter(s => s.category === activeCategory && s.searchTags?.some(tag => tag.includes(searchQuery.toLowerCase())));
+  }, [items, activeCategory, searchQuery]);
 
-  const storiesCount = useMemo(() => stories.length, [stories]);
+  const itemsCount = useMemo(() => items.length, [items]);
+
+  const categoryIcon = (cat: string) => {
+    switch (cat) {
+      case 'بحث': return BookOpen;
+      case 'تقرير': return FileText;
+      case 'دراسة': return FolderOpen;
+      case 'تقييم': return Award;
+      default: return BarChart3;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
-      {/* Unified Page Header */}
       <PageHeader
         icon={Award}
-        badge="قصص نجاح حقيقية"
-        title="قصص النجاح"
-        subtitle="اقرأ قصص المستفيدين الذين غيرتهم برامجنا إلى الأفضل"
+        badge="الأثر والمعرفة"
+        title="أثرنا ومعرفتنا"
+        subtitle="نتائج أبحاثنا وتقارير أثرنا ودراساتنا التنموية في اليمن"
       >
         <StatsGrid
           stats={[
-            { label: 'قصة نجاح', value: storiesCount, icon: BarChart3, color: 'green' },
-            { label: 'مشروع', value: 'مشاريع', icon: TrendingUp, color: 'gold' },
-            { label: 'مستفيد', value: '50K+', icon: Users, color: 'blue' },
+            { label: 'بحث', value: itemsCount, icon: BookOpen, color: 'green' },
+            { label: 'تقرير', value: 'متاح', icon: FileText, color: 'gold' },
+            { label: 'مستفيد', value: '12,847', icon: Users, color: 'blue' },
             { label: 'تقييم', value: '4.9/5', icon: Star, color: 'purple' },
           ]}
           columns={4}
@@ -115,18 +123,17 @@ export default function SuccessStoriesPage() {
         />
       </PageHeader>
 
-      {/* Category Filter */}
       <section className="py-6 bg-white border-b border-[var(--border)]">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2 justify-center">
             <div className="relative w-full max-w-md">
-              <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[var(--muted-foreground)] absolute left-4 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="ابحث باسم المستفيد أو الموقع أو البرنامج..."
-                className="w-full pl-10 py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0F4C3A] transition-colors"
+                placeholder="ابحث باسم البحث أو التقرير أو القطاع..."
+                className="w-full pl-10 py-2.5 rounded-xl bg-white border border-[var(--border)] text-xs font-bold text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:border-[var(--brand-green)] transition-colors"
                 dir="rtl"
               />
             </div>
@@ -137,7 +144,7 @@ export default function SuccessStoriesPage() {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                   activeCategory === cat
                     ? "bg-[var(--brand-green)] text-white shadow-lg"
-                    : "bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200"
+                    : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                 }`}
               >
                 {cat}
@@ -147,113 +154,105 @@ export default function SuccessStoriesPage() {
         </div>
       </section>
 
-      {/* Stories Grid */}
       <section className="py-12 bg-[var(--secondary)]">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {filteredStories.map((story, i) => (
-              <motion.div
-                key={story.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={story.image}
-                    alt={story.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1">
-                    {[...Array(story.rating)].map((_, j) => (
-                      <Star key={j} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    ))}
+            {filteredItems.map((item, i) => {
+              const Icon = categoryIcon(item.category);
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1">
+                      <Icon className="w-3.5 h-3.5 text-[var(--brand-green)]" />
+                      <span className="text-xs font-medium text-[var(--brand-green)]">{item.category}</span>
+                    </div>
+                    <div className="absolute bottom-3 left-3">
+                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-[var(--foreground)]">
+                        {item.location}
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute bottom-3 left-3">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-[var(--foreground)]">
-                      {story.category}
-                    </span>
-                  </div>
-                </div>
 
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-bold text-lg text-[var(--foreground)] leading-tight">
-                      {story.title}
+                  <div className="p-6">
+                    <h3 className="font-bold text-lg text-[var(--foreground)] leading-tight mb-3">
+                      {item.title}
                     </h3>
-                  </div>
 
-                  {/* Excerpt */}
-                  <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed line-clamp-3">
-                    {story.excerpt}
-                  </p>
-
-                  {/* Quote */}
-                  <div className="mb-4 p-3 bg-amber-50 rounded-lg border-r-2 border-amber-400">
-                    <Quote className="w-4 h-4 text-amber-400 mb-1" />
-                    <p className="text-xs text-amber-800 italic leading-relaxed line-clamp-2">
-                      {story.quote}
+                    <p className="text-sm text-[var(--muted-foreground)] mb-4 leading-relaxed line-clamp-3">
+                      {item.excerpt}
                     </p>
-                  </div>
 
-                  {/* Person Info */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-full bg-[var(--brand-green)]/10 flex items-center justify-center">
-                      <Users className="w-5 h-5 text-[var(--brand-green)]" />
+                    <div className="mb-4 p-3 bg-[var(--warning-bg)] rounded-lg border-r-2 border-[var(--warning)]">
+                      <Quote className="w-4 h-4 text-[var(--warning)] mb-1" />
+                      <p className="text-xs text-[var(--warning)] italic leading-relaxed line-clamp-2">
+                        {item.quote}
+                      </p>
                     </div>
-                    <div>
-                      <p className="font-semibold text-sm text-[var(--foreground)]">{story.name}</p>
-                      <p className="text-xs text-[var(--muted-foreground)]">{story.role}</p>
-                    </div>
-                  </div>
 
-                  {/* Meta */}
-                  <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
-                    <div className="flex items-center gap-3 text-xs text-[var(--muted-foreground)]">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" />
-                        {story.location}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-[var(--brand-green)]/10 flex items-center justify-center">
+                        <Users className="w-5 h-5 text-[var(--brand-green)]" />
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {story.year}
+                      <div>
+                        <p className="font-semibold text-sm text-[var(--foreground)]">{item.name}</p>
+                        <p className="text-xs text-[var(--muted-foreground)]">{item.role}</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setSelectedStory(story)}
-                      className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
-                    >
-                      اقرأ المزيد
-                      <ArrowLeft className="w-4 h-4" />
-                    </button>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
+                      <div className="flex items-center gap-3 text-xs text-[var(--muted-foreground)]">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {item.year}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5" />
+                          {item.location}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setSelectedItem(item)}
+                        className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
+                      >
+                        اطلع على التقرير
+                        <ArrowLeft className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
-          {filteredStories.length === 0 && (
+          {filteredItems.length === 0 && (
             <div className="text-center py-16">
-              <Award className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد قصص مطابقة</h3>
-              <p className="text-[var(--muted-foreground)]">جرب تغيير الفئة</p>
+              <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">لا توجد نتائج مطابقة</h3>
+              <p className="text-[var(--muted-foreground)]">جرب تغيير الفئة أو كلمة البحث</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Story Modal */}
-      {selectedStory && (
+      {selectedItem && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={() => setSelectedStory(null)}
+          onClick={() => setSelectedItem(null)}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -265,12 +264,12 @@ export default function SuccessStoriesPage() {
           >
             <div className="relative">
               <img
-                src={selectedStory.image}
-                alt={selectedStory.title}
+                src={selectedItem.image}
+                alt={selectedItem.title}
                 className="w-full h-64 object-cover rounded-t-3xl"
               />
               <button
-                onClick={() => setSelectedStory(null)}
+                onClick={() => setSelectedItem(null)}
                 className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
               >
                 ✕
@@ -280,28 +279,26 @@ export default function SuccessStoriesPage() {
             <div className="p-8">
               <div className="flex items-center gap-2 mb-4">
                 <span className="px-3 py-1 bg-[var(--brand-green)]/10 text-[var(--brand-green)] rounded-full text-xs font-medium">
-                  {selectedStory.category}
+                  {selectedItem.category}
                 </span>
-                <div className="flex items-center gap-1">
-                  {[...Array(selectedStory.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
+                <span className="px-3 py-1 bg-[var(--brand-gold-pale)] text-[var(--brand-gold-dark)] rounded-full text-xs font-medium">
+                  {selectedItem.location}
+                </span>
               </div>
 
               <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
-                {selectedStory.title}
+                {selectedItem.title}
               </h2>
 
-              <div className="mb-6 p-4 bg-amber-50 rounded-xl border-r-4 border-amber-400">
-                <Quote className="w-6 h-6 text-amber-400 mb-2" />
-                <p className="text-lg text-amber-800 italic leading-relaxed">
-                  {selectedStory.quote}
+              <div className="mb-6 p-4 bg-[var(--warning-bg)] rounded-xl border-r-4 border-[var(--warning)]">
+                <Quote className="w-6 h-6 text-[var(--warning)] mb-2" />
+                <p className="text-lg text-[var(--warning)] italic leading-relaxed">
+                  {selectedItem.quote}
                 </p>
               </div>
 
               <p className="text-[var(--muted-foreground)] leading-relaxed mb-6">
-                {selectedStory.fullStory}
+                {selectedItem.fullStory}
               </p>
 
               <div className="flex items-center gap-4 pt-6 border-t border-[var(--border)]">
@@ -310,20 +307,24 @@ export default function SuccessStoriesPage() {
                     <Users className="w-6 h-6 text-[var(--brand-green)]" />
                   </div>
                   <div>
-                    <p className="font-bold text-[var(--foreground)]">{selectedStory.name}</p>
-                    <p className="text-sm text-[var(--muted-foreground)]">{selectedStory.role}</p>
+                    <p className="font-bold text-[var(--foreground)]">{selectedItem.name}</p>
+                    <p className="text-sm text-[var(--muted-foreground)]">{selectedItem.role}</p>
                     <p className="text-xs text-[var(--muted-foreground)]">
-                      {selectedStory.program} • {selectedStory.location}
+                      {selectedItem.program} • {selectedItem.year}
                     </p>
                   </div>
                 </div>
               </div>
+
+              <button className="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[var(--brand-green)] text-white font-bold hover:bg-[var(--brand-green-dark)] transition-colors">
+                <Download className="w-4 h-4" />
+                تحميل التقرير الكامل
+              </button>
             </div>
           </motion.div>
         </motion.div>
       )}
 
-      {/* CTA */}
       <section className="py-16 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
@@ -332,16 +333,15 @@ export default function SuccessStoriesPage() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">هل تريد أن تكون جزءاً من قصة نجاح؟</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">هل تريد الوصول إلى تقاريرنا؟</h2>
             <p className="text-white/80 text-lg mb-8">
-              ساهم في تغيير حياة أحد المحتاجين اليوم
-            </p>
+            تحميل التقارير والأبحاث متاح مجاناً لدعم الشفافية والمعرفة المشتركة</p>
             <button
-              onClick={() => navigate('/donate')}
+              onClick={() => navigate('/reports')}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
-              <Heart className="w-5 h-5" fill="white" />
-              ساهم الآن
+              <FileText className="w-5 h-5" />
+              استكشف التقارير
             </button>
           </motion.div>
         </div>
@@ -349,3 +349,4 @@ export default function SuccessStoriesPage() {
     </div>
   );
 }
+

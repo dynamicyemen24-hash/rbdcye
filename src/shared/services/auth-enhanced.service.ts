@@ -404,3 +404,4 @@ class EnhancedAuthService {
 export const authEnhanced = new EnhancedAuthService();
 export const securityManager = new SecurityManager();
 export { SessionManager, PermissionManager };
+

@@ -82,7 +82,7 @@ abstract class ComponentDecorator implements Component {
 class LoggingDecorator extends ComponentDecorator {
   operation(): string {
     const result = super.operation();
-    console.log(`[LOG] ${result}`);
+    if (import.meta.env.DEV) console.log(`[LOG] ${result}`);
     return result;
   }
 }
@@ -430,3 +430,5 @@ class Mediator implements IMediator {
 }
 
 export const mediator = new Mediator();
+
+

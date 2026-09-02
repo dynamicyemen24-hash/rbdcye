@@ -21,7 +21,7 @@ export function usePerformance() {
         body: JSON.stringify(metrics),
       }).catch(console.error);
     } else {
-      console.log('Web Vitals:', metrics);
+      if (import.meta.env.DEV) console.log('Web Vitals:', metrics);
     }
   }, []);
 
@@ -115,3 +115,4 @@ export function measurePerformance(name: string, startMark: string, endMark: str
   }
   return 0;
 }
+

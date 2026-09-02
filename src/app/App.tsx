@@ -3,7 +3,7 @@ import { lazy, Suspense, useCallback, useState, useEffect, memo } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 
-import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { NewsTicker } from "./components/NewsTicker";
@@ -159,3 +159,5 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
+

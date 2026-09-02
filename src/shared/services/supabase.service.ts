@@ -406,3 +406,5 @@ export { hasSupabaseConfig, supabase };
 export function refreshTable(table: string) {
   invalidateTableCache(table);
 }
+
+

@@ -39,7 +39,7 @@ export const NewsTicker = memo(function NewsTicker() {
 
   return (
     <div 
-      className="bg-gradient-to-r from-[#0F3D2E] via-[var(--brand-green)] to-[#0F3D2E] text-white py-1.5 px-4 text-xs font-semibold relative z-40 border-b border-white/10"
+      className="bg-gradient-to-r from-[var(--brand-green-dark)] via-[var(--brand-green)] to-[var(--brand-green-dark)] text-white py-1.5 px-4 text-xs font-semibold relative z-40 border-b border-white/10"
       dir="rtl"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -93,3 +93,5 @@ export const NewsTicker = memo(function NewsTicker() {
     </div>
   );
 });
+
+

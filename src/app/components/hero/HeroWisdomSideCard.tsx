@@ -1,4 +1,4 @@
-﻿import { 
+import { 
   Sparkles, 
   ChevronLeft, 
   ChevronRight,
@@ -29,7 +29,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
   const current = ISLAMIC_TEXTS[verseIndex];
 
   return (
-    <aside className="w-full flex flex-col gap-4" aria-label="قبس من الهدي النبوي والقرآني والفيلم التعريفي الميداني">
+    <aside className="w-full flex flex-col gap-4" aria-label="??? ?? ????? ?????? ???????? ??????? ???????? ????????">
       {/* 1. Pure Quranic & Hadith Card */}
       <motion.div 
         whileHover={{ y: -3 }}
@@ -53,7 +53,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-white/15">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/15 border border-amber-300/30 text-[#E6C875] text-xs font-black font-cairo shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-[#E6C875]" aria-hidden="true" />
-              <span>{current.type === 'ayah' ? 'قبس قرآني كريم' : 'هدي نبوي شريف'}</span>
+              <span>{current.type === 'ayah' ? '??? ????? ????' : '??? ???? ????'}</span>
             </div>
             
             <span className="text-emerald-100/90 text-xs font-extrabold font-cairo bg-white/10 px-3 py-1 rounded-lg border border-white/15 backdrop-blur-md">
@@ -73,7 +73,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
                 className="space-y-3"
               >
                 <p className="font-amiri text-xl sm:text-2xl text-amber-50 leading-[2.2] font-extrabold text-center drop-shadow-md">
-                  « {current.arabic} »
+                  � {current.arabic} �
                 </p>
                 {current.meaning && (
                   <p className="text-xs sm:text-sm text-emerald-100/90 font-cairo leading-relaxed text-center font-medium max-w-xl mx-auto">
@@ -87,12 +87,12 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           {/* Navigation & Clean Action Footer */}
           <div className="pt-3 border-t border-white/15 flex items-center justify-between gap-3">
             {/* Prev/Next Verse Controls */}
-            <div className="flex items-center gap-1.5" aria-label="التنقل بين النصوص المباركة">
+            <div className="flex items-center gap-1.5" aria-label="?????? ??? ?????? ????????">
               <button
                 onClick={prevVerse}
                 className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-md"
-                title="السابق"
-                aria-label="النص السابق"
+                title="??????"
+                aria-label="???? ??????"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -102,8 +102,8 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
               <button
                 onClick={nextVerse}
                 className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-md"
-                title="التالي"
-                aria-label="النص التالي"
+                title="??????"
+                aria-label="???? ??????"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -112,11 +112,11 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
             {/* Dignified CTA */}
             <button
               onClick={() => setCurrentPage("donate")}
-              aria-label="دعم البرامج والمشاريع الإنسانية للمؤسسة"
+              aria-label="??? ??????? ????????? ????????? ???????"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C69E5A] hover:bg-[#B38B47] text-slate-950 text-xs font-black font-cairo shadow-md transition-all cursor-pointer"
             >
               <Heart className="w-3.5 h-3.5 fill-slate-950" />
-              <span>دعم البرامج الإنسانية</span>
+              <span>??? ??????? ?????????</span>
             </button>
           </div>
 
@@ -132,7 +132,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           className="relative rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-[#0F4C3A] text-white border border-emerald-500/20 hover:border-amber-400/50 shadow-md cursor-pointer overflow-hidden group transition-all"
           role="button"
           tabIndex={0}
-          aria-label="مشاهدة الفيلم التعريفي والتوثيقي الميداني لمؤسسة رحماء بينهم"
+          aria-label="?????? ?????? ???????? ????????? ???????? ?????? ????? ?????"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -168,17 +168,17 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
                 <div className="flex items-center gap-2">
                   <Film className="w-3.5 h-3.5 text-[#E6C875]" />
                   <span className="font-extrabold text-sm sm:text-base font-cairo text-white group-hover:text-amber-200 transition-colors">
-                    الفيلم التعريفي الميداني
+                    ?????? ???????? ????????
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-300 font-cairo mt-0.5">
-                  شاهد التوثيق الميداني الشامل لمشاريع رحماء بينهم
+                  ???? ??????? ???????? ?????? ??????? ????? ?????
                 </p>
               </div>
             </div>
 
             <div className="inline-flex items-center gap-1 text-xs font-bold font-cairo text-amber-300 group-hover:-translate-x-1 transition-transform shrink-0">
-              <span>عرض التوثيق</span>
+              <span>??? ???????</span>
               <ChevronLeft className="w-4 h-4" />
             </div>
           </div>
@@ -189,3 +189,5 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
 }
 
 export default HeroWisdomSideCard;
+
+

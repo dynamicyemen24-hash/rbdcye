@@ -23,7 +23,7 @@ const TONE_STYLES: Record<SectionTone, { style: React.CSSProperties; className?:
   },
   dark: {
     style: {
-      background: "linear-gradient(180deg, var(--brand-green-dark) 0%, #071F17 100%)",
+      background: "linear-gradient(180deg, var(--brand-green-dark) 0%, var(--brand-green) 100%)",
     },
     className: "text-white",
   },
@@ -69,7 +69,7 @@ export function Section({
         <IslamicPattern
           variant={pattern}
           style={{
-            color: isDark ? "#C69E5A" : "var(--brand-green)",
+            color: isDark ? "var(--brand-gold)" : "var(--brand-green)",
             opacity: isDark ? 0.07 : 0.05,
           }}
         />
@@ -124,13 +124,13 @@ export function SectionHeader({
           dark
             ? {
                 color: "var(--brand-gold-light)",
-                background: "rgba(198,158,90,0.14)",
-                border: "1px solid rgba(198,158,90,0.35)",
+                background: "rgba(var(--brand-gold-rgb),0.14)",
+                border: "1px solid rgba(var(--brand-gold-rgb),0.35)",
               }
             : {
                 color: "var(--brand-gold)",
-                background: "rgba(198,158,90,0.1)",
-                border: "1px solid rgba(198,158,90,0.25)",
+                background: "rgba(var(--brand-gold-rgb),0.1)",
+                border: "1px solid rgba(var(--brand-gold-rgb),0.25)",
               }
         }
       >
@@ -144,7 +144,7 @@ export function SectionHeader({
           fontSize: "var(--fs-h2)",
           fontWeight: 800,
           lineHeight: "var(--lh-heading)",
-          color: dark ? "#FFFFFF" : "var(--foreground)",
+          color: dark ? "var(--white)" : "var(--foreground)",
         }}
       >
         {title}{" "}
@@ -187,7 +187,7 @@ export function SectionSeam() {
     <div dir="rtl" aria-hidden="true" className="relative h-20 flex items-center justify-center overflow-hidden" style={{ background: "var(--background)" }}>
       <div
         className="absolute inset-x-0 top-1/2 h-px"
-        style={{ background: "linear-gradient(to left, transparent, rgba(198,158,90,0.55), transparent)" }}
+        style={{ background: "linear-gradient(to left, transparent, rgba(var(--brand-gold-rgb),0.55), transparent)" }}
       />
       <div className="relative flex items-center justify-center px-5" style={{ background: "var(--background)" }}>
         <StarMedallion size={52} color="var(--brand-gold)">
@@ -197,3 +197,5 @@ export function SectionSeam() {
     </div>
   );
 }
+
+

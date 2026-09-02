@@ -375,3 +375,4 @@ export function calculateZakat(amount: number, assetType: 'cash' | 'gold' | 'sil
 }
 
 export const paymentGateway = PaymentGatewayService.getInstance();
+

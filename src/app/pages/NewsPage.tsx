@@ -148,7 +148,7 @@ export default function NewsPage() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeCategory === "الكل"
                     ? "bg-[var(--brand-green)] text-white shadow-lg"
-                    : "bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200"
+                    : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                 }`}
               >
                 الكل
@@ -169,7 +169,7 @@ export default function NewsPage() {
             </div>
 
             <div className="relative">
-              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" />
               <input
                 type="text"
                 value={searchQuery}
@@ -312,7 +312,7 @@ export default function NewsPage() {
                           <Calendar className="w-3.5 h-3.5" />
                           {n.date}
                         </div>
-                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                        <span className="w-1 h-1 bg-[var(--muted)] rounded-full" />
                         <div className="flex items-center gap-1">
                           <Eye className="w-3.5 h-3.5" />
                           {n.views || 0}
@@ -336,3 +336,5 @@ export default function NewsPage() {
     </div>
   );
 }
+
+

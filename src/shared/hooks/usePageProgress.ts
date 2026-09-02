@@ -85,3 +85,4 @@ export function usePageProgress(pageKey: string = 'default') {
     isReady: stage === 'ready' || stage === 'interactive' || stage === 'complete',
   };
 }
+

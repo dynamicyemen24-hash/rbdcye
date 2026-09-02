@@ -46,7 +46,7 @@ p {
 
 /* ── تحديد النص بهوية المؤسسة ───────────────────────────── */
 ::selection {
-  background: rgba(198, 158, 90, 0.28);
+  background: rgba(var(--brand-gold-rgb), 0.28);
   color: var(--brand-green-dark);
 }
 
@@ -76,7 +76,7 @@ html {
 @supports (scrollbar-width: thin) {
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(15, 76, 58, 0.35) transparent;
+    scrollbar-color: rgba(var(--brand-green-rgb), 0.35) transparent;
   }
 }
 
@@ -90,14 +90,24 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(15, 76, 58, 0.4), rgba(198, 158, 90, 0.4));
+  background: linear-gradient(180deg, rgba(var(--brand-green-rgb), 0.4), rgba(var(--brand-gold-rgb), 0.4));
   border-radius: 8px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(15, 76, 58, 0.6), rgba(198, 158, 90, 0.6));
+  background: linear-gradient(180deg, rgba(var(--brand-green-rgb), 0.6), rgba(var(--brand-gold-rgb), 0.6));
   border: 2px solid transparent;
   background-clip: padding-box;
 }
+
+
+
+
+
+
+
+
+
+

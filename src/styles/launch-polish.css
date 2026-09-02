@@ -8,7 +8,7 @@ html {
 
 body {
   min-width: 320px;
-  background: #f7f8f5;
+  background: var(--background);
   font-synthesis: none;
   overflow-x: hidden;
 }
@@ -49,12 +49,12 @@ button:active {
 }
 
 ::selection {
-  background: #d6a95d;
-  color: #14352b;
+  background: var(--brand-gold);
+  color: var(--brand-green-dark);
 }
 
 :focus-visible {
-  outline: 3px solid rgba(214, 169, 93, 0.8);
+  outline: 3px solid var(--brand-green);
   outline-offset: 3px;
 }
 
@@ -78,3 +78,13 @@ button:active {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
+
+
+
+
+
+
+
+
+
+

@@ -56,10 +56,10 @@
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(198, 158, 90, 0.45),
-    rgba(198, 158, 90, 0.08) 35%,
-    rgba(15, 76, 58, 0.06) 65%,
-    rgba(198, 158, 90, 0.35)
+    rgba(var(--brand-gold-rgb), 0.45),
+    rgba(var(--brand-gold-rgb), 0.08) 35%,
+    rgba(var(--brand-green-rgb), 0.06) 65%,
+    rgba(var(--brand-gold-rgb), 0.35)
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -84,3 +84,13 @@
     scroll-behavior: auto !important;
   }
 }
+
+
+
+
+
+
+
+
+
+

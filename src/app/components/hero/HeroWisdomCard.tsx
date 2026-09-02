@@ -1,4 +1,4 @@
-﻿import { 
+import { 
   Sparkles, 
   Type, 
   ZoomIn, 
@@ -100,7 +100,7 @@ export function HeroWisdomCard() {
       <div 
         className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-8 bg-white border border-emerald-200/80 shadow-xs flex flex-col justify-between overflow-hidden text-center transition-all duration-300"
         role="region"
-        aria-label="Ù‚Ø¨Ø³ Ù…Ù† Ø§Ù„Ù‡Ø¯ÙŠ Ø§Ù„Ù‚Ø±Ø¢Ù†ÙŠ ÙˆØ§Ù„Ù†Ø¨ÙˆÙŠ Ù…Ø¹ Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„Ù‚Ø±Ø§Ø¡Ø© Ø§Ù„Ù…Ø±ÙŠØ­Ø©"
+        aria-label="قبس من الهدي القرآني والنبوي مع خيارات القراءة المريحة"
       >
         {/* Internal Soft Glass Highlight Accents */}
         <div className="absolute top-0 right-0 w-60 h-60 bg-gradient-to-br from-emerald-100/30 to-transparent rounded-full blur-2xl pointer-events-none" />
@@ -112,7 +112,7 @@ export function HeroWisdomCard() {
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 text-amber-950 text-xs sm:text-sm font-extrabold font-cairo border border-amber-300 shadow-2xs">
                 <Sparkles className="w-4 h-4 text-[#8F6A1A]" aria-hidden="true" />
-                <span>{current.type === 'ayah' ? 'Ù…Ù† Ø§Ù„Ù‡Ø¯ÙŠ Ø§Ù„Ù‚Ø±Ø¢Ù†ÙŠ' : 'Ù…Ù† Ø§Ù„Ù‚Ø¨Ø³ Ø§Ù„Ù†Ø¨ÙˆÙŠ'}</span>
+                <span>{current.type === 'ayah' ? 'من الهدي القرآني' : 'من القبس النبوي'}</span>
               </span>
 
               <span className="text-slate-700 text-xs sm:text-sm md:text-base font-bold font-cairo">
@@ -131,10 +131,10 @@ export function HeroWisdomCard() {
                     ? 'bg-emerald-800 text-white border-emerald-900 shadow-sm' 
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                 }`}
-                title="ØªØ®ØµÙŠØµ Ø®Ø· ÙˆÙ†Ù…Ø· Ø§Ù„Ù‚Ø±Ø§Ø¡Ø© Ø§Ù„Ù…Ø±ÙŠØ­Ø©"
+                title="تخصيص خط ونمط القراءة المريحة"
               >
                 <Sliders className="w-3.5 h-3.5 text-[#8F6A1A]" aria-hidden="true" />
-                <span>ØªØ®ØµÙŠØµ Ø§Ù„Ù‚Ø±Ø§Ø¡Ø© ({currentFontConfig.category === 'serif' ? 'Serif' : 'Sans'})</span>
+                <span>تخصيص القراءة ({currentFontConfig.category === 'serif' ? 'Serif' : 'Sans'})</span>
               </button>
             </div>
           </div>
@@ -157,14 +157,14 @@ export function HeroWisdomCard() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs sm:text-sm font-extrabold text-slate-900 font-cairo flex items-center gap-1.5">
                         <Type className="w-4 h-4 text-emerald-800" />
-                        <span>Ù†Ù…Ø· Ø®Ø· Ø§Ù„Ø¹Ø±Ø¶ (Serif / Sans-serif):</span>
+                        <span>نمط خط العرض (Serif / Sans-serif):</span>
                       </span>
                       <span className="text-xs font-semibold text-emerald-900 bg-emerald-100/90 px-2.5 py-0.5 rounded-full font-cairo">
                         {currentFontConfig.name}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2" role="radiogroup" aria-label="Ø£Ù†Ù…Ø§Ø· Ø§Ù„Ø®Ø·ÙˆØ· Ø§Ù„Ù…ØªØ§Ø­Ø©">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2" role="radiogroup" aria-label="أنماط الخطوط المتاحة">
                       {FONT_OPTIONS.map((font) => {
                         const isSelected = selectedFont === font.id;
                         return (
@@ -183,7 +183,7 @@ export function HeroWisdomCard() {
                               className="text-lg sm:text-xl font-bold mb-1"
                               style={{ fontFamily: font.fontFamily }}
                             >
-                              {font.category === 'serif' ? 'Ø§Ù‚Ù’Ø±ÙŽØ£Ù’' : 'Ø§Ù‚Ø±Ø£'}
+                              {font.category === 'serif' ? 'اقْرَأْ' : 'اقرأ'}
                             </span>
                             <span className="text-xs font-bold leading-tight font-cairo">
                               {font.name.split(' (')[0]}
@@ -202,13 +202,13 @@ export function HeroWisdomCard() {
                   {/* Font Size & Reset Controls */}
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs sm:text-sm font-bold text-slate-800 font-cairo">Ø­Ø¬Ù… Ø§Ù„Ø®Ø·:</span>
+                      <span className="text-xs sm:text-sm font-bold text-slate-800 font-cairo">حجم الخط:</span>
                       <button
                         onClick={() => handleSizeChange(-1)}
                         disabled={fontSizeOffset <= -2}
                         className="p-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 disabled:opacity-40 text-slate-800 transition-colors shadow-2xs"
-                        aria-label="ØªØµØºÙŠØ± Ø­Ø¬Ù… Ø§Ù„Ø®Ø·"
-                        title="ØªØµØºÙŠØ±"
+                        aria-label="تصغير حجم الخط"
+                        title="تصغير"
                       >
                         <ZoomOut className="w-4 h-4" />
                       </button>
@@ -219,8 +219,8 @@ export function HeroWisdomCard() {
                         onClick={() => handleSizeChange(1)}
                         disabled={fontSizeOffset >= 6}
                         className="p-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 disabled:opacity-40 text-slate-800 transition-colors shadow-2xs"
-                        aria-label="ØªÙƒØ¨ÙŠØ± Ø­Ø¬Ù… Ø§Ù„Ø®Ø·"
-                        title="ØªÙƒØ¨ÙŠØ±"
+                        aria-label="تكبير حجم الخط"
+                        title="تكبير"
                       >
                         <ZoomIn className="w-4 h-4" />
                       </button>
@@ -229,10 +229,10 @@ export function HeroWisdomCard() {
                     <button
                       onClick={handleResetTypography}
                       className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 font-bold font-cairo py-1 px-2.5 rounded-lg hover:bg-slate-200 transition-colors"
-                      title="Ø§Ø³ØªØ¹Ø§Ø¯Ø© Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©"
+                      title="استعادة الإعدادات الافتراضية"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
-                      <span>Ø¥Ø¹Ø§Ø¯Ø© Ø¶Ø¨Ø· Ø§Ù„Ø®Ø·</span>
+                      <span>إعادة ضبط الخط</span>
                     </button>
                   </div>
 
@@ -265,7 +265,7 @@ export function HeroWisdomCard() {
                     fontSize: `clamp(${1.25 + fontSizeOffset * 0.1}rem, ${3 + fontSizeOffset * 0.25}vw, ${2.15 + fontSizeOffset * 0.2}rem)`
                   }}
                 >
-                  Â« {current.arabic} Â»
+                  « {current.arabic} »
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -277,19 +277,19 @@ export function HeroWisdomCard() {
               <button
                 onClick={prevVerse}
                 className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 shadow-2xs hover:shadow-xs border border-slate-300 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
-                aria-label="Ø§Ù„Ù†Øµ Ø§Ù„Ø³Ø§Ø¨Ù‚"
-                title="Ø§Ù„Ø³Ø§Ø¨Ù‚"
+                aria-label="النص السابق"
+                title="السابق"
               >
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-800" aria-hidden="true" />
               </button>
               
-              <div className="flex gap-2 items-center" dir="ltr" role="tablist" aria-label="Ù…Ø¤Ø´Ø±Ø§Øª Ø§Ù„ØªØµÙØ­">
+              <div className="flex gap-2 items-center" dir="ltr" role="tablist" aria-label="مؤشرات التصفح">
                 {ISLAMIC_TEXTS.map((_, i) => (
                   <button
                     key={i}
                     role="tab"
                     aria-selected={i === verseIndex}
-                    aria-label={`Ø§Ù„Ù†Øµ ${i + 1}`}
+                    aria-label={`النص ${i + 1}`}
                     onClick={() => setVerseIndex(i)}
                     className="p-1"
                   >
@@ -303,8 +303,8 @@ export function HeroWisdomCard() {
               <button
                 onClick={nextVerse}
                 className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 shadow-2xs hover:shadow-xs border border-slate-300 transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
-                aria-label="Ø§Ù„Ù†Øµ Ø§Ù„ØªØ§Ù„ÙŠ"
-                title="Ø§Ù„ØªØ§Ù„ÙŠ"
+                aria-label="النص التالي"
+                title="التالي"
               >
                 <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-800" aria-hidden="true" />
               </button>
@@ -313,11 +313,11 @@ export function HeroWisdomCard() {
             <div className="flex items-center gap-2">
               <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-600 font-cairo font-bold">
                 <BookOpen className="w-3.5 h-3.5 text-emerald-800" />
-                <span>Ù†Ù…Ø· Ø§Ù„Ø®Ø·: {currentFontConfig.name.split(' (')[0]}</span>
+                <span>نمط الخط: {currentFontConfig.name.split(' (')[0]}</span>
               </span>
-              <span className="text-slate-400 font-bold">â€¢</span>
+              <span className="text-slate-400 font-bold">•</span>
               <span className="text-slate-700 text-xs sm:text-sm font-bold font-cairo">
-                Ø±Ø­Ù…Ø§Ø¡ Ø¨ÙŠÙ†Ù‡Ù… â€¢ Ø£Ø«Ø± ÙŠØªØ¬Ø¯Ø¯
+                رحماء بينهم • أثر يتجدد
               </span>
             </div>
           </div>
@@ -328,3 +328,5 @@ export function HeroWisdomCard() {
 }
 
 export default HeroWisdomCard;
+
+

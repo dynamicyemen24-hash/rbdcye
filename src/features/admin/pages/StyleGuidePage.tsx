@@ -122,7 +122,7 @@ const GLASS_UTILITIES = [
     css: `background: rgba(255, 255, 255, 0.08);
 backdrop-filter: blur(18px);
 border: 1px solid rgba(255, 255, 255, 0.18);
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);`,
+box-shadow: 0 20px 50px rgba(var(--foreground-rgb), 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);`,
   },
   {
     name: 'Hero Glass Card',
@@ -130,7 +130,7 @@ box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0
     css: `background: rgba(255, 255, 255, 0.06);
 backdrop-filter: blur(14px);
 border: 1px solid rgba(255, 255, 255, 0.15);
-box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);`,
+box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);`,
   },
   {
     name: 'Glass Badge',
@@ -173,7 +173,7 @@ export default function StyleGuidePage() {
   return (
     <div className="space-y-8 font-cairo" dir="rtl">
       {/* Header Banner */}
-      <div className="relative bg-gradient-to-br from-[#0F4C3A] via-[#125843] to-[#0A372A] text-white p-8 sm:p-10 rounded-3xl shadow-xl overflow-hidden border border-emerald-800/50">
+      <div className="relative bg-gradient-to-br from-[var(--brand-green)] via-[var(--brand-green-light)] to-[var(--brand-green-dark)] text-white p-8 sm:p-10 rounded-3xl shadow-xl overflow-hidden border border-emerald-800/50">
         <div className="absolute inset-0 pattern-geometric-islamic opacity-20 pointer-events-none" aria-hidden="true" />
         
         <div className="relative z-10 max-w-3xl">
@@ -392,7 +392,7 @@ export default function StyleGuidePage() {
               </div>
 
               {/* Glass live demo on emerald background */}
-              <div className="relative bg-gradient-to-br from-[#0F4C3A] to-[#0A372A] p-6 rounded-2xl overflow-hidden min-h-[120px] flex items-center justify-center">
+              <div className="relative bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-dark)] p-6 rounded-2xl overflow-hidden min-h-[120px] flex items-center justify-center">
                 <div className="absolute inset-0 pattern-geometric-islamic opacity-20 pointer-events-none" />
                 <div className={`relative z-10 p-4 rounded-xl text-center text-white text-xs font-bold font-cairo ${glass.className}`}>
                   {glass.name} (.
@@ -444,3 +444,5 @@ export default function StyleGuidePage() {
     </div>
   );
 }
+
+

@@ -27,21 +27,21 @@
   /* -----------------------------------------------------------------------
      1.1 الألوان الأساسية والمؤسسية (Enterprise Color System)
      ----------------------------------------------------------------------- */
-  /* Institutional Emerald — NexoraOS™ Unified (AGENTS.md: #059669) */
-  --brand-green:       #059669;
-  --brand-green-light: #10B981;
-  --brand-green-dark:  #0F4C3A;
-  --brand-green-pale:  #ECFDF5;
-  --brand-green-hover: #047857;
-  --brand-green-rgb:   5, 150, 105;
+/* Institutional Emerald — Ruhamaa Design System (AGENTS.md: #0F4C3A) */
+   --brand-green:       #0F4C3A;
+   --brand-green-light: #17694F;
+   --brand-green-dark:  #0A3527;
+   --brand-green-pale:  #E9F1EC;
+   --brand-green-hover: #0F4C3A;
+   --brand-green-rgb:   15, 76, 58;
 
-  /* Dignity Gold — Unified Amber (AGENTS.md: #d97706) */
-  --brand-gold:             #d97706;
-  --brand-gold-light:       #FBBF24;
-  --brand-gold-dark:        #92400e;
-  --brand-gold-bright:      #FCD34D;
-  --brand-gold-pale:        #FFFBEB;
-  --brand-gold-rgb:         217, 119, 6;
+   /* Dignity Gold — Ruhamaa Design System (AGENTS.md: #C69E5A) */
+   --brand-gold:             #C69E5A;
+   --brand-gold-light:       #D6B274;
+   --brand-gold-dark:        #8C6212;
+   --brand-gold-bright:      #D6B274;
+   --brand-gold-pale:        #F7EFE0;
+   --brand-gold-rgb:         198, 158, 90;
   
   /* WCAG 2.1 AAA High-Contrast Gold Semantic Tokens (تباين عالي > 7.1:1 ممتد) */
   --brand-gold-wcag-aaa:    #5C3E00; /* 9.8:1 contrast ratio on white/light surface - Strict WCAG 2.1 AAA */
@@ -88,7 +88,7 @@
   --black: #000000;
 
   /* Semantic Dynamic Colors — Unified with AGENTS.md */
-  --color-success: #059669;
+  --color-success: #0F4C3A;
   --color-danger:  #dc2626;
   --color-warning: #d97706;
   --color-info:    #0ea5e9;
@@ -247,10 +247,10 @@
   --radius-full: 9999px;
   --radius:      var(--radius-lg);
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 20px 45px -5px rgba(0, 0, 0, 0.1);
+--shadow-sm: 0 1px 3px rgba(var(--foreground-rgb), 0.05);
+   --shadow-md: 0 4px 6px -1px rgba(var(--foreground-rgb), 0.06), 0 2px 4px -2px rgba(var(--foreground-rgb), 0.04);
+   --shadow-lg: 0 10px 40px rgba(var(--foreground-rgb), 0.08);
+   --shadow-xl: 0 20px 45px -5px rgba(var(--foreground-rgb), 0.1);
 
   --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -287,22 +287,22 @@
   --muted:                   #1F2937;
   --muted-foreground:        #9CA3AF;
 
-  --primary:                 #10B981;
-  --primary-foreground:      #022C22;
-  --primary-hover:           #34D399;
-  --primary-subtle:          rgba(16, 185, 129, 0.15);
+--primary:                 #0F4C3A;
+   --primary-foreground:      #FFFFFF;
+   --primary-hover:           #17694F;
+   --primary-subtle:          rgba(var(--brand-green-rgb), 0.15);
 
   --accent:                  #E6C875;
   --accent-foreground:       #000000;
   --accent-hover:            #F59E0B;
   --accent-subtle:           rgba(230, 200, 117, 0.15);
 
-  --brand-green-pale:        rgba(16, 185, 129, 0.15);
-  --brand-gold-pale:         rgba(230, 200, 117, 0.15);
+--brand-green-pale:        rgba(var(--brand-green-rgb), 0.15);
+   --brand-gold-pale:         rgba(var(--brand-gold-rgb), 0.15);
 
-  --border:                  rgba(255, 255, 255, 0.15);
-  --border-strong:           rgba(255, 255, 255, 0.3);
-  --border-subtle:           rgba(255, 255, 255, 0.08);
+  --border:                  rgba(var(--primary-foreground-rgb), 0.15);
+  --border-strong:           rgba(var(--primary-foreground-rgb), 0.3);
+  --border-subtle:           rgba(var(--primary-foreground-rgb), 0.08);
   --input:                   #1F2937;
   --ring:                    #10B981;
 }
@@ -657,13 +657,13 @@ section {
   gap: 8px;
   height: 52px;
   padding: 0 32px;
-  background-color: #0F4C3A;
+  background-color: var(--brand-green);
   color: #FFFFFF; /* WCAG AAA 9.39:1 text contrast */
   font-weight: 800;
   font-family: var(--font-cairo);
   border-radius: var(--radius-xl);
-  border: 2px solid #062317; /* WCAG AAA high contrast boundary on light Islamic backgrounds */
-  box-shadow: 0 4px 14px rgba(15, 76, 58, 0.35), 0 0 0 1px rgba(6, 35, 23, 0.15);
+border: 2px solid var(--brand-green-dark); /* WCAG AAA high contrast boundary on light Islamic backgrounds */
+   box-shadow: 0 4px 14px rgba(var(--brand-green-rgb), 0.35), 0 0 0 1px rgba(var(--brand-green-rgb), 0.15);
   transition: all var(--transition-fast);
   cursor: pointer;
   white-space: nowrap;
@@ -671,16 +671,16 @@ section {
 }
 
 .btn-primary:hover {
-  background-color: #0A372A;
+  background-color: var(--brand-green-dark);
   color: #FFFFFF;
-  border-color: #041A12;
-  box-shadow: 0 8px 22px rgba(10, 55, 42, 0.45);
+  border-color: var(--brand-green-dark);
+  box-shadow: 0 8px 22px rgba(var(--brand-green-rgb), 0.45);
   transform: translateY(-2px) scale(1.02);
 }
 
 .btn-primary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0F4C3A, 0 8px 20px rgba(15, 76, 58, 0.4);
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green), 0 8px 20px rgba(var(--brand-green-rgb), 0.4);
 }
 
 .btn-primary:active {
@@ -695,7 +695,7 @@ section {
   height: 52px;
   padding: 0 32px;
   background: linear-gradient(135deg, #D4AF67, #C69E5A);
-  color: #041A12; /* WCAG AAA 13.1:1 text contrast ratio */
+  color: var(--brand-green-dark); /* WCAG AAA 13.1:1 text contrast ratio */
   font-weight: 900;
   font-family: var(--font-cairo);
   border-radius: var(--radius-xl);
@@ -728,12 +728,12 @@ section {
   height: 52px;
   padding: 0 32px;
   background-color: #FFFFFF;
-  color: #0A372A; /* WCAG AAA 12.5:1 text contrast */
+  color: var(--brand-green-dark); /* WCAG AAA 12.5:1 text contrast */
   font-weight: 800;
   font-family: var(--font-cairo);
   border-radius: var(--radius-xl);
-  border: 2px solid #0A372A; /* WCAG AAA 11.2:1 border contrast on light backgrounds */
-  box-shadow: 0 2px 8px rgba(10, 55, 42, 0.12);
+  border: 2px solid var(--brand-green-dark); /* WCAG AAA 11.2:1 border contrast on light backgrounds */
+  box-shadow: 0 2px 8px rgba(var(--brand-green-rgb), 0.12);
   transition: all var(--transition-fast);
   cursor: pointer;
   white-space: nowrap;
@@ -742,15 +742,15 @@ section {
 
 .btn-secondary:hover {
   background-color: #F0F7F4;
-  color: #041A12;
-  border-color: #041A12;
-  box-shadow: 0 4px 14px rgba(4, 26, 18, 0.18);
+  color: var(--brand-green-dark);
+  border-color: var(--brand-green-dark);
+  box-shadow: 0 4px 14px rgba(var(--brand-green-rgb), 0.18);
   transform: translateY(-2px);
 }
 
 .btn-secondary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0A372A;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green-dark);
 }
 
 .btn-tertiary {
@@ -759,7 +759,7 @@ section {
   justify-content: center;
   gap: 6px;
   background: transparent;
-  color: #0A372A; /* WCAG AAA 12.5:1 contrast */
+  color: var(--brand-green-dark); /* WCAG AAA 12.5:1 contrast */
   font-weight: 800;
   font-family: var(--font-cairo);
   border: none;
@@ -770,12 +770,12 @@ section {
 
 .btn-tertiary:hover {
   text-decoration: underline;
-  color: #041A12;
+  color: var(--brand-green-dark);
 }
 
 .btn-tertiary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px #0A372A;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--brand-green-dark);
   border-radius: var(--radius-md);
 }
 
@@ -830,39 +830,39 @@ section {
    5. AUTHENTIC PATTERNS & GLASSMORPHISM UTILITIES
    ========================================================================== */
 .hero-glass-panel {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(var(--primary-foreground-rgb), 0.08);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.18);
+  box-shadow: 0 20px 50px rgba(var(--foreground-rgb), 0.22), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.22);
 }
 
 .hero-glass-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(var(--primary-foreground-rgb), 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.15);
+  box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.16), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.18);
 }
 
 .glass-badge {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(var(--primary-foreground-rgb), 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.2);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(var(--primary-foreground-rgb), 0.08);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.16);
+  box-shadow: 0 12px 36px rgba(var(--foreground-rgb), 0.12), inset 0 1px 0 rgba(var(--primary-foreground-rgb), 0.16);
 }
 
 .dark .glass-card {
   background: rgba(17, 24, 39, 0.55);
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(var(--primary-foreground-rgb), 0.14);
 }
 
 /* -----------------------------------------------------------------------
@@ -878,7 +878,7 @@ section {
 }
 
 .pattern-islamic-subtle {
-  background-image: radial-gradient(circle at 50% 50%, rgba(198, 158, 90, 0.06) 0%, transparent 70%),
+  background-image: radial-gradient(circle at 50% 50%, rgba(var(--brand-gold-rgb), 0.06) 0%, transparent 70%),
     url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M60 0L75 25L100 15L90 40L115 55L90 70L100 95L75 85L60 110L45 85L20 95L30 70L5 55L30 40L20 15L45 25Z'/%3E%3Ccircle cx='60' cy='55' r='12' fill='none' stroke='%230F4C3A' stroke-opacity='0.1'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 120px 120px;
 }
@@ -886,7 +886,7 @@ section {
 .pattern-sanaani-brick {
   background-image: 
     linear-gradient(335deg, rgba(13, 92, 62, 0.05) 23px, transparent 23px),
-    linear-gradient(155deg, rgba(198, 158, 90, 0.05) 23px, transparent 23px);
+    linear-gradient(155deg, rgba(var(--brand-gold-rgb), 0.05) 23px, transparent 23px);
   background-size: 58px 58px;
 }
 
@@ -933,7 +933,7 @@ section {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(198, 158, 90, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--brand-gold-rgb), 0.4), transparent);
 }
 
 .divider-islamic-badge {
@@ -947,7 +947,7 @@ section {
 .divider-ornate-gold {
   height: 2px;
   width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(198, 158, 90, 0.2) 20%, #C69E5A 50%, rgba(198, 158, 90, 0.2) 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(var(--brand-gold-rgb), 0.2) 20%, #C69E5A 50%, rgba(var(--brand-gold-rgb), 0.2) 80%, transparent 100%);
   position: relative;
   margin: 2.5rem 0;
 }
@@ -996,7 +996,7 @@ section {
 .bg-slate-900 .text-gold-aaa,
 .bg-slate-950 .text-gold-aaa,
 .bg-[#0F4C3A] .text-gold-aaa,
-.bg-[#0A372A] .text-gold-aaa {
+.bg-brand-green-dark .text-gold-aaa {
   color: var(--brand-gold-wcag-darkbg); /* #FBBF24: WCAG AAA 8.5:1 contrast ratio on dark backgrounds */
 }
 
@@ -1070,3 +1070,13 @@ article ul li,
   line-height: 2.0;
   margin-bottom: 0.625rem;
 }
+
+
+
+
+
+
+
+
+
+

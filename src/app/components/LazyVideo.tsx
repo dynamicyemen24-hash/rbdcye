@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface LazyVideoProps {
   src: string;
@@ -11,7 +11,7 @@ interface LazyVideoProps {
 }
 
 /**
- * مكون فيديو يُحمّل بطيئًا لتجنب بطء التحميل
+ * ???? ????? ?????? ?????? ????? ??? ???????
  */
 export function LazyVideo({ 
   src, 
@@ -26,7 +26,7 @@ export function LazyVideo({
   const [isInView, setIsInView] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // مراقبة ظهور الفيديو في viewport
+  // ?????? ???? ??????? ?? viewport
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
@@ -36,7 +36,7 @@ export function LazyVideo({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsInView(true);
-            // تحميل الفيديو عند الظهور
+            // ????? ??????? ??? ??????
             if ('requestIdleCallback' in window) {
               requestIdleCallback(() => {
                 videoElement.load();
@@ -88,10 +88,10 @@ export function LazyVideo({
       >
         <source src={src} type="video/mp4" />
         <source src={src.replace('.mp4', '.webm')} type="video/webm" />
-        {/* نص بديل إذا كان الفيديو غير متاح */}
+        {/* ?? ???? ??? ??? ??????? ??? ???? */}
         <img 
           src={poster} 
-          alt="خلفية الصفحة الرئيسية" 
+          alt="????? ?????? ????????" 
           className="w-full h-full object-cover"
         />
         {/* Track for accessibility */}
@@ -100,3 +100,4 @@ export function LazyVideo({
     </div>
   );
 }
+

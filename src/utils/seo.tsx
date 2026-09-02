@@ -69,7 +69,7 @@ export function getBreadcrumbSchema(items: { label: string; href?: string }[]) {
 export function generateSeoMeta({
   title = "رحماء بينهم | rbdcye",
   description = "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.",
-  ogImage = "https://rbdcye.org/og-default.jpg",
+  ogImage = "https://rbdcye.org/og-image.png",
   ogTitle,
   ogDescription,
   twitterCard = "summary_large_image",
@@ -164,3 +164,4 @@ export function getAnalyticsScript(): React.ReactNode {
     />
   );
 }
+

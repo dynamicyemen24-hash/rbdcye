@@ -157,3 +157,5 @@ export function HeroSectors({ setCurrentPage }: HeroSectorsProps) {
 }
 
 export default HeroSectors;
+
+

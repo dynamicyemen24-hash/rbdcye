@@ -95,7 +95,9 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
           title: document.title,
           url: window.location.href,
         });
-      } catch {}
+      } catch {
+        // The user may cancel the native share dialog; no further action is required.
+      }
     } else {
       navigator.clipboard.writeText(window.location.href);
     }
@@ -277,7 +279,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
 
                 {/* Font Size */}
                 <div>
-                  <label className="text-xs font-bold text-gray-500 mb-2 block">حجم الخط</label>
+                  <span className="text-xs font-bold text-gray-500 mb-2 block">حجم الخط</span>
                   <div className="flex gap-1.5">
                     {fontSizes.map((fs) => (
                       <button
@@ -298,7 +300,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
 
                 {/* Font Weight */}
                 <div>
-                  <label className="text-xs font-bold text-gray-500 mb-2 block">سمك الخط</label>
+                  <span className="text-xs font-bold text-gray-500 mb-2 block">سمك الخط</span>
                   <div className="flex gap-1.5">
                     {fontWeights.map((fw) => (
                       <button
@@ -319,7 +321,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
 
                 {/* Theme */}
                 <div>
-                  <label className="text-xs font-bold text-gray-500 mb-2 block">نمط العرض</label>
+                  <span className="text-xs font-bold text-gray-500 mb-2 block">نمط العرض</span>
                   <div className="grid grid-cols-2 gap-1.5">
                     {themes.map((t) => (
                       <button
@@ -353,7 +355,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
 
                 {/* Quick Actions */}
                 <div>
-                  <label className="text-xs font-bold text-gray-500 mb-2 block">إجراءات سريعة</label>
+                  <span className="text-xs font-bold text-gray-500 mb-2 block">إجراءات سريعة</span>
                   <div className="grid grid-cols-2 gap-2">
                     {tools.map((tool) => (
                       <button
@@ -378,3 +380,5 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
     </>
   );
 }
+
+

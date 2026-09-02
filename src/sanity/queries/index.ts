@@ -189,12 +189,145 @@ export const VIDEOS_LIST_QUERY = defineQuery(`
       ${imageFragment}
     },
     videoUrl,
+    videoFile {
+      asset->{ url, metadata { dimensions } }
+    },
     duration,
     category,
+    tags,
     isFeatured,
     isStoryVideo,
+    views,
+    likes,
     publishDate,
+    chapters[] {
+      time,
+      title
+    },
     ${seoFragment}
+  }
+`);
+
+export const VIDEO_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "video" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    thumbnail {
+      ${imageFragment}
+    },
+    videoUrl,
+    videoFile {
+      asset->{ url, metadata { dimensions } }
+    },
+    duration,
+    category,
+    tags,
+    isFeatured,
+    isStoryVideo,
+    views,
+    likes,
+    publishDate,
+    chapters[] {
+      time,
+      title
+    },
+    ${seoFragment}
+  }
+`);
+
+export const FEATURED_VIDEOS_QUERY = defineQuery(`
+  *[_type == "video" && isFeatured == true && defined(slug.current)]
+  | order(publishDate desc) [0...10] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    thumbnail {
+      ${imageFragment}
+    },
+    videoUrl,
+    videoFile {
+      asset->{ url }
+    },
+    duration,
+    category,
+    tags,
+    isStoryVideo,
+    views,
+    likes,
+    publishDate,
+    chapters[] {
+      time,
+      title
+    }
+  }
+`);
+
+export const STORY_VIDEO_QUERY = defineQuery(`
+  *[_type == "video" && isStoryVideo == true && isFeatured == true && defined(slug.current)][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    thumbnail {
+      ${imageFragment}
+    },
+    videoUrl,
+    videoFile {
+      asset->{ url }
+    },
+    duration,
+    category,
+    tags,
+    views,
+    likes,
+    publishDate,
+    chapters[] {
+      time,
+      title
+    }
+  }
+`);
+
+export const VIDEOS_BY_CATEGORY_QUERY = defineQuery(`
+  *[_type == "video" && category == $category && defined(slug.current)]
+  | order(publishDate desc) [0...20] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    thumbnail {
+      ${imageFragment}
+    },
+    videoUrl,
+    duration,
+    category,
+    tags,
+    isFeatured,
+    views,
+    likes,
+    publishDate,
+    chapters[] {
+      time,
+      title
+    }
+  }
+`);
+
+export const VIDEO_SITEMAP_QUERY = defineQuery(`
+  *[_type == "video" && defined(slug.current) && seo.noIndex != true] {
+    "url": "/video/" + slug.current,
+    "title": title,
+    "description": description,
+    "thumbnailUrl": thumbnail.asset->url,
+    "contentUrl": coalesce(videoUrl, videoFile.asset->url),
+    "duration": duration,
+    "publishDate": publishDate,
+    "category": category,
+    "views": views,
+    "likes": likes
   }
 `);
 
@@ -360,3 +493,4 @@ export const IMPACT_METRICS_QUERY = defineQuery(`
     "totalDonationAmount": sum(*[_type == "donation" && status == "completed"].amount)
   }
 `);
+

@@ -53,3 +53,4 @@ export function useNotifications() {
 
   return { permission, isSubscribed, loading, subscribe, unsubscribe, notify };
 }
+

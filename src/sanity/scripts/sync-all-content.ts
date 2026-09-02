@@ -650,3 +650,4 @@ sync.syncAll()
     console.error('❌ فشلت المزامنة:', error);
     process.exit(1);
   });
+

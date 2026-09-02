@@ -1,4 +1,4 @@
-﻿import { StrictMode, lazy, Suspense, useState, useEffect } from "react";
+import { StrictMode, lazy, Suspense, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 import AdvancedProgressBar, { ScrollProgressIndicator } from "@/components/AdvancedProgressBar";
@@ -13,7 +13,7 @@ import "./styles/index.css";
 
 // ============================================================
 // CRITICAL: All initialization is NON-BLOCKING
-// الموقع يظهر فوراً دون انتظار أي شيء
+// ?????? ???? ????? ??? ?????? ?? ???
 // ============================================================
 
 // Initialize in background after DOM is ready
@@ -43,7 +43,7 @@ if (typeof window !== 'undefined') {
 const App = lazy(() => import("./app/App"));
 
 // ============================================================
-// Main App - instant render, no artificial delays
+// Main App - instant render
 // ============================================================
 function AppWithProgress() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -90,3 +90,5 @@ createRoot(document.getElementById("root")!).render(
     </ErrorBoundary>
   </StrictMode>
 );
+
+

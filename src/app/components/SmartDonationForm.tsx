@@ -343,14 +343,14 @@ export function SmartDonationForm({
                 onClick={() => setSelectedProject(proj.id)}
                 className={`p-3.5 rounded-2xl border-2 text-right transition-all cursor-pointer flex flex-col justify-between gap-2 ${
                   selectedProject === proj.id
-                    ? 'border-[#0F4C3A] bg-[#0F4C3A]/5 shadow-sm'
+                    ? 'border-[var(--brand-green)] bg-[var(--brand-green)]/5 shadow-sm'
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <proj.icon className={`w-5 h-5 ${selectedProject === proj.id ? 'text-[#0F4C3A]' : 'text-slate-400'}`} />
+                  <proj.icon className={`w-5 h-5 ${selectedProject === proj.id ? 'text-[var(--brand-green)]' : 'text-slate-400'}`} />
                   <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
-                    selectedProject === proj.id ? 'bg-[#0F4C3A] text-white' : 'bg-slate-100 text-slate-600'
+                    selectedProject === proj.id ? 'bg-[var(--brand-green)] text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {proj.badge}
                   </span>
@@ -383,7 +383,7 @@ export function SmartDonationForm({
                   }}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     currency === curr
-                      ? 'bg-[#0F4C3A] text-white shadow-xs'
+                      ? 'bg-[var(--brand-green)] text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -405,7 +405,7 @@ export function SmartDonationForm({
                 }}
                 className={`py-3 px-2 rounded-xl border-2 text-sm font-extrabold transition-all cursor-pointer text-center ${
                   selectedAmount === preset && !customAmount
-                    ? 'border-[#0F4C3A] bg-[#0F4C3A] text-white shadow-md scale-[1.02]'
+                    ? 'border-[var(--brand-green)] bg-[var(--brand-green)] text-white shadow-md scale-[1.02]'
                     : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300'
                 }`}
               >
@@ -425,7 +425,7 @@ export function SmartDonationForm({
                 if (e.target.value) setSelectedAmount(0);
               }}
               placeholder={`أو أدخل مبلغاً مخصصاً بـ ${CURRENCY_SYMBOLS[currency]}...`}
-              className="w-full p-3.5 pr-10 rounded-2xl border-2 border-slate-200 focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10 text-sm font-bold text-slate-900 outline-none transition-all text-right"
+              className="w-full p-3.5 pr-10 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-sm font-bold text-slate-900 outline-none transition-all text-right"
             />
             <DollarSign className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
           </div>
@@ -442,7 +442,7 @@ export function SmartDonationForm({
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="px-2 py-0.5 rounded-md bg-[#C69E5A] text-slate-950 text-[10px] font-black">
+                <span className="px-2 py-0.5 rounded-md bg-[var(--brand-gold)] text-slate-950 text-[10px] font-black">
                   {dynamicImpact.badge}
                 </span>
                 <h4 className="text-amber-200 font-extrabold text-xs sm:text-sm">
@@ -475,11 +475,11 @@ export function SmartDonationForm({
               onClick={() => setPaymentMethod('stripe')}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
                 paymentMethod === 'stripe'
-                  ? 'border-[#0F4C3A] bg-emerald-50/80 text-[#0F4C3A] shadow-sm font-black'
+                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
               }`}
             >
-              <CreditCard className="w-6 h-6 text-[#0F4C3A]" />
+              <CreditCard className="w-6 h-6 text-[var(--brand-green)]" />
               <span className="text-xs font-bold">بطاقة ائتمان (Visa / MasterCard)</span>
             </button>
 
@@ -488,7 +488,7 @@ export function SmartDonationForm({
               onClick={() => setPaymentMethod('apple')}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
                 paymentMethod === 'apple'
-                  ? 'border-[#0F4C3A] bg-emerald-50/80 text-[#0F4C3A] shadow-sm font-black'
+                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
               }`}
             >
@@ -501,7 +501,7 @@ export function SmartDonationForm({
               onClick={() => setPaymentMethod('google')}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
                 paymentMethod === 'google'
-                  ? 'border-[#0F4C3A] bg-emerald-50/80 text-[#0F4C3A] shadow-sm font-black'
+                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
               }`}
             >
@@ -514,7 +514,7 @@ export function SmartDonationForm({
               onClick={() => setPaymentMethod('bank')}
               className={`p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 ${
                 paymentMethod === 'bank'
-                  ? 'border-[#0F4C3A] bg-emerald-50/80 text-[#0F4C3A] shadow-sm font-black'
+                  ? 'border-[var(--brand-green)] bg-emerald-50/80 text-[var(--brand-green)] shadow-sm font-black'
                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
               }`}
             >
@@ -593,7 +593,7 @@ export function SmartDonationForm({
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
-                className="w-4 h-4 text-[#0F4C3A] rounded border-slate-300 focus:ring-[#0F4C3A]"
+                className="w-4 h-4 text-[var(--brand-green)] rounded border-slate-300 focus:ring-[var(--brand-green)]"
               />
               <span className="text-xs font-bold text-slate-700">التبرع كـ &quot;فاعل خير&quot; (مجهول)</span>
             </label>
@@ -612,7 +612,7 @@ export function SmartDonationForm({
                   placeholder="الاسم الكامل *"
                   value={donorInfo.name}
                   onChange={(e) => setDonorInfo(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none text-right"
+                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none text-right"
                 />
               </div>
 
@@ -623,14 +623,14 @@ export function SmartDonationForm({
                   placeholder="البريد الإلكتروني (لإرسال السند الإلكتروني) *"
                   value={donorInfo.email}
                   onChange={(e) => setDonorInfo(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
+                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
                 />
                 <input
                   type="tel"
                   placeholder="رقم الواتساب / الهاتف (اختياري)"
                   value={donorInfo.phone}
                   onChange={(e) => setDonorInfo(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
+                  className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none dir-ltr text-right"
                 />
               </div>
             </motion.div>
@@ -641,7 +641,7 @@ export function SmartDonationForm({
             rows={2}
             value={donorInfo.message}
             onChange={(e) => setDonorInfo(prev => ({ ...prev, message: e.target.value }))}
-            className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[#0F4C3A] focus:ring-4 focus:ring-[#0F4C3A]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none resize-none text-right"
+            className="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-[var(--brand-green)] focus:ring-4 focus:ring-[var(--brand-green)]/10 text-xs sm:text-sm font-bold text-slate-900 outline-none resize-none text-right"
           />
         </div>
 
@@ -688,3 +688,5 @@ export function SmartDonationForm({
 }
 
 export default SmartDonationForm;
+
+

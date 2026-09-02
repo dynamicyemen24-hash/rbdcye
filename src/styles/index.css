@@ -1,4 +1,6 @@
 @import './fonts.css';
+@import './globals.css';
+@import './site-loader.css';
 @import './tailwind.css';
 @import './theme.css';
 @import './islamic-patterns.css';
@@ -11,3 +13,42 @@
 @import './design-system.css';
 @import './components.css';
 @import './launch-polish.css';
+
+/* ==========================================================================
+    PERFORMANCE: Content Visibility for below-fold sections
+    ========================================================================== */
+main section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+main section:first-child,
+#hero,
+#story {
+  content-visibility: visible;
+}
+
+/* ==========================================================================
+    PERFORMANCE: Optimize paint for animated elements
+    ========================================================================== */
+.will-change-transform,
+.motion-custom {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-change-transform,
+  .motion-custom {
+    will-change: auto;
+  }
+}
+
+
+
+
+
+
+
+
+
+

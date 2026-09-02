@@ -141,3 +141,4 @@ export const donationFormSchema = {
   project: { validators: [] },
   type: { validators: [validators.required()] },
 };
+

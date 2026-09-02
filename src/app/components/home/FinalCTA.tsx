@@ -19,7 +19,7 @@ export function FinalCTA() {
       dir="rtl"
       className="relative py-24 md:py-32 overflow-hidden"
       style={{
-        background: "linear-gradient(160deg, var(--brand-green-dark) 0%, var(--brand-green) 60%, #0A372A 100%)",
+        background: "linear-gradient(160deg, var(--brand-green-dark) 0%, var(--brand-green) 60%, var(--brand-green-dark) 100%)",
       }}
     >
       {/* الزخارف */}
@@ -28,7 +28,7 @@ export function FinalCTA() {
       <div className="absolute bottom-0 inset-x-0 h-2 pattern-band-gold pointer-events-none z-10" />
       <div
         className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(198,158,90,0.18), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(var(--brand-gold-rgb),0.18), transparent 70%)" }}
       />
       <div
         className="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full pointer-events-none"
@@ -76,9 +76,9 @@ export function FinalCTA() {
               onClick={() => navigate("/donate")}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl font-extrabold text-lg transition-all hover:-translate-y-0.5 hover:shadow-2xl"
               style={{
-                background: "linear-gradient(135deg, var(--brand-gold), #B07A2A)",
+                background: "linear-gradient(135deg, var(--brand-gold), var(--brand-gold))",
                 color: "#FFFFFF",
-                boxShadow: "0 12px 28px rgba(198,158,90,0.35)",
+                boxShadow: "0 12px 28px rgba(var(--brand-gold-rgb),0.35)",
               }}
             >
               <Heart className="w-5 h-5" fill="currentColor" />
@@ -109,3 +109,5 @@ export function FinalCTA() {
     </section>
   );
 }
+
+

@@ -114,3 +114,4 @@ export const newsArticle = defineType({
     },
   },
 });
+

@@ -20,3 +20,4 @@ export type {
   ViewerControls,
   NavigationState,
 } from './MediaViewer.types';
+

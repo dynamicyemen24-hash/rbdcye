@@ -48,7 +48,7 @@ class NotificationService {
         this.swRegistration = await navigator.serviceWorker.register('/sw.js', {
           scope: '/',
         });
-        console.log('Service Worker registered for notifications');
+        if (import.meta.env.DEV) console.log('Service Worker registered for notifications');
       } catch {
         // Service worker registration failed
       }
@@ -216,3 +216,4 @@ class NotificationService {
 }
 
 export const notificationService = NotificationService.getInstance();
+

@@ -43,7 +43,7 @@ export function StickyDonateBar() {
             className="pointer-events-auto flex items-center gap-4 pl-3 pr-4 py-3 rounded-2xl shadow-2xl border backdrop-blur-md"
             style={{
               background: "rgba(255,255,255,0.92)",
-              borderColor: "rgba(198,158,90,0.35)",
+              borderColor: "rgba(var(--brand-gold-rgb),0.35)",
               boxShadow: "0 16px 40px rgba(15,76,58,0.22)",
             }}
           >
@@ -65,7 +65,7 @@ export function StickyDonateBar() {
               onClick={() => navigate("/donate")}
               className="shrink-0 inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl font-extrabold text-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
               style={{
-                background: "linear-gradient(135deg, var(--brand-gold), #B07A2A)",
+                background: "linear-gradient(135deg, var(--brand-gold), var(--brand-gold))",
                 color: "#FFFFFF",
               }}
             >
@@ -86,3 +86,5 @@ export function StickyDonateBar() {
     </AnimatePresence>
   );
 }
+
+

@@ -49,3 +49,4 @@ export function getImageDimensions(
   if (!dimensions) return null;
   return { width: dimensions.width, height: dimensions.height };
 }
+

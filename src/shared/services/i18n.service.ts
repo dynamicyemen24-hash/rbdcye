@@ -104,3 +104,4 @@ export function t(key: string, language: LanguageCode = 'ar'): string {
 export function getDirection(language: LanguageCode = 'ar'): 'ltr' | 'rtl' {
   return LANGUAGES[language].dir;
 }
+

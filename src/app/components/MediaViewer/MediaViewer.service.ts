@@ -263,3 +263,4 @@ export class MediaViewerService {
 
 // المثال الواحد
 export const mediaViewerService = new MediaViewerService();
+

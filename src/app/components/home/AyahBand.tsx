@@ -27,9 +27,9 @@ export function AyahBand() {
             style={{
               fontSize: "var(--fs-xs)",
               fontWeight: 700,
-              color: "#B07A2A",
+              color: "var(--brand-gold)",
               background: "var(--brand-gold-pale)",
-              border: "1px solid rgba(198,158,90,0.3)",
+              border: "1px solid rgba(var(--brand-gold-rgb),0.3)",
             }}
           >
             سورة البقرة ۝ ٢٦١
@@ -41,3 +41,5 @@ export function AyahBand() {
     </Section>
   );
 }
+
+

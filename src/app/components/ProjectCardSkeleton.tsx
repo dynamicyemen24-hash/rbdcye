@@ -76,3 +76,5 @@ export function ProjectCardSkeleton({ count = 6 }: ProjectCardSkeletonProps) {
 }
 
 export default ProjectCardSkeleton;
+
+

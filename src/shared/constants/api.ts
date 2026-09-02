@@ -48,3 +48,4 @@ export const EASTER_EGG_KEYS = {
   SPECIAL_GREETING: 'ramadan_greeting',
   INTERACTIVE_MAP: 'map_3d_view',
 } as const;
+

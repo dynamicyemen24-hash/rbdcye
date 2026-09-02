@@ -1,41 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0A372A"/><stop offset=".55" stop-color="#0F4C3A"/><stop offset="1" stop-color="#155A45"/>
-    </linearGradient>
-    <pattern id="khatam" width="96" height="96" patternUnits="userSpaceOnUse">
-      <g fill="none" stroke="#C69E5A" stroke-opacity=".16"><rect x="27" y="27" width="42" height="42"/><rect x="27" y="27" width="42" height="42" transform="rotate(45 48 48)"/></g>
-    </pattern>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#D9B87C"/><stop offset="1" stop-color="#B07A2A"/>
-    </linearGradient>
-  </defs>
-  <rect width="800" height="600" fill="url(#bg)"/>
-  <rect width="800" height="600" fill="url(#khatam)"/>
-  <path d="M400 78 C 515 78 572 160 572 250 L572 482 L228 482 L228 250 C228 160 285 78 400 78 Z" fill="#FDFBF6" opacity=".97"/>
-  <path d="M400 66 C 525 66 584 154 584 250 L584 494 L216 494 L216 250 C216 154 275 66 400 66 Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
-  <!-- ماكينة خياطة -->
-  <g fill="none" stroke="#0F4C3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M290 420 L470 420 L470 396 C 470 380 458 370 442 370 L360 370 L360 300 L330 300 L330 340 C 330 356 318 366 302 366 L290 366 Z" fill="#F6EFDD"/>
-    <circle cx="404" cy="342" r="22" fill="#FDFBF6"/>
-    <circle cx="404" cy="342" r="8"/>
-    <path d="M296 420 L296 438 M464 420 L464 438 M280 438 L480 438"/>
-    <path d="M390 370 L390 396 M420 370 L420 396"/>
-  </g>
-  <!-- بكرة خيط -->
-  <g fill="none" stroke="#B07A2A" stroke-width="5" stroke-linecap="round">
-    <rect x="506" y="286" width="40" height="64" rx="8" fill="#F6EFDD" stroke="#0F4C3A" stroke-width="5"/>
-    <path d="M512 300 L540 300 M512 314 L540 314 M512 328 L540 328"/>
-    <path d="M526 350 C 500 372 470 380 448 384" stroke="#B07A2A" stroke-width="4"/>
-  </g>
-  <!-- برعم من كومة عملات -->
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="560" cy="430" rx="34" ry="12" fill="#ECFDF5" stroke="#0F4C3A" stroke-width="4.5"/>
-    <ellipse cx="560" cy="414" rx="34" ry="12" fill="#FDFBF6" stroke="#0F4C3A" stroke-width="4.5"/>
-    <path d="M560 414 L560 372" fill="none" stroke="#0F4C3A" stroke-width="4.5"/>
-    <path d="M560 384 C 548 380 542 372 542 362 C 553 364 560 372 560 384 Z" fill="#ECFDF5" stroke="#0F4C3A" stroke-width="4"/>
-    <path d="M560 372 C 572 368 578 360 578 350 C 567 352 560 360 560 372 Z" fill="#ECFDF5" stroke="#0F4C3A" stroke-width="4"/>
-  </g>
-  <rect y="520" width="800" height="80" fill="#071F17"/>
-  <rect y="520" width="800" height="4" fill="url(#gold)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <circle cx="200" cy="120" r="40" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
+  <circle cx="200" cy="120" r="20" fill="#C69E5A" opacity=".3"/>
+  <path d="M200 160 Q150 200 100 250 M200 160 Q250 200 300 250 M140 180 Q170 210 140 240 M260 180 Q230 210 260 240" stroke="#C69E5A" stroke-width="2" opacity=".6" fill="none"/>
+  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">التمكين</text>
 </svg>

@@ -19,7 +19,7 @@ const colorClasses = {
   green: 'text-[var(--brand-green)]',
   gold: 'text-[var(--brand-gold)]',
   blue: 'text-[var(--brand-green-light)]',
-  purple: 'text-[#6D28D9]',
+  purple: 'text-[var(--chart-3)]',
 };
 
 export function StatsGrid({ stats, columns = 4, variant = 'default' }: StatsGridProps) {
@@ -86,3 +86,4 @@ export function StatsGrid({ stats, columns = 4, variant = 'default' }: StatsGrid
     </div>
   );
 }
+

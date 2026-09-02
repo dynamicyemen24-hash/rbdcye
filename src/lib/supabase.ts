@@ -40,3 +40,5 @@ export interface Database {
 }
 
 type MessageRow = Database['public']['Tables']['messages']['Row'];
+
+

@@ -175,7 +175,7 @@ class AuditLogger {
       this.logs.shift();
     }
 
-    console.log('[AUDIT]', log);
+    if (import.meta.env.DEV) console.log('[AUDIT]', log);
   }
 
   getLogs() {
@@ -197,3 +197,4 @@ class AuditLogger {
 }
 
 export const auditLogger = AuditLogger.getInstance();
+

@@ -35,7 +35,7 @@ class ErrorTrackingService {
   }
 
   captureMessage(message: string, level: 'info' | 'warning' | 'error' = 'info') {
-    console.log(`[${level.toUpperCase()}]`, message);
+    if (import.meta.env.DEV) console.log(`[${level.toUpperCase()}]`, message);
   }
 
   private persist() {
@@ -60,3 +60,4 @@ class ErrorTrackingService {
 }
 
 export const errorTracker = ErrorTrackingService.getInstance();
+

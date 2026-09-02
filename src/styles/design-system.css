@@ -134,13 +134,13 @@
   margin-bottom: 1rem;
   background: var(--brand-green-pale);
   color: var(--brand-green);
-  border: 1px solid rgba(26, 92, 72, 0.15);
+  border: 1px solid rgba(var(--brand-green-rgb), 0.15);
 }
 
 .section-header .section-badge--gold {
   background: var(--brand-gold-pale);
   color: var(--brand-gold);
-  border-color: rgba(200, 134, 30, 0.15);
+  border-color: rgba(var(--brand-gold-rgb), 0.15);
 }
 
 .section-header h2 {
@@ -232,25 +232,25 @@
 
 /* Glass card - for hero overlays */
 .card-glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(var(--primary-foreground-rgb), 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.2);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-md);
 }
 
 .dark .card-glass {
   background: rgba(20, 26, 34, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.08);
 }
 
 /* Dark glass card - for hero sections */
 .card-glass-dark {
-  background: rgba(26, 92, 72, 0.85);
+  background: rgba(var(--brand-green-rgb), 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(26, 92, 72, 0.3);
+  border: 1px solid rgba(var(--brand-green-rgb), 0.3);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-md);
 }
@@ -274,20 +274,20 @@
 .badge--green {
   background: var(--brand-green-pale);
   color: var(--brand-green);
-  border: 1px solid rgba(26, 92, 72, 0.15);
+  border: 1px solid rgba(var(--brand-green-rgb), 0.15);
 }
 
 .badge--gold {
   background: var(--brand-gold-pale);
   color: var(--brand-gold);
-  border: 1px solid rgba(200, 134, 30, 0.15);
+  border: 1px solid rgba(var(--brand-gold-rgb), 0.15);
 }
 
 .badge--ghost {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--primary-foreground-rgb), 0.1);
   backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--primary-foreground);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.2);
 }
 
 /* ============================================================
@@ -306,7 +306,7 @@
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  border-color: rgba(26, 92, 72, 0.2);
+  border-color: rgba(var(--brand-green-rgb), 0.2);
 }
 
 .stat-card .stat-value {
@@ -360,7 +360,7 @@
 .cta-section {
   padding: var(--space-3xl) var(--space-md);
   background: var(--gradient-brand);
-  color: white;
+  color: var(--primary-foreground);
   text-align: center;
 }
 
@@ -416,7 +416,7 @@
 
 .cta-section .btn-cta-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(var(--primary-foreground-rgb), 0.3);
 }
 
 .cta-section .btn-cta-secondary {
@@ -425,8 +425,8 @@
   gap: 0.5rem;
   padding: 0.875rem 2rem;
   background: transparent;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--primary-foreground);
+  border: 2px solid rgba(var(--primary-foreground-rgb), 0.3);
   border-radius: var(--radius-xl);
   font-weight: 600;
   font-size: 1rem;
@@ -435,8 +435,8 @@
 }
 
 .cta-section .btn-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(var(--primary-foreground-rgb), 0.1);
+  border-color: rgba(var(--primary-foreground-rgb), 0.5);
   transform: translateY(-2px);
 }
 
@@ -593,7 +593,7 @@
 .form-input:focus {
   outline: none;
   border-color: var(--brand-green);
-  box-shadow: 0 0 0 3px rgba(26, 92, 72, 0.1);
+  box-shadow: 0 0 0 3px rgba(var(--brand-green-rgb), 0.1);
 }
 
 .form-textarea {
@@ -613,7 +613,7 @@
 .form-textarea:focus {
   outline: none;
   border-color: var(--brand-green);
-  box-shadow: 0 0 0 3px rgba(26, 92, 72, 0.1);
+  box-shadow: 0 0 0 3px rgba(var(--brand-green-rgb), 0.1);
 }
 
 .form-label {
@@ -779,7 +779,7 @@
    Glass Effects
    ============================================================ */
 .glass-card {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(var(--primary-foreground-rgb), 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
@@ -788,7 +788,7 @@
 
 .dark .glass-card {
   background: rgba(20, 26, 34, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.08);
 }
 
 /* ============================================================
@@ -845,3 +845,12 @@
     print-color-adjust: exact;
   }
 }
+
+
+
+
+
+
+
+
+

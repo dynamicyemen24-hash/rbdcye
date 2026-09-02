@@ -238,3 +238,4 @@ export default function NotificationsPanel({ isOpen, onClose }: { isOpen: boolea
     </div>
   );
 }
+

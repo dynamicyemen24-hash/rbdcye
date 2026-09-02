@@ -39,7 +39,7 @@ function InstallAppCard() {
         <div className="flex items-center gap-3 mb-3">
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: "rgba(198,158,90,0.2)", border: "1px solid rgba(198,158,90,0.4)" }}
+            style={{ background: "rgba(var(--brand-gold-rgb),0.2)", border: "1px solid rgba(var(--brand-gold-rgb),0.4)" }}
           >
             <Smartphone className="w-5.5 h-5.5" style={{ color: "var(--brand-gold-light)" }} />
           </div>
@@ -74,7 +74,7 @@ function InstallAppCard() {
               }}
               className="w-full py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 hover:shadow-lg"
               style={{
-                background: "linear-gradient(135deg, var(--brand-gold), #B07A2A)",
+                background: "linear-gradient(135deg, var(--brand-gold), var(--brand-gold))",
                 color: "#FFFFFF",
                 fontSize: "var(--fs-sm)",
               }}
@@ -114,7 +114,7 @@ function ImpactEstimatorCard() {
 
   const equivalents = [
     { icon: ShoppingBasket, per: 25, label: "سلة غذائية تكفي أسرة شهراً", color: "var(--brand-green)" },
-    { icon: BookOpen, per: 15, label: "حقيبة مدرسية لطالب", color: "#B07A2A" },
+    { icon: BookOpen, per: 15, label: "حقيبة مدرسية لطالب", color: "var(--brand-gold)" },
     { icon: Droplets, per: 150, label: "حصة في حفر بئر يروي قرية", color: "var(--brand-green-light)" },
   ].map((e) => ({ ...e, count: Math.floor(amount / e.per) }));
 
@@ -123,9 +123,9 @@ function ImpactEstimatorCard() {
       <div className="flex items-center gap-3 mb-4">
         <div
           className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: "var(--brand-gold-pale)", border: "1px solid rgba(198,158,90,0.35)" }}
+          style={{ background: "var(--brand-gold-pale)", border: "1px solid rgba(var(--brand-gold-rgb),0.35)" }}
         >
-          <Calculator className="w-5.5 h-5.5" style={{ color: "#B07A2A" }} />
+          <Calculator className="w-5.5 h-5.5" style={{ color: "var(--brand-gold)" }} />
         </div>
         <div>
           <div className="font-extrabold" style={{ fontSize: "var(--fs-body)", color: "var(--foreground)" }}>كم يساوي تبرعك؟</div>
@@ -274,3 +274,5 @@ export function DonorToolkit() {
     </Section>
   );
 }
+
+

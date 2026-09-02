@@ -62,7 +62,7 @@
 
 /* Focus visible styles */
 :focus-visible {
-  outline: 3px solid #0F4C3A;
+  outline: 3px solid var(--brand-green);
   outline-offset: 2px;
 }
 
@@ -71,8 +71,8 @@
   position: absolute;
   top: -40px;
   left: 0;
-  background: #0F4C3A;
-  color: white;
+  background: var(--brand-green);
+  color: var(--primary-foreground);
   padding: 8px;
   z-index: 100;
   transition: top 0.3s;
@@ -81,3 +81,12 @@
 .skip-link:focus {
   top: 0;
 }
+
+
+
+
+
+
+
+
+

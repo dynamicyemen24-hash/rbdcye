@@ -78,3 +78,4 @@ export function getErrorMessage(error: unknown): string {
   }
   return 'حدث خطأ غير متوقع';
 }
+

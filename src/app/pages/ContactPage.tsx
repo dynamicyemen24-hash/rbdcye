@@ -259,7 +259,7 @@ export default function ContactPage() {
                   <span className="text-[var(--muted-foreground)]">موثوق ومعتمد</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                  <CheckCircle className="w-4 h-4 text-[var(--info)]" />
                   <span className="text-[var(--muted-foreground)]">خصوصية بيانات محمية</span>
                 </div>
               </div>
@@ -273,7 +273,7 @@ export default function ContactPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-red-50 text-red-700 rounded-xl border border-red-200"
+                  className="p-4 bg-[var(--danger-bg)] text-[var(--destructive)] rounded-xl border border-[var(--danger)]"
                 >
                   {error}
                 </motion.div>
@@ -402,3 +402,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

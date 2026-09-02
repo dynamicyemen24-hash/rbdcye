@@ -45,3 +45,4 @@ export function ProtectedRoute({ children, requiredPermission, requiredAction }:
 
   return <>{children}</>;
 }
+

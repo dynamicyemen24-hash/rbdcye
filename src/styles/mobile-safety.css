@@ -63,7 +63,7 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(var(--primary-foreground-rgb), 0.95);
   backdrop-filter: blur(12px);
   padding-top: calc(4rem + var(--safe-area-top));
   transform: translateX(100%);
@@ -113,3 +113,12 @@
     border-radius: 2px;
   }
 }
+
+
+
+
+
+
+
+
+

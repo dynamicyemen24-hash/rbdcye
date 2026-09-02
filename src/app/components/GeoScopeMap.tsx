@@ -252,3 +252,4 @@ export function GeoScopeMap({ setCurrentPage = () => {} }: GeoScopeMapProps) {
     </section>
   );
 }
+

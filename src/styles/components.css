@@ -219,14 +219,14 @@
   margin-bottom: 1rem;
   background: var(--brand-green-pale);
   color: var(--brand-green);
-    border: 1px solid rgba(15, 76, 58, 0.15);
+    border: 1px solid rgba(var(--brand-green-rgb), 0.15);
 
 }
 
 .section-badge--gold {
   background: var(--brand-gold-pale);
   color: var(--brand-gold);
-    border-color: rgba(198, 158, 90, 0.15);
+    border-color: rgba(var(--brand-gold-rgb), 0.15);
 
 }
 
@@ -257,10 +257,10 @@
   border-radius: 9999px;
   font-size: 0.8rem;
   font-weight: 600;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(var(--foreground-rgb), 0.35);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 1px solid rgba(var(--primary-foreground-rgb), 0.2);
+  color: var(--primary-foreground);
 }
 
 /* Decorative orb - for background decoration */
@@ -405,3 +405,13 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+
+
+
+
+
+
+
+
+
+

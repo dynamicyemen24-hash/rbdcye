@@ -35,3 +35,5 @@ export function getServerClient(token?: string) {
     token: token || import.meta.env.VITE_SANITY_API_READ_TOKEN,
   });
 }
+
+

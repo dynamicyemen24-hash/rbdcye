@@ -158,3 +158,4 @@ export function MarketingNarrativeBridge({ setCurrentPage }: MarketingNarrativeB
     </section>
   );
 }
+

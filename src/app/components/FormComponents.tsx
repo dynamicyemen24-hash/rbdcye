@@ -15,7 +15,7 @@ export function TextField({ label, value, onChange, required, type = "text", pla
   }, [value, required, type, maxLength]);
 
   const inputClass = `w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] transition-colors ${
-    error ? 'border-red-400 bg-red-50' : 'border-[var(--border)] bg-white'
+    error ? 'border-[var(--destructive)] bg-[var(--danger-bg)]' : 'border-[var(--border)] bg-white'
   }`;
 
   return (
@@ -117,3 +117,5 @@ export function FormActions({ onSave, onCancel, submitLabel = "حفظ", cancelLa
     </div>
   );
 }
+
+

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, X, Loader2, FolderHeart, Newspaper, Award, 
@@ -21,10 +21,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: 'proj-1',
     _type: 'project',
-    title: 'مشروع السلال الغذائية الطارئة للأسر الأشد فقراً',
-    description: 'توزيع سلال غذائية متكاملة تكفي الأسر لمدة شهر كامل في المحافظات الأكثر احتياجاً.',
-    category: 'إغاثة طارئة',
-    status: 'نشط',
+    title: '????? ?????? ???????? ??????? ????? ????? ?????',
+    description: '????? ???? ?????? ??????? ???? ????? ???? ??? ???? ?? ????????? ?????? ????????.',
+    category: '????? ?????',
+    status: '???',
     progress: 78,
     goalAmount: 150000,
     raisedAmount: 117000,
@@ -33,10 +33,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: 'proj-2',
     _type: 'project',
-    title: 'حفر وآبار مياه شرب نظيفة بالطاقة الشمسية',
-    description: 'توفير مياه صحية وآمنة لآلاف النسمة في المناطق الريفية الجافة لتخفيف معاناة العطش.',
-    category: 'المياه والبيئة',
-    status: 'نشط',
+    title: '??? ????? ???? ??? ????? ??????? ???????',
+    description: '????? ???? ???? ????? ????? ?????? ?? ??????? ??????? ?????? ?????? ?????? ?????.',
+    category: '?????? ???????',
+    status: '???',
     progress: 92,
     goalAmount: 85000,
     raisedAmount: 78200,
@@ -45,10 +45,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: 'proj-3',
     _type: 'project',
-    title: 'برنامج التمكين الاقتصادي وسبل العيش',
-    description: 'تمويل المشاريع الصغيرة وتدريب الأسر المنتجة لتحقيق الاكتفاء الذاتي والاستقلالية المالية.',
-    category: 'تنمية مستدامة',
-    status: 'مكتمل',
+    title: '?????? ??????? ????????? ???? ?????',
+    description: '????? ???????? ??????? ?????? ????? ??????? ?????? ???????? ?????? ???????????? ???????.',
+    category: '????? ???????',
+    status: '?????',
     progress: 100,
     goalAmount: 200000,
     raisedAmount: 200000,
@@ -57,10 +57,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: 'proj-4',
     _type: 'project',
-    title: 'كفالة ورعاية الأيتام الشاملة',
-    description: 'تقديم الرعاية التعليمية والتمويلية والصحية لأكثر من 500 يتيم ويتيمة شهرياً.',
-    category: 'رعاية أيتام',
-    status: 'نشط',
+    title: '????? ?????? ??????? ???????',
+    description: '????? ??????? ????????? ?????????? ??????? ????? ?? 500 ???? ?????? ??????.',
+    category: '????? ?????',
+    status: '???',
     progress: 64,
     goalAmount: 120000,
     raisedAmount: 76800,
@@ -72,9 +72,9 @@ const FALLBACK_NEWS = [
   {
     _id: 'news-1',
     _type: 'news',
-    title: 'رحماء بينهم تفتتح 5 مشاريع مياه رئيسية بالمحافظات',
-    excerpt: 'افتتحت رحماء بينهم حزمة من المشاريع المائية بالطاقة الشمسية لخدمة آلاف المواطنين.',
-    category: 'تغطيات ميدانية',
+    title: '????? ????? ????? 5 ?????? ???? ?????? ??????????',
+    excerpt: '?????? ????? ????? ???? ?? ???????? ??????? ??????? ??????? ????? ???? ?????????.',
+    category: '?????? ???????',
     publishDate: '2026-08-10',
     views: 1420,
     mainImage: '/images/defaults/project-water.svg'
@@ -82,9 +82,9 @@ const FALLBACK_NEWS = [
   {
     _id: 'news-2',
     _type: 'news',
-    title: 'إطلاق القافلة الإغاثية الشاملة لمواجهة موجة البرد والنزوح',
-    excerpt: 'توزيع البطانيات والمستلزمات الشتوية والخيام للأسر النازحة والمضرورة.',
-    category: 'إغاثة عاجلة',
+    title: '????? ??????? ???????? ??????? ??????? ???? ????? ???????',
+    excerpt: '????? ????????? ??????????? ??????? ??????? ????? ??????? ?????????.',
+    category: '????? ?????',
     publishDate: '2026-08-04',
     views: 2180,
     mainImage: '/images/defaults/project-relief.svg'
@@ -92,9 +92,9 @@ const FALLBACK_NEWS = [
   {
     _id: 'news-3',
     _type: 'news',
-    title: 'تخريج الدفعة الأولى من ورش التمكين الخياطة والحرف اليدوية',
-    excerpt: 'تمكين 45 امرأة معيلة وتزويدهن بماكينات خياطة حديثة لبدء مشاريعهن الخاصة.',
-    category: 'تمكين النساء',
+    title: '????? ?????? ?????? ?? ??? ??????? ??????? ?????? ???????',
+    excerpt: '????? 45 ????? ????? ???????? ???????? ????? ????? ???? ???????? ??????.',
+    category: '????? ??????',
     publishDate: '2026-07-28',
     views: 950,
     mainImage: '/images/defaults/project-development.svg'
@@ -105,18 +105,18 @@ const FALLBACK_STORIES = [
   {
     _id: 'story-1',
     _type: 'successStory',
-    title: 'من الحاجة إلى الإنتاج: قصة نجاح أم أحمد',
-    story: 'حصلت أم أحمد على منحة مشروع خياطة صغير، واليوم تعيل أسرتها المكونة من 6 أفراد بتفوق.',
-    beneficiaryName: 'أم أحمد (المعافر)',
+    title: '?? ?????? ??? ???????: ??? ???? ?? ????',
+    story: '???? ?? ???? ??? ???? ????? ????? ????? ?????? ???? ?????? ??????? ?? 6 ????? ?????.',
+    beneficiaryName: '?? ???? (???????)',
     publishDate: '2026-08-01',
     mainImage: '/images/defaults/story-woman.svg'
   },
   {
     _id: 'story-2',
     _type: 'successStory',
-    title: 'وصول مياه الشرب النظيفة لقرية الأمل المقفرة',
-    story: 'بعد سنوات من السير لمسافات طويلة لجلب المياه، أصبح لدى أطفال القرية صنبور مياه نقية بجوار منازلهم.',
-    beneficiaryName: 'أهالي قرية الأمل',
+    title: '???? ???? ????? ??????? ????? ????? ???????',
+    story: '??? ????? ?? ????? ??????? ????? ???? ??????? ???? ??? ????? ?????? ????? ???? ???? ????? ???????.',
+    beneficiaryName: '????? ???? ?????',
     publishDate: '2026-07-15',
     mainImage: '/images/defaults/project-relief.svg'
   }
@@ -126,28 +126,28 @@ const FALLBACK_PROGRAMS = [
   {
     _id: 'prog-1',
     _type: 'program',
-    title: 'برنامج الأمن الغذائي والاستجابة السريعة',
-    description: 'توفير المساعدات الغذائية الأساسية وإغاثة المجتمعات في الأزمات والطوارئ.',
-    icon: '🌾',
+    title: '?????? ????? ??????? ?????????? ???????',
+    description: '????? ????????? ???????? ???????? ?????? ????????? ?? ??????? ????????.',
+    icon: '??',
     mainImage: '/images/defaults/project-relief.svg'
   },
   {
     _id: 'prog-2',
     _type: 'program',
-    title: 'برنامج التنمية الاجتماعية والتعليم',
-    description: 'دعم المدارس والمراكز التعليمية وتوفير الحقائب المدرسية وكفالة الطلاب.',
-    icon: '📚',
+    title: '?????? ??????? ?????????? ????????',
+    description: '??? ??????? ???????? ????????? ?????? ??????? ???????? ?????? ??????.',
+    icon: '??',
     mainImage: '/images/defaults/project-education.svg'
   }
 ];
 
 const POPULAR_SEARCH_TAGS = [
-  'السلال الغذائية',
-  'مشاريع المياه',
-  'كفالة أيتام',
-  'تمكين اقتصادي',
-  'إغاثة طارئة',
-  'الزكاة والصدقات'
+  '?????? ????????',
+  '?????? ??????',
+  '????? ?????',
+  '????? ???????',
+  '????? ?????',
+  '?????? ????????'
 ];
 
 export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlayProps) {
@@ -378,7 +378,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
           transition={{ duration: 0.2, ease: 'easeOut' }}
           role="dialog"
           aria-modal="true"
-          aria-label="البحث الشامل في موقع رحماء بينهم"
+          aria-label="????? ?????? ?? ???? ????? ?????"
           className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col max-h-[85vh]"
         >
           {/* Top Search Input Bar */}
@@ -390,23 +390,23 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="ابحث عن المشاريع، الأخبار، قصص النجاح، أو البرامج الإغاثية..."
-              aria-label="حقل البحث"
+              placeholder="???? ?? ????????? ???????? ??? ??????? ?? ??????? ????????..."
+              aria-label="??? ?????"
               aria-autocomplete="list"
               aria-controls="search-results-list"
               className="w-full bg-transparent border-none outline-none text-base sm:text-lg font-bold font-cairo text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-0"
             />
 
             {loading && (
-              <Loader2 className="w-5 h-5 text-[var(--brand-green)] animate-spin ml-2 flex-shrink-0" aria-label="جاري التحميل" />
+              <Loader2 className="w-5 h-5 text-[var(--brand-green)] animate-spin ml-2 flex-shrink-0" aria-label="???? ???????" />
             )}
 
             {query && (
               <button
                 onClick={() => setQuery('')}
                 className="p-1.5 rounded-full hover:bg-gray-200/80 text-gray-500 transition-colors ml-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
-                aria-label="مسح نص البحث"
-                title="مسح النص"
+                aria-label="??? ?? ?????"
+                title="??? ????"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -414,27 +414,27 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
             <button
               onClick={onClose}
-              aria-label="إغلاق نافذة البحث"
+              aria-label="????? ????? ?????"
               className="px-3 py-1.5 bg-gray-200/60 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-xl font-cairo transition-colors mr-2 flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
             >
-              <span className="hidden sm:inline">إغلاق</span>
+              <span className="hidden sm:inline">?????</span>
               <kbd className="px-1.5 py-0.5 bg-white rounded border border-gray-300 text-[10px] shadow-2xs font-mono">Esc</kbd>
             </button>
           </div>
 
           {/* Filter Categories Pills */}
-          <div className="flex items-center gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto no-scrollbar font-cairo text-xs font-bold" role="tablist" aria-label="تصفية فئات البحث">
+          <div className="flex items-center gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto no-scrollbar font-cairo text-xs font-bold" role="tablist" aria-label="????? ???? ?????">
             <span className="text-gray-400 font-normal whitespace-nowrap ml-1 flex items-center gap-1">
               <Tag className="w-3.5 h-3.5" aria-hidden="true" />
-              التصفية:
+              ???????:
             </span>
 
             {[
-              { id: 'all', label: 'الكل', count: results.projects.length + results.news.length + results.successStories.length + results.programs.length },
-              { id: 'projects', label: 'المشاريع', count: results.projects.length, icon: FolderHeart },
-              { id: 'news', label: 'الأخبار', count: results.news.length, icon: Newspaper },
-              { id: 'stories', label: 'قصص النجاح', count: results.successStories.length, icon: Award },
-              { id: 'programs', label: 'البرامج', count: results.programs.length, icon: Layers },
+              { id: 'all', label: '????', count: results.projects.length + results.news.length + results.successStories.length + results.programs.length },
+              { id: 'projects', label: '????????', count: results.projects.length, icon: FolderHeart },
+              { id: 'news', label: '???????', count: results.news.length, icon: Newspaper },
+              { id: 'stories', label: '??? ??????', count: results.successStories.length, icon: Award },
+              { id: 'programs', label: '???????', count: results.programs.length, icon: Layers },
             ].map(tab => {
               const Icon = tab.icon;
               const isActive = selectedCategory === tab.id;
@@ -444,7 +444,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                   key={tab.id}
                   role="tab"
                   aria-selected={isActive}
-                  aria-label={`تصفية حسب ${tab.label}`}
+                  aria-label={`????? ??? ${tab.label}`}
                   onClick={() => setSelectedCategory(tab.id as CategoryFilter)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                     isActive
@@ -474,7 +474,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                 <div>
                   <h4 className="text-xs font-bold text-gray-400 font-cairo mb-3 flex items-center gap-1.5">
                     <TrendingUp className="w-4 h-4 text-emerald-600" />
-                    كلمات الأكثر بحثاً:
+                    ????? ?????? ?????:
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {POPULAR_SEARCH_TAGS.map((tag) => (
@@ -495,8 +495,8 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     className="p-4 rounded-2xl bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 hover:border-emerald-200 text-right transition-all group"
                   >
                     <FolderHeart className="w-6 h-6 text-emerald-600 mb-2 group-hover:scale-110 transition-transform" />
-                    <h5 className="font-bold text-sm text-gray-900 font-cairo">استعراض كافة المشاريع</h5>
-                    <p className="text-xs text-gray-500 font-cairo mt-1">المشاريع الإغاثية والتنموية الميدانية</p>
+                    <h5 className="font-bold text-sm text-gray-900 font-cairo">??????? ???? ????????</h5>
+                    <p className="text-xs text-gray-500 font-cairo mt-1">???????? ???????? ????????? ?????????</p>
                   </button>
 
                   <button
@@ -504,8 +504,8 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     className="p-4 rounded-2xl bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 hover:border-emerald-200 text-right transition-all group"
                   >
                     <Newspaper className="w-6 h-6 text-emerald-600 mb-2 group-hover:scale-110 transition-transform" />
-                    <h5 className="font-bold text-sm text-gray-900 font-cairo">المركز الإعلامي</h5>
-                    <p className="text-xs text-gray-500 font-cairo mt-1">تغطيات حية للأنشطة والبيانات الصحفية</p>
+                    <h5 className="font-bold text-sm text-gray-900 font-cairo">?????? ????????</h5>
+                    <p className="text-xs text-gray-500 font-cairo mt-1">?????? ??? ??????? ????????? ???????</p>
                   </button>
 
                   <button
@@ -513,8 +513,8 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     className="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 border border-amber-200/60 text-right transition-all group"
                   >
                     <Heart className="w-6 h-6 text-amber-600 mb-2 group-hover:scale-110 transition-transform" fill="currentColor" />
-                    <h5 className="font-bold text-sm text-amber-900 font-cairo">التبرع المباشر</h5>
-                    <p className="text-xs text-amber-700 font-cairo mt-1">ساهم مباشرة في حاسبة العطاء والمساعدات</p>
+                    <h5 className="font-bold text-sm text-amber-900 font-cairo">?????? ???????</h5>
+                    <p className="text-xs text-amber-700 font-cairo mt-1">???? ?????? ?? ????? ?????? ??????????</p>
                   </button>
                 </div>
               </div>
@@ -527,16 +527,16 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                   <Search className="w-8 h-8" />
                 </div>
                 <h4 className="text-base font-bold text-gray-800 font-cairo mb-1">
-                  لم نجد أي نتائج تطابق &quot;{query}&quot;
+                  ?? ??? ?? ????? ????? &quot;{query}&quot;
                 </h4>
                 <p className="text-xs text-gray-500 font-cairo max-w-sm mx-auto mb-6 leading-relaxed">
-                  جرب البحث باستخدام كلمات مفتاحية أخرى مثل &quot;مياه&quot;، &quot;أيتام&quot;، &quot;غذاء&quot;، أو تصفح الأقسام الرئيسية مباشرة.
+                  ??? ????? ???????? ????? ??????? ???? ??? &quot;????&quot;? &quot;?????&quot;? &quot;????&quot;? ?? ???? ??????? ???????? ??????.
                 </p>
                 <button
                   onClick={() => setQuery('')}
                   className="px-4 py-2 bg-[var(--brand-green)] text-white text-xs font-bold font-cairo rounded-xl shadow-xs hover:bg-[var(--brand-green-light)] transition-all"
                 >
-                  إعادة ضبط البحث
+                  ????? ??? ?????
                 </button>
               </div>
             )}
@@ -550,13 +550,13 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
                       <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                         <FolderHeart className="w-4 h-4 text-emerald-600" />
-                        المشاريع الإغاثية والتنموية ({results.projects.length})
+                        ???????? ???????? ????????? ({results.projects.length})
                       </h4>
                       <button 
                         onClick={() => handleSelectItem('projects')}
                         className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1"
                       >
-                        عرض الكل <ArrowLeft className="w-3 h-3" />
+                        ??? ???? <ArrowLeft className="w-3 h-3" />
                       </button>
                     </div>
 
@@ -571,7 +571,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             key={proj._id}
                             type="button"
                             onClick={() => handleSelectItem('projects', proj)}
-                            aria-label={`عرض مشروع ${proj.title}`}
+                            aria-label={`??? ????? ${proj.title}`}
                             className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                               isFocused 
                                 ? 'bg-emerald-50/80 border-emerald-300 shadow-sm' 
@@ -589,7 +589,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                                 />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center bg-emerald-100 text-emerald-700 font-bold text-lg">
-                                  🏗️
+                                  ???
                                 </div>
                               )}
                             </div>
@@ -597,11 +597,11 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="px-2 py-0.5 text-[10px] bg-emerald-100 text-[var(--brand-green-dark)] font-bold rounded-md">
-                                  {proj.category || 'مشروع'}
+                                  {proj.category || '?????'}
                                 </span>
                                 {proj.status && (
                                   <span className="text-[10px] text-gray-400 font-semibold">
-                                    • {proj.status}
+                                    � {proj.status}
                                   </span>
                                 )}
                               </div>
@@ -641,13 +641,13 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
                       <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Newspaper className="w-4 h-4 text-emerald-600" />
-                        الأخبار والتغطيات ({results.news.length})
+                        ??????? ????????? ({results.news.length})
                       </h4>
                       <button 
                         onClick={() => handleSelectItem('news')}
                         className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1"
                       >
-                        عرض الكل <ArrowLeft className="w-3 h-3" />
+                        ??? ???? <ArrowLeft className="w-3 h-3" />
                       </button>
                     </div>
 
@@ -662,7 +662,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             key={item._id}
                             type="button"
                             onClick={() => handleSelectItem('news', item)}
-                            aria-label={`عرض الخبر: ${item.title}`}
+                            aria-label={`??? ?????: ${item.title}`}
                             className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                               isFocused 
                                 ? 'bg-emerald-50/80 border-emerald-300 shadow-sm' 
@@ -680,7 +680,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                                 />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-700 font-bold text-lg">
-                                  📰
+                                  ??
                                 </div>
                               )}
                             </div>
@@ -688,11 +688,11 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="px-2 py-0.5 text-[10px] bg-blue-50 text-blue-700 font-bold rounded-md">
-                                  {item.category || 'خبر'}
+                                  {item.category || '???'}
                                 </span>
                                 {item.publishDate && (
                                   <span className="text-[10px] text-gray-400">
-                                    • {item.publishDate}
+                                    � {item.publishDate}
                                   </span>
                                 )}
                               </div>
@@ -718,14 +718,14 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
                       <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Award className="w-4 h-4 text-amber-500" aria-hidden="true" />
-                        قصص النجاح والأثر ({results.successStories.length})
+                        ??? ?????? ?????? ({results.successStories.length})
                       </h4>
                       <button 
                         onClick={() => handleSelectItem('success')}
-                        aria-label="عرض كل قصص النجاح"
+                        aria-label="??? ?? ??? ??????"
                         className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-[var(--brand-green)] rounded"
                       >
-                        عرض الكل <ArrowLeft className="w-3 h-3" aria-hidden="true" />
+                        ??? ???? <ArrowLeft className="w-3 h-3" aria-hidden="true" />
                       </button>
                     </div>
 
@@ -740,7 +740,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             key={story._id}
                             type="button"
                             onClick={() => handleSelectItem('success', story)}
-                            aria-label={`عرض قصة النجاح: ${story.title}`}
+                            aria-label={`??? ??? ??????: ${story.title}`}
                             className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                               isFocused 
                                 ? 'bg-amber-50/80 border-amber-300 shadow-sm' 
@@ -758,7 +758,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                                 />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center bg-amber-100 text-amber-700 font-bold text-lg">
-                                  🌟
+                                  ??
                                 </div>
                               )}
                             </div>
@@ -766,7 +766,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 font-bold rounded-md">
-                                  {story.beneficiaryName || 'قصة إنسان'}
+                                  {story.beneficiaryName || '??? ?????'}
                                 </span>
                               </div>
                               <h5 className="text-sm font-bold text-gray-900 truncate">
@@ -791,14 +791,14 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                     <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
                       <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Layers className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-                        البرامج والمبادرات ({results.programs.length})
+                        ??????? ?????????? ({results.programs.length})
                       </h4>
                       <button 
                         onClick={() => handleSelectItem('programs')}
-                        aria-label="عرض كل البرامج والمبادرات"
+                        aria-label="??? ?? ??????? ??????????"
                         className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-[var(--brand-green)] rounded"
                       >
-                        عرض الكل <ArrowLeft className="w-3 h-3" aria-hidden="true" />
+                        ??? ???? <ArrowLeft className="w-3 h-3" aria-hidden="true" />
                       </button>
                     </div>
 
@@ -812,7 +812,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             key={prog._id}
                             type="button"
                             onClick={() => handleSelectItem('programs', prog)}
-                            aria-label={`عرض برنامج ${prog.title}`}
+                            aria-label={`??? ?????? ${prog.title}`}
                             className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                               isFocused 
                                 ? 'bg-emerald-50/80 border-emerald-300 shadow-sm' 
@@ -820,7 +820,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                             }`}
                           >
                             <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold flex-shrink-0">
-                              {prog.icon || '🎯'}
+                              {prog.icon || '??'}
                             </div>
 
                             <div className="flex-1 min-w-0">
@@ -847,19 +847,19 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
           <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500 font-cairo">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">↑</kbd>
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">↓</kbd>
-                للتنقل
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">?</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">?</kbd>
+                ??????
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">↵</kbd>
-                للاختيار
+                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">?</kbd>
+                ????????
               </span>
             </div>
 
             <div className="flex items-center gap-1.5 text-emerald-700 font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>بحث لحظي مدعوم بـ Sanity CMS</span>
+              <span>??? ???? ????? ?? Sanity CMS</span>
             </div>
           </div>
         </motion.div>
@@ -869,3 +869,5 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 }
 
 export default SearchOverlay;
+
+

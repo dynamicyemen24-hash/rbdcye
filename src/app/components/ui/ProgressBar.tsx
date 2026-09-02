@@ -25,7 +25,7 @@ export function ProgressBar({ value, max = 100, size = "md", showPercent = true 
             <stop offset="100%" stopColor="#6ee7b7" stopOpacity="1" />
           </linearGradient>
         </defs>
-        <rect x="0" y="0" width="100" height={height} rx={height / 2} fill="rgba(0,0,0,0.06)" />
+        <rect x="0" y="0" width="100" height={height} rx={height / 2} fill="rgba(var(--foreground-rgb),0.06)" />
         <rect x="0" y="0" width={`${pct}%`} height={height} rx={height / 2} fill={`url(#${gradientId})`} />
       </svg>
     </div>
@@ -33,3 +33,5 @@ export function ProgressBar({ value, max = 100, size = "md", showPercent = true 
 }
 
 export default ProgressBar;
+
+

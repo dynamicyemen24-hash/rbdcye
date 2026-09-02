@@ -35,14 +35,14 @@ export default function AdminDashboardExtras() {
           <InteractiveChart data={sampleChart} type="area" />
         </div>
         <div className="space-y-4">
-          <div className="bg-white/80 dark:bg-[#07101a]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
+          <div className="bg-white/80 dark:bg-[var(--brand-green-dark)]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
             <h4 className="text-sm text-[var(--muted)]">أداء الحملة</h4>
             <div className="mt-3">
               <ProgressBar value={68} max={100} />
             </div>
           </div>
 
-          <div className="bg-white/80 dark:bg-[#07101a]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
+          <div className="bg-white/80 dark:bg-[var(--brand-green-dark)]/80 rounded-xl p-4 shadow-sm border border-[var(--border)]">
             <h4 className="text-sm text-[var(--muted)]">معدل إتمام النماذج</h4>
             <div className="mt-3">
               <ProgressBar value={87} max={100} size="sm" />
@@ -53,3 +53,5 @@ export default function AdminDashboardExtras() {
     </div>
   );
 }
+
+

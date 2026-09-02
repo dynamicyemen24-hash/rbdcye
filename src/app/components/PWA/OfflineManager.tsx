@@ -256,7 +256,7 @@ export const OfflineManager = memo(function OfflineManager() {
               className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden font-cairo z-10 max-h-[85vh] flex flex-col"
             >
               {/* Header */}
-              <div className="p-5 sm:p-6 bg-gradient-to-l from-slate-900 via-[#0F3D2E] to-[#0A2A1F] text-white flex items-center justify-between shrink-0">
+              <div className="p-5 sm:p-6 bg-gradient-to-l from-slate-900 via-[var(--brand-green-dark)] to-[var(--brand-green-dark)] text-white flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-2xl bg-[var(--brand-gold)]/20 border border-[var(--brand-gold)]/40 flex items-center justify-center text-[var(--brand-gold)]">
                     <HardDrive className="w-6 h-6" />
@@ -394,3 +394,5 @@ export const OfflineManager = memo(function OfflineManager() {
 });
 
 export default OfflineManager;
+
+

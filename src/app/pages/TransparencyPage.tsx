@@ -176,7 +176,7 @@ export default function TransparencyPage() {
                 >
                   <div className="text-2xl font-bold text-[var(--foreground)]">{stat.value}</div>
                   <div className="text-sm text-[var(--muted-foreground)] mt-1">{stat.label}</div>
-                  <div className={`text-xs font-semibold mt-1 ${stat.positive ? 'text-green-600' : 'text-amber-600'}`}>
+                  <div className={`text-xs font-semibold mt-1 ${stat.positive ? 'text-[var(--success)]' : 'text-[var(--warning)]'}`}>
                     {stat.change}
                   </div>
                 </motion.div>
@@ -292,7 +292,7 @@ export default function TransparencyPage() {
                     className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                       activeFilter === filter
                         ? 'bg-[var(--brand-green)] text-white'
-                        : 'bg-gray-100 text-[var(--muted-foreground)] hover:bg-gray-200'
+                        : 'bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]'
                     }`}
                   >
                     {filter === 'all' ? 'الكل' : filter}
@@ -301,7 +301,7 @@ export default function TransparencyPage() {
               </div>
 
               <div className="relative">
-                <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" />
                 <input
                   type="text"
                   value={searchQuery}
@@ -332,7 +332,7 @@ export default function TransparencyPage() {
                     <div>
                       <h3 className="font-bold text-[var(--foreground)]">{report.title}</h3>
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        report.type === 'سنوي' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600'
+                        report.type === 'سنوي' ? 'bg-[var(--info-bg)] text-[var(--info)]' : 'bg-[var(--warning-bg)] text-[var(--warning)]'
                       }`}>
                         {report.type}
                       </span>
@@ -400,3 +400,4 @@ export default function TransparencyPage() {
     </div>
   );
 }
+

@@ -134,3 +134,4 @@ export function useImpactNotification() {
 
   return { notification, showNotification };
 }
+

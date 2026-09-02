@@ -438,7 +438,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
       className={`group bg-white rounded-2xl overflow-hidden shadow-lg border ${
-        item.isFallback ? 'border-[#10B981]/20' : 'border-[var(--border)]'
+        item.isFallback ? 'border-[var(--brand-green)]/20' : 'border-[var(--border)]'
       } hover:shadow-2xl transition-all duration-400 cursor-pointer relative`}
       onClick={onClick}
     >
@@ -535,7 +535,7 @@ const FullNewsCard = memo(({ item, onClick }: { item: NewsItem; onClick: () => v
                 isLiked ? 'text-[var(--success)]' : 'text-[var(--muted-foreground)]'
               }`}
             >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-[#10B981]' : ''}`} />
+              <Heart className={`w-4 h-4 ${isLiked ? 'fill-[var(--brand-green)]' : ''}`} />
               {likes}
             </motion.button>
           </div>
@@ -784,7 +784,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
                 placeholder={showInspirational ? 'ابحث في الرسائل الملهمة...' : 'ابحث في الأخبار...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[var(--secondary)] border border-[var(--border)] rounded-xl py-2.5 pr-10 pl-4 focus:outline-none focus:border-[#10B981] transition-colors"
+                className="w-full bg-[var(--secondary)] border border-[var(--border)] rounded-xl py-2.5 pr-10 pl-4 focus:outline-none focus:border-[var(--brand-green)] transition-colors"
               />
               {searchQuery && (
                 <button
@@ -848,7 +848,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
                         onClick={() => setSelectedCategory(category)}
                         className={`px-4 py-1.5 rounded-full text-sm transition-all ${
                           selectedCategory === category
-                            ? 'bg-[#10B981] text-white shadow-lg shadow-[#10B981]/30'
+                            ? 'bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30'
                             : 'bg-[var(--secondary)] text-[var(--muted-foreground)] hover:bg-[var(--border)]'
                         }`}
                       >
@@ -877,7 +877,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
                 setSearchQuery('');
                 setSelectedCategory('الكل');
               }}
-              className="mt-4 text-[#10B981] hover:underline"
+              className="mt-4 text-[var(--brand-green)] hover:underline"
             >
               عرض جميع المحتويات
             </button>
@@ -929,7 +929,7 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
                   onClick={() => setCurrentPageState(pageNum)}
                   className={`min-w-[40px] px-3 py-2 rounded-xl transition-colors ${
                     currentPage === pageNum
-                      ? 'bg-[#10B981] text-white shadow-lg shadow-[#10B981]/30'
+                      ? 'bg-[var(--brand-green)] text-white shadow-lg shadow-[var(--brand-green)]/30'
                       : 'bg-white border border-[var(--border)] hover:bg-[var(--secondary)]'
                   }`}
                 >
@@ -953,3 +953,4 @@ export const News = ({ setCurrentPage = () => {}, isFullPage: _isFullPage = fals
 };
 
 export default memo(News);
+

@@ -58,3 +58,5 @@ export function getResponsiveImageProps(
     decoding: 'async' as const,
   };
 }
+
+

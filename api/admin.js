@@ -579,6 +579,52 @@ async function markNotificationsRead(req, res) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// SITE SETTINGS: Authenticated read / update
+// ═══════════════════════════════════════════════════════════════
+async function ensureSettingsTable() {
+  await query(`CREATE TABLE IF NOT EXISTS site_settings (
+    id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+    site_name VARCHAR(120) NOT NULL DEFAULT 'رحماء بينهم',
+    tagline VARCHAR(200) NOT NULL DEFAULT 'أثرٌ يدوم - مستقبلٌ يُبنى',
+    email VARCHAR(254) NOT NULL DEFAULT 'info@rbdcye.org',
+    phone VARCHAR(30) NOT NULL DEFAULT '+967 780 777 007',
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_by UUID NULL
+  )`);
+}
+
+async function getSettings(req, res) {
+  const user = await verifyToken(req);
+  if (!user) return res.status(401).json({ success: false, error: 'غير مصرح' });
+  await ensureSettingsTable();
+  await query(`INSERT INTO site_settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING`);
+  const result = await query('SELECT site_name, tagline, email, phone FROM site_settings WHERE id = 1');
+  const row = result.rows[0];
+  return res.status(200).json({ success: true, data: { siteName: row.site_name, tagline: row.tagline, email: row.email, phone: row.phone } });
+}
+
+async function updateSettings(req, res) {
+  const user = await verifyToken(req);
+  if (!user) return res.status(401).json({ success: false, error: 'غير مصرح' });
+  const body = req.body || {};
+  const siteName = sanitize(body.siteName, 120);
+  const tagline = sanitize(body.tagline, 200);
+  const email = sanitizeEmail(body.email);
+  const phone = sanitize(body.phone, 30);
+  if (!siteName || !tagline || !phone || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+    return res.status(400).json({ success: false, error: 'بيانات الإعدادات غير صالحة' });
+  }
+  await ensureSettingsTable();
+  const result = await query(`INSERT INTO site_settings (id, site_name, tagline, email, phone, updated_at, updated_by)
+    VALUES (1, $1, $2, $3, $4, NOW(), $5)
+    ON CONFLICT (id) DO UPDATE SET site_name = EXCLUDED.site_name, tagline = EXCLUDED.tagline, email = EXCLUDED.email, phone = EXCLUDED.phone, updated_at = NOW(), updated_by = EXCLUDED.updated_by
+    RETURNING site_name, tagline, email, phone`, [siteName, tagline, email, phone, user.id]);
+  await auditLog(user.id, 'update', 'site_settings', '1', { siteName, tagline, email, phone });
+  const row = result.rows[0];
+  return res.status(200).json({ success: true, data: { siteName: row.site_name, tagline: row.tagline, email: row.email, phone: row.phone } });
+}
+
+// ═══════════════════════════════════════════════════════════════
 // ROUTER
 // ═══════════════════════════════════════════════════════════════
 export default async function handler(req, res) {
@@ -623,6 +669,11 @@ export default async function handler(req, res) {
       case 'notifications':
         if (req.method === 'GET') return await listNotifications(req, res);
         if (req.method === 'PUT') return await markNotificationsRead(req, res);
+        return res.status(405).json({ error: 'Method not allowed' });
+
+      case 'settings':
+        if (req.method === 'GET') return await getSettings(req, res);
+        if (req.method === 'PUT') return await updateSettings(req, res);
         return res.status(405).json({ error: 'Method not allowed' });
 
       default:

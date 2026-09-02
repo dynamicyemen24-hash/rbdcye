@@ -146,7 +146,7 @@ export const ReadabilityControls: React.FC<ReadabilityControlsProps> = ({
       {/* Feature Label */}
       {showLabels && (
         <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[var(--brand-green)]/10 text-[var(--brand-green)] text-xs font-bold shrink-0">
-          <Sparkles className="w-3.5 h-3.5 text-[#C69E5A]" />
+          <Sparkles className="w-3.5 h-3.5 text-[var(--brand-gold)]" />
           <span>القراءة المريحة:</span>
         </div>
       )}
@@ -243,3 +243,5 @@ export const ReadabilityControls: React.FC<ReadabilityControlsProps> = ({
     </div>
   );
 };
+
+
