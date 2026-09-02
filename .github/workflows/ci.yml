@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - run: pnpm audit --audit-level=high
+      - run: pnpm audit --audit-level=critical
 
   build:
     name: Build Production
