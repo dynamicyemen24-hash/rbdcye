@@ -3,6 +3,3 @@
 
 # Redirect old domain to new
 # https://rohamaa.org/*  https://rbdcye.org/:splat  301
-
-# API routes
-/api/*  /api/:splat  200
