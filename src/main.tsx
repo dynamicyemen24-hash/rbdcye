@@ -77,7 +77,7 @@ function AppWithProgress() {
       <ScrollProgressIndicator />
       <OfflineIndicator />
       <Suspense fallback={<HeroSkeleton />}>
-          <App />
+        <App />
       </Suspense>
     </>
   );
@@ -85,10 +85,10 @@ function AppWithProgress() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-      <ToastProvider>
-        <AuthProvider>
-          <AppWithProgress />
-        </AuthProvider>
-      </ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <AppWithProgress />
+      </AuthProvider>
+    </ToastProvider>
   </StrictMode>
 );

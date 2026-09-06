@@ -65,7 +65,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-relief-1",
         title: "مشروع السلال الغذائية الرمضانية",
-        description: "تأمين المواد الغذائية الأساسية للأسر المتعففة والنازحة طيلة شهر رمضان المبارك.",
+        description:
+          "تأمين المواد الغذائية الأساسية للأسر المتعففة والنازحة طيلة شهر رمضان المبارك.",
         beneficiariesCount: "٣٬٠٠٠ أسرة",
         budget: "٥٠٠٬٠٠٠ ر.ي",
         progressPercentage: 88,
@@ -76,7 +77,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-relief-2",
         title: "مشروع الكساء والبطانيات الشتوية",
-        description: "توزيع الأغطية والملابس الدافئة للأطفال وكبار السن في المناطق الجبلية الباردة.",
+        description:
+          "توزيع الأغطية والملابس الدافئة للأطفال وكبار السن في المناطق الجبلية الباردة.",
         beneficiariesCount: "٢٬٠٠٠ أسرة",
         budget: "٣٥٠٬٠٠٠ ر.ي",
         progressPercentage: 75,
@@ -90,7 +92,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         id: "story-relief-1",
         beneficiaryName: "أم محمد - ريف تعز",
         storyTitle: "من المعاناة اليومية إلى الأمان الغذائي",
-        quote: "كانت السلة الغذائية عوناً كبيراً لأطفالي بعد فقدان معيلنا، وأعادت لبيتنا الاستقرار والأمل.",
+        quote:
+          "كانت السلة الغذائية عوناً كبيراً لأطفالي بعد فقدان معيلنا، وأعادت لبيتنا الاستقرار والأمل.",
         transformationBadge: "استقرار معيشي",
         location: "محافظة تعز",
         image: "/images/defaults/story-woman.svg",
@@ -143,7 +146,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         id: "story-edu-1",
         beneficiaryName: "الطالب عبد الرحمن",
         storyTitle: "العودة إلى مقاعد الدراسة بعد الانقطاع",
-        quote: "بفضل توفير الحقيبة والكتب، استطعت العودة للدراسة وأحلم بأن أصبح طبيباً لأخدم قريتي.",
+        quote:
+          "بفضل توفير الحقيبة والكتب، استطعت العودة للدراسة وأحلم بأن أصبح طبيباً لأخدم قريتي.",
         transformationBadge: "تفوق دراسي",
         location: "محافظة حجة",
         image: "/images/defaults/story-community.svg",
@@ -171,7 +175,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-com-1",
         title: "تمكين المرأة الريفية بالحرف والخياطة",
-        description: "تدريب مكثف على فنون الخياطة والتطريز وتوزيع مكائن الخياطة الحديثة مع أقمشة البداية.",
+        description:
+          "تدريب مكثف على فنون الخياطة والتطريز وتوزيع مكائن الخياطة الحديثة مع أقمشة البداية.",
         beneficiariesCount: "١٥٠ سيدة",
         budget: "٢٢٠٬٠٠٠ ر.ي",
         progressPercentage: 80,
@@ -182,7 +187,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-com-2",
         title: "حاضنة المشاريع المهنية للشباب",
-        description: "تأهيل الشباب في صيانة الطاقة الشمسية والكهرباء وتوفير حقائب العدد الفنية المتكاملة.",
+        description:
+          "تأهيل الشباب في صيانة الطاقة الشمسية والكهرباء وتوفير حقائب العدد الفنية المتكاملة.",
         beneficiariesCount: "١٠٠ شاب",
         budget: "١٩٠٬٠٠٠ ر.ي",
         progressPercentage: 65,
@@ -196,7 +202,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         id: "story-com-1",
         beneficiaryName: "فاطمة صالح",
         storyTitle: "مشغل الخياطة الصغير الذي أعال أسرة كاملة",
-        quote: "استلمت ماكينة الخياطة بعد إتمام التدريب، واليوم أصبح لدي دخل يومي يكفي متطلبات أولادي.",
+        quote:
+          "استلمت ماكينة الخياطة بعد إتمام التدريب، واليوم أصبح لدي دخل يومي يكفي متطلبات أولادي.",
         transformationBadge: "استقلال مالي",
         location: "مدينة تعز",
         image: "/images/defaults/story-woman.svg",
@@ -224,7 +231,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-wat-1",
         title: "مشروع آبار المياه بالطاقة الشمسية",
-        description: "حفر وتجهيز آبار ارتوازية ومحطات تنقية تعمل بالطاقة النظيفة لخدمة القرى العطشى.",
+        description:
+          "حفر وتجهيز آبار ارتوازية ومحطات تنقية تعمل بالطاقة النظيفة لخدمة القرى العطشى.",
         beneficiariesCount: "٤٬٥٠٠ أسرة",
         budget: "٤٨٠٬٠٠٠ ر.ي",
         progressPercentage: 70,
@@ -249,7 +257,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         id: "story-wat-1",
         beneficiaryName: "أهالي قرية النور",
         storyTitle: "انتهاء معاناة جلب الماء الشاقة على النساء والأطفال",
-        quote: "كنا نقطع كيلومترات يومياً على الأقدام، واليوم الماء النظيف يصل مباشرة إلى وسط القرية بفضل الله ثم جهود المؤسسة.",
+        quote:
+          "كنا نقطع كيلومترات يومياً على الأقدام، واليوم الماء النظيف يصل مباشرة إلى وسط القرية بفضل الله ثم جهود المؤسسة.",
         transformationBadge: "أمن مائي",
         location: "محافظة مأرب",
         image: "/images/defaults/project-water.svg",
@@ -277,7 +286,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-daw-1",
         title: "رعاية حلقات التحفيظ النموذجية",
-        description: "دعم حلقات القرآن الكريم الصباحية والمسائية وتوفير المصاحف والمكافآت التشجيعية للحفظة.",
+        description:
+          "دعم حلقات القرآن الكريم الصباحية والمسائية وتوفير المصاحف والمكافآت التشجيعية للحفظة.",
         beneficiariesCount: "٨٠٠ طالب وطالبة",
         budget: "١٢٠٬٠٠٠ ر.ي",
         progressPercentage: 85,
@@ -291,7 +301,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         id: "story-daw-1",
         beneficiaryName: "الحافظ إبراهيم",
         storyTitle: "إتمام حفظ كتاب الله وإجازة بالسند المتصل",
-        quote: "رعاية المؤسسة للحلقات كان لها الفضل بعد توفيق الله في حفظي للقرآن الكريم وحصولي على الإجازة.",
+        quote:
+          "رعاية المؤسسة للحلقات كان لها الفضل بعد توفيق الله في حفظي للقرآن الكريم وحصولي على الإجازة.",
         transformationBadge: "حفظ القرآن",
         location: "صنعاء",
         image: "/images/defaults/story-quran.svg",
@@ -319,7 +330,8 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
       {
         id: "p-agr-1",
         title: "مشروع دعم البذور والري بالتنقيط",
-        description: "توزيع شبكات الري بالتنقيط والبذور الموسمية على صغار المزارعين في الوديان الزراعية.",
+        description:
+          "توزيع شبكات الري بالتنقيط والبذور الموسمية على صغار المزارعين في الوديان الزراعية.",
         beneficiariesCount: "٤٠٠ مزارع",
         budget: "٣١٠٬٠٠٠ ر.ي",
         progressPercentage: 60,

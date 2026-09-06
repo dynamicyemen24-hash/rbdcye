@@ -63,3 +63,4 @@ package-lock.json
 output.txt
 wrangler-4.118.0.tgz
 .vercel
+lint-output.txt

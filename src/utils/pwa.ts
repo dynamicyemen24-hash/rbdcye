@@ -26,7 +26,8 @@ export function getConnectionQuality(): "excellent" | "good" | "slow" | "offline
   if (!navigator.onLine) return "offline";
 
   // Type assertion for connection API which may not be available in all browsers
-  const connection = (navigator as { connection?: { effectiveType?: string; downlink?: number } }).connection;
+  const connection = (navigator as { connection?: { effectiveType?: string; downlink?: number } })
+    .connection;
   if (!connection) return "good";
 
   const { effectiveType, downlink } = connection;

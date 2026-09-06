@@ -330,8 +330,8 @@ const AppContent = memo(function AppContent() {
 
 export default function App() {
   return (
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }

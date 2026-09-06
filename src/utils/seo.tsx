@@ -161,8 +161,7 @@ export function getHowToSchema({
  */
 export function generateSeoMeta({
   title = "رحماء بينهم | rbdcye",
-  description =
-    "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.",
+  description = "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.",
   ogImage = "https://rbdcye.org/og-image.png",
   ogTitle,
   ogDescription,
@@ -181,31 +180,17 @@ export function generateSeoMeta({
 
   // Charset and viewport
   meta.push(<meta charSet="utf-8" key="charset" />);
-  meta.push(
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-      key="viewport"
-    />
-  );
+  meta.push(<meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />);
 
   // Title
   meta.push(<title key="title">{title}</title>);
 
   // Description
-  meta.push(
-    <meta
-      name="description"
-      content={description}
-      key="desc"
-    />
-  );
+  meta.push(<meta name="description" content={description} key="desc" />);
 
   // Canonical URL
   if (canonicalUrl) {
-    meta.push(
-      <link rel="canonical" href={canonicalUrl} key="canonical" />
-    );
+    meta.push(<link rel="canonical" href={canonicalUrl} key="canonical" />);
   }
 
   // Robots
@@ -220,57 +205,31 @@ export function generateSeoMeta({
   // Open Graph
   meta.push(<meta property="og:locale" content={locale} key="oglocale" />);
   meta.push(<meta property="og:type" content={type} key="ogtype" />);
-  meta.push(
-    <meta property="og:site_name" content={siteName} key="ogsite" />
-  );
-  meta.push(
-    <meta property="og:title" content={ogTitle || title} key="ogtitle" />
-  );
-  meta.push(
-    <meta property="og:description" content={ogDescription || description} key="ogdesc" />
-  );
-  meta.push(
-    <meta property="og:image" content={ogImage} key="ogimage" />
-  );
-  meta.push(
-    <meta property="og:image:width" content="1200" key="ogiw" />
-  );
-  meta.push(
-    <meta property="og:image:height" content="630" key="ogih" />
-  );
-  meta.push(
-    <meta property="og:url" content={canonicalUrl || "https://rbdcye.org"} key="ogurl" />
-  );
+  meta.push(<meta property="og:site_name" content={siteName} key="ogsite" />);
+  meta.push(<meta property="og:title" content={ogTitle || title} key="ogtitle" />);
+  meta.push(<meta property="og:description" content={ogDescription || description} key="ogdesc" />);
+  meta.push(<meta property="og:image" content={ogImage} key="ogimage" />);
+  meta.push(<meta property="og:image:width" content="1200" key="ogiw" />);
+  meta.push(<meta property="og:image:height" content="630" key="ogih" />);
+  meta.push(<meta property="og:url" content={canonicalUrl || "https://rbdcye.org"} key="ogurl" />);
 
   // Twitter Card
-  meta.push(
-    <meta name="twitter:card" content={twitterCard} key="twcard" />
-  );
-  meta.push(
-    <meta name="twitter:title" content={ogTitle || title} key="twtitle" />
-  );
+  meta.push(<meta name="twitter:card" content={twitterCard} key="twcard" />);
+  meta.push(<meta name="twitter:title" content={ogTitle || title} key="twtitle" />);
   meta.push(
     <meta name="twitter:description" content={ogDescription || description} key="twdesc" />
   );
-  meta.push(
-    <meta name="twitter:image" content={ogImage} key="twimage" />
-  );
+  meta.push(<meta name="twitter:image" content={ogImage} key="twimage" />);
 
   // Article-specific OG tags
   if (type === "article" && publishedTime) {
-    meta.push(
-      <meta property="article:published_time" content={publishedTime} key="articlept" />
-    );
+    meta.push(<meta property="article:published_time" content={publishedTime} key="articlept" />);
   }
   if (type === "article" && modifiedTime) {
-    meta.push(
-      <meta property="article:modified_time" content={modifiedTime} key="articlemt" />
-    );
+    meta.push(<meta property="article:modified_time" content={modifiedTime} key="articlemt" />);
   }
   if (type === "article" && author) {
-    meta.push(
-      <meta property="article:author" content={author} key="articleauthor" />
-    );
+    meta.push(<meta property="article:author" content={author} key="articleauthor" />);
   }
 
   // Additional meta tags
@@ -371,12 +330,7 @@ export function getHomeSeoProps({
     extraMeta,
   });
 
-  const schema = [
-    getOrganizationSchema(),
-    getBreadcrumbSchema([
-      { label: "الرئيسية", href: "/" },
-    ]),
-  ];
+  const schema = [getOrganizationSchema(), getBreadcrumbSchema([{ label: "الرئيسية", href: "/" }])];
 
   return { head, schema };
 }
@@ -409,10 +363,9 @@ export function getPageSeoProps({
     extraMeta,
   });
 
-const schema: React.ReactNode[] = [
-    null,
-    ...(extraMeta || []),
-  ].filter(Boolean) as React.ReactNode[];
+  const schema: React.ReactNode[] = [null, ...(extraMeta || [])].filter(
+    Boolean
+  ) as React.ReactNode[];
 
   return { head, schema };
 }
