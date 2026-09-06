@@ -1,30 +1,6 @@
 // PWA Utilities - مركز PWA متكامل
 import { useEffect, useState } from "react";
 
-// Register service worker
-export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | null> {
-  if ("serviceWorker" in navigator && import.meta.env.PROD) {
-    try {
-      const registration = await navigator.serviceWorker.register("/sw.js", {
-        scope: "/",
-      });
-      return registration;
-    } catch (error) {
-      console.error("SW registration failed:", error);
-    }
-  }
-  return null;
-}
-
-// Check if running as PWA
-export function isPWA(): boolean {
-  return (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    (navigator as any).standalone === true ||
-    document.referrer.includes("android-app://")
-  );
-}
-
 // Network status hook
 export function useNetworkStatus() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -49,19 +25,44 @@ export function useNetworkStatus() {
 export function getConnectionQuality(): "excellent" | "good" | "slow" | "offline" {
   if (!navigator.onLine) return "offline";
 
-  const connection = (navigator as any).connection;
+  // Type assertion for connection API which may not be available in all browsers
+  const connection = (navigator as { connection?: { effectiveType?: string; downlink?: number } }).connection;
   if (!connection) return "good";
 
   const { effectiveType, downlink } = connection;
 
-  if (effectiveType === "4g" || downlink > 2) return "excellent";
-  if (effectiveType === "3g" || downlink > 0.5) return "good";
+  if (effectiveType === "4g" || (downlink && downlink > 2)) return "excellent";
+  if (effectiveType === "3g" || (downlink && downlink > 0.5)) return "good";
   return "slow";
+}
+
+// Register service worker
+export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | null> {
+  if ("serviceWorker" in navigator && import.meta.env.PROD) {
+    try {
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
+      });
+      return registration;
+    } catch (error) {
+      console.error("SW registration failed:", error);
+    }
+  }
+  return null;
+}
+
+// Check if running as PWA
+export function isPWA(): boolean {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (navigator as any).standalone === true ||
+    document.referrer.includes("android-app://")
+  );
 }
 
 // Background sync registration
 export async function registerBackgroundSync(tag: string, data?: any): Promise<void> {
-  if ("serviceWorker" in navigator && "sync" in (window as any).registration) {
+  if ("serviceWorker" in navigator && "sync" in (navigator as any).serviceWorker) {
     try {
       const registration = await navigator.serviceWorker.ready;
       await (registration as any).sync.register(tag);
@@ -147,7 +148,7 @@ export async function shareContent(data: {
 export async function requestWakeLock(): Promise<WakeLockSentinel | null> {
   if ("wakeLock" in navigator) {
     try {
-      return await (navigator as any).wakeLock.request("screen");
+      return await navigator.wakeLock.request("screen");
     } catch (error) {
       console.error("Wake lock error:", error);
     }
@@ -174,10 +175,11 @@ export function getDeviceInfo() {
 }
 
 // Battery status
-export async function getBatteryStatus(): Promise<any | null> {
+export async function getBatteryStatus(): Promise<{ charging: boolean; level: number } | null> {
   if ("getBattery" in navigator) {
     try {
-      return await (navigator as any).getBattery();
+      const battery = await (navigator as any).getBattery();
+      return { charging: battery.charging, level: battery.level };
     } catch {
       return null;
     }

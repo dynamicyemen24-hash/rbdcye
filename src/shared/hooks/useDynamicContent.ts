@@ -11,7 +11,13 @@ interface UseDynamicContentOptions<T> {
   refreshInterval?: number;
 }
 
-export function useDynamicContent<T = any>({
+interface ContentBridgeContent<T> {
+  data: T[];
+  success: boolean;
+  error?: string;
+}
+
+export function useDynamicContent<T>({
   contentType,
   initialData,
   enableRealtime = false,

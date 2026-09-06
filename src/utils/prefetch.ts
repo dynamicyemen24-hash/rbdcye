@@ -66,7 +66,7 @@ export function initIdlePrefetching(): void {
 
       if (index < priorityPages.length) {
         if ("requestIdleCallback" in window) {
-          (window as any).requestIdleCallback(loadNext, { timeout: 3000 });
+          (window as unknown as Window).requestIdleCallback(loadNext, { timeout: 3000 });
         } else {
           setTimeout(loadNext, 1000);
         }
@@ -74,7 +74,7 @@ export function initIdlePrefetching(): void {
     };
 
     if ("requestIdleCallback" in window) {
-      (window as any).requestIdleCallback(loadNext, { timeout: 3000 });
+      (window as unknown as Window).requestIdleCallback(loadNext, { timeout: 3000 });
     } else {
       setTimeout(loadNext, 2000);
     }

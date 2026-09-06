@@ -27,7 +27,7 @@ class EnvValidator {
     }
 
     const errors: string[] = [];
-    const config: any = {};
+    const config: Partial<Record<keyof EnvConfig, string>> = {};
 
     // فحص المتغيرات المطلوبة
     for (const key of REQUIRED_VARS) {
@@ -84,7 +84,7 @@ class EnvValidator {
       throw new Error("فشل التحقق من متغيرات البيئة:\n" + errors.join("\n"));
     }
 
-    this.config = config;
+    this.config = config as EnvConfig;
     this.validated = true;
 
     if (import.meta.env.DEV) console.log("✅ تم التحقق من متغيرات البيئة بنجاح");

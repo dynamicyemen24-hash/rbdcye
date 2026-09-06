@@ -2,7 +2,6 @@ import { StrictMode, lazy, Suspense, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 import AdvancedProgressBar, { ScrollProgressIndicator } from "@/components/AdvancedProgressBar";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HeroSkeleton } from "@/components/LoadingSkeleton";
 import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
@@ -78,9 +77,7 @@ function AppWithProgress() {
       <ScrollProgressIndicator />
       <OfflineIndicator />
       <Suspense fallback={<HeroSkeleton />}>
-        <ErrorBoundary>
           <App />
-        </ErrorBoundary>
       </Suspense>
     </>
   );
@@ -88,12 +85,10 @@ function AppWithProgress() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ErrorBoundary>
       <ToastProvider>
         <AuthProvider>
           <AppWithProgress />
         </AuthProvider>
       </ToastProvider>
-    </ErrorBoundary>
   </StrictMode>
 );

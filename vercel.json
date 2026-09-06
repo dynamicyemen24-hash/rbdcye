@@ -16,21 +16,28 @@
       ]
     },
     {
-      "source": "/(.*).(js|css|html|ico|svg|png|jpg|jpeg|webp|woff2)",
+      "source": "/(.*)\\.(js|css|html|ico|svg|png|jpg|jpeg|webp|woff2|ttf|otf)$",
       "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), payment=(self), usb=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://cdn.sanity.io; connect-src 'self' https://rbdcye.org https://*.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com; font-src 'self' data:; frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; object-src 'none'; base-uri 'self'; form-action 'self';"
+        }
       ]
     },
     {
       "source": "/sw.js",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" },
-        { "key": "Service-Worker", "value": "script" }
+        { "key": "Service-Worker", "value": "script" },
+        { "key": "Content-Type", "value": "application/javascript" }
       ]
     },
     {
@@ -38,7 +45,8 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" }
       ]
     }
   ],
@@ -46,6 +54,7 @@
     "VITE_SANITY_PROJECT_ID": "xd0ohyiz",
     "VITE_SANITY_DATASET": "production",
     "VITE_SANITY_API_VERSION": "2026-02-01",
-    "VITE_APP_URL": "https://rbdcye.org"
+    "VITE_APP_URL": "https://rbdcye.org",
+    "VITE_NODE_ENV": "production"
   }
 }

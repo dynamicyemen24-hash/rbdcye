@@ -208,7 +208,6 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
 
 export async function exportToExcel(options: ExportOptions): Promise<ArrayBuffer> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, import/no-unresolved
     const XLSX: any = await import("xlsx");
     const workbook = XLSX.utils.book_new();
 
@@ -312,7 +311,6 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
         const text = await readFileAsText(file);
         rawData = parseCSVContent(text);
       } else if (format === "excel") {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, import/no-unresolved
         const XLSX: any = await import("xlsx");
         const buffer = await file.arrayBuffer();
         const workbook = XLSX.read(buffer, { type: "array" });

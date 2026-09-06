@@ -15,7 +15,16 @@ export interface WebVitals {
   TTFB?: PerformanceMetric;
 }
 
-class PerformanceMonitor {
+// PerformanceEntry types match the browser PerformanceEntry API
+// We only need the properties we actually use
+type PerformanceEntryTiming =
+  | { name: "first-contentful-paint"; startTime: number; duration: number }
+  | { name: "largest-contentful-paint"; startTime: number; duration: number }
+  | { name: "first-input"; startTime: number; duration: number }
+  | { name: "layout-shift"; startTime: number; duration: number }
+  | { name: "navigate"; startTime: number; duration: number };
+
+export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: Map<string, PerformanceMetric> = new Map();
   private observers: PerformanceObserver[] = [];
@@ -28,61 +37,93 @@ class PerformanceMonitor {
   }
 
   init() {
-    if (typeof window === "undefined") return;
-
-    this.observeNavigation();
-    this.observePaint();
-    this.observeLayoutShifts();
-    this.observeInteractions();
-    this.observeResourceTiming();
+    this.observeFCP();
+    this.observeLCP();
+    this.observeCLS();
+    this.observeFID();
+    this.observeTTFB();
   }
 
-  private observeNavigation() {
-    try {
-      const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
-      if (navEntry) {
-        this.metrics.set("TTFB", {
-          name: "TTFB",
-          value: navEntry.responseStart,
-          rating: this.rateMetric("TTFB", navEntry.responseStart),
-          delta: navEntry.responseStart,
-          id: this.generateId(),
-        });
-      }
-    } catch (error) {
-      console.error("Navigation observation error:", error);
+  private getRate(value: number): "good" | "needs-improvement" | "poor" {
+    if (value < 0.1) return "good";
+    if (value < 0.25) return "needs-improvement";
+    return "poor";
+  }
+
+  private rateMetric(name: string, value: number): "good" | "needs-improvement" | "poor" {
+    switch (name) {
+      case "CLS":
+        return value < 0.1 ? "good" : value < 0.25 ? "needs-improvement" : "poor";
+      case "FID":
+        return value < 100 ? "good" : value < 300 ? "needs-improvement" : "poor";
+      case "LCP":
+        return value < 2500 ? "good" : value < 4000 ? "needs-improvement" : "poor";
+      case "INP":
+        return value < 200 ? "good" : value < 500 ? "needs-improvement" : "poor";
+      case "TTFB":
+        return value < 800 ? "good" : value < 1800 ? "needs-improvement" : "poor";
+      default:
+        return this.getRate(value);
     }
   }
 
-  private observePaint() {
+  private observeFCP() {
     try {
-      const paintObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          if (entry.name === "first-contentful-paint") {
-            this.metrics.set("FCP", {
-              name: "FCP",
-              value: entry.startTime,
-              rating: this.rateMetric("FCP", entry.startTime),
-              delta: entry.startTime,
-              id: this.generateId(),
-            });
-          }
+      const fcpObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        if (lastEntry && "duration" in lastEntry) {
+          const entry = lastEntry as PerformanceEntryTiming;
+          this.metrics.set("FCP", {
+            name: "FCP",
+            value: entry.duration,
+            rating: this.rateMetric("FCP", entry.duration),
+            delta: entry.duration,
+            id: this.generateId(),
+          });
         }
       });
-      paintObserver.observe({ type: "paint", buffered: true });
-      this.observers.push(paintObserver);
+      fcpObserver.observe({ type: "first-contentful-paint", buffered: true });
+      this.observers.push(fcpObserver);
     } catch (error) {
-      console.error("Paint observation error:", error);
+      console.error("FCP observation error:", error);
     }
   }
 
-  private observeLayoutShifts() {
+  private observeLCP() {
+    try {
+      const lcpObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        if (lastEntry && "duration" in lastEntry) {
+          const entry = lastEntry as PerformanceEntryTiming;
+          this.metrics.set("LCP", {
+            name: "LCP",
+            value: entry.duration,
+            rating: this.rateMetric("LCP", entry.duration),
+            delta: entry.duration,
+            id: this.generateId(),
+          });
+        }
+      });
+      lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
+      this.observers.push(lcpObserver);
+    } catch (error) {
+      console.error("LCP observation error:", error);
+    }
+  }
+
+  private observeCLS() {
     try {
       const clsObserver = new PerformanceObserver((list) => {
         let clsValue = 0;
-        for (const entry of list.getEntries()) {
-          if (!(entry as any).hadRecentInput) {
-            clsValue += (entry as any).value;
+        const entries = list.getEntries();
+        for (const entry of entries) {
+          // CLS entries are PerformanceEntry objects
+          if ((entry as any).hadRecentInput) continue;
+          const value = (entry as any).value;
+          if (typeof value === "number") {
+            clsValue += value;
           }
         }
         this.metrics.set("CLS", {
@@ -100,15 +141,18 @@ class PerformanceMonitor {
     }
   }
 
-  private observeInteractions() {
+  private observeFID() {
     try {
       const fidObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
+        const entries = list.getEntries();
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          const entry = firstEntry as PerformanceEntryTiming;
           this.metrics.set("FID", {
             name: "FID",
-            value: (entry as any).processingStart - entry.startTime,
-            rating: this.rateMetric("FID", (entry as any).processingStart - entry.startTime),
-            delta: (entry as any).processingStart - entry.startTime,
+            value: entry.duration,
+            rating: this.rateMetric("FID", entry.duration),
+            delta: entry.duration,
             id: this.generateId(),
           });
         }
@@ -120,67 +164,32 @@ class PerformanceMonitor {
     }
   }
 
-  private observeResourceTiming() {
+  private observeTTFB() {
     try {
-      const resourceObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          const resource = entry as PerformanceResourceTiming;
-          if (resource.duration > 1000) {
-            // slow resource detected
-          }
+      const tfbObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        if (lastEntry) {
+          const entry = lastEntry as PerformanceEntryTiming;
+          this.metrics.set("TTFB", {
+            name: "TTFB",
+            value: entry.duration,
+            rating: this.rateMetric("TTFB", entry.duration),
+            delta: entry.duration,
+            id: this.generateId(),
+          });
         }
       });
-      resourceObserver.observe({ type: "resource", buffered: true });
-      this.observers.push(resourceObserver);
+      tfbObserver.observe({ type: "navigate", buffered: true });
+      this.observers.push(tfbObserver);
     } catch (error) {
-      console.error("Resource timing error:", error);
+      console.error("TTFB observation error:", error);
     }
   }
 
-  private rateMetric(name: string, value: number): "good" | "needs-improvement" | "poor" {
-    const thresholds: Record<string, { good: number; poor: number }> = {
-      FCP: { good: 1800, poor: 3000 },
-      LCP: { good: 2500, poor: 4000 },
-      FID: { good: 100, poor: 300 },
-      CLS: { good: 0.1, poor: 0.25 },
-      INP: { good: 200, poor: 500 },
-      TTFB: { good: 800, poor: 1800 },
-    };
-
-    const threshold = thresholds[name];
-    if (!threshold) return "good";
-
-    if (value <= threshold.good) return "good";
-    if (value <= threshold.poor) return "needs-improvement";
-    return "poor";
-  }
-
-  private generateId(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  getMetrics(): WebVitals {
-    const result: WebVitals = {};
-    this.metrics.forEach((value, key) => {
-      result[key as keyof WebVitals] = value;
-    });
-    return result;
-  }
-
-  getMetric(name: string): PerformanceMetric | undefined {
-    return this.metrics.get(name);
-  }
-
-  clear() {
-    this.metrics.clear();
-    this.observers.forEach((observer) => observer.disconnect());
-    this.observers = [];
-  }
-
-  destroy() {
-    this.clear();
-    PerformanceMonitor.instance = undefined as any;
+  generateId(): string {
+    return Math.random().toString(36).substring(2, 11);
   }
 }
 
-export const performanceMonitor = PerformanceMonitor.getInstance();
+export default PerformanceMonitor;

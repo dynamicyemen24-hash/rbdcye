@@ -3,7 +3,7 @@ export interface ApiError {
   message: string;
   code?: string;
   status?: number;
-  details?: any;
+  details?: Record<string, unknown>;
 }
 
 // Create a standardized API error
@@ -11,7 +11,7 @@ export function createApiError(
   message: string,
   status?: number,
   code?: string,
-  details?: any
+  details?: Record<string, unknown>
 ): ApiError {
   return {
     message,

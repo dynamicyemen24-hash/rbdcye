@@ -234,7 +234,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-[var(--brand-gold)] text-[var(--brand-green-dark)]">
                   <BadgeCheck className="h-3.5 w-3.5" />
                 </span>
-                مؤسسة إنسانية تنموية مستقلة ومرخصة
+                مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢
               </motion.div>
               <motion.h1
                 variants={fadeUp}

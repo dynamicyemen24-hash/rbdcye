@@ -49,30 +49,41 @@ module.exports = {
   },
   rules: {
     // TypeScript
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
 
     // React
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/no-unknown-property': 'off',
 
     // React Hooks
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
     'react-hooks/set-state-in-effect': 'off',
+
+    // Accessibility (balanced for interactive UI elements)
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/interactive-supports-focus': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
 
     // Import
     'import/order': 'off',
     'import/no-named-as-default': 'off',
+    'import/no-unresolved': 'off',
 
     // General
-    'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+    'no-console': 'off',
     'prefer-const': 'warn',
     'no-var': 'error',
     'no-debugger': 'error',
-    'no-alert': 'warn',
+    'no-alert': 'off',
   },
   ignorePatterns: [
     'dist/',

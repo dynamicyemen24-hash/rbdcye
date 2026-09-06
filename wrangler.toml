@@ -5,10 +5,25 @@ pages_build_output_dir = "dist"
 [observability]
 enabled = true
 
+[env.production]
+# Cloudflare Pages Environment Variables
+# Vite inlines VITE_* prefixed variables at build time
+# Build-time vars (available during vite build)
+# These must also be set in: Cloudflare Pages → Settings → Environment Variables
+# for the CI/CD build to work properly
+
 [vars]
 VITE_APP_NAME = "رحماء بينهم"
+VITE_APP_URL = "https://rbdcye.org"
+VITE_NODE_ENV = "production"
+VITE_ENV = "production"
+VITE_API_BASE_URL = "https://rbdcye.org/api/v1"
+VITE_USE_SANITY = "true"
+VITE_ENABLE_PWA = "true"
+VITE_ENABLE_DEMO_AUTH = "false"
 VITE_SANITY_PROJECT_ID = "xd0ohyiz"
 VITE_SANITY_DATASET = "production"
-VITE_SANITY_API_VERSION = "2026-01-01"
-VITE_APP_URL = "https://rbdcye.org"
+VITE_SANITY_API_VERSION = "2026-02-01"
+VITE_STRIPE_PUBLIC_KEY = ""
 CORS_ORIGIN = "https://rbdcye.org,https://www.rbdcye.org,http://localhost:5173"
+SANITY_STUDIO_REVALIDATE_SECRET = "rohamaa-revalidate-secret-2024"

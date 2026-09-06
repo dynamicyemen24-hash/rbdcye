@@ -7,16 +7,16 @@ interface CacheOptions {
   cacheName: string;
 }
 
-interface CacheEntry {
-  key: string;
-  value: any;
+interface CacheEntry<K, V> {
+  key: K;
+  value: V;
   expiry: number;
   tags: string[];
 }
 
 class SmartCacheService {
   private static instance: SmartCacheService;
-  private memoryCache: Map<string, CacheEntry> = new Map();
+  private memoryCache: Map<string, CacheEntry<string, any>> = new Map();
 
   static getInstance(): SmartCacheService {
     if (!SmartCacheService.instance) {
@@ -90,7 +90,7 @@ class SmartCacheService {
       .then((data) => {
         this.memoryCache.set(key, {
           key,
-          value: data,
+          value: data as any,
           expiry: Date.now() + (options?.maxAge || 5 * 60 * 1000),
           tags: [options?.cacheName || "default"],
         });
@@ -100,8 +100,8 @@ class SmartCacheService {
 
   getStats() {
     let totalSize = 0;
-    let oldestEntry: CacheEntry | undefined;
-    let newestEntry: CacheEntry | undefined;
+    let oldestEntry: CacheEntry<string, any> | undefined;
+    let newestEntry: CacheEntry<string, any> | undefined;
 
     for (const entry of this.memoryCache.values()) {
       totalSize += JSON.stringify(entry.value).length;

@@ -13,7 +13,7 @@ interface HealthCheck {
   status: "pass" | "fail" | "warn";
   duration: number;
   message?: string;
-  details?: Record<string, any>;
+  details?: Record<string, unknown>;
 }
 
 class HealthCheckService {

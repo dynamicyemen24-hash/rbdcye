@@ -3,10 +3,11 @@
 
 import { useState } from "react";
 
-// استعارة لأنواع Stripe على النافذ
+// Types declaration for Stripe (declared when needed)
+// Stripe types are loaded dynamically from CDN
 declare global {
   interface Window {
-    Stripe: any;
+    Stripe: any; // Will be typed when Stripe SDK loads
   }
 }
 

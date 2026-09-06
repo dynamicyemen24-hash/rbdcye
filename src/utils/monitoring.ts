@@ -8,7 +8,7 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
-  data?: any;
+  data?: Record<string, unknown>;
   userId?: string;
   sessionId?: string;
   url?: string;
@@ -21,7 +21,7 @@ class Logger {
   private static MAX_LOGS = 100;
 
   // تنسيق الرسالة
-  private format(level: LogLevel, message: string, data?: any): LogEntry {
+  private format(level: LogLevel, message: string, data?: Record<string, unknown>): LogEntry {
     return {
       timestamp: new Date().toISOString(),
       level,
