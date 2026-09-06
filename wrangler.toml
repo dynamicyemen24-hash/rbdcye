@@ -5,12 +5,13 @@ pages_build_output_dir = "dist"
 [observability]
 enabled = true
 
-[env.production]
-# Cloudflare Pages Environment Variables
-# Vite inlines VITE_* prefixed variables at build time
-# Build-time vars (available during vite build)
-# These must also be set in: Cloudflare Pages → Settings → Environment Variables
-# for the CI/CD build to work properly
+# ============================================================
+# Cloudflare Pages Configuration
+# Project: rbdcye.org — مؤسسة رحماء بينهم
+# ============================================================
+# Vite inlines VITE_* prefixed variables at build time.
+# Set real secret values in: Cloudflare Pages → Settings → Environment Variables
+# ============================================================
 
 [vars]
 VITE_APP_NAME = "رحماء بينهم"
