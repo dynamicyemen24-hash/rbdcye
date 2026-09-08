@@ -35,7 +35,17 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M0 30 Q15 10 30 30 Q45 50 60 30 Q75 10 90 30 Q105 50 120 30'/%3E%3Cpath d='M-30 55 Q-15 35 0 55 Q15 75 30 55 Q45 35 60 55 Q75 75 90 55 Q105 35 120 55 Q135 75 150 55'/%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* ── شريط المحراب العلوي (Mihrab Arch Band) ────────────────── */
+/* ── نمط سنااني (Sanaani Arch Pattern) ─────────────────────── */
+.pattern-sanaani-arch {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%230F4C3A' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M40 0 C40 0 80 20 80 50 C80 70 62 80 40 80 C18 80 0 70 0 50 C0 20 40 0 40 0 Z'/%3E%3Cpath d='M40 10 C40 10 70 25 70 48 C70 65 56 73 40 73 C24 73 10 65 10 48 C10 25 40 10 40 10 Z'/%3E%3Ccircle cx='40' cy='40' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── نمط الجيري (Girih Star Pattern) ─────────────────────── */
+.pattern-girih {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23C69E5A' stroke-opacity='0.08' stroke-width='0.8'%3E%3Cpath d='M50 0 L61 17 L81 10 L71 29 L90 38 L71 47 L81 66 L61 59 L50 76 L39 59 L19 66 L29 47 L10 38 L29 29 L19 10 L39 17 Z'/%3E%3Ccircle cx='50' cy='38' r='4'/%3E%3Cpath d='M0 0 L100 100 M100 0 L0 100'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── نمط المحراب العلوي (Mihrab Arch Band) ────────────────── */
 .pattern-band-gold {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8' viewBox='0 0 40 8'%3E%3Cpath d='M20 0 L24 4 L20 8 L16 4 Z' fill='%23C69E5A' fill-opacity='0.85'/%3E%3Ccircle cx='0' cy='4' r='1.2' fill='%23C69E5A' fill-opacity='0.5'/%3E%3Ccircle cx='40' cy='4' r='1.2' fill='%23C69E5A' fill-opacity='0.5'/%3E%3C/svg%3E");
   background-size: 40px 8px;

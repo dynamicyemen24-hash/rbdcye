@@ -16,7 +16,7 @@ const defaultSEO = {
   description:
     "منظمة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ - نعمل على تحقيق التنمية المستدامة ومساعدة المجتمعات المحتاجة في اليمن",
   keywords: ["إغاثة", "تنمية", "يمن", "خير", "تبرعات", "رحماء بينهم"],
-  image: "https://rbdcye.org/og-image.jpg",
+  image: "https://rbdcye.org/og-image.svg",
   url: "https://rbdcye.org",
   type: "website",
 };

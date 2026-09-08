@@ -9,10 +9,10 @@ const VALUES = [
   {
     id: "sincerity",
     title: "الإخلاص",
-    description: "نية صادقة لله تعالى في كل خطوة ومبادرة، نبتغي بها وجه الله وخدمة الأمة.",
+    description: "نية صادقة لله تعالى في كل خطوة ومبادرة، نبتgeh بها وجه الله وخدمة الأمة.",
     icon: Heart,
-    color: "#8F6A1A",
-    bg: "#FDF8EE",
+    color: "var(--brand-gold-dark)",
+    bg: "var(--brand-gold-pale)",
   },
   {
     id: "transparency",
@@ -28,15 +28,15 @@ const VALUES = [
     description: "جودة متميزة بتنفيذ المشاريع، وتطبيق أرفع معايير التخطيط والإنجاز التنموي.",
     icon: Award,
     color: "var(--brand-green)",
-    bg: "#F0FDF4",
+    bg: "var(--brand-green-pale)",
   },
   {
     id: "responsibility",
     title: "المسؤولية",
     description: "أمانة راسخة أمام الله والمجتمع، والتزام كامل بالصيانة التنموية وحفظ الكرامة.",
     icon: Users,
-    color: "#8F6A1A",
-    bg: "#FDF8EE",
+    color: "var(--brand-gold-dark)",
+    bg: "var(--brand-gold-pale)",
   },
   {
     id: "initiative",
@@ -50,7 +50,7 @@ const VALUES = [
 
 export function CoreValues({ onActionClick }: CoreValuesProps) {
   return (
-    <section className="section-padding-lg bg-white relative overflow-hidden font-cairo" dir="rtl">
+    <section className="section-padding-lg bg-[var(--card)] relative overflow-hidden font-cairo" dir="rtl">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--brand-green)]/20 to-transparent pointer-events-none" />
       <div className="absolute inset-0 pattern-sanaani-arch opacity-15 pointer-events-none" />
 
@@ -83,7 +83,7 @@ export function CoreValues({ onActionClick }: CoreValuesProps) {
                 whileTap={{ scale: 0.98 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="bg-white rounded-3xl p-7 border border-[var(--border)] shadow-sm hover:shadow-xl hover:border-[var(--brand-green)]/40 transition-all flex flex-col justify-between text-center group cursor-pointer"
+                className="bg-[var(--card)] rounded-3xl p-7 border border-[var(--border)] shadow-sm hover:shadow-xl hover:border-[var(--brand-green)]/40 transition-all flex flex-col justify-between text-center group cursor-pointer"
               >
                 <div>
                   <div

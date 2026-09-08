@@ -75,6 +75,8 @@
   --brand-gold-rgb: 198, 158, 90;
   --brand-gold-light: #d6b274;
   --brand-gold-light-rgb: 214, 178, 116;
+  --brand-gold-dark: #8f6a1a;
+  --brand-gold-dark-rgb: 143, 106, 26;
   --brand-gold-pale: #f7efe0;
   --brand-parchment: #f8f5ec;
   --brand-ink: #17202a;
@@ -166,6 +168,8 @@
 .dark {
   --background: #0a0f15;
   --foreground: #f5f0e4;
+  --foreground-rgb: 245, 240, 228;
+  --primary-foreground-rgb: 255, 255, 255;
   --card: #141a22;
   --card-foreground: #f5f0e4;
   --popover: #141a22;
@@ -468,14 +472,32 @@
   padding: 0 var(--space-md);
 }
 
+.container-standard {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.section-padding-lg {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
 @media (min-width: 640px) {
   .container-responsive {
+    padding: 0 var(--space-lg);
+  }
+  .container-standard {
     padding: 0 var(--space-lg);
   }
 }
 
 @media (min-width: 1024px) {
   .container-responsive {
+    padding: 0 var(--space-xl);
+  }
+  .container-standard {
     padding: 0 var(--space-xl);
   }
 }

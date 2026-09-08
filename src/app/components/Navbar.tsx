@@ -89,7 +89,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isOverlay ? "bg-gradient-to-b from-[#061F17]/80 to-transparent" : "border-b border-[var(--brand-green)]/8 bg-white/92 shadow-[0_10px_35px_rgba(15,76,58,.08)] backdrop-blur-xl"}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isOverlay ? "bg-gradient-to-b from-[var(--brand-green-dark)]/80 to-transparent" : "border-b border-[var(--brand-green)]/8 bg-[var(--card)]/92 shadow-[0_10px_35px_rgba(15,76,58,.08)] backdrop-blur-xl"}`}
       dir="rtl"
     >
       <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10" aria-label="التصفح الرئيسي">
@@ -98,7 +98,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
             type="button"
             onClick={() => navigate("home")}
             aria-label="العودة إلى الصفحة الرئيسية"
-            className={`rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[#D6A95D] focus-visible:ring-offset-2 ${isOverlay ? "brightness-0 invert" : ""}`}
+            className={`rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[var(--brand-gold)] focus-visible:ring-offset-2 ${isOverlay ? "brightness-0 invert" : ""}`}
           >
             <BrandMark />
           </button>
@@ -112,12 +112,12 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
                   type="button"
                   onClick={() => navigate(id)}
                   aria-current={active ? "page" : undefined}
-                  className={`relative inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 text-xs font-bold transition ${active ? "bg-[var(--brand-green)] text-white shadow-md shadow-[var(--brand-green)]/15" : "text-[#52635D] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"}`}
+                  className={`relative inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 text-xs font-bold transition ${active ? "bg-[var(--brand-green)] text-white shadow-md shadow-[var(--brand-green)]/15" : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"}`}
                 >
                   <Icon className="h-3.5 w-3.5" />
                   <span>{label}</span>
                   {id === "transparency" && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#D6A95D]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)]" />
                   )}
                 </button>
               );
@@ -126,7 +126,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
             <button
               type="button"
               onClick={() => navigate("zakat")}
-              className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-bold text-[var(--brand-gold-dark)] transition hover:bg-[#F7F0DF]"
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-bold text-[var(--brand-gold-dark)] transition hover:bg-[var(--brand-gold-pale)]"
             >
               <Calculator className="h-3.5 w-3.5" />
               <span>حاسبة الزكاة</span>
