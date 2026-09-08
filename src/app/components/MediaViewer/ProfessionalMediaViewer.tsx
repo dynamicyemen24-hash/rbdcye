@@ -154,8 +154,8 @@ export const ProfessionalMediaViewer = memo(
         try {
           const data = await mediaViewerService.fetchAllMedia();
           setMedia(data);
-        } catch (error) {
-          console.error("Failed to fetch media:", error);
+        } catch {
+          // Failed to fetch media
         } finally {
           setLoading(false);
         }
@@ -328,8 +328,8 @@ export const ProfessionalMediaViewer = memo(
       if (videoRef.current) {
         try {
           await videoRef.current.requestPictureInPicture();
-        } catch (error) {
-          console.error("PiP failed:", error);
+        } catch {
+          // PiP not supported
         }
       }
     };

@@ -303,8 +303,8 @@ function getAppMeta(): React.ReactNode {
   return (
     <React.Fragment>
       <meta name="apple-mobile-web-app-capable" content="yes" key="applemawc" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="#0F4C3A" key="applemawssbs" />
-      <meta name="msapplication-TileColor" content="#0F4C3A" key="msatc" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="var(--brand-green)" key="applemawssbs" />
+      <meta name="msapplication-TileColor" content="var(--brand-green)" key="msatc" />
       <meta name="msapplication-config" content="/browserconfig.json" key="maconfig" />
       <meta name="format-detection" content="telephone=no" key="fdt" />
     </React.Fragment>

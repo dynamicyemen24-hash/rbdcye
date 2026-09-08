@@ -2,10 +2,24 @@
 # Allowed crawlers
 User-agent: *
 Allow: /
+
+# Disallow admin and API routes
 Disallow: /admin/
 Disallow: /api/
 Disallow: /donor/
 Disallow: /login
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /__next/
+
+# Disallow search and filter pages (thin content)
+Disallow: /?*
+Disallow: /*?page=
+Disallow: /*?sort=
+Disallow: /*?q=
+
+# Disallow internal search
+Disallow: /search
 
 # Sitemap
 Sitemap: https://rbdcye.org/sitemap.xml
@@ -13,6 +27,34 @@ Sitemap: https://rbdcye.org/sitemap.xml
 # Crawl-delay for polite bots
 User-agent: Googlebot
 Crawl-delay: 1
+Allow: /
 
 User-agent: Bingbot
 Crawl-delay: 2
+Allow: /
+
+# Allow social media crawlers
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Block malicious bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /

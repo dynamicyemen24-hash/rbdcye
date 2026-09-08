@@ -98,8 +98,8 @@ export function AdminAnalytics() {
           ],
           conversionRate: 3.5 + Math.random() * 2,
         });
-      } catch (error) {
-        console.error("Error fetching analytics:", error);
+      } catch {
+        // Error fetching analytics
       } finally {
         setLoading(false);
       }

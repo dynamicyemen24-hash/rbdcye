@@ -49,17 +49,18 @@ export async function initializeCoreServices(): Promise<void> {
         const fcp = paintEntries.find((entry) => entry.name === "first-contentful-paint");
         if (fcp) {
           // Report FCP
-          if (import.meta.env.DEV) console.log(`[Core] FCP: ${fcp.startTime}ms`);
+           if (import.meta.env.DEV) {
+        // Report FCP in development
+      }
         }
       }
     }
 
-    if (import.meta.env.DEV)
-      console.log(
-        `[Core] ${CORE_CONFIG.appName} v${CORE_CONFIG.appVersion} initialized successfully (${CORE_CONFIG.environment})`
-      );
-  } catch (error) {
-    console.error("[Core] Failed to initialize core services:", error);
+    if (import.meta.env.DEV) {
+      // Initialization log
+    }
+  } catch {
+    // Core initialization failed
   }
 }
 

@@ -137,6 +137,7 @@
   },
   "devDependencies": {
     "@esbuild/win32-x64": "^0.25.12",
+    "@playwright/test": "^1.63.0",
     "@rollup/rollup-win32-x64-msvc": "^4.62.2",
     "@tailwindcss/oxide-win32-x64-msvc": "4.1.12",
     "@tailwindcss/vite": "4.1.12",
@@ -171,17 +172,5 @@
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

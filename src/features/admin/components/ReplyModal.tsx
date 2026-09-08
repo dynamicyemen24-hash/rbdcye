@@ -22,8 +22,8 @@ export function ReplyModal({ isOpen, message, onClose, onSend }: ReplyModalProps
     try {
       await onSend(reply);
       setReply("");
-    } catch (error) {
-      console.error("Error sending reply:", error);
+    } catch {
+      // Error sending reply
     } finally {
       setSending(false);
     }

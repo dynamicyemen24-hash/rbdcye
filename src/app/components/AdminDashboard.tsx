@@ -942,8 +942,8 @@ function GenericSection({
     try {
       const data = await service.getAll();
       setItems(data);
-    } catch (error) {
-      console.error(`Error loading ${title}:`, error);
+    } catch {
+      // Error loading items
     } finally {
       setLoading(false);
     }
@@ -1015,10 +1015,9 @@ function GenericSection({
               }
               await loadItems();
               setEditModal(null);
-            } catch (error) {
-              console.error(`Error saving ${title}:`, error);
-              alert(`حدث خطأ أثناء حفظ ${title}`);
-            }
+    } catch {
+      // Error saving items
+    }
           }}
           onCancel={() => setEditModal(null)}
         />
@@ -1044,9 +1043,9 @@ function DashboardOverview({ onNavigate }: { onNavigate: (id: string) => void })
         ]);
         setMetrics(metricsData);
         setCharts(chartData);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
+    } catch {
+      // Error fetching dashboard data
+    } finally {
         setLoading(false);
       }
     };
@@ -1383,8 +1382,8 @@ export function AdminDashboard({
     try {
       const data = await donationsService.getAll();
       setDonations(data);
-    } catch (error) {
-      console.error("Error loading donations:", error);
+    } catch {
+      // Error loading donations
     } finally {
       setDonationsLoading(false);
     }
@@ -1395,8 +1394,8 @@ export function AdminDashboard({
     try {
       const data = await requestsService.getAll();
       setRequests(data);
-    } catch (error) {
-      console.error("Error loading requests:", error);
+    } catch {
+      // Error loading requests
     } finally {
       setRequestsLoading(false);
     }
@@ -1407,8 +1406,8 @@ export function AdminDashboard({
     try {
       const data = await volunteersService.getAll();
       setVolunteers(data);
-    } catch (error) {
-      console.error("Error loading volunteers:", error);
+    } catch {
+      // Error loading volunteers
     } finally {
       setVolunteersLoading(false);
     }
@@ -1419,8 +1418,8 @@ export function AdminDashboard({
     try {
       const data = await subscribersService.getAll();
       setSubscribers(data);
-    } catch (error) {
-      console.error("Error loading subscribers:", error);
+    } catch {
+      // Error loading subscribers
     } finally {
       setSubscribersLoading(false);
     }
@@ -1431,8 +1430,8 @@ export function AdminDashboard({
     try {
       const data = await usersService.getAll();
       setUsers(data);
-    } catch (error) {
-      console.error("Error loading users:", error);
+    } catch {
+      // Error loading users
     } finally {
       setUsersLoading(false);
     }
@@ -1443,8 +1442,8 @@ export function AdminDashboard({
     try {
       const data = await reportsService.getAll();
       setReports(data);
-    } catch (error) {
-      console.error("Error loading reports:", error);
+    } catch {
+      // Error loading reports
     } finally {
       setReportsLoading(false);
     }
@@ -1455,8 +1454,8 @@ export function AdminDashboard({
     try {
       const data = await mediaService.getAll();
       setMedia(data);
-    } catch (error) {
-      console.error("Error loading media:", error);
+    } catch {
+      // Error loading media
     } finally {
       setMediaLoading(false);
     }
@@ -1467,8 +1466,8 @@ export function AdminDashboard({
     try {
       const data = await newsService.getAll();
       setNews(data);
-    } catch (error) {
-      console.error("Error loading news:", error);
+    } catch {
+      // Error loading news
     } finally {
       setNewsLoading(false);
     }
@@ -1521,8 +1520,8 @@ export function AdminDashboard({
       setShowAddModal(false);
       await loadDonations();
       toast.success("تم تسجيل التبرع بنجاح");
-    } catch (error) {
-      console.error("Error saving donation:", error);
+    } catch {
+      // Error saving donation
       toast.error("حدث خطأ أثناء حفظ التبرع");
     }
   };
@@ -1551,8 +1550,8 @@ export function AdminDashboard({
       toast.success(
         action === "completed" ? "تم قبول التبرع وإرسال إشعار للمتبرع" : "تم رفض التبرع"
       );
-    } catch (error) {
-      console.error("Error updating donation status:", error);
+    } catch {
+      // Error updating donation status
       toast.error("حدث خطأ أثناء تحديث حالة التبرع");
     }
   };
@@ -1561,8 +1560,8 @@ export function AdminDashboard({
     try {
       await requestsService.update(id, { status } as any);
       await loadRequests();
-    } catch (error) {
-      console.error("Error updating request status:", error);
+    } catch {
+      // Error updating request status
     }
   };
 
@@ -1571,8 +1570,8 @@ export function AdminDashboard({
     try {
       await volunteersService.update(id, { status: newStatus } as any);
       await loadVolunteers();
-    } catch (error) {
-      console.error("Error toggling volunteer status:", error);
+    } catch {
+      // Error toggling volunteer status
     }
   };
 
@@ -1581,8 +1580,8 @@ export function AdminDashboard({
     try {
       await subscribersService.update(id, { status: newStatus } as any);
       await loadSubscribers();
-    } catch (error) {
-      console.error("Error toggling subscriber status:", error);
+    } catch {
+      // Error toggling subscriber status
     }
   };
 
@@ -1591,8 +1590,8 @@ export function AdminDashboard({
     try {
       await usersService.update(user.id, { status: newStatus } as any);
       await loadUsers();
-    } catch (error) {
-      console.error("Error toggling user status:", error);
+    } catch {
+      // Error fetching dashboard data
     }
   };
 
@@ -2010,8 +2009,8 @@ export function AdminDashboard({
                     }
                     await loadNews();
                     setEditModal(null);
-                  } catch (error) {
-                    console.error("Error saving news:", error);
+                  } catch {
+                    // Error saving news
                     alert("حدث خطأ أثناء حفظ الخبر");
                   }
                 }}
@@ -2191,8 +2190,8 @@ export function AdminDashboard({
                     }
                     await loadReports();
                     setEditModal(null);
-                  } catch (error) {
-                    console.error("Error saving report:", error);
+                  } catch {
+                    // Error saving report
                     alert("حدث خطأ أثناء حفظ التقرير");
                   }
                 }}
@@ -2314,8 +2313,8 @@ export function AdminDashboard({
                     }
                     await loadMedia();
                     setEditModal(null);
-                  } catch (error) {
-                    console.error("Error saving media:", error);
+                  } catch {
+                    // Error saving media
                     alert("حدث خطأ أثناء حفظ الوسيط");
                   }
                 }}
@@ -2646,9 +2645,9 @@ export function AdminDashboard({
                       });
                       await loadUsers();
                       setEditModal(null);
-                    } catch (error) {
-                      console.error("Error creating user:", error);
-                      alert("حدث خطأ أثناء إضافة المستخدم");
+    } catch {
+      // Error creating user
+      alert("حدث خطأ أثناء إضافة المستخدم");
                     }
                   }}
                   onCancel={() => setEditModal(null)}

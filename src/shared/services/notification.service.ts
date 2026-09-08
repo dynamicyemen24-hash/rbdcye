@@ -48,7 +48,7 @@ class NotificationService {
         this.swRegistration = await navigator.serviceWorker.register("/sw.js", {
           scope: "/",
         });
-        if (import.meta.env.DEV) console.log("Service Worker registered for notifications");
+        // Service worker registered
       } catch {
         // Service worker registration failed
       }
@@ -126,8 +126,7 @@ class NotificationService {
       await this.sendSubscriptionToServer(this.subscription);
 
       return this.subscription;
-    } catch (error) {
-      console.error("Failed to subscribe to push notifications:", error);
+    } catch {
       return null;
     }
   }
@@ -142,8 +141,8 @@ class NotificationService {
         await sub.unsubscribe();
       }
       this.subscription = null;
-    } catch (error) {
-      console.error("Failed to unsubscribe:", error);
+    } catch {
+      // Unsubscribe failed
     }
   }
 

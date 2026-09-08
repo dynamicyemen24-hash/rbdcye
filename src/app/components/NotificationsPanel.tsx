@@ -43,8 +43,8 @@ export default function NotificationsPanel({
         // Fallback to empty array
         setNotifications([]);
       }
-    } catch (error) {
-      console.error("Error loading notifications:", error);
+    } catch {
+      // Error loading notifications
       setNotifications([]);
     } finally {
       setLoading(false);
@@ -59,8 +59,8 @@ export default function NotificationsPanel({
           n.id === id ? { ...n, status: "read" as const, read_at: new Date().toISOString() } : n
         )
       );
-    } catch (error) {
-      console.error("Error marking notification as read:", error);
+    } catch {
+      // Error marking notification as read
     }
   };
 
@@ -74,8 +74,8 @@ export default function NotificationsPanel({
             : n
         )
       );
-    } catch (error) {
-      console.error("Error marking all as read:", error);
+    } catch {
+      // Error marking all as read
     }
   };
 
@@ -85,8 +85,8 @@ export default function NotificationsPanel({
       setNotifications((prev) =>
         prev.map((n) => (n.id === id ? { ...n, status: "archived" as const } : n))
       );
-    } catch (error) {
-      console.error("Error archiving notification:", error);
+    } catch {
+      // Error archiving notification
     }
   };
 

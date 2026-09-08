@@ -507,9 +507,8 @@ export const VideoShowcase = memo(
           // اختيار فيديو القصة
           const storyVideo = videoArray.find((v) => v.isStoryVideo && v.isFeatured);
           if (storyVideo) setActiveVideo(storyVideo);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          // لا تستخدم بيانات ثابتة - أظهر رسالة خطأ بدلاً من ذلك
+        } catch {
+          // Error fetching data
           setVideos([]);
           setFilteredVideos([]);
         } finally {

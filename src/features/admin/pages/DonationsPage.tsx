@@ -41,8 +41,8 @@ export default function DonationsPage() {
       const completed = data.filter((d: Donation) => d.status === "completed").length;
 
       setStats({ total, amount, pending, completed });
-    } catch (err) {
-      console.error("Error fetching donations:", err);
+    } catch {
+      // Error fetching donations - state will reflect loading=false
     } finally {
       setLoading(false);
     }
@@ -56,8 +56,8 @@ export default function DonationsPage() {
     try {
       await donationsQueries.updateStatus(String(id), status);
       fetchDonations();
-    } catch (err) {
-      console.error("Error updating donation:", err);
+    } catch {
+      // Error updating donation status
     }
   };
 

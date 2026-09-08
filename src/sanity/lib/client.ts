@@ -18,12 +18,7 @@ export async function sanityFetch<QueryString extends string>({
   query: QueryString;
   params?: QueryParams;
 }): Promise<ReturnType<typeof client.fetch<QueryString>>> {
-  try {
-    return await client.fetch(query, params);
-  } catch (error) {
-    console.error("[Sanity] Fetch error:", error);
-    throw error;
-  }
+  return await client.fetch(query, params);
 }
 
 /**

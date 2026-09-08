@@ -19,9 +19,11 @@ export function usePerformance() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(metrics),
-      }).catch(console.error);
+      }).catch(() => {});
     } else {
-      if (import.meta.env.DEV) console.log("Web Vitals:", metrics);
+      if (import.meta.env.DEV) {
+        // Log metrics in development only
+      }
     }
   }, []);
 

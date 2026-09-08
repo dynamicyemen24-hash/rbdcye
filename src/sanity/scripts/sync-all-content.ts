@@ -41,9 +41,7 @@ class ContentSync {
   private results: SyncResult[] = [];
   private uploadedImages = new Map<string, string>(); // Cache for uploaded images
 
-  async syncAll(): Promise<void> {
-    console.log("🚀 بدء مزامنة المحتوى إلى Sanity...\n");
-
+async syncAll(): Promise<void> {
     await this.syncNews();
     await this.syncSuccessStories();
     await this.syncPartners();
@@ -53,8 +51,6 @@ class ContentSync {
     await this.syncMedia();
     await this.syncDonations();
     await this.syncVolunteers();
-
-    this.printSummary();
   }
 
   /**
@@ -71,8 +67,6 @@ class ContentSync {
     }
 
     try {
-      console.log(`  📸 رفع الصورة: ${imageUrl.substring(0, 60)}...`);
-
       // Download image
       const response = await fetch(imageUrl);
       if (!response.ok) {
@@ -95,7 +89,6 @@ class ContentSync {
       const imageRef = asset._id;
       this.uploadedImages.set(imageUrl, imageRef);
 
-      console.log(`    ✅ تم رفع الصورة: ${asset._id}`);
       return imageRef;
     } catch {
       // Failed to upload image, return placeholder
@@ -155,7 +148,7 @@ class ContentSync {
           });
 
           result.created++;
-          console.log(`  ✅ تم إنشاء خبر: ${item.title.substring(0, 50)}...`);
+        // Success logged silently
         } catch (error) {
           result.errors.push(`فشل إنشاء الخبر ${item.id}: ${error}`);
         }

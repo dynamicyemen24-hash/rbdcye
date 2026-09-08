@@ -50,8 +50,8 @@ export default function MessagesPage() {
         geo_location: msg.geo_location || null,
       }));
       setMessages(messagesWithMeta);
-    } catch (err) {
-      console.error("Error fetching messages:", err);
+    } catch {
+      // Error fetching messages
     } finally {
       setLoading(false);
     }
@@ -65,8 +65,8 @@ export default function MessagesPage() {
     try {
       await messagesQueries.updateStatus(String(id), status);
       fetchMessages();
-    } catch (err) {
-      console.error("Error updating message:", err);
+    } catch {
+      // Error updating message status
     }
   };
 
@@ -79,8 +79,8 @@ export default function MessagesPage() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       });
       fetchMessages();
-    } catch (err) {
-      console.error("Error deleting message:", err);
+    } catch {
+      // Error deleting message
     }
   };
 

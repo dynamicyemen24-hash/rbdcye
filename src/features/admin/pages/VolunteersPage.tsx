@@ -27,8 +27,8 @@ export default function VolunteersPage() {
     try {
       const result = await volunteersQueries.findAll(100, 0);
       setVolunteers(result.rows || []);
-    } catch (err) {
-      console.error("Error fetching volunteers:", err);
+    } catch {
+      // Error fetching volunteers
     } finally {
       setLoading(false);
     }
@@ -42,8 +42,8 @@ export default function VolunteersPage() {
     try {
       await volunteersQueries.updateStatus(String(id), status);
       fetchVolunteers();
-    } catch (err) {
-      console.error("Error updating volunteer:", err);
+    } catch {
+      // Error updating volunteer status
     }
   };
 

@@ -61,8 +61,8 @@ export const AdminStats = () => {
         },
         performance: 95,
       });
-    } catch (err) {
-      console.error("Error fetching stats:", err);
+    } catch {
+      // Error fetching stats
       setError("فشل تحميل البيانات من قاعدة البيانات");
     } finally {
       setLoading(false);

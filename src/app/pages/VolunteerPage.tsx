@@ -91,20 +91,18 @@ export default function VolunteerPage() {
     };
   }, []);
 
-  // Turnstile verification
+  // Turnstile verification — server-side via Cloudflare Pages Function
   async function verifyTurnstile(token: string) {
     try {
-      const response = await fetch("https://challenges.cloudflare.com/v1/siteverify", {
+      const response = await fetch("/api/verify-turnstile", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `secret=${process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SECRET}&response=${token}`,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
       });
       const data = await response.json();
       setTurnstileVerified(data.success ?? false);
       if (!data.success) {
-        setTurnstileError("التحقق منTURNSTILE فشل يرجى المحاولة مرة أخرى");
+        setTurnstileError("التحقق من TURNSTILE فشل يرجى المحاولة مرة أخرى");
       }
     } catch (err) {
       setTurnstileError("حدث خطأ في التحقق من TURNSTILE");

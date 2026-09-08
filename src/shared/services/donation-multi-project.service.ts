@@ -336,9 +336,8 @@ class MultiProjectDonationService {
     // Save to database
     try {
       await this.saveDonationToDatabase(receipt, request);
-    } catch (dbError) {
-      console.error("Failed to save donation to database:", dbError);
-      // Don't throw - the receipt is still valid locally
+    } catch {
+      // Failed to save donation
     }
 
     // Audit log

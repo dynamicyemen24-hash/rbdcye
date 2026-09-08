@@ -38,7 +38,7 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     projectsCount: 0,
     beneficiaries: 0,
     sector: "الإغاثة والأمن الغذائي",
-    sectorColor: "#0F4C3A",
+    sectorColor: "var(--brand-green)",
     projects: [
       {
         title: "مشروع السلال الغذائية الشهرية الدورية",
@@ -71,7 +71,7 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     projectsCount: 0,
     beneficiaries: 0,
     sector: "المياه والإصلاح البيئي",
-    sectorColor: "#0284C7",
+    sectorColor: "var(--brand-green)",
     projects: [
       {
         title: "حفر وتجهيز آبار المياه بالطاقة الشمسية",
@@ -371,7 +371,7 @@ export const YEMEN_MAP_GOVERNORATES: GovernorateProjectData[] = [
     projectsCount: 0,
     beneficiaries: 0,
     sector: "سقيا الماء والدعم الاجتماعي",
-    sectorColor: "#0284C7",
+    sectorColor: "var(--brand-green)",
     projects: [
       {
         title: "تأهيل شبكات المياه القروية",
@@ -664,12 +664,12 @@ export function InteractiveMap() {
                   "تمكين اقتصادي",
                 ].map((sector) => {
                   const sectorMap: Record<string, string> = {
-                    "إغاثة وأمن غذائي": "#0F4C3A",
-                    "مياه وإصحاح بيئي": "#0284C7",
-                    "صحة واستجابة طارئة": "#0F4C3A",
-                    "إغاثة وسقيا الماء": "#C69E5A",
-                    "تعليم وتنمية": "#7C3AED",
-                    "تمكين اقتصادي": "#C69E5A",
+                    "إغاثة وأمن غذائي": "var(--brand-green)",
+                    "مياه وإصحاح بيئي": "var(--brand-green)",
+                    "صحة واستجابة طارئة": "var(--brand-green)",
+                    "إغاثة وسقيا الماء": "var(--brand-gold)",
+                    "تعليم وتنمية": "var(--brand-green)",
+                    "تمكين اقتصادي": "var(--brand-gold)",
                   };
                   const isSelected = selectedSector === sector;
                   return (

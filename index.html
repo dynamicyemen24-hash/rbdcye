@@ -73,6 +73,13 @@
       .app-loader{display:none}
     </style>
 
+    <!-- Security: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(self)" />
+
     <!-- JSON-LD Structured Data: Organization -->
     <script type="application/ld+json">
       {
@@ -149,7 +156,10 @@
     </script>
   </head>
   <body>
-    <div id="root">
+    <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي">
+      انتقل إلى المحتوى الرئيسي
+    </a>
+    <div id="root" role="application" aria-label="موقع مؤسسة رحماء بينهم الإلكتروني">
       <div class="app-loader" aria-label="جاري التحميل"></div>
     </div>
     <noscript>

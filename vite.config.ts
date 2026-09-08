@@ -19,7 +19,7 @@ export default defineConfig({
     compression({ algorithm: 'brotliCompress', ext: '.br', deleteOriginFile: false, threshold: 1024, verbose: false }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon-32x32.png', 'favicon-16x16.png', 'robots.txt', 'offline.html'],
+      includeAssets: ['favicon.svg', 'favicon-32x32.png', 'favicon-16x16.png', 'robots.txt', 'offline.html', 'sitemap.xml', 'manifest.json'],
       manifest: {
         name: 'رحماء بينهم',
         short_name: 'رحماء بينهم',
@@ -100,7 +100,7 @@ export default defineConfig({
         drop_debugger: true,
       },
     },
-    reportCompressedSize: false,
+    reportCompressedSize: true,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -130,7 +130,7 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 500,
+    chunkSizeWarningLimit: 400,
     cssCodeSplit: true,
     assetsInlineLimit: 4096,
   },

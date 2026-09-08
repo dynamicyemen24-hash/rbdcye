@@ -2,11 +2,20 @@
 // Subscribers API - Cloudflare Pages Functions
 // Route: POST /api/subscribers
 // Adds/updates a newsletter subscriber in Neon Postgres.
+// Uses context.env (Workers bindings) - NOT process.env.
 // ============================================================
-import { query } from './database.js';
+import { createQuery } from './database.js';
 
-const ALLOWED_ORIGINS =
-  process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173', 'https://rbdcye.org'];
+function allowedOrigins(env) {
+  return (
+    env?.CORS_ORIGIN?.split(',') || [
+      'http://localhost:5173',
+      'https://rbdcye.org',
+      'https://www.rbdcye.org',
+      'https://rbdcye.pages.dev',
+    ]
+  );
+}
 
 export async function onRequestOptions() {
   return new Response(null, {
@@ -21,9 +30,10 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestPost(context) {
-  const { request } = context;
+  const { request, env } = context;
   const origin = request.headers.get('Origin');
-  const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const list = allowedOrigins(env);
+  const allowOrigin = origin && list.includes(origin) ? origin : list[0];
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': allowOrigin,
@@ -51,6 +61,7 @@ export async function onRequestPost(context) {
       );
     }
 
+    const query = createQuery(env);
     const result = await query(
       `INSERT INTO subscribers (email, name, phone, country, subscribed_at, status)
        VALUES ($1, $2, $3, $4, NOW(), 'active')

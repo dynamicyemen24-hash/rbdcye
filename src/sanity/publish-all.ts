@@ -13,10 +13,7 @@ const client = createClient({
 });
 
 async function publishAll() {
-  console.log("📦 Publishing all drafts...\n");
-
   const drafts = await client.fetch(`*[_id in path("drafts.**")] { _id, _type, title }`);
-  console.log(`Found ${drafts.length} drafts\n`);
 
   let published = 0;
   let skipped = 0;
@@ -30,28 +27,19 @@ async function publishAll() {
         _type: d._type,
       });
       await client.delete(d._id);
-      console.log(`✅ Published: ${d.title || d._type} (${pubId})`);
       published++;
     } catch (e: any) {
       if (e.message?.includes("already exists")) {
         // Document already published, just delete draft
         await client.delete(d._id);
-        console.log(`⏭️ Already published, draft deleted: ${d.title || d._type}`);
         skipped++;
-      } else {
-        console.log(`❌ Failed: ${d._id} - ${e.message}`);
       }
     }
   }
 
-  console.log(`\n📊 Summary:`);
-  console.log(`   Published: ${published}`);
-  console.log(`   Skipped (already published): ${skipped}`);
-  console.log(`   Total processed: ${drafts.length}`);
   process.exit(0);
 }
 
-publishAll().catch((err) => {
-  console.error("❌ Error:", err);
+publishAll().catch(() => {
   process.exit(1);
 });

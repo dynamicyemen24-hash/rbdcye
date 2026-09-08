@@ -1,4 +1,4 @@
-// PWA Utilities - مركز PWA متكامل
+// PWA Utilities - مركز PWA متكامل مع استراتيجيات caching محسّنة
 import { useEffect, useState } from "react";
 
 // Network status hook
@@ -25,7 +25,6 @@ export function useNetworkStatus() {
 export function getConnectionQuality(): "excellent" | "good" | "slow" | "offline" {
   if (!navigator.onLine) return "offline";
 
-  // Type assertion for connection API which may not be available in all browsers
   const connection = (navigator as { connection?: { effectiveType?: string; downlink?: number } })
     .connection;
   if (!connection) return "good";
@@ -37,16 +36,60 @@ export function getConnectionQuality(): "excellent" | "good" | "slow" | "offline
   return "slow";
 }
 
-// Register service worker
+// Register service worker with advanced caching strategies
 export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | null> {
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
     try {
       const registration = await navigator.serviceWorker.register("/sw.js", {
         scope: "/",
       });
+
+      // Enable background sync for offline submissions
+      if ("sync" in registration) {
+        try {
+          await (registration as any).sync.register("form-sync");
+        } catch {
+          // Background sync not available
+        }
+      }
+
+      // Enable periodic background sync for content updates
+      if ("periodicSync" in (registration as any).sync) {
+        try {
+          await (registration as any).periodicSync.register("content-update", {
+            minInterval: 60 * 60 * 1000, // 1 hour
+          });
+        } catch {
+          // Periodic sync not available
+        }
+      }
+
+      // Listen for updates
+      registration.addEventListener("updatefound", () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener("statechange", () => {
+            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+              // New content available
+              if ("Notification" in window) {
+                try {
+                  new Notification("تحديث جديد متوفر", {
+                    body: "الموقع لديه تحديث جديد. هل تريد التحديث الآن؟",
+                    tag: "rbdcye-update",
+                    requireInteraction: true,
+                  });
+                } catch {
+                  // Notification not supported
+                }
+              }
+            }
+          });
+        }
+      });
+
       return registration;
-    } catch (error) {
-      console.error("SW registration failed:", error);
+    } catch {
+      // Service Worker registration failed silently
     }
   }
   return null;
@@ -67,8 +110,8 @@ export async function registerBackgroundSync(tag: string, data?: any): Promise<v
     try {
       const registration = await navigator.serviceWorker.ready;
       await (registration as any).sync.register(tag);
-    } catch (error) {
-      console.error("Background sync registration failed:", error);
+    } catch {
+      // Background sync not supported
     }
   }
 }
@@ -86,8 +129,7 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
       ),
     });
     return subscription;
-  } catch (error) {
-    console.error("Push subscription failed:", error);
+  } catch {
     return null;
   }
 }
@@ -112,8 +154,8 @@ export async function setAppBadge(count: number): Promise<void> {
   if ("setAppBadge" in navigator) {
     try {
       await (navigator as any).setAppBadge(count);
-    } catch (error) {
-      console.error("Badge API error:", error);
+    } catch {
+      // Badge API not supported or denied
     }
   }
 }
@@ -122,8 +164,8 @@ export async function clearAppBadge(): Promise<void> {
   if ("clearAppBadge" in navigator) {
     try {
       await (navigator as any).clearAppBadge();
-    } catch (error) {
-      console.error("Badge clear error:", error);
+    } catch {
+      // Badge API not supported or denied
     }
   }
 }
@@ -150,8 +192,8 @@ export async function requestWakeLock(): Promise<WakeLockSentinel | null> {
   if ("wakeLock" in navigator) {
     try {
       return await navigator.wakeLock.request("screen");
-    } catch (error) {
-      console.error("Wake lock error:", error);
+    } catch {
+      return null;
     }
   }
   return null;
@@ -215,6 +257,40 @@ export function useInstallPrompt() {
   };
 
   return { installPrompt: !!installPrompt, promptInstall };
+}
+
+// Cache strategy helper for service worker
+export const CACHE_STRATEGIES = {
+  // Cache-first for static assets
+  CACHE_FIRST: "CacheFirst",
+  // Network-first for dynamic data
+  NETWORK_FIRST: "NetworkFirst",
+  // Stale-while-revalidate for content
+  STALE_WHILE_REVALIDATE: "StaleWhileRevalidate",
+  // Network-only for API calls that must be fresh
+  NETWORK_ONLY: "NetworkOnly",
+  // Cache-only for offline fallback
+  CACHE_ONLY: "CacheOnly",
+} as const;
+
+// Prefetch strategy based on connection quality
+export function getPrefetchStrategy(): {
+  prefetchImages: boolean;
+  prefetchPages: boolean;
+  prefetchFonts: boolean;
+} {
+  const quality = getConnectionQuality();
+
+  switch (quality) {
+    case "excellent":
+      return { prefetchImages: true, prefetchPages: true, prefetchFonts: true };
+    case "good":
+      return { prefetchImages: true, prefetchPages: false, prefetchFonts: true };
+    case "slow":
+      return { prefetchImages: false, prefetchPages: false, prefetchFonts: false };
+    case "offline":
+      return { prefetchImages: false, prefetchPages: false, prefetchFonts: false };
+  }
 }
 
 interface BeforeInstallPromptEvent extends Event {

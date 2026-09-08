@@ -10,6 +10,10 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self'
+  X-DNS-Prefetch-Control: on
+  X-Permitted-Cross-Domain-Policies: none
+  X-Request-Id: $request_id
+  X-Runtime: $runtime
 
 # Cache static assets aggressively
 /assets/*
@@ -46,3 +50,31 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
+
+# External API endpoints - shorter cache for fresh data
+/api/stripe/*
+  Cache-Control: no-cache, no-store, must-revalidate
+/api/sanity/*
+  Cache-Control: public, max-age=60, stale-while-revalidate=300
+/api/supabase/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Sanity CDN assets
+https://cdn.sanity.io/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+https://xd0ohyiz.apicdn.sanity.io/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+# Stripe assets
+https://js.stripe.com/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=172800
+https://hooks.stripe.com/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=172800
+
+# Font assets
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images
+/images/*
+  Cache-Control: public, max-age=31536000, immutable

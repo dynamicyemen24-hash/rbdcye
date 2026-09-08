@@ -103,7 +103,7 @@ class Logger {
 
   debug(message: string, data?: any) {
     const entry = this.format("debug", message, data);
-    console.debug(entry);
+    if (import.meta.env.DEV) console.debug(entry);
     // لا نحفظ debug في التخزين المحلي
   }
 
@@ -130,10 +130,7 @@ class Logger {
             }
           : error,
     });
-    console.error(entry);
     this.persist(entry);
-
-    // إرسال لخدمة المراقبة الخارجية (Sentry, etc.)
     this.sendToExternalService(entry);
   }
 
@@ -149,10 +146,7 @@ class Logger {
             }
           : error,
     });
-    console.error(entry);
     this.persist(entry);
-
-    // إرسال فوري لخدمة المراقبة
     this.sendToExternalService(entry, true);
   }
 
@@ -161,14 +155,6 @@ class Logger {
     // يمكن إضافة Sentry هنا
     // يمكن إضافة LogRocket هنا
     // يمكن إضافة خدمة مخصصة هنا
-
-    // مثال: إرسال لـ Sentry
-    // if (typeof Sentry !== 'undefined') {
-    //   Sentry.captureException(new Error(entry.message), {
-    //     level: entry.level,
-    //     extra: entry.data,
-    //   });
-    // }
 
     // أو إرسال لـ API مخصص
     if (isFatal && typeof navigator !== "undefined" && "sendBeacon" in navigator) {

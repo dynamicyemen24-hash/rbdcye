@@ -94,8 +94,8 @@ export const VideoManager = () => {
         published: v.filter((x: VideoItem) => x.status === "published").length,
         drafts: v.filter((x: VideoItem) => x.status === "draft" || !x.status).length,
       });
-    } catch (err) {
-      console.error("Failed to fetch videos:", err);
+    } catch {
+      // Failed to fetch videos
       setError("فشل تحميل بيانات الفيديو من Sanity");
     } finally {
       setLoading(false);
@@ -110,8 +110,8 @@ export const VideoManager = () => {
     try {
       await sanityClient.patch(video._id).set({ isFeatured: !video.isFeatured }).commit();
       fetchVideos();
-    } catch (err) {
-      console.error("Failed to toggle featured:", err);
+    } catch {
+      // Failed to toggle featured status
     }
   };
 
@@ -120,8 +120,8 @@ export const VideoManager = () => {
     try {
       await sanityClient.patch(video._id).set({ status: newStatus }).commit();
       fetchVideos();
-    } catch (err) {
-      console.error("Failed to toggle status:", err);
+    } catch {
+      // Failed to toggle status
     }
   };
 

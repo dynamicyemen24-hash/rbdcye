@@ -262,8 +262,8 @@ class DomainEventBus {
     handlers.forEach((handler) => {
       try {
         handler(event);
-      } catch (error) {
-        console.error(`Error handling ${event.type}:`, error);
+      } catch {
+        // Error handling event
       }
     });
   }
@@ -277,8 +277,6 @@ export const domainEventBus = DomainEventBus.getInstance();
 class ProjectCreatedHandler {
   handle(event: DomainEvent) {
     const { title } = event.data;
-    console.log(`[ProjectCreated] New project: ${title}`);
-
     // Send notification
     // Update analytics
     // Create related entities
@@ -288,8 +286,6 @@ class ProjectCreatedHandler {
 class ProjectProgressUpdatedHandler {
   handle(event: DomainEvent) {
     const { newProgress } = event.data;
-    console.log(`[ProgressUpdate] Project progress: ${newProgress}%`);
-
     // Update dashboard stats
     // Check milestone completion
     // Send progress report
@@ -366,15 +362,12 @@ class UnitOfWork {
 
   private async persist(aggregate: any): Promise<void> {
     // Persist to database
-    console.log(`[UoW] Persisting ${aggregate.constructor.name}`);
   }
 
   private async update(aggregate: any): Promise<void> {
-    console.log(`[UoW] Updating ${aggregate.constructor.name}`);
   }
 
   private async remove(aggregate: any): Promise<void> {
-    console.log(`[UoW] Removing ${aggregate.constructor.name}`);
   }
 }
 

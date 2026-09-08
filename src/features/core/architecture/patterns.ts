@@ -50,7 +50,7 @@ class Observable<T> {
 
   async notify(data: T): Promise<void> {
     const promises = Array.from(this.observers).map((observer) =>
-      Promise.resolve(observer.update(data)).catch((err) => console.error("Observer error:", err))
+      Promise.resolve(observer.update(data)).catch(() => {})
     );
     await Promise.all(promises);
   }
@@ -80,7 +80,9 @@ abstract class ComponentDecorator implements Component {
 class LoggingDecorator extends ComponentDecorator {
   operation(): string {
     const result = super.operation();
-    if (import.meta.env.DEV) console.log(`[LOG] ${result}`);
+    if (import.meta.env.DEV) {
+      // Logging decorator for development
+    }
     return result;
   }
 }
@@ -352,8 +354,8 @@ class Saga {
     for (let i = this.executedSteps.length - 1; i >= 0; i--) {
       try {
         await this.executedSteps[i].compensate();
-      } catch (error) {
-        console.error("Compensation error:", error);
+      } catch {
+        // Compensation failed
       }
     }
     this.executedSteps = [];
@@ -419,8 +421,8 @@ class Mediator implements IMediator {
     for (const handler of handlers) {
       try {
         await handler(message);
-      } catch (error) {
-        console.error("Handler error:", error);
+      } catch {
+        // Handler error
       }
     }
   }

@@ -78,10 +78,12 @@ export function Footer({ setCurrentPage }: FooterProps) {
         direction: "rtl",
         background: "linear-gradient(180deg, var(--brand-green-dark) 0%, var(--brand-green) 100%)",
       }}
+      role="contentinfo"
+      aria-label="تذييل الموقع - معلومات التواصل والروابط السريعة"
     >
-      <div className="absolute inset-0 pattern-khatam-white opacity-[0.06] pointer-events-none" />
-      <div className="absolute top-0 inset-x-0 h-1.5 pattern-band-gold pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+       <div className="absolute inset-0 pattern-khatam-white opacity-[0.06] pointer-events-none" />
+       <div className="absolute top-0 inset-x-0 h-1.5 pattern-band-gold pointer-events-none" />
+       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Top Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}

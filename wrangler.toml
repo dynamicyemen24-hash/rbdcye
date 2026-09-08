@@ -27,4 +27,4 @@ VITE_SANITY_DATASET = "production"
 VITE_SANITY_API_VERSION = "2026-02-01"
 VITE_STRIPE_PUBLIC_KEY = ""
 CORS_ORIGIN = "https://rbdcye.org,https://www.rbdcye.org,http://localhost:5173"
-SANITY_STUDIO_REVALIDATE_SECRET = "rohamaa-revalidate-secret-2024"
+# SANITY_STUDIO_REVALIDATE_SECRET — set in Cloudflare Pages dashboard, NOT here

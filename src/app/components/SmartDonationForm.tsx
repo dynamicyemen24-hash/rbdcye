@@ -274,10 +274,9 @@ export function SmartDonationForm({
       });
 
       setIsSuccess(true);
-    } catch (err: any) {
-      console.error("Stripe Donation Error:", err);
+    } catch {
       setErrorMsg(
-        err.message || "حدث خطأ غير متوقع أثناء معالجة الدفع عبر Stripe. يرجى المحاولة مرة أخرى."
+        "حدث خطأ غير متوقع أثناء معالجة الدفع عبر Stripe. يرجى المحاولة مرة أخرى."
       );
     } finally {
       setIsSubmitting(false);

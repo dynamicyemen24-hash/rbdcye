@@ -64,9 +64,8 @@ export const dashboardEnhancedService = {
         newsCount: news.length,
         storiesCount: stories.length,
       };
-    } catch (error) {
-      console.error("All dashboard data sources failed:", error);
-      // Return empty metrics as last resort
+    } catch {
+      // All data sources failed, return empty metrics
       return {
         totalBeneficiaries: 0,
         activeProjects: 0,
@@ -128,8 +127,7 @@ export const dashboardEnhancedService = {
 
     // Refresh all entities in parallel
     const refreshPromises = entities.map((entity) =>
-      dataService.getAll(entity, true).catch((err) => {
-        console.error(`Failed to refresh ${entity}:`, err);
+      dataService.getAll(entity, true).catch(() => {
         return [];
       })
     );

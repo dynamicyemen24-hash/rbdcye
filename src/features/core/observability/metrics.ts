@@ -145,8 +145,8 @@ class MetricsCollector {
     for (const listener of this.listeners) {
       try {
         listener(data);
-      } catch (error) {
-        console.error("Metrics listener error:", error);
+      } catch {
+        // Listener error
       }
     }
   }
@@ -212,14 +212,16 @@ class Logger {
       };
 
       console.log(`%c[${entry.level.toUpperCase()}] ${message}`, styles[level], context || {});
+      // Log metrics with styling
+      // Log metrics
     }
 
     // Notify listeners
     for (const listener of this.listeners) {
       try {
         listener(entry);
-      } catch (error) {
-        console.error("Logger listener error:", error);
+      } catch {
+        // Logger listener error
       }
     }
   }
@@ -339,8 +341,8 @@ class Tracer {
     for (const listener of this.listeners) {
       try {
         listener(span);
-      } catch (error) {
-        console.error("Tracer listener error:", error);
+      } catch {
+        // Tracer listener error
       }
     }
 

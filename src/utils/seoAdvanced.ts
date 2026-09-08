@@ -6,6 +6,7 @@ interface SEOData {
   description: string;
   keywords?: string[];
   image?: string;
+  alt?: string;
   url?: string;
   type?: "website" | "article" | "organization";
   publishedTime?: string;
@@ -138,22 +139,33 @@ class SEOManager {
     if (data.image) this.setMeta("og:image", data.image);
     if (data.url) this.setMeta("og:url", data.url);
 
-    // Twitter Card
+// Twitter Card specific
     this.setMeta("twitter:card", "summary_large_image");
+    this.setMeta("twitter:site", "@rbdcye");
+    this.setMeta("twitter:creator", "@rbdcye");
     this.setMeta("twitter:title", data.title);
     this.setMeta("twitter:description", data.description);
     if (data.image) this.setMeta("twitter:image", data.image);
+    if (data.image) this.setMeta("twitter:image:alt", data.alt || data.title);
 
-    // Article specific
-    if (data.type === "article") {
-      if (data.publishedTime) this.setMeta("article:published_time", data.publishedTime);
-      if (data.modifiedTime) this.setMeta("article:modified_time", data.modifiedTime);
-      if (data.author?.name) this.setMeta("article:author", data.author.name);
-      if (data.section) this.setMeta("article:section", data.section);
-      if (data.tags) {
-        data.tags.forEach((tag) => this.setMeta("article:tag", tag));
-      }
+    // Open Graph with locale and type-specific tags
+    this.setMeta("og:title", data.title);
+    this.setMeta("og:description", data.description);
+    this.setMeta("og:type", data.type || "website");
+    this.setMeta("og:url", data.url || "https://rbdcye.org");
+    this.setMeta("og:locale", "ar_AR");
+    this.setMeta("og:locale:alternate", "en_US");
+    if (data.image) {
+      this.setMeta("og:image", data.image);
+      this.setMeta("og:image:width", "1200");
+      this.setMeta("og:image:height", "630");
+      this.setMeta("og:image:alt", data.alt || data.title);
     }
+    if (data.keywords) {
+      this.setMeta("og:tags", data.keywords.join(", "));
+    }
+    this.setMeta("article:publisher", "https://www.facebook.com/rbdcye");
+    this.setMeta("article:author", data.author?.name || "فريق التحرير");
 
     // JSON-LD schemas
     this.injectSchema("organization", this.getOrganizationSchema());

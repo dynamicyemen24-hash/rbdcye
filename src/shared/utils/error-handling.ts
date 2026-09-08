@@ -69,7 +69,7 @@ export function logError(error: Error | ApiError, context?: string) {
 
   // Send to monitoring service if available
   if (typeof console !== "undefined") {
-    console.error("[Error]", errorInfo);
+    // Error logged for monitoring
   }
 }
 

@@ -33,8 +33,8 @@ export function useNotifications() {
       if (sub) {
         setIsSubscribed(true);
       }
-    } catch (error) {
-      console.error("Subscription failed:", error);
+    } catch {
+      // Subscription failed
     } finally {
       setLoading(false);
     }

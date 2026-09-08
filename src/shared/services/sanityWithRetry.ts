@@ -70,9 +70,8 @@ export async function fetchProjectsWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch projects:", error);
-    return []; // Return empty array on error
+  } catch {
+    return [];
   }
 }
 
@@ -95,13 +94,13 @@ export async function fetchNewsWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch news:", error);
+  } catch {
     return [];
   }
 }
 
 /**
+ * Fetch news with retry
  * Fetch partners with retry
  */
 export async function fetchPartnersWithRetry() {
@@ -117,8 +116,7 @@ export async function fetchPartnersWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch partners:", error);
+  } catch {
     return [];
   }
 }
@@ -138,8 +136,7 @@ export async function fetchSuccessStoriesWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch success stories:", error);
+  } catch {
     return [];
   }
 }
@@ -166,13 +163,13 @@ export async function fetchEventsWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch events:", error);
+  } catch {
     return [];
   }
 }
 
 /**
+ * Fetch news with retry
  * Fetch dashboard metrics with retry
  */
 export async function fetchDashboardMetricsWithRetry() {
@@ -189,8 +186,7 @@ export async function fetchDashboardMetricsWithRetry() {
 
   try {
     return await queryWithRetry(query);
-  } catch (error) {
-    console.error("Failed to fetch dashboard metrics:", error);
+  } catch {
     return {
       totalProjects: 0,
       activeProjects: 0,

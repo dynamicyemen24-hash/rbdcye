@@ -25,17 +25,11 @@ class ErrorTrackingService {
       timestamp: Date.now(),
     });
 
-    if (import.meta.env.PROD) {
-      console.error("[ErrorTracking]", error, context);
-      // يمكن إضافة إرسال لـ Sentry / LogRocket هنا
-      // Sentry.captureException(error, { extra: context });
-    }
-
     this.persist();
   }
 
   captureMessage(message: string, level: "info" | "warning" | "error" = "info") {
-    if (import.meta.env.DEV) console.log(`[${level.toUpperCase()}]`, message);
+    // Message logged silently
   }
 
   private persist() {

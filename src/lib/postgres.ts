@@ -7,7 +7,7 @@ const API_BASE = "/api";
 
 async function apiQuery<T = any>(
   action: string,
-  options?: { method?: string; body?: any; params?: Record<string, string> }
+  options?: { method?: string; body?: unknown; params?: Record<string, string> }
 ): Promise<{ rows: T[]; rowCount: number }> {
   const { method = "GET", body, params } = options || {};
   const qs = params ? "?" + new URLSearchParams(params).toString() : "";
@@ -162,7 +162,4 @@ export const notificationsQueries = {
 };
 
 // ─── Generic query wrapper (for backward compatibility) ───
-export async function query(text: string, params?: any[]) {
-  console.warn("[postgres.ts] Direct SQL queries are deprecated. Use apiQuery() instead.");
-  return { rows: [], rowCount: 0 };
-}
+// Removed: Direct SQL query wrapper deprecated in favor of apiQuery()

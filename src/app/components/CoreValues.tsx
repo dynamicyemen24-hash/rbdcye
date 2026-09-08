@@ -19,15 +19,15 @@ const VALUES = [
     title: "الشفافية",
     description: "إفصاح ووضوح تام في مسارات التبرع، وتوثيق ميداني وتقارير حوكمة دقيقة.",
     icon: Shield,
-    color: "#0F4C3A",
-    bg: "#F0FDF4",
+    color: "var(--brand-green)",
+    bg: "var(--brand-green-pale)",
   },
   {
     id: "perfection",
     title: "الإتقان",
     description: "جودة متميزة بتنفيذ المشاريع، وتطبيق أرفع معايير التخطيط والإنجاز التنموي.",
     icon: Award,
-    color: "#0F4C3A",
+    color: "var(--brand-green)",
     bg: "#F0FDF4",
   },
   {
@@ -43,8 +43,8 @@ const VALUES = [
     title: "المبادرة",
     description: "استجابة سريعة وفاعلة للاحتياجات الميدانية والأزمات الإنسانية عبر اليمن.",
     icon: Sparkles,
-    color: "#0F4C3A",
-    bg: "#F0FDF4",
+    color: "var(--brand-green)",
+    bg: "var(--brand-green-pale)",
   },
 ];
 

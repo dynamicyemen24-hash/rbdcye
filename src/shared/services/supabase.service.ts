@@ -141,8 +141,7 @@ class SupabaseTableService {
       const result = { data, count };
       setCache(ck, result);
       return result;
-    } catch (error) {
-      console.error(`Error fetching ${this.table}:`, error);
+    } catch {
       return { data: [], count: 0 };
     }
   }
@@ -186,8 +185,7 @@ class SupabaseTableService {
 
       if (response.error) throw response.error;
       return response.data as T;
-    } catch (error) {
-      console.error(`Error creating in ${this.table}:`, error);
+    } catch {
       return null;
     }
   }
@@ -208,8 +206,7 @@ class SupabaseTableService {
 
       if (response.error) throw response.error;
       return response.data as T;
-    } catch (error) {
-      console.error(`Error updating in ${this.table}:`, error);
+    } catch {
       return null;
     }
   }

@@ -63,9 +63,7 @@ class EventBus {
 
     const handlers = this.handlers.get(eventType) || new Set();
     const promises = Array.from(handlers).map((handler) =>
-      Promise.resolve(handler(payload)).catch((err) =>
-        console.error(`[EventBus] Error in handler for ${eventType}:`, err)
-      )
+      Promise.resolve(handler(payload)).catch(() => {})
     );
 
     await Promise.all(promises);

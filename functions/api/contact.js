@@ -3,15 +3,25 @@
 // Route: POST /api/contact
 // Saves message to Neon Postgres (if configured) and sends an
 // email via Resend (if configured). Fails safe otherwise.
+// Uses context.env (Workers bindings) - NOT process.env.
 // ============================================================
-import { query } from './database.js';
+import { createQuery } from './database.js';
 
-const ALLOWED_ORIGINS =
-  process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173', 'https://rbdcye.org'];
+function allowedOrigins(env) {
+  return (
+    env?.CORS_ORIGIN?.split(',') || [
+      'http://localhost:5173',
+      'https://rbdcye.org',
+      'https://www.rbdcye.org',
+      'https://rbdcye.pages.dev',
+    ]
+  );
+}
 
-function corsHeaders(req) {
+function corsHeaders(req, env) {
   const origin = req.headers.get('Origin');
-  const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const list = allowedOrigins(env);
+  const allowOrigin = origin && list.includes(origin) ? origin : list[0];
   return {
     'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -21,13 +31,6 @@ function corsHeaders(req) {
     'X-Frame-Options': 'DENY',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
   };
-}
-
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  });
 }
 
 function escapeHtmlEntities(str) {
@@ -52,9 +55,8 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestPost(context) {
-  const { request } = context;
-  const headers = corsHeaders(request);
-  const res = (status) => new Response(null, { status, headers });
+  const { request, env } = context;
+  const headers = corsHeaders(request, env);
 
   try {
     const body = await request.json();
@@ -94,7 +96,8 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Persist to Neon if configured (non-blocking if absent)
+    // Persist to Neon if DATABASE_URL is configured
+    const query = createQuery(env);
     await query(
       `INSERT INTO contact_messages (name, email, phone, subject, message, status, created_at)
        VALUES ($1, $2, $3, $4, $5, 'new', NOW())`,
@@ -102,17 +105,17 @@ export async function onRequestPost(context) {
     );
 
     // Email via Resend if configured
-    if (process.env.EMAIL_API_KEY && process.env.EMAIL_FROM) {
+    if (env?.EMAIL_API_KEY && env?.EMAIL_FROM) {
       try {
         const emailResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${process.env.EMAIL_API_KEY}`,
+            Authorization: `Bearer ${env.EMAIL_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: process.env.EMAIL_FROM,
-            to: process.env.CONTACT_RECIPIENT_EMAIL || 'info@rbdcye.org',
+            from: env.EMAIL_FROM,
+            to: env.CONTACT_RECIPIENT_EMAIL || 'info@rbdcye.org',
             reply_to: safeEmail,
             subject: `[موقع رحماء بينهم] ${safeSubject}`,
             html: `<div dir="rtl" style="font-family: 'Cairo', sans-serif; max-width: 600px; margin:0 auto; padding:20px; background:#fafaf7; border-radius:8px;">
@@ -143,14 +146,10 @@ export async function onRequestPost(context) {
   } catch (error) {
     console.error('Contact API Error:', error);
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.',
-      }),
+      JSON.stringify({ success: false, error: 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.' }),
       { status: 500, headers }
     );
   }
 }
 
-// Default export for pages that hit this file directly
 export default { onRequestPost, onRequestOptions };

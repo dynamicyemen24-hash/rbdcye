@@ -6,7 +6,9 @@ import { HeroSkeleton } from "@/components/LoadingSkeleton";
 import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
 import { initializeCoreServices } from "@/features/core";
-
+import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
+import { preloadCriticalAssets } from "@/utils/performance";
+import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
 import { ToastProvider } from "./app/components/Toast";
 import "./styles/index.css";
 
@@ -26,16 +28,22 @@ if (typeof window !== "undefined") {
   };
 
   scheduleInit(() => {
-    initializeCoreServices().catch(() => {});
-
-    // CSP is set via HTTP headers (vercel.json / server config), not dynamic meta injection.
+    initializeCoreServices().catch((err) => {
+      if (import.meta.env.DEV) console.error("[CoreServices]", err);
+    });
+    setSecurityHeaders();
+    cleanDangerousElements();
+    preloadCriticalAssets();
+    setupGlobalErrorHandler();
   });
 
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
     window.addEventListener(
       "load",
       () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {});
+        navigator.serviceWorker.register("/sw.js").catch((err) => {
+      if (import.meta.env.DEV) console.error("[SW Registration]", err);
+    });
       },
       { passive: true, once: true }
     );

@@ -85,8 +85,8 @@ export class PerformanceMonitor {
       });
       fcpObserver.observe({ type: "first-contentful-paint", buffered: true });
       this.observers.push(fcpObserver);
-    } catch (error) {
-      console.error("FCP observation error:", error);
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 
@@ -108,8 +108,8 @@ export class PerformanceMonitor {
       });
       lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
       this.observers.push(lcpObserver);
-    } catch (error) {
-      console.error("LCP observation error:", error);
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 
@@ -119,7 +119,6 @@ export class PerformanceMonitor {
         let clsValue = 0;
         const entries = list.getEntries();
         for (const entry of entries) {
-          // CLS entries are PerformanceEntry objects
           if ((entry as any).hadRecentInput) continue;
           const value = (entry as any).value;
           if (typeof value === "number") {
@@ -136,8 +135,8 @@ export class PerformanceMonitor {
       });
       clsObserver.observe({ type: "layout-shift", buffered: true });
       this.observers.push(clsObserver);
-    } catch (error) {
-      console.error("CLS observation error:", error);
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 
@@ -159,8 +158,8 @@ export class PerformanceMonitor {
       });
       fidObserver.observe({ type: "first-input", buffered: true });
       this.observers.push(fidObserver);
-    } catch (error) {
-      console.error("FID observation error:", error);
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 
@@ -182,8 +181,8 @@ export class PerformanceMonitor {
       });
       tfbObserver.observe({ type: "navigate", buffered: true });
       this.observers.push(tfbObserver);
-    } catch (error) {
-      console.error("TTFB observation error:", error);
+    } catch {
+      // PerformanceObserver not supported
     }
   }
 

@@ -191,7 +191,9 @@ class AuditLogger {
       this.logs.shift();
     }
 
-    if (import.meta.env.DEV) console.log("[AUDIT]", log);
+    if (import.meta.env.DEV) {
+      // Audit log in development
+    }
   }
 
   getLogs() {

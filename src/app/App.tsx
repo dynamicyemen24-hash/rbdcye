@@ -13,6 +13,19 @@ import { UpdateNotification } from "./components/UpdateNotification";
 import { PageSkeleton } from "@/components/LoadingSkeleton";
 import { GlobalUtilityBar } from "./components/GlobalUtilityBar";
 import SearchOverlay from "./components/SearchOverlay";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+
+// Setup global error handling — log to console in dev, suppress in prod
+if (typeof window !== "undefined") {
+  window.addEventListener("error", (e) => {
+    if (import.meta.env.DEV) console.error("[GlobalError]", e.error);
+    e.preventDefault();
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    if (import.meta.env.DEV) console.error("[UnhandledRejection]", e.reason);
+    e.preventDefault();
+  });
+}
 
 // Lazy load all pages with better error handling
 const HomePage = lazy(() => import("./pages/HomePage").then((m) => ({ default: m.default })));
@@ -130,8 +143,9 @@ const AppContent = memo(function AppContent() {
 
       <StepScroll />
 
-      <main className="min-h-screen">
-        <AnimatePresence mode="wait">
+      <main id="main-content" className="min-h-screen">
+        <ErrorBoundary>
+          <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
               path="/"
@@ -311,6 +325,7 @@ const AppContent = memo(function AppContent() {
             />
           </Routes>
         </AnimatePresence>
+        </ErrorBoundary>
       </main>
 
       <Footer setCurrentPage={setCurrentPage} />
