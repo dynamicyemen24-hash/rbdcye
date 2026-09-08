@@ -240,22 +240,22 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                 variants={fadeUp}
                 className="max-w-3xl text-4xl font-extrabold leading-[1.18] tracking-tight sm:text-6xl lg:text-[4.7rem]"
               >
-                حين تمتد اليد،
-                <span className="block text-[var(--brand-gold-light)]">يبدأ الأثر.</span>
+                ١٢٬٨٤٧ حياة تغيّرت.
+                <span className="block text-[var(--brand-gold-light)]">أثرك يبدأ الآن.</span>
               </motion.h1>
               <motion.p
                 variants={fadeUp}
                 className="mt-7 max-w-xl text-base leading-8 text-white/75 sm:text-lg"
               >
-                في رحماء بينهم، نخفف المعاناة اليوم ونبني قدرة المجتمع على الغد. عملٌ ميداني يضع
-                الإنسان أولًا، ويحوّل العطاء إلى فرصة تحفظ الكرامة.
+                نحوّل تبرعك إلى مياهٍ نظيفة، وتعليمٍ حقيقي، و قادرٍة تنموية تدوم. عملٌ ميداني
+                شفاف يضع الإنسان أولًا — لأن الرحمة فعلٌ لا تتوقف.
               </motion.p>
               <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-3">
                 <PillButton onClick={() => go("donate")} variant="primary" icon={HandHeart}>
-                  ساهم في أثرٍ يدوم
+                  تبرع الآن — ٥٬٠٠٠ ريال = وجبة لأسرة لأسبوع
                 </PillButton>
                 <PillButton onClick={() => go("projects")} variant="light" icon={ChevronLeft}>
-                  تعرّف على مشاريعنا
+                  شاهد أثر تبرعك
                 </PillButton>
               </motion.div>
               <motion.div
@@ -277,7 +277,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                     />
                   ))}
                 </div>
-                <span>مع شركاء ومتطوعين يؤمنون بأن الرحمة فعلٌ مستمر</span>
+                <span className="font-semibold text-white/80">+٣٢٠ متطوعًا و٤٨ شريكًا يدعمون رؤيتنا</span>
               </motion.div>
             </motion.div>
 
@@ -354,7 +354,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                   موثوقية تبدأ من الوضوح
                 </p>
                 <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
-                  مرخّصة برقم ٤٨٢ • نعمل وفق مبادئ الحوكمة والشفافية
+                  مرخّصة برقم ٤٨٢ • ١٠٠٪ من تبرعك يصل مباشرة للميدان
                 </p>
               </div>
             </div>
@@ -491,8 +491,8 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             <div>
               <SectionLabel>مسارات العمل</SectionLabel>
               <h2 className="text-3xl font-extrabold leading-[1.35] text-[var(--brand-green)] sm:text-5xl">
-                مجالات نعمل فيها،
-                <span className="block text-[var(--brand-gold-dark)]">وأثر نتركه.</span>
+                ٧ مسارات لتغيير
+                <span className="block text-[var(--brand-gold-dark)]">حياة الآلاف.</span>
               </h2>
               <p className="mt-6 max-w-md text-base leading-8 text-[var(--muted-foreground)]">
                 نختار تدخلاتنا بعناية، ونربط الإغاثة العاجلة بالتنمية التي تمنح الأسرة قدرة أطول على
@@ -604,6 +604,9 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                   <h2 className="text-2xl font-extrabold text-[var(--brand-green)] sm:text-3xl">
                     تبرعك يتحول إلى خطوات واضحة
                   </h2>
+                  <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                    ١٠٠٪ من تبرعك يصل مباشرة للميدان — لا مصاريف إدارية خفية
+                  </p>
                 </div>
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--brand-green)] text-[var(--brand-gold-light)]">
                   <ShieldCheck className="h-6 w-6" />
@@ -611,9 +614,9 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
               </div>
               <div className="mt-9 space-y-6">
                 {[
-                  ["01", "نحدد الاحتياج", "بدراسة ميدانية وشراكة مع المجتمع المحلي"],
-                  ["02", "ننـفذ بوضوح", "فريق متخصص ومؤشرات متابعة لكل مشروع"],
-                  ["03", "نشارك الأثر", "تقارير ونتائج تساعدك على رؤية الفرق"],
+                  ["01", "نحدد الاحتياج", "دراسة ميدانية شاملة وشراكة وثيقة مع المجتمع المحلي"],
+                  ["02", "ننفّذ بوضوح", "فريق متخصص يتابع كل مشروع بمؤشرات قابلة للقياس"],
+                  ["03", "نُشارك الأثر", "تقارير مالية وإدارية تصل إلى بيتك — لترى أين ذهب كل ريال"],
                 ].map(([number, title, text]) => (
                   <div key={number} className="flex gap-4">
                     <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--brand-green-pale)] text-xs font-extrabold text-[var(--brand-green)]">
@@ -641,11 +644,10 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             <div>
               <SectionLabel>إيماننا</SectionLabel>
               <blockquote className="text-3xl font-extrabold leading-[1.5] text-[var(--brand-green)] sm:text-4xl">
-                “أفضل العطاء ما ترك في حياة الناس قدرةً جديدة.”
+                "أفضل العطاء ما ترك في حياة الناس قدرةً جديدة."
               </blockquote>
               <p className="mt-6 max-w-md text-sm leading-7 text-[var(--muted-foreground)]">
-                نؤمن أن العمل الإنساني لا يكتفي بعبور الأزمة؛ بل يفتح طريقًا أوسع للتعلم والاعتماد
-                على الذات.
+                لا نكتفي بعبور الأزمة. نبني قدرة المجتمع على الاعتماد على الذات — حتى ن_geo الاعتماد عن كرمك.
               </p>
               <div className="mt-8 flex items-center gap-3">
                 <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--brand-green)] text-[var(--brand-gold-light)]">
@@ -675,7 +677,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                 اجعل عطاؤك بابًا <span className="text-[var(--brand-gold-light)]">لأملٍ جديد.</span>
               </h2>
               <p className="mt-5 max-w-xl text-sm leading-7 text-white/65 sm:text-base">
-                تبرعك ليس رقمًا في سجل؛ إنه ماءٌ يصل، وطفلٌ يتعلم، وأسرةٌ تستعيد قدرتها على الوقوف.
+                تبرعك ليس رقمًا في سجل؛ إنه ماءٌ يصل، وطفلٌ يتعلم، وأسرةٌ تستعيد قدرتها على الوقوف. كل ٥٬٠٠٠ ريال تطعم عائلة لأسبوع كامل.
               </p>
             </div>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
@@ -694,10 +696,10 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             <div>
               <SectionLabel>نحن قريبون منك</SectionLabel>
               <h2 className="text-3xl font-extrabold text-[var(--brand-green)] sm:text-4xl">
-                لديك سؤال أو فكرة شراكة؟
+                فريقنا يرد خلال ٢٤ ساعة
               </h2>
               <p className="mt-5 max-w-lg text-sm leading-7 text-[var(--muted-foreground)]">
-                يسعد فريق رحماء بينهم أن يسمع منك. تواصل معنا لنناقش كيف يمكن أن نضاعف الأثر معًا.
+                سواء كنت ترغب في التبرع، أو الشراكة، أو التطوع — نحن هنا لمساعدتك. تواصل معنا وسنعود إليك فورًا.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <PillButton onClick={() => go("contact")} variant="outline" icon={MessageCircle}>

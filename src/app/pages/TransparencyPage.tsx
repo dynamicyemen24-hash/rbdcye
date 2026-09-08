@@ -362,7 +362,9 @@ export default function TransparencyPage() {
                     <span>{report.pages} صفحة</span>
                   </div>
                   <button
-                    onClick={() => alert("سيتم إضافة رابط التحميل قريباً")}
+                    onClick={() => {
+                      window.open(`/reports/${report.id}.pdf`, '_blank');
+                    }}
                     className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
                   >
                     <Download className="w-4 h-4" />
