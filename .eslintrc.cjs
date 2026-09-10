@@ -88,6 +88,9 @@ module.exports = {
   ignorePatterns: [
     'dist/',
     'node_modules/',
+    '**/*.css',
+    '**/*.scss',
+    '**/*.less',
   ],
   overrides: [
     {

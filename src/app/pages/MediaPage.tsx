@@ -18,7 +18,7 @@ interface MediaItem {
 }
 
 const MEDIA_TYPES = ["الكل", "image", "video"];
-const TYPE_LABELS = { image: "صور", video: "فيديو" };
+const TYPE_LABELS = { image: "صور فوتوغرافية", video: "فيديو وثائقي" };
 
 function normalizeMedia(): MediaItem[] {
   return SEED_MEDIA.map((m) => ({
@@ -39,8 +39,8 @@ export default function MediaPage() {
   const [mediaItems, setMediaItems] = useState<MediaItem[]>(normalizeMedia());
 
   useSEO({
-    title: "معرض الوسائط - رحماء بينهم",
-    description: "معرض صور وفيديوهات من مشاريعنا الإنسانية والتنموية",
+    title: "معرض الوسائط — صور وفيديوهات من مشاريع رحماء بينهم",
+    description: "استكشف معرض الصور الفوتوغرافية والفيديوهات الوثائقية من مشاريعنا الإنسانية والتنموية في المحافظات اليمنية.",
   });
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export default function MediaPage() {
   return (
     <div className="min-h-screen pt-20" dir="rtl">
       {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-white overflow-hidden">
-        <div className="container mx-auto px-4">
+      <section className="relative py-16 bg-gradient-to-b from-[var(--brand-green)]/10 to-[var(--background)] overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -89,18 +89,27 @@ export default function MediaPage() {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="text-[var(--foreground)]">لحظات </span>
-              <span className="text-[var(--brand-green)]">من عملنا</span>
+              <span className="text-[var(--brand-green)]">من عملنا الميداني</span>
             </h1>
-            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto">
-              استكشف صور وفيديوهات من مشاريعنا الإنسانية والتنموية
+            <p className="text-lg text-[var(--muted-foreground)] max-w-3xl mx-auto leading-[1.8]">
+              استكشف لقطات حقيقية من مشاريعنا الإنسانية والتنموية في المحافظات اليمنية —
+              من توزيع المساعدات الإغاثية إلى مشاريع البنية التحتية والتمكين المجتمعي.
             </p>
           </motion.div>
         </div>
       </section>
 
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ وَالصُّفُحِ وَالْجَمِيلِ ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة الشورى، الآية ٢٣</p>
+      </div>
+
       {/* Controls */}
-      <section className="py-6 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
+      <section className="py-6 bg-[var(--background)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
               {MEDIA_TYPES.map((type) => (
@@ -125,7 +134,7 @@ export default function MediaPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="بحث..."
+                  placeholder="ابحث عن مشروع أو محافظة..."
                   className="w-48 pr-10 pl-4 py-2 border border-[var(--border)] rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30"
                 />
               </div>
@@ -159,7 +168,7 @@ export default function MediaPage() {
 
       {/* Media Grid */}
       <section className="py-12 bg-[var(--secondary)]">
-        <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             className={`grid gap-6 max-w-7xl mx-auto ${
               viewMode === "grid"
@@ -174,7 +183,7 @@ export default function MediaPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className={`group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer ${
+                className={`group bg-[var(--card)] rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer ${
                   viewMode === "list" ? "flex items-center gap-4 p-4" : ""
                 }`}
                 onClick={() => setSelectedMedia(item)}
@@ -225,11 +234,14 @@ export default function MediaPage() {
 
           {filteredMedia.length === 0 && (
             <div className="text-center py-16">
-              <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <Search className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
-                لا توجد وسائط مطابقة
+                لا توجد نتائج مطابقة
               </h3>
-              <p className="text-[var(--muted-foreground)]">جرب تغيير معايير البحث</p>
+              <p className="text-[var(--muted-foreground)] leading-[1.8]">
+                جرّب تغيير كلمة البحث أو تبديل فلتر النوع — قد تكون الصورة أو الفيديو المطلوب
+                في فئة أخرى.
+              </p>
             </div>
           )}
         </div>
@@ -270,6 +282,7 @@ export default function MediaPage() {
               )}
               <button
                 onClick={() => setSelectedMedia(null)}
+                aria-label="إغلاق"
                 className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               >
                 <X className="w-5 h-5 text-white" />

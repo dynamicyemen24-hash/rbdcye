@@ -2,39 +2,8 @@
    Component Styles - Enhanced & Unified
    ============================================================ */
 
-/* ============================================================
-   Card Component Styles
-   ============================================================ */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-2xl);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.card-header {
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--card-foreground);
-}
-
-.card-description {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  margin-top: 0.25rem;
-}
+/* Card component styles are defined in design-system.css.
+   This block intentionally left minimal to avoid conflicts. */
 
 /* ============================================================
    Loading Skeleton Styles (Enhanced)

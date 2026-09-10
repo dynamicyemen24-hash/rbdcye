@@ -15,7 +15,7 @@
   <path d="M180 160 L220 140 L260 160" stroke="#C69E5A" stroke-width="3" fill="none"/>
   <rect x="400" y="100" width="720" height="120" rx="16" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".4"/>
   <text x="440" y="140" fill="#E9F1EC" font-size="42" font-weight="800" font-family="Cairo,sans-serif">رحماء بينهم</text>
-  <text x="440" y="180" fill="#C69E5A" font-size="20" font-family="Cairo,sans-serif">مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢</text>
+  <text x="440" y="180" fill="#C69E5A" font-size="20" font-family="Cairo,sans-serif">حملة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢</text>
   <rect x="400" y="250" width="720" height="80" rx="12" fill="none" stroke="#C69E5A" stroke-width="2" opacity=".3"/>
   <text x="440" y="285" fill="#E9F1EC" font-size="20" font-family="Cairo,sans-serif">إغاثة  ·  تعليم  ·  تنمية  ·  تبرع</text>
   <circle cx="600" cy="440" r="60" fill="none" stroke="#C69E5A" stroke-width="4" opacity=".3"/>

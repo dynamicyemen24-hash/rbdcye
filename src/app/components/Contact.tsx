@@ -102,7 +102,7 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   whileHover={{ scale: 1.02 }}
-                  className="bg-white rounded-xl p-5 border border-[var(--border)] flex gap-4 items-start transition-shadow hover:shadow-md"
+                  className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)] flex gap-4 items-start transition-shadow hover:shadow-md"
                 >
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
@@ -167,7 +167,7 @@ export const Contact = ({ setCurrentPage = () => {} }: ContactProps) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-3 bg-white rounded-2xl p-7 sm:p-8 border border-[var(--border)] shadow-sm"
+            className="lg:col-span-3 bg-[var(--card)] rounded-2xl p-7 sm:p-8 border border-[var(--border)] shadow-sm"
           >
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full text-center py-12">

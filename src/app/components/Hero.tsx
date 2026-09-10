@@ -172,7 +172,7 @@ const VideoBackground = memo(function VideoBackground() {
         }}
         onCanPlay={() => setVideoLoading(false)}
         onPlaying={() => setVideoLoading(false)}
-        aria-label="فيديو خلفية تعريفي لمؤسسة رحماء بينهم"
+        aria-label="فيديو خلفية تعريفي لحملة رحماء بينهم"
       >
         <source src="/videos/hero-background.mp4" type="video/mp4" />
         <track kind="captions" src="" label="العربية" srcLang="ar" />

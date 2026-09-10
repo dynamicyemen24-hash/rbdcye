@@ -1,6 +1,6 @@
 // Reports Page - التقارير السنوية والإصدارات
 import { motion } from "motion/react";
-import { FileText, Download, Calendar, Search, FileBarChart } from "lucide-react";
+import { FileText, Download, Calendar, Search, FileBarChart, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,8 @@ const REPORTS = [
     description: "التقرير المالي والإداري السنوي للعام 2024",
     highlights: ["إيرادات مالية", "آلاف المستفيدين", "مشاريع متنوعة"],
     color: "blue",
-    available: false,
+    available: true,
+    pdfUrl: "/reports/annual-2024.pdf",
   },
   {
     id: 3,
@@ -45,7 +46,8 @@ const REPORTS = [
     description: "تقرير قياس أثر البرامج والمشاريع للربع الأول",
     highlights: ["3,500 مستفيد", "8 مشاريع", "698K$ ميزانية"],
     color: "amber",
-    available: false,
+    available: true,
+    pdfUrl: "/reports/impact-q1-2025.pdf",
   },
   {
     id: 4,
@@ -109,12 +111,12 @@ export default function ReportsPage() {
   });
 
   const colorMap: Record<string, string> = {
-    emerald: "from-emerald-500 to-teal-500",
-    blue: "from-blue-500 to-indigo-500",
-    amber: "from-amber-500 to-orange-500",
-    purple: "from-purple-500 to-violet-500",
-    rose: "from-rose-500 to-pink-500",
-    cyan: "from-cyan-500 to-blue-500",
+    emerald: "from-[var(--brand-green)] to-[var(--brand-green-light)]",
+    blue: "from-[var(--brand-green-dark)] to-[var(--brand-green)]",
+    amber: "from-[var(--brand-gold)] to-[var(--brand-gold-light)]",
+    purple: "from-[var(--brand-green)] to-[var(--brand-green-light)]",
+    rose: "from-[var(--brand-gold-dark)] to-[var(--brand-gold)]",
+    cyan: "from-[var(--brand-green)] to-[var(--brand-green-dark)]",
   };
 
   return (
@@ -123,12 +125,35 @@ export default function ReportsPage() {
         icon={FileText}
         badge="التقارير والإصدارات"
         title="التقارير والشفافية"
-        subtitle="نضع بين أيديكم تقارير المؤسسة وإصداراتها الدورية لمتابعة البرامج والحوكمة والأثر بوضوح ومسؤولية."
+        subtitle="نضع بين أيديكم تقارير الحملة وإصداراتها الدورية لمتابعة البرامج والحوكمة والأثر بوضوح ومسؤولية."
       />
 
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ وَلَا تَكْتُمُوا الشَّهَادَةَ وَمَن يَكْتُمْهَا فَإِنَّهُ آثِمٌ قَلْبُهُ ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة البقرة، الآية ٢٨٣</p>
+      </div>
+
+      {/* ملاحظة التحديث */}
+      <section className="bg-[var(--brand-green-pale)] border-b border-[var(--brand-green)]/10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+          <p className="text-sm text-center text-[var(--brand-green)] font-medium">
+            جميع التقارير قيد التحديث — يمكنك طلب نسخة عبر{" "}
+            <button
+              onClick={() => navigate("/messages")}
+              className="underline font-bold hover:text-[var(--brand-green-light)] transition-colors"
+            >
+              نموذج التواصل
+            </button>
+          </p>
+        </div>
+      </section>
+
       {/* Filters */}
-      <section className="py-6 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
+      <section className="py-6 bg-[var(--card)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((cat) => (
@@ -161,8 +186,8 @@ export default function ReportsPage() {
       </section>
 
       {/* Reports Grid */}
-      <section className="py-12 bg-[var(--secondary)]">
-        <div className="container mx-auto px-4">
+      <section className="py-24 sm:py-32 bg-[var(--secondary)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {filteredReports.map((report, i) => (
               <motion.div
@@ -219,16 +244,27 @@ export default function ReportsPage() {
                       <span>{report.pages} صفحة</span>
                       <span>{report.size}</span>
                     </div>
-                    <button
-                      type="button"
-                      disabled={!report.available}
-                      onClick={() => navigate("/messages")}
-                      className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] transition-colors disabled:cursor-not-allowed disabled:text-[var(--muted-foreground)]"
-                      title={report.available ? "تحميل التقرير" : "اطلب نسخة من فريق المؤسسة"}
-                    >
-                      <Download className="w-4 h-4" />
-                      {report.available ? "تحميل" : "اطلب نسخة"}
-                    </button>
+                    {report.available ? (
+                      <a
+                        href={report.pdfUrl}
+                        download
+                        className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] transition-colors hover:underline"
+                        title="تحميل التقرير"
+                      >
+                        <Download className="w-4 h-4" />
+                        تحميل
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => navigate("/messages")}
+                        className="flex items-center gap-1 text-sm font-semibold text-[var(--muted-foreground)] transition-colors hover:text-[var(--brand-green)]"
+                        title="قريبًا — يمكنك طلب نسخة عبر نموذج التواصل"
+                      >
+                        <AlertCircle className="w-4 h-4" />
+                        قريبًا
+                      </button>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -237,7 +273,7 @@ export default function ReportsPage() {
 
           {filteredReports.length === 0 && (
             <div className="text-center py-16">
-              <FileBarChart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <FileBarChart className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
                 لا توجد تقارير مطابقة
               </h3>

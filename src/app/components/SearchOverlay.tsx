@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+﻿import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
@@ -31,10 +31,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: "proj-1",
     _type: "project",
-    title: "????? ?????? ???????? ??????? ????? ????? ?????",
-    description: "????? ???? ?????? ??????? ???? ????? ???? ??? ???? ?? ????????? ?????? ????????.",
-    category: "????? ?????",
-    status: "???",
+    title: "إغاثة طارئة للأسر المتضررة في محافظة صعدة",
+    description: "توفير المساعدات الإنسانية العاجلة للأسر المتضررة من الصراعات في المناطق المحرومة.",
+    category: "إغاثة طارئة",
+    status: "نشط",
     progress: 78,
     goalAmount: 150000,
     raisedAmount: 117000,
@@ -43,11 +43,11 @@ const FALLBACK_PROJECTS = [
   {
     _id: "proj-2",
     _type: "project",
-    title: "??? ????? ???? ??? ????? ??????? ???????",
+    title: "مياه نظيفة للمجتمعات الريفية",
     description:
-      "????? ???? ???? ????? ????? ?????? ?? ??????? ??????? ?????? ?????? ?????? ?????.",
-    category: "?????? ???????",
-    status: "???",
+      "حفر آبار وتركيب أنظمة تنقية المياه للمجتمعات الريفية النائية في المناطق المحرومة.",
+    category: "تنمية مجتمعية",
+    status: "نشط",
     progress: 92,
     goalAmount: 85000,
     raisedAmount: 78200,
@@ -56,11 +56,11 @@ const FALLBACK_PROJECTS = [
   {
     _id: "proj-3",
     _type: "project",
-    title: "?????? ??????? ????????? ???? ?????",
+    title: "مشروع بنى تحتية للمجتمعات المتضررة",
     description:
-      "????? ???????? ??????? ?????? ????? ??????? ?????? ???????? ?????? ???????????? ???????.",
-    category: "????? ???????",
-    status: "?????",
+      "ترميم البنية التحتية الحيوية للمجتمعات المتضررة من الصراعات وتحسين بيئة الحياة.",
+    category: "تنمية مجتمعية",
+    status: "مكتمل",
     progress: 100,
     goalAmount: 200000,
     raisedAmount: 200000,
@@ -69,10 +69,10 @@ const FALLBACK_PROJECTS = [
   {
     _id: "proj-4",
     _type: "project",
-    title: "????? ?????? ??????? ???????",
-    description: "????? ??????? ????????? ?????????? ??????? ????? ?? 500 ???? ?????? ??????.",
-    category: "????? ?????",
-    status: "???",
+    title: "دعم التعليم للأطفال النازحين",
+    description: "توفير المواد التعليمية والأدوات المدرسية لأكثر من 500 طفل نازح في المحافظات.",
+    category: "إغاثة طارئة",
+    status: "نشط",
     progress: 64,
     goalAmount: 120000,
     raisedAmount: 76800,
@@ -84,9 +84,9 @@ const FALLBACK_NEWS = [
   {
     _id: "news-1",
     _type: "news",
-    title: "????? ????? ????? 5 ?????? ???? ?????? ??????????",
-    excerpt: "?????? ????? ????? ???? ?? ???????? ??????? ??????? ??????? ????? ???? ?????????.",
-    category: "?????? ???????",
+    title: "افتتاح 5 مشاريع مياه نظيفة في محافظات مختلفة",
+    excerpt: "تم افتتاح خمسة مشاريع لإمداد المياه النظيفة للمجتمعات المحرومة في المناطق الريفية.",
+    category: "تنمية مجتمعية",
     publishDate: "2026-08-10",
     views: 1420,
     mainImage: "/images/defaults/project-water.svg",
@@ -94,9 +94,9 @@ const FALLBACK_NEWS = [
   {
     _id: "news-2",
     _type: "news",
-    title: "????? ??????? ???????? ??????? ??????? ???? ????? ???????",
-    excerpt: "????? ????????? ??????????? ??????? ??????? ????? ??????? ?????????.",
-    category: "????? ?????",
+    title: "توقيع اتفاقية شراكة مع منظمات دولية لدعم التعليم",
+    excerpt: "وقعت الجمعية اتفاقية شراكة مع عدة منظمات دولية لتعزيز برامج التعليم والتدريب.",
+    category: "إغاثة طارئة",
     publishDate: "2026-08-04",
     views: 2180,
     mainImage: "/images/defaults/project-relief.svg",
@@ -104,9 +104,9 @@ const FALLBACK_NEWS = [
   {
     _id: "news-3",
     _type: "news",
-    title: "????? ?????? ?????? ?? ??? ??????? ??????? ?????? ???????",
-    excerpt: "????? 45 ????? ????? ???????? ???????? ????? ????? ???? ???????? ??????.",
-    category: "????? ??????",
+    title: "توزيع مساعدات غذائية على 45 عائلة نازحة في المحافظات",
+    excerpt: "وزعت الجمعية 45 سلة غذائية على العائلات النازحة في مخيمات المحافظات الجنوبية.",
+    category: "إغاثة عاجلة",
     publishDate: "2026-07-28",
     views: 950,
     mainImage: "/images/defaults/project-development.svg",
@@ -117,19 +117,19 @@ const FALLBACK_STORIES = [
   {
     _id: "story-1",
     _type: "successStory",
-    title: "?? ?????? ??? ???????: ??? ???? ?? ????",
-    story: "???? ?? ???? ??? ???? ????? ????? ????? ?????? ???? ?????? ??????? ?? 6 ????? ?????.",
-    beneficiaryName: "?? ???? (???????)",
+    title: "قصة فاطمة: من الصفر إلى المشروع الناجح",
+    story: "بدأت فاطمة مشروعاً صغيراً لتصنيع الأحذية بعد حصولها على تدريب مهني من الجمعية قبل 6 أشهر فقط.",
+    beneficiaryName: "أم أحمد (تعز)",
     publishDate: "2026-08-01",
     mainImage: "/images/defaults/story-woman.svg",
   },
   {
     _id: "story-2",
     _type: "successStory",
-    title: "???? ???? ????? ??????? ????? ????? ???????",
+    title: "نجاح برنامج تعليمي مميز للأطفال النازحين",
     story:
-      "??? ????? ?? ????? ??????? ????? ???? ??????? ???? ??? ????? ?????? ????? ???? ???? ????? ???????.",
-    beneficiaryName: "????? ???? ?????",
+      "نجح برنامج تعليمي مقدم من الجمعية في إعادة 200 طفل إلى المدارس وتقديم الدعم النفسي والتعليمي للأطفال والآباء.",
+    beneficiaryName: "سعيد عبد الله (إب)",
     publishDate: "2026-07-15",
     mainImage: "/images/defaults/project-relief.svg",
   },
@@ -139,28 +139,28 @@ const FALLBACK_PROGRAMS = [
   {
     _id: "prog-1",
     _type: "program",
-    title: "?????? ????? ??????? ?????????? ???????",
-    description: "????? ????????? ???????? ???????? ?????? ????????? ?? ??????? ????????.",
-    icon: "??",
+    title: "برنامج الإغاثة الطارئة والدعم الإنساني",
+    description: "توفير المساعدات الإنسانية العاجلة للأسر المتضررة في المناطق المحرومة.",
+    icon: "🏥",
     mainImage: "/images/defaults/project-relief.svg",
   },
   {
     _id: "prog-2",
     _type: "program",
-    title: "?????? ??????? ?????????? ????????",
-    description: "??? ??????? ???????? ????????? ?????? ??????? ???????? ?????? ??????.",
-    icon: "??",
+    title: "برنامج التنمية المجتمعية المستدامة",
+    description: "تعزيز قدرات المجتمعات المحلية من خلال المشاريع التنموية المستدامة.",
+    icon: "🎓",
     mainImage: "/images/defaults/project-education.svg",
   },
 ];
 
 const POPULAR_SEARCH_TAGS = [
-  "?????? ????????",
-  "?????? ??????",
-  "????? ?????",
-  "????? ???????",
-  "????? ?????",
-  "?????? ????????",
+  "إغاثة طارئة",
+  "مشاريع مياه",
+  "إغاثة طارئة",
+  "تنمية مجتمعية",
+  "إغاثة طارئة",
+  "مشاريع تعليمية",
 ];
 
 export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlayProps) {
@@ -394,7 +394,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   return (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-16 md:pt-20 px-4 bg-slate-950/80 backdrop-blur-md transition-all"
+        className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-16 md:pt-20 px-4 bg-[var(--brand-ink)]/80 backdrop-blur-md transition-all"
         dir="rtl"
       >
         {/* Backdrop click to close */}
@@ -414,12 +414,12 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
           transition={{ duration: 0.2, ease: "easeOut" }}
           role="dialog"
           aria-modal="true"
-          aria-label="????? ?????? ?? ???? ????? ?????"
-          className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col max-h-[85vh]"
+          aria-label="ابحث عن المشاريع والأخبار والقصص والبرامج"
+          className="relative w-full max-w-3xl bg-[var(--card)] rounded-3xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col max-h-[85vh]"
         >
           {/* Top Search Input Bar */}
           <div
-            className="relative flex items-center p-4 sm:p-5 border-b border-gray-100 bg-gray-50/50"
+            className="relative flex items-center p-4 sm:p-5 border-b border-[var(--border)] bg-[var(--background)]/50"
             role="search"
           >
             <Search
@@ -432,26 +432,26 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="???? ?? ????????? ???????? ??? ??????? ?? ??????? ????????..."
-              aria-label="??? ?????"
+              placeholder="اكتب للبحث عن المشاريع والأخبار أو القصص والبرامج..."
+              aria-label="اكتب للبحث"
               aria-autocomplete="list"
               aria-controls="search-results-list"
-              className="w-full bg-transparent border-none outline-none text-base sm:text-lg font-bold font-cairo text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-0"
+              className="w-full bg-transparent border-none outline-none text-base sm:text-lg font-bold font-cairo text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] placeholder:font-normal focus:ring-0"
             />
 
             {loading && (
               <Loader2
                 className="w-5 h-5 text-[var(--brand-green)] animate-spin ml-2 flex-shrink-0"
-                aria-label="???? ???????"
+                aria-label="جاري التحميل"
               />
             )}
 
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="p-1.5 rounded-full hover:bg-gray-200/80 text-gray-500 transition-colors ml-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
-                aria-label="??? ?? ?????"
-                title="??? ????"
+                className="p-1.5 rounded-full hover:bg-[var(--muted)]/80 text-[var(--muted-foreground)] transition-colors ml-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
+                aria-label="مسح البحث"
+                title="مسح النص"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -459,11 +459,11 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
             <button
               onClick={onClose}
-              aria-label="????? ????? ?????"
-              className="px-3 py-1.5 bg-gray-200/60 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-xl font-cairo transition-colors mr-2 flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
+              aria-label="إغلاق البحث"
+              className="px-3 py-1.5 bg-[var(--muted)]/60 hover:bg-[var(--muted)] text-[var(--foreground)] font-bold text-xs rounded-xl font-cairo transition-colors mr-2 flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]"
             >
-              <span className="hidden sm:inline">?????</span>
-              <kbd className="px-1.5 py-0.5 bg-white rounded border border-gray-300 text-[10px] shadow-2xs font-mono">
+              <span className="hidden sm:inline">إغلاق</span>
+              <kbd className="px-1.5 py-0.5 bg-[var(--card)] rounded border border-[var(--border)] text-[10px] shadow-2xs font-mono">
                 Esc
               </kbd>
             </button>
@@ -471,19 +471,19 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
           {/* Filter Categories Pills */}
           <div
-            className="flex items-center gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto no-scrollbar font-cairo text-xs font-bold"
+            className="flex items-center gap-2 px-4 py-3 bg-[var(--card)] border-b border-[var(--border)] overflow-x-auto no-scrollbar font-cairo text-xs font-bold"
             role="tablist"
-            aria-label="????? ???? ?????"
+            aria-label="تصفية حسب الفئات"
           >
-            <span className="text-gray-400 font-normal whitespace-nowrap ml-1 flex items-center gap-1">
+            <span className="text-[var(--muted-foreground)] font-normal whitespace-nowrap ml-1 flex items-center gap-1">
               <Tag className="w-3.5 h-3.5" aria-hidden="true" />
-              ???????:
+              الفئات:
             </span>
 
             {[
               {
                 id: "all",
-                label: "????",
+                label: "الكل",
                 count:
                   results.projects.length +
                   results.news.length +
@@ -492,18 +492,18 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
               },
               {
                 id: "projects",
-                label: "????????",
+                label: "المشاريع",
                 count: results.projects.length,
                 icon: FolderHeart,
               },
-              { id: "news", label: "???????", count: results.news.length, icon: Newspaper },
+              { id: "news", label: "الأخبار", count: results.news.length, icon: Newspaper },
               {
                 id: "stories",
-                label: "??? ??????",
+                label: "قصص نجاح",
                 count: results.successStories.length,
                 icon: Award,
               },
-              { id: "programs", label: "???????", count: results.programs.length, icon: Layers },
+              { id: "programs", label: "البرامج", count: results.programs.length, icon: Layers },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = selectedCategory === tab.id;
@@ -513,12 +513,12 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                   key={tab.id}
                   role="tab"
                   aria-selected={isActive}
-                  aria-label={`????? ??? ${tab.label}`}
+                  aria-label={`تصفية ${tab.label}`}
                   onClick={() => setSelectedCategory(tab.id as CategoryFilter)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                     isActive
                       ? "bg-[var(--brand-green)] text-white shadow-xs"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200/80"
+                      : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]/80"
                   }`}
                 >
                   {Icon && <Icon className="w-3.5 h-3.5" aria-hidden="true" />}
@@ -526,7 +526,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                   {query.trim() && (
                     <span
                       className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                        isActive ? "bg-white/20 text-white" : "bg-gray-200 text-gray-700"
+                        isActive ? "bg-[var(--card)]/20 text-white" : "bg-[var(--muted)] text-[var(--foreground)]"
                       }`}
                     >
                       {tab.count}
@@ -548,10 +548,10 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
             {!query.trim() && (
               <div className="py-4 space-y-6">
                 <div>
-                  <h4 className="text-xs font-bold text-gray-400 font-cairo mb-3 flex items-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-emerald-600" />
-                    ????? ?????? ?????:
-                  </h4>
+                    <h4 className="text-xs font-bold text-[var(--muted-foreground)] font-cairo mb-3 flex items-center gap-1.5">
+                      <TrendingUp className="w-4 h-4 text-emerald-600" />
+                      عمليات بحث شائعة:
+                    </h4>
                   <div className="flex flex-wrap gap-2">
                     {POPULAR_SEARCH_TAGS.map((tag) => (
                       <button
@@ -565,28 +565,28 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-100">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-[var(--border)]">
                   <button
                     onClick={() => handleSelectItem("projects")}
-                    className="p-4 rounded-2xl bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 hover:border-emerald-200 text-right transition-all group"
+                    className="p-4 rounded-2xl bg-[var(--background)] hover:bg-emerald-50/60 border border-[var(--border)] hover:border-emerald-200 text-right transition-all group"
                   >
                     <FolderHeart className="w-6 h-6 text-emerald-600 mb-2 group-hover:scale-110 transition-transform" />
-                    <h5 className="font-bold text-sm text-gray-900 font-cairo">
-                      ??????? ???? ????????
+                    <h5 className="font-bold text-sm text-[var(--foreground)] font-cairo">
+                      استكشف المشاريع الجارية
                     </h5>
-                    <p className="text-xs text-gray-500 font-cairo mt-1">
-                      ???????? ???????? ????????? ?????????
+                    <p className="text-xs text-[var(--muted-foreground)] font-cairo mt-1">
+                      مشاريع متعددة تخدم المجتمعات المحرومة
                     </p>
                   </button>
 
                   <button
                     onClick={() => handleSelectItem("news")}
-                    className="p-4 rounded-2xl bg-gray-50 hover:bg-emerald-50/60 border border-gray-100 hover:border-emerald-200 text-right transition-all group"
+                    className="p-4 rounded-2xl bg-[var(--background)] hover:bg-emerald-50/60 border border-[var(--border)] hover:border-emerald-200 text-right transition-all group"
                   >
                     <Newspaper className="w-6 h-6 text-emerald-600 mb-2 group-hover:scale-110 transition-transform" />
-                    <h5 className="font-bold text-sm text-gray-900 font-cairo">?????? ????????</h5>
-                    <p className="text-xs text-gray-500 font-cairo mt-1">
-                      ?????? ??? ??????? ????????? ???????
+                    <h5 className="font-bold text-sm text-[var(--foreground)] font-cairo">آخر الأخبار</h5>
+                    <p className="text-xs text-[var(--muted-foreground)] font-cairo mt-1">
+                      تابع آخر أخبار الجمعية والمشاريع
                     </p>
                   </button>
 
@@ -598,9 +598,9 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                       className="w-6 h-6 text-amber-600 mb-2 group-hover:scale-110 transition-transform"
                       fill="currentColor"
                     />
-                    <h5 className="font-bold text-sm text-amber-900 font-cairo">?????? ???????</h5>
+                    <h5 className="font-bold text-sm text-amber-900 font-cairo">تبرع الآن</h5>
                     <p className="text-xs text-amber-700 font-cairo mt-1">
-                      ???? ?????? ?? ????? ?????? ??????????
+                      ساعد في دعم المشاريع الإنسانية والتنموية
                     </p>
                   </button>
                 </div>
@@ -610,21 +610,21 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
             {/* Case 2: Query Typed & No Results Found */}
             {query.trim() && !loading && totalResultsCount === 0 && (
               <div className="py-12 text-center">
-                <div className="w-16 h-16 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[var(--muted)] text-[var(--muted-foreground)] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="w-8 h-8" />
                 </div>
-                <h4 className="text-base font-bold text-gray-800 font-cairo mb-1">
-                  ?? ??? ?? ????? ????? &quot;{query}&quot;
+                <h4 className="text-base font-bold text-[var(--foreground)] font-cairo mb-1">
+                  لم يتم العثور على نتائج &quot;{query}&quot;
                 </h4>
-                <p className="text-xs text-gray-500 font-cairo max-w-sm mx-auto mb-6 leading-relaxed">
-                  ??? ????? ???????? ????? ??????? ???? ??? &quot;????&quot;? &quot;?????&quot;?
-                  &quot;????&quot;? ?? ???? ??????? ???????? ??????.
+                <p className="text-xs text-[var(--muted-foreground)] font-cairo max-w-sm mx-auto mb-6 leading-relaxed">
+                  جرب البحث بكلمات مختلفة مثل &quot;مياه&quot;، &quot;تعليم&quot;،
+                  &quot;إغاثة&quot;، أو تصفح المشاريع مباشرة.
                 </p>
                 <button
                   onClick={() => setQuery("")}
                   className="px-4 py-2 bg-[var(--brand-green)] text-white text-xs font-bold font-cairo rounded-xl shadow-xs hover:bg-[var(--brand-green-light)] transition-all"
                 >
-                  ????? ??? ?????
+                  ابدأ البحث من جديد
                 </button>
               </div>
             )}
@@ -636,16 +636,16 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                 {(selectedCategory === "all" || selectedCategory === "projects") &&
                   results.projects.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
-                        <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border)]">
+                        <h4 className="text-xs font-extrabold text-[var(--muted-foreground)] uppercase tracking-wider flex items-center gap-1.5">
                           <FolderHeart className="w-4 h-4 text-emerald-600" />
-                          ???????? ???????? ????????? ({results.projects.length})
+                          المشاريع المجتمعية الجارية ({results.projects.length})
                         </h4>
                         <button
                           onClick={() => handleSelectItem("projects")}
                           className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1"
                         >
-                          ??? ???? <ArrowLeft className="w-3 h-3" />
+                          عرض الكل <ArrowLeft className="w-3 h-3" />
                         </button>
                       </div>
 
@@ -662,14 +662,14 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               key={proj._id}
                               type="button"
                               onClick={() => handleSelectItem("projects", proj)}
-                              aria-label={`??? ????? ${proj.title}`}
+                              aria-label={`مشروع مشروع?? ${proj.title}`}
                               className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                                 isFocused
                                   ? "bg-emerald-50/80 border-emerald-300 shadow-sm"
-                                  : "bg-gray-50/60 hover:bg-gray-100/80 border-gray-100 hover:border-gray-200"
+                                  : "bg-[var(--background)]/60 hover:bg-[var(--muted)]/80 border-[var(--border)] hover:border-[var(--border)]"
                               }`}
                             >
-                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gray-200 overflow-hidden flex-shrink-0 relative">
+                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-[var(--muted)] overflow-hidden flex-shrink-0 relative">
                                 {img ? (
                                   <FallbackImage
                                     src={img}
@@ -680,7 +680,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                                   />
                                 ) : (
                                   <div className="w-full h-full flex items-center justify-center bg-emerald-100 text-emerald-700 font-bold text-lg">
-                                    ???
+                                    مشروع
                                   </div>
                                 )}
                               </div>
@@ -688,24 +688,24 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
                                   <span className="px-2 py-0.5 text-[10px] bg-emerald-100 text-[var(--brand-green-dark)] font-bold rounded-md">
-                                    {proj.category || "?????"}
+                                    {proj.category || "غير محدد"}
                                   </span>
                                   {proj.status && (
-                                    <span className="text-[10px] text-gray-400 font-semibold">
+                                    <span className="text-[10px] text-[var(--muted-foreground)] font-semibold">
                                       � {proj.status}
                                     </span>
                                   )}
                                 </div>
-                                <h5 className="text-sm font-bold text-gray-900 truncate">
+                                <h5 className="text-sm font-bold text-[var(--foreground)] truncate">
                                   {renderHighlightedText(proj.title, query)}
                                 </h5>
-                                <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                <p className="text-xs text-[var(--muted-foreground)] line-clamp-1 mt-0.5">
                                   {renderHighlightedText(proj.description, query)}
                                 </p>
 
                                 {proj.progress !== undefined && (
                                   <div className="mt-2 flex items-center gap-3">
-                                    <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                    <div className="flex-1 h-1.5 bg-[var(--muted)] rounded-full overflow-hidden">
                                       <div
                                         className="h-full bg-[var(--brand-green)]"
                                         style={{ width: `${Math.min(proj.progress, 100)}%` }}
@@ -719,7 +719,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               </div>
 
                               <CornerDownLeft
-                                className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                className="w-4 h-4 text-[var(--muted-foreground)] opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                 aria-hidden="true"
                               />
                             </button>
@@ -733,16 +733,16 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                 {(selectedCategory === "all" || selectedCategory === "news") &&
                   results.news.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
-                        <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border)]">
+                        <h4 className="text-xs font-extrabold text-[var(--muted-foreground)] uppercase tracking-wider flex items-center gap-1.5">
                           <Newspaper className="w-4 h-4 text-emerald-600" />
-                          ??????? ????????? ({results.news.length})
+                          للتنقل? للتنقلمشروع ({results.news.length})
                         </h4>
                         <button
                           onClick={() => handleSelectItem("news")}
                           className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1"
                         >
-                          ??? ???? <ArrowLeft className="w-3 h-3" />
+                          عرض الكل <ArrowLeft className="w-3 h-3" />
                         </button>
                       </div>
 
@@ -759,14 +759,14 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               key={item._id}
                               type="button"
                               onClick={() => handleSelectItem("news", item)}
-                              aria-label={`??? ?????: ${item.title}`}
+                              aria-label={`مشروع مشروع??: ${item.title}`}
                               className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                                 isFocused
                                   ? "bg-emerald-50/80 border-emerald-300 shadow-sm"
-                                  : "bg-gray-50/60 hover:bg-gray-100/80 border-gray-100 hover:border-gray-200"
+                                  : "bg-[var(--background)]/60 hover:bg-[var(--muted)]/80 border-[var(--border)] hover:border-[var(--border)]"
                               }`}
                             >
-                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gray-200 overflow-hidden flex-shrink-0">
+                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-[var(--muted)] overflow-hidden flex-shrink-0">
                                 {img ? (
                                   <FallbackImage
                                     src={img}
@@ -785,24 +785,24 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
                                   <span className="px-2 py-0.5 text-[10px] bg-blue-50 text-blue-700 font-bold rounded-md">
-                                    {item.category || "???"}
+                                    {item.category || "عام"}
                                   </span>
                                   {item.publishDate && (
-                                    <span className="text-[10px] text-gray-400">
+                                    <span className="text-[10px] text-[var(--muted-foreground)]">
                                       � {item.publishDate}
                                     </span>
                                   )}
                                 </div>
-                                <h5 className="text-sm font-bold text-gray-900 truncate">
+                                <h5 className="text-sm font-bold text-[var(--foreground)] truncate">
                                   {renderHighlightedText(item.title, query)}
                                 </h5>
-                                <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                <p className="text-xs text-[var(--muted-foreground)] line-clamp-1 mt-0.5">
                                   {renderHighlightedText(item.excerpt, query)}
                                 </p>
                               </div>
 
                               <CornerDownLeft
-                                className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                className="w-4 h-4 text-[var(--muted-foreground)] opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                 aria-hidden="true"
                               />
                             </button>
@@ -816,17 +816,17 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                 {(selectedCategory === "all" || selectedCategory === "stories") &&
                   results.successStories.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
-                        <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border)]">
+                        <h4 className="text-xs font-extrabold text-[var(--muted-foreground)] uppercase tracking-wider flex items-center gap-1.5">
                           <Award className="w-4 h-4 text-amber-500" aria-hidden="true" />
-                          ??? ?????? ?????? ({results.successStories.length})
+                          مشروع للتنقل للتنقل ({results.successStories.length})
                         </h4>
                         <button
                           onClick={() => handleSelectItem("success")}
-                          aria-label="??? ?? ??? ??????"
+                          aria-label="مشروع ?? مشروع للتنقل"
                           className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-[var(--brand-green)] rounded"
                         >
-                          ??? ???? <ArrowLeft className="w-3 h-3" aria-hidden="true" />
+                          عرض الكل <ArrowLeft className="w-3 h-3" aria-hidden="true" />
                         </button>
                       </div>
 
@@ -843,14 +843,14 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               key={story._id}
                               type="button"
                               onClick={() => handleSelectItem("success", story)}
-                              aria-label={`??? ??? ??????: ${story.title}`}
+                              aria-label={`مشروع مشروع للتنقل: ${story.title}`}
                               className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                                 isFocused
                                   ? "bg-amber-50/80 border-amber-300 shadow-sm"
-                                  : "bg-gray-50/60 hover:bg-gray-100/80 border-gray-100 hover:border-gray-200"
+                                  : "bg-[var(--background)]/60 hover:bg-[var(--muted)]/80 border-[var(--border)] hover:border-[var(--border)]"
                               }`}
                             >
-                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gray-200 overflow-hidden flex-shrink-0">
+                              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-[var(--muted)] overflow-hidden flex-shrink-0">
                                 {img ? (
                                   <FallbackImage
                                     src={img}
@@ -869,19 +869,19 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
                                   <span className="px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 font-bold rounded-md">
-                                    {story.beneficiaryName || "??? ?????"}
+                                    {story.beneficiaryName || "مستفيد"}
                                   </span>
                                 </div>
-                                <h5 className="text-sm font-bold text-gray-900 truncate">
+                                <h5 className="text-sm font-bold text-[var(--foreground)] truncate">
                                   {renderHighlightedText(story.title, query)}
                                 </h5>
-                                <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                <p className="text-xs text-[var(--muted-foreground)] line-clamp-1 mt-0.5">
                                   {renderHighlightedText(story.story, query)}
                                 </p>
                               </div>
 
                               <CornerDownLeft
-                                className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                className="w-4 h-4 text-[var(--muted-foreground)] opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                 aria-hidden="true"
                               />
                             </button>
@@ -895,17 +895,17 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                 {(selectedCategory === "all" || selectedCategory === "programs") &&
                   results.programs.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-gray-100">
-                        <h4 className="text-xs font-extrabold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border)]">
+                        <h4 className="text-xs font-extrabold text-[var(--muted-foreground)] uppercase tracking-wider flex items-center gap-1.5">
                           <Layers className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-                          ??????? ?????????? ({results.programs.length})
+                          للتنقل? للتنقلمشروع? ({results.programs.length})
                         </h4>
                         <button
                           onClick={() => handleSelectItem("programs")}
-                          aria-label="??? ?? ??????? ??????????"
+                          aria-label="مشروع ?? للتنقل? للتنقلمشروع?"
                           className="text-xs font-bold text-[var(--brand-green)] hover:underline flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-[var(--brand-green)] rounded"
                         >
-                          ??? ???? <ArrowLeft className="w-3 h-3" aria-hidden="true" />
+                          عرض الكل <ArrowLeft className="w-3 h-3" aria-hidden="true" />
                         </button>
                       </div>
 
@@ -921,28 +921,28 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
                               key={prog._id}
                               type="button"
                               onClick={() => handleSelectItem("programs", prog)}
-                              aria-label={`??? ?????? ${prog.title}`}
+                              aria-label={`مشروع للتنقل ${prog.title}`}
                               className={`w-full text-right p-3 sm:p-4 rounded-2xl transition-all cursor-pointer border flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                                 isFocused
                                   ? "bg-emerald-50/80 border-emerald-300 shadow-sm"
-                                  : "bg-gray-50/60 hover:bg-gray-100/80 border-gray-100 hover:border-gray-200"
+                                  : "bg-[var(--background)]/60 hover:bg-[var(--muted)]/80 border-[var(--border)] hover:border-[var(--border)]"
                               }`}
                             >
                               <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold flex-shrink-0">
-                                {prog.icon || "??"}
+                                {prog.icon || "خبر"}
                               </div>
 
                               <div className="flex-1 min-w-0">
-                                <h5 className="text-sm font-bold text-gray-900 truncate">
+                                <h5 className="text-sm font-bold text-[var(--foreground)] truncate">
                                   {renderHighlightedText(prog.title, query)}
                                 </h5>
-                                <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                                <p className="text-xs text-[var(--muted-foreground)] line-clamp-1 mt-0.5">
                                   {renderHighlightedText(prog.description, query)}
                                 </p>
                               </div>
 
                               <CornerDownLeft
-                                className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                className="w-4 h-4 text-[var(--muted-foreground)] opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                 aria-hidden="true"
                               />
                             </button>
@@ -956,28 +956,28 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
           </div>
 
           {/* Bottom Footer Shortcuts Info */}
-          <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500 font-cairo">
+          <div className="px-5 py-3 bg-[var(--background)] border-t border-[var(--border)] flex items-center justify-between text-[11px] text-[var(--muted-foreground)] font-cairo">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-[var(--card)] border border-[var(--border)] rounded font-mono text-[10px]">
                   ?
                 </kbd>
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-[var(--card)] border border-[var(--border)] rounded font-mono text-[10px]">
                   ?
                 </kbd>
-                ??????
+                للتنقل
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-gray-300 rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-[var(--card)] border border-[var(--border)] rounded font-mono text-[10px]">
                   ?
                 </kbd>
-                ????????
+                للتنقل??
               </span>
             </div>
 
             <div className="flex items-center gap-1.5 text-emerald-700 font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>??? ???? ????? ?? Sanity CMS</span>
+              <span>نتائج بحث فورية من Sanity CMS</span>
             </div>
           </div>
         </motion.div>

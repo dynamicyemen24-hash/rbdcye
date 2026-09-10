@@ -97,7 +97,7 @@ function HeroMetric({ metric, inView }: { metric: Metric; inView: boolean }) {
       style={{
         background:
           "linear-gradient(135deg, var(--brand-green-dark) 0%, var(--brand-green) 55%, var(--brand-green-light) 100%)",
-        boxShadow: "0 24px 48px rgba(15, 76, 58, 0.25)",
+        boxShadow: "0 24px 48px rgba(var(--brand-green-rgb), 0.25)",
         opacity: 0,
         animation: inView ? "card-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards" : "none",
       }}
@@ -156,7 +156,7 @@ function FeatureMetric({ metric, inView }: { metric: Metric; inView: boolean }) 
     <div
       className="relative rounded-3xl p-8 overflow-hidden border border-[var(--border)] bg-white/80 backdrop-blur-sm h-full flex flex-col justify-between min-h-[320px]"
       style={{
-        boxShadow: "0 12px 32px rgba(15, 76, 58, 0.08)",
+        boxShadow: "0 12px 32px rgba(var(--brand-green-rgb), 0.08)",
         opacity: 0,
         animation: inView
           ? "card-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards"

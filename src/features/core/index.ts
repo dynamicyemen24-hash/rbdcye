@@ -22,8 +22,8 @@ export async function initializeCoreServices(): Promise<void> {
     // Initialize SEO manager
     if (typeof window !== "undefined") {
       seoManager.update({
-        title: "مؤسسة رحماء بينهم للإغاثة والتنمية",
-        description: "الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
+        title: "حملة رحماء بينهم للإغاثة والتنمية",
+        description: "الموقع الإلكتروني التعريفي الرسمي لحملة رحماء بينهم للإغاثة والتنمية باليمن",
         type: "organization",
         image: "/og-image.png",
         url: "https://rbdcye.org",

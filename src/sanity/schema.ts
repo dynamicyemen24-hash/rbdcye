@@ -1373,10 +1373,10 @@ export const video = defineType({
     }),
     defineField({
       name: "isStoryVideo",
-      title: "فيديو قصة المؤسسة",
+      title: "فيديو قصة الحملة",
       type: "boolean",
       initialValue: false,
-      description: "فيديو قصة نجاح المؤسسة الرئيسي",
+      description: "فيديو قصة نجاح الحملة الرئيسي",
     }),
     defineField({
       name: "tags",
@@ -1474,20 +1474,20 @@ export const siteSettings = defineType({
   fields: [
     defineField({
       name: "siteName",
-      title: "اسم المؤسسة",
+      title: "اسم الحملة",
       type: "string",
       initialValue: "رحماء بينهم",
-      description: "الاسم الرسمي للمؤسسة",
+      description: "الاسم الرسمي للحملة",
     }),
     defineField({
       name: "tagline",
       title: "الشعار المختصر",
       type: "string",
-      description: "شعار قصير يصف المؤسسة",
+      description: "شعار قصير يصف الحملة",
     }),
     defineField({
       name: "description",
-      title: "وصف المؤسسة",
+      title: "وصف الحملة",
       type: "text",
       rows: 4,
     }),
@@ -1846,7 +1846,7 @@ export const testimonial = defineType({
       name: "role",
       title: "الصفة",
       type: "string",
-      description: "المسمى الوظيفي أو الصلة بالمؤسسة",
+      description: "المسمى الوظيفي أو الصلة بالحملة",
     }),
     defineField({
       name: "quote",

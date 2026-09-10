@@ -27,12 +27,8 @@ export function PageHeader({
 
   return (
     <section
-      className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20"
+      className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20 bg-gradient-to-b from-[rgba(var(--brand-green-rgb),0.06)] to-white"
       aria-labelledby="page-header-title"
-      style={{
-        background:
-          "linear-gradient(180deg, rgba(26, 92, 72, 0.06) 0%, rgba(255, 255, 255, 1) 100%)",
-      }}
     >
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -74,27 +70,15 @@ export function PageHeader({
         >
           {/* Unified Badge */}
           <div
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 shadow-md"
-            style={{
-              background: "rgba(255, 255, 255, 0.9)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(26, 92, 72, 0.12)",
-            }}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 shadow-md bg-white/90 backdrop-blur-[10px] border border-[rgba(var(--brand-green-rgb),0.12)]"
           >
             <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
-              }}
+              className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]"
             >
               <Icon className="w-4 h-4 text-white" />
             </div>
             <span
-              className="text-sm font-semibold"
-              style={{
-                color: "var(--brand-green)",
-                fontFamily: "Cairo, sans-serif",
-              }}
+              className="text-sm font-semibold text-[var(--brand-green)]"
             >
               {badge}
             </span>
@@ -103,16 +87,7 @@ export function PageHeader({
           {/* Title with consistent typography */}
           <h1
             id="page-header-title"
-            className="mb-6 max-w-3xl"
-
-            style={{
-              fontSize: "clamp(2.15rem, 5vw, var(--fs-h1))",
-
-              fontWeight: 800,
-              lineHeight: "var(--lh-heading)",
-              color: "var(--foreground)",
-              fontFamily: "Cairo, sans-serif",
-            }}
+            className="mb-6 max-w-3xl text-[clamp(2.15rem,5vw,var(--fs-h1))] font-extrabold leading-[var(--lh-heading)] text-[var(--foreground)]"
           >
             {title}
           </h1>
@@ -121,13 +96,7 @@ export function PageHeader({
 
           {/* Subtitle with consistent styling */}
           <p
-            className="max-w-3xl leading-relaxed"
-            style={{
-              fontSize: "clamp(1rem, 1.8vw, 1.15rem)",
-              color: "var(--muted-foreground)",
-              fontFamily: "Cairo, sans-serif",
-              lineHeight: 1.8,
-            }}
+            className="max-w-3xl leading-[1.8] text-[clamp(1rem,1.8vw,1.15rem)] text-[var(--muted-foreground)]"
           >
             {subtitle}
           </p>

@@ -1,62 +1,558 @@
-/* Launch polish: small, safe defaults shared by the public experience. */
+/* ==========================================================================
+   GLOBAL FOUNDATION
+   --------------------------------------------------------------------------
+   Production-grade baseline for modern web applications
+   RTL / LTR · Accessibility · Performance · Responsive · Mobile · Print
+   WCAG 2.2 AA oriented
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. ROOT
+   ========================================================================== */
+
 html {
+  /*
+   * Prevent pathological viewport widths.
+   */
   min-width: 320px;
+
+  /*
+   * Modern viewport units.
+   */
+  min-height: 100%;
+
+  /*
+   * Native smooth scrolling.
+   * Automatically neutralized for reduced-motion users below.
+   */
   scroll-behavior: smooth;
+
+  /*
+   * Improve text rasterization where supported.
+   */
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+
+  /*
+   * Prevent synthetic font faces.
+   * Important when using variable self-hosted fonts.
+   */
+  font-synthesis: none;
+
+  /*
+   * Prevent browser text inflation on mobile.
+   */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /*
+   * Prevent accidental horizontal overflow without
+   * turning the root into an unwanted scroll container.
+   */
+  overflow-x: clip;
+
+  /*
+   * Allow native controls to respect the application theme.
+   * Change to "light" if your application is intentionally light-only.
+   */
+  color-scheme: light dark;
+
+  /*
+   * Modern mobile safe area.
+   */
+  padding-block-start: env(safe-area-inset-top, 0px);
+
+  /*
+   * Use the site's primary font system.
+   */
+  font-family: var(--font-ar, system-ui, sans-serif);
 }
+
+
+/* ==========================================================================
+   02. UNIVERSAL BOX MODEL
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   03. BODY
+   ========================================================================== */
 
 body {
+  /*
+   * Prevent horizontal layout collapse.
+   */
   min-width: 320px;
-  background: var(--background);
+
+  /*
+   * Ensure full viewport coverage.
+   */
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  /*
+   * Remove browser default margin.
+   */
+  margin: 0;
+
+  /*
+   * Application colors.
+   */
+  background-color: var(--background, #ffffff);
+  color: var(--foreground, #111111);
+
+  /*
+   * Never synthesize missing font weights/styles.
+   */
   font-synthesis: none;
-  overflow-x: hidden;
+
+  /*
+   * Keep accidental overflow from creating horizontal scrolling.
+   */
+  overflow-x: clip;
+
+  /*
+   * Prevent vertical overscroll chaining on the document.
+   */
+  overscroll-behavior-y: none;
+
+  /*
+   * Protect mobile bottom safe area.
+   */
+  padding-block-end: env(safe-area-inset-bottom, 0px);
 }
 
-p,
-a,
+
+/* ==========================================================================
+   04. TYPOGRAPHY INHERITANCE
+   ========================================================================== */
+
 button,
-label {
-  overflow-wrap: anywhere;
+input,
+textarea,
+select,
+optgroup {
+  font: inherit;
+  color: inherit;
 }
+
+button,
+input,
+textarea,
+select {
+  font-synthesis: none;
+}
+
+
+/* ==========================================================================
+   05. MEDIA
+   ========================================================================== */
 
 img,
-svg,
-video {
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-button,
-a,
-input,
-textarea,
-select {
-  font: inherit;
+img,
+video,
+canvas {
+  height: auto;
 }
 
-button,
+img {
+  /*
+   * Prevent accidental italic fallback text from producing
+   * strange visual results when an image fails.
+   */
+  font-style: normal;
+}
+
+svg {
+  /*
+   * Prevent SVG flex items from unexpectedly shrinking.
+   */
+  flex-shrink: 0;
+}
+
+iframe {
+  display: block;
+  max-width: 100%;
+  border: 0;
+}
+
+
+/* ==========================================================================
+   06. IMAGES WITH EXPLICIT DIMENSIONS
+   ========================================================================== */
+
+img[width][height] {
+  /*
+   * Preserve intrinsic aspect ratio and reduce CLS.
+   */
+  height: auto;
+}
+
+
+/* ==========================================================================
+   07. LINKS
+   ========================================================================== */
+
 a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.15em;
+}
+
+a:where(:not([class])) {
+  /*
+   * Content links remain visibly recognizable.
+   */
+  text-decoration: underline;
+}
+
+a[href^="http"],
+a[href^="https"],
+a[href^="mailto:"],
+a[href^="tel:"] {
+  /*
+   * URLs and long identifiers may contain unbreakable sequences.
+   */
+  overflow-wrap: anywhere;
+}
+
+
+/* ==========================================================================
+   08. TEXT SAFETY
+   ========================================================================== */
+
+p,
+li,
+blockquote,
+figcaption,
+dd {
+  overflow-wrap: break-word;
+}
+
+/*
+ * Explicit utility for URLs, hashes, IDs, tokens and long strings.
+ */
+.break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/*
+ * Explicit utility where wrapping is forbidden.
+ */
+.text-nowrap {
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   09. HEADINGS
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block: 0;
+
+  font-family: var(--font-ar, system-ui, sans-serif);
+  font-style: normal;
+  font-synthesis: none;
+
+  text-wrap: balance;
+}
+
+
+/* ==========================================================================
+   10. PARAGRAPHS
+   ========================================================================== */
+
+p {
+  margin-block: 0;
+}
+
+
+/* ==========================================================================
+   11. LISTS
+   ========================================================================== */
+
+ul,
+ol {
+  margin-block: 0;
+}
+
+
+/* ==========================================================================
+   12. INTERACTIVE CONTROLS
+   ========================================================================== */
+
+button,
+[role="button"] {
+  /*
+   * Recommended minimum interactive target.
+   */
+  min-height: 44px;
+
+  /*
+   * Better touch interaction.
+   */
+  touch-action: manipulation;
+
+  /*
+   * Remove native tap highlight.
+   */
   -webkit-tap-highlight-color: transparent;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+
+/* ==========================================================================
+   13. BUTTON INTERACTION
+   ========================================================================== */
+
 button {
-  transition: transform 160ms ease-out;
+  /*
+   * No browser-specific visual assumptions.
+   */
+  appearance: auto;
 }
 
-button:active {
-  transform: scale(0.98);
+/*
+ * Tactile feedback only for actual pointer devices.
+ *
+ * Avoids unnecessary transform effects on touch devices.
+ */
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled) {
+    transition:
+      transform 160ms ease-out,
+      opacity 160ms ease-out;
+  }
+
+  button:not(:disabled):hover {
+    opacity: 0.96;
+  }
 }
 
-::selection {
-  background: var(--brand-gold);
-  color: var(--brand-green-dark);
+button:not(:disabled):active {
+  transform: scale(0.985);
+}
+
+
+/* ==========================================================================
+   14. FOCUS
+   ========================================================================== */
+
+/*
+ * Remove the default outline only because a stronger
+ * :focus-visible treatment is provided below.
+ */
+:focus {
+  outline: none;
 }
 
 :focus-visible {
-  outline: 3px solid var(--brand-green);
+  outline:
+    3px solid var(--focus-ring, var(--brand-green, currentColor));
+
   outline-offset: 3px;
 }
+
+/*
+ * High-value interactive elements receive explicit focus.
+ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline:
+    3px solid var(--focus-ring, var(--brand-green, currentColor));
+
+  outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   15. FORM CONTROLS
+   ========================================================================== */
+
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 0.7;
+}
+
+
+/* ==========================================================================
+   16. SELECTION
+   ========================================================================== */
+
+::selection {
+  background: var(--brand-gold, #d4af37);
+  color: var(--brand-green-dark, #123524);
+}
+
+
+/* ==========================================================================
+   17. CODE
+   ========================================================================== */
+
+code,
+kbd,
+samp,
+pre {
+  font-family:
+    var(--font-code,
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      "Liberation Mono",
+      monospace);
+
+  font-synthesis: none;
+}
+
+pre {
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+}
+
+
+/* ==========================================================================
+   18. DIRECTIONAL ISOLATION
+   ========================================================================== */
+
+/*
+ * Numbers, IDs, URLs, phone numbers and technical identifiers
+ * should not interfere with Arabic bidi layout.
+ */
+
+[dir="ltr"],
+.ltr,
+[data-direction="ltr"] {
+  direction: ltr;
+}
+
+[dir="rtl"],
+.rtl,
+[data-direction="rtl"] {
+  direction: rtl;
+}
+
+.numeric,
+.price,
+.amount,
+.stat,
+.metric,
+.phone,
+.email,
+.url,
+.identifier {
+  unicode-bidi: isolate;
+}
+
+.numeric,
+.price,
+.amount,
+.stat,
+.metric {
+  direction: ltr;
+
+  font-family:
+    var(--font-latin,
+      var(--font-ar, system-ui, sans-serif));
+
+  font-variant-numeric:
+    lining-nums tabular-nums;
+
+  font-feature-settings:
+    "tnum" 1,
+    "lnum" 1;
+}
+
+.phone,
+.email,
+.url,
+.identifier {
+  direction: ltr;
+
+  font-family:
+    var(--font-latin,
+      var(--font-ar, system-ui, sans-serif));
+}
+
+
+/* ==========================================================================
+   19. TEXT WRAPPING
+   ========================================================================== */
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+
+/* ==========================================================================
+   20. CONTENT VISIBILITY
+   ========================================================================== */
+
+/*
+ * Optional utility for large below-the-fold sections.
+ *
+ * Do NOT apply globally.
+ */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+
+/* ==========================================================================
+   21. REDUCED MOTION
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -68,13 +564,153 @@ button:active {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
+    animation-delay: 0ms !important;
+
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+
+    scroll-behavior: auto !important;
+  }
+
+  button:not(:disabled):active {
+    transform: none;
   }
 }
 
+
+/* ==========================================================================
+   22. FORCED COLORS / WINDOWS HIGH CONTRAST
+   ========================================================================== */
+
+@media (forced-colors: active) {
+
+  /*
+   * Allow the OS accessibility theme to take control.
+   */
+  *,
+  *::before,
+  *::after {
+    forced-color-adjust: auto;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    border: 1px solid ButtonText;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+
+/* ==========================================================================
+   23. INCREASED CONTRAST
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :focus-visible {
+    outline-width: 4px;
+    outline-offset: 4px;
+  }
+
+  a {
+    text-decoration-thickness: 0.12em;
+  }
+}
+
+
+/* ==========================================================================
+   24. SMALL SCREENS
+   ========================================================================== */
+
 @media (max-width: 640px) {
+
+  /*
+   * Avoid overly dense typography on compact devices.
+   */
   body {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    font-size: 0.9375rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: pretty;
+  }
+}
+
+
+/* ==========================================================================
+   25. VERY SMALL DEVICES
+   ========================================================================== */
+
+@media (max-width: 359px) {
+
+  html,
+  body {
+    min-width: 320px;
+  }
+}
+
+
+/* ==========================================================================
+   26. PRINT
+   ========================================================================== */
+
+@media print {
+  html {
+    min-width: 0;
+    overflow: visible;
+    color-scheme: light;
+  }
+
+  body {
+    min-width: 0;
+    min-height: auto;
+
+    background: #fff;
+    color: #000;
+
+    overflow: visible;
+    padding: 0;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /*
+   * Avoid awkward page breaks.
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  img,
+  svg,
+  video {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }

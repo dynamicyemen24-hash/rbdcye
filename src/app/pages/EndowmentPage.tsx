@@ -49,28 +49,28 @@ export default function EndowmentPage() {
 
   const endowmentProjects = [
     {
-      name: "مجمع رحماء الوقفي",
-      target: "250 مليون ر.ي",
-      raised: "162.5 مليون ر.ي",
-      progress: 65,
-      description: "مجمع تجاري سكني يضم محلات تجارية وشقق سكنية",
-      returns: "12% سنوياً",
+      name: "وقف كسوة الشتاء",
+      target: "٥٠ مليون ر.ي",
+      raised: "١٦ مليون ر.ي",
+      progress: 32,
+      description: "تأمين بطانيات ودفايات وملابس شتوية للأسر المتضررة في المحافظات الريفية خلال فصل الشتاء القارس.",
+      impact: "١,٢٠٠ أسرة مستفيدة حتى الآن",
     },
     {
-      name: "مزرعة النخيل الوقفية",
-      target: "125 مليون ر.ي",
-      raised: "87.5 مليون ر.ي",
-      progress: 70,
-      description: "مزرعة نخيل منتجة في وادي حضرموت",
-      returns: "15% سنوياً",
+      name: "وقف آبار المياه النقية",
+      target: "٧٥ مليون ر.ي",
+      raised: "٣٣.٧٥ مليون ر.ي",
+      progress: 45,
+      description: "حفر وتجهيز آبار مياه عذبة في المناطق المحرومة من شبكات المياه في مأرب وشبوة والحديدة.",
+      impact: "٨ آبار مياه مكتملة، ١٢ قيد الإنشاء",
     },
     {
-      name: "صندوق الوقف النقدي",
-      target: "500 مليون ر.ي",
-      raised: "200 مليون ر.ي",
-      progress: 40,
-      description: "صندوق استثماري متنوع الأصول لإيرادات مستقرة",
-      returns: "10% سنوياً",
+      name: "وقف التعليم والتحفيظ",
+      target: "٤٠ مليون ر.ي",
+      raised: "١١.٢ مليون ر.ي",
+      progress: 28,
+      description: "إنشاء حلقات تحفيظ القرآن الكريم ودروس تعليمية أساسية للفتيان والأطفال في المساجد والمدارس المجتمعية.",
+      impact: "٤٥٠ طالب في حلقات التحفيظ",
     },
   ];
 
@@ -83,7 +83,7 @@ export default function EndowmentPage() {
           <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -106,7 +106,7 @@ export default function EndowmentPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => navigate("/donate")}
-                className="px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
+                className="px-8 py-4 bg-[var(--card)] text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 ساهم في الوقف
               </button>
@@ -121,15 +121,23 @@ export default function EndowmentPage() {
         </div>
       </section>
 
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنْبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة البقرة، الآية ٢٦١</p>
+      </div>
+
       {/* Stats */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-[var(--background)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
-              { value: "875 مليون ر.ي", label: "رأس المال المستهدف", icon: Target },
-              { value: "12%", label: "عائد استثماري مجدٍ", icon: TrendingUp },
-              { value: "آلاف", label: "مستفيد سنوياً", icon: Users },
-              { value: "سنوات", label: "عام من الاستدامة", icon: Clock },
+              { value: "١٦٥ مليون ر.ي", label: "إجمالي رأس المال الوقفي", icon: Target },
+              { value: "١,٢٠٠+", label: "أسرة مستفيدة", icon: Users },
+              { value: "٨ آبار", label: "مياه مكتملة", icon: Building2 },
+              { value: "٤٥٠ طالب", label: "في حلقات التحفيظ", icon: Award },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -152,7 +160,7 @@ export default function EndowmentPage() {
 
       {/* Features */}
       <section className="py-16 bg-[var(--secondary)]">
-        <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +183,7 @@ export default function EndowmentPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
               >
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)] flex items-center justify-center mb-5">
                   <feature.icon className="w-8 h-8 text-white" />
@@ -189,8 +197,8 @@ export default function EndowmentPage() {
       </section>
 
       {/* Endowment Projects */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-[var(--background)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,12 +221,12 @@ export default function EndowmentPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bg-white rounded-2xl p-6 border border-[var(--border)] shadow-md hover:shadow-2xl transition-all duration-500"
+                className="group bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] shadow-md hover:shadow-2xl transition-all duration-500"
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-[var(--foreground)]">{project.name}</h3>
                   <span className="text-xs font-semibold text-[var(--brand-green)] bg-[var(--brand-green-pale)] px-3 py-1 rounded-full">
-                    {project.returns}
+                    {project.impact}
                   </span>
                 </div>
 
@@ -258,9 +266,78 @@ export default function EndowmentPage() {
         </div>
       </section>
 
+      {/* How the Endowment Works */}
+      <section className="py-16 bg-[var(--secondary)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              كيف يعمل <span className="text-[var(--brand-green)]">الوقف</span>؟
+            </h2>
+            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
+              ورشة عمل الوقف — من الشرعية الإسلامية إلى التطبيق العملي
+            </p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            {/* Quranic Verse */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] shadow-lg mb-8 text-center"
+            >
+              <p className="text-xl text-[var(--foreground)] leading-loose font-medium mb-4">
+                ﴿ وَمَا آتَيْتُم مِّن زَكَاةٍ تُرِيدُونَ وَجْهَ اللَّهِ فَأُولَٰئِكَ هُمُ الْمُضْلِحُونَ ﴾
+              </p>
+              <span className="text-sm text-[var(--muted-foreground)]">سورة الروم، الآية ٣٩</span>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  step: "الخطوة الأولى",
+                  title: "تأسيس الوقف",
+                  desc: "يُسجَّل الوقف رسمياً لدى الجهات الرقابية ويُنشأ صندوق خاص لإدارته وفق أحكام الشريعة الإسلامية والأنظمة اليمنية المعمول بها.",
+                },
+                {
+                  step: "الخطوة الثانية",
+                  title: "الاستثمار والتشغيل",
+                  desc: "تُستثمر أموال الوقف في مشاريع منتجة (عقارات، أراضٍ زراعية، صناديق نقدي) وتُخصص عوائدها لتمويل المشاريع الخيرية المستدامة.",
+                },
+                {
+                  step: "الخطوة الثالثة",
+                  title: "التوزيع والاستدامة",
+                  desc: "تُوزَّع العوائد على المستفيدين المستهدفين (أسر محتاجة، طلاب، مشاريع مياه) مع إعادة استثمار جزء منها لضمان استمرارية الأثر لعقود قادمة.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] shadow-md"
+                >
+                  <span className="text-xs font-bold text-[var(--brand-green)] bg-[var(--brand-green-pale)] px-3 py-1 rounded-full">
+                    {item.step}
+                  </span>
+                  <h3 className="text-lg font-bold text-[var(--foreground)] mt-3 mb-2">{item.title}</h3>
+                  <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
-        <div className="container mx-auto px-4 text-center">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -274,7 +351,7 @@ export default function EndowmentPage() {
             </p>
             <button
               onClick={() => navigate("/contact")}
-              className="px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
+              className="px-8 py-4 bg-[var(--card)] text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
             >
               تواصل معنا للاستفسار
             </button>

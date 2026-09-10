@@ -1,11 +1,11 @@
 // src/utils/imageUtils.ts
 
 /**
- * أدوات معالجة الصور للمؤسسة
+ * أدوات معالجة الصور للحملة
  * توفر صور افتراضية ذكية في حالة عدم توفر صور من لوحة التحكم
  */
 
-// ألوان المؤسسة حسب التصنيفات
+// ألوان الحملة حسب التصنيفات
 const CATEGORY_COLORS: Record<string, string> = {
   تعليم: "2563EB",
   إغاثة: "E74C3C",
@@ -29,7 +29,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   عام: "📰",
 };
 
-// صور افتراضية محلية بهوية المؤسسة (زخارف إسلامية وثقافة يمنية)
+// صور افتراضية محلية بهوية الحملة (زخارف إسلامية وثقافة يمنية)
 // تُستخدم فقط عند غياب صورة من لوحة التحكم أو Sanity
 const HIGH_QUALITY_FALLBACK_IMAGES = [
   "/images/defaults/project-relief.svg", // إغاثة وسلال غذائية
@@ -42,7 +42,7 @@ const HIGH_QUALITY_FALLBACK_IMAGES = [
   "/images/defaults/project-infrastructure.svg", // بنية تحتية ومساجد
 ];
 
-// صور خاصة بالمؤسسة
+// صور خاصة بالحملة
 const CUSTOM_FALLBACK_IMAGES = [
   "/images/defaults/project-default.svg",
   "/images/defaults/project-relief.svg",
@@ -79,7 +79,7 @@ export const getPlaceholderImage = (
   // استخدام عداد ثابت بدلاً من Math.random لتجنب المشاكل
   placeholderCounter = (placeholderCounter + 1) % (HIGH_QUALITY_FALLBACK_IMAGES.length + 3);
 
-  // الصور الافتراضية المحلية بهوية المؤسسة (الأولوية دائماً)
+  // الصور الافتراضية المحلية بهوية الحملة (الأولوية دائماً)
   const placeholders = [
     ...HIGH_QUALITY_FALLBACK_IMAGES,
     `https://placehold.co/${width}x${height}/${color}/FFFFFF/png?text=${encodedText}`,
@@ -184,7 +184,7 @@ export const getThumbnail = (url: string, size: number = 300): string => {
 };
 
 /**
- * قائمة الصور الموصى بها للمؤسسة
+ * قائمة الصور الموصى بها للحملة
  */
 export const RECOMMENDED_IMAGES = {
   hero: "/images/defaults/about-hero.svg",

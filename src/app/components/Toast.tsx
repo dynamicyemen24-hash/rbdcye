@@ -48,10 +48,10 @@ const ICONS: Record<ToastType, ReactNode> = {
 };
 
 const STYLES: Record<ToastType, { bg: string; border: string; iconColor: string }> = {
-  success: { bg: "#F0FDF4", border: "#BBF7D0", iconColor: "var(--brand-green)" },
-  error: { bg: "#FEF2F2", border: "#FECACA", iconColor: "#E74C3C" },
-  warning: { bg: "#FFFBEB", border: "#FDE68A", iconColor: "var(--brand-gold)" },
-  info: { bg: "#EFF6FF", border: "#BFDBFE", iconColor: "#2563EB" },
+  success: { bg: "var(--success-bg)", border: "var(--success)", iconColor: "var(--brand-green)" },
+  error: { bg: "var(--danger-bg)", border: "var(--danger)", iconColor: "var(--destructive)" },
+  warning: { bg: "var(--warning-bg)", border: "var(--warning)", iconColor: "var(--brand-gold)" },
+  info: { bg: "var(--info-bg)", border: "var(--info)", iconColor: "var(--info)" },
 };
 
 function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) => void }) {

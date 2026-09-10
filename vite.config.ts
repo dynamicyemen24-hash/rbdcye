@@ -93,6 +93,7 @@ export default defineConfig({
     sourcemap: false,
     minify: 'terser',
     target: 'esnext',
+    modulePreload: { polyfill: true },
     terserOptions: {
       compress: {
         passes: 2,
@@ -103,6 +104,9 @@ export default defineConfig({
     reportCompressedSize: true,
     rollupOptions: {
       output: {
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
         manualChunks(id) {
           if (id.includes('vite/preload-helper') || /[\\/]node_modules[\\/]tslib[\\/]/.test(id)) {
             return undefined;
@@ -123,15 +127,37 @@ export default defineConfig({
           if (/[\\/]node_modules[\\/]@sanity[\\/]/.test(id)) {
             return 'vendor-sanity';
           }
+          if (/[\\/]node_modules[\\/]@supabase[\\/]/.test(id)) {
+            return 'vendor-supabase';
+          }
           if (/[\\/]node_modules[\\/](dompurify)[\\/]/.test(id)) {
             return 'security-vendor';
+          }
+          if (/[\\/]node_modules[\\/](lucide-react)[\\/]/.test(id)) {
+            return 'vendor-icons';
+          }
+          if (/[\\/]node_modules[\\/](embla-carousel-react|embla-carousel)[\\/]/.test(id)) {
+            return 'vendor-carousel';
+          }
+          if (/[\\/]node_modules[\\/](leaflet)[\\/]/.test(id)) {
+            return 'vendor-map';
+          }
+          if (/[\\/]node_modules[\\/](date-fns)[\\/]/.test(id)) {
+            return 'vendor-date';
+          }
+          if (/[\\/]node_modules[\\/](sonner|vaul|cmdk)[\\/]/.test(id)) {
+            return 'vendor-feedback';
+          }
+          if (/[\\/]node_modules[\\/](clsx|tailwind-merge|class-variance-authority)[\\/]/.test(id)) {
+            return 'vendor-style';
           }
           return undefined;
         },
       },
     },
-    chunkSizeWarningLimit: 400,
+    chunkSizeWarningLimit: 350,
     cssCodeSplit: true,
+    cssMinify: 'esbuild',
     assetsInlineLimit: 4096,
   },
   server: {
@@ -164,6 +190,10 @@ export default defineConfig({
         },
       },
     },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'recharts'],
+    exclude: ['@supabase/supabase-js'],
   },
   preview: {
     port: 4173,

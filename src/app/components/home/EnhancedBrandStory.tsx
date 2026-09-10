@@ -52,19 +52,14 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="card card--xl hover-lift relative overflow-hidden group"
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(15, 76, 58, 0.2)" }}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(var(--brand-green-rgb), 0.2)" }}
             >
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)",
-                }}
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-transparent via-[rgba(var(--brand-green-rgb),0.05)] to-transparent"
               />
               <div className="relative z-10 p-6">
                 <div
-                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300"
-                  style={{ boxShadow: "0 0 20px rgba(26, 92, 72, 0.2)" }}
+                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--brand-green-rgb),0.2)]"
                 >
                   <svg
                     className="w-7 h-7"
@@ -80,10 +75,10 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
                     <line x1="15" y1="14" x2="15.01" y2="14" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-3" style={{ color: "var(--foreground)" }}>
+                <h3 className="text-2xl font-bold mb-3 text-[var(--foreground)]">
                   نصل قبل أن يُدار
                 </h3>
-                <p className="text-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                <p className="text-lg leading-relaxed text-[var(--muted-foreground)]">
                   لا ننتظر حتى تصل الكارثة. فرقنا في الميدان قبل الأزمة — نتصفح الشوارع، نسأل عن
                   الأسر، نبني ثقتنا مع المجتمع قبل أن نحتاجه. هكذا نصل إلى من لا يصله أحد.
                 </p>
@@ -96,19 +91,14 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="card card--xl hover-lift relative overflow-hidden group"
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(15, 76, 58, 0.2)" }}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(var(--brand-green-rgb), 0.2)" }}
             >
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)",
-                }}
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-transparent via-[rgba(var(--brand-green-rgb),0.05)] to-transparent"
               />
               <div className="relative z-10 p-6">
                 <div
-                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300"
-                  style={{ boxShadow: "0 0 20px rgba(26, 92, 72, 0.2)" }}
+                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--brand-green-rgb),0.2)]"
                 >
                   <svg
                     className="w-7 h-7"
@@ -122,10 +112,10 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
                     <path d="M2 12l10 5 10-5" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-3" style={{ color: "var(--foreground)" }}>
+                <h3 className="text-2xl font-bold mb-3 text-[var(--foreground)]">
                   المساعدات تنتهي — الأثر يبقى
                 </h3>
-                <p className="text-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                <p className="text-lg leading-relaxed text-[var(--muted-foreground)]">
                   سلة غذائية تُطعم أسرة أسبوعاً. مشروع صغير يُطعم أسرة عُمر. لا نريد أن نبقى مصدر
                   العون — نريد أن نجعل المجتمع قادراً على العون.
                 </p>
@@ -138,19 +128,14 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="card card--xl hover-lift relative overflow-hidden group"
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(15, 76, 58, 0.2)" }}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(var(--brand-green-rgb), 0.2)" }}
             >
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(135deg, transparent, rgba(26,92,72,0.05), transparent)",
-                }}
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-transparent via-[rgba(var(--brand-green-rgb),0.05)] to-transparent"
               />
               <div className="relative z-10 p-6">
                 <div
-                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300"
-                  style={{ boxShadow: "0 0 20px rgba(26, 92, 72, 0.2)" }}
+                  className="icon-box icon-box--green w-14 h-14 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--brand-green-rgb),0.2)]"
                 >
                   <svg
                     className="w-7 h-7"
@@ -162,10 +147,10 @@ export function EnhancedBrandStory({ setCurrentPage: _setCurrentPage }: Enhanced
                     <polygon points="12 2 15 7 22 7 25 12 22 17 15 12 15 7 8 7 3 12 3 8 7 2 12 2" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-3" style={{ color: "var(--foreground)" }}>
+                <h3 className="text-2xl font-bold mb-3 text-[var(--foreground)]">
                   كل ريال يصل إلى صاحبه
                 </h3>
-                <p className="text-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                <p className="text-lg leading-relaxed text-[var(--muted-foreground)]">
                   ننشر تقاريرنا المالية شهرياً. لا نخفي ريالاً. لأن المتبرع الذي وضع ثقته فينا يستحق
                   أن يعرف أين ذهبت. شفافيتنا ليست اختياراً — إنها عقد مع من صدّقنا.
                 </p>

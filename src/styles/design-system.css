@@ -50,13 +50,13 @@
 
 /* Primary section - light background */
 .section {
-  padding: var(--space-4xl) var(--space-md);
+  padding: var(--space-9xl) var(--space-md);
   background: var(--section-bg-primary);
 }
 
 @media (min-width: 768px) {
   .section {
-    padding: var(--space-5xl) var(--space-lg);
+    padding: var(--space-9xl) var(--space-lg);
   }
 }
 
@@ -68,7 +68,7 @@
 
 /* Secondary section - subtle brand tint */
 .section-secondary {
-  padding: var(--space-4xl) var(--space-md);
+  padding: var(--space-7xl) var(--space-md);
   background: var(--section-bg-secondary);
 }
 

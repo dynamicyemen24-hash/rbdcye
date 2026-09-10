@@ -1,75 +1,49 @@
-import * as React from "react";
+import { type ReactNode } from "react";
+import { motion } from "motion/react";
 
-import { cn } from "./utils";
-
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border",
-        className
-      )}
-      {...props}
-    />
-  );
+interface CardProps {
+  children: ReactNode;
+  variant?: "default" | "elevated" | "outlined" | "glass";
+  hover?: boolean;
+  padding?: "none" | "sm" | "md" | "lg";
+  className?: string;
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-header"
-      className={cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className
-      )}
-      {...props}
-    />
-  );
-}
+const paddingMap = {
+  none: "",
+  sm: "p-4",
+  md: "p-6",
+  lg: "p-8",
+};
 
-function CardTitle({ className, children, ...props }: React.ComponentProps<"div">) {
+const variantMap = {
+  default: "bg-[var(--card)] border border-[var(--border)] rounded-2xl",
+  elevated: "bg-[var(--card)] shadow-lg border border-[var(--border)] rounded-2xl",
+  outlined: "bg-transparent border-2 border-[var(--border)] rounded-2xl",
+  glass: "bg-white/70 backdrop-blur-xl border border-white/20 rounded-2xl dark:bg-zinc-900/70 dark:border-white/10",
+};
+
+export function Card({
+  children,
+  variant = "default",
+  hover = false,
+  padding = "md",
+  className = "",
+}: CardProps) {
+  const Component = hover ? motion.div : "div";
+  const hoverProps = hover
+    ? {
+        whileHover: { y: -4, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" },
+        transition: { duration: 0.2 },
+      }
+    : {};
+
   return (
-    <h4 data-slot="card-title" className={cn("leading-none", className)} {...props}>
+    <Component
+      className={`${variantMap[variant]} ${paddingMap[padding]} transition-all duration-300 ${className}`}
+      {...hoverProps}
+    >
       {children}
-    </h4>
+    </Component>
   );
 }
-
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <p data-slot="card-description" className={cn("text-muted-foreground", className)} {...props} />
-  );
-}
-
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
-      {...props}
-    />
-  );
-}
-
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("px-6 [&:last-child]:pb-6", className)}
-      {...props}
-    />
-  );
-}
-
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-footer"
-      className={cn("flex items-center px-6 pb-6 [.border-t]:pt-6", className)}
-      {...props}
-    />
-  );
-}
-
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };

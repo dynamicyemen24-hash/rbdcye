@@ -6,13 +6,15 @@ import {
   ChevronDown,
   CircleUserRound,
   HandHeart,
-  Heart,
   Home,
   Menu,
+  Moon,
   ShieldCheck,
+  Sun,
   UsersRound,
-  X,
 } from "lucide-react";
+import { RohamaaHeart } from "@/app/components/ui/BrandIcons";
+import MobileMenu from "@/app/components/MobileMenu";
 import { memo, useCallback, useEffect, useState } from "react";
 
 interface NavbarProps {
@@ -28,7 +30,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "الرئيسية", icon: Home },
-  { id: "about", label: "عن المؤسسة", icon: BookOpenText },
+  { id: "about", label: "عن الحملة", icon: BookOpenText },
   { id: "programs", label: "مجالات العمل", icon: UsersRound },
   { id: "projects", label: "مشاريعنا", icon: HandHeart },
   { id: "transparency", label: "الشفافية", icon: ShieldCheck },
@@ -37,12 +39,12 @@ const NAV_ITEMS: NavItem[] = [
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <div
-        className={`${compact ? "h-10 w-10 rounded-[14px]" : "h-11 w-11 rounded-[15px]"} relative grid shrink-0 place-items-center bg-[var(--brand-green)] text-[var(--brand-gold)] shadow-[0_8px_20px_rgba(15,76,58,.15)]`}
-      >
-        <span className="absolute inset-[6px] rotate-45 rounded-[8px] border border-[var(--brand-gold)]/75" />
-        <Heart className="relative h-5 w-5" fill="currentColor" strokeWidth={1.8} />
-      </div>
+      <img
+        src="/logo.svg"
+        alt="شعار رحماء بينهم"
+        className={`${compact ? "h-10 w-10" : "h-11 w-11"} shrink-0 rounded-[14px] object-contain shadow-[0_8px_20px_rgba(var(--brand-green-rgb),.15)]`}
+      />
+      <RohamaaHeart className="h-5 w-5 text-[var(--brand-green)]" />
       <div className="text-right leading-none">
         <div
           className={`${compact ? "text-base" : "text-lg"} font-extrabold tracking-tight text-[var(--brand-green)]`}
@@ -50,7 +52,7 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
           رحماء بينهم
         </div>
         <div className="mt-1 text-[10px] font-medium tracking-[0.14em] text-[var(--brand-gold-dark)]">
-          إغاثة • تنمية • أثر
+          حملة إغاثية وتنموية
         </div>
       </div>
     </div>
@@ -60,6 +62,28 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
 export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    try {
+      const saved = localStorage.getItem("rh_theme");
+      if (saved === "dark") return true;
+      if (saved === "light") return false;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    try {
+      localStorage.setItem("rh_theme", isDark ? "dark" : "light");
+    } catch { /* ignore */ }
+  }, [isDark]);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 28);
@@ -68,18 +92,10 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
-
   const navigate = useCallback(
     (page: string) => {
       setCurrentPage(page);
       setIsMobileMenuOpen(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     [setCurrentPage]
   );
@@ -88,12 +104,19 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
   const isOverlay = isHome && !isScrolled;
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isOverlay ? "bg-gradient-to-b from-[var(--brand-green-dark)]/80 to-transparent" : "border-b border-[var(--brand-green)]/8 bg-[var(--card)]/92 shadow-[0_10px_35px_rgba(15,76,58,.08)] backdrop-blur-xl"}`}
-      dir="rtl"
-    >
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:right-2 focus:z-[100] focus:rounded-lg focus:bg-[var(--brand-green)] focus:px-4 focus:py-2 focus:text-[var(--primary-foreground)] focus:shadow-lg"
+      >
+        تخطى إلى المحتوى الرئيسي
+      </a>
+      <header
+        className={`fixed inset-x-0 top-0 lg:top-9 z-50 transition-all duration-300 ${isOverlay ? "bg-gradient-to-b from-[var(--brand-green-dark)]/80 to-transparent" :             "border-b border-[var(--brand-green)]/8 bg-[var(--card)]/90 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_10px_35px_rgba(var(--brand-green-rgb),.08)] backdrop-blur-xl"}`}
+        dir="rtl"
+      >
       <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10" aria-label="التصفح الرئيسي">
-        <div className="flex h-[76px] items-center justify-between gap-6">
+        <div className="flex h-18 items-center justify-between gap-6">
           <button
             type="button"
             onClick={() => navigate("home")}
@@ -103,32 +126,34 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
             <BrandMark />
           </button>
 
-          <div className="hidden items-center gap-1 rounded-2xl border border-[var(--brand-green)]/8 bg-white/85 p-1.5 shadow-sm backdrop-blur-md lg:flex">
+          <div className="hidden items-center gap-1 rounded-2xl border border-[var(--brand-green)]/8 bg-[var(--card)]/85 p-1.5 shadow-sm backdrop-blur-md lg:flex">
             {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
               const active = currentPage === id || (id === "home" && isHome);
               return (
-                <button
+                <motion.button
                   key={id}
                   type="button"
                   onClick={() => navigate(id)}
+                  whileTap={{ scale: 0.95 }}
                   aria-current={active ? "page" : undefined}
-                  className={`relative inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 text-xs font-bold transition ${active ? "bg-[var(--brand-green)] text-white shadow-md shadow-[var(--brand-green)]/15" : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"}`}
+                  className={`relative inline-flex min-h-10 items-center gap-2 rounded-xl px-3.5 text-xs font-bold transition-all duration-200 ${active ? "bg-[var(--brand-green)] text-[var(--primary-foreground)] shadow-md shadow-[var(--brand-green)]/15" : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"}`}
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>{label}</span>
                   {id === "transparency" && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)]" aria-hidden="true" />
                   )}
-                </button>
+                </motion.button>
               );
             })}
             <div className="mx-1 h-5 w-px bg-[var(--brand-green)]/10" />
             <button
               type="button"
               onClick={() => navigate("zakat")}
-              className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-bold text-[var(--brand-gold-dark)] transition hover:bg-[var(--brand-gold-pale)]"
+              aria-label="حاسبة الزكاة"
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-bold text-[var(--brand-gold-dark)] transition-all duration-200 hover:bg-[var(--brand-gold-pale)]"
             >
-              <Calculator className="h-3.5 w-3.5" />
+              <Calculator className="h-3.5 w-3.5" aria-hidden="true" />
               <span>حاسبة الزكاة</span>
             </button>
           </div>
@@ -136,100 +161,80 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => navigate("donor")}
-              className={`hidden min-h-11 items-center gap-2 rounded-xl px-3 text-xs font-bold transition xl:inline-flex ${isOverlay ? "text-white/80 hover:bg-white/10" : "text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)]"}`}
+              onClick={() => setIsDark((d) => !d)}
+              aria-label={isDark ? "التبديل إلى الوضع النهاري" : "التبديل إلى الوضع الليلي"}
+              className={`grid h-11 w-11 place-items-center rounded-xl transition-all duration-300 ${isOverlay ? "text-[var(--primary-foreground)]/80 hover:bg-[var(--primary-foreground)]/10" : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"}`}
             >
-              <CircleUserRound className="h-4 w-4" />
+              <AnimatePresence mode="wait" initial={false}>
+                {isDark ? (
+                  <motion.span
+                    key="sun"
+                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.25 }}
+                    className="inline-flex"
+                  >
+                    <Sun className="h-5 w-5" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="moon"
+                    initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.25 }}
+                    className="inline-flex"
+                  >
+                    <Moon className="h-5 w-5" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+            <div className="hidden xl:block w-px h-6 bg-[var(--brand-green)]/10 mx-1" />
+            <button
+              type="button"
+              onClick={() => navigate("donor")}
+              aria-label="بوابة المتبرع"
+              className={`hidden min-h-11 items-center gap-2 rounded-xl px-3 text-xs font-bold transition-all duration-200 xl:inline-flex ${isOverlay ? "text-[var(--primary-foreground)]/80 hover:bg-[var(--primary-foreground)]/10" : "text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)]"}`}
+            >
+              <CircleUserRound className="h-4 w-4" aria-hidden="true" />
               <span>بوابة المتبرع</span>
-              <ChevronDown className="h-3.5 w-3.5 rotate-90 opacity-50" />
+              <ChevronDown className="h-3.5 w-3.5 rotate-90 opacity-50" aria-hidden="true" />
             </button>
             <motion.button
               type="button"
               onClick={() => navigate("donate")}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
+              aria-label="تبرع الآن"
               className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--brand-gold-light)] px-4 text-xs font-extrabold text-[var(--brand-green-dark)] shadow-[0_10px_25px_rgba(var(--brand-gold-rgb),.23)] transition hover:bg-[var(--brand-gold)] sm:px-5"
             >
-              <HandHeart className="h-4 w-4" />
+              <HandHeart className="h-4 w-4" aria-hidden="true" />
               <span>تبرع الآن</span>
-              <ArrowLeft className="h-3.5 w-3.5" />
+              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
             </motion.button>
             <button
               type="button"
-              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              onClick={() => setIsMobileMenuOpen(true)}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
               aria-label={isMobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
-              className={`grid h-11 w-11 place-items-center rounded-xl transition lg:hidden ${isOverlay ? "bg-white/10 text-white hover:bg-white/20" : "bg-[var(--brand-green-pale)] text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)]"}`}
+              className={`grid h-11 w-11 place-items-center rounded-xl transition lg:hidden ${isOverlay ? "bg-[var(--primary-foreground)]/10 text-[var(--primary-foreground)] hover:bg-[var(--primary-foreground)]/20" : "bg-[var(--brand-green-pale)] text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)]"}`}
             >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <Menu className="h-5 w-5" />
             </button>
           </div>
         </div>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              id="mobile-navigation"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="mb-4 overflow-hidden rounded-[24px] border border-[var(--brand-green)]/10 bg-white/96 p-3 shadow-2xl backdrop-blur-xl lg:hidden"
-            >
-              <div className="mb-3 flex items-center justify-between rounded-2xl bg-[var(--brand-green-pale)] px-4 py-3">
-                <div>
-                  <p className="text-xs font-extrabold text-[var(--brand-green)]">رحماء بينهم</p>
-                  <p className="mt-1 text-[10px] text-[var(--muted-foreground)]">
-                    رحمة تُرى في العمل
-                  </p>
-                </div>
-                <BrandMark compact />
-              </div>
-              <div className="grid gap-1">
-                {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
-                  const active = currentPage === id || (id === "home" && isHome);
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => navigate(id)}
-                      aria-current={active ? "page" : undefined}
-                      className={`flex min-h-12 items-center gap-3 rounded-2xl px-4 text-right text-sm font-bold transition ${active ? "bg-[var(--brand-green)] text-white" : "text-[#52635D] hover:bg-[var(--brand-green-pale)]"}`}
-                    >
-                      <span
-                        className={`grid h-8 w-8 place-items-center rounded-xl ${active ? "bg-white/12 text-[var(--brand-gold)]" : "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"}`}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </span>
-                      <span>{label}</span>
-                      <ChevronDown className="mr-auto h-4 w-4 -rotate-90 opacity-40" />
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="mt-2 grid grid-cols-2 gap-2 border-t border-[var(--brand-green)]/8 pt-3">
-                <button
-                  type="button"
-                  onClick={() => navigate("zakat")}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#F7F0DF] text-xs font-bold text-[var(--brand-gold-dark)]"
-                >
-                  <Calculator className="h-4 w-4" />
-                  حاسبة الزكاة
-                </button>
-                <button
-                  type="button"
-                  onClick={() => navigate("donor")}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--brand-green-pale)] text-xs font-bold text-[var(--brand-green)]"
-                >
-                  <CircleUserRound className="h-4 w-4" />
-                  بوابة المتبرع
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
     </header>
+
+    <MobileMenu
+      isOpen={isMobileMenuOpen}
+      onClose={() => setIsMobileMenuOpen(false)}
+      onNavigate={(page) => setCurrentPage(page)}
+      currentPage={currentPage}
+    />
+    </>
   );
 });

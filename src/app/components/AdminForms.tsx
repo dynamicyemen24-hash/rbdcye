@@ -39,7 +39,7 @@ export function TextField({
 }: TextFieldProps) {
   const id = useId();
   const baseClass =
-    "w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-white transition-colors " +
+    "w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-[var(--card)] transition-colors " +
     className;
 
   return (
@@ -118,7 +118,7 @@ export function SelectField({
         onChange={(e) => onChange(e.target.value)}
         required={required}
         aria-required={required}
-        className={`w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white transition-colors ${className}`}
+        className={`w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)] transition-colors ${className}`}
         style={{ fontSize: "0.85rem" }}
       >
         <option value="">اختر...</option>
@@ -219,10 +219,10 @@ export function FormModal({ isOpen, onClose, title, children, size = "md" }: For
         }}
       />
       <div
-        className={`relative bg-white rounded-2xl p-6 w-full ${widthMap[size]} shadow-2xl max-h-[90vh] overflow-y-auto`}
+        className={`relative bg-[var(--card)] rounded-2xl p-6 w-full ${widthMap[size]} shadow-2xl max-h-[90vh] overflow-y-auto`}
         style={{ direction: "rtl" }}
       >
-        <div className="flex items-center justify-between mb-5 sticky top-0 bg-white pb-3 border-b border-[var(--border)] z-10">
+        <div className="flex items-center justify-between mb-5 sticky top-0 bg-[var(--card)] pb-3 border-b border-[var(--border)] z-10">
           <h3 id="form-modal-title" style={{ fontWeight: 700, fontSize: "1rem" }}>
             {title}
           </h3>
@@ -287,7 +287,7 @@ export function PartnerForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <TextField
-        label="اسم المؤسسة *"
+        label="اسم الحملة *"
         value={form.name}
         onChange={(v) => setForm({ ...form, name: v })}
         required
@@ -323,7 +323,7 @@ export function PartnerForm({
         placeholder="https://"
       />
       <TextField
-        label="شعار المؤسسة (رابط)"
+        label="شعار الحملة (رابط)"
         value={form.logo}
         onChange={(v) => setForm({ ...form, logo: v })}
         placeholder="https://..."
@@ -737,7 +737,7 @@ export function SuccessStoryForm({
             id="story-rating"
             value={form.rating}
             onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white transition-colors"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)] transition-colors"
             style={{ fontSize: "0.85rem" }}
           >
             <option value={5}>⭐⭐⭐⭐⭐ (5)</option>

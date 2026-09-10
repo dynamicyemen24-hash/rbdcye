@@ -1,117 +1,627 @@
 /* ============================================================
-   Typography System - Self-Hosted Variable Fonts
-   Cairo (Arabic + Latin) · Plus Jakarta Sans (Latin accents)
-   No external requests · zero render-blocking
+   TYPOGRAPHY SYSTEM — MODERN PRODUCTION
+   Tajawal Arabic + Plus Jakarta Sans Latin
+   Self-hosted Variable Fonts · RTL First · Performance Ready
    ============================================================ */
 
-/* Cairo — Variable 200..1000, Arabic subset */
+/* ============================================================
+   1. TAJAWAL — ARABIC VARIABLE FONT
+   ============================================================ */
+
 @font-face {
-  font-family: "Cairo";
-  src: url("/fonts/cairo-var-arabic.woff2") format("woff2");
-  font-weight: 200 1000;
+  font-family: "Tajawal";
+  src: url("/fonts/tajawal-var-arabic.woff2") format("woff2");
   font-style: normal;
+  font-weight: 200 900;
   font-display: swap;
-  font-variation-settings: "slnt" 0;
+  font-synthesis: none;
   unicode-range:
-    U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E,
-    U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+    U+0600-06FF,
+    U+0750-077F,
+    U+0870-089F,
+    U+08A0-08FF,
+    U+FB50-FDFF,
+    U+FE70-FEFF;
 }
 
-/* Cairo — Variable 200..1000, Latin subset */
+/* ============================================================
+   2. TAJAWAL — LATIN
+   ============================================================ */
+
 @font-face {
-  font-family: "Cairo";
-  src: url("/fonts/cairo-var-latin.woff2") format("woff2");
-  font-weight: 200 1000;
+  font-family: "Tajawal";
+  src: url("/fonts/tajawal-var-latin.woff2") format("woff2");
   font-style: normal;
+  font-weight: 200 900;
   font-display: swap;
+  font-synthesis: none;
   unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
-    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+0304,
+    U+0308,
+    U+0329,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
 }
 
-/* Plus Jakarta Sans — Variable 200..800, Latin-ext */
+/* ============================================================
+   3. PLUS JAKARTA SANS — LATIN EXTENDED
+   ============================================================ */
+
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url("/fonts/jakarta-var-latin-ext.woff2") format("woff2");
-  font-weight: 200 800;
   font-style: normal;
+  font-weight: 200 800;
   font-display: swap;
+  font-synthesis: none;
   unicode-range:
-    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
-    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+0100-02BA,
+    U+02BD-02C5,
+    U+02C7-02CC,
+    U+02CE-02D7,
+    U+02DD-02FF,
+    U+0304,
+    U+0308,
+    U+0329,
+    U+1D00-1DBF,
+    U+1E00-1E9F,
+    U+1EF2-1EFF,
+    U+2020,
+    U+20A0-20AB,
+    U+20AD-20C0,
+    U+2113,
+    U+2C60-2C7F,
     U+A720-A7FF;
 }
 
-/* Plus Jakarta Sans — Variable 200..800, Latin */
+/* ============================================================
+   4. PLUS JAKARTA SANS — LATIN
+   ============================================================ */
+
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url("/fonts/jakarta-var-latin.woff2") format("woff2");
-  font-weight: 200 800;
   font-style: normal;
+  font-weight: 200 800;
   font-display: swap;
+  font-synthesis: none;
   unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
-    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+0304,
+    U+0308,
+    U+0329,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
 }
 
 /* ============================================================
-   Font Family Utilities
+   5. DESIGN TOKENS
    ============================================================ */
 
-.font-cairo {
-  font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
-}
+:root {
+  --font-ar:
+    "Tajawal",
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
 
-.font-jakarta {
-  font-family: "Plus Jakarta Sans", "Cairo", system-ui, sans-serif;
-}
+  --font-latin:
+    "Plus Jakarta Sans",
+    "Tajawal",
+    system-ui,
+    sans-serif;
 
-/* Latin numerals & identifiers inside Arabic copy (prices, phones, URLs) */
-.font-latin {
-  font-family: "Plus Jakarta Sans", "Cairo", system-ui, sans-serif;
-  font-feature-settings: "tnum" 1;
-  letter-spacing: 0.01em;
+  --font-code:
+    "SFMono-Regular",
+    "Cascadia Code",
+    "Roboto Mono",
+    Consolas,
+    monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.01em;
 }
 
 /* ============================================================
-   RTL Typography Enhancements
+   6. GLOBAL TYPOGRAPHY
    ============================================================ */
 
-.arabic-text {
-  font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
-  line-height: 1.8;
+html {
+  font-family: var(--font-ar);
+  font-size: 100%;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.text-gradient-green {
-  background: linear-gradient(135deg, var(--brand-green), var(--brand-green-light));
+body {
+  font-family: var(--font-ar);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: var(--leading-relaxed);
+  font-synthesis: none;
+}
+
+/* ============================================================
+   7. RTL / LTR
+   ============================================================ */
+
+[dir="rtl"],
+.rtl {
+  font-family: var(--font-ar);
+}
+
+[dir="ltr"],
+.ltr {
+  font-family: var(--font-latin);
+}
+
+/* Latin content inside Arabic pages */
+.font-latin,
+.latin-text,
+[data-latin] {
+  font-family: var(--font-latin);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings:
+    "tnum" 1,
+    "lnum" 1;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ============================================================
+   8. FONT UTILITIES
+   ============================================================ */
+
+.font-tajawal {
+  font-family: var(--font-ar);
+}
+
+.font-jakarta {
+  font-family: var(--font-latin);
+}
+
+.font-code {
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+}
+
+/* ============================================================
+   9. HEADINGS
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-ar);
+  font-style: normal;
+  font-synthesis: none;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h3 {
+  font-size: clamp(1.375rem, 2vw, 2rem);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+}
+
+h4 {
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: var(--leading-snug);
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: var(--leading-snug);
+}
+
+/* ============================================================
+   10. TEXT SCALE
+   ============================================================ */
+
+.text-xs {
+  font-size: var(--text-xs);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.text-3xl {
+  font-size: var(--text-3xl);
+}
+
+.text-4xl {
+  font-size: var(--text-4xl);
+}
+
+.text-5xl {
+  font-size: var(--text-5xl);
+}
+
+/* ============================================================
+   11. WEIGHTS
+   ============================================================ */
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+.font-black {
+  font-weight: 900;
+}
+
+/* ============================================================
+   12. ARABIC CONTENT
+   ============================================================ */
+
+.arabic-text {
+  font-family: var(--font-ar);
+  line-height: var(--leading-relaxed);
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* Long Arabic paragraphs */
+
+.arabic-prose {
+  max-width: 75ch;
+  font-family: var(--font-ar);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+/* ============================================================
+   13. NUMBERS / PRICES / DATA
+   ============================================================ */
+
+.numeric,
+.price,
+.stat,
+.metric,
+[data-number] {
+  font-family: var(--font-latin);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings:
+    "tnum" 1,
+    "lnum" 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.price {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.stat {
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* ============================================================
+   14. EMAIL / URL / PHONE / IDENTIFIERS
+   ============================================================ */
+
+.email,
+.url,
+.phone,
+.identifier {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--font-latin);
+  overflow-wrap: anywhere;
+}
+
+/* ============================================================
+   15. BUTTONS & CONTROLS
+   ============================================================ */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+[role="button"] {
+  font-weight: 600;
+}
+
+label {
+  font-weight: 600;
+}
+
+/* ============================================================
+   16. GRADIENT TEXT
+   ============================================================ */
+
+.text-gradient-green,
+.text-gradient-gold {
+  display: inline-block;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-green {
+  background-image:
+    linear-gradient(135deg,
+      var(--brand-green),
+      var(--brand-green-light));
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background-image:
+    linear-gradient(135deg,
+      var(--brand-gold),
+      var(--brand-gold-light));
 }
 
+/* ============================================================
+   17. TITLE DECORATION
+   ============================================================ */
+
 .title-decoration {
-  display: inline-block;
   position: relative;
+  display: inline-block;
+  isolation: isolate;
 }
 
 .title-decoration::after {
   content: "";
   position: absolute;
-  bottom: -4px;
-  left: 50%;
+  inset-inline-start: 50%;
+  inset-block-end: -0.35rem;
+
+  width: min(4rem, 60%);
+  height: 0.1875rem;
+
   transform: translateX(-50%);
-  width: 60%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--brand-gold), transparent);
-  border-radius: 9999px;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(90deg,
+      transparent,
+      var(--brand-gold),
+      transparent);
+}
+
+/* ============================================================
+   18. TEXT WRAPPING
+   ============================================================ */
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   19. ACCESSIBILITY — LARGE TEXT
+   ============================================================ */
+
+html.a11y-large-text {
+  font-size: 112.5%;
+}
+
+html.a11y-large-text body {
+  line-height: 1.85;
+}
+
+html.a11y-large-text h1 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+}
+
+html.a11y-large-text h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+}
+
+/* ============================================================
+   20. FOCUS
+   ============================================================ */
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   21. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   22. FORCED COLORS / HIGH CONTRAST
+   ============================================================ */
+
+@media (forced-colors: active) {
+
+  .text-gradient-green,
+  .text-gradient-gold {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+
+  .title-decoration::after {
+    background: CanvasText;
+  }
+}
+
+/* ============================================================
+   23. MOBILE TYPOGRAPHY
+   ============================================================ */
+
+@media (max-width: 640px) {
+  body {
+    font-size: 0.9375rem;
+  }
+
+  .arabic-prose {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: pretty;
+  }
+}
+
+/* ============================================================
+   24. PRINT
+   ============================================================ */
+
+@media print {
+
+  html,
+  body {
+    font-family: var(--font-ar);
+    color: #000;
+    background: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
 }

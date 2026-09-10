@@ -1,21 +1,18 @@
-import * as React from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
-import { cn } from "./utils";
-
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base bg-input-background transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className
-      )}
-      {...props}
-    />
-  );
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?: boolean;
 }
 
-export { Input };
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ error, className = "", ...props }, ref) => {
+    return (
+      <input
+        ref={ref}
+        className={`w-full rounded-xl border bg-[var(--background)] px-4 py-3 text-sm text-[var(--foreground)] transition-all duration-200 placeholder:text-[var(--muted-foreground)] placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20 focus:border-[var(--brand-green)] disabled:cursor-not-allowed disabled:opacity-50 ${error ? "border-[var(--destructive)] focus:ring-[var(--destructive)]/20" : "border-[var(--border)]"} ${className}`}
+        {...props}
+      />
+    );
+  }
+);
+Input.displayName = "Input";

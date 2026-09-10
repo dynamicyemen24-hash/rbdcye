@@ -174,7 +174,7 @@ const ProfessionalVideoPlayer = memo(
       >
         <div
           className={`relative rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 ${getPlayerSizeClasses()}`}
-          style={{ backgroundColor: "#0A1A0F" }}
+          style={{ backgroundColor: "var(--brand-green-dark)" }}
           onClick={(e) => e.stopPropagation()}
           onMouseMove={handleMouseMove}
           role="presentation"
@@ -207,7 +207,7 @@ const ProfessionalVideoPlayer = memo(
                   className="p-2 rounded-full hover:bg-white/20"
                   title="قناة اليوتيوب"
                 >
-                  <Youtube className="w-6 h-6 text-red-500" />
+                  <Youtube className="w-6 h-6 text-[var(--destructive)]" />
                 </button>
                 <button
                   onClick={onClose}
@@ -256,7 +256,7 @@ const ProfessionalVideoPlayer = memo(
                   >
                     <div
                       className="h-full rounded-full absolute top-0 left-0"
-                      style={{ width: `${progress}%`, backgroundColor: "#10B981" }}
+                      style={{ width: `${progress}%`, backgroundColor: "var(--brand-green)" }}
                     />
                   </button>
 
@@ -326,7 +326,7 @@ const ProfessionalVideoPlayer = memo(
           </div>
 
           {/* معلومات الفيديو */}
-          <div className="p-6 bg-white dark:bg-gray-900">
+          <div className="p-6 bg-[var(--card)]">
             <h3 className="text-2xl font-bold text-[var(--foreground)]">{video.title}</h3>
             <p className="text-[var(--muted-foreground)] mt-2">{video.description}</p>
 
@@ -437,7 +437,7 @@ const AdvancedVideoCard = memo(
           )}
         </div>
 
-        <div className="p-4 bg-white dark:bg-gray-800">
+        <div className="p-4 bg-[var(--card)]">
           <h4 className="font-bold text-sm text-[var(--foreground)] line-clamp-1">{video.title}</h4>
           <p className="text-[var(--muted-foreground)] text-xs line-clamp-2 mt-1">
             {video.description}
@@ -530,7 +530,7 @@ export const VideoShowcase = memo(
 
     if (loading) {
       return (
-        <section className="py-20 bg-white dark:bg-gray-900" dir="rtl">
+        <section className="py-20 bg-[var(--card)]" dir="rtl">
           <div className="container mx-auto px-4">
             <div className="flex flex-col items-center justify-center space-y-8 min-h-[400px]">
               <Loader2 className="w-16 h-16 animate-spin text-[var(--brand-green)]" />
@@ -543,7 +543,7 @@ export const VideoShowcase = memo(
 
     if (videos.length === 0) {
       return (
-        <section className="py-20 bg-white dark:bg-gray-900" dir="rtl">
+        <section className="py-20 bg-[var(--card)]" dir="rtl">
           <div className="container mx-auto px-4 text-center">
             <p className="text-[var(--muted-foreground)]">لا توجد فيديوهات متاحة حالياً</p>
           </div>
@@ -553,7 +553,7 @@ export const VideoShowcase = memo(
 
     return (
       <section
-        className="py-20 bg-gradient-to-b from-white to-[var(--secondary)] dark:from-gray-900 dark:to-gray-800"
+        className="py-20 bg-gradient-to-b from-[var(--background)] to-[var(--secondary)]"
         dir="rtl"
       >
         <div className="container mx-auto px-4">
@@ -623,7 +623,7 @@ export const VideoShowcase = memo(
           <div className="flex justify-center mt-8 max-w-5xl mx-auto">
             <button
               onClick={handleYoutubeClick}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--destructive)] text-white rounded-xl font-medium hover:bg-[var(--destructive)]/90 transition-colors"
             >
               <Youtube className="w-4 h-4" />
               قناة اليوتيوب

@@ -5,8 +5,6 @@ import {
   TrendingUp,
   Globe,
   Clock,
-  BarChart3,
-  PieChart,
   Calendar,
   MousePointer,
   RefreshCw,
@@ -157,7 +155,7 @@ export function AdminAnalytics() {
       {/* المخططات البيانية */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* أهم الصفحات */}
-        <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
+        <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
           <h3
             className="text-[var(--foreground)] mb-4"
             style={{ fontSize: "0.9rem", fontWeight: 700 }}
@@ -193,7 +191,7 @@ export function AdminAnalytics() {
         </div>
 
         {/* مصادر الزيارات */}
-        <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
+        <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
           <h3
             className="text-[var(--foreground)] mb-4"
             style={{ fontSize: "0.9rem", fontWeight: 700 }}
@@ -219,7 +217,7 @@ export function AdminAnalytics() {
         </div>
 
         {/* الإحصائيات اليومية */}
-        <div className="bg-white rounded-xl p-5 border border-[var(--border)] lg:col-span-2">
+        <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)] lg:col-span-2">
           <h3
             className="text-[var(--foreground)] mb-4"
             style={{ fontSize: "0.9rem", fontWeight: 700 }}
@@ -257,7 +255,7 @@ export function AdminAnalytics() {
         </div>
 
         {/* الإحصائيات حسب الجهاز */}
-        <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
+        <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
           <h3
             className="text-[var(--foreground)] mb-4"
             style={{ fontSize: "0.9rem", fontWeight: 700 }}
@@ -302,7 +300,7 @@ export function AdminAnalytics() {
         </div>
 
         {/* سلوك المستخدم */}
-        <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
+        <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
           <h3
             className="text-[var(--foreground)] mb-4"
             style={{ fontSize: "0.9rem", fontWeight: 700 }}
@@ -341,7 +339,7 @@ export function AdminAnalytics() {
 // StatCard مساعد (نفس واحد من AdminDashboard)
 function StatCard({ label, value, trend, icon: Icon, color }: any) {
   return (
-    <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
+    <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
       <div className="flex items-start justify-between mb-3">
         <div
           className="w-10 h-10 rounded-xl flex items-center justify-center"

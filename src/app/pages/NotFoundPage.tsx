@@ -88,7 +88,7 @@ export default function NotFoundPage() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="inline-flex items-center justify-center gap-2 p-3 bg-white rounded-xl border border-[var(--border)] hover:border-[var(--brand-green)] hover:shadow-md transition-all group"
+                  className="inline-flex items-center justify-center gap-2 p-3 bg-[var(--card)] rounded-xl border border-[var(--border)] hover:border-[var(--brand-green)] hover:shadow-md transition-all group"
                 >
                   <span className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--brand-green)] transition-colors">
                     {link.label}

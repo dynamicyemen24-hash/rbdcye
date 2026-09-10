@@ -55,12 +55,12 @@ export default function SubscriptionsPage() {
             ابق قريبًا من <span className="text-[var(--brand-gold)]">الأثر.</span>
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-7 text-white/65 sm:text-base">
-            اختر نوع التحديثات التي تهمك، وسنرسل لك أخبار المؤسسة وتقارير أثرها دون إغراق بريدك.
+            اختر نوع التحديثات التي تهمك، وسنرسل لك أخبار الحملة وتقارير أثرها دون إغراق بريدك.
           </p>
         </div>
       </section>
       <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:px-10">
-        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,76,58,.07)] sm:p-8">
+        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-6 shadow-[0_20px_60px_rgba(var(--brand-green-rgb),.07)] sm:p-8">
           {status === "success" ? (
             <motion.div
               initial={{ opacity: 0, y: 10 }}

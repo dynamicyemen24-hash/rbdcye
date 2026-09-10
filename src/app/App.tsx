@@ -4,7 +4,10 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import { AnimatePresence, motion } from "motion/react";
 
 import { Footer } from "./components/Footer";
+import { SocialProof } from "./components/SocialProof";
+import { UrgencyBanner } from "./components/UrgencyBanner";
 import Navbar from "./components/Navbar";
+import CookieConsent from "./components/CookieConsent";
 import { NewsTicker } from "./components/NewsTicker";
 import { PageProgress } from "./components/PageProgress";
 import { EnhancedInstallPrompt } from "./components/PWA/EnhancedInstallPrompt";
@@ -12,8 +15,16 @@ import { StepScroll } from "./components/StepScroll";
 import { UpdateNotification } from "./components/UpdateNotification";
 import { PageSkeleton } from "@/components/LoadingSkeleton";
 import { GlobalUtilityBar } from "./components/GlobalUtilityBar";
+import { HeaderComponentsBar } from "./components/HeaderComponentsBar";
+import { FixedDonateButton } from "./components/FixedDonateButton";
+import { SocialProofToast } from "./components/SocialProofToast";
+import { ScrollProgress } from "./components/ScrollProgress";
+import { BackToTop } from "./components/BackToTop";
+import { SkipToContent } from "./components/SkipToContent";
 import SearchOverlay from "./components/SearchOverlay";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { pageTransition } from "@/utils/animations";
+import { reportWebVitals } from "@/utils/performance";
 
 // Setup global error handling — log to console in dev, suppress in prod
 if (typeof window !== "undefined") {
@@ -25,6 +36,8 @@ if (typeof window !== "undefined") {
     if (import.meta.env.DEV) console.error("[UnhandledRejection]", e.reason);
     e.preventDefault();
   });
+  // Report Web Vitals in production
+  reportWebVitals();
 }
 
 // Lazy load all pages with better error handling
@@ -75,17 +88,66 @@ const NotFoundPage = lazy(() =>
   import("./pages/NotFoundPage").then((m) => ({ default: m.default }))
 );
 
+const BeneficiaryRequestPage = lazy(() =>
+  import("./pages/BeneficiaryRequestPage").then((m) => ({ default: m.BeneficiaryRequestPage }))
+);
+const ComplaintsSuggestionPage = lazy(() =>
+  import("./pages/ComplaintsSuggestionPage").then((m) => ({ default: m.ComplaintsSuggestionPage }))
+);
+const ServiceCatalogPage = lazy(() =>
+  import("./pages/ServiceCatalogPage").then((m) => ({ default: m.ServiceCatalogPage }))
+);
+const CommunityImpactPage = lazy(() =>
+  import("./pages/CommunityImpactPage").then((m) => ({ default: m.CommunityImpactPage }))
+);
+const HelpCenterPage = lazy(() =>
+  import("./pages/HelpCenterPage").then((m) => ({ default: m.HelpCenterPage }))
+);
+const ZakatCalculatorPage = lazy(() =>
+  import("./pages/ZakatCalculatorPage").then((m) => ({ default: m.default }))
+);
+const SadaqahJariyahPage = lazy(() =>
+  import("./pages/SadaqahJariyahPage").then((m) => ({ default: m.default }))
+);
+const TrainingPage = lazy(() =>
+  import("./pages/TrainingPage").then((m) => ({ default: m.default }))
+);
+const ImpactCenterPage = lazy(() =>
+  import("./pages/ImpactCenterPage").then((m) => ({ default: m.default }))
+);
+const SmartAdvisorPage = lazy(() =>
+  import("./pages/SmartAdvisorPage").then((m) => ({ default: m.default }))
+);
+const DonorPassportPage = lazy(() =>
+  import("./pages/DonorPassportPage").then((m) => ({ default: m.default }))
+);
+const InteractiveMapPage = lazy(() =>
+  import("./pages/InteractiveMapPage").then((m) => ({ default: m.default }))
+);
+const CorporatePage = lazy(() =>
+  import("./pages/CorporatePage").then((m) => ({ default: m.default }))
+);
+const ImpactForBusinessPage = lazy(() =>
+  import("./pages/ImpactForBusinessPage").then((m) => ({ default: m.default }))
+);
+const DonorJourneyPage = lazy(() =>
+  import("./pages/DonorJourneyPage").then((m) => ({ default: m.default }))
+);
+const CampaignsPage = lazy(() =>
+  import("./pages/CampaignsPage").then((m) => ({ default: m.default }))
+);
+const MajorDonorsPage = lazy(() =>
+  import("./pages/MajorDonorsPage").then((m) => ({ default: m.default }))
+);
+const ImpactEnginePage = lazy(() =>
+  import("./pages/ImpactEnginePage").then((m) => ({ default: m.default }))
+);
+
 // Page transition variants
 const pageVariants = {
   initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -8 },
-};
-
-const pageTransition = {
-  type: "tween" as const,
-  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-  duration: 0.3,
 };
 
 // Memoized Wrapper for lazy pages with smooth transitions
@@ -118,6 +180,28 @@ const AppContent = memo(function AppContent() {
     [navigate]
   );
 
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NonprofitOrganization",
+    name: "حملة رحماء بينهم",
+    alternateName: "Rohamaa Baynahum",
+    url: "https://rbdcye.org",
+    logo: "https://rbdcye.org/logo.svg",
+    description: "حملة إغاثية وتنموية يمنية تأسست عام 2014",
+    foundingDate: "2014",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "YE",
+      addressLocality: "صنعاء",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+967-780-777-007",
+      contactType: "customer service",
+    },
+    sameAs: [],
+  };
+
   // Keyboard shortcut: Ctrl+K for search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -135,8 +219,13 @@ const AppContent = memo(function AppContent() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
-      <NewsTicker />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <HeaderComponentsBar onNavigate={setCurrentPage} />
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <NewsTicker />
       <UpdateNotification />
       <PageProgress />
       <EnhancedInstallPrompt />
@@ -308,6 +397,150 @@ const AppContent = memo(function AppContent() {
               }
             />
             <Route
+              path="/requests"
+              element={
+                <PageWrapper>
+                  <BeneficiaryRequestPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/feedback"
+              element={
+                <PageWrapper>
+                  <ComplaintsSuggestionPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/services"
+              element={
+                <PageWrapper>
+                  <ServiceCatalogPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/impact"
+              element={
+                <PageWrapper>
+                  <CommunityImpactPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/impact-center"
+              element={
+                <PageWrapper>
+                  <ImpactCenterPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/help"
+              element={
+                <PageWrapper>
+                  <HelpCenterPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/zakat-calculator"
+              element={
+                <PageWrapper>
+                  <ZakatCalculatorPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/sadaqah-jariyah"
+              element={
+                <PageWrapper>
+                  <SadaqahJariyahPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/training"
+              element={
+                <PageWrapper>
+                  <TrainingPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/smart-advisor"
+              element={
+                <PageWrapper>
+                  <SmartAdvisorPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/donor-passport"
+              element={
+                <PageWrapper>
+                  <DonorPassportPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/interactive-map"
+              element={
+                <PageWrapper>
+                  <InteractiveMapPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/corporate"
+              element={
+                <PageWrapper>
+                  <CorporatePage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/impact-for-business"
+              element={
+                <PageWrapper>
+                  <ImpactForBusinessPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/donor-journey"
+              element={
+                <PageWrapper>
+                  <DonorJourneyPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/campaigns"
+              element={
+                <PageWrapper>
+                  <CampaignsPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/major-donors"
+              element={
+                <PageWrapper>
+                  <MajorDonorsPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/impact-engine"
+              element={
+                <PageWrapper>
+                  <ImpactEnginePage />
+                </PageWrapper>
+              }
+            />
+            <Route
               path="/admin/*"
               element={
                 <PageWrapper>
@@ -328,6 +561,16 @@ const AppContent = memo(function AppContent() {
         </ErrorBoundary>
       </main>
 
+      <SocialProof />
+      <UrgencyBanner
+        title="حملة كسوة الشتاء ٢٠٢٦"
+        message="نسعى لتوفيركسوات شتوية لأكثر من ٢,٠٠٠ أسرة محتاجة"
+        ctaText="تبرع الآن"
+        ctaLink="/donate"
+        type="urgent"
+        dismissKey="winter_2026"
+      />
+
       <Footer setCurrentPage={setCurrentPage} />
 
       {/* Global Utility Bar - accessible from any page */}
@@ -339,6 +582,24 @@ const AppContent = memo(function AppContent() {
         onClose={() => setIsSearchOpen(false)}
         setCurrentPage={setCurrentPage}
       />
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
+
+      {/* Fixed Donate Button - always visible */}
+      <FixedDonateButton />
+
+      {/* Social Proof Toast */}
+      <SocialProofToast />
+
+      {/* Scroll Progress Bar */}
+      <ScrollProgress />
+
+      {/* Back to Top Button */}
+      <BackToTop />
+
+      {/* Skip to Content - Accessibility */}
+      <SkipToContent />
     </div>
   );
 });

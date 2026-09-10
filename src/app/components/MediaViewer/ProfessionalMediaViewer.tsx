@@ -533,7 +533,7 @@ export const ProfessionalMediaViewer = memo(
                             }}
                             role="slider"
                             aria-label="شريط تقدم الفيديو"
-                            aria-valuenow={progress} // progress هي قيمة百分比 (0-100)
+                            aria-valuenow={progress} // progress هي قيمة مئوية (0-100)
                             aria-valuemin={0}
                             aria-valuemax={100}
                             tabIndex={0}

@@ -30,7 +30,7 @@ async function seed() {
       _type: "siteSettings",
       siteName: "رحماء بينهم",
       tagline: "أثرٌ يدوم - مستقبلٌ يُبنى",
-      description: "مؤسسة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن.",
+      description: "حملة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن.",
       heroVideoUrl: "/videos/hero-background.mp4",
       heroVideoMuted: true,
       heroVideoLoop: true,
@@ -53,8 +53,8 @@ async function seed() {
         workingHours: "السبت - الخميس: 8:00 ص - 4:00 م",
       },
       seo: {
-        metaTitle: "مؤسسة رحماء بينهم - إغاثة وتنمية",
-        metaDescription: "مؤسسة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن.",
+        metaTitle: "حملة رحماء بينهم - إغاثة وتنمية",
+        metaDescription: "حملة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن.",
         keywords: ["رحماء بينهم", "إغاثة", "تنمية", "يمن"],
       },
     });
@@ -71,15 +71,15 @@ async function seed() {
     items.push("projects(5)");
 
     const newsItems = [
-      { _type: "news", title: "إطلاق مشروع التعليم المستدام", slug: { _type: "slug", current: "sustainable-education-launch" }, excerpt: "أطلقت مؤسسة رحماء بينهم مشروعها السنوي للتعليم المستدام.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "في إطار جهودها المتواصلة لدعم التعليم في اليمن." }] }], category: "تعليم", status: "PUBLISHED", author: "فريق التحرير", views: 1240, featured: true, tags: ["تعليم", "تنمية"], publishDate: "2024-10-18T10:00:00Z" },
-      { _type: "news", title: "توزيع ٢٠٠٠ سلة غذائية", slug: { _type: "slug", current: "food-baskets-hajjah" }, excerpt: "وزعت مؤسسة رحماء بينهم ٢٠٠٠ سلة غذائية.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "في حملة الإغاثة الطارئة." }] }], category: "إغاثة", status: "PUBLISHED", author: "فريق التحرير", views: 890, featured: true, tags: ["إغاثة"], publishDate: "2024-09-15T10:00:00Z" },
-      { _type: "news", title: "اختتام برنامج التدريب المهني", slug: { _type: "slug", current: "vocational-training-conclusion" }, excerpt: "اختتمت المؤسسة برنامج التدريب المهني.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "اختتمت المؤسسة برنامج التدريب المهني." }] }], category: "تدريب", status: "PUBLISHED", author: "فريق التحرير", views: 650, featured: false, tags: ["تدريب"], publishDate: "2024-08-20T10:00:00Z" },
+      { _type: "news", title: "إطلاق مشروع التعليم المستدام", slug: { _type: "slug", current: "sustainable-education-launch" }, excerpt: "أطلقت حملة رحماء بينهم مشروعها السنوي للتعليم المستدام.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "في إطار جهودها المتواصلة لدعم التعليم في اليمن." }] }], category: "تعليم", status: "PUBLISHED", author: "فريق التحرير", views: 1240, featured: true, tags: ["تعليم", "تنمية"], publishDate: "2024-10-18T10:00:00Z" },
+      { _type: "news", title: "توزيع ٢٠٠٠ سلة غذائية", slug: { _type: "slug", current: "food-baskets-hajjah" }, excerpt: "وزعت حملة رحماء بينهم ٢٠٠٠ سلة غذائية.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "في حملة الإغاثة الطارئة." }] }], category: "إغاثة", status: "PUBLISHED", author: "فريق التحرير", views: 890, featured: true, tags: ["إغاثة"], publishDate: "2024-09-15T10:00:00Z" },
+      { _type: "news", title: "اختتام برنامج التدريب المهني", slug: { _type: "slug", current: "vocational-training-conclusion" }, excerpt: "اختتمت الحملة برنامج التدريب المهني.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "اختتمت الحملة برنامج التدريب المهني." }] }], category: "تدريب", status: "PUBLISHED", author: "فريق التحرير", views: 650, featured: false, tags: ["تدريب"], publishDate: "2024-08-20T10:00:00Z" },
     ];
     await Promise.all(newsItems.map((n) => client.create(n)));
     items.push("news(3)");
 
     const stories = [
-      { _type: "successStory", title: "من اللجوء إلى ريادة الأعمال", slug: { _type: "slug", current: "from-displacement-to-entrepreneurship" }, name: "فاطمة أحمد", program: "تمكين المرأة", quote: "بدأت فاطمة رحلتها مع المؤسسة.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "بفضل برنامج تمكين المرأة." }] }], status: "published", featured: true },
+      { _type: "successStory", title: "من اللجوء إلى ريادة الأعمال", slug: { _type: "slug", current: "from-displacement-to-entrepreneurship" }, name: "فاطمة أحمد", program: "تمكين المرأة", quote: "بدأت فاطمة رحلتها مع الحملة.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "بفضل برنامج تمكين المرأة." }] }], status: "published", featured: true },
       { _type: "successStory", title: "عودة الأمل بعد اليأس", slug: { _type: "slug", current: "return-of-hope" }, name: "أحمد محمد", program: "الإغاثة الطارئة", quote: "أعادت لي ولأسرتي الحياة.", content: [{ _type: "block", style: "normal", children: [{ _type: "span", text: "تلقى أحمد وأسرته دعماً شاملاً." }] }], status: "published", featured: true },
     ];
     await Promise.all(stories.map((s) => client.create(s)));
@@ -103,12 +103,12 @@ async function seed() {
     items.push("videos(2)");
 
     const faqs = [
-      { question: "كيف يمكنني التبرع للمؤسسة؟", answer: "يمكنك التبرع عبر موقعنا.", category: "donations", order: 1 },
+      { question: "كيف يمكنني التبرع للحملة؟", answer: "يمكنك التبرع عبر موقعنا.", category: "donations", order: 1 },
       { question: "هل تبرعاتي تصل إلى المستحقين؟", answer: "نعم، تصل تبرعاتكم.", category: "donations", order: 2 },
       { question: "كيف يمكنني التطوع؟", answer: "سجّل في قسم التطوع.", category: "volunteering", order: 3 },
-      { question: "ما هي مجالات عمل المؤسسة؟", answer: "الإغاثة، التعليم، التنمية.", category: "general", order: 4 },
+      { question: "ما هي مجالات عمل الحملة؟", answer: "الإغاثة، التعليم، التنمية.", category: "general", order: 4 },
       { question: "هل يمكنني تخصيص تبرعي؟", answer: "نعم، اختر المشروع.", category: "donations", order: 5 },
-      { question: "كيف التواصل مع المؤسسة؟", answer: "info@rbdcye.org", category: "general", order: 6 },
+      { question: "كيف التواصل مع الحملة؟", answer: "info@rbdcye.org", category: "general", order: 6 },
     ];
     await Promise.all(faqs.map((f) => client.create({ _type: "faq", ...f, helpful: true })));
     items.push("faqs(6)");

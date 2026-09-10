@@ -87,7 +87,7 @@ export function MarketingNarrativeBridge({ setCurrentPage }: MarketingNarrativeB
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: Number(story.id) * 0.1 }}
                 className="card card--xl hover-lift relative overflow-hidden border border-[var(--border)] group"
-                whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(15, 76, 58, 0.15)" }}
+                whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(var(--brand-green-rgb), 0.15)" }}
               >
                 {/* Gradient top overlay */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--brand-green)] to-[var(--brand-green-light)]" />
@@ -137,7 +137,7 @@ export function MarketingNarrativeBridge({ setCurrentPage }: MarketingNarrativeB
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="w-full px-6 py-3 rounded-xl bg-[var(--brand-green)] text-white font-bold text-lg hover:bg-[var(--brand-green-light)] transition-colors"
-                    onClick={() => setCurrentPage("success-stories")}
+                    onClick={() => setCurrentPage("success")}
                   >
                     {story.cta}
                     <svg

@@ -36,15 +36,15 @@ export const CTAButton = forwardRef<HTMLButtonElement, CTAButtonProps>(
         background: "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))",
         color: "white",
         border: "none",
-        shadow: "0 4px 14px rgba(26, 92, 72, 0.25)",
-        hoverShadow: "0 6px 20px rgba(26, 92, 72, 0.35)",
+        shadow: "0 4px 14px rgba(var(--brand-green-rgb), 0.25)",
+        hoverShadow: "0 6px 20px rgba(var(--brand-green-rgb), 0.35)",
       },
       secondary: {
         background: "rgba(255, 255, 255, 0.9)",
         color: "var(--brand-green)",
         border: "2px solid var(--brand-green)",
         shadow: "none",
-        hoverShadow: "0 4px 12px rgba(26, 92, 72, 0.15)",
+        hoverShadow: "0 4px 12px rgba(var(--brand-green-rgb), 0.15)",
       },
       gold: {
         background: "linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light))",

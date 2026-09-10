@@ -61,7 +61,7 @@ export default function MessagesPage() {
         </div>
       </section>
       <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.38fr] lg:px-10">
-        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-6 shadow-[0_20px_60px_rgba(15,76,58,.07)] sm:p-8">
+        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-[var(--card)] p-6 shadow-[0_20px_60px_rgba(var(--brand-green-rgb),.07)] sm:p-8">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--brand-green)]/8 pb-5">
             <div>
               <p className="text-xs font-bold text-[var(--brand-gold-dark)]">تواصل مباشر</p>
@@ -154,7 +154,7 @@ export default function MessagesPage() {
           )}
         </section>
         <aside className="space-y-4">
-          <div className="rounded-[24px] border border-[var(--brand-green)]/10 bg-white p-6">
+          <div className="rounded-[24px] border border-[var(--brand-green)]/10 bg-[var(--card)] p-6">
             <div className="flex items-center gap-3">
               <Search className="h-5 w-5 text-[var(--brand-gold-dark)]" />
               <h2 className="text-sm font-extrabold text-[var(--brand-green)]">تتبع طلبًا</h2>
@@ -177,7 +177,7 @@ export default function MessagesPage() {
             </button>
             {tracking && (
               <p className="mt-3 rounded-xl bg-[var(--brand-gold-pale)] p-3 text-xs leading-5 text-[var(--brand-gold-dark)]">
-                سيظهر التحديث عند ربط رقم الطلب بسجل المؤسسة. تأكد من كتابة الرقم كما وصل إليك.
+                سيظهر التحديث عند ربط رقم الطلب بسجل الحملة. تأكد من كتابة الرقم كما وصل إليك.
               </p>
             )}
           </div>

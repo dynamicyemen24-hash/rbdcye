@@ -1,57 +1,101 @@
-"use client";
+import { useState, useRef, memo, ReactNode } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import * as React from "react";
-
-import { cn } from "./utils";
-
-function TooltipProvider({
-  delayDuration = 0,
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delayDuration={delayDuration}
-      {...props}
-    />
-  );
+interface TooltipProps {
+  children: ReactNode;
+  content?: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
 }
 
-function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return (
-    <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-    </TooltipProvider>
-  );
-}
+export const Tooltip = memo(function Tooltip({ children, content, position = 'top' }: TooltipProps) {
+  const [show, setShow] = useState(false);
+  const timeoutRef = useRef<number>();
 
-function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
-}
+  const positions = {
+    top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+    bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
+    left: 'right-full top-1/2 -translate-y-1/2 mr-2',
+    right: 'left-full top-1/2 -translate-y-1/2 ml-2',
+  };
 
-function TooltipContent({
-  className,
-  sideOffset = 0,
-  children,
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+  const handleEnter = () => {
+    clearTimeout(timeoutRef.current);
+    setShow(true);
+  };
+
+  const handleLeave = () => {
+    timeoutRef.current = window.setTimeout(() => setShow(false), 200);
+  };
+
   return (
-    <TooltipPrimitive.Portal>
-      <TooltipPrimitive.Content
-        data-slot="tooltip-content"
-        sideOffset={sideOffset}
-        className={cn(
-          "bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md px-3 py-1.5 text-xs text-balance",
-          className
+    <div className="relative inline-block" onMouseEnter={handleEnter} onMouseLeave={handleLeave} onFocus={handleEnter} onBlur={handleLeave}>
+      {children}
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className={`absolute ${positions[position]} z-50 whitespace-nowrap rounded-lg bg-[var(--foreground)] px-3 py-1.5 text-xs text-[var(--background)] shadow-lg`}
+            role="tooltip"
+          >
+            {content}
+          </motion.div>
         )}
-        {...props}
-      >
-        {children}
-        <TooltipPrimitive.Arrow className="bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
-      </TooltipPrimitive.Content>
-    </TooltipPrimitive.Portal>
+      </AnimatePresence>
+    </div>
   );
+});
+
+export interface TooltipContentProps {
+  side?: 'top' | 'bottom' | 'left' | 'right';
+  align?: 'start' | 'center' | 'end';
+  hidden?: boolean;
+  [key: string]: any;
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+export const TooltipTrigger = memo(function TooltipTrigger({ children, ...props }: React.ComponentPropsWithoutRef<'button'> & { asChild?: boolean }) {
+  if (props.asChild) {
+    return <span {...props}>{children}</span>;
+  }
+  return <button {...props}>{children}</button>;
+});
+
+export const TooltipProvider = memo(function TooltipProvider({ children, delayDuration = 0 }: { children: React.ReactNode; delayDuration?: number }) {
+  const [show, setShow] = useState(false);
+  const timeoutRef = useRef<number>();
+
+  const showEffect = () => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => setShow(true), delayDuration);
+  };
+
+  const hideEffect = () => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => setShow(false), delayDuration);
+  };
+
+  return (
+    <div
+      onMouseEnter={showEffect}
+      onMouseLeave={hideEffect}
+      onFocus={showEffect}
+      onBlur={hideEffect}
+    >
+      {children}
+    </div>
+  );
+});
+
+export const TooltipContent = memo(function TooltipContent({ side = 'top', align = 'center', hidden, children, ...props }: TooltipContentProps) {
+  return (
+    <div
+      style={{
+        // Positioning controlled by Tooltip
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+});

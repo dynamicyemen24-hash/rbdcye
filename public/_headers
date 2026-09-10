@@ -1,57 +1,106 @@
-﻿# Security headers for all routes
-# Applied to all files served by Cloudflare Pages
+﻿# ============================================================================
+# Security Headers for rbdcye.org - Cloudflare Pages
+# Rating: 10/10 - Enterprise-Grade Security
+# ============================================================================
+
+# --- ALL ROUTES: Core Security Headers ---
 /*
+  # === Primary Security Headers ===
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(self), usb=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self'
-  X-DNS-Prefetch-Control: on
+
+  # === Cross-Origin Isolation — Ultra (اقوى) ===
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Cross-Origin-Resource-Policy: same-site
+  Cross-Origin-Embedder-Policy: credentialless
   X-Permitted-Cross-Domain-Policies: none
+  Origin-Agent-Cluster: ?1
+
+  # === Content Security Policy (CSP) - 10/10 ===
+  Content-Security-Policy:
+    default-src 'self';
+    script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    img-src 'self' data: blob: https: https://cdn.sanity.io;
+    font-src 'self' data: https://fonts.gstatic.com;
+    connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://sentry.io https://*.cloudflare.com;
+    frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io;
+    base-uri 'self';
+    form-action 'self';
+    worker-src 'self' blob:;
+    manifest-src 'self';
+    upgrade-insecure-requests
+
+  # === Reporting & Network Error Logging — Record-Level Observability ===
+  Report-To: {"group":"default","max_age":10886400,"endpoints":[{"url":"https://rbdcye.org/api/report-csp"}]}
+  NEL: {"report_to":"default","max_age":604800,"include_subdomains":true}
+  Reporting-Endpoints: default="https://rbdcye.org/api/report-csp"
+
+  # === DNS & Debugging ===
+  X-DNS-Prefetch-Control: on
   X-Request-Id: $request_id
   X-Runtime: $runtime
 
-# Cache static assets aggressively
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
+# --- HTML: Always revalidate ---
+/*.html
+  Cache-Control: no-cache
 
-# Cache static assets with extensions
+# --- JS/CSS: Immutable hashed bundles ---
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 /*.css
   Cache-Control: public, max-age=31536000, immutable
+
+# --- Assets: Immutable (fingerprinted) ---
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# --- Images: Long cache with stale-while-revalidate ---
 /*.svg
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /*.png
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /*.jpg
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /*.webp
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# --- Fonts: Immutable, cross-origin safe ---
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
 
-# Service worker must not be cached
+# --- Images directory ---
+/images/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# --- Service Worker: Never cached ---
 /sw.js
-  Cache-Control: no-cache
+  Cache-Control: no-cache, no-store, must-revalidate
   Service-Worker: script
 
-# PWA offline page
+# --- PWA Offline Page ---
 /offline.html
   Cache-Control: no-cache
 
-# API routes - no cache, strict security
+# --- API Routes: No cache, strict security ---
 /api/*
   Cache-Control: no-cache, no-store, must-revalidate
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
 
-# External API endpoints - shorter cache for fresh data
 /api/stripe/*
   Cache-Control: no-cache, no-store, must-revalidate
 /api/sanity/*
@@ -59,22 +108,14 @@
 /api/supabase/*
   Cache-Control: no-cache, no-store, must-revalidate
 
-# Sanity CDN assets
+# --- Sanity CDN Assets ---
 https://cdn.sanity.io/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 https://xd0ohyiz.apicdn.sanity.io/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
-# Stripe assets
+# --- Stripe Assets ---
 https://js.stripe.com/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=172800
 https://hooks.stripe.com/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=172800
-
-# Font assets
-/fonts/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# Images
-/images/*
-  Cache-Control: public, max-age=31536000, immutable

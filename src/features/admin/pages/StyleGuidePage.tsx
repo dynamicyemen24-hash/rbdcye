@@ -1,4 +1,4 @@
-// StyleGuidePage.tsx - دليل أنماط الزخارف والخلفيات الإسلامية لـ مؤسسة رحماء بينهم
+// StyleGuidePage.tsx - دليل أنماط الزخارف والخلفيات الإسلامية لـ حملة رحماء بينهم
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import {
@@ -117,7 +117,7 @@ const PATTERNS: PatternItem[] = [
   <div className="absolute inset-0 pattern-sanaani-brick opacity-30 pointer-events-none" aria-hidden="true" />
   
   <div className="relative z-10">
-    <h3 className="text-xl font-bold font-cairo text-amber-300">مؤسسة رحماء بينهم في اليمن</h3>
+    <h3 className="text-xl font-bold font-cairo text-amber-300">حملة رحماء بينهم في اليمن</h3>
     <p className="mt-2 text-sm text-slate-300 leading-relaxed">رسالة أمل ووفاء للإنسان في كافة المحافظات اليمنية.</p>
   </div>
 </div>`,
@@ -206,7 +206,7 @@ export default function StyleGuidePage() {
             دليل أنماط الزخارف والخلفيات الإسلامية
           </h1>
           <p className="mt-3 text-emerald-100 text-sm sm:text-base leading-relaxed">
-            دليل أسلوب العمل لزخارف وأكواد الخلفيات الرسمية لمؤسسة «رحماء بينهم للإغاثة والتنمية
+            دليل أسلوب العمل لزخارف وأكواد الخلفيات الرسمية لحملة «رحماء بينهم للإغاثة والتنمية
             باليمن». يتيح للمطورين والمصممين استدعاء الأنماط بدقة عالية لضمان التوافق البصري والهوية
             المؤسسية الموحدة.
           </p>
@@ -304,7 +304,7 @@ export default function StyleGuidePage() {
                           معاينة النمط الميداني
                         </span>
                         <h4 className="text-base font-bold font-cairo leading-snug">
-                          مؤسسة رحماء بينهم للإغاثة والتنمية
+                          حملة رحماء بينهم للإغاثة والتنمية
                         </h4>
                         <p className="text-xs opacity-90 leading-relaxed">
                           نُترجم كل تبرع ومساهمة إنسانية إلى أثرٍ وإنجازاتٍ ملموسة في أوساط الفئات

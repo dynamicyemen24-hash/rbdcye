@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 
 export type ThemeMode = "light" | "dark" | "system";
+export type DisplayMode = "default" | "sepia" | "contrast";
 
 interface ThemeContextType {
   theme: ThemeMode;
@@ -10,12 +11,25 @@ interface ThemeContextType {
   isHighContrast: boolean;
   toggleHighContrast: () => void;
   setHighContrast: (value: boolean) => void;
+  displayMode: DisplayMode;
+  setDisplayMode: (mode: DisplayMode) => void;
+  fontSize: number;
+  setFontSize: (size: number) => void;
+  reducedMotion: boolean;
+  toggleReducedMotion: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_STORAGE_KEY = "rh_theme_mode";
 const HIGH_CONTRAST_STORAGE_KEY = "rh_high_contrast";
+const DISPLAY_MODE_STORAGE_KEY = "rh_display_mode";
+const FONT_SIZE_STORAGE_KEY = "rh_font_size";
+const REDUCED_MOTION_STORAGE_KEY = "rh_reduced_motion";
+
+const DEFAULT_FONT_SIZE = 16;
+const FONT_SIZE_MIN = 12;
+const FONT_SIZE_MAX = 24;
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
@@ -27,6 +41,24 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isHighContrast, setIsHighContrastState] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(HIGH_CONTRAST_STORAGE_KEY) === "true";
+  });
+
+  const [displayMode, setDisplayModeState] = useState<DisplayMode>(() => {
+    if (typeof window === "undefined") return "default";
+    const saved = localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) as DisplayMode | null;
+    return saved && ["default", "sepia", "contrast"].includes(saved) ? saved : "default";
+  });
+
+  const [fontSize, setFontSizeState] = useState<number>(() => {
+    if (typeof window === "undefined") return DEFAULT_FONT_SIZE;
+    const saved = localStorage.getItem(FONT_SIZE_STORAGE_KEY);
+    const parsed = saved ? parseInt(saved, 10) : DEFAULT_FONT_SIZE;
+    return Number.isFinite(parsed) ? Math.max(FONT_SIZE_MIN, Math.min(FONT_SIZE_MAX, parsed)) : DEFAULT_FONT_SIZE;
+  });
+
+  const [reducedMotion, setReducedMotionState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
 
   const [isSystemDark, setIsSystemDark] = useState<boolean>(() => {
@@ -47,6 +79,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
+  // Listen to reduced motion preference changes
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setReducedMotionState(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   const isDark = theme === "dark" || (theme === "system" && isSystemDark);
 
   // Apply root DOM classes and data attributes
@@ -54,8 +99,16 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = document.documentElement;
 
     // Remove theme classes
-    root.classList.remove("light", "dark");
+    root.classList.remove("light", "dark", "sepia", "contrast");
 
+    // Apply display mode
+    if (displayMode === "sepia") {
+      root.classList.add("sepia");
+    } else if (displayMode === "contrast") {
+      root.classList.add("contrast");
+    }
+
+    // Apply theme mode
     if (isDark) {
       root.classList.add("dark");
       root.setAttribute("data-theme", "dark");
@@ -66,6 +119,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       root.style.colorScheme = "light";
     }
 
+    // Apply high contrast
     if (isHighContrast) {
       root.classList.add("high-contrast");
       root.setAttribute("data-high-contrast", "true");
@@ -73,7 +127,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       root.classList.remove("high-contrast");
       root.removeAttribute("data-high-contrast");
     }
-  }, [isDark, isHighContrast]);
+
+    // Apply font size
+    root.style.fontSize = `${fontSize}px`;
+
+    // Apply reduced motion
+    if (reducedMotion) {
+      root.classList.add("reduced-motion");
+      root.setAttribute("data-reduced-motion", "true");
+    } else {
+      root.classList.remove("reduced-motion");
+      root.removeAttribute("data-reduced-motion");
+    }
+  }, [isDark, isHighContrast, displayMode, fontSize, reducedMotion]);
 
   const setTheme = useCallback((mode: ThemeMode) => {
     setThemeState(mode);
@@ -117,6 +183,37 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   }, []);
 
+  const setDisplayMode = useCallback((mode: DisplayMode) => {
+    setDisplayModeState(mode);
+    try {
+      localStorage.setItem(DISPLAY_MODE_STORAGE_KEY, mode);
+    } catch {
+      /* non-critical */
+    }
+  }, []);
+
+  const setFontSize = useCallback((size: number) => {
+    const clamped = Math.max(FONT_SIZE_MIN, Math.min(FONT_SIZE_MAX, size));
+    setFontSizeState(clamped);
+    try {
+      localStorage.setItem(FONT_SIZE_STORAGE_KEY, String(clamped));
+    } catch {
+      /* non-critical */
+    }
+  }, []);
+
+  const toggleReducedMotion = useCallback(() => {
+    setReducedMotionState((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(REDUCED_MOTION_STORAGE_KEY, String(next));
+      } catch {
+        /* non-critical */
+      }
+      return next;
+    });
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       theme,
@@ -126,8 +223,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       isHighContrast,
       toggleHighContrast,
       setHighContrast,
+      displayMode,
+      setDisplayMode,
+      fontSize,
+      setFontSize,
+      reducedMotion,
+      toggleReducedMotion,
     }),
-    [theme, setTheme, isDark, toggleTheme, isHighContrast, toggleHighContrast, setHighContrast]
+    [theme, setTheme, isDark, toggleTheme, isHighContrast, toggleHighContrast, setHighContrast, displayMode, setDisplayMode, fontSize, setFontSize, reducedMotion, toggleReducedMotion]
   );
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;

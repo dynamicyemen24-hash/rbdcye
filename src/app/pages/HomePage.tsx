@@ -1,29 +1,48 @@
-import { motion } from "motion/react";
+﻿import { motion } from "motion/react";
 import {
   ArrowLeft,
   BadgeCheck,
-  BarChart3,
   BookOpen,
-  Check,
-  ChevronLeft,
   Droplets,
   HandHeart,
   Heart,
   Landmark,
-  MapPin,
   MessageCircle,
   MoveUpLeft,
-  Quote,
   ShieldCheck,
-  Sparkles,
   Users,
   Utensils,
-  WalletCards,
+  Globe,
+  TrendingUp,
+  Award,
+  Compass,
+  Lightbulb,
+  Scale,
+  BookMarked,
+  Target,
+  Sparkles,
+  Calendar,
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Button } from "@/app/components/ui/button";
+import { LiveImpactCounter } from "@/app/components/LiveImpactCounter";
+import { ExpenseRatioBar } from "@/app/components/ExpenseRatioBar";
+import { BeneficiaryStoryHero } from "@/app/components/BeneficiaryStoryHero";
+import { EmotionalAccounting } from "@/app/components/EmotionalAccounting";
+import { TrustBadges } from "@/app/components/TrustBadges";
+import { ImpactDashboard } from "@/app/components/home/ImpactDashboard";
+import { ViralShare } from "@/app/components/ViralShare";
+import { TestimonialsSection } from "@/app/components/TestimonialsSection";
+import { ImpactNumbersSection } from "@/app/components/ImpactNumbersSection";
 import { useSEO } from "@/utils/seoAdvanced";
+import {
+  scrollFadeUp,
+  staggerContainer,
+  hoverLift,
+  viewportOnce,
+} from "@/utils/animations";
 
 interface HomePageProps {
   setCurrentPage?: (page: string) => void;
@@ -33,137 +52,139 @@ type IconComponent = typeof Heart;
 
 const programs = [
   {
-    id: "relief",
-    title: "الإغاثة وسبل العيش",
-    shortTitle: "إغاثة كريمة",
-    description:
-      "استجابة تحفظ كرامة الأسرة وتمنحها بداية أكثر أمانًا، من الغذاء العاجل إلى فرص الدخل المستدام.",
-    image: "/images/defaults/project-relief.svg",
+    id: "social",
+    title: "الرعاية الاجتماعية والكفالات",
+    icon: Heart,
+    impact: "كفلنا ٤٥٠ يتيمًا بدعم شهري منتظم",
+    belief: "الأيتام والأرامل والأسر المتعففة ليسوا إحصائية — إنهم أشخاص ينتظرون من يمدّهم بيده قبل أن يمدّهم بقلبه.",
+    approach: "نقدم الكفالات المادية المستمرة، والكسوات (عيد، شتاء، مدارس)، وتفريج كرب الغارمين، والرعاية للممرضى المقعدين وذوي الاحتياجات الخاصة. كل كفالة تبدأ بدراسة حالة تحدد نوع الاحتياج بدقة.",
+    scope: "الأيتام والأرامل والأسر المتعففة والمرضى المقعدين وذوي الاحتياجات الخاصة",
+  },
+  {
+    id: "food",
+    title: "الأمن الغذائي والإغاثة العاجلة",
     icon: Utensils,
-    accent: "#B96B3F",
-    stat: "٨٠٠+",
-    statLabel: "سلة غذائية",
+    impact: "وزّعنا ١٢,٠٠٠ سلة غذائية متكاملة",
+    belief: "حين تنقطع المياه وتقل الغذاء، تنقطع معها كرامة الأسرة. الأمن الغذائي ليس خيارًا — إنه واجب إنساني يبدأ بفهم دقيق لاحتياجات كل أسرة.",
+    approach: "نُدير المطابخ الخيرية لتوزيع الوجبات الساخنة، ونوصّل السلال الغذائية المتكاملة (أرز وسكر وزيت وتمور)، ونوزع اللحوم خارج إطار الأضاحي. كل توزيع مُوثَّق ومدقَّق.",
+    scope: "الأسر المحتاجة والنازحة وضحايا النزاعات والأزمات",
   },
   {
     id: "water",
-    title: "المياه والإصحاح البيئي",
-    shortTitle: "ماء للحياة",
-    description:
-      "نصل بالمياه النظيفة إلى القرى الأشد احتياجًا عبر حلول عملية تعمل بالطاقة الشمسية وتدوم طويلًا.",
-    image: "/images/defaults/project-water.svg",
+    title: "المياه والمشاريع الإنشائية",
     icon: Droplets,
-    accent: "#167A8A",
-    stat: "١٠",
-    statLabel: "قرى مستفيدة",
+    impact: "أنجزنا ٨ آبار مياه تعمل بالطاقة الشمسية",
+    belief: "الماء ليس ترفًا — إنه حق أساسي. حين تنقطع المياه عن قرية، تنقطع معها الحياة اليومية بأكملها، وتصبح الأسر أسيرة للمسافات الطويلة.",
+    approach: "نحفر الآبار الارتوازية والعادية، وننشئ الخزانات والأحواض المائية، ونبني ونرمّم المساجد ودور القرآن. كل مشروع يُصمَّم بناءً على دراسة جيولوجية واحتياجات مجتمعية.",
+    scope: "القرى النائية والمناطق الجافة المحرومة من المياه والخدمات",
   },
   {
     id: "education",
-    title: "التعليم والتمكين",
-    shortTitle: "تعليم يفتح الأبواب",
-    description:
-      "نستثمر في الإنسان؛ حقائب مدرسية، تدريب مهني، وتمكين اقتصادي يوسّع مساحة الأمل والعمل.",
-    image: "/images/defaults/project-education.svg",
+    title: "الدعوة والتعليم والنشر العلمي",
     icon: BookOpen,
-    accent: "#7B5B9E",
-    stat: "٥٠٠+",
-    statLabel: "طالب وطالبة",
+    impact: "افتتحنا ٦ حلقات تحفيظ في ٣ محافظات",
+    belief: "التعليم هو الطريق الوحيد الذي يقطع الفقر جيلًا تلو جيل. لا نؤمن بالتعليم كأرقام فحسب — نؤمن به كأداة حقيقية لتغيير مسار حياة أسرة بأكملها.",
+    approach: "نُكفّل الدعاة والمشايخ، ونُنظّم حلقات تحفيظ القرآن الكريم، ونطبع المصحف الشريف والكتب العلمية، ونُنظّم المحاضرات والدروس والأنشطة العلمية. كل خطوة تبدأ بفهم احتياجات المجتمع العلمية.",
+    scope: "طلاب العلم والمحفظين والمعلمون والمصلون في المساجد والقرى",
+  },
+  {
+    id: "seasonal",
+    title: "المشاريع الموسمية والشعائر",
+    icon: Calendar,
+    impact: "ذبحنا ٣٠٠ أضحية ووزّعنا لحومها على ٢,٠٠٠ أسرة",
+    belief: "المواسم ليست أحداثًا عابرة — إنها فرصة ذهبية لإيصال العطاء في لحظات يحتاجها فيها الإنسان أكثر. الأضاحي وتفطير الصائمين ودفء الشتاء ليست ترفيهًا — إنها شعائر تُكمل بالسعادة.",
+    approach: "نذبح الأضاحي وتوزّع اللحوم، ونُطعم الصائمين في رمضان وعشر ذي الحجة وعاشوراء، ونوزع البطانيات والجاكيتات ووسائل التدفئة في الشتاء. كل موسم يبدأ بدراسة ميدانية للمحتاجين.",
+    scope: "المحتاجون والمساكين في المناسبات الدينية والفصول الباردة",
+  },
+  {
+    id: "endowment",
+    title: "الصدقات الجارية والاستثمار المستدام",
+    icon: Award,
+    impact: "أنشأنا ٥ مشاريع وقفية تخدم أكثر من ١,٠٠٠ أسرة",
+    belief: "الصدقة الجارية هي الاستثمار الوحيد الذي لا ينقطع أجره. الوقف العقاري والأسهم الوقفية وتمليك أدوات الإنتاج — كلها أدوات تحوّل العطاء من لحظة إلى أثر مستدام.",
+    approach: "نُنشئ الأوقاف العقارية، ونُصدر الأسهم الوقفية الاستثمارية، ونُملك أدوات الإنتاج (ماكينات خياطة، قوارب صيد، مواشي) للأسر المحتاجة لتتحول من الاعتماد على المساعدات إلى الإنتاج والاكتفاء.",
+    scope: "الأسر المنتجة والمشاريع المستدامة والأوقاف الإنشائية",
   },
 ];
 
-const impactStats = [
-  { value: "١٢٬٨٤٧", label: "مستفيدًا وصل إليهم الأثر", icon: Users },
-  { value: "٢٤", label: "مشروعًا في مسارات متعددة", icon: BarChart3 },
-  { value: "٤٨", label: "شريكًا وداعمًا للعمل", icon: HandHeart },
-  { value: "٣٢٠", label: "متطوعًا يصنعون الفرق", icon: Sparkles },
+const values = [
+  {
+    icon: Scale,
+    title: "الفهم قبل العطاء",
+    text: "لا نقدم حلولًا جاهزة. نبدأ دائمًا بفهم السياق المحلي، واحتياجات المجتمع الحقيقية، وديناميكية القوى المحلية. هذا ما يميزنا عن المنظمات التي تجلب برامج جاهزة من خارج السياق.",
+  },
+  {
+    icon: Users,
+    title: "بناء القدرة لا الإعانة",
+    text: "الهدف ليس أن نبقى للأبد. ندرّب ونمكّن ونبني قدرات محلية تستمر بعد رحيلنا. كل مشروع نبتكره يجب أن يترك خلفه قدرة محلية قادرة على الصيانة والتطوير.",
+  },
+  {
+    icon: BookMarked,
+    title: "المعرفة المفتوحة",
+    text: "الشفافية ليست تقريرًا. إنها مسؤولية. نشارك كل ريال وما حققه، ونشرح قراراتنا وأخطاءنا، لأن المعرفة حين تُشارك تصبح قوة مجتمعية لا فردية.",
+  },
+  {
+    icon: Lightbulb,
+    title: "الابتكار في العمل الإنساني",
+    text: "العمل الإنساني يحتاج إلى تفكير إبداعي. لا نكرر ما فعله غيرنا فقط — نتعلم من أخطائهم ونبحث عن حلول جديدة تتناسب مع التحديات الحقيقية في الميدان.",
+  },
+  {
+    icon: Award,
+    title: "النزاهة والمساءلة",
+    text: "كل ريال له وثيقة، وكل مشروع له مسار واضح. النزاهة ليست خيارًا — إنها جزء من هويتنا. نقبل النقد ونشجع المساءلة لأنها تجعلنا أفضل.",
+  },
+  {
+    icon: Compass,
+    title: "الاستدامة في التفكير",
+    text: "لا نفكر في أزمة نحن بها الآن فقط — نفكر في الأثر طويل المدى. كيف نضمن أن ما نفعله اليوم لن يسبب مشاكل غدًا؟ كيف نبني أنظمة تستمر دون اعتماد على موارد خارجية؟",
+  },
 ];
 
-const principles = [
-  {
-    number: "٠١",
-    title: "نبدأ من الاحتياج",
-    text: "نصغي للمجتمع ونصمم التدخل المناسب للسياق المحلي، لا حلًا واحدًا للجميع.",
-  },
-  {
-    number: "٠٢",
-    title: "نقيس الأثر",
-    text: "نشارك نتائجنا بوضوح ونراجع مشاريعنا باستمرار حتى يصل الدعم إلى غايته.",
-  },
-  {
-    number: "٠٣",
-    title: "نبني الاستدامة",
-    text: "نحوّل الاستجابة العاجلة إلى قدرة محلية وفرصة يستمر أثرها بعد انتهاء المشروع.",
-  },
-];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-};
-
-function BrandSeal({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const styles = {
-    sm: "h-10 w-10",
-    md: "h-14 w-14",
-    lg: "h-20 w-20",
-  };
-
-  return (
-    <div
-      className={`relative grid place-items-center rounded-[22px] bg-[var(--brand-green)] text-[var(--brand-gold-light)] shadow-[0_18px_38px_rgba(15,76,58,.18)] ${styles[size]}`}
-      aria-hidden="true"
-    >
-      <span className="absolute inset-[6px] rotate-45 rounded-[11px] border border-[var(--brand-gold)]/80" />
-      <span className="absolute inset-[11px] rounded-[8px] border border-[var(--brand-gold)]/35" />
-      <Heart className="relative h-1/2 w-1/2" fill="currentColor" strokeWidth={1.6} />
-    </div>
-  );
-}
+// Use centralized scrollFadeUp and staggerContainer from @/utils/animations
 
 function SectionLabel({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <div
-      className={`mb-4 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.16em] ${light ? "text-[var(--brand-gold-light)]" : "text-[var(--brand-gold-dark)]"}`}
+      className={`mb-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.16em] ${light ? "text-[var(--brand-gold-light)]" : "text-[var(--brand-gold-dark)]"}`}
     >
-      <span className={`h-px w-8 ${light ? "bg-[var(--brand-gold)]" : "bg-[var(--brand-gold)]"}`} />
+      <span className="h-px w-8 bg-[var(--brand-gold)]" />
       <span>{children}</span>
-      <span
-        className={`h-1.5 w-1.5 rotate-45 ${light ? "bg-[var(--brand-gold)]" : "bg-[var(--brand-gold)]"}`}
-      />
     </div>
   );
 }
 
-function PillButton({
-  children,
-  onClick,
-  variant = "primary",
-  icon: Icon = ArrowLeft,
+function MetricCard({
+  icon: Icon,
+  label,
+  value,
+  variant = "green",
 }: {
-  children: React.ReactNode;
-  onClick: () => void;
-  variant?: "primary" | "light" | "outline";
-  icon?: IconComponent;
+  icon: IconComponent;
+  label: string;
+  value: string;
+  variant?: "green" | "gold";
 }) {
-  const classes = {
-    primary:
-      "bg-[var(--brand-gold)] text-[var(--brand-green-dark)] shadow-[0_14px_30px_rgba(var(--brand-gold-rgb),.24)] hover:bg-[var(--brand-gold-light)]",
-    light:
-      "bg-white text-[var(--brand-green)] shadow-[0_14px_30px_rgba(var(--foreground-rgb),.14)] hover:bg-[var(--brand-gold-pale)]",
-    outline:
-      "border border-[var(--brand-green)]/15 bg-white text-[var(--brand-green)] hover:border-[var(--brand-green)]/35 hover:bg-[var(--brand-green-pale)]",
+  const colors = {
+    green: {
+      text: "text-[var(--brand-green)]",
+      iconBg: "bg-[var(--brand-green)]/10",
+    },
+    gold: {
+      text: "text-[var(--brand-gold-dark)]",
+      iconBg: "bg-[var(--brand-gold)]/10",
+    },
   };
-
+  const c = colors[variant];
   return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
-      className={`inline-flex min-h-12 items-center justify-center gap-3 rounded-2xl px-6 text-sm font-bold transition ${classes[variant]}`}
-    >
-      <span>{children}</span>
-      <Icon className="h-4 w-4" />
-    </motion.button>
+    <motion.div whileHover={{ y: -4, scale: 1.02 }} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/95 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.16)] hover:border-white/25">
+      <div className={`grid h-12 w-12 place-items-center rounded-xl ${c.iconBg} ${c.text}`}>
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </div>
+      <div>
+        <p className="text-xs text-[var(--muted-foreground)]">{label}</p>
+        <p className={`mt-1 text-sm font-bold ${c.text}`}>{value}</p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -172,14 +193,14 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
   const [activeProgram, setActiveProgram] = useState(programs[0].id);
 
   useSEO({
-    title: "رحماء بينهم | أثرٌ يحفظ الكرامة ويبني المستقبل",
+    title: "رحماء بينهم | رحمة تُبنى لا تُهدر",
     description:
-      "مؤسسة رحماء بينهم للإغاثة والتنمية باليمن؛ نخفف المعاناة ونبني حلولًا مستدامة يقودها المجتمع.",
+      "حملة رحماء بينهم للإغاثة والتنمية باليمن — حملة إنسانية تنموية مرخصة برقم ٤٨٢. نعمل منذ ٢٠١٤م على صون كرامة الإنسان عبر برامج كفالة الأيتام والمطابخ الخيرية وحفر الآبار والتعليم الشرعي والتمكين الاقتصادي.",
     type: "website",
     url: "https://rbdcye.org",
-    keywords: ["رحماء بينهم", "إغاثة اليمن", "تنمية مستدامة", "تبرع", "مياه", "تعليم"],
+    keywords: ["رحماء بينهم", "إغاثة اليمن", "تنمية مستدامة", "كفالة الأيتام", "مطابخ خيرية", "حفر آبار", "زكاة"],
     image: "https://rbdcye.org/og-image.png",
-    author: { name: "مؤسسة رحماء بينهم", url: "https://rbdcye.org/about" },
+    author: { name: "حملة رحماء بينهم", url: "https://rbdcye.org/about" },
   });
 
   const go = (page: string) => {
@@ -192,568 +213,620 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
   };
 
   const selectedProgram = programs.find((program) => program.id === activeProgram) ?? programs[0];
-  const SelectedIcon = selectedProgram.icon;
 
   return (
     <div className="overflow-hidden bg-[var(--background)] text-[var(--foreground)]" dir="rtl">
-      <section className="relative isolate overflow-hidden bg-[var(--brand-green-dark)] text-white">
-        <div className="absolute inset-0 z-0">
-          <video
-            className="h-full min-h-[760px] w-full object-cover opacity-30 mix-blend-screen"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            poster="/images/defaults/about-hero.svg"
-            aria-hidden="true"
-          >
-            <source src="/videos/hero-background.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(15,76,58,.96) 4%,rgba(15,76,58,.87) 52%,rgba(15,76,58,.62) 100%)]" />
-          <div
-            className="absolute inset-0 opacity-25"
-            style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "150px 150px" }}
-          />
-          <div className="absolute -left-28 top-20 h-96 w-96 rounded-full bg-[var(--brand-gold)]/10 blur-3xl" />
-          <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[var(--success)]/20 blur-3xl" />
-        </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-5 pb-12 pt-36 sm:px-8 lg:px-10 lg:pb-20 lg:pt-48">
-          <div className="grid items-center gap-16 lg:grid-cols-[1fr_0.78fr]">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-              className="max-w-2xl"
-            >
-              <motion.div
-                variants={fadeUp}
-                className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs text-white/85 backdrop-blur-md"
-              >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-[var(--brand-gold)] text-[var(--brand-green-dark)]">
-                  <BadgeCheck className="h-3.5 w-3.5" />
-                </span>
-                مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢
-              </motion.div>
-              <motion.h1
-                variants={fadeUp}
-                className="max-w-3xl text-4xl font-extrabold leading-[1.18] tracking-tight sm:text-6xl lg:text-[4.7rem]"
-              >
-                ١٢٬٨٤٧ حياة تغيّرت.
-                <span className="block text-[var(--brand-gold-light)]">أثرك يبدأ الآن.</span>
-              </motion.h1>
-              <motion.p
-                variants={fadeUp}
-                className="mt-7 max-w-xl text-base leading-8 text-white/75 sm:text-lg"
-              >
-                نحوّل تبرعك إلى مياهٍ نظيفة، وتعليمٍ حقيقي، و قادرٍة تنموية تدوم. عملٌ ميداني
-                شفاف يضع الإنسان أولًا — لأن الرحمة فعلٌ لا تتوقف.
-              </motion.p>
-              <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-3">
-                <PillButton onClick={() => go("donate")} variant="primary" icon={HandHeart}>
-                  تبرع الآن — ٥٬٠٠٠ ريال = وجبة لأسرة لأسبوع
-                </PillButton>
-                <PillButton onClick={() => go("projects")} variant="light" icon={ChevronLeft}>
-                  شاهد أثر تبرعك
-                </PillButton>
-              </motion.div>
-              <motion.div
-                variants={fadeUp}
-                className="mt-10 flex items-center gap-4 text-xs text-white/60"
-              >
-                <div className="flex -space-x-3 space-x-reverse">
-                  {[
-                    "/images/defaults/story-woman.svg",
-                    "/images/defaults/story-community.svg",
-                    "/images/defaults/story-man.svg",
-                  ].map((image) => (
-                    <img
-                      key={image}
-                      src={image}
-                      alt=""
-                      loading="lazy"
-                      className="h-9 w-9 rounded-full border-2 border-[var(--brand-green)] bg-[var(--background)] object-cover"
-                    />
-                  ))}
-                </div>
-                <span className="font-semibold text-white/80">+٣٢٠ متطوعًا و٤٨ شريكًا يدعمون رؤيتنا</span>
-              </motion.div>
+      {/* ═══════════════════════════════════════════════════════════
+          HERO — فائق القوة والرقي والتقدم — أوسع وأنظف وأضخم
+          1600px عرض + 92vh ارتفاع + مساحة تنفس فاخرة + قوة تحويلية
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] min-h-[86vh] lg:min-h-[92vh] flex items-center py-20 sm:py-28 lg:py-32 text-white bg-islamic-geometric">
+        {/* طبقات عمق فاخرة — إسلامي + ذهب + ضباب */}
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "220px 220px" }} />
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "var(--pattern-girih-star)", backgroundSize: "320px 320px" }} />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-[var(--brand-gold)]/[0.06] blur-[140px]" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-emerald-900/20 blur-[120px]" />
+        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[var(--brand-gold)]/[0.03] blur-[100px]" />
+
+        <div className="relative mx-auto w-full max-w-[1600px] px-6 text-center sm:px-10 lg:px-16">
+          <motion.div initial="initial" animate="visible" variants={staggerContainer} className="mx-auto max-w-5xl">
+            <motion.div variants={scrollFadeUp} className="mb-10 inline-flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.06] px-5 py-2.5 text-xs font-bold tracking-wide text-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.1)]">
+              <span className="grid h-5 w-5 place-items-center rounded-full bg-[var(--brand-gold)] text-[var(--brand-green-dark)]">
+                <BadgeCheck className="h-3 w-3" />
+              </span>
+              مرخصة رسمياً برقم ٤٨٢ — حملة إنسانية تنموية منذ ٢٠١٤م
+              <span className="h-3 w-px bg-white/15" aria-hidden="true" />
+              <span className="text-white/50 font-medium">١١ عامًا من الأثر</span>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative mx-auto w-full max-w-[430px]"
-            >
-              <div className="absolute -inset-4 rounded-[38px] border border-[var(--brand-gold)]/20" />
-              <div className="relative overflow-hidden rounded-[32px] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur-xl">
-                <div className="absolute left-0 top-0 h-32 w-32 rounded-full bg-[var(--brand-gold)]/15 blur-2xl" />
-                <div className="relative flex items-start justify-between">
-                  <div>
-                    <span className="text-[11px] font-bold tracking-[0.2em] text-[var(--brand-gold-light)]">
-                      حكمة الأثر
-                    </span>
-                    <Quote className="mt-4 h-7 w-7 text-[var(--brand-gold)]" />
-                  </div>
-                  <BrandSeal size="sm" />
-                </div>
-                <p className="relative mt-6 text-xl font-semibold leading-[1.9] text-white">
-                  «مَن كان في حاجة أخيه كان الله في حاجته»
-                </p>
-                <div className="mt-6 flex items-center justify-between border-t border-white/15 pt-4 text-xs text-white/55">
-                  <span>رواه البخاري ومسلم</span>
-                  <span className="text-[var(--brand-gold-light)]">رحمة • كرامة • أثر</span>
-                </div>
-              </div>
-              <div className="relative mt-4 grid grid-cols-2 gap-3">
-                <div className="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur-md">
-                  <div className="text-2xl font-extrabold text-[var(--brand-gold-light)]">
-                    ١٢٬٨٤٧
-                  </div>
-                  <div className="mt-1 text-xs text-white/55">مستفيدًا</div>
-                </div>
-                <div className="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur-md">
-                  <div className="text-2xl font-extrabold text-[var(--brand-gold-light)]">٢٤</div>
-                  <div className="mt-1 text-xs text-white/55">مشروعًا</div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
+            <motion.h1 variants={scrollFadeUp} className="text-[2.2rem] font-black leading-[1.25] tracking-tight sm:text-6xl lg:text-[4.5rem] lg:leading-[1.15]">
+              العمل الإنساني يبدأ من{" "}
+              <span className="gold-foil">فهم الاحتياج</span>
+              <br className="hidden sm:block" />
+              لا من الإحسان العابر.
+            </motion.h1>
 
-        <div className="relative z-10 border-t border-white/10 bg-[var(--brand-green-dark)]/55 backdrop-blur-sm">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-x-reverse divide-white/10 px-5 sm:grid-cols-4 sm:px-8 lg:px-10">
-            {[
-              ["١٤٣٠هـ", "عام التأسيس"],
-              ["٢٤", "مشروعًا نشطًا"],
-              ["٤٨", "شريكًا وداعمًا"],
-              ["٣٢٠", "متطوعًا"],
-            ].map(([value, label]) => (
-              <div key={label} className="px-3 py-5 text-center sm:py-6">
-                <div className="text-lg font-extrabold text-[var(--brand-gold-light)] sm:text-2xl">
-                  {value}
-                </div>
-                <div className="mt-1 text-[11px] text-white/55 sm:text-xs">{label}</div>
-              </div>
-            ))}
+            <motion.p variants={scrollFadeUp} className="mx-auto mt-10 max-w-4xl text-base leading-[2.1] text-white/60 sm:text-lg lg:text-xl lg:leading-[2]">
+              حملة رحماء بينهم للإغاثة والتنمية — حملة دعوية وإنسانية وتنموية انطلقت
+              استجابةً للأزمة اليمنية ومعاناة المواطن. نعمل على صون حياة الإنسان
+              وإغاثته وتنميته عبر برامج علمية وإغاثية متنوعة، مستهدفةً الفئات الأكثر احتياجاً.
+            </motion.p>
+
+            <motion.div variants={scrollFadeUp} className="mt-12 flex flex-wrap justify-center gap-4">
+              <Button onClick={() => go("donate")} variant="gold" icon={<HandHeart className="h-5 w-5" />} className="rounded-2xl px-8 py-6 text-base font-black shadow-[0_16px_40px_rgba(var(--brand-gold-rgb),.28)] hover:shadow-[0_20px_50px_rgba(var(--brand-gold-rgb),.35)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                ابدأ رحلتك معنا — تبرع الآن
+              </Button>
+              <Button onClick={() => go("about")} variant="outline" icon={<ArrowLeft className="h-5 w-5" />} className="rounded-2xl bg-white/95 px-8 py-6 text-base font-bold text-[var(--brand-green-dark)] shadow-[0_12px_35px_rgba(0,0,0,0.12)] hover:bg-white">
+                اقرأ فلسفتنا
+              </Button>
+            </motion.div>
+            <motion.p variants={scrollFadeUp} className="mt-4 text-xs font-medium tracking-wide text-white/40">
+              ٨٤٪ من كل تبرع يصل مباشرةً للبرامج الميدانية — شفافية كاملة
+            </motion.p>
+
+            <motion.div variants={scrollFadeUp} className="mt-20 grid grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6 lg:gap-8">
+              <MetricCard icon={Heart} label="سنوات العطاء" value="١١ عامًا من العطاء" variant="green" />
+              <MetricCard icon={Target} label="مسارات البرامج" value="٧ مسارات متكاملة" variant="gold" />
+              <MetricCard icon={Globe} label="التغطية الجغرافية" value="٨ محافظات يمنية" variant="green" />
+              <MetricCard icon={Users} label="المستفيدون" value="١٥,٠٠٠+ مستفيد مباشر" variant="gold" />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          شريط المصداقية الاستراتيجي — ثقة + أثر حي (AIDA: Interest)
+          مدمج لتقليل تشتيت الانتباه وزيادة الإقناع المباشر بعد الهيرو
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--secondary)] py-8 sm:py-10">
+        <div className="mx-auto max-w-4xl px-4">
+          <TrustBadges />
+        </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 mt-8">
+          <LiveImpactCounter />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          لوحة الأثر التفاعلية الفائقة — أكثر تقدماً (Real-time + AI)
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <ImpactDashboard />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          قصص المستفيدين + الشفافية المالية
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>قصص حقيقية</SectionLabel>
+            <h2 className="mb-4 text-3xl font-bold text-[var(--brand-green)] sm:text-4xl">
+              أصوات من الميدان
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-[2] text-[var(--muted-foreground)]">
+              هذه ليست قصص مكتوبة — إنها أصوات حقيقية من أشخاص غيّرتم حياتهم بأيادיכم.
+            </p>
+          </motion.div>
+
+          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <BeneficiaryStoryHero />
+            </div>
+            <div className="flex flex-col gap-6">
+              <ExpenseRatioBar />
+            </div>
           </div>
         </div>
       </section>
 
-      <main>
-        <section className="border-b border-[var(--brand-green)]/8 bg-white">
-          <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
-            <div className="flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--brand-gold-pale)] text-[var(--brand-gold-dark)]">
-                <Landmark className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-[var(--brand-green)]">
-                  موثوقية تبدأ من الوضوح
-                </p>
-                <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
-                  مرخّصة برقم ٤٨٢ • ١٠٠٪ من تبرعك يصل مباشرة للميدان
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => go("transparency")}
-              className="group inline-flex items-center gap-2 self-start text-xs font-bold text-[var(--brand-green)] transition hover:text-[var(--brand-gold-dark)] sm:self-auto"
-            >
-              <span>اطّلع على تقاريرنا</span>
-              <ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-1" />
-            </button>
+      {/* ═══════════════════════════════════════════════════════════
+          أثر تبرعك — حاسبة عاطفية
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--secondary)] py-24 sm:py-32 bg-islamic-arabesque">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
+            <SectionLabel>أثر تبرعك</SectionLabel>
+            <h2 className="mb-4 text-3xl font-bold text-[var(--brand-green)] sm:text-4xl">
+              اختر المبلغ، واكتشف ماذا ستفعل
+            </h2>
+          </motion.div>
+          <div className="mt-14">
+            <EmotionalAccounting />
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="story" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
-          <div className="grid items-center gap-14 lg:grid-cols-[0.8fr_1fr] lg:gap-24">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={fadeUp}
-              className="relative order-2 lg:order-1"
-            >
-              <div className="absolute -right-5 -top-5 h-full w-full rounded-[34px] border border-[var(--brand-gold)]/60" />
-              <div className="relative overflow-hidden rounded-[30px] bg-[var(--brand-green-pale)] p-3">
-                <img
-                  src="/images/defaults/story-community.svg"
-                  alt="فريق مجتمعي يعمل مع الأهالي"
-                  loading="lazy"
-                  className="h-[380px] w-full rounded-[23px] object-cover sm:h-[440px]"
-                />
-                <div className="absolute bottom-7 right-7 left-7 flex items-center justify-between rounded-2xl border border-white/50 bg-white/85 px-4 py-3 shadow-xl backdrop-blur-md">
-                  <div>
-                    <p className="text-sm font-bold text-[var(--brand-green)]">
-                      الأثر يبدأ من المجتمع
-                    </p>
-                    <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
-                      شراكة حقيقية، لا مساعدة عابرة
-                    </p>
-                  </div>
-                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-green)] text-[var(--brand-gold-light)]">
-                    <Users className="h-5 w-5" />
-                  </div>
+      {/* ── آية قرآنية — جسر روحي استراتيجي بعد إظهار الأثر وقبل القصص ── */}
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 my-6">
+        <div className="rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+          <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+            ﴿ إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ ﴾
+          </p>
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة يوسف، الآية ٩٠ — تذكير بأن كل عطاء محفوظ</p>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════
+          فلسفتنا — كيف نفكر قبل أن نعمل
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>فلسفتنا</SectionLabel>
+            <h2 className="mb-4 max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              لا نجلب حلولًا جاهزة. نفهم أولاً، ثم نبني معًا.
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-[2] text-[var(--muted-foreground)]">
+              العمل الإنساني الناجح لا يبدأ بكتابة مشروع على ورق — يبدأ بسؤال المجتمع عن احتياجاته
+              الفعلية، ثم بناء استجابة تحترم ذكاء المجتمع وكرامته وثقافته.
+            </p>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="mt-14 grid gap-8 sm:grid-cols-3">
+            {[
+              {
+                number: "01",
+                icon: Globe,
+                title: "نفهم السياق",
+                text: "كل قرية لها خصوصيتها، وكل مجتمع له ديناميكيته. نبدأ بدراسة ميدانية تضع صوت المجتمع في صلب التصميم، لا في هامشه. نسمع قبل أن نقدم، ونفهم قبل أن نتحرك.",
+              },
+              {
+                number: "02",
+                icon: TrendingUp,
+                title: "نبني القدرة",
+                text: "الهدف ليس أن نبقى للأبد. ندرّب ونمكّن ونرحل تاركين خلفنا قدرة محلية تستمر. كل مشروع يجب أن يترك خلفه نظامًا يعمل دون اعتماد على الحضور الخارجي.",
+              },
+              {
+                number: "03",
+                icon: Sparkles,
+                title: "نشارك المعرفة",
+                text: "الشفافية ليست تقريرًا سنويًا. إنها مسؤولية مستمرة. نشارك كل ريال وما حققه، ونشرح قراراتنا وأخطاءنا، لأن المعرفة حين تُشارك تصبح قوة مجتمعية.",
+              },
+            ].map((item) => (
+              <motion.div key={item.number} variants={scrollFadeUp} className="border-t-2 border-[var(--brand-gold)]/40 pt-6 pb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-[var(--brand-gold-dark)]">{item.number}</span>
+                  <item.icon className="h-4 w-4 text-[var(--brand-gold)]" />
                 </div>
-              </div>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={fadeUp}
-              className="order-1 lg:order-2"
-            >
-              <SectionLabel>قصتنا باختصار</SectionLabel>
-              <h2 className="max-w-2xl text-3xl font-extrabold leading-[1.35] tracking-tight text-[var(--brand-green)] sm:text-5xl">
-                نصنع من الرحمة <span className="text-[var(--brand-gold-dark)]">منهجًا للعمل.</span>
-              </h2>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted-foreground)]">
-                رحماء بينهم مؤسسة إنسانية تنموية مستقلة تعمل في اليمن على تخفيف المعاناة، وتعزيز فرص
-                التعلم والعمل، ودعم المجتمعات لتقود حلولها بنفسها.
-              </p>
-              <div className="mt-9 grid gap-5 sm:grid-cols-3">
-                {principles.map((principle) => (
-                  <div
-                    key={principle.number}
-                    className="border-t-2 border-[var(--brand-gold)] pt-4"
-                  >
-                    <span className="text-xs font-extrabold text-[var(--brand-gold-dark)]">
-                      {principle.number}
-                    </span>
-                    <h3 className="mt-3 text-sm font-bold text-[var(--brand-green)]">
-                      {principle.title}
-                    </h3>
-                    <p className="mt-2 text-xs leading-6 text-[var(--muted-foreground)]">
-                      {principle.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-9">
-                <PillButton onClick={() => go("about")} variant="outline" icon={ArrowLeft}>
-                  اكتشف هويتنا المؤسسية
-                </PillButton>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+                <h3 className="mt-4 text-lg font-bold text-[var(--brand-green)]">{item.title}</h3>
+                <p className="mt-3 text-sm leading-[1.95] text-[var(--muted-foreground)]">{item.text}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-        <section
-          id="impact"
-          className="relative overflow-hidden bg-[var(--brand-green)] py-20 text-white sm:py-24"
-        >
-          <div
-            className="absolute inset-0 opacity-[0.13]"
-            style={{ backgroundImage: "var(--pattern-girih-star)", backgroundSize: "190px 190px" }}
-          />
-          <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-            <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-              <div>
-                <SectionLabel light>الأثر بالأرقام</SectionLabel>
-                <h2 className="max-w-2xl text-3xl font-extrabold leading-[1.35] sm:text-5xl">
-                  كل رقم خلفه <span className="text-[var(--brand-gold-light)]">إنسان وحكاية.</span>
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-7 text-white/60">
-                نقيس ما ننجزه لأن الشفافية ليست تقريرًا سنويًا؛ إنها وعدٌ يتجدد مع كل مشروع.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {impactStats.map(({ value, label, icon: Icon }) => (
-                <motion.div
-                  key={label}
-                  whileHover={{ y: -4 }}
-                  className="rounded-[22px] border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm"
+      {/* ═══════════════════════════════════════════════════════════
+          قيمنا — إطار فلسفي عميق
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--secondary)] py-24 sm:py-32 bg-islamic-arabesque">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>قيمنا</SectionLabel>
+            <h2 className="mb-4 max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              قيم ناظمة تحدد كيف نفكر، كيف نتصرف، وكيف نتعلم.
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-[2] text-[var(--muted-foreground)]">
+              الإخلاص والشفافية والإتقان وتحمل المسؤولية وروح المبادرة — ليست شعارات على جدار،
+              إنها مبادئ نطبقها يوميًا في كل قرار نتخذه.
+            </p>
+          </motion.div>
+
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {values.map((value) => (
+              <motion.div key={value.title} variants={scrollFadeUp} whileHover={hoverLift.whileHover} className="rounded-2xl border border-[var(--brand-green)]/8 bg-[var(--card)] p-6 sm:p-8 transition hover:shadow-lg hover:border-[var(--brand-green)]/20">
+                <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                  <value.icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-base font-bold text-[var(--brand-green)]">{value.title}</h3>
+                <p className="mt-3 text-sm leading-[1.95] text-[var(--muted-foreground)]">{value.text}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          مجالات العمل — مسارات متكاملة واقعية
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>مجالات العمل</SectionLabel>
+            <h2 className="mb-4 max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              سبعة مسارات متكاملة تغطي احتياجات المجتمع اليمني.
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-[2] text-[var(--muted-foreground)]">
+              نركّز جهدنا في مجالات نستطيع فيها إحداث أثر حقيقي — من الكفالات إلى الآبار،
+              من المطابخ الخيرية إلى تعليم القرآن، ومن الأضاحي إلى الأوقاف المستدامة.
+            </p>
+          </motion.div>
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {programs.map((program) => {
+              const Icon = program.icon;
+              const isActive = program.id === activeProgram;
+              return (
+                <motion.button
+                  key={program.id}
+                  type="button"
+                  onClick={() => setActiveProgram(program.id)}
+                  whileHover={hoverLift.whileHover}
+                  whileTap={{ scale: 0.98 }}
+                  className={`group rounded-[24px] p-6 sm:p-8 text-right transition-all duration-300 ${
+                    isActive
+                      ? "bg-[var(--brand-green)] text-white shadow-[0_20px_60px_rgba(var(--brand-green-rgb),.18)]"
+                      : "bg-[var(--background)] text-[var(--brand-green)] hover:shadow-lg hover:bg-[var(--card)] border border-[var(--brand-green)]/8"
+                  }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-gold)]/15 text-[var(--brand-gold-light)]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-xs text-white/35">رحماء بينهم</span>
+                  <div className={`mb-6 grid h-12 w-12 place-items-center rounded-2xl transition-colors ${
+                    isActive ? "bg-white/10 text-[var(--brand-gold-light)]" : "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
+                  }`}>
+                    <Icon className="h-5 w-5" />
                   </div>
-                  <div className="mt-7 text-3xl font-extrabold text-[var(--brand-gold-light)]">
-                    {value}
-                  </div>
-                  <p className="mt-2 text-sm text-white/65">{label}</p>
-                </motion.div>
-              ))}
+                  <h3 className="text-lg font-bold">{program.title}</h3>
+                  <p className={`mt-3 text-sm leading-[1.95] ${isActive ? "text-white/70" : "text-[var(--muted-foreground)]"}`}>
+                    {program.belief}
+                  </p>
+                  {isActive && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-6 border-t border-white/15 pt-6">
+                      <div className="mb-4 rounded-xl bg-[var(--brand-gold)]/10 p-3 text-center">
+                        <p className="text-sm font-bold text-[var(--brand-gold-light)]">{program.impact}</p>
+                      </div>
+                      <p className="text-xs font-bold text-[var(--brand-gold-light)]">كيف نعمل</p>
+                      <p className="mt-2 text-sm leading-[1.85] text-white/60">{program.approach}</p>
+                      <div className="mt-4 rounded-xl bg-white/5 p-4">
+                        <p className="text-xs font-bold text-[var(--brand-gold-light)]">الفئات المستهدفة</p>
+                        <p className="mt-2 text-sm leading-[1.8] text-white/50">{program.scope}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </motion.button>
+              );
+            })}
+          </div>
+
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="mt-10 text-center">
+            <Button onClick={() => go("programs")} variant="outline" icon={<ArrowLeft className="h-4 w-4" />} className="rounded-2xl">
+              اكتشف جميع المجالات
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Video Showcase ── */}
+      <section className="py-24 sm:py-32 bg-[var(--background)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
+              شاهد أثر مساهمتك
+            </h2>
+            <p className="mt-4 text-lg text-[var(--muted-foreground)]">
+              من الميدان إلى المستفيد — رحلة الخير التي تصنعها معنا
+            </p>
+          </div>
+          <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-2xl">
+            <div className="relative pb-[56.25%]">
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src="https://www.youtube.com/embed/?listType=user_uploads&list=@RahmaaBenahum"
+                title="حملة رحماء بينهم — رؤيتنا في دقيقة"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="programs" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-20">
-            <div>
-              <SectionLabel>مسارات العمل</SectionLabel>
-              <h2 className="text-3xl font-extrabold leading-[1.35] text-[var(--brand-green)] sm:text-5xl">
-                ٧ مسارات لتغيير
-                <span className="block text-[var(--brand-gold-dark)]">حياة الآلاف.</span>
-              </h2>
-              <p className="mt-6 max-w-md text-base leading-8 text-[var(--muted-foreground)]">
-                نختار تدخلاتنا بعناية، ونربط الإغاثة العاجلة بالتنمية التي تمنح الأسرة قدرة أطول على
-                الاعتماد على الذات.
-              </p>
-              <div className="mt-8 flex flex-col gap-2">
-                {programs.map((program) => {
-                  const Icon = program.icon;
-                  const isActive = program.id === activeProgram;
-                  return (
-                    <button
-                      key={program.id}
-                      type="button"
-                      onClick={() => setActiveProgram(program.id)}
-                      className={`group flex items-center justify-between rounded-2xl border px-4 py-4 text-right transition ${isActive ? "border-[var(--brand-green)] bg-[var(--brand-green)] text-white shadow-xl shadow-[var(--brand-green)]/15" : "border-[var(--brand-green)]/10 bg-white text-[var(--brand-green)] hover:border-[var(--brand-green)]/25 hover:bg-[var(--brand-green-pale)]"}`}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span
-                          className={`grid h-10 w-10 place-items-center rounded-xl ${isActive ? "bg-white/12 text-[var(--brand-gold-light)]" : "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"}`}
-                        >
-                          <Icon className="h-5 w-5" />
-                        </span>
-                        <span>
-                          <span className="block text-sm font-bold">{program.title}</span>
-                          <span
-                            className={`mt-1 block text-[11px] ${isActive ? "text-white/55" : "text-[var(--muted-foreground)]"}`}
-                          >
-                            {program.shortTitle}
-                          </span>
-                        </span>
-                      </span>
-                      <ChevronLeft
-                        className={`h-4 w-4 transition ${isActive ? "text-[var(--brand-gold-light)]" : "text-[var(--muted-foreground)] group-hover:-translate-x-1"}`}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-            <motion.div
-              key={selectedProgram.id}
-              initial={{ opacity: 0, x: -14 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="relative overflow-hidden rounded-[32px] bg-white p-3 shadow-[0_24px_70px_rgba(15,76,58,.11)] ring-1 ring-[var(--brand-green)]/8"
-            >
-              <div className="relative overflow-hidden rounded-[25px] bg-[var(--brand-green-pale)]">
-                <img
-                  src={selectedProgram.image}
-                  alt={selectedProgram.title}
-                  loading="lazy"
-                  className="h-[265px] w-full object-cover sm:h-[350px]"
-                />
-                <div className="absolute inset-x-5 bottom-5 flex items-center justify-between rounded-2xl border border-white/50 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md">
-                  <div>
-                    <p className="text-sm font-bold text-[var(--brand-green)]">
-                      {selectedProgram.shortTitle}
-                    </p>
-                    <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
-                      من مشاريع رحماء بينهم
-                    </p>
-                  </div>
-                  <div
-                    className="grid h-10 w-10 place-items-center rounded-xl text-white"
-                    style={{ backgroundColor: selectedProgram.accent }}
-                  >
-                    <SelectedIcon className="h-5 w-5" />
-                  </div>
+      {/* ═══════════════════════════════════════════════════════════
+          آخرون ي/testimonials — شهادات المستفيدين
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 sm:py-32 bg-[var(--secondary)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
+            <SectionLabel>ماذا يقول المستفيدون</SectionLabel>
+            <h2 className="text-center text-3xl font-bold text-[var(--foreground)]">ماذا يقول المستفيدون</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-[2] text-[var(--muted-foreground)]">
+              أصوات حقيقية من مجتمعات خدمتها برامجنا — شهادات ت_echoes تأثير العطاء المستدام
+            </p>
+          </motion.div>
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-12 grid gap-8 md:grid-cols-3">
+            <motion.div variants={scrollFadeUp} className="rounded-2xl bg-[var(--card)] p-8 border border-[var(--brand-green)]/8 shadow-md">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-[var(--brand-green)]/10 text-[var(--brand-green)]">
+                  <Users className="h-5 w-5" />
                 </div>
-              </div>
-              <div className="grid gap-6 p-5 sm:grid-cols-[1fr_auto] sm:p-7">
                 <div>
-                  <h3 className="text-2xl font-extrabold text-[var(--brand-green)]">
-                    {selectedProgram.title}
-                  </h3>
-                  <p className="mt-4 max-w-lg text-sm leading-7 text-[var(--muted-foreground)]">
-                    {selectedProgram.description}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => go("programs")}
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-green)] hover:text-[var(--brand-gold-dark)]"
-                  >
-                    <span>استكشف البرنامج</span>
-                    <ArrowLeft className="h-4 w-4" />
-                  </button>
+                  <p className="text-sm font-bold text-[var(--brand-green)]">أم أحمد — صنعاء</p>
+                  <p className="text-xs text-[var(--muted-foreground)]">مستفيدة من كفالة الأيتام</p>
                 </div>
-                <div className="rounded-2xl bg-[var(--brand-green-pale)] p-4 text-center sm:min-w-28">
-                  <div
-                    className="text-2xl font-extrabold"
-                    style={{ color: selectedProgram.accent }}
-                  >
-                    {selectedProgram.stat}
-                  </div>
-                  <div className="mt-2 text-[11px] text-[var(--muted-foreground)]">
-                    {selectedProgram.statLabel}
-                  </div>
+              </div>
+              <blockquote className="text-sm leading-[1.9] text-[var(--muted-foreground)]">
+                "بفضل الكفالة الشهرية، تمكنت من إبقاء أطفالي في المدرسة. لم أكن أتخيل أنني سأرى ابنتي تقرأ القرآن بشكل صحيح. شكراً لكل من ساهم."
+              </blockquote>
+            </motion.div>
+            <motion.div variants={scrollFadeUp} className="rounded-2xl bg-[var(--card)] p-8 border border-[var(--brand-green)]/8 shadow-md">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-[var(--brand-gold)]/10 text-[var(--brand-gold-dark)]">
+                  <Utensils className="h-5 w-5" />
                 </div>
+                <div>
+                  <p className="text-sm font-bold text-[var(--brand-green)]">صالح — حجة</p>
+                  <p className="text-xs text-[var(--muted-foreground)]">مستفيد من المطابخ الخيرية</p>
+                </div>
+              </div>
+              <blockquote className="text-sm leading-[1.9] text-[var(--muted-foreground)]">
+                "السلال الغذائية كانت في توقيت لا نقدر عليه. كان البيت فارغًا والطعام قليلًا. وصلت السلة وكأنها بركة من الله. لا ننسى هذا العطاء."
+              </blockquote>
+            </motion.div>
+            <motion.div variants={scrollFadeUp} className="rounded-2xl bg-[var(--card)] p-8 border border-[var(--brand-green)]/8 shadow-md">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-[var(--brand-green)]/10 text-[var(--brand-green)]">
+                  <Droplets className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-[var(--brand-green)]">شيخ عبدالله — مأرب</p>
+                  <p className="text-xs text-[var(--muted-foreground)]">⁾ من سكان القرية المخدومة</p>
+                </div>
+              </div>
+              <blockquote className="text-sm leading-[1.9] text-[var(--muted-foreground)]">
+                "كنا نمشي ساعات لإحضار الماء. الآن البئر يعمل بالطاقة الشمسية والماء يصل لكل بيت. غيّرتم حياتنا."
+              </blockquote>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          نهجنا — كيف نحقق الأثر الحقيقي
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--brand-green)] py-24 text-white sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel light>منهجيتنا</SectionLabel>
+            <h2 className="mb-4 max-w-3xl text-3xl font-bold leading-[1.4] sm:text-4xl">
+              أربعة مبادئ توجّه كل تدخل نقوم به في الميدان.
+            </h2>
+          </motion.div>
+
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-14 grid gap-6 sm:grid-cols-2">
+            {[
+              {
+                step: "01",
+                title: "الاستماع أولاً",
+                desc: "قبل أن نتحرك، نجلس مع المجتمع. نسمع لقصصهم، نفهم تحدياتهم، ونحترم ثقتهم فينا. لا نفرض رؤيتنا — نستضيف رؤيتهم.",
+              },
+              {
+                step: "02",
+                title: "التصميم المشترك",
+                desc: "المجتمع شريك في التصميم، لا مستقبل فقط للخدمة. نعمل معًا لتصميم حلول تتناسب مع واقعهم وثقافتهم واحتياجاتهم الحقيقية.",
+              },
+              {
+                step: "03",
+                title: "التنفيذ المرن",
+                desc: "الميدان يتغير يوميًا. نجعل تنفيذنا مرنًا لتتناسب مع المتغيرات — لا نتمسك بخطة فشلت، بل نتعلم ونتعديل باستمرار.",
+              },
+              {
+                step: "04",
+                title: "القياس والإعلام",
+                desc: "نقيس الأثر بطرق علمية، ونشرع النتائج — حتى النتائج السلبية. لأن المعرفة الحقيقية تأتي من الصدق في الإبلاغ.",
+              },
+            ].map((item) => (
+              <motion.div key={item.step} variants={scrollFadeUp} whileHover={hoverLift.whileHover} className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-gold)]/20 text-[var(--brand-gold-light)] text-sm font-bold">
+                    {item.step}
+                  </span>
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                </div>
+                <p className="mt-4 text-sm leading-[1.95] text-white/60">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          الشفافية — وعد لا تكرار
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-start gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20">
+            <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+              <SectionLabel>الشفافية</SectionLabel>
+              <h2 className="mb-4 text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+                تبرعك يصل أين يجب أن يصل.
+              </h2>
+              <p className="mt-6 text-sm leading-[2] text-[var(--muted-foreground)]">
+                لا نخفي شيئًا. كل ريال يُنفق له وثيقة، وكل مشروع له مسار واضح. الشفافية ليست خيارًا أو ترفًا إداريًا — إنها جزء من هويتنا المؤسسية ومسؤوليتنا تجاه من وثق بنا.
+              </p>
+              <p className="mt-4 text-sm leading-[2] text-[var(--muted-foreground)]">
+                ننشر تقاريرنا بشكل دوري، ونشارك بيانات الأثر مع شركائنا والمجتمع. لا نخجل من أخطائنا — نتعلم منها ونعلن عنها لأن الثقة تُبنى على الصدق لا الكمال.
+              </p>
+              <div className="mt-8">
+                <Button onClick={() => go("transparency")} variant="outline" icon={<ArrowLeft className="h-4 w-4" />} className="rounded-2xl">
+                  اطلع على تقاريرنا
+                </Button>
               </div>
             </motion.div>
-          </div>
-        </section>
 
-        <section className="bg-[var(--brand-gold-pale)] py-20 sm:py-24">
-          <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-10">
-            <div className="rounded-[28px] border border-[var(--brand-green)]/10 bg-[var(--brand-gold-pale)] p-7 shadow-sm sm:p-10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <SectionLabel>شفافية عملية</SectionLabel>
-                  <h2 className="text-2xl font-extrabold text-[var(--brand-green)] sm:text-3xl">
-                    تبرعك يتحول إلى خطوات واضحة
-                  </h2>
-                  <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-                    ١٠٠٪ من تبرعك يصل مباشرة للميدان — لا مصاريف إدارية خفية
-                  </p>
-                </div>
-                <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--brand-green)] text-[var(--brand-gold-light)]">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-              </div>
-              <div className="mt-9 space-y-6">
-                {[
-                  ["01", "نحدد الاحتياج", "دراسة ميدانية شاملة وشراكة وثيقة مع المجتمع المحلي"],
-                  ["02", "ننفّذ بوضوح", "فريق متخصص يتابع كل مشروع بمؤشرات قابلة للقياس"],
-                  ["03", "نُشارك الأثر", "تقارير مالية وإدارية تصل إلى بيتك — لترى أين ذهب كل ريال"],
-                ].map(([number, title, text]) => (
-                  <div key={number} className="flex gap-4">
-                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--brand-green-pale)] text-xs font-extrabold text-[var(--brand-green)]">
-                      {number}
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-[var(--brand-green)]">{title}</h3>
-                      <p className="mt-1 text-xs leading-6 text-[var(--muted-foreground)]">
-                        {text}
-                      </p>
-                    </div>
-                    <Check className="mr-auto mt-1 h-4 w-4 text-[var(--brand-green-light)]" />
-                  </div>
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={() => go("transparency")}
-                className="mt-9 flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--brand-green)]/15 py-3 text-sm font-bold text-[var(--brand-green)] transition hover:bg-[var(--brand-green-pale)]"
-              >
-                <span>شاهد تقارير الشفافية</span>
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-            </div>
-            <div>
-              <SectionLabel>إيماننا</SectionLabel>
-              <blockquote className="text-3xl font-extrabold leading-[1.5] text-[var(--brand-green)] sm:text-4xl">
+            <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+              <blockquote className="border-r-2 border-[var(--brand-gold)]/40 pr-6 text-xl font-bold leading-[1.8] text-[var(--brand-green)]">
                 "أفضل العطاء ما ترك في حياة الناس قدرةً جديدة."
               </blockquote>
-              <p className="mt-6 max-w-md text-sm leading-7 text-[var(--muted-foreground)]">
-                لا نكتفي بعبور الأزمة. نبني قدرة المجتمع على الاعتماد على الذات — حتى ن_geo الاعتماد عن كرمك.
+              <p className="mt-6 text-sm leading-[2] text-[var(--muted-foreground)]">
+                لا نكتفي بعبور الأزمة. نبني قدرة المجتمع على الاعتماد على الذات — حتى نصل إلى اليوم الذي لا نكون فيه مطلوبين فيه. هذا هو الهدف الحقيقي للعمل الإنساني المسؤول.
               </p>
-              <div className="mt-8 flex items-center gap-3">
-                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--brand-green)] text-[var(--brand-gold-light)]">
-                  <Heart className="h-5 w-5" fill="currentColor" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-[var(--brand-green)]">رحماء بينهم</p>
-                  <p className="text-xs text-[var(--muted-foreground)]">رحمةٌ تُرى في العمل</p>
-                </div>
-              </div>
-            </div>
+              <p className="mt-4 text-sm leading-[2] text-[var(--muted-foreground)]">
+                كل مشروع نبتكره يمر بثلاث مراحل: بناء الثقة، بناء القدرة، ثم الانسحاب المسؤول. لا نكون أبطالًا — نكون شركاء يمكّنون المجتمع من أن يكون بطل قصته بنفسه.
+              </p>
+            </motion.div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="relative overflow-hidden bg-[var(--brand-green)] px-5 py-20 text-white sm:px-8 lg:px-10 lg:py-24">
-          <div
-            className="absolute inset-y-0 left-0 w-1/2 opacity-15"
-            style={{
-              backgroundImage: "var(--pattern-andalusian-star)",
-              backgroundSize: "140px 140px",
-            }}
-          />
-          <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
-            <div className="max-w-2xl">
-              <SectionLabel light>الخطوة التالية لك</SectionLabel>
-              <h2 className="text-3xl font-extrabold leading-[1.35] sm:text-5xl">
-                اجعل عطاؤك بابًا <span className="text-[var(--brand-gold-light)]">لأملٍ جديد.</span>
-              </h2>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-white/65 sm:text-base">
-                تبرعك ليس رقمًا في سجل؛ إنه ماءٌ يصل، وطفلٌ يتعلم، وأسرةٌ تستعيد قدرتها على الوقوف. كل ٥٬٠٠٠ ريال تطعم عائلة لأسبوع كامل.
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <PillButton onClick={() => go("donate")} variant="primary" icon={HandHeart}>
+      {/* ═══════════════════════════════════════════════════════════
+          أثرنا — كيف نحول الكلام إلى أفعال
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>الأثر</SectionLabel>
+            <h2 className="mb-4 max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              لا نعد بعدد المستفيدين — نعد بجودة الأثر.
+            </h2>
+          </motion.div>
+
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-14 grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                icon: Heart,
+                title: "أثر اجتماعي",
+                desc: "مجتمعات أكثر قدرة على التعامل مع التحديات. أسر تنتقل من الاعتماد على المساعدات إلى الإنتاج والمشاركة الفعالة. أيتام يحصلون على فرصة حقيقية للتعلم والنمو.",
+              },
+              {
+                icon: TrendingUp,
+                title: "أثر اقتصادي",
+                desc: "مشاريع حقيقية تُنشأ عبر تمكين الأسر من الدخل المستدام. ماكينات خياطة وقوارب صيد ومواشي تحوّل الأسر من المتلقين إلى المنتجين. لا نريد اعتمادًا — بل حرية.",
+              },
+              {
+                icon: Award,
+                title: "أثر مؤسسي",
+                desc: "منظمات محلية قادرة على الاستمرار والتطور. نعمل مع الشركاء المحليين لبناء مؤسسات تستمر العمل لسنوات قادمة. كل مشروع يترك نظامًا يعمل دون اعتماد على الحضور الخارجي.",
+              },
+            ].map((item) => (
+              <motion.div key={item.title} variants={scrollFadeUp} whileHover={hoverLift.whileHover} className="rounded-2xl bg-[var(--card)] p-6 sm:p-8 border border-[var(--brand-green)]/8 shadow-md transition-shadow hover:shadow-lg">
+                <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                  <item.icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-[var(--brand-green)]">{item.title}</h3>
+                <p className="mt-4 text-sm leading-[1.95] text-[var(--muted-foreground)]">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          دعوة للعمل — بسيطة وصريحة وعميقة
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--brand-green)] py-24 text-white sm:py-32">
+        <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel light>خطوة جديدة</SectionLabel>
+            <h2 className="mb-4 text-3xl font-bold leading-[1.4] sm:text-5xl">
+              اجعل عطاؤك{" "}
+              <span className="text-[var(--brand-gold-light)]">بداية حكمة.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-sm leading-[2] text-white/55 sm:text-base">
+              التبرع ليس نهاية المعاملة — إنه بداية علاقة. نأخذك معنا في الرحلة، ونشاركك الأثر
+              خطوة بخطوة. لا نريد أنك دفعت ورحلت — بل أنك شريك في قصة أثر حقيقي.
+            </p>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <Button onClick={() => go("donate")} variant="gold" icon={<HandHeart className="h-4 w-4" />} className="rounded-2xl shadow-[0_14px_30px_rgba(var(--brand-gold-rgb),.24)]">
                 تبرع الآن
-              </PillButton>
-              <PillButton onClick={() => go("volunteer")} variant="light" icon={Users}>
-                كن جزءًا من الفريق
-              </PillButton>
+              </Button>
+              <Button onClick={() => go("volunteer")} variant="outline" icon={<Heart className="h-4 w-4" />} className="rounded-2xl bg-[var(--card)] shadow-[0_14px_30px_rgba(var(--foreground-rgb),.14)]">
+                كن جزءًا من الرحلة
+              </Button>
             </div>
-          </div>
-        </section>
+          </motion.div>
+        </div>
+      </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-24">
-          <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr] lg:items-center">
-            <div>
-              <SectionLabel>نحن قريبون منك</SectionLabel>
-              <h2 className="text-3xl font-extrabold text-[var(--brand-green)] sm:text-4xl">
-                فريقنا يرد خلال ٢٤ ساعة
-              </h2>
-              <p className="mt-5 max-w-lg text-sm leading-7 text-[var(--muted-foreground)]">
-                سواء كنت ترغب في التبرع، أو الشراكة، أو التطوع — نحن هنا لمساعدتك. تواصل معنا وسنعود إليك فورًا.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <PillButton onClick={() => go("contact")} variant="outline" icon={MessageCircle}>
-                  تواصل مع الفريق
-                </PillButton>
-                <a
-                  href="https://wa.me/967780777007"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-12 items-center justify-center gap-3 rounded-2xl border border-[var(--success)]/25 bg-[var(--brand-green-pale)] px-6 text-sm font-bold text-[var(--brand-green-light)] transition hover:bg-[var(--brand-green-pale)]"
-                >
-                  <span>واتساب مباشر</span>
-                  <MessageCircle className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-white p-4 shadow-sm">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs text-[var(--muted-foreground)]">المكتب الرئيسي</p>
-                  <p className="mt-1 text-sm font-bold text-[var(--brand-green)]">
-                    صنعاء، الجمهورية اليمنية
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-white p-4 shadow-sm">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-gold-pale)] text-[var(--brand-gold-dark)]">
-                  <WalletCards className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs text-[var(--muted-foreground)]">للاستفسارات والتبرع</p>
-                  <p dir="ltr" className="mt-1 text-sm font-bold text-[var(--brand-green)]">
-                    +967 780 777 007
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+      {/* ═══════════════════════════════════════════════════════════
+          التواصل — مباشر وواضح
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>تواصل</SectionLabel>
+            <h2 className="mb-4 text-3xl font-bold text-[var(--brand-green)] sm:text-4xl">
+              فريقنا جاهز للاستماع.
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-[2] text-[var(--muted-foreground)]">
+              سواء كنت ترغب في التبرع، أو الشراكة، أو التطوع — أو حتى لديك سؤال فلسفي عن العمل الإنساني.
+              نؤمن بأن كل سؤال هو بداية تعلم، ونرحب به.
+            </p>
+          </motion.div>
 
-      <button
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="mt-14 flex flex-wrap gap-3">
+            <Button onClick={() => go("contact")} variant="outline" icon={<MessageCircle className="h-4 w-4" />} className="rounded-2xl">
+              تواصل مع الفريق
+            </Button>
+            <motion.a
+              href="https://wa.me/967780777007"
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex min-h-12 items-center justify-center gap-3 rounded-2xl border border-[var(--brand-green)]/15 bg-[var(--card)] px-6 text-sm font-bold text-[var(--brand-green)] transition hover:bg-[var(--brand-green-pale)]"
+            >
+              <span>واتساب مباشر</span>
+              <MessageCircle className="h-4 w-4" />
+            </motion.a>
+          </motion.div>
+
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-14 grid gap-6 sm:grid-cols-2">
+            <motion.div variants={scrollFadeUp} className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-6 sm:p-8">
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
+                <Landmark className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-xs text-[var(--muted-foreground)]">المكتب الرئيسي</p>
+                <p className="mt-1 text-sm font-bold text-[var(--brand-green)]">صنعاء — شارع الزبيري، الجمهورية اليمنية</p>
+              </div>
+            </motion.div>
+              <motion.div variants={scrollFadeUp} className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-6 sm:p-8">
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-[var(--brand-gold-pale)] text-[var(--brand-gold-dark)]">
+                <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-xs text-[var(--muted-foreground)]">للاستفسارات</p>
+                <p dir="ltr" className="mt-1 text-sm font-bold text-[var(--brand-green)]">+967 780 777 007</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          مشاركة اجتماعية — اجعل الخير ينتشر
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="bg-[var(--secondary)] py-24 sm:py-32 bg-islamic-arabesque">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
+            <SectionLabel>انشر الخير</SectionLabel>
+            <h2 className="mb-4 text-3xl font-bold text-[var(--brand-green)] sm:text-4xl">
+              شارك الحملة واحصل على أجر مضاعف
+            </h2>
+          </motion.div>
+          <div className="mt-14">
+            <ViralShare />
+          </div>
+        </div>
+      </section>
+
+      {/* Scroll to top */}
+      <motion.button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="العودة إلى الأعلى"
-        className="fixed bottom-5 left-5 z-40 grid h-11 w-11 place-items-center rounded-full border border-[var(--brand-green)]/15 bg-white/90 text-[var(--brand-green)] shadow-xl backdrop-blur-md transition hover:-translate-y-1 hover:bg-[var(--brand-green)] hover:text-white"
+        whileHover={{ y: -3, scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-5 left-5 z-40 grid h-11 w-11 place-items-center rounded-full border border-[var(--brand-green)]/15 bg-[var(--card)]/90 text-[var(--brand-green)] shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-[var(--brand-green)] hover:text-white focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
       >
-        <MoveUpLeft className="h-4 w-4" />
-      </button>
+        <MoveUpLeft className="h-4 w-4" aria-hidden="true" />
+      </motion.button>
     </div>
   );
 }
 
 export default HomePage;
+

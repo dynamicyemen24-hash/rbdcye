@@ -53,6 +53,13 @@ import AdminDashboardExtras from "./AdminDashboardExtras";
 import NotificationsPanel from "./NotificationsPanel";
 import { useToast, useConfirm } from "./Toast";
 import SettingsPage from "@/features/admin/pages/SettingsPage";
+import { ProjectManager } from "./admin/ProjectManager";
+import { DashboardWidgets } from '../components/admin/DashboardWidgets';
+import SmartAlerts from '../components/admin/SmartAlerts';
+import { Pagination } from '../components/admin/Pagination';
+import { ExportButton } from '../components/admin/ExportButton';
+import { realAnalyticsService } from '@/services/admin/real-analytics.service';
+import { RequestsDashboard } from './admin/RequestsDashboard';
 
 // ============================================================
 // استيراد الخدمات (Services) المتصلة بـ Supabase/LocalStorage
@@ -89,10 +96,10 @@ function Modal({
         aria-hidden="true"
       />
       <div
-        className={`relative bg-white rounded-2xl p-6 w-full ${widthMap[size]} shadow-2xl max-h-[90vh] overflow-y-auto`}
+        className={`relative bg-[var(--card)] rounded-2xl p-6 w-full ${widthMap[size]} shadow-2xl max-h-[90vh] overflow-y-auto`}
         style={{ direction: "rtl" }}
       >
-        <div className="flex items-center justify-between mb-5 sticky top-0 bg-white pb-3 border-b border-[var(--border)] z-10">
+        <div className="flex items-center justify-between mb-5 sticky top-0 bg-[var(--card)] pb-3 border-b border-[var(--border)] z-10">
           <h3 style={{ fontWeight: 700, fontSize: "1rem" }}>{title}</h3>
           <button
             onClick={onClose}
@@ -167,7 +174,7 @@ function StatCard({
     <Wrapper
       type={onClick ? "button" : undefined}
       onClick={onClick}
-      className={`bg-white rounded-xl p-5 border border-[var(--border)] ${onClick ? "cursor-pointer hover:shadow-md hover:border-[var(--brand-green)]/40" : ""} transition-all`}
+      className={`bg-[var(--card)] rounded-xl p-5 border border-[var(--border)] ${onClick ? "cursor-pointer hover:shadow-md hover:border-[var(--brand-green)]/40" : ""} transition-all`}
       style={onClick ? { background: "transparent", border: "none" } : undefined}
     >
       <div className="flex items-start justify-between mb-3">
@@ -220,7 +227,7 @@ function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder || "بحث..."}
-        className="w-64 pr-9 pl-4 py-2.5 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] transition-colors"
+                className="w-64 pr-9 pl-4 py-2.5 border border-[var(--border)] rounded-xl bg-[var(--card)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] transition-colors"
         style={{ fontSize: "0.82rem" }}
         aria-label={placeholder || "بحث"}
       />
@@ -295,7 +302,7 @@ function DataTable({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-[var(--border)] overflow-hidden">
+    <div className="bg-[var(--card)] rounded-xl border border-[var(--border)] overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
@@ -430,7 +437,7 @@ function GenericForm({
               onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
               required={field.required}
               rows={4}
-              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-white transition-colors"
+              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-[var(--card)] transition-colors"
               style={{ fontSize: "0.85rem", resize: "vertical" }}
             />
           </div>
@@ -446,7 +453,7 @@ function GenericForm({
               value={form[field.key] || ""}
               onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
               required={field.required}
-              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white transition-colors"
+              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)] transition-colors"
               style={{ fontSize: "0.85rem" }}
             >
               <option value="">اختر...</option>
@@ -471,7 +478,7 @@ function GenericForm({
               onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
               required={field.required}
               placeholder={field.label}
-              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-white transition-colors"
+              className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-[var(--card)] transition-colors"
               style={{ fontSize: "0.85rem" }}
             />
           </div>
@@ -546,7 +553,7 @@ function NewsForm({
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           required
-          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-white"
+          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 focus:border-[var(--brand-green)] bg-[var(--card)]"
           style={{ fontSize: "0.85rem" }}
         />
       </div>
@@ -563,7 +570,7 @@ function NewsForm({
           rows={5}
           value={form.content}
           onChange={(e) => setForm({ ...form, content: e.target.value })}
-          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
           style={{ fontSize: "0.85rem", resize: "vertical" }}
         />
       </div>
@@ -580,7 +587,7 @@ function NewsForm({
           rows={3}
           value={form.excerpt}
           onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
           style={{ fontSize: "0.85rem", resize: "vertical" }}
         />
       </div>
@@ -597,7 +604,7 @@ function NewsForm({
             id="news-category"
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           >
             <option value="">اختر...</option>
@@ -621,7 +628,7 @@ function NewsForm({
             id="news-status"
             value={form.status}
             onChange={(e) => setForm({ ...form, status: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           >
             <option value="PUBLISHED">منشور</option>
@@ -645,7 +652,7 @@ function NewsForm({
             value={form.image}
             onChange={(e) => setForm({ ...form, image: e.target.value })}
             placeholder="https://..."
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -662,7 +669,7 @@ function NewsForm({
             type="date"
             value={form.date}
             onChange={(e) => setForm({ ...form, date: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -681,7 +688,7 @@ function NewsForm({
           value={form.tags}
           onChange={(e) => setForm({ ...form, tags: e.target.value })}
           placeholder="إغاثة, تعليم, تنمية"
-          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+          className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
           style={{ fontSize: "0.85rem" }}
         />
       </div>
@@ -747,7 +754,7 @@ function DonationForm({
             value={form.donor}
             onChange={(e) => setForm({ ...form, donor: e.target.value })}
             required
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -766,7 +773,7 @@ function DonationForm({
             onChange={(e) => setForm({ ...form, amount: e.target.value })}
             required
             min="1"
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -785,7 +792,7 @@ function DonationForm({
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -802,7 +809,7 @@ function DonationForm({
             type="tel"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -821,7 +828,7 @@ function DonationForm({
             type="text"
             value={form.project}
             onChange={(e) => setForm({ ...form, project: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           />
         </div>
@@ -837,7 +844,7 @@ function DonationForm({
             id="donor-method"
             value={form.method}
             onChange={(e) => setForm({ ...form, method: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           >
             <option value="card">بطاقة ائتمان</option>
@@ -859,7 +866,7 @@ function DonationForm({
             id="donor-type"
             value={form.type}
             onChange={(e) => setForm({ ...form, type: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           >
             <option value="once">تبرع لمرة واحدة</option>
@@ -879,7 +886,7 @@ function DonationForm({
             id="donor-status"
             value={form.status}
             onChange={(e) => setForm({ ...form, status: e.target.value })}
-            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white"
+            className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)]"
             style={{ fontSize: "0.85rem" }}
           >
             <option value="pending">معلق</option>
@@ -966,7 +973,7 @@ function GenericSection({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={searchPlaceholder || `بحث في ${title}...`}
-            className="px-4 py-2.5 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 w-64"
+                className="px-4 py-2.5 border border-[var(--border)] rounded-xl bg-[var(--card)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 w-64"
             style={{ fontSize: "0.82rem" }}
           />
           <span className="text-[var(--muted-foreground)]" style={{ fontSize: "0.8rem" }}>
@@ -1069,196 +1076,8 @@ function DashboardOverview({ onNavigate }: { onNavigate: (id: string) => void })
 
   return (
     <div className="space-y-6">
-      {/* البطاقات الإحصائية */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="إجمالي المستفيدين"
-          value={metrics.totalBeneficiaries.toLocaleString("ar-SA")}
-          trend="+١٢٪"
-          icon={Users}
-          color="var(--brand-green)"
-        />
-        <StatCard
-          label="المشاريع النشطة"
-          value={metrics.activeProjects}
-          trend="+٣"
-          icon={FolderOpen}
-          color="var(--brand-gold)"
-        />
-        <StatCard
-          label="التبرعات"
-          value={`${metrics.totalDonations.toLocaleString("ar-SA")} ر`}
-          trend="+١٢.٥٪"
-          icon={DollarSign}
-          color="#2563EB"
-        />
-        <StatCard
-          label="الشركاء"
-          value={metrics.totalPartners}
-          trend="+٢"
-          icon={Handshake}
-          color="#7C3AED"
-        />
-      </div>
-
-      {/* الصف الثاني - إحصائيات إضافية */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="المتطوعون النشطون"
-          value={metrics.totalVolunteers}
-          icon={Heart}
-          color="#E74C3C"
-        />
-        <StatCard
-          label="الرسائل الجديدة"
-          value={metrics.newMessages}
-          icon={MessageSquare}
-          color="var(--brand-gold)"
-        />
-        <StatCard
-          label="الأخبار المنشورة"
-          value={metrics.newsCount}
-          icon={Newspaper}
-          color="#2563EB"
-        />
-        <StatCard label="قصص النجاح" value={metrics.storiesCount} icon={Star} color="#7C3AED" />
-      </div>
-
-      {/* المخططات البيانية */}
-      {charts && (
-        <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
-              <h3
-                className="text-[var(--foreground)] mb-4"
-                style={{ fontSize: "0.9rem", fontWeight: 700 }}
-              >
-                التبرعات الشهرية
-              </h3>
-              <div className="space-y-2">
-                {charts.donationsOverYear.map((d: any, i: number) => {
-                  const maxAmount = Math.max(
-                    ...charts.donationsOverYear.map((x: any) => x.amount),
-                    1
-                  );
-                  const width = (d.amount / maxAmount) * 100;
-                  return (
-                    <div key={d.month} className="flex items-center gap-2">
-                      <span
-                        style={{
-                          fontSize: "0.7rem",
-                          fontWeight: 600,
-                          minWidth: "40px",
-                          color: "var(--muted-foreground)",
-                        }}
-                      >
-                        {d.month}
-                      </span>
-                      <div className="flex-1 h-5 bg-[var(--muted)] rounded-full overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-[var(--brand-green)] transition-all"
-                          style={{ width: `${width}%` }}
-                        />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: "0.7rem",
-                          fontWeight: 700,
-                          minWidth: "50px",
-                          textAlign: "left",
-                          color: "var(--brand-green)",
-                        }}
-                      >
-                        {d.amount.toLocaleString("ar-SA")}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
-              <h3
-                className="text-[var(--foreground)] mb-4"
-                style={{ fontSize: "0.9rem", fontWeight: 700 }}
-              >
-                المشاريع حسب التصنيف
-              </h3>
-              <div className="space-y-3">
-                {charts.projectsByCategory.map((p: any, i: number) => {
-                  const totalProjects = charts.projectsByCategory.reduce(
-                    (sum: number, x: any) => sum + x.count,
-                    0
-                  );
-                  const percentage = totalProjects > 0 ? (p.count / totalProjects) * 100 : 0;
-                  const colors = [
-                    "var(--brand-green)",
-                    "var(--brand-gold)",
-                    "#2563EB",
-                    "#7C3AED",
-                    "#E74C3C",
-                    "#6B7280",
-                  ];
-                  return (
-                    <div key={p.category} className="flex items-center gap-2">
-                      <div
-                        className="w-3 h-3 rounded-full flex-shrink-0"
-                        style={{ background: colors[i % colors.length] }}
-                      />
-                      <span style={{ fontSize: "0.78rem", fontWeight: 600, flex: 1 }}>
-                        {p.category}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "0.72rem",
-                          fontWeight: 700,
-                          color: "var(--muted-foreground)",
-                        }}
-                      >
-                        {p.count}
-                      </span>
-                      <span style={{ fontSize: "0.7rem", color: "var(--muted-foreground)" }}>
-                        ({percentage.toFixed(1)}%)
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* مكونات إضافية احترافية */}
-      <div>
-        <AdminDashboardExtras />
-      </div>
-
-      {/* الوصول السريع */}
-      <div className="bg-white rounded-xl p-5 border border-[var(--border)]">
-        <h3
-          className="text-[var(--foreground)] mb-4"
-          style={{ fontSize: "0.9rem", fontWeight: 700 }}
-        >
-          الوصول السريع
-        </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {SIDEBAR_ITEMS.slice(1).map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
-                className="flex items-center gap-2 p-3 bg-white rounded-xl border border-[var(--border)] hover:border-[var(--brand-green)]/40 hover:shadow-sm transition-all text-right"
-              >
-                <div className="w-8 h-8 rounded-lg bg-[var(--brand-green-pale)] flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-4 h-4 text-[var(--brand-green)]" />
-                </div>
-                <span style={{ fontSize: "0.78rem", fontWeight: 600 }}>{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      <SmartAlerts />
+      <DashboardWidgets />
     </div>
   );
 }
@@ -1277,6 +1096,7 @@ const SIDEBAR_ITEMS = [
   { id: "partners", label: "الشركاء", icon: Handshake },
   { id: "donations", label: "التبرعات", icon: DollarSign },
   { id: "requests", label: "طلبات التواصل", icon: MessageSquare },
+  { id: "beneficiary-requests", label: "طلبات المستفيدين", icon: FileText },
   { id: "volunteers", label: "المتطوعون", icon: Users },
   { id: "subscribers", label: "حسابات المشتركين", icon: UserCheck },
   { id: "users", label: "المستخدمين والصلاحيات", icon: Users },
@@ -1303,7 +1123,7 @@ function renderSelect(
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-white transition-colors"
+        className="w-full px-4 py-2.5 border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30 bg-[var(--card)] transition-colors"
         style={{ fontSize: "0.85rem" }}
       >
         {options.map((o) => (
@@ -1338,6 +1158,9 @@ export function AdminDashboard({
   const [donationsLoading, setDonationsLoading] = useState(true);
   const [donationSearch, setDonationSearch] = useState("");
   const [donationFilter, setDonationFilter] = useState("all");
+  const [donationsPage, setDonationsPage] = useState(1);
+  const DONATIONS_PER_PAGE = 25;
+  const donationsData = donations;
 
   const [requests, setRequests] = useState<any[]>([]);
   const [requestsLoading, setRequestsLoading] = useState(true);
@@ -2062,63 +1885,7 @@ export function AdminDashboard({
         );
 
       case "projects":
-        return (
-          <GenericSection
-            service={projectsService}
-            title="مشروع"
-            searchPlaceholder="بحث في المشاريع..."
-            emptyIcon={FolderOpen}
-            emptyTitle="لا توجد مشاريع"
-            emptyMessage="أضف مشروعاً جديداً"
-            columns={[
-              {
-                key: "title",
-                label: "المشروع",
-                render: (p: any) => <span style={{ fontWeight: 600 }}>{p.title}</span>,
-              },
-              { key: "category", label: "التصنيف" },
-              {
-                key: "status",
-                label: "الحالة",
-                render: (p: any) => <StatusBadge status={p.status} />,
-              },
-              {
-                key: "progress",
-                label: "التقدم",
-                render: (p: any) => (
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 h-1.5 bg-[var(--muted)] rounded-full overflow-hidden max-w-20">
-                      <div
-                        className="h-full rounded-full bg-[var(--brand-green)]"
-                        style={{ width: `${p.progress}%` }}
-                      />
-                    </div>
-                    <span style={{ fontSize: "0.72rem", fontWeight: 700 }}>{p.progress}٪</span>
-                  </div>
-                ),
-              },
-              { key: "budget", label: "الميزانية" },
-            ]}
-            formFields={[
-              { key: "title", label: "العنوان", required: true },
-              { key: "category", label: "التصنيف", required: true },
-              { key: "description", label: "الوصف", multiline: true },
-              { key: "budget", label: "الميزانية" },
-              { key: "progress", label: "نسبة التقدم", type: "number" },
-              {
-                key: "status",
-                label: "الحالة",
-                options: [
-                  { value: "active", label: "نشط" },
-                  { value: "completed", label: "مكتمل" },
-                  { value: "pending", label: "قيد الانتظار" },
-                ],
-              },
-              { key: "start_date", label: "تاريخ البداية", type: "date" },
-              { key: "end_date", label: "تاريخ النهاية", type: "date" },
-            ]}
-          />
-        );
+        return <ProjectManager />;
 
       case "reports":
         return (
@@ -2148,7 +1915,7 @@ export function AdminDashboard({
               }}
               emptyIcon={FileText}
               emptyTitle="لا توجد تقارير"
-              emptyMessage="قم بإضافة أول تقرير للمؤسسة"
+              emptyMessage="قم بإضافة أول تقرير للحملة"
             />
 
             <Modal
@@ -2221,13 +1988,13 @@ export function AdminDashboard({
                 <RefreshCw className="w-8 h-8 animate-spin text-[var(--brand-green)]" />
               </div>
             ) : media.length === 0 ? (
-              <EmptyState icon={Image} title="لا توجد وسائط" message="قم برفع أول وسيط للمؤسسة" />
+              <EmptyState icon={Image} title="لا توجد وسائط" message="قم برفع أول وسيط للحملة" />
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {media.map((m) => (
                   <div
                     key={m.id}
-                    className="bg-white rounded-xl border border-[var(--border)] overflow-hidden hover:shadow-md transition-shadow group"
+                    className="bg-[var(--card)] rounded-xl border border-[var(--border)] overflow-hidden hover:shadow-md transition-shadow group"
                   >
                     <div className="relative h-36 overflow-hidden">
                       <img
@@ -2384,7 +2151,7 @@ export function AdminDashboard({
                 <select
                   value={donationFilter}
                   onChange={(e) => setDonationFilter(e.target.value)}
-                  className="px-3 py-2.5 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30"
+                  className="px-3 py-2.5 border border-[var(--border)] rounded-xl bg-[var(--card)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/30"
                   style={{ fontSize: "0.82rem" }}
                 >
                   <option value="all">جميع الحالات</option>
@@ -2404,6 +2171,19 @@ export function AdminDashboard({
                     .toLocaleString("ar-SA")}{" "}
                   ر.ي
                 </div>
+                <ExportButton 
+                  data={donationsData} 
+                  columns={[
+                    { key: 'donor_name', label: 'المتبرع' },
+                    { key: 'amount', label: 'المبلغ' },
+                    { key: 'currency', label: 'العملة' },
+                    { key: 'donation_type', label: 'النوع' },
+                    { key: 'payment_status', label: 'الحالة' },
+                    { key: 'created_at', label: 'التاريخ' },
+                  ]}
+                  filename="donations"
+                  title="تقرير التبرعات"
+                />
                 <button
                   onClick={() => setShowAddModal(true)}
                   className="flex items-center gap-2 px-4 py-2 bg-[var(--brand-green)] text-white rounded-lg hover:bg-[var(--brand-green-light)] transition-colors"
@@ -2421,6 +2201,13 @@ export function AdminDashboard({
               emptyIcon={DollarSign}
               emptyTitle="لا توجد تبرعات"
               emptyMessage="لم يتم تسجيل أي تبرعات بعد"
+            />
+            <Pagination
+              currentPage={donationsPage}
+              totalPages={Math.ceil((filteredDonations?.length || 0) / DONATIONS_PER_PAGE)}
+              onPageChange={setDonationsPage}
+              totalItems={filteredDonations?.length || 0}
+              pageSize={DONATIONS_PER_PAGE}
             />
 
             <Modal
@@ -2471,6 +2258,9 @@ export function AdminDashboard({
             />
           </div>
         );
+
+      case "beneficiary-requests":
+        return <RequestsDashboard />;
 
       case "volunteers":
         return (
@@ -2690,7 +2480,7 @@ export function AdminDashboard({
       >
         {/* Sidebar */}
         <aside
-          className={`flex-shrink-0 transition-all duration-300 flex flex-col border-l border-[var(--border)] bg-white ${sidebarCollapsed ? "w-16" : "w-56"}`}
+          className={`flex-shrink-0 transition-all duration-300 flex flex-col border-l border-[var(--border)] bg-[var(--card)] ${sidebarCollapsed ? "w-16" : "w-56"}`}
         >
           <div className="p-4 border-b border-[var(--border)] flex items-center justify-between">
             {!sidebarCollapsed && (
@@ -2745,7 +2535,7 @@ export function AdminDashboard({
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-white sticky top-0 z-20">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-[var(--card)] sticky top-0 z-20">
             <div>
               <h2
                 className="text-[var(--foreground)]"
@@ -2755,7 +2545,7 @@ export function AdminDashboard({
               </h2>
               <div className="text-[var(--muted-foreground)]" style={{ fontSize: "0.72rem" }}>
                 {activeSection === "dashboard"
-                  ? "نظرة عامة على أداء المؤسسة"
+                  ? "نظرة عامة على أداء الحملة"
                   : `إدارة ${SIDEBAR_ITEMS.find((s) => s.id === activeSection)?.label}`}
               </div>
             </div>

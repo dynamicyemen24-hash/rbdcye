@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Sun, Moon, Laptop, Eye, Check } from "lucide-react";
-import { useTheme, ThemeMode } from "@/app/context/ThemeContext";
+import { Sun, Moon, Laptop, Eye, Check, SunMedium, Contrast, Type, Minimize2, Maximize2 } from "lucide-react";
+import { useTheme, ThemeMode, DisplayMode } from "@/app/context/ThemeContext";
 
 interface ThemeToggleProps {
   className?: string;
@@ -12,7 +12,19 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className = "",
   variant = "dropdown",
 }) => {
-  const { theme, setTheme, isDark, isHighContrast, toggleHighContrast } = useTheme();
+  const { 
+    theme, 
+    setTheme, 
+    isDark, 
+    isHighContrast, 
+    toggleHighContrast,
+    displayMode,
+    setDisplayMode,
+    fontSize,
+    setFontSize,
+    reducedMotion,
+    toggleReducedMotion,
+  } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -46,6 +58,16 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     { mode: "light", label: "وضع نهاري (فاتح)", icon: Sun },
     { mode: "dark", label: "وضع ليلي (داكن)", icon: Moon },
     { mode: "system", label: "تلقائي (حسب الجهاز)", icon: Laptop },
+  ];
+
+  const displayModeOptions: {
+    mode: DisplayMode;
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[] = [
+    { mode: "default", label: "وضع افتراضي", icon: SunMedium },
+    { mode: "sepia", label: "وضع القراءة (سيبيا)", icon: Type },
+    { mode: "contrast", label: "تباين عالي", icon: Contrast },
   ];
 
   if (variant === "compact") {
@@ -103,13 +125,14 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl z-50 p-2 space-y-1 text-slate-800 dark:text-slate-100 text-xs font-cairo"
+            className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl z-50 p-2 space-y-1 text-slate-800 dark:text-slate-100 text-xs font-cairo"
             role="menu"
             aria-orientation="vertical"
             aria-label="خيارات المظهر"
           >
+            {/* Theme Mode Section */}
             <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
-              اختر مظهر الموقع
+              وضع الألوان
             </div>
 
             {themeOptions.map((opt) => {
@@ -143,6 +166,90 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
             <div className="pt-1 border-t border-slate-100 dark:border-slate-800 my-1" />
 
+            {/* Display Mode Section */}
+            <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+              وضع العرض
+            </div>
+
+            {displayModeOptions.map((opt) => {
+              const Icon = opt.icon;
+              const isSelected = displayMode === opt.mode;
+
+              return (
+                <button
+                  key={opt.mode}
+                  role="menuitem"
+                  onClick={() => {
+                    setDisplayMode(opt.mode);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-colors cursor-pointer text-right font-medium ${
+                    isSelected
+                      ? "bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 font-bold"
+                      : "hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-200"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                    <span>{opt.label}</span>
+                  </div>
+                  {isSelected && (
+                    <Check className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                  )}
+                </button>
+              );
+            })}
+
+            <div className="pt-1 border-t border-slate-100 dark:border-slate-800 my-1" />
+
+            {/* Font Size Section */}
+            <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+              حجم الخط
+            </div>
+
+            <div className="px-3 py-2">
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <button
+                  role="menuitem"
+                  onClick={() => setFontSize(fontSize - 1)}
+                  disabled={fontSize <= 12}
+                  aria-label="تصغير الخط"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <Minimize2 className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-xs">أصغر</span>
+                </button>
+                <span className="flex-1 text-center text-sm font-bold text-slate-700 dark:text-slate-200">
+                  {fontSize}px
+                </span>
+                <button
+                  role="menuitem"
+                  onClick={() => setFontSize(fontSize + 1)}
+                  disabled={fontSize >= 24}
+                  aria-label="تكبير الخط"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <span className="text-xs">أكبر</span>
+                  <Maximize2 className="w-4 h-4" aria-hidden="true" />
+                </button>
+              </div>
+              <button
+                role="menuitem"
+                onClick={() => setFontSize(16)}
+                aria-label="إعادة تعيين حجم الخط"
+                className="w-full text-center text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+              >
+                إعادة التعيين (16px)
+              </button>
+            </div>
+
+            <div className="pt-1 border-t border-slate-100 dark:border-slate-800 my-1" />
+
+            {/* Accessibility Toggles */}
+            <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+              إمكانية الوصول
+            </div>
+
             {/* High Contrast Toggle */}
             <button
               role="menuitem"
@@ -167,6 +274,35 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
                 <div
                   className={`w-3 h-3 rounded-full bg-white transition-transform ${
                     isHighContrast ? "-translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Reduced Motion Toggle */}
+            <button
+              role="menuitem"
+              onClick={() => {
+                toggleReducedMotion();
+              }}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-colors cursor-pointer text-right font-medium ${
+                reducedMotion
+                  ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold"
+                  : "hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-200"
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <Contrast className="w-4 h-4 text-emerald-500 shrink-0" aria-hidden="true" />
+                <span>تقليل الحركة</span>
+              </div>
+              <div
+                className={`w-8 h-4 rounded-full transition-colors relative p-0.5 ${
+                  reducedMotion ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-700"
+                }`}
+              >
+                <div
+                  className={`w-3 h-3 rounded-full bg-white transition-transform ${
+                    reducedMotion ? "-translate-x-4" : "translate-x-0"
                   }`}
                 />
               </div>

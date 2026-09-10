@@ -209,7 +209,7 @@ class PaymentGatewayService {
         body: JSON.stringify({
           amount: request.amount * 100, // Convert to cents
           currency: request.currency.toLowerCase(),
-          description: request.description || "تبرع لمؤسسة رحماء بينهم",
+          description: request.description || "تبرع لحملة رحماء بينهم",
           metadata: {
             projectId: request.projectId,
             donorName: request.donorName,
@@ -272,7 +272,7 @@ class PaymentGatewayService {
       status: "pending",
       confirmationCode: `BNK_${base.transactionId}`,
       metadata: {
-        message: "يرجى التواصل مع المؤسسة للحصول على التفاصيل البنكية",
+        message: "يرجى التواصل مع الحملة للحصول على التفاصيل البنكية",
         contactEmail: "info@rbdcye.org",
       },
     };
@@ -287,7 +287,7 @@ class PaymentGatewayService {
       status: "pending",
       confirmationCode: `CSH_${base.transactionId}`,
       metadata: {
-        message: "يرجى التواصل مع المؤسسة لتنسيق استلام التبرع النقدي",
+        message: "يرجى التواصل مع الحملة لتنسيق استلام التبرع النقدي",
         contactEmail: "info@rbdcye.org",
       },
     };

@@ -179,7 +179,7 @@ const InlineVideoPlayer = memo(
           {isLoading && !hasError && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
               <div className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-16 h-16 border-4 border-[var(--brand-green)] border-t-transparent rounded-full animate-spin" />
                 <span className="text-white/70 text-sm">جاري تحميل الفيديو...</span>
               </div>
             </div>
@@ -188,8 +188,8 @@ const InlineVideoPlayer = memo(
           {/* حالة عدم الاتصال */}
           {isOffline && !hasError && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10 p-6">
-              <div className="w-20 h-20 rounded-full bg-amber-500/20 flex items-center justify-center mb-4">
-                <VolumeX className="w-10 h-10 text-amber-400" />
+              <div className="w-20 h-20 rounded-full bg-[var(--brand-gold)]/20 flex items-center justify-center mb-4">
+                <VolumeX className="w-10 h-10 text-[var(--brand-gold)]" />
               </div>
               <h4 className="text-white text-lg font-bold mb-2">لا يوجد اتصال بالإنترنت</h4>
               <p className="text-white/70 text-sm text-center mb-4">
@@ -204,7 +204,7 @@ const InlineVideoPlayer = memo(
                     videoRef.current.load();
                   }
                 }}
-                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-2 bg-[var(--brand-green)] hover:bg-[var(--brand-green-light)] text-white rounded-lg font-medium transition-colors"
               >
                 إعادة المحاولة
               </button>
@@ -214,8 +214,8 @@ const InlineVideoPlayer = memo(
           {/* حالة الخطأ - فشل تحميل الفيديو */}
           {hasError && !isOffline && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10 p-6">
-              <div className="w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
-                <X className="w-10 h-10 text-red-400" />
+              <div className="w-20 h-20 rounded-full bg-[var(--destructive)]/20 flex items-center justify-center mb-4">
+                <X className="w-10 h-10 text-[var(--destructive)]" />
               </div>
               <h4 className="text-white text-lg font-bold mb-2">تعذر تحميل الفيديو</h4>
               <p className="text-white/70 text-sm text-center mb-4">
@@ -233,7 +233,7 @@ const InlineVideoPlayer = memo(
                       videoRef.current.load();
                     }
                   }}
-                  className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+                  className="px-6 py-2 bg-[var(--brand-green)] hover:bg-[var(--brand-green-light)] text-white rounded-lg font-medium transition-colors"
                 >
                   إعادة المحاولة
                 </button>
@@ -289,7 +289,7 @@ const InlineVideoPlayer = memo(
                 >
                   <div
                     className="h-full rounded-full"
-                    style={{ width: `${progress}%`, backgroundColor: "#10B981" }}
+                    style={{ width: `${progress}%`, backgroundColor: "var(--brand-green)" }}
                   />
                 </button>
 
@@ -374,7 +374,7 @@ const InlineVideoPlayer = memo(
 
         {/* معلومات الفيديو */}
         {!isFullscreen && videoRef.current?.duration && (
-          <div className="p-6 bg-white dark:bg-gray-900">
+          <div className="p-6 bg-[var(--card)]">
             <p className="text-[var(--muted-foreground)] text-center">
               {title || "فيديو تعريفي لـ رحماء بينهم - إغاثة وتنمية"}
             </p>

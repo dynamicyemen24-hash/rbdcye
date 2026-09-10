@@ -2,7 +2,7 @@
   "id": "/",
   "name": "رحماء بينهم",
   "short_name": "رحماء بينهم",
-  "description": "منظمة إنسانية تنموية مستقلة مرخصة - إغاثة، تعليم، وتنمية مستدامة",
+  "description": "حملة إنسانية تنموية مستقلة مرخصة - إغاثة، تعليم، وتنمية مستدامة",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0F4C3A",
@@ -13,9 +13,7 @@
   "scope": "/",
   "categories": [
     "charity",
-    "nonprofit",
-    "education",
-    "humanitarian"
+    "social"
   ],
   "icons": [
     {
@@ -98,7 +96,7 @@
       ]
     },
     {
-      "name": "حاسبة الزكاة",
+      "name": "حساب الزكاة",
       "short_name": "الزكاة",
       "description": "احسب زكاة مالك بطريقة شرعية دقيقة",
       "url": "/zakat",
@@ -110,22 +108,10 @@
       ]
     },
     {
-      "name": "برامجنا",
-      "short_name": "البرامج",
-      "description": "اطلع على القطاعات والبرامج التنموية",
-      "url": "/programs",
-      "icons": [
-        {
-          "src": "/icons/pwa-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "تقارير الشفافية",
-      "short_name": "الشفافية",
-      "description": "تقارير الأثر والشفافية المالية للمؤسسة",
-      "url": "/transparency",
+      "name": "تواصل معنا",
+      "short_name": "تواصل",
+      "description": "تواصل مع حملة رحماء بينهم",
+      "url": "/contact",
       "icons": [
         {
           "src": "/icons/pwa-192x192.png",
@@ -135,14 +121,29 @@
     }
   ],
   "prefer_related_applications": false,
-  "translations": {
-    "ar": {
-      "name": "رحماء بينهم",
-      "short_name": "رحماء بينهم"
+  "handle_links": "preferred",
+  "launch_handler": { "client_mode": "navigate-existing" },
+  "edge_side_panel": { "preferred_width": 400 },
+  "screenshots": [
+    {
+      "src": "/og-image.svg",
+      "sizes": "1200x630",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "رحماء بينهم — الصفحة الرئيسية"
     },
-    "en": {
-      "name": "Rohmaaa Between",
-      "short_name": "Rohmaaa Between"
+    {
+      "src": "/icons/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "شاشة التطبيق"
     }
-  }
+  ],
+  "file_handlers": [
+    {
+      "action": "/donate",
+      "accept": { "text/plain": [".txt"] }
+    }
+  ]
 }

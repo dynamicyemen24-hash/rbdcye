@@ -382,14 +382,14 @@ async syncAll(): Promise<void> {
         await sanityClient.create({
           _type: "siteSettings",
           siteName: "رحماء بينهم",
-          description: "مؤسسة رحماء بينهم الخيرية",
+          description: "حملة رحماء بينهم الخيرية",
           contactInfo: {
             phone: "",
             email: "info@rahmaparabnahum.org",
           },
           seo: {
             metaTitle: "رحماء بينهم",
-            metaDescription: "مؤسسة إنسانية تنموية رائدة في اليمن",
+            metaDescription: "حملة إنسانية تنموية رائدة في اليمن",
           },
         });
         result.created++;

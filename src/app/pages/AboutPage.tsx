@@ -1,903 +1,458 @@
 // About Page - من نحن - الهوية الموحدة
 import { motion } from "motion/react";
 import {
-  Users,
-  Award,
-  Globe,
   Heart,
+  Globe,
+  Users,
   Target,
-  BookOpen,
-  HandHeart,
   Star,
   Shield,
   Sparkles,
   Quote,
   Compass,
-  TrendingUp,
-  Clock,
-  BadgeCheck,
-  Mail,
-  Phone,
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
+  Award,
   Calendar,
   CheckCircle2,
-  GitCommit,
-  Gem,
   Crown,
   Layers,
+  BadgeCheck,
+  Gem,
 } from "lucide-react";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PageHeader } from "@/app/components/PageHeader";
-import { StatsGrid } from "@/app/components/StatsGrid";
 import { useSEO } from "@/utils/seoAdvanced";
+import {
+  scrollFadeUp,
+  staggerContainer,
+  viewportOnce,
+  hoverLift,
+} from "@/utils/animations";
+
+function SectionLabel({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+  return (
+    <div
+      className={`mb-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.16em] ${light ? "text-[var(--brand-gold-light)]" : "text-[var(--brand-gold-dark)]"}`}
+    >
+      <span className="h-px w-8 bg-[var(--brand-gold)]" />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+// Use centralized scrollFadeUp and staggerContainer from @/utils/animations
 
 export default function AboutPage() {
   useSEO({
-    title: "من نحن - مؤسسة رحماء بينهم للإغاثة والتنمية",
+    title: "من نحن - حملة رحماء بينهم للإغاثة والتنمية",
     description:
-      "مؤسسة رحماء بينهم للإغاثة والتنمية باليمن؛ مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢. نعمل على صون كرامة الإنسان وصناعة الأثر المستدام.",
-    keywords: ["من نحن", "مؤسسة رحماء بينهم", "إغاثة اليمن", "تنمية", "ترخيص 482"],
+      "حملة رحماء بينهم للإغاثة والتنمية بالجمهورية اليمنية؛ حملة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢. انطلقت استجابةً للاحتياج الإنساني وتعمل على صون كرامة الإنسان وصناعة الأثر المستدام منذ ٢٠١٤م.",
+    keywords: ["من نحن", "حملة رحماء بينهم", "إغاثة اليمن", "تنمية", "ترخيص 482"],
     url: "https://rbdcye.org/about",
   });
 
-  const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const go = (page: string) => {
+    navigate(page === "home" ? "/" : `/${page}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const aboutText =
-    'مؤسسة "رحماء بينهم" للإغاثة والتنمية بالجمهورية اليمنية؛ مؤسسة إنسانية وتنموية مستقلة مرخصة رسمياً برقم (٤٨٢). انطلقت مسيرة عطائها استجابةً للاحتياج الإنساني ومعاناة المجتمع اليمني، وتسعى المؤسسة – بدعم شركاء الخير والعطاء – إلى صون حياة الإنسان وإغاثته وتنميته عبر برامج تعليمية وتنموية وإغاثية مستدامة، مستهدفةً الفئات الأكثر احتياجاً بروح الإخاء والمسؤولية التامة.';
+    'حملة "رحماء بينهم" للإغاثة والتنمية بالجمهورية اليمنية؛ حملة دعوية وإنسانية وتنموية مستقلة مرخصة رسمياً برقم (٤٨٢). انطلقت مسيرة عطائها استجابةً للاحتياج الإنساني ومعاناة المجتمع اليمني، وتسعى الحملة – بدعم شركاء الخير والعطاء – إلى صون حياة الإنسان وإغاثته وتنميته عبر برامج تعليمية وتنموية وإغاثية مستدامة، مستهدفةً الفئات الأكثر احتياجاً بروح الإخاء والمسؤولية التامة.';
 
-  const supervisorMessage = `إنه لمن دواعي سرورنا اليوم وبعد ما يقارب عشرة أعوام من العطاء المستمر والجهود الدؤوبة، وبما يتوافق مع رؤيتنا وأهدافنا، يطيب لنا أن نقف شاكرين لله تعالى، وممتنين لكل صاحب يد سخية وجهد مبارك رسمنا سويا بصمات شريفة وأثرا حميدا، مما جعل حملة رحماء بينهم تحقق نجاحات مبهرة في مجالات متنوعة على مساحات واسعة، عبر ما يزيد عقد من الزمن.\n\nفشكرًا لكل داعمٍ ومحسن، وشكرًا لكل عاملٍ وداعية، وشكرًا لكل من جعل العطاء هويته ورسالة حياته.`;
+  const supervisorMessage = `إنه لمن دواعي سرورنا اليوم وبعد ما يقارب عشرة أعوام من العطاء المستمر والجهود الدؤوبة، وبما يتوافق مع رؤيتنا وأهدافنا، يطيب لنا أن نقف شاكرين لله تعالى، وممتنين لكل صاحب يد سخية وجهد مبارك رسمنا سويا بصمات شريفة وأثرا حميدا، مما جعل حملة رحماء بينهم تحقق نجاحات مبهرة في مجالات متنوعة على مساحات واسعة، عبر ما يزيد عقد من الزمن.`;
+
+  const supervisorMessagePart2 = `فشكرًا لكل داعمٍ ومحسن، وشكرًا لكل عاملٍ وداعية، وشكرًا لكل من جعل العطاء هويته ورسالة حياته.`;
 
   const partnersText = `"إلى أولئك الأخفياء الأتقياء الأصفياء، والذين ما كان لنا أن نحقق شيئاً من مشاريعنا، مؤمنين أن ما تعلّم متعلّم ولا حفظ حافظ ولا طعِم جائع ولا ارتوى ظامئ ولا اكتسى عارٍ ولا ارتسمت على محيّا حزين بسمة وكُفّت عنه دمعة إلا بفضل الله ثم بفضل الراغبين فيما عند الكريم، مَن يرون أن إصلاح المسلمين والإحسان إليهم مطلباً ربانياً ومسؤولية مجتمعية واجباً قيمياً وأخلاقياً."`;
 
-  const handleSocialClick = (platform: string) => {
-    const urls: Record<string, string> = {
-      facebook: "https://facebook.com/rbdcye",
-      twitter: "https://twitter.com/rbdcye",
-      instagram: "https://instagram.com/rbdcye",
-      youtube: "https://youtube.com/@rbdcye",
-    };
-    window.open(urls[platform] || "/contact", "_blank");
-  };
-
-  const handleQuickLink = (href: string) => {
-    navigate("/" + href);
-  };
-
   return (
-    <div ref={containerRef} className="min-h-screen bg-[var(--background)]" dir="rtl">
-      {/* Unified Page Header */}
-      <PageHeader
-        icon={Heart}
-        badge="رحماء بينهم"
-        title="من نحن"
-        subtitle="حملة رحماء بينهم الخيرية - تضامن إنساني وتنموي متكامل منذ 2014م"
-        align="right"
-      >
-        <StatsGrid
-          stats={[
-            { label: "سنوات العطاء", value: "عشرات", icon: Clock, color: "green" },
-            { label: "مشروع منفذ", value: "مشاريع", icon: Target, color: "gold" },
-            { label: "مستفيد", value: "50K+", icon: Users, color: "blue" },
-            { label: "متطوع", value: "متطوعون", icon: HandHeart, color: "purple" },
-          ]}
-          columns={4}
-          variant="glass"
-        />
-      </PageHeader>
+    <div className="min-h-screen bg-[var(--background)]" dir="rtl">
 
-      {/* ============================================ */}
-      {/* تعريف بالمؤسسة */}
-      {/* ============================================ */}
-      <section id="definition" className="section bg-white">
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{
-            background: "linear-gradient(90deg, transparent, rgba(15,76,58,0.3), transparent)",
-          }}
-        />
-
-        <div className="section-container">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="section-header"
-            >
-              <span className="badge badge--green">
-                <Gem className="w-4 h-4" />
-                نبذة عنا
-              </span>
-              <h2>
-                تعريف <span className="highlight">بالمؤسسة</span>
-              </h2>
-              <div className="divider" />
+      {/* ═══════════════════════════════════════════
+          Hero Banner
+          ═══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-28 text-white sm:py-40 bg-islamic-star">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "200px 200px" }} />
+        <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
+          <motion.div initial="initial" animate="visible" variants={staggerContainer}>
+            <motion.div variants={scrollFadeUp} className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 backdrop-blur-sm">
+              <BadgeCheck className="h-3.5 w-3.5 text-[var(--brand-gold)]" />
+              مرخصة رسمياً برقم ٤٨٢ — منذ ٢٠١٤م
             </motion.div>
-
-            <div className="relative">
-              <div
-                className="absolute -inset-4 rounded-3xl blur-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(15,76,58,0.05), transparent, rgba(15,76,58,0.05))",
-                }}
-              />
-
-              <motion.div
-                className="card card--xl relative overflow-hidden"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                whileHover={{ boxShadow: "0 25px 50px -12px rgba(26, 92, 72, 0.25)" }}
-              >
-                {/* Decorative circles */}
-                <div
-                  className="absolute top-0 right-0 w-64 h-64 rounded-full -translate-y-1/2 translate-x-1/2"
-                  style={{ background: "rgba(15,76,58,0.05)" }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/2"
-                  style={{ background: "rgba(15,76,58,0.05)" }}
-                />
-                <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
-                  style={{ background: "rgba(15,76,58,0.02)" }}
-                />
-
-                <div className="relative z-10">
-                  <Quote className="w-12 h-12 mb-6" style={{ color: "rgba(15,76,58,0.2)" }} />
-
-                  <p
-                    className="text-xl md:text-2xl leading-[1.8] font-light"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {aboutText}
-                  </p>
-
-                  <div
-                    className="mt-8 flex flex-wrap items-center gap-6 pt-6"
-                    style={{ borderTop: "1px solid var(--border)" }}
-                  >
-                    {[
-                      { icon: Calendar, label: "انطلقت 2014م" },
-                      { icon: Target, label: "برامج متنوعة" },
-                      { icon: Globe, label: "تغطية واسعة" },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex items-center gap-2 text-sm"
-                        style={{ color: "var(--muted-foreground)" }}
-                      >
-                        <item.icon className="w-4 h-4" style={{ color: "var(--brand-green)" }} />
-                        <span>{item.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
+            <motion.h1 variants={scrollFadeUp} className="text-3xl font-bold leading-[1.35] sm:text-5xl lg:text-6xl">
+              من <span className="text-[var(--brand-gold-light)]">نحن</span>
+            </motion.h1>
+            <motion.p variants={scrollFadeUp} className="mx-auto mt-6 max-w-3xl text-base leading-[2] text-white/55 sm:text-lg">
+              حملة رحماء بينهم للإغاثة والتنمية — حملة دعوية وإنسانية وتنموية
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* كلمة المشرف العام */}
-      {/* ============================================ */}
-      <section id="supervisor" className="section-secondary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))",
-            }}
-          />
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة المائدة، الآية ٢</p>
+      </div>
+
+      {/* ═══════════════════════════════════════════
+          تعريف بالحملة
+          ═══════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>
+              <Gem className="h-3.5 w-3.5" />
+              نبذة عنا
+            </SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              تعريف <span className="text-[var(--brand-gold)]">بالحملة</span>
+            </h2>
+          </motion.div>
+
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl"
-            style={{ background: "rgba(15,76,58,0.05)" }}
-            animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-            transition={{ duration: 30, repeat: -1 }}
-          />
-        </div>
-
-        <div className="section-container relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="section-header"
-            >
-              <span className="badge badge--gold">
-                <Crown className="w-4 h-4" />
-                كلمة القيادة
-              </span>
-              <h2>
-                كلمة <span className="highlight-gold">المشرف العام</span>
-              </h2>
-              <div className="divider" />
-            </motion.div>
-
-            <motion.div
-              className="card card--xl relative overflow-hidden"
-              style={{ borderRight: "8px solid var(--brand-green)" }}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ boxShadow: "0 30px 60px -20px rgba(26, 92, 72, 0.3)" }}
-            >
-              {/* Decorative bg */}
-              <div
-                className="absolute -top-32 -right-32 w-80 h-80 rounded-full"
-                style={{ background: "rgba(15,76,58,0.05)" }}
-              />
-              <div
-                className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full"
-                style={{ background: "rgba(15,76,58,0.05)" }}
-              />
-
-              <div className="relative z-10">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="mb-6"
-                >
-                  <Quote className="w-12 h-12" style={{ color: "rgba(15,76,58,0.2)" }} />
-                  <div
-                    className="w-16 h-1 mt-2 rounded-full"
-                    style={{ background: "rgba(15,76,58,0.3)" }}
-                  />
-                </motion.div>
-
-                {supervisorMessage.split("\n\n").map((paragraph, index) => (
-                  <motion.p
-                    key={`paragraph-${index}`}
-                    className={`text-xl md:text-2xl leading-[1.8] font-light ${index > 0 ? "mt-6" : ""}`}
-                    style={{ color: "var(--foreground)" }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + index * 0.2, duration: 0.5 }}
-                  >
-                    {paragraph}
-                  </motion.p>
-                ))}
-
-                <motion.div
-                  className="mt-8 pt-6 flex flex-wrap items-center gap-6"
-                  style={{ borderTop: "1px solid var(--border)" }}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="icon-box icon-box--green w-16 h-16 rounded-full">
-                      <Users className="w-8 h-8" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-xl" style={{ color: "var(--foreground)" }}>
-                        المشرف العام
-                      </p>
-                      <p style={{ color: "var(--muted-foreground)" }}>حملة رحماء بينهم</p>
-                    </div>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 text-sm"
-                    style={{ color: "var(--brand-green)" }}
-                  >
-                    <BadgeCheck className="w-5 h-5" />
-                    <span>عقد من العطاء</span>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={scrollFadeUp}
+            className="mt-10 rounded-[24px] border border-[var(--brand-green)]/8 bg-[var(--background)] p-6 sm:p-8"
+          >
+            <Quote className="mb-6 h-10 w-10 text-[var(--brand-green)]/15" />
+            <p className="text-lg leading-[2] text-[var(--foreground)] sm:text-xl">
+              {aboutText}
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-[var(--border)] pt-6">
+              {[
+                { icon: Calendar, label: "انطلقت ٢٠١٤م" },
+                { icon: Target, label: "برامج متنوعة" },
+                { icon: Globe, label: "تغطية واسعة" },
+                { icon: BadgeCheck, label: "ترخيص رسمي ٤٨٢" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
+                  <item.icon className="h-4 w-4 text-[var(--brand-green)]" />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* الهوية التنموية */}
-      {/* ============================================ */}
-      <section id="identity" className="section bg-white">
-        <div className="section-container">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="section-header"
+      {/* ═══════════════════════════════════════════
+          كلمة المشرف العام
+          ═══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--secondary)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>
+              <Crown className="h-3.5 w-3.5" />
+              كلمة القيادة
+            </SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              كلمة <span className="text-[var(--brand-gold)]">المشرف العام</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={scrollFadeUp}
+            className="mt-10 rounded-[24px] border-r-[6px] border-[var(--brand-green)] bg-[var(--card)] p-6 sm:p-8 shadow-lg"
+          >
+            <Quote className="mb-6 h-10 w-10 text-[var(--brand-green)]/15" />
+            <motion.p
+              className="text-lg leading-[2] text-[var(--foreground)] sm:text-xl"
+              initial="initial"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={scrollFadeUp}
+              transition={{ delay: 0.2 }}
             >
-              <span className="badge badge--green">
-                <Layers className="w-4 h-4" />
-                هوية
-              </span>
-              <h2>
-                هويتنا <span className="highlight">التنموية</span>
-              </h2>
-              <div className="divider" />
+              {supervisorMessage}
+            </motion.p>
+            <motion.p
+              className="mt-6 text-lg leading-[2] text-[var(--foreground)] sm:text-xl"
+              initial="initial"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={scrollFadeUp}
+              transition={{ delay: 0.3 }}
+            >
+              {supervisorMessagePart2}
+            </motion.p>
+
+            <div className="mt-8 flex items-center gap-4 border-t border-[var(--border)] pt-6">
+              <div className="grid h-14 w-14 place-items-center rounded-full bg-[var(--brand-green)]/10 text-[var(--brand-green)]">
+                <Users className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-lg font-bold text-[var(--foreground)]">المشرف العام</p>
+                <p className="text-sm text-[var(--muted-foreground)]">حملة رحماء بينهم</p>
+              </div>
+              <div className="mr-auto flex items-center gap-2 text-sm text-[var(--brand-green)]">
+                <BadgeCheck className="h-4 w-4" />
+                <span>عقد من العطاء</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          الهوية التنموية — الرؤية والرسالة والقيم
+          ═══════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>
+              <Layers className="h-3.5 w-3.5" />
+              هوية
+            </SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              هويتنا <span className="text-[var(--brand-gold)]">التنموية</span>
+            </h2>
+          </motion.div>
+
+          <div className="mt-14 grid gap-8 sm:grid-cols-2">
+            {/* الرؤية */}
+            <motion.div
+              initial="initial"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={scrollFadeUp}
+              whileHover={hoverLift.whileHover}
+              className="rounded-[24px] border border-[var(--brand-green)]/8 bg-[var(--background)] p-6 sm:p-8 transition hover:shadow-lg"
+            >
+              <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                <Globe className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold text-[var(--foreground)]">رؤيتنا</h3>
+              <p className="mt-4 text-base leading-[1.9] text-[var(--muted-foreground)] flex-1">
+                الريادة والشمولية في المجال الدعوي والإنساني والتنموي.
+              </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* الرؤية */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="card card--xl hover-lift relative overflow-hidden group"
-                whileHover={{ y: -8 }}
-              >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, transparent, rgba(15,76,58,0.05), transparent)",
-                  }}
-                />
-                <div className="relative z-10">
-                  <div
-                    className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg"
-                    style={{ boxShadow: "0 0 20px rgba(15,76,58,0.2)" }}
-                  >
-                    <Globe className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ color: "var(--foreground)" }}>
-                    رؤيتنا
-                  </h3>
-                  <p
-                    className="text-lg leading-relaxed"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    الريادة والشمولية في المجال الدعوي والإنساني والتنموي.
-                  </p>
-                </div>
-              </motion.div>
+            {/* الرسالة */}
+            <motion.div
+              initial="initial"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={scrollFadeUp}
+              whileHover={hoverLift.whileHover}
+              className="rounded-[24px] border border-[var(--brand-green)]/8 bg-[var(--background)] p-6 sm:p-8 transition hover:shadow-lg"
+            >
+              <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-[var(--brand-gold)]/10 text-[var(--brand-gold-dark)]">
+                <Heart className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold text-[var(--foreground)]">رسالتنا</h3>
+              <p className="mt-4 text-base leading-[1.9] text-[var(--muted-foreground)] flex-1">
+                الإسهام في إصلاح المجتمع روحاً وسلوكاً، ومد يد العون لتوفير حياة كريمة يعيشها،
+                بالشراكة مع المهتمين والخيرين في الداخل والخارج.
+              </p>
+            </motion.div>
+          </div>
 
-              {/* الرسالة */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="card card--xl hover-lift relative overflow-hidden group"
-                whileHover={{ y: -8 }}
-              >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, transparent, rgba(15,76,58,0.05), transparent)",
-                  }}
-                />
-                <div className="relative z-10">
-                  <div
-                    className="icon-box icon-box--green w-20 h-20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg"
-                    style={{ boxShadow: "0 0 20px rgba(15,76,58,0.2)" }}
-                  >
-                    <Heart className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ color: "var(--foreground)" }}>
-                    رسالتنا
-                  </h3>
-                  <p
-                    className="text-lg leading-relaxed"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    الإسهام في إصلاح المجتمع روحاً وسلوكاً، ومد يد العون لتوفير حياة كريمة يعيشها،
-                    بالشراكة مع المهتمين والخيرين في الداخل والخارج.
-                  </p>
-                </div>
-              </motion.div>
+          {/* القيم */}
+          <motion.div
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={staggerContainer}
+            className="mt-14"
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                <Award className="h-5 w-5" />
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--foreground)]">قيمها الناظمة</h3>
             </div>
 
-            {/* القيم */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-16"
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="icon-box icon-box--green w-14 h-14 rounded-xl">
-                  <Award className="w-7 h-7" />
-                </div>
-                <h3 className="text-3xl font-bold" style={{ color: "var(--foreground)" }}>
-                  قيمنا الناظمة
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {[
-                  { icon: Star, label: "الإخلاص", color: "var(--brand-gold)", desc: "نية صادقة" },
-                  { icon: Shield, label: "الشفافية", color: "var(--primary)", desc: "وضوح تام" },
-                  {
-                    icon: Award,
-                    label: "الإتقان",
-                    color: "var(--brand-green)",
-                    desc: "إتقان العمل",
-                  },
-                  {
-                    icon: Users,
-                    label: "المسؤولية",
-                    color: "var(--chart-3)",
-                    desc: "تحمل المسؤولية",
-                  },
-                  {
-                    icon: Sparkles,
-                    label: "المبادرة",
-                    color: "var(--chart-4)",
-                    desc: "روح المبادرة",
-                  },
-                ].map((value) => (
-                  <motion.div
-                    key={value.label}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className="stat-card group cursor-pointer"
-                  >
-                    <div
-                      className="icon-box w-14 h-14 rounded-full mx-auto mb-3 group-hover:scale-110 transition-all duration-300"
-                      style={{ backgroundColor: `${value.color}15`, color: value.color }}
-                    >
-                      <value.icon className="w-7 h-7" />
-                    </div>
-                    <p className="font-bold" style={{ color: "var(--foreground)" }}>
-                      {value.label}
-                    </p>
-                    <p className="stat-label mt-1">{value.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* أهدافنا */}
-      {/* ============================================ */}
-      <section id="goals" className="section-secondary relative overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))",
-          }}
-        />
-
-        <div className="section-container relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="section-header"
-            >
-              <span className="badge badge--green">
-                <Target className="w-4 h-4" />
-                طموحاتنا
-              </span>
-              <h2>
-                أهدافنا <span className="highlight">وطموحاتنا</span>
-              </h2>
-              <div className="divider" />
-            </motion.div>
-
-            <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
               {[
-                "تحقيق مبدأ التعاون على البر والتقوى، وخلق روح التكافل بين أفراد الأمة المسلمة",
-                "إحياء دور المسجد في التربية والإصلاح، وإبرار رسالة العلم، والمحافظة على أوقات المسلم",
-                "الإسهام في توفير حياة كريمة لشريحة المستفيدين وصيانتهم من مذلة السؤال",
-                "تحقيق الاكتفاء التنموي الذاتي لضمان بقاء المشاريع وديمومة أدائها",
-              ].map((goal, index) => (
+                { icon: Star, label: "الإخلاص", desc: "نية صادقة" },
+                { icon: Shield, label: "الشفافية", desc: "وضوح تام" },
+                { icon: Award, label: "الإتقان", desc: "إتقان العمل" },
+                { icon: Users, label: "المسؤولية", desc: "تحمل المسؤولية" },
+                { icon: Sparkles, label: "المبادرة", desc: "روح المبادرة" },
+              ].map((value) => (
                 <motion.div
-                  key={`goal-${index}`}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card hover-lift flex items-start gap-6 cursor-pointer group"
-                  whileHover={{ x: 10 }}
+                  key={value.label}
+                  variants={scrollFadeUp}
+                  whileHover={hoverLift.whileHover}
+                  className="rounded-2xl border border-[var(--brand-green)]/8 bg-[var(--card)] p-6 sm:p-8 text-center transition hover:shadow-md"
                 >
-                  <div className="flex-shrink-0">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg"
-                      style={{
-                        background: "var(--brand-green)",
-                        color: "white",
-                        boxShadow: "0 0 20px rgba(15,76,58,0.2)",
-                      }}
-                    >
-                      {index + 1}
-                    </div>
+                  <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                    <value.icon className="h-5 w-5" />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-lg leading-relaxed" style={{ color: "var(--foreground)" }}>
-                      {goal}
-                    </p>
-                    <div className="mt-2 flex items-center gap-2">
-                      <div
-                        className="w-16 h-0.5 rounded-full"
-                        style={{ background: "rgba(15,76,58,0.3)" }}
-                      />
-                      <span className="text-xs" style={{ color: "var(--brand-green)" }}>
-                        هدف استراتيجي
-                      </span>
-                    </div>
-                  </div>
-                  <CheckCircle2
-                    className="w-5 h-5 flex-shrink-0 transition-colors"
-                    style={{ color: "rgba(15,76,58,0.3)" }}
-                  />
+                  <p className="font-bold text-[var(--foreground)]">{value.label}</p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">{value.desc}</p>
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* الفئات المستهدفة */}
-      {/* ============================================ */}
-      <section id="beneficiaries" className="section bg-white">
-        <div className="section-container">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="section-header"
-            >
-              <span className="badge badge--green">
-                <Users className="w-4 h-4" />
-                من نستهدف
-              </span>
-              <h2>
-                الفئات <span className="highlight">المستهدفة</span>
-              </h2>
-              <div className="divider" />
-            </motion.div>
+      {/* ═══════════════════════════════════════════
+          أهدافنا
+          ═══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--secondary)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>
+              <Target className="h-3.5 w-3.5" />
+              طموحاتنا
+            </SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              أهدافنا <span className="text-[var(--brand-gold)]">وطموحاتنا</span>
+            </h2>
+          </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  icon: Heart,
-                  title: "الأيتام والأرامل والأسر المتعففة",
-                  desc: "مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين",
-                  color: "var(--destructive)",
-                  count: "آلاف",
-                },
-                {
-                  icon: HandHeart,
-                  title: "المحتاجون والنازحون",
-                  desc: "مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين",
-                  color: "var(--brand-gold)",
-                  count: "عشرات آلاف",
-                },
-                {
-                  icon: BookOpen,
-                  title: "طلاب وحفظة القرآن والمعلمون",
-                  desc: "مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية",
-                  color: "var(--primary)",
-                  count: "آلاف",
-                },
-                {
-                  icon: Compass,
-                  title: "سكان المناطق النائية والجافة",
-                  desc: "مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن",
-                  color: "var(--brand-green)",
-                  count: "آلاف",
-                },
-                {
-                  icon: TrendingUp,
-                  title: "الأسر الباحثة عن الدخل",
-                  desc: "مستفيدو تمليك الأدوات الإنتاجية للتحوؤل إلى أسر منتجة",
-                  color: "var(--chart-3)",
-                  count: "مئات",
-                },
-              ].map((group, index) => (
-                <motion.div
-                  key={group.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="card hover-lift relative overflow-hidden group cursor-pointer"
-                  whileHover={{ y: -6, scale: 1.01 }}
-                >
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ backgroundColor: `${group.color}08` }}
-                  />
-                  <div className="relative z-10 flex items-start gap-5">
-                    <div
-                      className="icon-box w-16 h-16 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
-                      style={{ backgroundColor: `${group.color}15`, color: group.color }}
-                    >
-                      <group.icon className="w-8 h-8" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between">
-                        <h3
-                          className="text-xl font-bold mb-1"
-                          style={{ color: "var(--foreground)" }}
-                        >
-                          {group.title}
-                        </h3>
-                        <span
-                          className="text-xs font-bold px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: `${group.color}15`, color: group.color }}
-                        >
-                          {group.count}
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm leading-relaxed"
-                        style={{ color: "var(--muted-foreground)" }}
-                      >
-                        {group.desc}
-                      </p>
-                      <div className="mt-3 flex items-center gap-2">
-                        <div
-                          className="w-12 h-1 rounded-full"
-                          style={{ backgroundColor: `${group.color}20` }}
-                        />
-                        <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
-                          فئة مستهدفة
-                        </span>
-                      </div>
-                    </div>
+          <motion.div
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={staggerContainer}
+            className="mt-14 grid gap-6 sm:grid-cols-2"
+          >
+            {[
+              "تحقيق مبدأ التعاون على البر والتقوى، وخلق روح التكافل بين أفراد الأمة المسلمة",
+              "إحياء دور المسجد في التربية والإصلاح، وإبرار رسالة العلم، والمحافظة على أوقات المسلم",
+              "الإسهام في توفير حياة كريمة لشريحة المستفيدين وصيانتهم من مذلة السؤال",
+              "تحقيق الاكتفاء التنموي الذاتي لضمان بقاء المشاريع وديمومة أدائها",
+            ].map((goal, index) => (
+              <motion.div
+                key={`goal-${index}`}
+                variants={scrollFadeUp}
+                whileHover={{ x: -4 }}
+                className="flex items-start gap-5 rounded-2xl border border-[var(--brand-green)]/8 bg-[var(--card)] p-6 sm:p-8 transition hover:shadow-lg shadow-md"
+              >
+                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-full bg-[var(--brand-green)] text-sm font-bold text-white">
+                  {index + 1}
+                </div>
+                <div className="flex-1">
+                  <p className="text-base leading-[1.9] text-[var(--foreground)]">{goal}</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <div className="h-px w-12 bg-[var(--brand-green)]/20" />
+                    <span className="text-xs text-[var(--brand-green)]">هدف استراتيجي</span>
                   </div>
-                </motion.div>
+                </div>
+                <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-[var(--brand-green)]/30" />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          الفئات المستهدفة
+          ═══════════════════════════════════════════ */}
+      <section className="bg-[var(--background)] py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel>
+              <Users className="h-3.5 w-3.5" />
+              من نستهدف
+            </SectionLabel>
+            <h2 className="max-w-3xl text-3xl font-bold leading-[1.4] text-[var(--brand-green)] sm:text-4xl">
+              الفئات <span className="text-[var(--brand-gold)]">المستهدفة</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={staggerContainer}
+            className="mt-14 grid gap-6 sm:grid-cols-2"
+          >
+            {[
+              {
+                icon: Heart,
+                title: "الأيتام والأرامل والأسر المتعففة",
+                desc: "مستفيدو الكفالات المادية، الكسوة، وتفريج كرب الغارمين",
+              },
+              {
+                icon: Compass,
+                title: "المحتاجون والنازحون",
+                desc: "مستفيدو السلال الغذائية، المطابخ الخيرية، واللحوم وتفطير الصائمين",
+              },
+              {
+                icon: Star,
+                title: "طلاب وحفظة القرآن والمعلمون",
+                desc: "مستفيدو كفالات الحلقات، طباعة المصاحف والكتب العلمية",
+              },
+              {
+                icon: Globe,
+                title: "سكان المناطق النائية والجافة",
+                desc: "مستفيدو حفر الآبار، شبكات السقيا، وبناء المساجد ودور القرآن",
+              },
+              {
+                icon: Target,
+                title: "الأسر الباحثة عن الدخل",
+                desc: "مستفيدو تمليك الأدوات الإنتاجية للتحوّل إلى أسر منتجة",
+              },
+            ].map((group, index) => (
+              <motion.div
+                key={group.title}
+                variants={scrollFadeUp}
+                whileHover={hoverLift.whileHover}
+                className="flex items-start gap-5 rounded-2xl border border-[var(--brand-green)]/8 bg-[var(--background)] p-6 sm:p-8 transition hover:shadow-lg shadow-md min-h-[140px]"
+              >
+                <div className="grid h-13 w-13 flex-shrink-0 place-items-center rounded-2xl bg-[var(--brand-green)]/8 text-[var(--brand-green)]">
+                  <group.icon className="h-6 w-6" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-[var(--foreground)]">{group.title}</h3>
+                  <p className="mt-3 text-sm leading-[1.9] text-[var(--muted-foreground)]">{group.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          شركاء النجاح
+          ═══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--brand-green)] py-24 text-white sm:py-32">
+        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
+            <SectionLabel light>شراكات</SectionLabel>
+            <h2 className="text-3xl font-bold leading-[1.4] sm:text-4xl">
+              شركاء <span className="text-[var(--brand-gold-light)]">النجاح</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={scrollFadeUp}
+            className="mt-10 rounded-[24px] border border-white/10 bg-white/5 p-6 sm:p-8 backdrop-blur-sm"
+          >
+            <Quote className="mx-auto mb-6 h-10 w-10 text-white/10" />
+            <p className="text-lg leading-[2] text-white/70 sm:text-xl">
+              {partnersText}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-6 border-t border-white/10 pt-6">
+              {[
+                { icon: Heart, label: "شركاء النجاح" },
+                { icon: Star, label: "داعمون أوفياء" },
+                { icon: Target, label: "صناع الأثر" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2 text-sm text-white/60">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)]" />
+                  <span>{item.label}</span>
+                </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
-
-      {/* ============================================ */}
-      {/* شركاء النجاح */}
-      {/* ============================================ */}
-      <section id="partners" className="section-secondary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(15,76,58,0.05), rgba(15,76,58,0.1), rgba(15,76,58,0.05))",
-            }}
-          />
-          <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
-            style={{ background: "rgba(15,76,58,0.05)" }}
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 15, repeat: Infinity }}
-          />
-        </div>
-
-        <div className="section-container relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <motion.div
-                className="icon-box icon-box--green w-24 h-24 rounded-full mx-auto mb-6"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 1 }}
-              >
-                <Users className="w-12 h-12" />
-              </motion.div>
-
-              <span className="badge badge--gold">
-                <GitCommit className="w-4 h-4" />
-                شراكات مستدامة
-              </span>
-
-              <h2
-                className="text-5xl md:text-6xl font-bold mb-4"
-                style={{ color: "var(--foreground)" }}
-              >
-                شركاء <span className="text-[var(--brand-green)]">النجاح</span>
-              </h2>
-
-              <div className="gradient-divider mx-auto mb-8" />
-
-              <motion.div
-                className="card card--xl relative overflow-hidden"
-                whileHover={{ boxShadow: "0 30px 60px -20px rgba(26, 92, 72, 0.25)" }}
-              >
-                {/* Decorative bg */}
-                <div
-                  className="absolute top-0 right-0 w-48 h-48 rounded-full -translate-y-1/2 translate-x-1/2"
-                  style={{ background: "rgba(15,76,58,0.05)" }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 w-48 h-48 rounded-full translate-y-1/2 -translate-x-1/2"
-                  style={{ background: "rgba(15,76,58,0.05)" }}
-                />
-
-                <div className="relative z-10">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <Quote
-                      className="w-14 h-14 mx-auto mb-6"
-                      style={{ color: "rgba(15,76,58,0.1)" }}
-                    />
-                  </motion.div>
-
-                  <p
-                    className="text-xl md:text-2xl leading-[1.8] font-light"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {partnersText}
-                  </p>
-
-                  <motion.div
-                    className="mt-8 pt-6 flex flex-wrap justify-center gap-8"
-                    style={{ borderTop: "1px solid var(--border)" }}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    {[
-                      { icon: Heart, label: "شركاء النجاح" },
-                      { icon: Star, label: "داعمون أوفياء" },
-                      { icon: Target, label: "صناع الأثر" },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex items-center gap-2"
-                        style={{ color: "var(--muted-foreground)" }}
-                      >
-                        <div
-                          className="w-2 h-2 rounded-full"
-                          style={{ background: "var(--brand-green)" }}
-                        />
-                        <span>{item.label}</span>
-                      </div>
-                    ))}
-                  </motion.div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* Footer */}
-      {/* ============================================ */}
-      <footer
-        className="relative overflow-hidden"
-        style={{ background: "var(--foreground)", color: "white" }}
-      >
-        <div className="absolute inset-0">
-          <div
-            className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl"
-            style={{ background: "rgba(15,76,58,0.1)" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl"
-            style={{ background: "rgba(15,76,58,0.1)" }}
-          />
-        </div>
-
-        <div className="relative z-10 section-container py-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8 text-center md:text-right">
-              <div>
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-                  <Heart className="w-6 h-6" style={{ color: "var(--brand-green)" }} />
-                  <span className="font-bold text-lg">رحماء بينهم</span>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  حملة خيرية دعوية إنسانية تنموية
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-3">روابط سريعة</h4>
-                <ul className="space-y-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  <li>
-                    <button
-                      onClick={() => handleQuickLink("about")}
-                      className="hover:text-[var(--brand-green)] transition-colors"
-                    >
-                      من نحن
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => handleQuickLink("programs")}
-                      className="hover:text-[var(--brand-green)] transition-colors"
-                    >
-                      برامجنا
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => handleQuickLink("contact")}
-                      className="hover:text-[var(--brand-green)] transition-colors"
-                    >
-                      تواصل معنا
-                    </button>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-3">تواصل</h4>
-                <ul className="space-y-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  <li className="flex items-center justify-center md:justify-start gap-2">
-                    <Phone className="w-4 h-4" /> +967 780 777 007
-                  </li>
-                  <li className="flex items-center justify-center md:justify-start gap-2">
-                    <Mail className="w-4 h-4" /> info@rbdcye.org
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-3">تابعنا</h4>
-                <div className="flex justify-center md:justify-start gap-3">
-                  {[
-                    { Icon: Facebook, platform: "facebook" },
-                    { Icon: Twitter, platform: "twitter" },
-                    { Icon: Instagram, platform: "instagram" },
-                    { Icon: Youtube, platform: "youtube" },
-                  ].map(({ Icon, platform }) => (
-                    <motion.button
-                      key={platform}
-                      onClick={() => handleSocialClick(platform)}
-                      whileHover={{ y: -3 }}
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-[var(--brand-green)]"
-                      style={{ background: "rgba(255,255,255,0.1)" }}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="mt-12 pt-8 text-center text-sm"
-              style={{
-                borderTop: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.4)",
-              }}
-            >
-              <p>{new Date().getFullYear()} © جميع الحقوق محفوظة - حملة رحماء بينهم الخيرية</p>
-              <p className="mt-1 text-xs">رحماء بينهم - تضامن إنساني وتنموي متكامل منذ 2014</p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

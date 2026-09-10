@@ -20,7 +20,7 @@ export function ShareableImpactCard({
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleShare = useCallback(async () => {
-    const text = `🤲 تبرعت لـ رحماء بينهم\n${impact}\n\nتبرعك يُحدث فرقاً真實\nrbdcye.org/donate`;
+    const text = `🤲 تبرعت لـ رحماء بينهم\n${impact}\n\nتبرعك يُحدث فرقاً حقيقياً\nrbdcye.org/donate`;
     if (navigator.share) {
       try {
         await navigator.share({ text });

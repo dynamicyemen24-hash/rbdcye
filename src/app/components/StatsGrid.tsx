@@ -31,15 +31,8 @@ export function StatsGrid({ stats, columns = 4, variant = "default" }: StatsGrid
 
   const bgStyle =
     variant === "glass"
-      ? {
-          background: "rgba(255, 255, 255, 0.85)",
-          backdropFilter: "blur(16px)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-        }
-      : {
-          background: "var(--card)",
-          border: "1px solid var(--border)",
-        };
+      ? "bg-white/85 backdrop-blur-[16px] border border-white/20"
+      : "bg-[var(--card)] border border-[var(--border)]";
 
   return (
     <div className={`grid ${gridCols[columns]} gap-4 max-w-4xl mx-auto`}>
@@ -53,8 +46,7 @@ export function StatsGrid({ stats, columns = 4, variant = "default" }: StatsGrid
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i, duration: 0.5 }}
-            className="text-center p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1"
-            style={bgStyle}
+            className={`text-center p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 ${bgStyle}`}
           >
             <div
               className={`w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center ${
@@ -64,22 +56,13 @@ export function StatsGrid({ stats, columns = 4, variant = "default" }: StatsGrid
               <Icon className={`w-6 h-6 ${colorClass}`} />
             </div>
             <div
-              className="text-3xl font-bold mb-1"
-              style={{
-                color: stat.color
-                  ? `var(--brand-${stat.color === "blue" ? "green-light" : stat.color})`
-                  : "var(--foreground)",
-                fontFamily: "Cairo, sans-serif",
-              }}
+              className="text-3xl font-bold mb-1 text-[var(--foreground)]"
+              style={stat.color ? { color: `var(--brand-${stat.color === "blue" ? "green-light" : stat.color})` } : undefined}
             >
               {stat.value}
             </div>
             <div
-              className="text-sm"
-              style={{
-                color: "var(--muted-foreground)",
-                fontFamily: "Cairo, sans-serif",
-              }}
+              className="text-sm text-[var(--muted-foreground)]"
             >
               {stat.label}
             </div>

@@ -1,18 +1,18 @@
-import * as React from "react";
+import { forwardRef, type TextareaHTMLAttributes } from "react";
 
-import { cn } from "./utils";
-
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
-  return (
-    <textarea
-      data-slot="textarea"
-      className={cn(
-        "resize-none border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-input-background px-3 py-2 text-base transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className
-      )}
-      {...props}
-    />
-  );
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  error?: boolean;
 }
 
-export { Textarea };
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ error, className = "", ...props }, ref) => {
+    return (
+      <textarea
+        ref={ref}
+        className={`w-full rounded-xl border bg-[var(--background)] px-4 py-3 text-sm text-[var(--foreground)] transition-all duration-200 placeholder:text-[var(--muted-foreground)] placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20 focus:border-[var(--brand-green)] disabled:cursor-not-allowed disabled:opacity-50 min-h-[120px] resize-y ${error ? "border-[var(--destructive)]" : "border-[var(--border)]"} ${className}`}
+        {...props}
+      />
+    );
+  }
+);
+Textarea.displayName = "Textarea";

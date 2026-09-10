@@ -129,7 +129,7 @@ const DEFAULT_PROJECTS: ProjectAllocation[] = [
     isCustom: true,
   },
   { projectId: "p7", projectName: "دعم المشاريع التنموية", amount: 0, isCustom: true },
-  { projectId: "p8", projectName: "عام - حيث تحتاج المؤسسة", amount: 0, isCustom: true },
+  { projectId: "p8", projectName: "عام - حيث تحتاج الحملة", amount: 0, isCustom: true },
 ];
 
 // ============================================================
@@ -137,7 +137,7 @@ const DEFAULT_PROJECTS: ProjectAllocation[] = [
 // ============================================================
 const ORGANIZATION_INFO = {
   name: "Rahmaa Bainahum Foundation",
-  nameAr: "مؤسسة رحماء بينهم الخيرية",
+  nameAr: "حملة رحماء بينهم الخيرية",
   taxNumber: "TX-2024-ROH-001",
   licenseNumber: "LIC-2024-CF-789",
   address: "مسقط، سلطنة عمان",
@@ -664,7 +664,7 @@ class MultiProjectDonationService {
 
     return `
       ============================================
-      شهادة أثر - مؤسسة رحماء بينهم
+      شهادة أثر - حملة رحماء بينهم
       ============================================
       رقم الإيصال: ${receipt.receiptNumber}
       التاريخ: ${new Date(receipt.createdAt).toLocaleDateString("ar-SA")}

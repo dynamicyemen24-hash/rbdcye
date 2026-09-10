@@ -156,9 +156,17 @@ export default function NewsPage() {
         />
       </PageHeader>
 
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ قُلْ هَذِهِ سَبِيلِي أَدْعُو إِلَى اللَّهِ ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة يوسف، الآية ١٠٨</p>
+      </div>
+
       {/* Category Filter */}
-      <section className="py-6 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
+      <section className="py-6 bg-[var(--background)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
               <button
@@ -204,7 +212,7 @@ export default function NewsPage() {
       {/* Featured News */}
       {featuredNews.length > 0 && (
         <section className="py-12 bg-[var(--secondary)]">
-          <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -226,7 +234,7 @@ export default function NewsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                  className="group bg-[var(--card)] rounded-3xl overflow-hidden border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col"
                 >
                   {n.image && (
                     <div className="relative h-48 overflow-hidden">
@@ -277,8 +285,8 @@ export default function NewsPage() {
       )}
 
       {/* News Grid */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-12 bg-[var(--background)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {news.length === 0 ? (
             <div className="text-center py-16">
               <FolderOpen className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4 opacity-50" />
@@ -291,7 +299,7 @@ export default function NewsPage() {
             </div>
           ) : filteredNews.length === 0 ? (
             <div className="text-center py-16">
-              <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <Search className="w-16 h-16 text-[var(--muted-foreground)] mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
                 لا توجد أخبار مطابقة
               </h3>
@@ -302,7 +310,7 @@ export default function NewsPage() {
               {filteredNews.map((n: any) => (
                 <article
                   key={n.id}
-                  className="bg-white rounded-2xl border border-[var(--border)] overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                  className="bg-[var(--card)] rounded-2xl border border-[var(--border)] overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
                 >
                   {n.image && (
                     <img

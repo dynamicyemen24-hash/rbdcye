@@ -47,7 +47,7 @@ export function DonatePage() {
         className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4"
         style={{ direction: "rtl" }}
       >
-        <div className="bg-white rounded-3xl p-10 max-w-md w-full text-center shadow-xl border border-[var(--border)]">
+        <div className="bg-[var(--card)] rounded-3xl p-10 max-w-md w-full text-center shadow-xl border border-[var(--border)]">
           <div className="w-20 h-20 rounded-full bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-5">
             <CheckCircle className="w-10 h-10 text-[var(--brand-green)]" />
           </div>
@@ -101,7 +101,7 @@ export function DonatePage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-5">
             {/* Donation Type */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
                 نوع التبرع
               </div>
@@ -128,7 +128,7 @@ export function DonatePage() {
             </div>
 
             {/* Amount */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
                 اختر مبلغ التبرع (ريال)
               </div>
@@ -168,7 +168,7 @@ export function DonatePage() {
             </div>
 
             {/* Project */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
                 وجهة التبرع
               </div>
@@ -208,7 +208,7 @@ export function DonatePage() {
             </div>
 
             {/* Donor Info */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
                 بيانات المتبرع
               </div>
@@ -242,7 +242,7 @@ export function DonatePage() {
             </div>
 
             {/* Payment Method */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>
                 طريقة الدفع
               </div>
@@ -306,7 +306,7 @@ export function DonatePage() {
 
           {/* Summary */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)] sticky top-24">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)] sticky top-24">
               <h3 style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "1rem" }}>
                 ملخص تبرعك
               </h3>
@@ -364,7 +364,7 @@ export function DonatePage() {
             </div>
 
             {/* Impact */}
-            <div className="bg-white rounded-2xl p-5 border border-[var(--border)]">
+            <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
               <div style={{ fontWeight: 700, fontSize: "0.88rem", marginBottom: "0.75rem" }}>
                 أثر تبرعك
               </div>

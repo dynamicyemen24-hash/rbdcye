@@ -73,8 +73,8 @@ describe("Validation Utilities", () => {
     });
 
     it("handles Arabic text", () => {
-      const slug = generateSlug("مؤسسة رحماء بينهم");
-      expect(slug).toContain("مؤسسة");
+      const slug = generateSlug("حملة رحماء بينهم");
+      expect(slug).toContain("حملة");
     });
   });
 

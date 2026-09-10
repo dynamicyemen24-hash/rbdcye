@@ -96,9 +96,17 @@ export default function PartnersPage() {
         />
       </PageHeader>
 
+      {/* ═══════ آية قرآنية ═══════ */}
+      <div className="my-8 rounded-2xl border border-[var(--brand-gold)]/20 bg-gradient-to-l from-[var(--brand-gold)]/5 to-transparent p-6 text-center">
+        <p className="font-amiri text-xl leading-loose text-[var(--foreground)] md:text-2xl" dir="rtl">
+          ﴿ وَأَوْفُوا بِالْعَهْدِ إِنَّ الْعَهْدَ كَانَ مَسْئُولًا ﴾
+        </p>
+        <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة الإسراء، الآية ٣٤</p>
+      </div>
+
       {/* Type Filter */}
-      <section className="py-6 bg-white border-b border-[var(--border)]">
-        <div className="container mx-auto px-4">
+      <section className="py-6 bg-[var(--background)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 justify-center">
             {PARTNER_TYPES.map((type) => (
               <button
@@ -119,7 +127,7 @@ export default function PartnersPage() {
 
       {/* Partners Grid */}
       <section className="py-12 bg-[var(--secondary)]">
-        <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {filteredPartners.map((partner, i) => (
               <motion.div
@@ -128,7 +136,7 @@ export default function PartnersPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group bg-white rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 text-center"
+                className="group bg-[var(--card)] rounded-3xl p-6 border border-[var(--border)] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 text-center"
               >
                 <div className="mb-6">
                   <img
@@ -152,7 +160,7 @@ export default function PartnersPage() {
 
                 <div className="flex items-center justify-center gap-2 pt-4 border-t border-[var(--border)]">
                   <span
-                    className={`w-2 h-2 rounded-full ${partner.status === "active" ? "bg-[var(--success-bg)]0" : "bg-gray-400"}`}
+                    className={`w-2 h-2 rounded-full ${partner.status === "active" ? "bg-[var(--success-bg)]" : "bg-gray-400"}`}
                   />
                   <span className="text-xs text-[var(--muted-foreground)]">
                     {partner.status === "active" ? "نشط" : "غير نشط"}
@@ -176,7 +184,7 @@ export default function PartnersPage() {
 
       {/* Become a Partner CTA */}
       <section className="py-16 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
-        <div className="container mx-auto px-4 text-center">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -190,7 +198,7 @@ export default function PartnersPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => navigate("/contact")}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--card)] text-[var(--brand-green)] rounded-xl font-bold text-lg hover:shadow-2xl transition-all"
               >
                 <Handshake className="w-5 h-5" />
                 تواصل معنا

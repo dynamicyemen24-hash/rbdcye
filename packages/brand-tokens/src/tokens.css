@@ -1,15 +1,110 @@
-/* NexoraOS™ Unified Brand Tokens — CSS */
+/* Rahma Baynahum — Unified Brand Tokens CSS */
+/* Auto-generated from tokens.ts — do not edit manually */
+
 :root {
-  --brand-primary: #059669;
-  --brand-accent: #d97706;
-  --brand-dark-bg: #090d16;
-  --brand-light-bg: #f8fafc;
-  /* Aliases */
-  --brand-green: #059669;
-  --brand-green-dark: #0F4C3A;
-  --brand-green-light: #10B981;
-  --brand-green-pale: #ECFDF5;
-  --brand-gold: #d97706;
-  --brand-gold-light: #FBBF24;
-  --brand-gold-pale: #FFFBEB;
+  /* Primary — Emerald (AGENTS.md: #0F4C3A) */
+  --brand-primary: #0F4C3A;
+  --brand-primary-hover: #17694F;
+  --brand-primary-dark: #0A3527;
+  --brand-primary-light: #17694F;
+  --brand-primary-pale: #E9F1EC;
+  --brand-primary-rgb: 15, 76, 58;
+
+  /* Accent — Gold (AGENTS.md: #C69E5A) */
+  --brand-accent: #C69E5A;
+  --brand-accent-hover: #D6B274;
+  --brand-accent-dark: #8F6A1A;
+  --brand-accent-light: #D6B274;
+  --brand-accent-pale: #F7EFE0;
+  --brand-accent-rgb: 198, 158, 90;
+
+  /* Legacy aliases for backward compatibility (map to same palette) */
+  --brand-green: #0F4C3A;
+  --brand-green-dark: #0A3527;
+  --brand-green-light: #17694F;
+  --brand-gold: #C69E5A;
+  --brand-gold-dark: #8F6A1A;
+  --brand-gold-light: #D6B274;
+
+  /* Dark/Light surfaces */
+  --brand-dark-bg: #0A0F15;
+  --brand-dark-surface: #111827;
+  --brand-light-bg: #F8F5EC;
+  --brand-light-surface: #FFFFFF;
+
+  /* Semantic */
+  --brand-success: #17694F;
+  --brand-warning: #D68910;
+  --brand-danger: #C0392B;
+  --brand-info: #2563EB;
+
+  /* WCAG AAA helpers */
+  --brand-gold-wcag-aaa: #5C3E00;
+  --brand-gold-wcag-dark-bg: #FBBF24;
+
+  /* Typography */
+  --font-family-arabic: Cairo;
+  --font-family-latin: 'Plus Jakarta Sans';
+  --font-family-base: Cairo, Plus Jakarta Sans, system-ui, sans-serif;
+  --font-size-base: 16px;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* Spacing */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(23, 32, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(23, 32, 42, 0.06), 0 1px 2px rgba(23, 32, 42, 0.04);
+  --shadow-md: 0 4px 6px rgba(23, 32, 42, 0.08), 0 2px 4px rgba(23, 32, 42, 0.06);
+  --shadow-lg: 0 8px 25px rgba(23, 32, 42, 0.1), 0 4px 12px rgba(23, 32, 42, 0.08);
+  --shadow-xl: 0 20px 40px rgba(23, 32, 42, 0.12), 0 8px 24px rgba(23, 32, 42, 0.1);
+  --shadow-2xl: 0 30px 60px rgba(23, 32, 42, 0.15), 0 12px 30px rgba(23, 32, 42, 0.12);
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  /* Z-Index */
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
 }

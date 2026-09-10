@@ -1,92 +1,574 @@
-/* Mobile Safety Styles - دعم النوتش والشريط السفلي */
+/* ==========================================================================
+   MOBILE FOUNDATION
+   ==========================================================================
+   Production-grade responsive foundation
+   RTL / LTR · Safe Area · Dynamic Viewport · Touch · Accessibility
+   Reduced Motion · Forced Colors · Mobile Navigation · Print
+   --------------------------------------------------------------------------
+   Assumptions:
+   - Global box-sizing is already enabled or this file is loaded globally.
+   - --background / --foreground / brand tokens may be overridden by theme.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. TOKENS
+   ========================================================================== */
+
 :root {
-  --safe-area-top: env(safe-area-inset-top, 0px);
-  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-area-left: env(safe-area-inset-left, 0px);
-  --safe-area-right: env(safe-area-inset-right, 0px);
+  /* --------------------------------------------------
+     Safe Area
+     -------------------------------------------------- */
+
+  --safe-top:
+    env(safe-area-inset-top, 0px);
+
+  --safe-right:
+    env(safe-area-inset-right, 0px);
+
+  --safe-bottom:
+    env(safe-area-inset-bottom, 0px);
+
+  --safe-left:
+    env(safe-area-inset-left, 0px);
+
+
+  /* --------------------------------------------------
+     Interaction
+     -------------------------------------------------- */
+
   --touch-target-min: 44px;
+
+  --focus-width: 3px;
+  --focus-offset: 3px;
+
+
+  /* --------------------------------------------------
+     Mobile Navigation
+     -------------------------------------------------- */
+
+  --mobile-header-height: 4rem;
+
+  --mobile-nav-height: 4rem;
+
+  --mobile-menu-z-index: 1000;
+  --mobile-header-z-index: 900;
+  --mobile-bottom-nav-z-index: 900;
+
+
+  /* --------------------------------------------------
+     Motion
+     -------------------------------------------------- */
+
+  --motion-duration-fast: 120ms;
+  --motion-duration-normal: 200ms;
+
+  --motion-ease-standard:
+    cubic-bezier(0.2, 0, 0, 1);
+
+  --motion-ease-emphasized:
+    cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Safe Area Padding Classes */
+
+/* ==========================================================================
+   02. MOBILE VIEWPORT
+   ========================================================================== */
+
+html {
+  /*
+   * Prevent pathological viewport widths.
+   */
+  min-width: 320px;
+
+  /*
+   * Prevent mobile browsers from inflating text.
+   */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+
+/*
+ * Application document.
+ */
+
+body {
+  min-width: 320px;
+
+  /*
+   * Modern dynamic viewport.
+   */
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  /*
+   * Prevent accidental horizontal scrolling.
+   *
+   * `clip` is preferred over `hidden` because it does not
+   * create an unnecessary scrolling context.
+   */
+  overflow-x: clip;
+
+  /*
+   * Safe bottom area for devices with home indicators.
+   */
+  padding-block-end:
+    var(--safe-bottom);
+}
+
+
+/* ==========================================================================
+   03. SAFE AREA UTILITIES
+   ========================================================================== */
+
+/*
+ * Physical edges.
+ *
+ * These are intentionally physical because safe-area variables
+ * themselves represent physical viewport edges.
+ */
+
 .safe-top {
-  padding-top: var(--safe-area-top);
-}
-
-.safe-bottom {
-  padding-bottom: var(--safe-area-bottom);
-}
-
-.safe-left {
-  padding-left: var(--safe-area-left);
+  padding-block-start:
+    var(--safe-top);
 }
 
 .safe-right {
-  padding-right: var(--safe-area-right);
+  padding-inline-end:
+    var(--safe-right);
 }
 
-.safe-area-inset {
-  padding-top: var(--safe-area-top);
-  padding-bottom: var(--safe-area-bottom);
-  padding-left: var(--safe-area-left);
-  padding-right: var(--safe-area-right);
+.safe-bottom {
+  padding-block-end:
+    var(--safe-bottom);
 }
 
-/* Touch Target Optimization */
+.safe-left {
+  padding-inline-start:
+    var(--safe-left);
+}
+
+
+/*
+ * Complete viewport safe area.
+ */
+
+.safe-area {
+  padding-block-start:
+    var(--safe-top);
+
+  padding-block-end:
+    var(--safe-bottom);
+
+  padding-inline-start:
+    var(--safe-left);
+
+  padding-inline-end:
+    var(--safe-right);
+}
+
+
+/*
+ * Safe area + spacing.
+ *
+ * Useful for headers and bottom navigation.
+ */
+
+.safe-top-content {
+  padding-block-start:
+    calc(var(--safe-top) + 1rem);
+}
+
+.safe-bottom-content {
+  padding-block-end:
+    calc(var(--safe-bottom) + 1rem);
+}
+
+
+/* ==========================================================================
+   04. FULL-SCREEN MOBILE SURFACES
+   ========================================================================== */
+
+.mobile-viewport {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+
+/*
+ * Modal / Drawer / Fullscreen application layer.
+ */
+
+.mobile-layer {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  padding-block-start:
+    var(--safe-top);
+
+  padding-block-end:
+    var(--safe-bottom);
+
+  padding-inline-start:
+    var(--safe-left);
+
+  padding-inline-end:
+    var(--safe-right);
+}
+
+
+/* ==========================================================================
+   05. TOUCH TARGET SYSTEM
+   ========================================================================== */
+
 .touch-target {
-  min-height: var(--touch-target-min);
-  min-width: var(--touch-target-min);
+  min-width:
+    var(--touch-target-min);
+
+  min-height:
+    var(--touch-target-min);
+
+  touch-action: manipulation;
 }
 
-/* Mobile First Utilities */
+
+.touch-target-inline {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width:
+    var(--touch-target-min);
+
+  min-height:
+    var(--touch-target-min);
+
+  touch-action: manipulation;
+}
+
+
+/*
+ * Icon buttons.
+ */
+
+.icon-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+
+  padding: 0;
+
+  touch-action: manipulation;
+}
+
+
+/* ==========================================================================
+   06. MOBILE VISIBILITY
+   ========================================================================== */
+
 .mobile-only {
   display: block;
-}
-
-@media (min-width: 640px) {
-  .mobile-only {
-    display: none;
-  }
 }
 
 .desktop-only {
   display: none;
 }
 
+
+.mobile-only-flex {
+  display: flex;
+}
+
+.desktop-only-flex {
+  display: none;
+}
+
+
+.mobile-only-grid {
+  display: grid;
+}
+
+.desktop-only-grid {
+  display: none;
+}
+
+
 @media (min-width: 640px) {
+
+  .mobile-only,
+  .mobile-only-flex,
+  .mobile-only-grid {
+    display: none;
+  }
+
   .desktop-only {
     display: block;
   }
+
+  .desktop-only-flex {
+    display: flex;
+  }
+
+  .desktop-only-grid {
+    display: grid;
+  }
 }
 
-/* Mobile Menu Improvements */
+
+/* ==========================================================================
+   07. MOBILE HEADER
+   ========================================================================== */
+
+.mobile-header {
+  position: relative;
+
+  padding-block-start:
+    var(--safe-top);
+}
+
+
+/*
+ * Fixed header.
+ */
+
+.mobile-header-fixed {
+  position: fixed;
+
+  inset-block-start: 0;
+  inset-inline: 0;
+
+  z-index:
+    var(--mobile-header-z-index);
+
+  padding-block-start:
+    var(--safe-top);
+}
+
+
+/*
+ * Inner header content.
+ */
+
+.mobile-header__content {
+  min-height:
+    var(--mobile-header-height);
+
+  display: flex;
+
+  align-items: center;
+}
+
+
+/* ==========================================================================
+   08. MOBILE BOTTOM NAVIGATION
+   ========================================================================== */
+
+.mobile-bottom-nav {
+  position: fixed;
+
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+
+  z-index:
+    var(--mobile-bottom-nav-z-index);
+
+  padding-block-end:
+    var(--safe-bottom);
+
+  /*
+   * Never allow content to overflow into the home-indicator area.
+   */
+  background:
+    var(--background, #fff);
+}
+
+
+/*
+ * Inner navigation.
+ */
+
+.mobile-bottom-nav__content {
+  min-height:
+    var(--mobile-nav-height);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+/*
+ * Reserve document space for fixed navigation.
+ *
+ * Apply this class only when the page actually contains
+ * a fixed bottom navigation.
+ */
+
+.has-mobile-bottom-nav {
+  padding-block-end:
+    calc(var(--mobile-nav-height) + var(--safe-bottom));
+}
+
+
+/* ==========================================================================
+   09. MOBILE MENU / DRAWER
+   ========================================================================== */
+
 .mobile-menu {
   position: fixed;
+
   inset: 0;
-  z-index: 50;
-  background-color: rgba(var(--primary-foreground-rgb), 0.95);
-  backdrop-filter: blur(12px);
-  padding-top: calc(4rem + var(--safe-area-top));
-  transform: translateX(100%);
-  transition: transform 200ms ease-in-out;
+
+  z-index:
+    var(--mobile-menu-z-index);
+
+  width: 100%;
+
+  height: 100vh;
+  height: 100dvh;
+
+  /*
+   * Safe area.
+   */
+  padding-block-start:
+    calc(var(--mobile-header-height) + var(--safe-top));
+
+  padding-block-end:
+    var(--safe-bottom);
+
+  padding-inline-start:
+    max(1rem, var(--safe-left));
+
+  padding-inline-end:
+    max(1rem, var(--safe-right));
+
+
+  /*
+   * Layer appearance.
+   */
+  background:
+    rgba(var(--primary-foreground-rgb, 0, 0, 0),
+      0.95);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  backdrop-filter:
+    blur(12px);
+
+
+  /*
+   * Initial state.
+   */
+  visibility: hidden;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform:
+    translate3d(100%, 0, 0);
+
+  /*
+   * Controlled animation.
+   */
+  transition:
+    transform var(--motion-duration-normal) var(--motion-ease-standard),
+    opacity var(--motion-duration-fast) linear,
+    visibility 0ms linear var(--motion-duration-normal);
+
+
+  /*
+   * Isolate compositor layer.
+   */
+  isolation: isolate;
+
+  /*
+   * Keep gestures inside the menu.
+   */
+  overscroll-behavior:
+    contain;
 }
 
-.mobile-menu.open {
-  transform: translateX(0);
+
+/*
+ * RTL drawer direction.
+ */
+
+[dir="rtl"] .mobile-menu,
+.rtl .mobile-menu {
+  transform:
+    translate3d(-100%, 0, 0);
 }
 
-/* iOS Notch Support */
-@supports (padding: env(safe-area-inset-top)) {
-  .navbar {
-    padding-top: var(--safe-area-top);
-  }
 
-  .bottom-nav {
-    padding-bottom: var(--safe-area-bottom);
-  }
+/*
+ * Open state.
+ */
+
+.mobile-menu:is(.open,
+  [data-state="open"],
+  [aria-hidden="false"]) {
+  visibility: visible;
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform:
+    translate3d(0, 0, 0);
+
+  transition-delay: 0ms;
 }
 
-/* Prevent zoom on input focus (iOS) */
+
+/*
+ * Menu scrolling surface.
+ */
+
+.mobile-menu__scroll {
+  width: 100%;
+  height: 100%;
+
+  overflow-y: auto;
+
+  overscroll-behavior:
+    contain;
+
+  -webkit-overflow-scrolling:
+    touch;
+
+  scrollbar-width:
+    thin;
+}
+
+
+/* ==========================================================================
+   10. MOBILE FORM CONTROLS
+   ========================================================================== */
+
 @media (max-width: 768px) {
+
+  /*
+   * Prevent iOS Safari from zooming when focusing
+   * form controls.
+   */
   input,
   textarea,
   select {
@@ -94,26 +576,290 @@
   }
 }
 
-/* Reduced motion support */
+
+/*
+ * Ensure form controls remain touch-friendly.
+ */
+
+.mobile-form-control {
+  min-height:
+    var(--touch-target-min);
+
+  touch-action:
+    manipulation;
+}
+
+
+/* ==========================================================================
+   11. HORIZONTAL MOBILE SCROLL
+   ========================================================================== */
+
+.mobile-scroll-x {
+  display: flex;
+
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  overscroll-behavior-inline:
+    contain;
+
+  -webkit-overflow-scrolling:
+    touch;
+
+  scrollbar-width:
+    thin;
+}
+
+
+.mobile-scroll-x>* {
+  flex: 0 0 auto;
+}
+
+
+/* ==========================================================================
+   12. MOBILE CARD / GRID SAFETY
+   ========================================================================== */
+
+.mobile-safe-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+
+.mobile-safe-grid>* {
+  min-width: 0;
+}
+
+
+/*
+ * Prevent long content from breaking a grid/flex layout.
+ */
+
+.mobile-safe-flex>* {
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   13. MOBILE TEXT SAFETY
+   ========================================================================== */
+
+.mobile-break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+.mobile-nowrap {
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   14. ACCESSIBILITY — FOCUS
+   ========================================================================== */
+
+:where(button,
+  a,
+  input,
+  textarea,
+  select,
+  summary,
+  [tabindex]):focus-visible {
+  outline:
+    var(--focus-width, 3px) solid var(--focus-ring,
+      var(--brand-green, currentColor));
+
+  outline-offset:
+    var(--focus-offset, 3px);
+}
+
+
+/* ==========================================================================
+   15. ACCESSIBILITY — REDUCED MOTION
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+
     scroll-behavior: auto !important;
+  }
+
+
+  .mobile-menu {
+    transform: none;
+
+    transition:
+      opacity 0.01ms linear,
+      visibility 0.01ms linear;
+  }
+
+
+  .mobile-menu:is(.open,
+    [data-state="open"],
+    [aria-hidden="false"]) {
+    transform: none;
   }
 }
 
-/* Mobile Scrollbar */
-@media (max-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 4px;
+
+/* ==========================================================================
+   16. ACCESSIBILITY — FORCED COLORS
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .mobile-menu {
+    /*
+     * Let Windows High Contrast determine colors.
+     */
+    background:
+      Canvas;
+
+    color:
+      CanvasText;
+
+    -webkit-backdrop-filter:
+      none;
+
+    backdrop-filter:
+      none;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: var(--brand-green);
-    border-radius: 2px;
+
+  .mobile-bottom-nav {
+    background:
+      Canvas;
+
+    color:
+      CanvasText;
+  }
+
+
+  :where(button,
+    a,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]):focus-visible {
+    outline:
+      3px solid Highlight;
+  }
+}
+
+
+/* ==========================================================================
+   17. ACCESSIBILITY — INCREASED CONTRAST
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+
+  :where(button,
+    a,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]):focus-visible {
+    outline-width: 4px;
+    outline-offset: 4px;
+  }
+}
+
+
+/* ==========================================================================
+   18. MOBILE SCROLLBAR
+   ========================================================================== */
+
+.mobile-scroll-x,
+.mobile-menu__scroll {
+  scrollbar-width: thin;
+}
+
+
+.mobile-scroll-x::-webkit-scrollbar,
+.mobile-menu__scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+
+.mobile-scroll-x::-webkit-scrollbar-track,
+.mobile-menu__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.mobile-scroll-x::-webkit-scrollbar-thumb,
+.mobile-menu__scroll::-webkit-scrollbar-thumb {
+  background:
+    var(--brand-green, currentColor);
+
+  border-radius:
+    999px;
+}
+
+
+/* ==========================================================================
+   19. VERY SMALL SCREENS
+   ========================================================================== */
+
+@media (max-width: 359px) {
+  :root {
+    --mobile-header-height: 3.5rem;
+    --mobile-nav-height: 3.75rem;
+  }
+}
+
+
+/* ==========================================================================
+   20. LANDSCAPE MOBILE
+   ========================================================================== */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+  /*
+   * Reduce excessive vertical occupation in landscape.
+   */
+  .mobile-header__content {
+    min-height:
+      3.25rem;
+  }
+
+  .mobile-bottom-nav__content {
+    min-height:
+      3.5rem;
+  }
+}
+
+
+/* ==========================================================================
+   21. PRINT
+   ========================================================================== */
+
+@media print {
+
+  .mobile-menu,
+  .mobile-bottom-nav,
+  .mobile-header-fixed {
+    display: none !important;
+  }
+
+  .has-mobile-bottom-nav {
+    padding-block-end: 0;
   }
 }

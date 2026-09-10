@@ -108,7 +108,7 @@ export function SiteLoader({ onComplete }: SiteLoaderProps) {
           <SkipButton onClick={handleSkip} />
 
           <div className="text-center max-w-lg mx-auto px-6 z-10" dir="rtl">
-            {/* شعار المؤسسة مع فيديو تحفيزي */}
+            {/* شعار الحملة مع فيديو تحفيزي */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}

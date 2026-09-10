@@ -1,16 +1,17 @@
 @import "./fonts.css";
-@import "./globals.css";
 @import "./site-loader.css";
 @import "./tailwind.css";
 @import "./theme.css";
+@import "./world-class-design-system.css";
 @import "./islamic-patterns.css";
+@import "./islamic-visual-identity.css";
 @import "./typography.css";
 @import "./animations.css";
 @import "./hero.css";
 @import "./icon-enhancements.css";
 @import "./video-player.css";
 @import "./mobile-safety.css";
-@import "./design-system.css";
+/* design-system.css — LEGACY DEPRECATED: merged into world-class-design-system.css (v3 Nebula) — removed to close 20k duplication fracture */
 @import "./components.css";
 @import "./launch-polish.css";
 
@@ -41,4 +42,21 @@ main section:first-child,
   .motion-custom {
     will-change: auto;
   }
+}
+
+/* ==========================================================================
+   RECORD-LEVEL: View Transitions API for SPA — smooth page navigation
+   Respects prefers-reduced-motion, RTL-safe
+   ========================================================================== */
+@supports (view-transition-name: none) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.25s;
+    animation-timing-function: var(--ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+  main { view-transition-name: main-content; }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 0.01ms !important; }
 }

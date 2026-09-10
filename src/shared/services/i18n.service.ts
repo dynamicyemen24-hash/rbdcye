@@ -21,7 +21,7 @@ export const translations = {
 
     // Hero
     hero_title: "رحماء بينهم... أثرٌ يدوم مستقبلٌ يُبنى",
-    hero_subtitle: "مؤسسة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن",
+    hero_subtitle: "حملة رحماء بينهم منظمة إنسانية تنموية رائدة في اليمن",
     donate_now: "تبرع الآن",
     quick_donate: "تبرع سريع",
     watch_story: "شاهد قصتنا",

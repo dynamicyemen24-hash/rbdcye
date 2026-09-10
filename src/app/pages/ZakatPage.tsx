@@ -32,10 +32,10 @@ const formatNumber = (value: number, maximumFractionDigits = 0) =>
   );
 
 const modes: Array<{ id: ZakatMode; title: string; description: string; icon: typeof Coins }> = [
-  { id: "money", title: "زكاة المال", description: "النقد والمدخرات والذمم المرجوّة", icon: Coins },
-  { id: "gold", title: "زكاة الذهب", description: "الوزن الخالص أو المكافئ الخالص", icon: Gem },
-  { id: "silver", title: "زكاة الفضة", description: "وزن الفضة المملوك", icon: Landmark },
-  { id: "fitr", title: "زكاة الفطر", description: "عدد الأشخاص وقيمة الصاع محليًا", icon: Users },
+  { id: "money", title: "زكاة المال", description: "النقديات والودائع والذمم التجارية", icon: Coins },
+  { id: "gold", title: "زكاة الذهب", description: "الذهب المصنّع أو المعدني ب وزنه الخالص", icon: Gem },
+  { id: "silver", title: "زكاة الفضة", description: "فضة السبائك والعملات والفِضَّة", icon: Landmark },
+  { id: "fitr", title: "زكاة الفطر", description: "واجبة على كل مسلم قبل صلاة العيد", icon: Users },
 ];
 
 export default function ZakatPage() {
@@ -55,10 +55,10 @@ export default function ZakatPage() {
   const [saved, setSaved] = useState(false);
 
   useSEO({
-    title: "حاسبة الزكاة المعيارية | رحماء بينهم",
+    title: "حاسبة الزكاة المعيارية — رحماء بينهم",
     description:
-      "أداة إرشادية واضحة لحساب زكاة المال والذهب والفضة والفطر مع إظهار الفرضيات والنصاب.",
-    keywords: ["حاسبة الزكاة", "زكاة المال", "زكاة الذهب", "زكاة الفطر", "رحماء بينهم"],
+      "أداة إرشادية متوافقة مع أصول الفقه لحساب زكاة المال والذهب والفضة والفطر — تُظهر النصاب والفرضيات ونسبة ٢٫٥٪ بشكل واضح.",
+    keywords: ["حاسبة الزكاة", "زكاة المال", "زكاة الذهب", "زكاة الفطر", "رحماء بينهم", "نصاب الزكاة"],
   });
 
   const moneyNisab = goldPrice * GOLD_NISAB_GRAMS;
@@ -153,7 +153,7 @@ export default function ZakatPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] pt-24 text-[var(--brand-ink)]" dir="rtl">
-      <section className="relative overflow-hidden bg-[var(--brand-green)] px-5 py-16 text-white sm:px-8 lg:px-10 lg:py-20">
+      <section className="relative overflow-hidden bg-[var(--brand-green)] px-5 py-24 text-white sm:px-8 sm:py-32 lg:px-10">
         <div
           className="absolute inset-0 opacity-15"
           style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "160px 160px" }}
@@ -168,9 +168,15 @@ export default function ZakatPage() {
                 حاسبة الزكاة <span className="text-[var(--brand-gold)]">بوضوح وأمانة.</span>
               </h1>
               <p className="mt-5 max-w-xl text-sm leading-7 text-white/65 sm:text-base">
-                احسب على أساس المدخلات التي تعرفها، وراجع النصاب والفرضيات قبل اعتماد النتيجة.
-                الأداة إرشادية ولا تستبدل سؤال أهل العلم عند وجود تفاصيل خاصة.
+                أداة إرشادية لحساب زكاة المال والذهب والفضة والفطر وفقًا لأحكام الشريعة الإسلامية.
+                أدخل بياناتك بدقة، وراجع النصاب والفرضيات قبل اعتماد النتيجة. هذه الأداة لا تُغني عن سؤال أهل العلم في الحوائل الخاصة.
               </p>
+              <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
+                <p className="font-amiri text-xl leading-loose text-white md:text-2xl" dir="rtl">
+                  ﴿ خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا ﴾
+                </p>
+                <p className="mt-3 text-sm text-white/50">سورة التوبة، الآية ١٠٣</p>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:min-w-[320px]">
               <div className="rounded-2xl border border-white/10 bg-white/8 p-4">
@@ -187,7 +193,7 @@ export default function ZakatPage() {
       </section>
 
       <main className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_0.36fr] lg:py-14 lg:px-10">
-        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-white p-5 shadow-[0_20px_60px_rgba(15,76,58,.08)] sm:p-8">
+        <section className="rounded-[28px] border border-[var(--brand-green)]/10 bg-[var(--card)] p-5 shadow-[0_20px_60px_rgba(var(--brand-green-rgb),.08)] sm:p-8">
           <div className="grid gap-2 sm:grid-cols-4">
             {modes.map(({ id, title, description, icon: Icon }) => (
               <button
@@ -348,10 +354,10 @@ export default function ZakatPage() {
                   </div>
                   <p className="mt-2 text-xs leading-6 text-[var(--muted-foreground)]">
                     {mode === "fitr"
-                      ? `على أساس ${formatNumber(fitrPeople)} أشخاص × ${formatNumber(fitrValue)} ر.ي`
+                      ? `على أساس ${formatNumber(fitrPeople)} أشخاص × ${formatNumber(fitrValue)} ر.ي — مجموع واجب الفطر`
                       : calculation.eligible
-                        ? `٢٫٥٪ من أصل ${formatNumber(calculation.base, 2)} ${calculation.unit}`
-                        : "لم يتحقق النصاب أو شرط الحول وفق المدخلات الحالية."}
+                        ? `نسبة ٢٫٥٪ من أصل ${formatNumber(calculation.base, 2)} ${calculation.unit} بعد خصم الالتزامات`
+                        : "لم يتحقق النصاب أو شرط الحول وفق المدخلات الحالية — يُنصح بمراجعة أهل العلم."}
                   </p>
                 </div>
                 <button
@@ -374,10 +380,11 @@ export default function ZakatPage() {
         <aside className="space-y-4">
           <div className="rounded-[24px] bg-[var(--brand-green)] p-6 text-white">
             <ShieldCheck className="h-7 w-7 text-[var(--brand-gold)]" />
-            <h2 className="mt-5 text-lg font-extrabold">منهج الحساب</h2>
+            <h2 className="mt-5 text-lg font-extrabold">منهج الحساب الشرعي</h2>
             <p className="mt-3 text-xs leading-7 text-white/65">
-              النصاب يُعرض بوضوح، والالتزامات الحالّة تُخصم من المال المدخل. لا تُخفي الأداة أي
-              فرضية مؤثرة في النتيجة.
+              تعتمد الأداة على أصول الفقه المعتمدة في حساب الزكاة: يُعرض النصاب بوضوح، وتُخصَّم
+              الالتزامات الحالّة من إجمالي المال قبل احتساب نسبته. لا تُخفِي الأداة أي فرضية مؤثرة
+              في النتيجة النهائية.
             </p>
             <div className="mt-5 space-y-3 border-t border-white/10 pt-5 text-xs text-white/70">
               <div className="flex justify-between">
@@ -397,15 +404,16 @@ export default function ZakatPage() {
           <div className="rounded-[24px] border border-[var(--brand-green)]/10 bg-white p-6">
             <div className="flex items-center gap-3">
               <BookOpen className="h-5 w-5 text-[var(--brand-gold-dark)]" />
-              <h2 className="text-sm font-extrabold text-[var(--brand-green)]">تنبيه مهم</h2>
+              <h2 className="text-sm font-extrabold text-[var(--brand-green)]">تنبيه شرعي مهم</h2>
             </div>
             <p className="mt-4 text-xs leading-7 text-[var(--muted-foreground)]">
-              هذه حاسبة إرشادية. في زكاة عروض التجارة، الأسهم، الديون، أو اختلاف الحول والنصاب، راجع
-              عالمًا أو جهة شرعية موثوقة قبل الإخراج.
+              هذه أداة إرشادية لتسهيل الحساب ولا تُغني عن الفتوى. في زكاة عروض التجارة، الأسهم،
+              الصناديق الاستثمارية، أو اختلاف الحول والنصاب، يُنصح بمراجعة عالم أهل العلم أو جهة
+              شرعية موثوقة قبل إخراج الزكاة.
             </p>
             <div className="mt-5 flex items-start gap-2 rounded-xl bg-[var(--brand-gold-pale)] p-3 text-[11px] leading-5 text-[var(--brand-gold-dark)]">
-              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /> سعر الذهب وقيمة الفطر قابلان
-              للتعديل لأنهما يتغيران محليًا.
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /> سعر الذهب وقيمة زكاة الفطر
+              يختلفان من دولة لأخرى ويزولان محليًا — يُنصح بتحديثهما قبل الحساب.
             </div>
           </div>
           <button
@@ -435,11 +443,13 @@ function Field({
   onChange: (value: number) => void;
   min?: number;
 }) {
+  const fieldId = `field-${label.replace(/\s+/g, "-")}`;
   return (
-    <label className="block">
+    <label htmlFor={fieldId} className="block">
       <span className="mb-2 block text-xs font-bold text-[var(--brand-green)]">{label}</span>
       <div className="relative">
         <input
+          id={fieldId}
           type="number"
           min={min}
           value={value || ""}

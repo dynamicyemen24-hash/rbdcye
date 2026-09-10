@@ -213,7 +213,7 @@ export const SectorShowcase: React.FC<SectorShowcaseProps> = memo(
                               {activeSector.stories[0].beneficiaryName}
                             </span>
                             <button
-                              onClick={() => setCurrentPage("stories")}
+                              onClick={() => setCurrentPage("success")}
                               aria-label={`استعراض قصة نجاح ${activeSector.stories[0].beneficiaryName} في ${activeSector.stories[0].location}`}
                               className="text-[11px] font-bold font-cairo text-emerald-300 hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
                             >

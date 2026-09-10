@@ -42,7 +42,7 @@ export default function LoginPage() {
             دخول لوحة التحكم
           </h1>
           <p className="text-[var(--muted-foreground)]" style={{ fontSize: "0.9rem" }}>
-            مؤسسة رحماء بينهم
+            حملة رحماء بينهم
           </p>
         </div>
 

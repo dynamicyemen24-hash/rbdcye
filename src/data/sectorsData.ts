@@ -258,7 +258,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         beneficiaryName: "أهالي قرية النور",
         storyTitle: "انتهاء معاناة جلب الماء الشاقة على النساء والأطفال",
         quote:
-          "كنا نقطع كيلومترات يومياً على الأقدام، واليوم الماء النظيف يصل مباشرة إلى وسط القرية بفضل الله ثم جهود المؤسسة.",
+          "كنا نقطع كيلومترات يومياً على الأقدام، واليوم الماء النظيف يصل مباشرة إلى وسط القرية بفضل الله ثم جهود الحملة.",
         transformationBadge: "أمن مائي",
         location: "محافظة مأرب",
         image: "/images/defaults/project-water.svg",
@@ -302,7 +302,7 @@ export const SECTORS_SHOWCASE_DATA: SectorItem[] = [
         beneficiaryName: "الحافظ إبراهيم",
         storyTitle: "إتمام حفظ كتاب الله وإجازة بالسند المتصل",
         quote:
-          "رعاية المؤسسة للحلقات كان لها الفضل بعد توفيق الله في حفظي للقرآن الكريم وحصولي على الإجازة.",
+          "رعاية الحملة للحلقات كان لها الفضل بعد توفيق الله في حفظي للقرآن الكريم وحصولي على الإجازة.",
         transformationBadge: "حفظ القرآن",
         location: "صنعاء",
         image: "/images/defaults/story-quran.svg",

@@ -221,10 +221,10 @@ export class MediaViewerService {
       {
         _id: "fallback-1",
         _type: "media",
-        title: "مؤسسة رحماء بينهم - صورة تعريفية",
+        title: "حملة رحماء بينهم - صورة تعريفية",
         type: "image",
         url: "/favicon.svg",
-        altText: "مؤسسة رحماء بينهم",
+        altText: "حملة رحماء بينهم",
         category: "organization",
         isFeatured: true,
         order: 0,
@@ -233,7 +233,7 @@ export class MediaViewerService {
       {
         _id: "fallback-2",
         _type: "video",
-        title: "فيديو تعريفي للمؤسسة",
+        title: "فيديو تعريفي للحملة",
         type: "video",
         videoUrl: "/videos/hero-background.mp4",
         duration: "4:30",

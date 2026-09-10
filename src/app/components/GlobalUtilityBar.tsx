@@ -1,24 +1,21 @@
-// Global Utility Bar - شريط الأدوات المساعدة العائم المتقدم
+// GlobalUtilityBar — Strategic floating action bar
+// شريط الأدوات الاستراتيجي العائم — وصول سريع للوظائف المحورية
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
+  Heart,
+  Calculator,
+  MessageCircle,
+  Share2,
   Type,
   Sun,
   Moon,
-  Coffee,
-  Eye,
-  RotateCcw,
-  ArrowUp,
-  Share2,
-  Phone,
-  MessageCircle,
-  X,
-  Sparkles,
   Printer,
+  ArrowUp,
+  X,
   Minus,
   Plus,
-  Keyboard,
   Zap,
 } from "lucide-react";
 import {
@@ -32,394 +29,285 @@ interface GlobalUtilityBarProps {
   onSearchOpen: () => void;
 }
 
-type FontWeightMode = "normal" | "bold" | "bolder";
-
 export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [fontSize, setFontSize] = useState<FontSizeLevel>("normal");
   const [theme, setTheme] = useState<ReaderThemeMode>("light");
-  const [fontWeight, setFontWeight] = useState<FontWeightMode>("normal");
-  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [shareTooltip, setShareTooltip] = useState(false);
 
+  // Load saved preferences
   useEffect(() => {
     const saved = getSavedReaderPreferences();
     setFontSize(saved.fontSize);
     setTheme(saved.theme);
   }, []);
 
+  // Track scroll position for "scroll to top" visibility
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleFontSizeChange = useCallback((size: FontSizeLevel) => {
+  // Apply font size to root
+  const handleFontSize = useCallback((size: FontSizeLevel) => {
     setFontSize(size);
     saveReaderPreferences({ fontSize: size });
-    document.documentElement.style.setProperty(
-      "--reader-font-size",
-      size === "normal"
-        ? "1rem"
-        : size === "large"
-          ? "1.15rem"
-          : size === "xlarge"
-            ? "1.3rem"
-            : "1.5rem"
-    );
+    const map: Record<FontSizeLevel, string> = {
+      normal: "1rem",
+      large: "1.15rem",
+      xlarge: "1.3rem",
+      xxlarge: "1.5rem",
+    };
+    document.documentElement.style.setProperty("--reader-font-size", map[size]);
   }, []);
 
-  const handleThemeChange = useCallback((t: ReaderThemeMode) => {
-    setTheme(t);
-    saveReaderPreferences({ theme: t });
+  // Toggle dark mode
+  const toggleDarkMode = useCallback(() => {
+    const next: ReaderThemeMode = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    saveReaderPreferences({ theme: next });
     const root = document.documentElement;
-    if (t === "dark") {
-      root.classList.add("dark");
-      root.classList.remove("sepia", "contrast");
-    } else if (t === "sepia") {
-      root.classList.add("sepia");
-      root.classList.remove("dark", "contrast");
-    } else if (t === "contrast") {
-      root.classList.add("contrast");
-      root.classList.remove("dark", "sepia");
-    } else {
-      root.classList.remove("dark", "sepia", "contrast");
-    }
-  }, []);
+    root.classList.toggle("dark", next === "dark");
+    root.classList.remove("sepia", "contrast");
+  }, [theme]);
 
-  const handleFontWeightChange = useCallback((weight: FontWeightMode) => {
-    setFontWeight(weight);
-    document.documentElement.style.setProperty(
-      "--reader-font-weight",
-      weight === "normal" ? "400" : weight === "bold" ? "600" : "700"
-    );
-  }, []);
-
-  const handleReset = useCallback(() => {
-    setFontSize("normal");
-    setTheme("light");
-    setFontWeight("normal");
-    saveReaderPreferences({ fontSize: "normal", theme: "light", lineHeight: "relaxed" });
-    const root = document.documentElement;
-    root.classList.remove("dark", "sepia", "contrast");
-    root.style.removeProperty("--reader-font-size");
-    root.style.removeProperty("--reader-font-weight");
-  }, []);
+  // Increase / decrease font size
+  const cycleFontSize = useCallback(
+    (dir: "up" | "down") => {
+      const levels: FontSizeLevel[] = ["normal", "large", "xlarge", "xxlarge"];
+      const idx = levels.indexOf(fontSize);
+      const next = dir === "up" ? levels[Math.min(idx + 1, 3)] : levels[Math.max(idx - 1, 0)];
+      handleFontSize(next);
+    },
+    [fontSize, handleFontSize],
+  );
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
+  const handlePrint = () => window.print();
+
   const handleShare = async () => {
+    const url = window.location.href;
+    const title = document.title;
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: document.title,
-          url: window.location.href,
-        });
+        await navigator.share({ title, url });
       } catch {
-        // The user may cancel the native share dialog; no further action is required.
+        // User cancelled native share
       }
     } else {
-      navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(url);
+      setShareTooltip(true);
+      setTimeout(() => setShareTooltip(false), 1800);
     }
   };
 
-  const handlePrint = () => window.print();
+  const openWhatsApp = () =>
+    window.open("https://wa.me/967780777007?text=مرحباً، أريد التواصل معكم", "_blank");
 
-  const tools = [
-    {
-      icon: Search,
-      label: "بحث",
-      onClick: onSearchOpen,
-      color: "var(--brand-green)",
-      shortcut: "Ctrl+K",
-    },
-    { icon: Share2, label: "مشاركة", onClick: handleShare, color: "var(--brand-green)" },
-    { icon: Printer, label: "طباعة", onClick: handlePrint, color: "var(--brand-green)" },
-    {
-      icon: Phone,
-      label: "اتصال",
-      onClick: () => window.open("tel:+967780777007"),
-      color: "var(--brand-green)",
-    },
-    {
-      icon: MessageCircle,
-      label: "واتساب",
-      onClick: () => window.open("https://wa.me/967780777007"),
-      color: "#25D366",
-    },
-  ];
+  const isDark = theme === "dark" || document.documentElement.classList.contains("dark");
 
-  const fontSizes: { key: FontSizeLevel; label: string; icon: React.ReactNode }[] = [
-    { key: "normal", label: "عادي", icon: <Minus className="w-3 h-3" /> },
-    { key: "large", label: "مريح", icon: <Type className="w-3.5 h-3.5" /> },
-    { key: "xlarge", label: "كبير", icon: <Plus className="w-3.5 h-3.5" /> },
-    { key: "xxlarge", label: "أقصى", icon: <Plus className="w-4 h-4" /> },
-  ];
-
-  const themes: { key: ReaderThemeMode; label: string; icon: React.ReactNode; desc: string }[] = [
-    { key: "light", label: "نهاري", icon: <Sun className="w-4 h-4" />, desc: "الوضع الافتراضي" },
-    { key: "sepia", label: "دافئ", icon: <Coffee className="w-4 h-4" />, desc: "مريح للعين" },
-    { key: "dark", label: "ليلي", icon: <Moon className="w-4 h-4" />, desc: "wohliger للعينين" },
-    { key: "contrast", label: "تباين", icon: <Eye className="w-4 h-4" />, desc: "وضوح عالي" },
-  ];
-
-  const fontWeights: { key: FontWeightMode; label: string }[] = [
-    { key: "normal", label: "عادي" },
-    { key: "bold", label: "سميك" },
-    { key: "bolder", label: "أثقل" },
-  ];
-
-  const shortcuts = [
-    { keys: ["Ctrl", "K"], action: "فتح البحث" },
-    { keys: ["Ctrl", "+"], action: "تكبير الخط" },
-    { keys: ["Ctrl", "-"], action: "تصغير الخط" },
-    { keys: ["Ctrl", "P"], action: "طباعة الصفحة" },
-    { keys: ["Esc"], action: "إغلاق النوافذ" },
-  ];
-
+  // ── Render ────────────────────────────────────────────────────────────
   return (
     <>
-      {/* Floating Action Button */}
-      <div className="fixed left-4 bottom-6 z-50 flex flex-col items-center gap-3" dir="ltr">
+      {/* Floating trigger FAB */}
+      <div className="fixed left-3 bottom-5 z-50 flex flex-col items-center gap-2" dir="rtl">
+        {/* Scroll-to-top (appears after 400px scroll) */}
         <AnimatePresence>
           {showScrollTop && (
             <motion.button
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              initial={{ opacity: 0, scale: 0.7, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 10 }}
+              exit={{ opacity: 0, scale: 0.7, y: 8 }}
               onClick={scrollToTop}
-              className="w-11 h-11 rounded-full bg-white shadow-lg shadow-gray-200/80 border border-gray-100 flex items-center justify-center text-gray-600 hover:text-[var(--brand-green)] hover:border-[var(--brand-green)]/30 transition-all hover:scale-110"
               aria-label="العودة للأعلى"
+              className="w-10 h-10 rounded-full bg-[var(--card)] shadow-lg border border-[var(--border)] flex items-center justify-center text-[var(--muted-foreground)] hover:text-[var(--brand-green)] hover:border-[var(--brand-green)]/30 transition-all hover:scale-110"
             >
-              <ArrowUp className="w-5 h-5" />
+              <ArrowUp className="w-4 h-4" />
             </motion.button>
           )}
         </AnimatePresence>
 
+        {/* Main FAB trigger */}
         <motion.button
-          onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className={`w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all ${
+          whileTap={{ scale: 0.93 }}
+          onClick={() => setIsOpen((v) => !v)}
+          aria-label={isOpen ? "إغلاق شريط الأدوات" : "فتح شريط الأدوات"}
+          className={`w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
             isOpen
-              ? "bg-gray-800 text-white shadow-gray-800/30"
+              ? "bg-[var(--foreground)] text-[var(--background)] shadow-black/20"
               : "bg-[var(--brand-green)] text-white shadow-[var(--brand-green)]/30"
           }`}
-          aria-label={isOpen ? "إغلاق الأدوات" : "أدوات المساعدة"}
         >
           {isOpen ? <X className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
         </motion.button>
       </div>
 
-      {/* Quick Actions (always visible) */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="fixed left-4 bottom-20 z-50 flex flex-col gap-2"
-            dir="ltr"
-          >
-            {tools.map((tool, i) => (
-              <motion.button
-                key={tool.label}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ delay: i * 0.05 }}
-                onClick={tool.onClick}
-                className="w-10 h-10 rounded-full bg-white shadow-md shadow-gray-200/60 border border-gray-100 flex items-center justify-center text-gray-500 hover:text-white hover:shadow-lg transition-all hover:scale-110 group"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = tool.color;
-                  e.currentTarget.style.color = "white";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "";
-                  e.currentTarget.style.color = "";
-                }}
-                aria-label={tool.label}
-                title={tool.label}
-              >
-                <tool.icon className="w-4 h-4" />
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Expanded Panel */}
+      {/* Expanded sidebar panel */}
       <AnimatePresence>
         {isOpen && (
           <>
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+              aria-hidden="true"
             />
-            <motion.div
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+
+            {/* Panel */}
+            <motion.nav
+              initial={{ opacity: 0, x: -20, scale: 0.96 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -20, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed left-4 bottom-20 z-50 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden max-h-[80vh] overflow-y-auto"
+              exit={{ opacity: 0, x: -20, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 320, damping: 28 }}
+              role="navigation"
+              aria-label="شريط الأدوات الاستراتيجي"
+              className="fixed left-3 bottom-20 z-50 w-72 bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden"
               dir="rtl"
             >
               {/* Header */}
-              <div className="px-4 py-3 bg-gradient-to-l from-[var(--brand-green)] to-emerald-600 sticky top-0 z-10">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-white">
-                    <Zap className="w-4 h-4" />
-                    <span className="text-sm font-bold">أدوات المساعدة</span>
-                  </div>
-                  <button
-                    onClick={() => setShowShortcuts(!showShortcuts)}
-                    className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-colors text-white"
-                    title="اختصارات لوحة المفاتيح"
-                  >
-                    <Keyboard className="w-4 h-4" />
-                  </button>
+              <div className="px-4 py-3 bg-gradient-to-l from-[var(--brand-green)] to-emerald-700">
+                <div className="flex items-center gap-2 text-white">
+                  <Zap className="w-4 h-4 shrink-0" />
+                  <span className="text-sm font-bold">شريط الأدوات</span>
                 </div>
               </div>
 
-              <div className="p-4 space-y-4">
-                {/* Keyboard Shortcuts */}
-                <AnimatePresence>
-                  {showShortcuts && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="bg-gray-50 rounded-xl p-3 space-y-2">
-                        <div className="text-xs font-bold text-gray-500 mb-2">
-                          اختصارات لوحة المفاتيح
-                        </div>
-                        {shortcuts.map((s, i) => (
-                          <div key={i} className="flex items-center justify-between text-xs">
-                            <span className="text-gray-600">{s.action}</span>
-                            <div className="flex gap-1">
-                              {s.keys.map((key, j) => (
-                                <kbd
-                                  key={j}
-                                  className="px-1.5 py-0.5 bg-white border border-gray-200 rounded text-[10px] font-mono text-gray-500"
-                                >
-                                  {key}
-                                </kbd>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Font Size */}
-                <div>
-                  <span className="text-xs font-bold text-gray-500 mb-2 block">حجم الخط</span>
-                  <div className="flex gap-1.5">
-                    {fontSizes.map((fs) => (
-                      <button
-                        key={fs.key}
-                        onClick={() => handleFontSizeChange(fs.key)}
-                        className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                          fontSize === fs.key
-                            ? "bg-[var(--brand-green)] text-white shadow-md"
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                      >
-                        {fs.icon}
-                        {fs.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Font Weight */}
-                <div>
-                  <span className="text-xs font-bold text-gray-500 mb-2 block">سمك الخط</span>
-                  <div className="flex gap-1.5">
-                    {fontWeights.map((fw) => (
-                      <button
-                        key={fw.key}
-                        onClick={() => handleFontWeightChange(fw.key)}
-                        className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                          fontWeight === fw.key
-                            ? "bg-[var(--brand-green)] text-white shadow-md"
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                        style={{
-                          fontWeight:
-                            fw.key === "normal" ? "400" : fw.key === "bold" ? "600" : "800",
-                        }}
-                      >
-                        {fw.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Theme */}
-                <div>
-                  <span className="text-xs font-bold text-gray-500 mb-2 block">نمط العرض</span>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {themes.map((t) => (
-                      <button
-                        key={t.key}
-                        onClick={() => handleThemeChange(t.key)}
-                        className={`flex flex-col items-center gap-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                          theme === t.key
-                            ? "bg-[var(--brand-green)] text-white shadow-md"
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                      >
-                        {t.icon}
-                        <span>{t.label}</span>
-                        <span className="text-[9px] font-normal opacity-70">{t.desc}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Reset */}
-                <button
-                  onClick={handleReset}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all border border-gray-200"
+              <div className="p-3 space-y-3 max-h-[70vh] overflow-y-auto">
+                {/* ── Strategic Row 1: Primary Conversion — Donate (expert: تحويل أولاً) ── */}
+                <a
+                  href="/donate"
+                  className="flex items-center justify-center gap-2 w-full px-3 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md"
+                  style={{
+                    background: "linear-gradient(135deg, var(--brand-gold), var(--brand-gold-dark))",
+                    color: "#fff",
+                    boxShadow: "0 4px 14px rgba(var(--brand-gold-rgb), 0.35)",
+                  }}
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  إعادة الضبط الافتراضي
+                  <Heart className="w-4 h-4" />
+                  <span>تبرع سريع — أثر فوري</span>
+                </a>
+
+                <button
+                  onClick={() => { onSearchOpen(); setIsOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)] text-sm font-semibold"
+                >
+                  <Search className="w-4 h-4 text-[var(--brand-green)]" />
+                  <span>بحث</span>
+                  <kbd className="mr-auto text-[10px] px-1.5 py-0.5 rounded border border-[var(--border)] text-[var(--muted-foreground)] font-mono">
+                    Ctrl+K
+                  </kbd>
                 </button>
 
-                {/* Divider */}
-                <div className="border-t border-gray-100" />
+                {/* ── Strategic Row 2: Zakat + WhatsApp ── */}
+                <div className="grid grid-cols-2 gap-2">
+                  <a
+                    href="/zakat"
+                    className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)]"
+                  >
+                    <Calculator className="w-4 h-4 text-[var(--brand-green)]" />
+                    <span className="text-xs font-bold">زكاة</span>
+                  </a>
 
-                {/* Quick Actions */}
-                <div>
-                  <span className="text-xs font-bold text-gray-500 mb-2 block">إجراءات سريعة</span>
-                  <div className="grid grid-cols-2 gap-2">
-                    {tools.map((tool) => (
-                      <button
-                        key={tool.label}
-                        onClick={() => {
-                          tool.onClick();
-                          setIsOpen(false);
-                        }}
-                        className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-bold transition-all"
+                  <button
+                    onClick={openWhatsApp}
+                    className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)]"
+                  >
+                    <MessageCircle className="w-4 h-4 text-green-500" />
+                    <span className="text-xs font-bold">واتساب</span>
+                  </button>
+                </div>
+
+                {/* ── Strategic Row 3: Share ── */}
+                <div className="relative">
+                  <button
+                    onClick={handleShare}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)] text-sm font-semibold"
+                  >
+                    <Share2 className="w-4 h-4 text-[var(--brand-green)]" />
+                    <span>مشاركة الصفحة</span>
+                  </button>
+                  <AnimatePresence>
+                    {shareTooltip && (
+                      <motion.span
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-[var(--brand-green)] text-white px-2 py-1 rounded-lg shadow-md whitespace-nowrap"
                       >
-                        <tool.icon className="w-4 h-4" style={{ color: tool.color }} />
-                        {tool.label}
-                      </button>
-                    ))}
+                        تم النسخ
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* ── Divider ── */}
+                <div className="border-t border-[var(--border)]" />
+
+                {/* ── Accessibility Controls ── */}
+                <div>
+                  <span className="text-xs font-bold text-[var(--muted-foreground)] mb-1.5 block">
+                    حجم الخط
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => cycleFontSize("down")}
+                      aria-label="تصغير الخط"
+                      className="w-9 h-9 rounded-lg bg-[var(--background)] hover:bg-[var(--muted)] border border-[var(--border)] flex items-center justify-center text-[var(--muted-foreground)] transition-colors"
+                    >
+                      <Minus className="w-3.5 h-3.5" />
+                    </button>
+                    <div className="flex-1 flex items-center justify-center">
+                      <Type className="w-4 h-4 text-[var(--brand-green)]" />
+                    </div>
+                    <button
+                      onClick={() => cycleFontSize("up")}
+                      aria-label="تكبير الخط"
+                      className="w-9 h-9 rounded-lg bg-[var(--background)] hover:bg-[var(--muted)] border border-[var(--border)] flex items-center justify-center text-[var(--muted-foreground)] transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </div>
+
+                {/* ── Dark Mode Toggle ── */}
+                <button
+                  onClick={toggleDarkMode}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)] text-sm font-semibold"
+                >
+                  {isDark ? (
+                    <Sun className="w-4 h-4 text-amber-400" />
+                  ) : (
+                    <Moon className="w-4 h-4 text-[var(--brand-green)]" />
+                  )}
+                  <span>{isDark ? "الوضع النهاري" : "الوضع الليلي"}</span>
+                </button>
+
+                {/* ── Print ── */}
+                <button
+                  onClick={handlePrint}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)] text-sm font-semibold"
+                >
+                  <Printer className="w-4 h-4 text-[var(--brand-green)]" />
+                  <span>طباعة الصفحة</span>
+                </button>
+
+                {/* ── Scroll to top (always visible inside panel) ── */}
+                <button
+                  onClick={() => { scrollToTop(); setIsOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--background)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)] text-sm font-semibold"
+                >
+                  <ArrowUp className="w-4 h-4 text-[var(--brand-green)]" />
+                  <span>العودة للأعلى</span>
+                </button>
               </div>
-            </motion.div>
+            </motion.nav>
           </>
         )}
       </AnimatePresence>

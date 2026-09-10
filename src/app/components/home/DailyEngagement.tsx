@@ -39,8 +39,8 @@ const DAILY_VERSES = [
 
 const DAILY_ACTIONS = [
   { time: "06:00", label: "صبح بالخير", icon: "🌅", message: "ابدأ يومك بصدقة" },
-  { time: "12:00", label: "暂停 و تذكر", icon: "☀️", message: "هل تبرعت اليوم؟" },
-  { time: "18:00", label: "مساء الخير", icon: "🌙", message: ".randrange opportunity" },
+  { time: "12:00", label: "استراحة و تذكر", icon: "☀️", message: "هل تبرعت اليوم؟" },
+  { time: "18:00", label: "مساء الخير", icon: "🌙", message: "تذكير بالخير قبل النوم" },
 ];
 
 interface DailyEngagementProps {

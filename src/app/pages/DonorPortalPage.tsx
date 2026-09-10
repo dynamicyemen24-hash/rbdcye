@@ -62,7 +62,7 @@ export default function DonorPortalPage() {
               key={tab}
               type="button"
               onClick={() => navigate(`/donor?view=${tab}`)}
-              className="group rounded-2xl border border-[var(--brand-green)]/10 bg-white p-4 text-right shadow-sm transition hover:-translate-y-1 hover:border-[var(--brand-green)]/25 hover:shadow-lg"
+              className="group rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-4 text-right shadow-sm transition hover:-translate-y-1 hover:border-[var(--brand-green)]/25 hover:shadow-lg"
             >
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)] transition group-hover:bg-[var(--brand-green)] group-hover:text-[var(--brand-gold)]">
                 <Icon className="h-5 w-5" />
@@ -78,7 +78,7 @@ export default function DonorPortalPage() {
         </div>
         <div
           id="donor-portal-overview"
-          className="overflow-hidden rounded-[30px] border border-[var(--brand-green)]/10 bg-white shadow-[0_20px_60px_rgba(15,76,58,.08)]"
+          className="overflow-hidden rounded-[30px] border border-[var(--brand-green)]/10 bg-[var(--card)] shadow-[0_20px_60px_rgba(var(--brand-green-rgb),.08)]"
         >
           <DonorPortal />
         </div>
@@ -86,7 +86,7 @@ export default function DonorPortalPage() {
           <button
             type="button"
             onClick={() => navigate("/messages")}
-            className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-white p-5 text-right transition hover:border-[var(--brand-green)]/25"
+            className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-5 text-right transition hover:border-[var(--brand-green)]/25"
           >
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
               <MessageSquare className="h-5 w-5" />
@@ -101,7 +101,7 @@ export default function DonorPortalPage() {
           <button
             type="button"
             onClick={() => navigate("/subscribe")}
-            className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-white p-5 text-right transition hover:border-[var(--brand-green)]/25"
+            className="flex items-center gap-4 rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-5 text-right transition hover:border-[var(--brand-green)]/25"
           >
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--brand-gold-pale)] text-[var(--brand-gold-dark)]">
               <Heart className="h-5 w-5" />
@@ -109,7 +109,7 @@ export default function DonorPortalPage() {
             <span>
               <strong className="block text-sm text-[var(--brand-green)]">تحديثات الأثر</strong>
               <small className="mt-1 block text-xs text-[var(--muted-foreground)]">
-                اختر ما ترغب في متابعته من أخبار المؤسسة
+                اختر ما ترغب في متابعته من أخبار الحملة
               </small>
             </span>
           </button>

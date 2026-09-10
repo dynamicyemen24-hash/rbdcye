@@ -31,7 +31,7 @@ const METRICS: Metric[] = [
     suffix: "+",
     icon: Users,
     color: "var(--brand-green)",
-    bgGradient: "linear-gradient(135deg, rgba(15,76,58,0.08), rgba(23,105,79,0.04))",
+    bgGradient: "linear-gradient(135deg, rgba(var(--brand-green-rgb),0.08), rgba(23,105,79,0.04))",
     description: "اسر يمنية استفادت من برامجنا",
   },
   {
@@ -77,7 +77,7 @@ const METRICS: Metric[] = [
     suffix: "",
     icon: TrendingUp,
     color: "var(--brand-green-light)",
-    bgGradient: "linear-gradient(135deg, rgba(23,105,79,0.08), rgba(15,76,58,0.04))",
+    bgGradient: "linear-gradient(135deg, rgba(23,105,79,0.08), rgba(var(--brand-green-rgb),0.04))",
     description: "شريك رئيسي في العمل الإنساني",
   },
 ];

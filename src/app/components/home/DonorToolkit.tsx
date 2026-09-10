@@ -197,7 +197,7 @@ function ImpactEstimatorCard() {
                   ? "linear-gradient(135deg, var(--brand-green), var(--brand-green-light))"
                   : "var(--muted)",
               color: amount === a ? "#FFFFFF" : "var(--muted-foreground)",
-              boxShadow: amount === a ? "0 6px 16px rgba(15,76,58,0.25)" : "none",
+              boxShadow: amount === a ? "0 6px 16px rgba(var(--brand-green-rgb),0.25)" : "none",
             }}
           >
             {a.toLocaleString("ar-SA")}$
