@@ -64,3 +64,12 @@ output.txt
 wrangler-4.118.0.tgz
 .vercel
 lint-output.txt
+
+# Playwright
+playwright-report/
+test-results/
+playwright/.auth/
+
+# Local public assets (generated)
+# public/js/ is intentionally tracked — do not ignore
+
