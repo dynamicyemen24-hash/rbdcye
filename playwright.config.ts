@@ -1,56 +1,55 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
+
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:5173";
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: "./e2e",
   timeout: 30000,
   expect: {
     timeout: 5000,
   },
   fullyParallel: true,
-  forbidOnly: process.env.CI ? true : false,
+  forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
+  reporter: [["list"], ["html", { outputFolder: "playwright-report", open: "never" }]],
   use: {
-    baseURL: 'http://localhost:5173',
-    trace: 'on-first-retry',
-    headless: false,
+    baseURL,
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    headless: true,
     viewport: { width: 1440, height: 900 },
     actionTimeout: 10000,
     navigationTimeout: 30000,
-
-    // Auth state
-    storageState: 'playwright/.auth/storage.state',
-
-    // Context options
     ignoreHTTPSErrors: true,
-
-    // Default device
-    ...devices['Desktop Chrome'],
+    locale: "ar-YE",
+    ...devices["Desktop Chrome"],
   },
 
-  // Projects to run
   projects: [
     {
-      name: 'Chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'Firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "mobile-chrome",
+      use: { ...devices["Pixel 7"] },
     },
     {
-      name: 'WebKit',
-      use: { ...devices['Desktop Safari'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
   ],
 
-  // Server to start before tests
   webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:5173',
+    command: "pnpm dev",
+    url: baseURL,
     timeout: 120000,
-    reuseExistingServer: true,
-    debug: process.env.CI ? 'only-on-failure : false' : 'debugger',
+    reuseExistingServer: !process.env.CI,
   },
 });

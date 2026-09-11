@@ -20,7 +20,6 @@ import { FixedDonateButton } from "./components/FixedDonateButton";
 import { SocialProofToast } from "./components/SocialProofToast";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { BackToTop } from "./components/BackToTop";
-import { SkipToContent } from "./components/SkipToContent";
 import SearchOverlay from "./components/SearchOverlay";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { pageTransition } from "@/utils/animations";
@@ -597,9 +596,6 @@ const AppContent = memo(function AppContent() {
 
       {/* Back to Top Button */}
       <BackToTop />
-
-      {/* Skip to Content - Accessibility */}
-      <SkipToContent />
     </div>
   );
 });

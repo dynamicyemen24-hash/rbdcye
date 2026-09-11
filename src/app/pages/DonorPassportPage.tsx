@@ -110,8 +110,8 @@ const V = {
   '--shadow-emboss': 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3)',
 
   /* typography */
-  '--font-display': "'Noto Kufi Arabic', 'Noto Sans Arabic', 'Tajawal', sans-serif",
-  '--font-body': "'Noto Sans Arabic', 'Tajawal', 'IBM Plex Sans Arabic', sans-serif",
+  '--font-display': "'Noto Kufi Arabic', 'Noto Sans Arabic', 'Cairo', sans-serif",
+  '--font-body': "'Noto Sans Arabic', 'Cairo', 'IBM Plex Sans Arabic', sans-serif",
   '--font-mono': "'IBM Plex Mono Arabic', 'Noto Sans Mono', monospace",
 
   /* radius */

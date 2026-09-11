@@ -10,7 +10,7 @@ const MAIN_ITEMS = [
   { id: "about", label: "من نحن" },
   { id: "programs", label: "قطاعات الأعمال" },
   { id: "projects", label: "المشاريع" },
-  { id: "transparency", label: "الشفافية" },
+  { id: "transparency", label: "الحوكمة" },
   { id: "news", label: "الأخبار" },
   { id: "contact", label: "تواصل معنا" },
 ] as const;

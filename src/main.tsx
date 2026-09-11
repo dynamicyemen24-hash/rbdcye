@@ -16,7 +16,7 @@ import { initializeCoreServices } from "@/features/core";
 import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
 import { preloadCriticalAssets } from "@/utils/performance";
 import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
-import { offlineManager, syncService } from "@/services/offline";
+import { I18nProvider } from "@/shared/i18n";
 import { ToastProvider } from "./app/components/Toast";
 import "./styles/index.css";
 
@@ -43,11 +43,15 @@ if (typeof window !== "undefined") {
     cleanDangerousElements();
     preloadCriticalAssets();
     setupGlobalErrorHandler();
-    offlineManager.init().then(() => {
-      syncService.start();
-    }).catch(err => {
-      if (import.meta.env.DEV) console.error('[OfflineManager]', err);
-    });
+    import("@/services/offline")
+      .then(({ offlineManager, syncService }) =>
+        offlineManager.init().then(() => {
+          syncService.start();
+        })
+      )
+      .catch((err) => {
+        if (import.meta.env.DEV) console.error("[OfflineManager]", err);
+      });
   });
 
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
@@ -114,10 +118,12 @@ function AppWithProgress() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ToastProvider>
-      <AuthProvider>
-        <AppWithProgress />
-      </AuthProvider>
-    </ToastProvider>
+    <I18nProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <AppWithProgress />
+        </AuthProvider>
+      </ToastProvider>
+    </I18nProvider>
   </StrictMode>
 );

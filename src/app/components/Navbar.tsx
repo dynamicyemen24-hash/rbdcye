@@ -33,7 +33,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "about", label: "عن الحملة", icon: BookOpenText },
   { id: "programs", label: "مجالات العمل", icon: UsersRound },
   { id: "projects", label: "مشاريعنا", icon: HandHeart },
-  { id: "transparency", label: "الشفافية", icon: ShieldCheck },
+  { id: "transparency", label: "الحوكمة", icon: ShieldCheck },
 ];
 
 function BrandMark({ compact = false }: { compact?: boolean }) {

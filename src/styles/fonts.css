@@ -1,16 +1,16 @@
 /* ============================================================
    TYPOGRAPHY SYSTEM — MODERN PRODUCTION
-   Tajawal Arabic + Plus Jakarta Sans Latin
+   Cairo Arabic + Plus Jakarta Sans Latin
    Self-hosted Variable Fonts · RTL First · Performance Ready
    ============================================================ */
 
 /* ============================================================
-   1. TAJAWAL — ARABIC VARIABLE FONT
+   1. CAIRO — ARABIC VARIABLE FONT
    ============================================================ */
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/tajawal-var-arabic.woff2") format("woff2");
+  font-family: "Cairo";
+  src: url("/fonts/cairo-var-arabic.woff2") format("woff2");
   font-style: normal;
   font-weight: 200 900;
   font-display: swap;
@@ -25,12 +25,12 @@
 }
 
 /* ============================================================
-   2. TAJAWAL — LATIN
+   2. CAIRO — LATIN
    ============================================================ */
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/tajawal-var-latin.woff2") format("woff2");
+  font-family: "Cairo";
+  src: url("/fonts/cairo-var-latin.woff2") format("woff2");
   font-style: normal;
   font-weight: 200 900;
   font-display: swap;
@@ -127,7 +127,7 @@
 
 :root {
   --font-ar:
-    "Tajawal",
+    "Cairo",
     "Segoe UI",
     Tahoma,
     Arial,
@@ -135,7 +135,7 @@
 
   --font-latin:
     "Plus Jakarta Sans",
-    "Tajawal",
+    "Cairo",
     system-ui,
     sans-serif;
 
@@ -216,6 +216,7 @@ body {
    8. FONT UTILITIES
    ============================================================ */
 
+.font-cairo,
 .font-tajawal {
   font-family: var(--font-ar);
 }

@@ -64,15 +64,10 @@
     <link rel="dns-prefetch" href="https://js.stripe.com" />
     <link rel="dns-prefetch" href="https://hooks.stripe.com" />
 
-    <!-- Modulepreload for critical runtime — record-level LCP -->
-    <link rel="modulepreload" href="/src/main.tsx" />
-    <link rel="modulepreload" href="/src/app/App.tsx" />
-
     <!-- Preload critical assets -->
     <link rel="preload" href="/fonts/cairo-var-arabic.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/cairo-var-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" as="image" href="/images/defaults/about-hero.svg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/defaults/story-community.svg" fetchpriority="high" />
 
     <!-- Font Display: Swap to prevent invisible text during font load -->
     <style>
@@ -93,8 +88,8 @@
       @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.05);opacity:.6}}
     </style>
 
-    <!-- Security: Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data:; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;">
+    <!-- Security: Content Security Policy (aligned with public/_headers — both policies are enforced) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://sentry.io https://*.cloudflare.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -179,7 +174,7 @@
     <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي">
       انتقل إلى المحتوى الرئيسي
     </a>
-    <div id="root" role="application" aria-label="موقع حملة رحماء بينهم الإلكتروني">
+    <div id="root">
       <div id="app-loader" class="app-loader" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a12 0%,#0F4C3A 50%,#0a1a12 100%);transition:opacity .6s ease,visibility .6s ease">
   <!-- Islamic geometric ring animation -->
   <div style="position:relative;width:120px;height:120px;margin-bottom:32px">
@@ -198,19 +193,7 @@
   </div>
   </div>
 </div>
-<script>
-(function(){
-  var p=document.getElementById('loader-progress');
-  if(!p)return;
-  var s=0;
-  var iv=setInterval(function(){
-    s+=Math.random()*15+5;
-    if(s>90)s=90;
-    p.style.width=s+'%';
-  },200);
-  window.__loaderStop=function(){clearInterval(iv);p.style.width='100%';};
-})();
-</script>
+<script src="/js/loader.js"></script>
     <noscript>
       <div style="text-align:center;padding:2rem;font-family:sans-serif">
         <h1>رحماء بينهم للإغاثة والتنمية</h1>

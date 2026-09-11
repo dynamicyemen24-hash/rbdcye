@@ -21,11 +21,40 @@
 - **ملفات الأيقونات:** `public/icons/` — جميع الأيقونات بصيغة SVG مع PNG للـ 192x192 و 512x512
 - **الصورة التعريفية:** `public/og-image.svg` + `public/logo.svg`
 
+### 3.1 نظام المكوّنات المؤسسية (Enterprise Component System)
+> جميع المكوّنات في `src/shared/components/` وتُصدَّر من `src/shared/components/index.ts`. استخدمها دائماً بدل العناصر الأولية أو Tailwind المبعثر.
+
+- **`EnterpriseButton`** — زر مؤسسي مع تأثير Ripple، `focus-visible`، 8 أشكال (primary/secondary/gold/ghost/danger/success/outline/gradient)، 6 أحجام، حالات تحميل.
+- **`EnterpriseCard`** — بطاقة مع `shadow-glow`، Glass Morphism، 7 أشكال، 4 أحجام، دعم النقر ولوحة المفاتيح.
+- **`EnterpriseInput`** — حقل إدخال مع تحقق كامل (error/warning/success)، أيقونات، مسح، دعم `textarea`.
+- **`EnterpriseSelect`** — قائمة منسدلة قابلة للبحث والتحديد المتعدد.
+- **`EnterpriseModal` + `EnterpriseConfirmModal`** — نوافذ منبثقة مع Focus Trap و Portal.
+- **`EnterpriseTabs`** — تبويبات (default/pills/underline/enclosed) مع دعم لوحة المفاتيح.
+- **`EnterpriseAccordion`** — أكورديون بحركات سلسة ودعم تعدد الفتح.
+- **`EnterpriseTable`** — جدول مؤسسي مع فرز وبحث وفلترة وتحديد وترقيم صفحات.
+- **`EnterpriseBadge` / `EnterpriseAlert` / `EnterpriseTooltip` / `EnterpriseDropdown`** — عناصر مساعدة.
+- **`EnterpriseSkeleton` / `EnterpriseSpinner` / `EnterpriseProgress`** — حالات التحميل والتقدم.
+- **`usePrefersReducedMotion`** (`src/shared/hooks/`) — Hook آمن لـ SSR/اختبارات يكشف تفضيل تقليل الحركة. **لا تستخدم `window.matchMedia` مباشرة أثناء العرض.**
+- **`LanguageSwitcher`** — زر تبديل اللغة مع `EnterpriseTooltip`، يخزّن الاختيار في `localStorage`.
+
+### 3.2 نظام التدويل (Internationalization)
+> بنية خفيفة دون `react-i18next` — كافية لموقع أحادي اللغة مع بوابة مستقبلية للإنجليزية.
+
+- **الدعم:** `src/shared/i18n/` — `I18nProvider` + `useI18n()` + `dictionaries/{ar,en}.ts` + أنواع `TranslationKey` المُوثّقة.
+- **الاتجاه و`lang`:** يزامن تلقائياً `document.documentElement.lang/dir` ويشغّل `storage` بين التبويبات.
+- **الثبات:** `localStorage["rbdcye.locale"]` مع سلوك آمن في SSR/الوضع الخاص.
+- **الاستخدام:** `const { t, locale, dir, isRTL, setLocale, formatDate, formatNumber } = useI18n()` — يدعم الاستيفاء `{var}` وسقوط احتياطي إلى العربية.
+- **التغليف:** `<I18nProvider>` في `src/main.tsx` خارج `ToastProvider`/`AuthProvider`.
+- **المكوّن:** `src/shared/components/LanguageSwitcher.tsx` جاهز للإدراج في `Navbar` أو `Footer`.
+- **الاختبار:** `src/__tests__/i18n.test.tsx` — 4 اختبارات لاختيار اللغة والثبات وتزامن `document`.
+
 ## 4. جودة الكود والتحسينات المكتملة (Quality & Debt Resolution)
 - **Linting:** `pnpm lint` — ESLint بدون أخطاء أو تحذيرات
 - **TypeScript:** `pnpm typecheck` — TypeScript بدون أخطاء
-- **اختبارات:** `pnpm test` — 67 اختبار ناجح
-- **البناء:** `pnpm build` — بناء ناجح مع ضغط gzip و brotli
+- **اختبارات الوحدة:** `pnpm test` — 91 اختبار ناجح (React Testing Library + Vitest)
+- **اختبارات E2E:** `pnpm test:e2e` — Playwright (Chromium/Firefox/WebKit/Mobile) لـ `e2e/` + تدقيق `WCAG 2.1 AA` آلي بـ `@axe-core/playwright` على 10 صفحات، شغّل `pnpm test:e2e:install` أولاً لتثبيت المتصفحات
+- **البناء:** `pnpm build` — بناء ناجح وبدون تحذير Circular chunk، مع ضغط gzip و brotli
+- **تقسيم الحزم:** `vite.config.ts` — manualChunks دقيق (react/supabase/sanity/motion/icons/charts/... ) بدون تكرار
 - **تنظيف console.log:** تم إزالة جميع console.log/warn/error من الكود الإنتاجي (App, AdminDashboard, services, hooks)
 - **إزالة الكود المُهدوم:** حذف الدالة `query()` المُهدومة من `src/lib/postgres.ts`
 - **تبسيط ملفات Sanity CLI:** `seed.ts` و `test-integration.ts` تم تبسيطها
@@ -36,11 +65,14 @@
 - **تحسين `performanceMonitoring.ts`:** استبدال `console.error` بمعالجة صامتة
 - **تحسين `usePerformance.ts`:** استبدال `console.error` و `console.log` بمعالجة صامتة
 - **النوعية:** جميع `catch` blocks في الكود الإنتاجي لا تحتوي على `console.error`
+- **بيئة الاختبار:** `src/__tests__/setup.ts` يوفّر polyfills آمنة لـ `matchMedia` و `IntersectionObserver` و `ResizeObserver`
 
 ## 5. نظام التصميم
 - **الألوان:** `--brand-green: #0F4C3A`, `--brand-gold: #C69E5A`
-- **الاتجاه:** RTL (عربي)
+- **الاتجاه:** RTL (عربي) — توحيد `dir/lang` عبر `I18nProvider`
 - **الخطوط:** Cairo (عربي) + Plus Jakarta Sans
+- **التدويل:** ar (RTL) افتراضي + en (LTR) بنية خفيفة (`src/shared/i18n/`)
+- **التوافق:** `prefers-reduced-motion` عبر Hook موحّد — لا `matchMedia` مباشر أثناء العرض
 - **الوضع الليلي:** مدعوم بالكامل
 - **الوضع عالي التباين:** مدعوم
 - **وضع التبعت:** مدعوم
@@ -56,7 +88,8 @@
 - **الـ _headers:** `public/_headers` — رؤوس أمان شاملة على Cloudflare Pages (CSP، HSTS، CORS)
 - **index.html:** أُضيفت رموز أمان CSP، X-Frame-Options، Referrer-Policy، Permissions-Policy كـ meta tags
 - **تحديث App.tsx:** تغليف المسارات بـ ErrorBoundary، إعداد معالج الأخطاء العالمي في main.tsx
-- **تحديث main.tsx:** إضافة `setSecurityHeaders()`، `cleanDangerousElements()`، `preloadCriticalAssets()`، `setupGlobalErrorHandler()`
+- **تحديث main.tsx:** إضافة `setSecurityHeaders()`، `cleanDangerousElements()`، `preloadCriticalAssets()`، `setupGlobalErrorHandler()` و`I18nProvider`
+- **تدقيق WCAG 2.1 AA:** `e2e/accessibility.spec.ts` — فحص `@axe-core/playwright` (العلامات wcag2a/wcag2aa/wcag21a/wcag21aa) على 10 صفحات + اختبارات لوحة المفاتيح/الـ skip-link/الـ lang
 
 ## 7. جودة الكود والتحسينات المكتملة (Quality & Debt Resolution)
 - **Linting:** `pnpm lint` — ESLint بدون أخطاء أو تحذيرات

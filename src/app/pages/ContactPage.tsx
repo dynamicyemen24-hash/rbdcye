@@ -17,18 +17,64 @@ import {
   Globe,
   MessageSquare,
   Heart,
+  Zap,
+  ArrowUpRight,
+  Star,
+  HelpCircle,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { sendMessage } from "@/api/messages";
 import { contentManager } from "@/shared/services/content-manager";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { EnhancedBrandStory } from "@/app/components/home/EnhancedBrandStory";
 import { useSEO } from "@/utils/seoAdvanced";
+import { EnterpriseButton, EnterpriseInput } from "@/shared/components";
 
-// Honeypot field - hidden from humans, filled by bots
 const HONEYPOT_FIELD = "website";
 const MAX_MESSAGE_LENGTH = 2000;
+
+// WhatsApp preset messages for different contact scenarios
+const WHATSAPP_PRESETS = [
+  {
+    id: "general",
+    label: "استفسار عام",
+    icon: HelpCircle,
+    message: "السلام عليكم، لدي استفسار عام حول مؤسسة رحماء بينهم. هل يمكنكم مساعدتي؟",
+  },
+  {
+    id: "donation",
+    label: "استفسار عن التبرع",
+    icon: Heart,
+    message: "السلام عليكم، أريد التبرع لمؤسسة رحماء بينهم وأحتاج لمعرفة التفاصيل والخيارات المتاحة.",
+  },
+  {
+    id: "sponsorship",
+    label: "كفالة يتيم/أرملة",
+    icon: Star,
+    message: "السلام عليكم، أود كفالة يتيم أو أرملة عبر مؤسسة رحماء بينهم. ما هي الخطوات والتكلفة؟",
+  },
+  {
+    id: "zakat",
+    label: "زكاة المال",
+    icon: Zap,
+    message: "السلام عليكم، أريد إخراج زكاة مالي عبر مؤسسة رحماء بينهم. كيف يمكنني ذلك؟",
+  },
+  {
+    id: "volunteer",
+    label: "التطوع",
+    icon: ArrowUpRight,
+    message: "السلام عليكم، أرغب بالتطوع مع مؤسسة رحماء بينهم. ما هي الفرص المتاحة؟",
+  },
+  {
+    id: "partnership",
+    label: "شراكة مؤسسية",
+    icon: Globe,
+    message: "السلام عليكم، نحن مؤسسة/شركة ونرغب في الشراكة مع رحماء بينهم. من نتواصل معه؟",
+  },
+];
+
+const WHATSAPP_NUMBER = "967780777007";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -250,12 +296,14 @@ export default function ContactPage() {
                 <CheckCircle className="w-4 h-4 text-[var(--brand-green)]" aria-hidden="true" />
                 <span>تم إنشاء تذكرة دعم رقم: #{ticketNumber}</span>
               </div>
-              <button
+              <EnterpriseButton
+                variant="primary"
+                size="md"
                 onClick={() => setSubmitted(false)}
-                className="px-6 py-2 bg-[var(--brand-green)] text-white rounded-xl font-bold hover:bg-[var(--brand-green-light)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
+                ripple
               >
                 إرسال رسالة أخرى
-              </button>
+              </EnterpriseButton>
             </motion.div>
           </div>
       </div>
@@ -406,6 +454,38 @@ export default function ContactPage() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2 bg-[var(--card)] rounded-3xl p-8 sm:p-10 border border-[var(--border)] shadow-lg">
+            {/* WhatsApp Quick Actions */}
+            <div className="mb-8 p-4 bg-[var(--brand-green-pale)] rounded-2xl border border-[var(--brand-green)]/20">
+              <h3 className="font-bold text-[var(--foreground)] mb-3 flex items-center gap-2">
+                <Zap className="w-5 h-5 text-[var(--brand-green)]" />
+                تواصل فوري عبر واتساب
+              </h3>
+              <p className="text-[var(--muted-foreground)] text-sm mb-3">
+                اختر موضوع الاستفسار وسيتم فتح واتساب برسالة جاهزة — أسرع طريقة للتواصل
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {WHATSAPP_PRESETS.map((preset) => {
+                  const Icon = preset.icon;
+                  const encodedMessage = encodeURIComponent(preset.message);
+                  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+                  return (
+                    <EnterpriseButton
+                      key={preset.id}
+                      variant="ghost"
+                      size="sm"
+                      icon={Icon}
+                      iconPosition="start"
+                      onClick={() => window.open(whatsappUrl, "_blank", "noopener,noreferrer")}
+                      className="text-[var(--brand-green)] hover:bg-[var(--brand-green-pale)] border border-[var(--brand-green)]/20"
+                      aria-label={`فتح واتساب لـ ${preset.label}`}
+                    >
+                      {preset.label}
+                    </EnterpriseButton>
+                  );
+                })}
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-8">
               {error && (
                 <motion.div
@@ -434,121 +514,81 @@ export default function ContactPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-semibold text-[var(--foreground)] mb-3"
-                  >
-                    الاسم الكامل *
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
-                    placeholder="أدخل اسمك الكامل كما سيظهر في الرد"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold text-[var(--foreground)] mb-3"
-                  >
-                    البريد الإلكتروني *
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
-                    placeholder="أدخل بريدك الإلكتروني لمتابعة الرد"
-                  />
-                  {/* Honeypot field - hidden from humans, filled by bots */}
-                  <input
-                    type="text"
-                    name="honeypot"
-                    className="w-full px-4 py-3 rounded-xl border border-transparent outline-none bg-transparent hidden sm:block"
-                    aria-hidden="true"
-                    readOnly
-                    tabIndex={-1}
-                  />
-                  {/* Turnstile response token */}
-                  <input
-                    type="hidden"
-                    name="cf-turnstile-response"
-                    id="cf-turnstile-response"
-                    value=""
-                  />
-                </div>
+                <EnterpriseInput
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(val) => setFormData({ ...formData, name: val })}
+                  label="الاسم الكامل"
+                  placeholder="أدخل اسمك الكامل كما سيظهر في الرد"
+                  required
+                  size="md"
+                  fullWidth
+                  helperText="مطلوب للرد عليك"
+                  error={!formData.name && submitted ? "الاسم مطلوب" : undefined}
+                />
+                <EnterpriseInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(val) => setFormData({ ...formData, email: val })}
+                  label="البريد الإلكتروني"
+                  placeholder="أدخل بريدك الإلكتروني لمتابعة الرد"
+                  required
+                  size="md"
+                  fullWidth
+                  helperText="مطلوب لاستلام الرد"
+                  error={formData.email && !formData.email.includes("@") ? "بريد إلكتروني غير صالح" : undefined}
+                />
               </div>
 
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-semibold text-[var(--foreground)] mb-3"
-                >
-                  رقم الهاتف
-                </label>
-                <input
+              <div className="grid md:grid-cols-2 gap-8">
+                <EnterpriseInput
                   id="phone"
                   name="phone"
                   type="tel"
                   value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
+                  onChange={(val) => setFormData({ ...formData, phone: val })}
+                  label="رقم الهاتف"
                   placeholder="أدخل رقم هاتفك للتواصل السريع (اختياري)"
+                  size="md"
+                  fullWidth
+                  helperText="اختياري — للتواصل السريع (مثال: +967780777007)"
+                  error={formData.phone && !isValidPhone(formData.phone) ? "رقم هاتف غير صحيح — يرجى إدخال رقم يمني صحيح" : undefined}
                 />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-semibold text-[var(--foreground)] mb-3"
-                >
-                  الموضوع *
-                </label>
-                <input
+                <EnterpriseInput
                   id="subject"
                   name="subject"
                   type="text"
-                  required
                   value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all"
+                  onChange={(val) => setFormData({ ...formData, subject: val })}
+                  label="الموضوع"
                   placeholder="مثال: استفسار عن برنامج الكفالة، أو طلب تبرع، أو اقتراح مشروع"
+                  required
+                  size="md"
+                  fullWidth
+                  helperText="مطلوب — كن محدداً لتسريع الرد"
+                  error={!formData.subject && submitted ? "الموضوع مطلوب" : undefined}
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-semibold text-[var(--foreground)] mb-3"
-                >
-                  الرسالة *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  maxLength={MAX_MESSAGE_LENGTH}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] focus:ring-2 focus-ring-[var(--brand-green)]/30 outline-none transition-all resize-none"
-                  placeholder="اكتب رسالتك بوضوح — كلما كانت التفاصيل أدق، كانت سرعة الاستجابة أكبر. يُرجى ذكر أي أرقام مرجعية إن وُجدت"
-                />
-                <div className="flex justify-end mt-1">
-                  <span className={`text-xs ${formData.message.length > MAX_MESSAGE_LENGTH * 0.9 ? 'text-[var(--destructive)]' : 'text-[var(--muted-foreground)]'}`}>
-                    {formData.message.length}/{MAX_MESSAGE_LENGTH}
-                  </span>
-                </div>
-              </div>
+              <EnterpriseInput
+                id="message"
+                name="message"
+                type="textarea"
+                value={formData.message}
+                onChange={(val) => setFormData({ ...formData, message: val })}
+                label="الرسالة"
+                placeholder="اكتب رسالتك بوضوح — كلما كانت التفاصيل أدق، كانت سرعة الاستجابة أكبر. يُرجى ذكر أي أرقام مرجعية إن وُجدت"
+                required
+                rows={5}
+                size="md"
+                fullWidth
+                helperText={`الحد الأقصى ${MAX_MESSAGE_LENGTH.toLocaleString("ar-YE")} حرف`}
+                error={formData.message.length > MAX_MESSAGE_LENGTH ? `تجاوزت الحد الأقصى (${MAX_MESSAGE_LENGTH} حرف)` : undefined}
+              />
 
               {/* Turnstile widget */}
               <div className="mb-6">
@@ -568,21 +608,21 @@ export default function ContactPage() {
                 )}
               </div>
 
-              <motion.button
+              <EnterpriseButton
                 type="submit"
-                disabled={isSubmitting}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                variant="primary"
+                size="lg"
+                fullWidth
+                loading={isSubmitting}
+                loadingText="جاري إرسال رسالتك..."
+                icon={Send}
+                className="shadow-lg hover:shadow-xl"
+                ripple
                 aria-label={isSubmitting ? "جاري إرسال رسالتك..." : "إرسال الرسالة"}
-                className="w-full bg-[var(--brand-green)] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
+                disabled={isSubmitting}
               >
-                {isSubmitting ? (
-                  <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
-                ) : (
-                  <Send className="w-5 h-5" aria-hidden="true" />
-                )}
                 {isSubmitting ? "جاري إرسال رسالتك..." : "إرسال الرسالة"}
-              </motion.button>
+              </EnterpriseButton>
 
               {/* Security Badge */}
               <div className="mt-4 text-center text-sm text-[var(--muted-foreground)]">

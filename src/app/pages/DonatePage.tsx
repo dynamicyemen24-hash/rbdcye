@@ -39,6 +39,7 @@ import { multiProjectDonationService } from "@/shared/services/donation-multi-pr
 import { donationDBService } from "@/services/donation/donation-db.service";
 import type { DonationProject, DonationPolicy, InKindCategory, ItemCondition } from "@/services/donation/donation-types";
 import { useSEO } from "@/utils/seoAdvanced";
+import { EnterpriseButton, EnterpriseInput } from "@/shared/components";
 
 import type { PaymentCurrency } from "@/shared/services/payment-gateway.service";
 
@@ -700,24 +701,24 @@ export default function DonatePage() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
+                <EnterpriseButton
+                  variant="primary"
+                  size="md"
                   onClick={() => navigate("/")}
                   aria-label="العودة إلى الصفحة الرئيسية"
-                  className="px-8 py-3 bg-[var(--brand-green)] text-white rounded-2xl font-bold hover:bg-[var(--brand-green-light)] transition-all duration-300 shadow-lg focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
+                  ripple
                 >
                   الرئيسية
-                </motion.button>
-                <motion.button
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
+                </EnterpriseButton>
+                <EnterpriseButton
+                  variant="secondary"
+                  size="md"
                   onClick={() => navigate("/programs")}
                   aria-label="تصفح برامجنا"
-                  className="px-8 py-3 border-2 border-[var(--brand-green)] text-[var(--brand-green)] rounded-2xl font-bold hover:bg-[var(--brand-green)]/5 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
+                  ripple
                 >
                   برامجنا
-                </motion.button>
+                </EnterpriseButton>
               </div>
             </motion.div>
           </div>
@@ -1167,22 +1168,29 @@ export default function DonatePage() {
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
                         <label className="mb-1 block text-sm font-bold text-[var(--foreground)]">اسم الصنف</label>
-                        <input
+                        <EnterpriseInput
                           type="text"
                           value={inKindItemName}
-                          onChange={e => setInKindItemName(e.target.value)}
+                          onChange={(val) => setInKindItemName(val)}
                           placeholder="مثال: بطانية شتوية"
-                          className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
+                          size="md"
+                          fullWidth
+                          label="اسم الصنف"
+                          helperText="أدخل اسم الصنف المتبرع به"
                         />
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-bold text-[var(--foreground)]">الكمية</label>
-                        <input
+                        <EnterpriseInput
                           type="number"
                           min="1"
-                          value={inKindQuantity}
-                          onChange={e => setInKindQuantity(Number(e.target.value))}
-                          className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
+                          value={String(inKindQuantity)}
+                          onChange={(val) => setInKindQuantity(Number(val) || 0)}
+                          placeholder="1"
+                          size="md"
+                          fullWidth
+                          label="الكمية"
+                          helperText="عدد القطع المتبرع بها"
                         />
                       </div>
                     </div>
@@ -1237,12 +1245,16 @@ export default function DonatePage() {
                     {deliveryMethod === 'pickup' && (
                       <div>
                         <label className="mb-1 block text-sm font-bold text-[var(--foreground)]">عنوان الاستلام</label>
-                        <textarea
+                        <EnterpriseInput
+                          type="textarea"
                           value={deliveryAddress}
-                          onChange={e => setDeliveryAddress(e.target.value)}
+                          onChange={(val) => setDeliveryAddress(val)}
                           placeholder="العنوان التفصيلي للاستلام"
                           rows={2}
-                          className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
+                          size="md"
+                          fullWidth
+                          label="عنوان الاستلام"
+                          helperText="أدخل العنوان الكامل للاستلام"
                         />
                       </div>
                     )}
@@ -1250,13 +1262,16 @@ export default function DonatePage() {
                     {/* Estimated Value */}
                     <div>
                       <label className="mb-1 block text-sm font-bold text-[var(--foreground)]">القيمة التقديرية (اختياري)</label>
-                      <input
+                      <EnterpriseInput
                         type="number"
                         min="0"
-                        value={estimatedValue}
-                        onChange={e => setEstimatedValue(Number(e.target.value))}
+                        value={String(estimatedValue)}
+                        onChange={(val) => setEstimatedValue(Number(val) || 0)}
                         placeholder="0"
-                        className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
+                        size="md"
+                        fullWidth
+                        label="القيمة التقديرية"
+                        helperText="القيمة المالية التقديرية للتبرع العيني (اختياري)"
                       />
                     </div>
                   </div>
@@ -1344,54 +1359,58 @@ export default function DonatePage() {
                     معلوماتك — اختيارية لكنها تساعدنا في التواصل معك
                   </h3>
                   <div className="space-y-4">
-                    <div>
-                      <label htmlFor="donor-name" className="sr-only">الاسم</label>
-                      <input
-                        id="donor-name"
-                        type="text"
-                        value={donorInfo.name}
-                        onChange={(e) => setDonorInfo({ ...donorInfo, name: e.target.value })}
-                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] bg-[var(--background)] focus:border-[var(--brand-green)] focus:ring-2 focus:ring-[var(--brand-green)]/20 outline-none transition-all"
-                        placeholder="الاسم — اتركه فارغاً إذا أردت التبرع المجهول"
-                      />
-                    </div>
+                    <EnterpriseInput
+                      type="text"
+                      id="donor-name"
+                      value={donorInfo.name}
+                      onChange={(val) => setDonorInfo({ ...donorInfo, name: val })}
+                      placeholder="الاسم — اتركه فارغاً إذا أردت التبرع المجهول"
+                      size="md"
+                      fullWidth
+                      label="الاسم"
+                      helperText="اختياري — اتركه فارغاً للتبرع المجهول"
+                      iconPosition="start"
+                    />
                     <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="donor-email" className="sr-only">البريد الإلكتروني</label>
-                        <input
-                          id="donor-email"
-                          type="email"
-                          value={donorInfo.email}
-                          onChange={(e) => setDonorInfo({ ...donorInfo, email: e.target.value })}
-                          className="w-full p-4 rounded-xl border-2 border-[var(--border)] bg-[var(--background)] focus:border-[var(--brand-green)] focus:ring-2 focus:ring-[var(--brand-green)]/20 outline-none transition-all"
-                          placeholder="البريد الإلكتروني * — لاستلام الإيصال"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="donor-phone" className="sr-only">رقم الهاتف</label>
-                        <input
-                          id="donor-phone"
-                          type="tel"
-                          value={donorInfo.phone}
-                          onChange={(e) => setDonorInfo({ ...donorInfo, phone: e.target.value })}
-                          className="w-full p-4 rounded-xl border-2 border-[var(--border)] bg-[var(--background)] focus:border-[var(--brand-green)] focus:ring-2 focus:ring-[var(--brand-green)]/20 outline-none transition-all"
-                          placeholder="رقم الهاتف * — للتواصل السريع"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="donor-message" className="sr-only">رسالة اختيارية</label>
-                      <textarea
-                        id="donor-message"
-                        value={donorInfo.message}
-                        onChange={(e) => setDonorInfo({ ...donorInfo, message: e.target.value })}
-                        className="w-full p-4 rounded-xl border-2 border-[var(--border)] focus:border-[var(--brand-green)] focus:ring-2 focus:ring-[var(--brand-green)]/20 outline-none transition-all resize-none"
-                        placeholder="رسالة اختيارية — ملاحظات أو توجيهات خاصة لتبرعك"
-                        rows={3}
+                      <EnterpriseInput
+                        type="email"
+                        id="donor-email"
+                        value={donorInfo.email}
+                        onChange={(val) => setDonorInfo({ ...donorInfo, email: val })}
+                        placeholder="البريد الإلكتروني * — لاستلام الإيصال"
+                        size="md"
+                        fullWidth
+                        label="البريد الإلكتروني"
+                        required
+                        helperText="مطلوب لاستلام إيصال التبرع"
+                        error={donorInfo.email && !donorInfo.email.includes("@") ? "بريد إلكتروني غير صالح" : undefined}
+                      />
+                      <EnterpriseInput
+                        type="tel"
+                        id="donor-phone"
+                        value={donorInfo.phone}
+                        onChange={(val) => setDonorInfo({ ...donorInfo, phone: val })}
+                        placeholder="رقم الهاتف * — للتواصل السريع"
+                        size="md"
+                        fullWidth
+                        label="رقم الهاتف"
+                        required
+                        helperText="مطلوب للتواصل السريع"
+                        error={donorInfo.phone && donorInfo.phone.length < 10 ? "رقم هاتف غير صالح" : undefined}
                       />
                     </div>
+                    <EnterpriseInput
+                      type="textarea"
+                      id="donor-message"
+                      value={donorInfo.message}
+                      onChange={(val) => setDonorInfo({ ...donorInfo, message: val })}
+                      placeholder="رسالة اختيارية — ملاحظات أو توجيهات خاصة لتبرعك"
+                      rows={3}
+                      size="md"
+                      fullWidth
+                      label="رسالة اختيارية"
+                      helperText="ملاحظات أو توجيهات خاصة لتبرعك"
+                    />
                   </div>
                 </div>
 
@@ -1456,21 +1475,23 @@ export default function DonatePage() {
                     {submitError}
                   </div>
                 )}
-                <motion.button
+                <EnterpriseButton
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  aria-label={isSubmitting ? "جاري المعالجة" : donationType === "monetary" ? `تأكيد التبرع بمبلغ ${actualAmount.toLocaleString("ar-YE")} ${currency.symbol}` : "تأكيد التبرع العيني"}
-                  className="w-full bg-[var(--brand-green)] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--brand-green-light)] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none"
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  loading={isSubmitting}
+                  loadingText="جاري المعالجة — نتحقق لضمان وصول تبرعك..."
+                  icon={Heart}
+                  className="shadow-lg hover:shadow-xl"
+                  ripple
+                  aria-label={donationType === "monetary" ? `تأكيد التبرع بمبلغ ${actualAmount.toLocaleString("ar-YE")} ${currency.symbol}` : "تأكيد التبرع العيني"}
                 >
-                  <Heart className="w-6 h-6" fill="white" aria-hidden="true" />
-                  {isSubmitting
-                    ? "جاري المعالجة — نتحقق لضمان وصول تبرعك..."
-                    : donationType === "monetary"
-                      ? `تأكيد التبرع — ${actualAmount.toLocaleString("ar-YE")} ${currency.symbol}`
-                      : "تأكيد التبرع العيني — سنتواصل معك لتنسيق التسليم"}
-                </motion.button>
+                  {donationType === "monetary"
+                    ? `تأكيد التبرع — ${actualAmount.toLocaleString("ar-YE")} ${currency.symbol}`
+                    : "تأكيد التبرع العيني — سنتواصل معك لتنسيق التسليم"}
+                </EnterpriseButton>
 
                 {/* شرائح الثقة */}
                 <div className="mt-8 grid grid-cols-3 gap-4">

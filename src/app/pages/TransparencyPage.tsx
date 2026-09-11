@@ -3,17 +3,12 @@ import { motion } from "motion/react";
 import {
   Shield,
   FileText,
-  BarChart3,
   Eye,
   Award,
-  TrendingUp,
   Users,
-  DollarSign,
   CheckCircle,
   Download,
   Search,
-  ExternalLink,
-  Calendar,
   ArrowLeft,
 } from "lucide-react";
 import { useState } from "react";
@@ -60,20 +55,6 @@ const REPORTS = [
   },
 ];
 
-const FINANCIAL_STATS = [
-  { label: "نسبة التزامات البرامج", value: "٨٤٪", change: "برامج مباشرة للمستفيدين — ممتاز وفق معايير المنظمات الدولية", positive: true },
-  { label: "المصروفات الإدارية", value: "١١٪", change: "إدارية وتشغيلية (حد أدنى) — أقل من المتوسط العالمي البالغ ١٥٪", positive: true },
-  { label: "نسبة الاحتفاظ", value: "٥٪", change: "طوارئ واحتياطي — لضمان الاستجابة السريعة للأزمات", positive: false },
-  { label: "التدقيق الخارجي", value: "سنوي", change: "مراجعة مستقلة من مكتب محاسبة معتمد", positive: true },
-];
-
-const ANNUAL_FIGURES = [
-  { label: "إجمالي الإيرادات ٢٠٢٤", value: "١٢٥ مليون ر.ي", icon: DollarSign },
-  { label: "إجمالي المصروفات", value: "١١٨ مليون ر.ي", icon: TrendingUp },
-  { label: "الرصيد المتبقي", value: "٧ مليون ر.ي", icon: BarChart3 },
-  { label: "عدد المستفيدين", value: "١٥,٠٠٠+ مستفيد", icon: Users },
-];
-
 const BENCHMARKS = [
   { category: "نسبة البرامج", orgValue: "٨٤٪", benchmark: "٨٥٪", rating: "ممتاز", note: "أعلى من متوسط المنظمات المحلية (٧٠٪)" },
   { category: "المصروفات الإدارية", orgValue: "١١٪", benchmark: "١٥٪", rating: "ممتاز", note: "أقل من الحد الأقصى المعتمد دولياً" },
@@ -107,23 +88,23 @@ const GOVERNANCE_BODIES = [
 const TRANSPARENCY_PILLARS = [
   {
     icon: Eye,
-    title: "الشفافية المالية",
-    desc: "نشر التقارير المالية المدققة بشكل دوري وإتاحتها للجمهور — من التوزيعات البرمجية إلى المصروفات الإدارية، دون إخفاء أي بند.",
+    title: "الإفصاح المالي المُدقق",
+    desc: "نشر الإفصاحات المالية المُدققة من مراجع خارجي مستقل بشكل دوري — من التخصيص البرامجي إلى المصروفات التشغيلية، بإتاحة كاملة دون حجب أي بند.",
   },
   {
     icon: Award,
-    title: "الحوكمة الرشيدة",
-    desc: "تطبيق أعلى معايير الحوكمة والرقابة الداخلية بما يشمل فصل السلطات، ومنع تعارض المصالح، وتطبيق سياسات الحماية.",
+    title: "الحوكمة الرشيدة والرقابة",
+    desc: "تطبيق أرقى معايير الحوكمة والرقابة الداخلية وفق معايير CHS و SPHERE — فصل السلطات، منع تعارض المصالح، وسياسات حماية صارمة.",
   },
   {
     icon: FileText,
-    title: "التقارير الدورية",
-    desc: "إصدار تقارير شهرية وربعية وسنوية عن الأداء والإنجازات والتحديات، مع توضيح المخرجات لكل مشروع على حدة.",
+    title: "الإفصاحات الدورية المنتظمة",
+    desc: "إصدار إفصاحات شهرية وربعية وسنوية عن الأداء والأثر والتحديات، مع تفصيل المخرجات والمؤشرات لكل تدخل على حدة.",
   },
   {
     icon: Users,
-    title: "إشراك المستفيدين",
-    desc: "آليات فعالة وموثوقة لتلقي الملاحظات والشكاوى والمقترحات — خط ساخن وصندوق بريد مخصص مع ضمان السرية والعدالة.",
+    title: "المساءلة المجتمعية",
+    desc: "منظومة مساءلة مجتمعية موثوقة لاستقبال الملاحظات والشكاوى والمقترحات — قنوات آمنة مع ضمان السرية والعدالة وسرعة الاستجابة.",
   },
 ];
 
@@ -133,8 +114,8 @@ export default function TransparencyPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useSEO({
-    title: "الشفافية والحوكمة - رحماء بينهم",
-    description: "تتعرف على سياسات الشفافية والحوكمة في حملة رحماء بينهم — التقارير المالية المدفّقة، هيكل الحوكمة، وآليات المساءلة والرقابة.",
+    title: "الحوكمة والإفصاح المؤسسي - رحماء بينهم",
+    description: "الإفصاح المؤسسي والحوكمة الرشيدة في حملة رحماء بينهم — الإفصاحات المالية المدققة، البنية الحوكمية، ومعايير المساءلة والرقابة المستقلة.",
   });
 
   const filteredReports = REPORTS.filter((report) => {
@@ -160,41 +141,28 @@ export default function TransparencyPage() {
           >
             <div className="inline-flex items-center gap-2 bg-[var(--card)]/80 backdrop-blur-sm border border-[var(--brand-green)]/20 px-5 py-2 rounded-full mb-6 shadow-lg">
               <Shield className="w-4 h-4 text-[var(--brand-green)]" />
-              <span className="text-[var(--brand-green)] text-sm font-medium">
-                الشفافية والنزاهة
+              <span className="text-[var(--brand-green)] text-sm font-bold tracking-wide">
+                الحوكمة والإفصاح المؤسسي
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-[var(--foreground)]">الشفافية </span>
-              <span className="text-[var(--brand-green)]">ركن أساسي</span>
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
+              <span className="text-[var(--foreground)]">الحوكمة </span>
+              <span className="text-[var(--brand-green)]">ركنٌ راسخ</span>
             </h1>
 
-            <p className="text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto leading-relaxed mb-8">
-              نؤمن في رحماء بينهم بأن الشفافية هي أساس بناء الثقة مع المتبرعين والمستفيدين والجهات
-              الرقابية. نلتزم بأعلى معايير الإفصاح والحوكمة لضمان وصول تبرعاتكم إلى مستحقيها
-              بأكمل كفاءة ونزاهة.
+            <p className="text-xl text-[var(--muted-foreground)] max-w-3xl mx-auto leading-[2] mb-8">
+              في حملة رحماء بينهم، نُعدّ الإفصاح المؤسسي والحوكمة الرشيدة أساساً لبناء الثقة المستدامة
+              مع شركائنا والمستفيدين والجهات الرقابية. نلتزم بأرقى معايير الإفصاح المالي والرقابة المستقلة
+              لضمان وصول كل تبرع إلى مستحقه بكفاءة ونزاهة مُطلقة.
             </p>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {FINANCIAL_STATS.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="bg-[var(--card)] backdrop-blur-sm rounded-2xl p-5 border border-[var(--border)] shadow-lg"
-                >
-                  <div className="text-2xl font-bold text-[var(--foreground)]">{stat.value}</div>
-                  <div className="text-sm text-[var(--muted-foreground)] mt-1">{stat.label}</div>
-                  <div
-                    className={`text-xs font-semibold mt-1 ${stat.positive ? "text-[var(--success)]" : "text-[var(--warning)]"}`}
-                  >
-                    {stat.change}
-                  </div>
-                </motion.div>
-              ))}
+            {/* Governance Promise — بلا أرقام مالية، حفظاً للخصوصية */}
+            <div className="mt-8 rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-6 text-center shadow-sm">
+              <p className="text-sm font-bold text-[var(--brand-green)]">عهد الحوكمة</p>
+              <p className="mt-2 text-sm leading-[1.9] text-[var(--muted-foreground)]">
+                نلتزم بالإفصاح الحوكي دون مساس بخصوصية المستفيدين أو سرية البيانات — لا ننشر ميزانيات تفصيلية ولا قوائم مستفيدين، بل نُفصح عن السياسات والآليات والرقابة المستقلة.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -208,45 +176,7 @@ export default function TransparencyPage() {
         <p className="mt-3 text-sm text-[var(--muted-foreground)]">سورة الرحمن، الآية ٩</p>
       </div>
 
-      {/* Annual Financial Figures */}
-      <section className="py-16 bg-[var(--background)]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              الأرقام <span className="text-[var(--brand-green)]">السنوية</span>
-            </h2>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto">
-              نفصح عن أرقامنا المالية بشكل كامل لضمان ثقة المتبرعين والمستفيدين
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {ANNUAL_FIGURES.map((figure, i) => (
-              <motion.div
-                key={figure.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] shadow-lg text-center"
-              >
-                <div className="w-12 h-12 rounded-full bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-3">
-                  <figure.icon className="w-6 h-6 text-[var(--brand-green)]" />
-                </div>
-                <div className="text-2xl font-bold text-[var(--foreground)]">{figure.value}</div>
-                <div className="text-sm text-[var(--muted-foreground)] mt-1">{figure.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benchmarks Section */}
+      {/* Benchmarks — مقارنة بالممارسات الدولية (نسب حوكمية، دون كشف تفاصيل مالية) */}
       <section className="py-16 bg-[var(--secondary)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -308,12 +238,12 @@ export default function TransparencyPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-[var(--brand-green)]">ركائز</span> الشفافية
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+              <span className="text-[var(--brand-green)]">مرتكزات</span> الحوكمة الرشيدة
             </h2>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
-              أربع ركائز استراتيجية نبني عليها التزامنا بالشفافية والمساءلة — كل ركيزة لها
-              آليات قياس وتقييم دورية تُنشر نتائجها للجمهور.
+            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[2]">
+              أربعة مرتكزات استراتيجية تُرسخ التزامنا بالإفصاح المؤسسي والمساءلة — لكل مرتكز
+              مؤشرات قياس وتقييم دورية تُنشر نتائجها بشفافية مطلقة.
             </p>
           </motion.div>
 
@@ -347,12 +277,12 @@ export default function TransparencyPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              هيكل <span className="text-[var(--brand-green)]">الحوكمة</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+              البنية <span className="text-[var(--brand-green)]">الحوكمية والرقابية</span>
             </h2>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
-              مجالس ولجان مستقلة تعمل وفقًا للأنظمة المعتمدة لضمان أعلى معايير الحوكمة
-              والرقابة الداخلية والتحقق المستقل من الأداء المالي والعملياتي.
+            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[2]">
+              مجالس ولجان مستقلة تعمل وفق الأنظمة المعتمدة لضمان أرقى معايير الحوكمة
+              والرقابة الداخلية والتدقيق المستقل للأداء المالي والعملياتي.
             </p>
           </motion.div>
 
@@ -390,12 +320,12 @@ export default function TransparencyPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-[var(--brand-green)]">التقارير</span> والإفصاحات
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+              <span className="text-[var(--brand-green)]">الإفصاحات</span> المالية والحوكمية
             </h2>
-            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
-              جميع تقاريرنا المالية والإدارية مُدفّقة من مراجع خارجي مستقل ومتاحة للتحميل
-              والاطلاع — ننشر تقارير ربعية وسنوية لضمان تتبع الأداء المستمر والشفافية المطلقة.
+            <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[2]">
+              جميع إفصاحاتنا المالية والإدارية مُدققة من مراجع خارجي مستقل ومتاحة للتحميل
+              والاطلاع — ننشر إفصاحات ربعية وسنوية لضمان تتبع الأداء المستمر والإفصاح المطلق.
             </p>
           </motion.div>
 
@@ -479,13 +409,12 @@ export default function TransparencyPage() {
                     <span>{report.pages} صفحة</span>
                   </div>
                   <button
-                    onClick={() => {
-                      window.open(`/reports/${report.id}.pdf`, '_blank');
-                    }}
+                    onClick={() => navigate("/reports")}
+                    aria-label={`عرض تفاصيل ${report.title}`}
                     className="flex items-center gap-1 text-sm font-semibold text-[var(--brand-green)] hover:text-[var(--brand-green-light)] transition-colors"
                   >
                     <Download className="w-4 h-4" />
-                    تحميل
+                    عرض التفاصيل
                   </button>
                 </div>
               </motion.div>

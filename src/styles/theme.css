@@ -895,6 +895,31 @@
   to { height: 0; }
 }
 
+/* ============================================================
+   Enterprise Component Animations
+   (moved from inline <style> in components — CSP-safe, single source)
+   ============================================================ */
+
+/* Button ripple */
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* Input error shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* Input focus pulse ring */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(var(--brand-green-rgb), 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(var(--brand-green-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--brand-green-rgb), 0); }
+}
+
 .accordion-down {
   animation: accordion-down 0.2s ease-out;
 }

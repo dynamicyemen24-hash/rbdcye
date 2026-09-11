@@ -27,31 +27,27 @@ export default defineConfig({
         theme_color: '#0F4C3A',
         background_color: '#0F4C3A',
         display: 'standalone',
-        orientation: 'any',
+        orientation: 'portrait',
         start_url: '/',
         scope: '/',
         lang: 'ar',
         dir: 'rtl',
-        icons: [
-          { src: '/icons/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/pwa-512x512-maskable.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'maskable' },
-          { src: '/icons/pwa-64x64.svg', sizes: '64x64', type: 'image/svg+xml' },
-          { src: '/icons/pwa-128x128.svg', sizes: '128x128', type: 'image/svg+xml' },
-          { src: '/icons/pwa-256x256.svg', sizes: '256x256', type: 'image/svg+xml' },
-          { src: '/icons/pwa-384x384.svg', sizes: '384x384', type: 'image/svg+xml' },
-        ],
-        categories: ['charity', 'donation', 'social'],
+        prefer_related_applications: false,
+        categories: ['charity', 'donation', 'social', 'lifestyle'],
         shortcuts: [
-          { name: 'تبرع سريع', url: '/donate', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
-          { name: 'آخر الأخبار', url: '/news', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
-          { name: 'حاسبة الزكاة', url: '/zakat', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
+          { name: 'تبرع سريع', url: '/donate', description: 'تبرع الآن وسريعاً', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
+          { name: 'آخر الأخبار', url: '/news', description: 'تصفح آخر الأخبار', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
+          { name: 'حاسبة الزكاة', url: '/zakat', description: 'احسب زكاتك بدقة', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
+        ],
+        screenshots: [
+          { src: '/og-image.png', sizes: '1280x720', type: 'image/png', form_factor: 'wide', label: 'صفحة رئيسية' },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
-        globIgnores: ['**/videos/**'],
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2,woff,ttf,json,xml}'],
+        globIgnores: ['**/videos/**', '**/maps/**', '**/analytics/**'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
@@ -67,7 +63,7 @@ export default defineConfig({
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'sanity-cache',
-              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 },
+              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 7 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
@@ -76,7 +72,35 @@ export default defineConfig({
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'static-images',
-              expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 14 },
+              expiration: { maxEntries: 150, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/api\.stripe\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'stripe-api',
+              networkTimeoutSeconds: 10,
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'supabase-api',
+              networkTimeoutSeconds: 10,
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            urlPattern: /\.(?:js|css)$/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'static-resources',
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
         ],
@@ -96,9 +120,18 @@ export default defineConfig({
     modulePreload: { polyfill: true },
     terserOptions: {
       compress: {
-        passes: 2,
+        passes: 3,
         drop_console: true,
         drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
+        ecma: 2020,
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
+        ecma: 2020,
       },
     },
     reportCompressedSize: true,
@@ -106,56 +139,97 @@ export default defineConfig({
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+        assetFileNames: (assetInfo) => {
+          const name = assetInfo.name ?? assetInfo.names?.[0] ?? 'asset';
+          const info = name.split('.');
+          const ext = info[info.length - 1];
+          if (/\.(png|jpe?g|gif|svg|webp|avif)$/i.test(name)) {
+            return `assets/images/[name]-[hash].${ext}`;
+          }
+          if (/\.(woff2?|ttf|eot)$/i.test(name)) {
+            return `assets/fonts/[name]-[hash].${ext}`;
+          }
+          if (/\.css$/i.test(name)) {
+            return `assets/css/[name]-[hash].${ext}`;
+          }
+          return `assets/[ext]/[name]-[hash].${ext}`;
+        },
         manualChunks(id) {
           if (id.includes('vite/preload-helper') || /[\\/]node_modules[\\/]tslib[\\/]/.test(id)) {
             return undefined;
           }
           if (!id.includes('node_modules')) return undefined;
+
+          // React core - highest priority
           if (/[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/.test(id)) {
             return 'vendor-react';
           }
-          if (/[\\/]node_modules[\\/]@radix-ui[\\/]/.test(id)) {
-            return 'vendor-ui';
-          }
-          if (/[\\/]node_modules[\\/](recharts|d3-shape|d3-scale|victory-vendor)[\\/]/.test(id)) {
-            return 'vendor-charts';
-          }
-          if (/[\\/]node_modules[\\/](framer-motion|motion|motion-dom|motion-utils)[\\/]/.test(id)) {
-            return 'vendor-motion';
-          }
-          if (/[\\/]node_modules[\\/]@sanity[\\/]/.test(id)) {
-            return 'vendor-sanity';
-          }
+          // Supabase - check before vendor-other to avoid circular
           if (/[\\/]node_modules[\\/]@supabase[\\/]/.test(id)) {
             return 'vendor-supabase';
           }
+          // UI Libraries
+          if (/[\\/]node_modules[\\/]@radix-ui[\\/]/.test(id)) {
+            return 'vendor-ui';
+          }
+          // Charts & Visualization
+          if (/[\\/]node_modules[\\/](recharts|d3-shape|d3-scale|d3-array|d3-interpolate|victory-vendor)[\\/]/.test(id)) {
+            return 'vendor-charts';
+          }
+          // Animation
+          if (/[\\/]node_modules[\\/](framer-motion|motion|motion-dom|motion-utils|@motionone)[\\/]/.test(id)) {
+            return 'vendor-motion';
+          }
+          // Sanity CMS
+          if (/[\\/]node_modules[\\/]@sanity[\\/]/.test(id)) {
+            return 'vendor-sanity';
+          }
+          // Security
           if (/[\\/]node_modules[\\/](dompurify)[\\/]/.test(id)) {
             return 'security-vendor';
           }
+          // Icons
           if (/[\\/]node_modules[\\/](lucide-react)[\\/]/.test(id)) {
             return 'vendor-icons';
           }
+          // Carousel
           if (/[\\/]node_modules[\\/](embla-carousel-react|embla-carousel)[\\/]/.test(id)) {
             return 'vendor-carousel';
           }
+          // Maps
           if (/[\\/]node_modules[\\/](leaflet)[\\/]/.test(id)) {
             return 'vendor-map';
           }
+          // Date utilities
           if (/[\\/]node_modules[\\/](date-fns)[\\/]/.test(id)) {
             return 'vendor-date';
           }
+          // Feedback/Toast/Modal
           if (/[\\/]node_modules[\\/](sonner|vaul|cmdk)[\\/]/.test(id)) {
             return 'vendor-feedback';
           }
+          // Style utilities
           if (/[\\/]node_modules[\\/](clsx|tailwind-merge|class-variance-authority)[\\/]/.test(id)) {
             return 'vendor-style';
           }
+          // Stripe
+          if (/[\\/]node_modules[\\/]@stripe[\\/]/.test(id)) {
+            return 'vendor-stripe';
+          }
+          // Zod validation
+          if (/[\\/]node_modules[\\/]zod[\\/]/.test(id)) {
+            return 'vendor-validation';
+          }
+          // Common utilities
+          if (/[\\/]node_modules[\\/](lodash-es|lodash|ramda)[\\/]/.test(id)) {
+            return 'vendor-utils';
+          }
+          // Let Rollup place remaining deps to avoid circular chunks
           return undefined;
         },
       },
     },
-    chunkSizeWarningLimit: 350,
+    chunkSizeWarningLimit: 400,
     cssCodeSplit: true,
     cssMinify: 'esbuild',
     assetsInlineLimit: 4096,

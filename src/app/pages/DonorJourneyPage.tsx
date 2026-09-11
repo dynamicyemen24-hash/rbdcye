@@ -1210,14 +1210,14 @@ const stages: StageData[] = [
 
 export default function DonorJourneyPage() {
   return (
-    <div dir="rtl" style={{ ...variables, fontFamily: "'Noto Kufi Arabic', 'Noto Sans Arabic', 'Tajawal', sans-serif" }}>
+    <div dir="rtl" style={{ ...variables, fontFamily: "'Noto Kufi Arabic', 'Noto Sans Arabic', 'Cairo', sans-serif" }}>
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
           background: var(--color-bg-dark);
           color: var(--color-text);
-          font-family: 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Tajawal', sans-serif;
+          font-family: 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Cairo', sans-serif;
           -webkit-font-smoothing: antialiased;
         }
         ::-webkit-scrollbar { width: 6px; }

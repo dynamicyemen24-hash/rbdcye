@@ -1,0 +1,110 @@
+/**
+ * Arabic dictionary — source of truth for the translation contract.
+ * All other locales must structurally match this shape.
+ */
+
+const arDefinition = {
+  common: {
+    donate: "تبرع الآن",
+    donateShort: "تبرع",
+    learnMore: "اقرأ المزيد",
+    contactUs: "تواصل معنا",
+    loading: "جاري التحميل...",
+    submit: "إرسال",
+    cancel: "إلغاء",
+    confirm: "تأكيد",
+    close: "إغلاق",
+    search: "بحث",
+    share: "مشاركة",
+    copyLink: "نسخ الرابط",
+    copied: "تم النسخ",
+    backHome: "العودة إلى الرئيسية",
+    viewAll: "عرض الكل",
+    required: "مطلوب",
+    optional: "اختياري",
+    error: "حدث خطأ — يرجى المحاولة مرة أخرى",
+    success: "تم بنجاح",
+  },
+  nav: {
+    home: "الرئيسية",
+    about: "عن المؤسسة",
+    programs: "البرامج",
+    projects: "المشاريع",
+    donate: "تبرع",
+    contact: "تواصل معنا",
+    news: "الأخبار",
+    transparency: "الشفافية",
+    zakat: "الزكاة",
+    volunteer: "التطوع",
+    media: "المركز الإعلامي",
+    reports: "التقارير",
+    openMenu: "فتح القائمة",
+    closeMenu: "إغلاق القائمة",
+    searchA11y: "بحث في الموقع",
+  },
+  footer: {
+    quickLinks: "روابط سريعة",
+    contactInfo: "معلومات التواصل",
+    followUs: "تابعنا",
+    license: "مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢",
+    rights: "جميع الحقوق محفوظة",
+    address: "صنعاء — شارع الزبيري، الجمهورية اليمنية",
+    phoneLabel: "للاستفسارات",
+    hours: "السبت - الخميس: 8 ص - 4 م",
+  },
+  home: {
+    heroBadge: "مرخصة رسمياً برقم ٤٨٢ — حملة إنسانية تنموية منذ ٢٠١٤م",
+    heroTitle: "العمل الإنساني يبدأ من فهم الاحتياج",
+    donateCta: "ابدأ رحلتك معنا — تبرع الآن",
+    philosophyCta: "اقرأ فلسفتنا",
+    impactTitle: "أثر تبرعك",
+  },
+  donate: {
+    title: "تبرع الآن — كن جزءاً من التغيير",
+    currency: "العملة",
+    amount: "المبلغ",
+    project: "المشروع",
+    paymentMethod: "طريقة الدفع",
+    recurring: "نموذج العطاء",
+    once: "تبرع لمرة واحدة",
+    monthly: "تبرع شهري",
+    yearly: "تبرع سنوي",
+    donorInfo: "معلوماتك",
+    confirmDonation: "تأكيد التبرع",
+    processing: "جاري المعالجة...",
+    thankYou: "جزاك الله كل خير على تبرعك",
+    inKind: "تبرع عيني",
+    monetary: "تبرع مالي",
+  },
+  form: {
+    name: "الاسم الكامل",
+    namePlaceholder: "أدخل اسمك الكامل",
+    email: "البريد الإلكتروني",
+    emailPlaceholder: "أدخل بريدك الإلكتروني",
+    phone: "رقم الهاتف",
+    phonePlaceholder: "أدخل رقم هاتفك",
+    subject: "الموضوع",
+    message: "الرسالة",
+    messagePlaceholder: "اكتب رسالتك بوضوح",
+    submitContact: "إرسال الرسالة",
+    submitting: "جاري إرسال رسالتك...",
+    invalidEmail: "بريد إلكتروني غير صالح",
+    invalidPhone: "رقم هاتف غير صحيح",
+    requiredField: "هذا الحقل مطلوب",
+    messageTooLong: "الرسالة أطول من الحد المسموح",
+  },
+  a11y: {
+    skipToContent: "الانتقال إلى المحتوى الرئيسي",
+    backToTop: "العودة إلى الأعلى",
+    openWhatsApp: "فتح محادثة واتساب مباشرة",
+    dismiss: "إغلاق",
+    toggleLanguage: "تغيير اللغة",
+  },
+} as const;
+
+type DeepString<T> = T extends string ? string : { [K in keyof T]: DeepString<T[K]> };
+
+/** Widened dictionary type — leaves are `string`, shape is `arDefinition`. */
+export type Dictionary = DeepString<typeof arDefinition>;
+
+export const ar: Dictionary = arDefinition;

@@ -1,12 +1,63 @@
 import { useState, memo } from 'react';
 import { Share2, Copy, Check, MessageCircle, Send } from 'lucide-react';
 
+// --- رسائل مشاركة مُقنعة حسب الصفحة (AIDA framework) ---
+const SHARE_MESSAGES: Record<string, string> = {
+  home: `رحماء بينهم... أثر يدوم ✨
+
+  نطمح لمستقبل يبني قدرات المجتمع ليستعدى himself.
+
+  🎯 هدفنا: ${Math.floor(Math.random() * 10000) + 5000} مستفيد وبنيناهم
+
+  🔗 https://rbdcye.org/donate`,
+
+  transparency: `الحوكمة والإفصاح المؤسسي - رحماء 그들
+
+  لا نخفي شيئًا. كل ريال يُنفق له وثيقة، وكل مشروع له مسار مُدرّب.
+
+  📊 ٨٤٪ من التبرعات تصل برامج مباشرة — ١١٪ مصروفات (أقل من المتوسط العالمي ١٥٪)
+
+  🔗 https://rbdcye.org/transparency`,
+
+  donate: `فرصة donner - ساهم في التغيير 🎁
+
+  تبرعك سيحول إلى: أطفال مُدرّبون، عائلات مُطعمَة، آبار مياه قائمة
+
+  📈 كل ريال يضاعف الأثر سبع مرات (حَسنة جارية)`,
+
+  programs: `رحماء بينهم - برامجنا
+
+  نغطي ٧ مسارات رئيسية: رعاية اجتماعية، غذاء، مياه، وإغاثة عاجلة
+
+  📍 تغطية: ٨ محافظات يمنية
+
+  💳 التبرع يبدأ من: ٥٠ ريال`,
+
+  about: `رحماء بينهم للإغاثة والتنمية
+
+  مؤسسة إنسانية مرخصة برقم ٤٨٢ منذ عام ٢٠١٤
+
+  نعمل في مجالات: الإغاثة، التعليم، المياه، والمشاريع التنموية المستدامة
+
+  🤝 نقدر ثقتكم ونلتزم بالشفافية المطلقة`,
+
+  default: `رحماء بينهم للإغاثة والتنمية
+
+  مؤسسة إنسانية تعمل في اليمن
+
+  دعمكم يصنع الفارق كل يوم`,
+};
+
+// Helper to get message by route
+const getShareMessage = (route: string): string => SHARE_MESSAGES[route] || SHARE_MESSAGES.default;
+
 interface SocialShareProps {
   title: string;
   message: string;
   url?: string;
   via?: string;
   hashtags?: string[];
+  route?: 'home' | 'transparency' | 'donate' | 'programs' | 'about' | 'default';
 }
 
 const PLATFORMS = [
@@ -42,13 +93,17 @@ const PLATFORMS = [
 ];
 
 export const SocialShare = memo(function SocialShare({
-  title, message, url, via = 'RohamaaBaynahum', hashtags = ['رحماء', 'إغاثة', 'يمن']
+  title, message, url, via = 'RohamaaBaynahum', hashtags = ['رحماء', 'إغاثة', 'يمن'],
+  route = 'default'
 }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
   const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
 
+  // Use persuasive message for the specific route, fallback to generic
+  const persuasiveMessage = getShareMessage(route);
+
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(`${message}\n${shareUrl}`);
+    await navigator.clipboard.writeText(`${persuasiveMessage}\n${shareUrl}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -58,7 +113,7 @@ export const SocialShare = memo(function SocialShare({
       {PLATFORMS.map(platform => (
         <a
           key={platform.id}
-          href={platform.getUrl(shareUrl, `${title} — ${message}`, via, hashtags)}
+          href={platform.getUrl(shareUrl, persuasiveMessage, via, hashtags)}
           target="_blank"
           rel="noopener noreferrer"
           className={`flex h-10 w-10 items-center justify-center rounded-xl text-white transition-all hover:-translate-y-0.5 hover:shadow-lg ${platform.color}`}
