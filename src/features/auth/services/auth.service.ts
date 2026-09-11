@@ -203,6 +203,7 @@ export const authService = {
       const result = await authApi.login(credentials);
       session.setSession(result.token, result.user, credentials.rememberMe ?? false);
       return result;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // API failed, try demo auth if enabled
       if (!DEMO_AUTH_ENABLED) {

@@ -1,4 +1,5 @@
 // Enterprise Event Bus - For decoupled communication
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type EventHandler<T = any> = (payload: T) => void | Promise<void>;
 
 interface EventMetadata {
@@ -10,6 +11,7 @@ interface EventMetadata {
 
 interface StoredEvent {
   type: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any;
   metadata: EventMetadata;
 }
@@ -97,6 +99,7 @@ export const DOMAIN_EVENTS = {
 // Event Sourcing - Store all state changes
 export class EventSourcer {
   private events: Map<string, StoredEvent[]> = new Map();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private snapshots: Map<string, { state: any; timestamp: number }> = new Map();
 
   recordEvent(aggregateId: string, event: StoredEvent) {
@@ -118,6 +121,7 @@ export class EventSourcer {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rebuildState(events: StoredEvent[]): any {
     return events.reduce((state, event) => {
       return { ...state, ...event.payload };

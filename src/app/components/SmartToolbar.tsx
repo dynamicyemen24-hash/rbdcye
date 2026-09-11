@@ -1,5 +1,4 @@
 // SmartToolbar - Professional Floating Toolbar with Advanced AI-Powered UX for Visitors
-import { motion, AnimatePresence } from "motion/react";
 import {
   Heart,
   Calculator,
@@ -20,6 +19,7 @@ import {
   HelpCircle,
   RefreshCcw,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef, useCallback, memo, useMemo } from "react";
 
 import { useSmartToolbar } from "@/app/hooks/useSmartToolbar";
@@ -289,6 +289,7 @@ export const SmartToolbar = memo(function SmartToolbar({
   );
 
   // Category tabs
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const categories: { id: "main" | "page" | "utility"; label: string; icon: any }[] = [
     { id: "main", label: "رئيسية", icon: Heart },
     { id: "page", label: "الصفحات", icon: Globe },

@@ -1,5 +1,4 @@
 // صفحة منصة الشركات — صفحة الشراكات المؤسسية والمسؤولية المجتمعية
-import { motion } from "motion/react";
 import {
   Building2,
   Gem,
@@ -25,13 +24,16 @@ import {
   Handshake,
   Target,
   Briefcase,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ArrowLeft,
   Send,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Building,
   GraduationCap,
   Droplets,
   School,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -245,7 +247,7 @@ export default function CorporatePage() {
               <Handshake className="w-4 h-4" />
               <span>مستويات الشراكة</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">
               اختر مستوى شراكتك المؤسسية
             </h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -331,7 +333,7 @@ export default function CorporatePage() {
               <Calculator className="w-4 h-4" />
               <span>حاسبة الأثر</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">
               احسب أثر شركتك قبل البدء
             </h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -493,7 +495,7 @@ export default function CorporatePage() {
               <TrendingUp className="w-4 h-4" />
               <span>قصص نجاح شركات</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">
               شركاء نجحوا في إحداث التغيير
             </h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -569,7 +571,7 @@ export default function CorporatePage() {
               <Briefcase className="w-4 h-4" />
               <span>مزايا الشراكة</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">
               لماذا تختار الشراكة مع رحماء بينهم؟
             </h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -617,7 +619,7 @@ export default function CorporatePage() {
             viewport={viewportOnce}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">شركاؤنا</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">شركاؤنا</h2>
             <p className="text-lg text-[var(--muted-foreground)]">
               نفخر بتعاوننا مع نخبة من المؤسسات والشركات الرائدة
             </p>
@@ -680,7 +682,7 @@ export default function CorporatePage() {
               <MessageCircle className="w-4 h-4" />
               <span>تواصل معنا</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">
               ابدأ شراكتك اليوم
             </h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -850,7 +852,7 @@ export default function CorporatePage() {
             viewport={viewportOnce}
           >
             <Shield className="w-16 h-16 mx-auto mb-6 opacity-90" />
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-3xl font-bold mb-4">
               معاً نبني مجتمعاً أقوى
             </h2>
             <p className="text-lg opacity-90 max-w-2xl mx-auto mb-8">

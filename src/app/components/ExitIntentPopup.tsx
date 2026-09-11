@@ -1,6 +1,6 @@
-import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { X, CheckCircle2, Gift } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
 
 const EXIT_KEY = 'exit_intent_shown';
 

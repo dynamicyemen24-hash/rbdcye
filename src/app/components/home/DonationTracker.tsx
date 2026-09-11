@@ -1,7 +1,8 @@
 // Donation Tracker - تتبع رحلة التبرع
-import { useState } from "react";
-import { motion } from "motion/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Heart, Check, Clock, MapPin, Users, Package, Droplets, BookOpen } from "lucide-react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 interface DonationStep {
   id: number;

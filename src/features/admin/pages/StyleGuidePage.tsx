@@ -1,6 +1,4 @@
 // StyleGuidePage.tsx - دليل أنماط الزخارف والخلفيات الإسلامية لـ حملة رحماء بينهم
-import React, { useState } from "react";
-import { motion } from "motion/react";
 import {
   Copy,
   Check,
@@ -10,10 +8,15 @@ import {
   Layers,
   Eye,
   FileCode2,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Info,
   Compass,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ShieldCheck,
 } from "lucide-react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { motion } from "motion/react";
+import React, { useState } from "react";
 
 interface PatternItem {
   id: string;

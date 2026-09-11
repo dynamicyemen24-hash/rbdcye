@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { motion } from 'motion/react';
 import { ArrowLeft, MapPin, Calendar } from 'lucide-react';
+import { motion } from 'motion/react';
+import { memo } from 'react';
 
 export const BeneficiaryStoryHero = memo(function BeneficiaryStoryHero() {
   return (

@@ -11,6 +11,7 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useThrottle<T extends (...args: any[]) => any>(
   func: T,
   delay: number

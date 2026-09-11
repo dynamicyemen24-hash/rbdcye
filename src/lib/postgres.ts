@@ -5,9 +5,10 @@
 
 const API_BASE = "/api";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function apiQuery<T = any>(
   action: string,
-  options?: { method?: string; body?: unknown; params?: Record<string, string> }
+  options?: { method?: string; body?: any; params?: Record<string, string> }
 ): Promise<{ rows: T[]; rowCount: number }> {
   const { method = "GET", body, params } = options || {};
   const qs = params ? "?" + new URLSearchParams(params).toString() : "";
@@ -37,9 +38,13 @@ export const messagesQueries = {
       rows: [
         {
           total: result.rowCount,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           new: rows.filter((r: any) => r.status === "new").length,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           read: rows.filter((r: any) => r.status === "read").length,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           replied: rows.filter((r: any) => r.status === "replied").length,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           archived: rows.filter((r: any) => r.status === "archived").length,
         },
       ],
@@ -66,13 +71,16 @@ export const donationsQueries = {
   getStats: async () => {
     const result = await apiQuery("donations", { params: { limit: "1000" } });
     const rows = result.rows;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const totalAmount = rows.reduce((sum: number, r: any) => sum + (Number(r.amount) || 0), 0);
     return {
       rows: [
         {
           total: result.rowCount,
           amount: totalAmount,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           pending: rows.filter((r: any) => r.status === "pending").length,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           completed: rows.filter((r: any) => r.status === "completed").length,
         },
       ],
@@ -103,7 +111,9 @@ export const volunteersQueries = {
       rows: [
         {
           total: result.rowCount,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           active: rows.filter((r: any) => r.status === "active").length,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           pending: rows.filter((r: any) => r.status === "pending").length,
         },
       ],

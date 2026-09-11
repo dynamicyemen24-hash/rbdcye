@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "motion/react";
 import { Zap, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 
 interface ShortcutToastProps {
   message: string | null;

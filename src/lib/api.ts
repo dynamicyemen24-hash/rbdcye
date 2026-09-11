@@ -69,6 +69,7 @@ class ApiClient {
   }
 
   async request<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { retries, retryDelay, timeout, ...fetchOptions } = {
       ...this.defaultOptions,
       ...options,

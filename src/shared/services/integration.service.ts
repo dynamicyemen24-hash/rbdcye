@@ -5,6 +5,7 @@ import { logger } from "@/utils/monitoring";
 
 import { DB_SCHEMA, supabase } from "./supabase.client";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Subscriber, Donation, Volunteer, ServiceRequest } from "@/shared/types/database";
 
 // ---------- Public ↔ Admin Bridge ----------

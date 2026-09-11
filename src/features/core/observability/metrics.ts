@@ -168,6 +168,7 @@ interface LogEntry {
   level: LogLevel;
   message: string;
   timestamp: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   context?: Record<string, any>;
   traceId?: string;
   spanId?: string;
@@ -187,6 +188,7 @@ class Logger {
     return Logger.instance;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   log(level: LogLevel, message: string, context?: Record<string, any>) {
     const entry: LogEntry = {
       level,
@@ -226,18 +228,22 @@ class Logger {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   debug(message: string, context?: Record<string, any>) {
     this.log("debug", message, context);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   info(message: string, context?: Record<string, any>) {
     this.log("info", message, context);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   warn(message: string, context?: Record<string, any>) {
     this.log("warn", message, context);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error(message: string, error?: Error, context?: Record<string, any>) {
     this.log("error", message, {
       ...context,
@@ -399,9 +405,11 @@ export const tracer = Tracer.getInstance();
 
 // Decorator for automatic tracing
 export function trace(operationName: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function (_target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     descriptor.value = async function (...args: any[]) {
       const span = tracer.startSpan(operationName);
 
@@ -428,11 +436,13 @@ export function trace(operationName: string) {
 
 // Metrics decorator
 export function measure(operationName: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function (_target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     const counter = metrics.createCounter(`${operationName}.count`);
     const histogram = metrics.createHistogram(`${operationName}.duration`);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     descriptor.value = async function (...args: any[]) {
       const startTime = Date.now();
 

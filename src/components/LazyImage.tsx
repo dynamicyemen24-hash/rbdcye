@@ -15,6 +15,7 @@ export function LazyImage({
   width,
   height,
   className = "",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmM2Y0ZjYiLz48L3N2Zz4=",
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);

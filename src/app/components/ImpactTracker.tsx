@@ -1,6 +1,7 @@
-import { useEffect, useState, memo } from 'react';
-import { motion } from 'motion/react';
 import { TrendingUp, Users, Heart, MapPin, Calendar } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useEffect, useState, memo } from 'react';
+
 import { realAnalyticsService } from '@/services/admin/real-analytics.service';
 
 interface ImpactMetric {

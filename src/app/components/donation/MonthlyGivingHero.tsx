@@ -1,7 +1,7 @@
-import { useState, memo } from 'react';
-import { motion } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
 import { Repeat, Heart, Star, Crown, Shield, Check, ArrowLeft } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TIERS = [
   { id: 'rufaqa', label: 'رفيق الخير', amount: 2500, icon: Heart, color: 'bg-emerald-500', benefits: ['إشعار شهري بالأثر', 'اسمك في صفحة الشاكرين'] },

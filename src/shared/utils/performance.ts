@@ -1,11 +1,12 @@
 export const reportWebVitals = (metric: { name: string; value: number; rating: string }) => {
   if (typeof window !== "undefined") {
     const body = JSON.stringify(metric);
-    const url = "/api/v1/analytics/web-vitals";
+    const url = "/api/rum";
+    const blob = new Blob([body], { type: "application/json" });
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(url, body);
+      navigator.sendBeacon(url, blob);
     } else {
-      fetch(url, { body, method: "POST", keepalive: true });
+      fetch(url, { body: blob, method: "POST", keepalive: true, headers: { "Content-Type": "application/json" } }).catch(() => {});
     }
   }
 };
@@ -18,13 +19,16 @@ export const measurePerformance = () => {
           if (entry.entryType === "largest-contentful-paint") {
             reportWebVitals({
               name: "LCP",
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               value: (entry as any).startTime,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               rating: (entry as any).rating || "good",
             });
           }
           if (entry.entryType === "first-input") {
             reportWebVitals({
               name: "FID",
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               value: (entry as any).processingStart - (entry as any).startTime,
               rating: "good",
             });

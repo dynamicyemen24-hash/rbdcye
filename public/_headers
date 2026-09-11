@@ -20,7 +20,7 @@
   X-Permitted-Cross-Domain-Policies: none
   Origin-Agent-Cluster: ?1
 
-  # === Content Security Policy (CSP) - 10/10 ===
+  # === Content Security Policy (CSP) - 10/10 — Trusted Types + nonce-ready ===
   Content-Security-Policy:
     default-src 'self';
     script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com;
@@ -33,7 +33,12 @@
     form-action 'self';
     worker-src 'self' blob:;
     manifest-src 'self';
-    upgrade-insecure-requests
+    upgrade-insecure-requests;
+    require-trusted-types-for 'script';
+    trusted-types default dompurify
+
+  # === Early Hints 103 — Cloudflare (enable in dashboard: Speed > Optimization > Early Hints) ===
+  Link: </fonts/cairo-var-arabic.woff2>; rel=preload; as=font; type=font/woff2; crossorigin, </videos/hero-poster.avif>; rel=preload; as=image; fetchpriority=low
 
   # === Reporting & Network Error Logging — Record-Level Observability ===
   Report-To: {"group":"default","max_age":10886400,"endpoints":[{"url":"https://rbdcye.org/api/report-csp"}]}

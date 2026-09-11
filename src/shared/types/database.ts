@@ -294,6 +294,7 @@ export interface Volunteer {
 export interface WebsiteSetting {
   id: string;
   key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   type: "text" | "json" | "image" | "boolean" | "array";
   group: string;

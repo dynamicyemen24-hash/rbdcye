@@ -23,6 +23,7 @@ interface UseFormValidationOptions<T> {
   sanitize?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useFormValidation<T extends Record<string, any>>({
   initialValues,
   validationRules = {},
@@ -45,6 +46,7 @@ export function useFormValidation<T extends Record<string, any>>({
     setIsDirty(false);
   }, [initialValues]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sanitizeValue = useCallback((value: any): any => {
     if (value === null || value === undefined) return value;
 
@@ -321,6 +323,7 @@ export const validationPresets = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateFieldValue<T>(value: T, rules: any): string | undefined {
   if (!rules) return undefined;
 

@@ -24,6 +24,7 @@ const queries = {
 
 async function testIntegration() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [news, projects, partners, stories, events] = await Promise.all([
       sanityClient.fetch(queries.allNews),
       sanityClient.fetch(queries.allProjects),
@@ -32,6 +33,7 @@ async function testIntegration() {
       sanityClient.fetch(queries.allEvents),
     ]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const metrics = await sanityClient.fetch(queries.dashboardMetrics);
 
     if (news.length === 0 && projects.length === 0 && partners.length === 0) {
@@ -39,6 +41,7 @@ async function testIntegration() {
     }
 
     process.exit(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     process.exit(1);
   }

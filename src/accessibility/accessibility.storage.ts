@@ -4,13 +4,14 @@
  * يتعامل مع السيناريوهات: التصفّح الخاص، واجهات غير متاحة، وتخزين تالف
  * ========================================================================== */
 
+import { A11Y_STORAGE_KEY, A11Y_LEGACY_STORAGE_KEY, A11Y_LEGACY_LARGE_TEXT_KEY } from "./accessibility.constants";
+
 import type {
   AccessibilityPreferences,
   AccessibilityPreference,
   PreferenceState,
   StoredAccessibilityPrefs,
 } from "./accessibility.types";
-import { A11Y_STORAGE_KEY, A11Y_LEGACY_STORAGE_KEY, A11Y_LEGACY_LARGE_TEXT_KEY } from "./accessibility.constants";
 
 /* --------------------------------------------------------------------------
  * قراءة آمنة

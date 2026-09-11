@@ -418,6 +418,7 @@ const MOCK_PROJECTS: Project[] = [
 ];
 
 // Category weights for scoring
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CATEGORY_WEIGHTS: Record<string, number> = {
   'تعليم': 1.0,
   'صحة': 1.0,
@@ -534,6 +535,7 @@ function scoreProject(project: Project, preference: DonorPreference): number {
  * Calculate impact preview based on project and amount
  */
 export function calculateImpactPreview(project: Project, amount: number): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const categoryImpacts = IMPACT_DESCRIPTIONS[project.category] || IMPACT_DESCRIPTIONS['إغاثة'];
   const avgCostPerBeneficiary = project.totalBudget / project.beneficiaryCount;
   const beneficiariesHelped = Math.floor(amount / avgCostPerBeneficiary);

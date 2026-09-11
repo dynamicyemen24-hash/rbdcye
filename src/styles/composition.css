@@ -1,0 +1,172 @@
+/* ==========================================================================
+   COMPOSITION — CUBE + Every Layout · مؤسسة رحماء بينهم
+   --------------------------------------------------------------------------
+   الطبقة التركيبية: حاويات Every Layout (stack/cluster/sidebar/switcher/cover/box)
+   مصدر وحيد بعد tokens.css — لا متغيرات هنا، فقط composition
+   ========================================================================== */
+
+/* ——— 1. Every Layout Primitives ——— */
+
+/* Stack: عمودي مع فجوة موحدة */
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.stack > * { margin-block: 0; }
+.stack > * + * { margin-block-start: var(--space, var(--space-lg, 1.5rem)); }
+.stack--xs > * + * { margin-block-start: var(--space-xs); }
+.stack--sm > * + * { margin-block-start: var(--space-sm); }
+.stack--lg > * + * { margin-block-start: var(--space-xl); }
+.stack--xl > * + * { margin-block-start: var(--space-2xl); }
+
+/* Cluster: صف مرن ملتّف — أزرار، شارات */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space, var(--space-md, 1rem));
+  justify-content: flex-start;
+  align-items: center;
+}
+.cluster[data-justify="center"] { justify-content: center; }
+.cluster[data-justify="end"] { justify-content: flex-end; }
+.cluster[data-justify="space-between"] { justify-content: space-between; }
+
+/* Sidebar: عمود جانبي رشيق — Every Layout Sidebar */
+.with-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space, var(--space-lg, 1.5rem));
+}
+.with-sidebar > :first-child {
+  flex-basis: 20rem;
+  flex-grow: 1;
+}
+.with-sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: 50%;
+}
+.with-sidebar[data-sidebar="left"] > :first-child { flex-basis: 14rem; }
+.with-sidebar[data-sidebar="right"] > :last-child { flex-basis: 14rem; flex-grow: 1; }
+.with-sidebar[data-sidebar="right"] > :first-child { flex-basis: 0; flex-grow: 999; }
+
+/* Switcher: يتحول من صف إلى عمود عند عتبة */
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space, var(--space-md, 1rem));
+}
+.switcher > * {
+  flex-basis: calc((var(--threshold, 30rem) - 100%) * 999);
+  flex-grow: 1;
+}
+.switcher[data-limit="4"] > :nth-last-child(n+5),
+.switcher[data-limit="4"] > :nth-last-child(n+5) ~ * { flex-basis: 100%; }
+
+/* Cover: يملأ الشاشة مع توسيط المحتوى */
+.cover {
+  display: flex;
+  flex-direction: column;
+  min-block-size: var(--cover-min, 100vh);
+  padding: var(--space, var(--space-md, 1rem));
+}
+.cover > * { margin-block: var(--space, 1rem); }
+.cover > :first-child:not(.centered) { margin-block-start: 0; }
+.cover > :last-child:not(.centered) { margin-block-end: 0; }
+.cover > .centered { margin-block: auto; }
+
+/* Box: حاوية بحشوة وحدود — للمحتوى المعزول */
+.box {
+  padding: var(--space, var(--space-md, 1rem));
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  color: var(--card-foreground);
+}
+.box--invert {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Center: توسيط أفقي بقياس 68ch */
+.center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--measure, 68ch);
+  padding-inline: var(--space, var(--space-md, 1rem));
+}
+.center--narrow { --measure: 56ch; }
+.center--wide { --measure: 74ch; }
+
+/* Grid Auto: شبكة مرنة — Every Layout Grid */
+.grid-auto {
+  display: grid;
+  gap: var(--space, var(--space-lg, 1.5rem));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 16rem), 100%), 1fr));
+}
+
+/* Reel: تمرير أفقي — للبطاقات */
+.reel {
+  display: flex;
+  gap: var(--space, var(--space-md, 1rem));
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  padding-block: var(--space-sm);
+}
+.reel > * { flex: 0 0 auto; }
+.reel[data-scrollbar="hidden"] { scrollbar-width: none; }
+.reel[data-scrollbar="hidden"]::-webkit-scrollbar { display: none; }
+
+/* Frame: إطار بنسبة ثابتة — للصور والفيديو */
+.frame {
+  aspect-ratio: var(--n, 16) / var(--d, 9);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.frame > img, .frame > video { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.frame--square { --n: 1; --d: 1; }
+.frame--4-3 { --n: 4; --d: 3; }
+
+/* ——— 2. Prose — حاوية نصية بمقياس قراءة ثابت 68ch ——— */
+.prose {
+  container-type: inline-size;
+  max-width: 68ch;
+  margin-inline: auto;
+  line-height: var(--leading-relaxed, 1.85);
+  font-size: var(--type-base, 1rem);
+  color: var(--foreground);
+  text-wrap: pretty;
+  hyphens: auto;
+  orphans: 3;
+  widows: 3;
+}
+
+@container (max-width: 40ch) {
+  .prose { font-size: var(--type-sm); }
+}
+
+/* ——— 3. View Transitions — hero ——— */
+@supports (view-transition-name: none) {
+  #hero { view-transition-name: hero; }
+  ::view-transition-group(hero) { animation-duration: 0.4s; }
+}
+
+/* ——— 4. Text Spacing Support (WCAG 1.4.12) ——— */
+@media screen {
+  /* ضمان عدم كسر التخطيط عند زيادة تباعد النص */
+  * { overflow-wrap: break-word; }
+}
+
+/* ——— 5. Forced Colors & High Contrast ——— */
+@media (forced-colors: active) {
+  .box, .cluster, .with-sidebar, .cover { border-color: CanvasText; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --border: rgba(0,0,0,0.3); }
+  .box { border-width: 2px; }
+}

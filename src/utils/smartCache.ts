@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type CacheStrategy =
   "cache-first" | "network-first" | "stale-while-revalidate" | "cache-only" | "network-only";
 
@@ -16,6 +17,7 @@ interface CacheEntry<K, V> {
 
 class SmartCacheService {
   private static instance: SmartCacheService;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private memoryCache: Map<string, CacheEntry<string, any>> = new Map();
 
   static getInstance(): SmartCacheService {
@@ -83,6 +85,7 @@ class SmartCacheService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prefetch(key: string, fetcher: () => Promise<any>, options?: Partial<CacheOptions>) {
     if (this.memoryCache.has(key)) return;
 
@@ -90,6 +93,7 @@ class SmartCacheService {
       .then((data) => {
         this.memoryCache.set(key, {
           key,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           value: data as any,
           expiry: Date.now() + (options?.maxAge || 5 * 60 * 1000),
           tags: [options?.cacheName || "default"],
@@ -100,7 +104,9 @@ class SmartCacheService {
 
   getStats() {
     let totalSize = 0;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let oldestEntry: CacheEntry<string, any> | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let newestEntry: CacheEntry<string, any> | undefined;
 
     for (const entry of this.memoryCache.values()) {

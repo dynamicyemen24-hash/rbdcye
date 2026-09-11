@@ -1,5 +1,6 @@
-import { memo, ReactNode } from 'react';
 import { motion } from 'motion/react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { memo, ReactNode } from 'react';
 
 interface Feature {
   icon: React.ComponentType<{ className?: string }>;

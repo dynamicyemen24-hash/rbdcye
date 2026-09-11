@@ -1,7 +1,5 @@
 // GlobalUtilityBar — Strategic floating action bar
 // شريط الأدوات الاستراتيجي العائم — وصول سريع للوظائف المحورية
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
   Heart,
@@ -18,6 +16,9 @@ import {
   Plus,
   Zap,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
+
 import {
   FontSizeLevel,
   ReaderThemeMode,

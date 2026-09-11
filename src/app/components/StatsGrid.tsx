@@ -1,6 +1,6 @@
 // Unified Stats Grid Component - Professional Design System
-import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 interface StatItem {
   label: string;

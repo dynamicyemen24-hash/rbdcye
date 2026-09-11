@@ -5,6 +5,10 @@ pages_build_output_dir = "dist"
 [observability]
 enabled = true
 
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "web_vitals"
+
 # ============================================================
 # Cloudflare Pages Configuration
 # Project: rbdcye.org — مؤسسة رحماء بينهم

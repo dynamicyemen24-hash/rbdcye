@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef, memo, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "motion/react";
 import {
   Users,
   Heart,
@@ -24,6 +22,8 @@ import {
   Repeat,
   Award,
 } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "motion/react";
+import { useState, useEffect, useRef, memo, useCallback } from "react";
 
 /* ─── Animated Counter Hook ─── */
 function useAnimatedCounter(target: number, duration = 2000, startOnView = true) {
@@ -203,7 +203,7 @@ const SectionTitle = memo(function SectionTitle({
         <Zap className="h-3.5 w-3.5" />
         {badge}
       </div>
-      <h2 className="text-3xl font-black tracking-tight text-[var(--foreground)] sm:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-black tracking-tight text-[var(--foreground)] sm:text-3xl lg:text-5xl">
         {title}
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-base text-[var(--muted-foreground)] sm:text-lg">
@@ -456,6 +456,7 @@ const FlowDots = memo(function FlowDots() {
    ═══════════════════════════════════════════════════════════════════ */
 export default memo(function ImpactEnginePage() {
   const [activeNode, setActiveNode] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedJourneyStage, setSelectedJourneyStage] = useState<number | null>(null);
 
   const handleNodeClick = useCallback((index: number) => {
@@ -494,7 +495,7 @@ export default memo(function ImpactEnginePage() {
             <Zap className="h-10 w-10 text-white" />
           </motion.div>
 
-          <h1 className="relative text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
+          <h1 className="relative text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
             محرك أثر رحماء
           </h1>
           <p className="relative mx-auto mt-4 max-w-2xl text-base text-white/80 sm:text-lg">
@@ -728,7 +729,7 @@ export default memo(function ImpactEnginePage() {
               className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)]"
             >
               {/* Report header */}
-              <div className="border-b border-[var(--border)] bg-gradient-to-l from-[var(--brand-green)] to-[var(--brand-green-dark)] p-6 sm:p-8">
+              <div className="border-b border-[var(--border)] bg-gradient-to-l from-[var(--brand-green)] to-[var(--brand-green-dark)] p-5 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
                     <FileBarChart className="h-6 w-6 text-white" />
@@ -740,7 +741,7 @@ export default memo(function ImpactEnginePage() {
                 </div>
               </div>
 
-              <div className="p-6 sm:p-8">
+              <div className="p-5 sm:p-6">
                 {/* Flow visualization within the report */}
                 <div className="mb-8 flex flex-wrap items-center justify-center gap-2 text-xs font-bold sm:gap-3">
                   {[

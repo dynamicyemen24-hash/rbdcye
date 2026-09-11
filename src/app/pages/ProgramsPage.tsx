@@ -1,5 +1,4 @@
 // Programs Page - صفحة البرامج والمشاريع
-import { motion } from "motion/react";
 import {
   BookOpen,
   Heart,
@@ -19,21 +18,21 @@ import {
   Shield,
   Leaf,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PageHeader } from "@/app/components/PageHeader";
 import { Button } from "@/app/components/ui/button";
-
 import { analyticsService } from "@/shared/services/analytics.service";
 import { contentManager } from "@/shared/services/content-manager";
-import { useSEO } from "@/utils/seoAdvanced";
 import {
   scrollFadeUp,
   staggerContainer,
   viewportOnce,
   hoverLift,
 } from "@/utils/animations";
+import { useSEO } from "@/utils/seoAdvanced";
 
 interface ProgramPath {
   id: string;
@@ -264,7 +263,7 @@ export default function ProgramsPage() {
       {/* ═══════════════════════════════════════════════════ */}
       {/* مقدمة فلسفية */}
       {/* ═══════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-[var(--background)]">
+      <section className="py-16 sm:py-20 bg-[var(--background)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="initial"
@@ -277,7 +276,7 @@ export default function ProgramsPage() {
               <Lightbulb className="w-4 h-4" />
               فلسفتنا البرامجية
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6 leading-relaxed">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-6 leading-relaxed">
               برامجنا ليست مجرد{" "}
               <span className="text-[var(--brand-green)]">مشاريع توزيع</span>
               <br />
@@ -313,7 +312,7 @@ export default function ProgramsPage() {
       {/* ═══════════════════════════════════════════════════ */}
       {/* مسارات البرامج — البطاقات التفصيلية */}
       {/* ═══════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-[var(--secondary)]">
+      <section className="py-16 sm:py-20 bg-[var(--secondary)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -325,7 +324,7 @@ export default function ProgramsPage() {
               <Target className="w-4 h-4" />
               مساراتنا البرامجية
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               <span className="text-[var(--brand-green)]">٧ مسارات</span> برامجية
               متكاملة
             </h2>
@@ -378,7 +377,7 @@ export default function ProgramsPage() {
                     className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${colorDef.gradient}`}
                   />
 
-                  <div className="p-6 sm:p-8">
+                  <div className="p-5 sm:p-6">
                     {/* Header */}
                     <div className="flex items-start gap-5 mb-6">
                       <div
@@ -468,7 +467,7 @@ export default function ProgramsPage() {
       {/* ═══════════════════════════════════════════════════ */}
       {/* قيم برامجية */}
       {/* ═══════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-[var(--background)]">
+      <section className="py-16 sm:py-20 bg-[var(--background)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="initial"
@@ -481,7 +480,7 @@ export default function ProgramsPage() {
               <Shield className="w-4 h-4" />
               مبادئنا التأسيسية
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               قيم توجّه{" "}
               <span className="text-[var(--brand-green)]">كل برنامج</span>{" "}
               نقدمه
@@ -536,7 +535,7 @@ export default function ProgramsPage() {
                   key={value.title}
                   variants={scrollFadeUp}
                   whileHover={hoverLift.whileHover}
-                  className="bg-[var(--card)] rounded-2xl p-6 sm:p-8 border border-[var(--border)] shadow-md hover:shadow-lg transition-all duration-300 min-h-[200px] flex flex-col"
+                  className="bg-[var(--card)] rounded-2xl p-5 sm:p-6 border border-[var(--border)] shadow-md hover:shadow-lg transition-all duration-300 min-h-[200px] flex flex-col"
                 >
                   <Icon className="w-8 h-8 text-[var(--brand-green)] mb-4" />
                   <h3 className="font-bold text-lg text-[var(--foreground)] mb-2">
@@ -555,7 +554,7 @@ export default function ProgramsPage() {
       {/* ═══════════════════════════════════════════════════ */}
       {/* إنجازات — أرقام حقيقية من الميدان */}
       {/* ═══════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-[var(--secondary)]">
+      <section className="py-16 sm:py-20 bg-[var(--secondary)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="initial"
@@ -568,7 +567,7 @@ export default function ProgramsPage() {
               <TrendingUp className="w-4 h-4" />
               إنجازاتنا في أرقام
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               أرقام تعكس{" "}
               <span className="text-[var(--brand-green)]">أثرًا حقيقيًا</span>{" "}
               في حياة الناس
@@ -600,7 +599,7 @@ export default function ProgramsPage() {
                 <div className="grid h-12 w-12 place-items-center rounded-xl bg-[var(--brand-green)]/8 text-[var(--brand-green)] mx-auto mb-4">
                   <stat.icon className="h-5 w-5" />
                 </div>
-                <div className="text-3xl font-bold text-[var(--brand-green)] mb-2">{stat.number}</div>
+                <div className="text-2xl font-bold text-[var(--brand-green)] mb-2">{stat.number}</div>
                 <div className="text-sm text-[var(--muted-foreground)]">{stat.label}</div>
               </motion.div>
             ))}
@@ -611,7 +610,7 @@ export default function ProgramsPage() {
       {/* ═══════════════════════════════════════════════════ */}
       {/* CTA Section */}
       {/* ═══════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial="initial"
@@ -621,7 +620,7 @@ export default function ProgramsPage() {
             className="text-center mb-16"
           >
             <Heart className="w-16 h-16 text-white/30 mx-auto mb-6" fill="currentColor" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-3xl font-bold text-white mb-6">
               هل تريد دعم برنامجاً من برامجنا؟
             </h2>
             <p className="text-white/80 text-lg mb-8 leading-[2]">

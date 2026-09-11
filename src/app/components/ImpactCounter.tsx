@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { useEffect, useState, useRef } from 'react';
 
 interface ImpactCounterProps {
   end: number;

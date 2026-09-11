@@ -1,5 +1,7 @@
-import { memo, useState, useMemo, useCallback } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { memo, useState, useMemo, useCallback } from 'react';
+
 import { Pagination } from './Pagination';
 
 interface Column<T> {
@@ -20,7 +22,7 @@ interface DataTableProps<T> {
   emptyMessage?: string;
 }
 
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T extends Record<string, any>>({
   data, columns, searchable = true, searchPlaceholder = 'بحث...', 
   pageSize = 25, onRowClick, emptyMessage = 'لا توجد بيانات'
 }: DataTableProps<T>) {

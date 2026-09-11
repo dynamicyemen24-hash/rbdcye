@@ -1,7 +1,8 @@
 // Enhanced PWA Install Prompt - تثبيت التطبيق بذكاء
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, type PanInfo } from "motion/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Download, X, Smartphone, Check, WifiOff, Wifi, ArrowDown } from "lucide-react";
+import { motion, AnimatePresence, type PanInfo } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -28,6 +29,7 @@ export function EnhancedInstallPrompt() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone) {
       setIsInstalled(true);
       return;
@@ -88,7 +90,7 @@ export function EnhancedInstallPrompt() {
   }, []);
 
   const handleDragEnd = useCallback(
-    (_: unknown, info: PanInfo) => {
+    (_: any, info: PanInfo) => {
       if (info.offset.y > 100) handleDismiss();
     },
     [handleDismiss]

@@ -1,7 +1,5 @@
 // ViralShare — مكون المشاركة الفيروسية
 // نظام مشاركة احترافي مع رمز QR يدوي ومحركات فيروسية
-import { useState, useRef, useEffect, useCallback, memo } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Share2,
   Copy,
@@ -17,6 +15,8 @@ import {
   TrendingUp,
   Gift,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useRef, useEffect, useCallback, memo } from "react";
 
 // ─── بناء رمز QR برمجيًا بدون مكتبات ─────────────────────────
 function generateQRMatrix(text: string, size = 21): boolean[][] {

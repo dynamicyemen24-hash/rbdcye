@@ -10,6 +10,7 @@ import { urlFor as buildImageUrl } from "../lib/image";
 // Custom components for Portable Text
 const portableTextComponents = {
   types: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     image: ({ value }: any) => {
       if (!value?.asset) return null;
       const imageUrl = buildImageUrl(value, 800);
@@ -24,6 +25,7 @@ const portableTextComponents = {
     },
   },
   marks: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     link: ({ children, value }: any) => {
       return (
         <a
@@ -38,24 +40,33 @@ const portableTextComponents = {
     },
   },
   block: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     h1: ({ children }: any) => <h1 className="text-3xl font-bold mb-4">{children}</h1>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     h2: ({ children }: any) => <h2 className="text-2xl font-bold mb-3">{children}</h2>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     h3: ({ children }: any) => <h3 className="text-xl font-bold mb-2">{children}</h3>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     blockquote: ({ children }: any) => (
       <blockquote className="border-r-4 border-brand-green pr-4 italic my-4">{children}</blockquote>
     ),
   },
   list: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     bullet: ({ children }: any) => <ul className="list-disc list-inside mb-4">{children}</ul>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     number: ({ children }: any) => <ol className="list-decimal list-inside mb-4">{children}</ol>,
   },
   listItem: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     bullet: ({ children }: any) => <li>{children}</li>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     number: ({ children }: any) => <li>{children}</li>,
   },
 };
 
 interface PortableTextProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   className?: string;
 }

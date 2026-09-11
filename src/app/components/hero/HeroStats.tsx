@@ -1,4 +1,5 @@
 import { Users, Star, Handshake } from "lucide-react";
+
 import { HeroMetrics } from "./types";
 
 interface HeroStatsProps {

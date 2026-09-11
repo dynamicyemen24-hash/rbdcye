@@ -17,6 +17,7 @@ interface DataLoaderResult<T> {
 
 export function useDataLoader<T>(
   fetchFn: () => Promise<T>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dependencies: any[] = [],
   options: DataLoaderOptions = {}
 ): DataLoaderResult<T> {

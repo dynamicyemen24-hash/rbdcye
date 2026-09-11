@@ -2,9 +2,9 @@
 // الرسالة والرؤية والقيم في ثلاثة أعمدة بزخارف مؤسسية
 import { Compass, Eye, Gem, ArrowLeft } from "lucide-react";
 
-import { Section, SectionHeader } from "@/app/components/layout/Section";
-import { Reveal } from "@/app/components/layout/Reveal";
 import { StarMedallion } from "@/app/components/decor/IslamicPattern";
+import { Reveal } from "@/app/components/layout/Reveal";
+import { Section, SectionHeader } from "@/app/components/layout/Section";
 
 interface WhyUsProps {
   setCurrentPage?: (page: string) => void;

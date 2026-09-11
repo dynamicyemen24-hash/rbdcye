@@ -161,13 +161,13 @@
    Enhanced Component Utilities
    ============================================================ */
 
-/* Section title - unified pattern */
+/* Section title — مصغّر 8% */
 .section-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 3.4vw, 2.15rem);
   font-weight: 700;
   color: var(--foreground);
-  margin-bottom: 1rem;
-  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  line-height: 1.22;
 }
 
 .section-title .highlight {
@@ -199,13 +199,13 @@
   border-color: rgba(var(--brand-gold-rgb), 0.15);
 }
 
-/* Section subtitle */
+/* Section subtitle — أنحف وأوضح */
 .section-subtitle {
-  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-size: clamp(0.86rem, 1.15vw, 0.98rem);
   color: var(--muted-foreground);
-  max-width: 42rem;
+  max-width: 40rem;
   margin: 0 auto;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 /* Section divider */

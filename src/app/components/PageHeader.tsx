@@ -1,6 +1,6 @@
 // Unified Page Header Component - Professional Design System
-import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 import { IslamicPattern, IslamicDivider } from "@/app/components/decor/IslamicPattern";
 

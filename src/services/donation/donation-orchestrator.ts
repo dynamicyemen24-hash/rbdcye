@@ -2,6 +2,7 @@ import { donationDBService, type Donation } from './donation-db.service';
 import { inKindService } from './inkind.service';
 import { materialService } from './material.service';
 import { offlineManager } from '../offline/offline-manager';
+
 import type { DonationSubmission, DonationReceipt } from './donation-types';
 
 class DonationOrchestrator {
@@ -45,6 +46,7 @@ class DonationOrchestrator {
       amount: donation.type === 'financial' ? donation.amount : undefined,
       currency: donation.type === 'financial' ? donation.currency : undefined,
       items: donation.type !== 'financial' 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ? (donation.items || []).map((item: any) => ({
             name: item.name,
             quantity: item.quantity,

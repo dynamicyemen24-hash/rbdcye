@@ -1,17 +1,19 @@
 // Endowment Page - الوقف الخيري
-import { motion } from "motion/react";
 import {
   Building2,
   Heart,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TrendingUp,
   Users,
   Shield,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Clock,
   Target,
   Award,
   Infinity,
   Landmark,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 
 import { useSEO } from "@/utils/seoAdvanced";
@@ -345,7 +347,7 @@ export default function EndowmentPage() {
             className="max-w-3xl mx-auto"
           >
             <Heart className="w-16 h-16 text-white/30 mx-auto mb-6" fill="currentColor" />
-            <h2 className="text-4xl font-bold text-white mb-4">اجعل أثر عطائك مستمراً</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">اجعل أثر عطائك مستمراً</h2>
             <p className="text-white/80 text-lg mb-8">
               انضم إلى الواقفين واجعل لك صدقة جارية إلى يوم القيامة
             </p>

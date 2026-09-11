@@ -1,4 +1,13 @@
 @import "tailwindcss" source(none);
-@source '../**/*.{js,ts,jsx,tsx}';
+@source '../app/**/*.{js,ts,jsx,tsx}';
+@source '../components/**/*.{js,ts,jsx,tsx}';
+@source '../shared/**/*.{js,ts,jsx,tsx}';
+@source '../features/**/*.{js,ts,jsx,tsx}';
+@source '../hooks/**/*.{js,ts,jsx,tsx}';
+@source '../sanity/**/*.{js,ts,jsx,tsx}';
+@source '../lib/**/*.{js,ts,jsx,tsx}';
+@source '../../index.html';
+@source not '../__tests__/**/*';
+@source not '../../e2e/**/*';
 
 @import "tw-animate-css";

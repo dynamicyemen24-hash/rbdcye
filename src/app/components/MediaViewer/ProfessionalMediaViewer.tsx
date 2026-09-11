@@ -12,7 +12,6 @@
  * - Dark/Light mode support
  */
 
-import { motion, AnimatePresence } from "motion/react";
 import {
   Play,
   Pause,
@@ -24,6 +23,7 @@ import {
   Eye,
   X,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect, useCallback, memo } from "react";
 
 import { mediaViewerService } from "./MediaViewer.service";

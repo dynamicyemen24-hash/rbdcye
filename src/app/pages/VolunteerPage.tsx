@@ -1,6 +1,4 @@
 // Volunteer Registration Page - صفحة التسجيل في التطوع
-import { motion } from "motion/react";
-import { useState } from "react";
 import {
   HandHelping,
   Users,
@@ -19,10 +17,15 @@ import {
   Target,
   Globe,
   Sparkles,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TrendingUp,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Star,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Zap,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 // ═══════════════════════════════════════════════════════
 // بيانات مجالات التطوع
@@ -189,7 +192,7 @@ export default function VolunteerPage() {
             >
               <CheckCircle className="w-14 h-14 text-[var(--brand-green)]" />
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               شكرًا لك! تم استلام طلبك بنجاح
             </h2>
             <p className="text-[var(--muted-foreground)] text-lg mb-8 leading-[2]">
@@ -239,7 +242,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           Hero Section
           ═══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-28 text-white sm:py-36">
+      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-20 text-white sm:py-36">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -308,7 +311,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           مزايا التطوع
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -321,7 +324,7 @@ export default function VolunteerPage() {
               لماذا التطوع معنا
               <span className="h-px w-8 bg-[var(--brand-gold)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               مزايا تجعل تجربتك استثنائية
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -362,7 +365,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           مجالات التطوع
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -375,7 +378,7 @@ export default function VolunteerPage() {
               مجالات التطوع
               <span className="h-px w-8 bg-[var(--brand-green)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               اختر المجال الذي يناسبك
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -437,7 +440,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           كيف يعمل التطوع
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -450,7 +453,7 @@ export default function VolunteerPage() {
               خطوات التطوع
               <span className="h-px w-8 bg-[var(--brand-gold)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)]">
               ثلاث خطوات بسيطة للبدء
             </h2>
           </motion.div>
@@ -510,7 +513,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           نموذج التسجيل
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32" id="register">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20" id="register">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -523,7 +526,7 @@ export default function VolunteerPage() {
               سجّل الآن
               <span className="h-px w-8 bg-[var(--brand-green)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               نموذج التسجيل في التطوع
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -749,7 +752,7 @@ export default function VolunteerPage() {
       {/* ═══════════════════════════════════════════
           دعوة للعمل
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--brand-green-dark)] py-24 sm:py-32 text-white relative overflow-hidden">
+      <section className="bg-[var(--brand-green-dark)] py-16 sm:py-20 text-white relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{

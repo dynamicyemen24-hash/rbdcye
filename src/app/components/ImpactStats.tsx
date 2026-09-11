@@ -12,13 +12,12 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef, type ComponentType } from "react";
 
-import { SEED_IMPACT } from "@/content/website";
-import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
 import {
   IslamicPattern,
   IslamicDivider,
   StarMedallion,
 } from "@/app/components/decor/IslamicPattern";
+import { useImpactMetrics } from "@/sanity/hooks/useImpactMetrics";
 
 interface Metric {
   icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
@@ -281,57 +280,25 @@ export function ImpactStats() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const progressRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Dynamic content
-  const { data: dynamicImpact, source } = useDynamicContent<any>({
-    contentType: "impact",
-    enableRealtime: false,
-    refreshInterval: 300000,
-  });
+  const { data: impactData, source: impactSource } = useImpactMetrics();
 
   // Dev badge
   useEffect(() => {
     if (import.meta.env?.DEV) setShowDevBadge(true);
   }, []);
 
-  // Metrics + intersection observer
+  // Metrics + intersection observer — GROQ System of Record with 7d stale
   useEffect(() => {
-    let cancelled = false;
-
-    const fallback = {
-      totalBeneficiaries: SEED_IMPACT.beneficiaries,
-      activeProjects: SEED_IMPACT.projects,
-      totalPartners: SEED_IMPACT.partners,
-      totalVolunteers: SEED_IMPACT.volunteers,
+    setMetrics({
+      totalBeneficiaries: impactData.totalBeneficiaries,
+      activeProjects: impactData.activeProjects,
+      totalPartners: impactData.totalPartners,
+      totalVolunteers: impactData.totalVolunteers,
       totalDonations: 3_200_000,
       productiveFamilies: 472,
-    };
-
-    const load = async () => {
-      try {
-        if (dynamicImpact?.length > 0) {
-          const d = dynamicImpact[0];
-          setMetrics({
-            totalBeneficiaries:
-              d?.totalBeneficiaries ?? d?.beneficiaries ?? fallback.totalBeneficiaries,
-            activeProjects: d?.activeProjects ?? d?.projects ?? fallback.activeProjects,
-            totalPartners: d?.totalPartners ?? d?.partners ?? fallback.totalPartners,
-            totalVolunteers: d?.totalVolunteers ?? d?.volunteers ?? fallback.totalVolunteers,
-            totalDonations: d?.totalDonations ?? fallback.totalDonations,
-            productiveFamilies: d?.productiveFamilies ?? fallback.productiveFamilies,
-          });
-          setContentSource(source as "sanity" | "static");
-        } else {
-          setMetrics(fallback);
-          setContentSource("static");
-        }
-      } catch {
-        if (!cancelled) {
-          setMetrics(fallback);
-          setContentSource("static");
-        }
-      }
-    };
-    load();
+    });
+    setContentSource(impactSource === 'sanity' ? 'sanity' : 'static');
+    // keep observer setup below — fall through
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -345,10 +312,9 @@ export function ImpactStats() {
     if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => {
-      cancelled = true;
       observer.disconnect();
     };
-  }, [dynamicImpact, source]);
+  }, [impactData, impactSource]);
 
   // ─── Metric definitions (سردية الأثر) ───────────────────
   const heroMetric: Metric = {

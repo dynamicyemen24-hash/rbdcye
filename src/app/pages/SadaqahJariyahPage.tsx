@@ -1,5 +1,4 @@
 // Sadaqah Jariyah Page - صفحة الصدقة الجارية
-import { motion } from "motion/react";
 import {
   Droplets,
   Landmark,
@@ -18,6 +17,7 @@ import {
   CheckCircle2,
   Star,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 
 import { useSEO } from "@/utils/seoAdvanced";
@@ -249,7 +249,7 @@ export default function SadaqahJariyahPage() {
                 <div className="w-12 h-12 rounded-full bg-[var(--brand-green-pale)] flex items-center justify-center mx-auto mb-3">
                   <stat.icon className="w-6 h-6 text-[var(--brand-green)]" />
                 </div>
-                <div className="text-3xl font-bold text-[var(--foreground)]">{stat.value}</div>
+                <div className="text-2xl font-bold text-[var(--foreground)]">{stat.value}</div>
                 <div className="text-sm text-[var(--muted-foreground)] mt-1">{stat.label}</div>
               </motion.div>
             ))}
@@ -384,7 +384,7 @@ export default function SadaqahJariyahPage() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center mx-auto mb-4">
                 <Droplets className="w-8 h-8 text-white" />
               </div>
-              <div className="text-4xl font-bold text-[var(--foreground)] mb-2">١٢</div>
+              <div className="text-3xl font-bold text-[var(--foreground)] mb-2">١٢</div>
               <div className="text-sm text-[var(--brand-green)] font-medium mb-1">بئر مياه مكتملة</div>
               <p className="text-xs text-[var(--muted-foreground)]">
                 تعمل بالطاقة الشمسية وتزوّد أكثر من ١٢,٠٠٠ شخص بالمياه النقية على مدار الساعة
@@ -402,7 +402,7 @@ export default function SadaqahJariyahPage() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center mx-auto mb-4">
                 <Landmark className="w-8 h-8 text-white" />
               </div>
-              <div className="text-4xl font-bold text-[var(--foreground)] mb-2">٨</div>
+              <div className="text-3xl font-bold text-[var(--foreground)] mb-2">٨</div>
               <div className="text-sm text-[var(--brand-green)] font-medium mb-1">مساجد بناء وترميم</div>
               <p className="text-xs text-[var(--muted-foreground)]">
                 بيئة روحانية وتعليمية مستدامة تخدم أكثر من ٨,٥٠٠ مصلٍّ وطالب علم يومياً
@@ -420,7 +420,7 @@ export default function SadaqahJariyahPage() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-400 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-white" />
               </div>
-              <div className="text-4xl font-bold text-[var(--foreground)] mb-2">٣٥,٠٠٠+</div>
+              <div className="text-3xl font-bold text-[var(--foreground)] mb-2">٣٥,٠٠٠+</div>
               <div className="text-sm text-[var(--brand-green)] font-medium mb-1">مستفيد مباشر</div>
               <p className="text-xs text-[var(--muted-foreground)]">
                 من مشاريع المياه والتعليم والصحة والتمكين الاقتصادي في ٧ محافظات يمنية
@@ -457,6 +457,7 @@ export default function SadaqahJariyahPage() {
                     title: "أجرك مستمر",
                     desc: "كل شخص يستفيد من المشروع يُ增加值 أجرك حتى يرث الله الأرض",
                   },
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 ].map((item, i) => (
                   <div key={item.step} className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-green)] text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
@@ -540,7 +541,7 @@ export default function SadaqahJariyahPage() {
             className="max-w-3xl mx-auto"
           >
             <Heart className="w-16 h-16 text-white/30 mx-auto mb-6" fill="currentColor" />
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-bold text-white mb-4">
               ابدأ صدقة جارية اليوم
             </h2>
             <p className="text-white/80 text-lg mb-8 leading-relaxed">

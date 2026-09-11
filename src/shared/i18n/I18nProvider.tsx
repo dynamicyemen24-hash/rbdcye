@@ -1,7 +1,7 @@
 import { createContext, useContext, useCallback, useEffect, useMemo, useState, useRef } from "react";
+
 import { dictionaries } from "./dictionaries";
 import { ar } from "./dictionaries/ar";
-import type { Dictionary } from "./dictionaries/ar";
 import {
   DEFAULT_LOCALE,
   LOCALE_STORAGE_KEY,
@@ -15,6 +15,8 @@ import {
   resolvePath,
   syncDocumentLocale,
 } from "./types";
+
+import type { Dictionary } from "./dictionaries/ar";
 import type { Locale, TranslationKey } from "./types";
 
 export interface I18nValue {
@@ -34,9 +36,9 @@ function buildTranslator(
 ): (key: TranslationKey<Dictionary>, vars?: Record<string, string | number>) => string {
   return (key, vars) => {
     const dict = dictionaries[locale] ?? ar;
-    const fallback = ar as unknown as Record<string, unknown>;
+    const fallback = ar as any as Record<string, any>;
 
-    const value = resolvePath(dict as unknown as Record<string, unknown>, key);
+    const value = resolvePath(dict as any as Record<string, any>, key);
     const fallbackValue = resolvePath(fallback, key as string);
 
     const template =

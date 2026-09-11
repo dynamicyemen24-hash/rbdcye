@@ -14,6 +14,7 @@ export function useNews(params: NewsQueryParams = {}) {
     setError(null);
     try {
       const res = await fetch(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         `${API_BASE_URL}${API_ENDPOINTS.NEWS.LIST}?${new URLSearchParams(params as any)}`
       );
       if (!res.ok) throw new Error("Failed to fetch news");

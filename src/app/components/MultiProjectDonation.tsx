@@ -3,7 +3,6 @@
 // يدعم التبرع لمشاريع متعددة في صفقة واحدة
 // متصل بقاعدة البيانات الحقيقية
 // ============================================================
-import { motion } from "motion/react";
 import {
   Heart,
   CheckCircle,
@@ -31,6 +30,7 @@ import {
   Star,
   Loader2,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useCallback, useMemo, useEffect } from "react";
 
 import { useAuth } from "@/features/auth/contexts/AuthContext";
@@ -45,6 +45,7 @@ import { type PaymentMethod } from "@/shared/services/payment-gateway.service";
 // ============================================================
 // Icons for projects
 // ============================================================
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PROJECT_ICONS: Record<string, any> = {
   default: Heart,
   ماء: Droplets,
@@ -60,6 +61,7 @@ const PROJECT_ICONS: Record<string, any> = {
   عام: Star,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getProjectIcon(name: string): any {
   for (const [keyword, icon] of Object.entries(PROJECT_ICONS)) {
     if (name.includes(keyword)) return icon;

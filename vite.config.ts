@@ -115,26 +115,10 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
-    target: 'esnext',
+    minify: 'esbuild',
+    target: ['es2022', 'chrome80', 'firefox78', 'safari14', 'edge80'],
     modulePreload: { polyfill: true },
-    terserOptions: {
-      compress: {
-        passes: 3,
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
-        ecma: 2020,
-      },
-      mangle: {
-        safari10: true,
-      },
-      format: {
-        comments: false,
-        ecma: 2020,
-      },
-    },
-    reportCompressedSize: true,
+    reportCompressedSize: false,
     rollupOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',

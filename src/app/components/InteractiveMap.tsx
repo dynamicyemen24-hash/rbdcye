@@ -1,6 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { MapPin, CheckCircle2, FolderOpen, Search, ShieldCheck } from "lucide-react";
 import {
   map as createMap,
   tileLayer,
@@ -9,6 +6,9 @@ import {
   CircleMarker,
   Map as LeafletMap,
 } from "leaflet";
+import { MapPin, CheckCircle2, FolderOpen, Search, ShieldCheck } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 
 export interface GovernorateProjectData {

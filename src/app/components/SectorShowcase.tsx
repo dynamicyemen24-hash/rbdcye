@@ -1,5 +1,3 @@
-import React, { useState, memo } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Heart,
   Users,
@@ -15,7 +13,11 @@ import {
   Quote,
   Sparkles,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, memo } from "react";
+
 import { SECTORS_SHOWCASE_DATA } from "@/data/sectorsData";
+
 import { FallbackImage } from "./FallbackImage";
 
 interface SectorShowcaseProps {

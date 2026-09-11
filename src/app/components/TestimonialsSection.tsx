@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import { SectionHeader } from './ui/SectionHeader';
+
 import { TestimonialCarousel } from './TestimonialCarousel';
+import { SectionHeader } from './ui/SectionHeader';
 
 export const TestimonialsSection = memo(function TestimonialsSection() {
   return (

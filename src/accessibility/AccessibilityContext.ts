@@ -4,6 +4,7 @@
  * ========================================================================== */
 
 import type {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   AccessibilityContextValue,
   AccessibilityPreferences,
   AccessibilitySettings,

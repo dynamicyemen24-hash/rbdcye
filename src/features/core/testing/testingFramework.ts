@@ -18,14 +18,18 @@ interface TestSuite {
 }
 
 interface AssertionHelpers {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toBe(expected: any): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toEqual(expected: any): void;
   toBeTruthy(): void;
   toBeFalsy(): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toContain(item: any): void;
   toThrow(expected?: string | RegExp): void;
   toBeGreaterThan(expected: number): void;
   toBeLessThan(expected: number): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toBeInstanceOf(expected: any): void;
 }
 
@@ -143,12 +147,15 @@ export const skip = (name: string, fn: () => Promise<void> | void) => it(name, f
 export const only = (name: string, fn: () => Promise<void> | void) => it(name, fn, { only: true });
 
 // Assertions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const expect = (actual: any): AssertionHelpers => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toBe: (expected: any) => {
     if (actual !== expected) {
       throw new Error(`Expected ${actual} to be ${expected}`);
     }
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toEqual: (expected: any) => {
     if (JSON.stringify(actual) !== JSON.stringify(expected)) {
       throw new Error(`Expected ${JSON.stringify(actual)} to equal ${JSON.stringify(expected)}`);
@@ -164,6 +171,7 @@ export const expect = (actual: any): AssertionHelpers => ({
       throw new Error(`Expected ${actual} to be falsy`);
     }
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toContain: (item: any) => {
     if (!actual.includes(item)) {
       throw new Error(`Expected ${JSON.stringify(actual)} to contain ${item}`);
@@ -173,7 +181,7 @@ export const expect = (actual: any): AssertionHelpers => ({
     try {
       actual();
       throw new Error("Expected function to throw");
-    } catch (error: unknown) {
+    } catch (error: any) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
       if (expected instanceof RegExp) {
         if (!expected.test(errorObj.message)) {
@@ -194,6 +202,7 @@ export const expect = (actual: any): AssertionHelpers => ({
       throw new Error(`Expected ${actual} to be less than ${expected}`);
     }
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toBeInstanceOf: (expected: any) => {
     if (!(actual instanceof expected)) {
       throw new Error(`Expected ${actual} to be instance of ${expected.name}`);
@@ -202,7 +211,9 @@ export const expect = (actual: any): AssertionHelpers => ({
 });
 
 // Mock utilities
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mock<T extends (...args: any[]) => any>(fn: T): MockFunction<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockFn = ((...args: any[]) => {
     return fn(...args);
   }) as MockFunction<T>;
@@ -211,14 +222,17 @@ export function mock<T extends (...args: any[]) => any>(fn: T): MockFunction<T> 
     return mock(impl);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockFn.mockReturnValue = (value: any) => {
     return mock((() => value) as T);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockFn.mockRejectedValue = (error: any) => {
     return mock((() => Promise.reject(error)) as T);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockFn.mockResolvedValue = (value: any) => {
     return mock((() => Promise.resolve(value)) as T);
   };
@@ -233,14 +247,20 @@ export function mock<T extends (...args: any[]) => any>(fn: T): MockFunction<T> 
   return mockFn;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MockFunction<T extends (...args: any[]) => any> = {
   (...args: Parameters<T>): ReturnType<T>;
   mockImplementation: (fn: T) => MockFunction<T>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockReturnValue: (value: any) => MockFunction<T>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockRejectedValue: (error: any) => MockFunction<T>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockResolvedValue: (value: any) => MockFunction<T>;
   mockClear: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockCalls: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mockResults: any[];
 };
 

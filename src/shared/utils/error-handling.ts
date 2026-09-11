@@ -60,6 +60,7 @@ export async function withRetry<T>(
 
 // Log error for monitoring
 export function logError(error: Error | ApiError, context?: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const errorInfo = {
     message: error.message,
     stack: error instanceof Error ? error.stack : undefined,

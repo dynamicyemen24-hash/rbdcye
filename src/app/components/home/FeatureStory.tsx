@@ -2,8 +2,8 @@
 import { Quote, MapPin, ArrowLeft, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { Section, SectionHeader } from "@/app/components/layout/Section";
 import { Reveal } from "@/app/components/layout/Reveal";
+import { Section, SectionHeader } from "@/app/components/layout/Section";
 import { SEED_SUCCESS_STORIES } from "@/content/website";
 
 const FALLBACK_IMAGE = "/images/defaults/story-woman.svg";

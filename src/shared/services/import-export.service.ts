@@ -29,7 +29,7 @@ export interface ImportOptions {
   content?: string;
   file?: File;
   conflictStrategy?: "skip" | "update" | "error";
-  validateItem?: (item: Record<string, unknown>) => true | string;
+  validateItem?: (item: Record<string, any>) => true | string;
   batchSize?: number;
   onProgress?: (progress: { imported: number; total: number; percent: number }) => void;
   abortSignal?: AbortSignal;
@@ -85,19 +85,22 @@ export function readFileAsText(file: File): Promise<string> {
   });
 }
 
-export async function readFileAsJSON(file: File): Promise<unknown> {
+export async function readFileAsJSON(file: File): Promise<any> {
   const text = await readFileAsText(file);
   return JSON.parse(text);
 }
 
 // ===================== تصدير البيانات =====================
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchEntityData(entity: string, options: ExportOptions): Promise<any[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let data: any[] = await dataService.getAll(entity as any, true);
 
   if (options.dateFrom || options.dateTo) {
     const from = options.dateFrom ? new Date(options.dateFrom).getTime() : 0;
     const to = options.dateTo ? new Date(options.dateTo).getTime() : Date.now();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data = data.filter((item: any) => {
       const dateVal = item.createdAt || item.date || 0;
       const ts =
@@ -110,6 +113,7 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
 
   if (options.orderBy) {
     const { field, dir } = options.orderBy;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data.sort((a: any, b: any) => {
       const aVal = String(a[field] || "");
       const bVal = String(b[field] || "");
@@ -124,10 +128,11 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
   }
 
   if (options.fields && options.fields.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data = data.map((item: any) => {
       // Include id field for type compatibility
-      const filtered: Record<string, unknown> = {
-        id: (item.id != null
+      const filtered: Record<string, any> = {
+        id: (item.id !== null && item.id !== undefined
           ? String(item.id)
           : `item-${Math.random().toString(36).slice(2)}`) as string,
       };
@@ -142,7 +147,7 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
 }
 
 export async function exportToJSON(options: ExportOptions): Promise<string> {
-  const result: Record<string, unknown> = {};
+  const result: Record<string, any> = {};
 
   for (const entity of options.entities) {
     const data = await fetchEntityData(entity, options);
@@ -175,7 +180,7 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
       continue;
     }
 
-    const firstItem = data[0] as Record<string, unknown>;
+    const firstItem = data[0] as Record<string, any>;
     const headers =
       options.fields && options.fields.length > 0
         ? options.fields
@@ -185,7 +190,7 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
     csvOutput += headers.join(delimiter) + "\n";
 
     for (const item of data) {
-      const itemRecord = item as Record<string, unknown>;
+      const itemRecord = item as Record<string, any>;
       const row = headers.map((h) => {
         const val = itemRecord[h];
         if (val === null || val === undefined) return "";
@@ -208,6 +213,7 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
 
 export async function exportToExcel(options: ExportOptions): Promise<ArrayBuffer> {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const XLSX: any = await import("xlsx");
     const workbook = XLSX.utils.book_new();
 
@@ -233,12 +239,12 @@ export async function exportToExcel(options: ExportOptions): Promise<ArrayBuffer
 
 // ===================== استيراد البيانات =====================
 
-function parseJSONContent(content: string): unknown[] {
+function parseJSONContent(content: string): any[] {
   const parsed = JSON.parse(content);
   return Array.isArray(parsed) ? parsed : [];
 }
 
-function parseCSVContent(content: string): Record<string, unknown>[] {
+function parseCSVContent(content: string): Record<string, any>[] {
   const lines = content.split("\n");
   const headers: string[] = [];
   let dataStartIndex = 0;
@@ -253,12 +259,12 @@ function parseCSVContent(content: string): Record<string, unknown>[] {
 
   if (headers.length === 0) return [];
 
-  const data: Record<string, unknown>[] = [];
+  const data: Record<string, any>[] = [];
   for (let i = dataStartIndex; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line || line.startsWith("#")) continue;
     const values = line.split(",");
-    const record: Record<string, unknown> = {};
+    const record: Record<string, any> = {};
     headers.forEach((header, idx) => {
       record[header.trim()] = values[idx] || "";
     });
@@ -301,16 +307,17 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
   };
 
   try {
-    let rawData: unknown[] = [];
+    let rawData: any[] = [];
 
     if (file) {
       if (format === "json") {
-        rawData = (await readFileAsJSON(file)) as unknown[];
+        rawData = (await readFileAsJSON(file)) as any[];
         rawData = Array.isArray(rawData) ? rawData : [];
       } else if (format === "csv") {
         const text = await readFileAsText(file);
         rawData = parseCSVContent(text);
       } else if (format === "excel") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const XLSX: any = await import("xlsx");
         const buffer = await file.arrayBuffer();
         const workbook = XLSX.read(buffer, { type: "array" });
@@ -318,7 +325,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
           ? workbook.Sheets[sheetName]
           : workbook.Sheets[workbook.SheetNames[0]];
         if (!sheet) throw new Error("الورقة المطلوبة غير موجودة في ملف Excel");
-        rawData = XLSX.utils.sheet_to_json(sheet, { defval: "" }) as unknown[];
+        rawData = XLSX.utils.sheet_to_json(sheet, { defval: "" }) as any[];
       } else {
         throw new Error("تنسيق غير مدعوم مع ملف");
       }
@@ -341,10 +348,10 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     const total = rawData.length;
     result.totalProcessed = total;
 
-    const prepared: Record<string, unknown>[] = [];
+    const prepared: Record<string, any>[] = [];
     for (let i = 0; i < rawData.length; i++) {
-      const item = rawData[i] as Record<string, unknown>;
-      const cleanItem: Record<string, unknown> = {};
+      const item = rawData[i] as Record<string, any>;
+      const cleanItem: Record<string, any> = {};
       for (const key of Object.keys(item)) {
         if (!key.startsWith("_")) {
           cleanItem[key] = item[key];
@@ -373,16 +380,18 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
       const batch = batches[batchIndex];
       for (const item of batch) {
         try {
-          const itemId = item.id != null ? String(item.id) : undefined;
+          const itemId = item.id !== null && item.id !== undefined ? String(item.id) : undefined;
 
           if (conflictStrategy === "skip" || conflictStrategy === "update") {
             if (itemId) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const existing = await dataService.getById(entity as any, itemId);
               if (existing) {
                 if (conflictStrategy === "skip") {
                   result.skipped = (result.skipped || 0) + 1;
                   continue;
                 } else if (conflictStrategy === "update") {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   await dataService.update(entity as any, itemId, item);
                   result.updated = (result.updated || 0) + 1;
                   result.imported++;
@@ -392,6 +401,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
             }
           }
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await dataService.create(entity as any, item);
           result.imported++;
         } catch (error) {

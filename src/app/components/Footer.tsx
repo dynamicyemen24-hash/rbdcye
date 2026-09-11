@@ -10,9 +10,10 @@ import {
   ExternalLink,
   Shield,
 } from "lucide-react";
-import { TrustShield } from "@/app/components/ui/BrandIcons";
-import { useState } from "react";
 import { motion } from "motion/react";
+import { useState } from "react";
+
+import { TrustShield } from "@/app/components/ui/BrandIcons";
 import { subscribersApi } from "@/shared/services/api.service";
 
 const footerLinks = {

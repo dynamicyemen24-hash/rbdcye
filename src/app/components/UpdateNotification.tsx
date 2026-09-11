@@ -1,7 +1,7 @@
 // Update Notification - إشعار التحديث الذكي
 import { RefreshCw, X, ArrowUp } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
 
 export function UpdateNotification() {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);

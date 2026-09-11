@@ -518,6 +518,7 @@ class PostgresService {
   }
 
   // ============ SUCCESS STORIES ============
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getSuccessStories(): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("success_stories")
@@ -528,6 +529,7 @@ class PostgresService {
     return data || [];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async createSuccessStory(story: any): Promise<any> {
     const { data, error } = await this.supabase
       .from("success_stories")
@@ -539,6 +541,7 @@ class PostgresService {
     return data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async updateSuccessStory(id: string, updates: any): Promise<any> {
     const { data, error } = await this.supabase
       .from("success_stories")
@@ -558,6 +561,7 @@ class PostgresService {
   }
 
   // ============ REPORTS/DASHBOARD METRICS ============
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getDashboardMetrics(): Promise<any> {
     const [projects, partners, volunteers, requests, donations, news, stories] = await Promise.all([
       this.getProjects(),
@@ -589,6 +593,7 @@ class PostgresService {
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getChartData(): Promise<any> {
     const donations = await this.getDonations();
     const projects = await this.getProjects();

@@ -1,5 +1,6 @@
 import { useAuth } from "../contexts/AuthContext";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Navigate({ to, replace }: { to: string; replace?: boolean }) {
   return null; // Placeholder - routing handled by App.tsx
 }

@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { InKindDonation, InKindItem } from './donation-types';
 
 export interface InKindDonationRecord {
@@ -69,7 +71,7 @@ class InKindService {
   }
 
   async updateStatus(id: string, status: string, coordinator?: { name: string; phone: string }): Promise<void> {
-    const updates: Record<string, unknown> = { status };
+    const updates: Record<string, any> = { status };
     if (coordinator) {
       updates.coordinator_name = coordinator.name;
       updates.coordinator_phone = coordinator.phone;

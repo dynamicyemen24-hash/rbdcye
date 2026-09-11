@@ -1,5 +1,4 @@
 // Transparency Page - صفحة الشفافية
-import { motion } from "motion/react";
 import {
   Shield,
   FileText,
@@ -11,6 +10,7 @@ import {
   Search,
   ArrowLeft,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -127,7 +127,7 @@ export default function TransparencyPage() {
   return (
     <div className="min-h-screen bg-[var(--background)] pt-24 sm:pt-32" dir="rtl">
       {/* Hero Section */}
-      <section className="relative py-24 sm:py-32 overflow-hidden bg-gradient-to-b from-[var(--brand-green)]/10 to-[var(--background)]">
+      <section className="relative py-16 sm:py-20 overflow-hidden bg-gradient-to-b from-[var(--brand-green)]/10 to-[var(--background)]">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[var(--brand-green)]/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[var(--brand-gold)]/5 rounded-full blur-3xl" />
@@ -230,7 +230,7 @@ export default function TransparencyPage() {
       </section>
 
       {/* Pillars Section */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -269,7 +269,7 @@ export default function TransparencyPage() {
       </section>
 
       {/* Governance Section */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -312,7 +312,7 @@ export default function TransparencyPage() {
       </section>
 
       {/* Reports Section */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -336,6 +336,7 @@ export default function TransparencyPage() {
                 {["all", "سنوي", "ربعي"].map((filter) => (
                   <button
                     key={filter}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onClick={() => setActiveFilter(filter as any)}
                     className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                       activeFilter === filter
@@ -431,7 +432,7 @@ export default function TransparencyPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 sm:py-32 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-green-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -439,7 +440,7 @@ export default function TransparencyPage() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">لديك استفسار حول الشفافية؟</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">لديك استفسار حول الشفافية؟</h2>
             <p className="text-white/80 text-lg mb-8 leading-[1.8]">
               يُرجى التواصل معنا لأي استفسار حول تقاريرنا المالية أو الإدارية أو آليات الحوكمة —
               فريقنا جاهز للرد على جميع الاستفسارات بشكل مفصّل.

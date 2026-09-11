@@ -1,5 +1,5 @@
-import { memo, ReactNode } from 'react';
 import { motion } from 'motion/react';
+import { memo, ReactNode } from 'react';
 
 interface SectionHeaderProps {
   badge?: string;

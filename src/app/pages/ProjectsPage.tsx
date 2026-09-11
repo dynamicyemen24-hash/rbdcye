@@ -1,5 +1,4 @@
 // Projects Page - صفحة المشاريع
-import { motion } from "motion/react";
 import {
   Target,
   MapPin,
@@ -13,6 +12,7 @@ import {
   BarChart3,
   TrendingUp,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +33,7 @@ interface Project {
   raised: string;
   beneficiaries: string;
   location: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any;
   description: string;
   color: string;
@@ -40,6 +41,7 @@ interface Project {
   image: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PROJECT_ICONS: Record<string, any> = {
   المياه: Droplets,
   إغاثة: Gift,
@@ -133,6 +135,7 @@ function normalizeSeedProjects(): Project[] {
 }
 
 // Normalize Sanity/API data
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function normalizeApiProjects(items: any[]): Project[] {
   return items.map((p) => {
     const category = p.category || "عام";
@@ -161,6 +164,7 @@ export default function ProjectsPage() {
   const [activeStatus, setActiveStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [projects, setProjects] = useState<Project[]>(normalizeSeedProjects());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [contentSource, setContentSource] = useState<"static" | "sanity">("static");
 
   useSEO({
@@ -494,7 +498,7 @@ export default function ProjectsPage() {
                 <circle cx="28" cy="28" r="3" fill="var(--brand-gold)" />
               </svg>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-white mb-4">
               كن شريكاً في صناعة الأثر
             </h2>
             <p className="text-white/85 text-lg mb-8 leading-relaxed max-w-xl mx-auto">

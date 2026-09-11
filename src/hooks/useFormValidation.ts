@@ -3,6 +3,7 @@
 
 import { useState, useCallback } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Validator = (value: any) => string | undefined;
 
 interface FieldConfig {
@@ -15,6 +16,7 @@ interface ValidationResult<T> {
   data: T | null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useFormValidation<T extends Record<string, any>>(
   schema: Record<keyof T, FieldConfig>,
   initialData: T
@@ -47,6 +49,7 @@ export function useFormValidation<T extends Record<string, any>>(
   );
 
   const handleChange = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (field: keyof T) => (value: any) => {
       setData((prev) => ({ ...prev, [field]: value }));
       setTouched((prev) => ({ ...prev, [field]: true }));

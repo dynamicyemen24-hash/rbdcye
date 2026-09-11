@@ -1,17 +1,19 @@
 // Admin Dashboard Page - Real-time Statistics
 // Professional Dashboard with Live Data
 
-import { motion } from "motion/react";
 import {
   Heart,
   MessageSquare,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TrendingUp,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Users,
   Video,
   ExternalLink,
   Volume2,
   VolumeX,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import AdminStats from "@/features/admin/components/AdminStats";
@@ -43,6 +45,7 @@ export default function DashboardPage() {
       try {
         // Fetch hero video settings from Sanity
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const settings: any = await sanityClient.fetch(`
             *[_type == "siteSettings"][0] {
               "heroVideo": heroVideo.asset->url,
@@ -69,6 +72,7 @@ export default function DashboardPage() {
         } catch {
           // Sanity unavailable, keep defaults
         }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setLoading(false);
       }

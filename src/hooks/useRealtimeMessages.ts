@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
 export function useRealtimeMessages() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [newMessage, setNewMessage] = useState<any | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [updatedMessage, setUpdatedMessage] = useState<any | null>(null);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export function useRealtimeMessages() {
           schema: "public",
           table: "messages",
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (payload: any) => {
           setNewMessage(payload.new);
           // طلب إشعار المتصفح
@@ -37,6 +40,7 @@ export function useRealtimeMessages() {
           schema: "public",
           table: "messages",
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (payload: any) => {
           setUpdatedMessage(payload.new);
         }

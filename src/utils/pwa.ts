@@ -48,6 +48,7 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
       // Enable background sync for offline submissions
       if ("sync" in registration) {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (registration as any).sync.register("form-sync");
         } catch {
           // Background sync not available — fallback to manual retry queue
@@ -55,10 +56,12 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
       }
 
       // Enable periodic background sync for content updates (hourly)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ("periodicSync" in (registration as any)) {
         try {
           const status = await navigator.permissions.query({ name: "periodic-background-sync" as PermissionName });
           if (status.state === "granted") {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             await (registration as any).periodicSync.register("content-update", {
               minInterval: 60 * 60 * 1000, // 1 hour
             });
@@ -164,18 +167,19 @@ export async function checkForPWAUpdate(): Promise<boolean> {
 export function isPWA(): boolean {
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (navigator as any).standalone === true ||
     document.referrer.includes("android-app://")
   );
 }
 
 // Background sync registration — queue-aware with retries
-export async function registerBackgroundSync(tag: string, _data?: unknown): Promise<void> {
+export async function registerBackgroundSync(tag: string, _data?: any): Promise<void> {
   if ("serviceWorker" in navigator && "SyncManager" in window) {
     try {
       const registration = await navigator.serviceWorker.ready;
       // Store payload in IndexedDB / localStorage if needed before registering sync
-      await (registration as unknown as { sync: { register: (tag: string) => Promise<void> } }).sync.register(tag);
+      await (registration as any as { sync: { register: (tag: string) => Promise<void> } }).sync.register(tag);
     } catch {
       // Background sync not supported — fallback to immediate retry via fetch queue
     }
@@ -185,7 +189,7 @@ export async function registerBackgroundSync(tag: string, _data?: unknown): Prom
 }
 
 // Queue a background sync with automatic retry semantics
-export async function queueBackgroundSync(tag: string, payload?: unknown): Promise<void> {
+export async function queueBackgroundSync(tag: string, payload?: any): Promise<void> {
   try {
     // Persist payload for SW to pick up on sync event
     if (payload && typeof localStorage !== "undefined") {
@@ -235,6 +239,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
 export async function setAppBadge(count: number): Promise<void> {
   if ("setAppBadge" in navigator) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (navigator as any).setAppBadge(count);
     } catch {
       // Badge API not supported or denied
@@ -245,6 +250,7 @@ export async function setAppBadge(count: number): Promise<void> {
 export async function clearAppBadge(): Promise<void> {
   if ("clearAppBadge" in navigator) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (navigator as any).clearAppBadge();
     } catch {
       // Badge API not supported or denied
@@ -303,6 +309,7 @@ export function getDeviceInfo() {
 export async function getBatteryStatus(): Promise<{ charging: boolean; level: number } | null> {
   if ("getBattery" in navigator) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const battery = await (navigator as any).getBattery();
       return { charging: battery.charging, level: battery.level };
     } catch {

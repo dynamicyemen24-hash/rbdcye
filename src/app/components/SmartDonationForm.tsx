@@ -1,5 +1,4 @@
 // Smart Donation Form Component - نموذج التبرع الذكي المتكامل مع Stripe والتبرع الدوري
-import { motion } from "motion/react";
 import {
   Heart,
   CreditCard,
@@ -15,11 +14,13 @@ import {
   FileText,
   DollarSign,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { paymentGateway, type PaymentCurrency } from "@/shared/services/payment-gateway.service";
 import { multiProjectDonationService } from "@/shared/services/donation-multi-project.service";
+import { paymentGateway, type PaymentCurrency } from "@/shared/services/payment-gateway.service";
+
 import { RecurringDonationToggle } from "./RecurringDonationToggle";
 
 interface SmartDonationFormProps {
@@ -71,6 +72,7 @@ export function SmartDonationForm({
   // 7. حالات المعالجة والنجاح
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [transactionDetails, setTransactionDetails] = useState<any>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -242,6 +244,7 @@ export function SmartDonationForm({
         ],
         totalAmount: actualAmount,
         currency: currency,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         paymentMethod: paymentMethod as any,
         paymentType:
           donationFrequency === "monthly"

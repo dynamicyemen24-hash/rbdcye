@@ -60,6 +60,7 @@ export function EnterpriseModal({
   footer,
   headerAction,
   icon: Icon,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   className = "",
   overlayClassName = "",
   contentClassName = "",

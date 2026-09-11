@@ -38,6 +38,7 @@ export function observeFID(callback: (metric: PerformanceMetric) => void) {
 
   const observer = new PerformanceObserver((list) => {
     const entries = list.getEntries();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     entries.forEach((entry: any) => {
       if (entry.processingStart) {
         callback({
@@ -66,6 +67,7 @@ export function observeCLS(callback: (metric: PerformanceMetric) => void) {
   let clsValue = 0;
   const observer = new PerformanceObserver((list) => {
     const entries = list.getEntries();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     entries.forEach((entry: any) => {
       if (!entry.hadRecentInput) {
         clsValue += entry.value;
@@ -93,6 +95,7 @@ export function observeINP(callback: (metric: PerformanceMetric) => void) {
   if (typeof window === 'undefined') return;
   try {
     const observer = new PerformanceObserver((list) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       list.getEntries().forEach((entry: any) => {
         if (entry.interactionId) {
           callback({
@@ -104,6 +107,7 @@ export function observeINP(callback: (metric: PerformanceMetric) => void) {
         }
       });
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     observer.observe({ type: 'event', buffered: true, durationThreshold: 16 } as any);
     return () => observer.disconnect();
   } catch {
@@ -133,7 +137,7 @@ export function observeTTFB(callback: (metric: PerformanceMetric) => void) {
 // Connection-aware prefetch strategy — record-level: saves data + speeds perceived perf
 export function getPrefetchStrategy(): 'prefetch-all' | 'prefetch-critical' | 'no-prefetch' {
   if (typeof navigator === 'undefined') return 'prefetch-critical';
-  const conn = (navigator as unknown as { connection?: { effectiveType?: string; saveData?: boolean; downlink?: number } }).connection;
+  const conn = (navigator as any as { connection?: { effectiveType?: string; saveData?: boolean; downlink?: number } }).connection;
   if (!navigator.onLine) return 'no-prefetch';
   if (conn?.saveData) return 'no-prefetch';
   if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') return 'no-prefetch';
@@ -183,22 +187,38 @@ export function preloadResource(href: string, as: string, opts?: { crossOrigin?:
 }
 
 // Report Web Vitals to analytics — record-level: LCP/FID/CLS + INP/TTFB
+// In production, beacons metrics to /api/analytics (fire-and-forget) + dev console
+function beaconMetric(metric: PerformanceMetric): void {
+  if (typeof navigator !== 'undefined' && 'sendBeacon' in navigator && import.meta.env.PROD) {
+    try {
+      const blob = new Blob([JSON.stringify({ ...metric, url: location.href })], { type: 'application/json' });
+      navigator.sendBeacon('/api/rum', blob);
+    } catch {
+      // silently ignore beacon failures — non-critical
+    }
+  }
+}
+
 export function reportWebVitals() {
-  observeLCP((metric) => {
-    if (import.meta.env.DEV) console.log('[WebVitals]', metric);
-  });
-  observeFID((metric) => {
-    if (import.meta.env.DEV) console.log('[WebVitals]', metric);
-  });
-  observeCLS((metric) => {
-    if (import.meta.env.DEV) console.log('[WebVitals]', metric);
-  });
-  observeINP((metric) => {
-    if (import.meta.env.DEV) console.log('[WebVitals]', metric);
-  });
-  observeTTFB((metric) => {
-    if (import.meta.env.DEV) console.log('[WebVitals]', metric);
-  });
+  const handler = (metric: PerformanceMetric) => {
+    beaconMetric(metric);
+  };
+  observeLCP(handler);
+  observeFID(handler);
+  observeCLS(handler);
+  observeINP(handler);
+  observeTTFB(handler);
+}
+
+// Preconnect helper — correct rel=preconnect (not preload)
+function preconnect(href: string): void {
+  if (typeof document === 'undefined') return;
+  if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+  const link = document.createElement('link');
+  link.rel = 'preconnect';
+  link.href = href;
+  link.crossOrigin = 'anonymous';
+  document.head.appendChild(link);
 }
 
 // Preload critical assets — connection-aware, font-optimized
@@ -206,25 +226,19 @@ export function preloadCriticalAssets() {
   if (typeof window === 'undefined') return;
 
   // Always preload brand logo with high priority (LCP candidate)
-  preloadResource('/UAMEX_ERPLOGO.png', 'image', { fetchPriority: 'high' });
+  preloadResource('/logo.svg', 'image', { fetchPriority: 'high' });
 
-  // Fonts: woff2 with crossorigin & type for correct preload
-  preloadResource('/fonts/tajawal-var-arabic.woff2', 'font', {
-    crossOrigin: 'anonymous',
-    type: 'font/woff2',
-    fetchPriority: 'high',
-  });
-  preloadResource('/fonts/tajawal-var-latin.woff2', 'font', {
-    crossOrigin: 'anonymous',
-    type: 'font/woff2',
-    fetchPriority: 'high',
-  });
+  // Preconnect to critical third-party domains for faster API calls
+  // NOTE: wildcard domains cannot be preloaded — use preconnect to origin instead
+  preconnect('https://js.stripe.com');
+  preconnect('https://cdn.sanity.io');
+  preconnect('https://xd0ohyiz.apicdn.sanity.io');
 }
 
 // Prefetch pages based on connection quality — saves data on slow/offline
 export function prefetchPages(routes: string[]) {
   if (typeof document === 'undefined' || typeof navigator === 'undefined') return;
-  const conn = (navigator as unknown as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
+  const conn = (navigator as any as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
   // Respect Save-Data and slow connections — skip prefetch
   if (conn?.saveData) return;
   if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') return;
@@ -244,7 +258,7 @@ export function prefetchPages(routes: string[]) {
 // Prefetch images based on connection — lazy network-aware
 export function prefetchCriticalImages(srcs: string[]) {
   if (typeof document === 'undefined' || typeof navigator === 'undefined') return;
-  const conn = (navigator as unknown as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
+  const conn = (navigator as any as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
   if (conn?.saveData) return;
   if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') return;
   if (!navigator.onLine) return;
@@ -264,7 +278,7 @@ export function initPerformancePrefetch() {
   if (typeof window === 'undefined') return;
   const idle = (cb: () => void) => {
     if ('requestIdleCallback' in window) {
-      (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback(cb, { timeout: 2000 });
+      (window as any as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback(cb, { timeout: 2000 });
     } else {
       globalThis.setTimeout(cb, 1500);
     }

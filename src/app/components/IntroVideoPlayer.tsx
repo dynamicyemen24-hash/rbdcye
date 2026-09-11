@@ -1,5 +1,4 @@
 // IntroVideoPlayer - مشغل الفيديو التعريفي المدمج في الصفحة الرئيسية
-import { motion, AnimatePresence } from "motion/react";
 import {
   Play,
   Pause,
@@ -11,6 +10,7 @@ import {
   X,
   Grid3X3,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect, memo } from "react";
 
 interface IntroVideoPlayerProps {

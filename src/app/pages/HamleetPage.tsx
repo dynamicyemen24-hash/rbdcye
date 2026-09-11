@@ -1,13 +1,16 @@
 ﻿// منصة «حملتي» — صناعة الحملات الخيرية الرقمية لصالح مشاريع معتمدة
-import { motion } from 'motion/react';
 import {
   Rocket, Share2, BarChart3, Users, Heart, Target,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Link2, PlusCircle, Send, Megaphone, MessageCircle, Globe,
   CheckCircle2, Clock, FileText, Shield,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Copy, ExternalLink, Zap, BookOpen, Sparkles, type LucideIcon,
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { PageHeader } from '@/app/components/PageHeader';
 import { StatsGrid } from '@/app/components/StatsGrid';
 import { useSEO } from '@/utils/seoAdvanced';
@@ -93,7 +96,7 @@ export default function HamleetPage() {
       <section className="py-16 sm:py-20 bg-[var(--card)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">كيف تصنع حملتك؟</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">كيف تصنع حملتك؟</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">أربع خطوات من الفكرة إلى الأثر الموثّق</p>
           </motion.div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,7 +121,7 @@ export default function HamleetPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">صفحة الحملة</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">صفحة الحملة</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">كل حملة تحصل على صفحة مستقلة بهدفها ومؤشر إنجازها وأدوات نشرها</p>
           </motion.div>
           <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -132,7 +135,7 @@ export default function HamleetPage() {
             <div className={`h-40 bg-gradient-to-l ${campaign.coverColor} flex items-center justify-center`}>
               <Megaphone className="w-16 h-16 text-white/80" />
             </div>
-            <div className="p-6 sm:p-8">
+            <div className="p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="px-3 py-1 rounded-full bg-[var(--brand-green)]/10 text-[var(--brand-green)] text-xs font-bold">{campaign.category}</span>
                 <span className="px-3 py-1 rounded-full bg-[var(--brand-gold)]/10 text-[var(--brand-gold-dark)] text-xs font-bold">{campaign.creatorType === 'institution' ? 'مؤسسة' : 'فرد'}</span>
@@ -143,7 +146,7 @@ export default function HamleetPage() {
               {/* مؤشر الإنجاز */}
               <div className="rounded-2xl bg-[var(--background)] p-5 mb-6">
                 <div className="flex items-end justify-between mb-3">
-                  <div><p className="text-sm text-[var(--muted-foreground)]">المجمّع</p><p className="text-3xl font-bold text-[var(--brand-green)]">{campaign.collected.toLocaleString('ar-YE')} ر.ي</p></div>
+                  <div><p className="text-sm text-[var(--muted-foreground)]">المجمّع</p><p className="text-2xl font-bold text-[var(--brand-green)]">{campaign.collected.toLocaleString('ar-YE')} ر.ي</p></div>
                   <div className="text-left"><p className="text-sm text-[var(--muted-foreground)]">الهدف</p><p className="text-xl font-bold text-[var(--foreground)]">{campaign.goal.toLocaleString('ar-YE')} ر.ي</p></div>
                 </div>
                 <div className="h-3 w-full rounded-full bg-[var(--muted)] overflow-hidden">
@@ -210,7 +213,7 @@ export default function HamleetPage() {
       <section id="create-campaign" className="py-16 sm:py-20 bg-[var(--card)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">أنشئ حملتك</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">أنشئ حملتك</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">اختر مشروعاً معتمداً وابدأ رحلتك في صناعة الأثر</p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-10 items-start">
@@ -269,7 +272,7 @@ export default function HamleetPage() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <Sparkles className="w-10 h-10 mx-auto mb-4 text-[var(--brand-gold-light)]" />
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">هل أنت مستعد لصنع الأثر؟</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-white mb-4">هل أنت مستعد لصنع الأثر؟</h2>
             <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">كل حملة تبدأ بقرار واحد — قرّر اليوم وابدأ رحلتك</p>
             <div className="flex flex-wrap justify-center gap-4">
               <button onClick={() => document.getElementById('create-campaign')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-bold text-[var(--brand-green)] shadow-2xl transition-all"><Rocket className="w-5 h-5" /> ابدأ حملتك</button>

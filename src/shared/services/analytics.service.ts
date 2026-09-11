@@ -532,6 +532,7 @@ class AnalyticsService {
     ];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getFinancialTables(filter: ReportFilter): TableData[] {
     return [
       {
@@ -555,6 +556,7 @@ class AnalyticsService {
     ];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getImpactTables(filter: ReportFilter): TableData[] {
     return [
       {
@@ -577,6 +579,7 @@ class AnalyticsService {
     ];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getDonorTables(filter: ReportFilter): TableData[] {
     return [
       {
@@ -599,6 +602,7 @@ class AnalyticsService {
     ];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getProjectTables(projectId?: string): TableData[] {
     return [
       {

@@ -17,12 +17,14 @@ interface FeatureFlag {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ABTest {
   id: string;
   name: string;
   variants: Array<{
     key: string;
     weight: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     config: Record<string, any>;
   }>;
   active: boolean;

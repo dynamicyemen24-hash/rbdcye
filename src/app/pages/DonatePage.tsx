@@ -1,5 +1,4 @@
 // Donate Page - صفحة التبرع المتعددة العملات والوحدات
-import { motion } from "motion/react";
 import {
   Heart,
   CreditCard,
@@ -27,20 +26,21 @@ import {
   Stethoscope,
   Utensils,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import { MonthlyGivingHero } from "@/app/components/donation/MonthlyGivingHero";
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
-import { MonthlyGivingHero } from "@/app/components/donation/MonthlyGivingHero";
 import { ViralShare } from "@/app/components/ViralShare";
+import { donationDBService } from "@/services/donation/donation-db.service";
+import { EnterpriseButton, EnterpriseInput } from "@/shared/components";
 import { analyticsService } from "@/shared/services/analytics.service";
 import { multiProjectDonationService } from "@/shared/services/donation-multi-project.service";
-import { donationDBService } from "@/services/donation/donation-db.service";
-import type { DonationProject, DonationPolicy, InKindCategory, ItemCondition } from "@/services/donation/donation-types";
 import { useSEO } from "@/utils/seoAdvanced";
-import { EnterpriseButton, EnterpriseInput } from "@/shared/components";
 
+import type { DonationProject, DonationPolicy, InKindCategory, ItemCondition } from "@/services/donation/donation-types";
 import type { PaymentCurrency } from "@/shared/services/payment-gateway.service";
 
 // ═══════════════════════════════════════════════════════
@@ -174,6 +174,7 @@ const IMPACT_ITEMS_YER: ImpactItem[] = [
 // ═══════════════════════════════════════════════════════
 // التبرع العيني — فئات المواد المقبولة
 // ═══════════════════════════════════════════════════════
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IN_KIND_CATEGORIES = [
   {
     id: "clothing",
@@ -267,7 +268,9 @@ export default function DonatePage() {
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
   const [donationType, setDonationType] = useState<"monetary" | "inkind">("monetary");
   const [recurringOption, setRecurringOption] = useState("once");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedInKind, setSelectedInKind] = useState<string[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inKindDetails, setInKindDetails] = useState("");
   const [donorInfo, setDonorInfo] = useState({ name: "", email: "", phone: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -280,6 +283,7 @@ export default function DonatePage() {
   const [debouncedConverterAmount, setDebouncedConverterAmount] = useState("100");
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [projects, setProjects] = useState<DonationProject[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [policies, setPolicies] = useState<DonationPolicy[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [inKindCategory, setInKindCategory] = useState('clothing');
@@ -536,6 +540,7 @@ export default function DonatePage() {
     return Math.round((amount * fromRate) / toRate);
   }, [debouncedConverterAmount, converterFrom, converterTo]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleInKind = useCallback((id: string) => {
     setSelectedInKind((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   }, []);
@@ -673,7 +678,7 @@ export default function DonatePage() {
               <div className="w-24 h-24 mx-auto mb-6 bg-[var(--brand-green-pale)] rounded-full flex items-center justify-center">
                 <CheckCircle className="w-12 h-12 text-[var(--brand-green)]" aria-hidden="true" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">
+              <h1 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-6">
                 جزاك الله كل خير على تبرعك
               </h1>
               <p className="text-[var(--muted-foreground)] text-lg mb-4 leading-[2]">
@@ -770,7 +775,7 @@ export default function DonatePage() {
       </PageHeader>
 
       {/* ═══════ مقدمة ═══════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -779,7 +784,7 @@ export default function DonatePage() {
             className="max-w-3xl mx-auto text-center"
           >
             <Sparkles className="w-8 h-8 text-[var(--brand-gold)] mx-auto mb-4" />
-            <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-6">
+            <h2 className="text-2xl md:text-2xl font-bold text-[var(--foreground)] mb-6">
               تبرعك ليس مجرد رقم — بل هو{" "}
               <span className="text-[var(--brand-green)]">أثر حقيقي</span>
             </h2>
@@ -882,7 +887,7 @@ export default function DonatePage() {
       </section>
 
       {/* ═══════ اختيار نوع التبرع ═══════ */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">
@@ -935,7 +940,7 @@ export default function DonatePage() {
 
       {/* ═══════ أثر التبرع ═══════ */}
       {donationType === "monetary" && (
-        <section className="bg-[var(--background)] py-24 sm:py-32">
+        <section className="bg-[var(--background)] py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-2 text-[var(--brand-green)] text-sm font-semibold bg-[var(--brand-green-pale)] px-4 py-1.5 rounded-full mb-4">
@@ -986,7 +991,7 @@ export default function DonatePage() {
       </div>
 
       {/* ═══════ نموذج التبرع ═══════ */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <form onSubmit={handleSubmit}>
@@ -1525,7 +1530,7 @@ export default function DonatePage() {
       </section>
 
       {/* ═══════ برنامج الاشتراك الشهري ═══════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <MonthlyGivingHero />
         </div>

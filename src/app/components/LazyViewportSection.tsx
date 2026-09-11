@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
+import React, { useState, useEffect, useRef, ReactNode } from "react";
 
 interface LazyViewportSectionProps {
   children: ReactNode;

@@ -1,6 +1,6 @@
 // Quick Donation Component - Interactive Impact Calculator with Inline Payment
-import { motion } from "motion/react";
 import { Heart, Package, CreditCard, Banknote, Users, Droplets, GraduationCap } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 
 import { paymentGateway } from "@/shared/services/payment-gateway.service";
@@ -151,6 +151,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
       const result = await paymentGateway.initiatePayment({
         amount: amount,
         currency: "USD",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         method: paymentMethod as any,
         type: selectedProject === "zakat" ? "zakat" : "once",
         projectId: selectedProject,

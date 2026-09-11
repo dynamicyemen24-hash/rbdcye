@@ -18,6 +18,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 // أيقونات التصنيفات
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CATEGORY_ICONS: Record<string, string> = {
   تعليم: "📚",
   إغاثة: "🆘",
@@ -43,6 +44,7 @@ const HIGH_QUALITY_FALLBACK_IMAGES = [
 ];
 
 // صور خاصة بالحملة
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CUSTOM_FALLBACK_IMAGES = [
   "/images/defaults/project-default.svg",
   "/images/defaults/project-relief.svg",

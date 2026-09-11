@@ -1,8 +1,6 @@
 // Donor Toolkit - صندوق أدوات المُحسِن المتقدم
 // الأدوات الرئيسية (تبرع سريع + حاسبة زكاة) + شريط الأدوات المساعدة
 // (تثبيت التطبيق PWA + حاسبة أثر مصغرة)
-import { lazy, Suspense, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import {
   Heart,
   Calculator,
@@ -18,10 +16,12 @@ import {
   ArrowLeft,
   Wrench,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { lazy, Suspense, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Section, SectionHeader } from "@/app/components/layout/Section";
 import { Reveal } from "@/app/components/layout/Reveal";
+import { Section, SectionHeader } from "@/app/components/layout/Section";
 import { QuickDonation } from "@/app/components/QuickDonation";
 import { usePwaInstall } from "@/shared/hooks/usePwaInstall";
 

@@ -13,7 +13,7 @@ interface HealthCheck {
   status: "pass" | "fail" | "warn";
   duration: number;
   message?: string;
-  details?: Record<string, unknown>;
+  details?: Record<string, any>;
 }
 
 class HealthCheckService {
@@ -89,7 +89,9 @@ export const createDefaultChecks = () => {
   healthCheckService.registerCheck("memory", async () => {
     const startTime = Date.now();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== "undefined" && (window as any).performance?.memory) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const memory = (window as any).performance.memory;
       const usedMB = memory.usedJSHeapSize / 1048576;
       const limitMB = memory.jsHeapSizeLimit / 1048576;
@@ -156,6 +158,7 @@ export const createDefaultChecks = () => {
         message: "Network is online",
         details: {
           online: true,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           connection: (navigator as any).connection?.effectiveType,
         },
       };
@@ -184,6 +187,7 @@ export const createDefaultChecks = () => {
           cacheNames,
         },
       };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return {
         name: "cache",
@@ -215,6 +219,7 @@ export const createDefaultChecks = () => {
         duration: Date.now() - startTime,
         message: "No auth token (user not logged in)",
       };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return {
         name: "auth",

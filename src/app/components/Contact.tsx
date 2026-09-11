@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 import { intakeService } from "@/shared/services/intake.service";

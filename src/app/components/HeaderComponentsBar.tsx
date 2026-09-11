@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { motion } from "motion/react";
 import { Calculator, Lightbulb, Map, Sparkles } from "lucide-react";
+import { motion } from "motion/react";
+import { memo } from "react";
 
 interface HeaderComponentsBarProps {
   onNavigate: (page: string) => void;

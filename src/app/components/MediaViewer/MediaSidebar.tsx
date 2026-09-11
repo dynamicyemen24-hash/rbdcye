@@ -3,8 +3,8 @@
  * Smart Media Sidebar with Virtual Scrolling
  */
 
-import { motion, AnimatePresence } from "motion/react";
 import { Search, Filter, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect, memo, useMemo } from "react";
 
 import { MediaItem, MediaItemType, SidebarViewMode } from "./MediaViewer.types";
@@ -132,7 +132,9 @@ export const MediaSidebar = memo(
     media,
     activeIndex,
     onSelect,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isOpen,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onToggle,
     viewMode,
     onViewModeChange,

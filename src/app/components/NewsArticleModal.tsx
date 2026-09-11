@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   X,
   Calendar,
@@ -16,6 +14,9 @@ import {
   Quote,
   ShieldCheck,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect } from "react";
+
 import {
   ReadabilityControls,
   FONT_SIZE_CLASSES,

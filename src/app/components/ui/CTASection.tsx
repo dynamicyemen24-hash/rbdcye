@@ -1,6 +1,6 @@
-import { memo, ReactNode } from 'react';
-import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
+import { motion } from 'motion/react';
+import { memo, ReactNode } from 'react';
 
 interface CTASectionProps {
   title: string;

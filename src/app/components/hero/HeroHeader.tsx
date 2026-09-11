@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
+import { motion } from "motion/react";
 
 export function HeroHeader() {
   return (

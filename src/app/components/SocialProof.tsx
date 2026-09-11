@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Heart, Users, HandHeart } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useState } from 'react';
 
 // Social proof notifications — shows recent donations to build trust
 const PROOF_ITEMS = [

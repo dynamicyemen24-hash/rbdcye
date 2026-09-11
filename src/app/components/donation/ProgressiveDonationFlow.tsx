@@ -1,9 +1,9 @@
-import { useState, memo, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   Heart, CreditCard, CheckCircle2, Shield, Smartphone,
   Building2, Loader2, Share2, ArrowLeft, ArrowRight, Repeat
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, memo, useMemo } from 'react';
 
 interface DonationAmount {
   value: number;
@@ -39,6 +39,7 @@ export const ProgressiveDonationFlow = memo(function ProgressiveDonationFlow() {
 
   const finalAmount = customAmount ? parseInt(customAmount) || 0 : selectedAmount;
   const dailyCost = Math.round(finalAmount / 30);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const annualImpact = finalAmount * 12;
 
   const selectedImpact = useMemo(() => {

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Search, X, Calendar } from "lucide-react";
 import React from "react";
 
@@ -9,6 +10,7 @@ interface FilterBarProps {
     fromDate: string;
     toDate: string;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFilterChange: (filters: any) => void;
   onClear: () => void;
 }

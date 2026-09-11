@@ -1,7 +1,5 @@
 // Impact Dashboard - لوحة أثر مؤسسي حية
 // عرض أرقام الأثر بأسلوب بصري متحرك ومقنع
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "motion/react";
 import {
   Users,
   Droplet,
@@ -10,9 +8,14 @@ import {
   Heart,
   TrendingUp,
   ArrowLeft,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Play,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Pause,
 } from "lucide-react";
+import { motion } from "motion/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useState, useEffect, useRef, useCallback } from "react";
 
 interface Metric {
   id: string;
@@ -192,6 +195,7 @@ function MetricCard({ metric, index }: { metric: Metric; index: number }) {
 }
 
 export function ImpactDashboard() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   return (

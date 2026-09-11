@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { motion } from 'motion/react';
 import { CheckCircle2, Share2, Mail, Repeat, Gift } from 'lucide-react';
+import { motion } from 'motion/react';
+import { memo } from 'react';
 
 interface PostGiftProps {
   amount: number;

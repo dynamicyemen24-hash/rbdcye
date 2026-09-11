@@ -1,5 +1,5 @@
-import { useState, memo } from 'react';
 import { Share2, Copy, Check, MessageCircle, Send } from 'lucide-react';
+import { useState, memo } from 'react';
 
 // --- رسائل مشاركة مُقنعة حسب الصفحة (AIDA framework) ---
 const SHARE_MESSAGES: Record<string, string> = {
@@ -93,6 +93,7 @@ const PLATFORMS = [
 ];
 
 export const SocialShare = memo(function SocialShare({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title, message, url, via = 'RohamaaBaynahum', hashtags = ['رحماء', 'إغاثة', 'يمن'],
   route = 'default'
 }: SocialShareProps) {

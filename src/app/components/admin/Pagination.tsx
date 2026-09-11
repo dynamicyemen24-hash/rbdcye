@@ -1,5 +1,5 @@
-import { memo, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { memo, useMemo } from 'react';
 
 interface PaginationProps {
   currentPage: number;

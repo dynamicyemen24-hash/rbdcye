@@ -9,14 +9,15 @@ declare global {
 }
 
 import AdvancedProgressBar, { ScrollProgressIndicator } from "@/components/AdvancedProgressBar";
+import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
 import { HeroSkeleton } from "@/components/LoadingSkeleton";
 import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
 import { initializeCoreServices } from "@/features/core";
-import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
-import { preloadCriticalAssets } from "@/utils/performance";
-import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
 import { I18nProvider } from "@/shared/i18n";
+import { initPerformancePrefetch, preloadCriticalAssets } from "@/utils/performance";
+import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
+
 import { ToastProvider } from "./app/components/Toast";
 import "./styles/index.css";
 
@@ -29,6 +30,7 @@ import "./styles/index.css";
 if (typeof window !== "undefined") {
   const scheduleInit = (cb: () => void) => {
     if ("requestIdleCallback" in window) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).requestIdleCallback(() => cb(), { timeout: 2000 });
     } else {
       setTimeout(cb, 100);
@@ -42,6 +44,7 @@ if (typeof window !== "undefined") {
     setSecurityHeaders();
     cleanDangerousElements();
     preloadCriticalAssets();
+    initPerformancePrefetch();
     setupGlobalErrorHandler();
     import("@/services/offline")
       .then(({ offlineManager, syncService }) =>

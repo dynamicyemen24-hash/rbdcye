@@ -75,7 +75,9 @@ export function EnterpriseAccordion({
   contentClassName = "",
   "aria-label": ariaLabel,
   animated = true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lazy = false,
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 }: EnterpriseAccordionProps) {
   const [openValues, setOpenValues] = useState<string[]>(() => {
     if (!value) return [];

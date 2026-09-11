@@ -1,7 +1,8 @@
 // Daily Engagement Widget - الذكر اليومي والتذكير بالخير
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Heart, Share2, Copy, Check, Sparkles, Clock, Bell, X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
 
 const DAILY_VERSES = [
   {
@@ -37,6 +38,7 @@ const DAILY_VERSES = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DAILY_ACTIONS = [
   { time: "06:00", label: "صبح بالخير", icon: "🌅", message: "ابدأ يومك بصدقة" },
   { time: "12:00", label: "استراحة و تذكر", icon: "☀️", message: "هل تبرعت اليوم؟" },

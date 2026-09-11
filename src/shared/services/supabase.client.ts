@@ -8,6 +8,7 @@ export const hasSupabaseConfig = Boolean(supabaseUrl && supabaseAnonKey);
 export const DB_SCHEMA = import.meta.env.VITE_SUPABASE_SCHEMA || "gs_website";
 
 // إذا لم تكن المفاتيح متوفرة، استخدم IndexedDB fallback
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let supabaseInstance: any = null;
 
 if (hasSupabaseConfig) {
@@ -68,6 +69,7 @@ class IndexedDBFallback {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getAll(table: string): Promise<any[]> {
     const db = await this.openDB();
     return new Promise((resolve, reject) => {
@@ -79,6 +81,7 @@ class IndexedDBFallback {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async create(table: string, item: any): Promise<any> {
     const db = await this.openDB();
     return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
 import { Home, ArrowRight, Search } from "lucide-react";
+import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 
 import { useSEO } from "@/utils/seoAdvanced";

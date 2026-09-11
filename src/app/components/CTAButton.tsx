@@ -1,6 +1,6 @@
 // Unified CTA Button Component - Professional Design System
-import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
+import { motion } from "motion/react";
 import { forwardRef } from "react";
 
 interface CTAButtonProps {

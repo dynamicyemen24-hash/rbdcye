@@ -1,7 +1,8 @@
-import { useState, useEffect, memo } from 'react';
 import { motion, useSpring } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
 
 export const ScrollProgress = memo(function ScrollProgress() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollProgress, setScrollProgress] = useState(0);
   const scaleX = useSpring(0, { stiffness: 100, damping: 30 });
 

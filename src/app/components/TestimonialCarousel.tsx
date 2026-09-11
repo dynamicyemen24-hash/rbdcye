@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useCallback, memo } from 'react';
 
 interface Testimonial {
   id: number;

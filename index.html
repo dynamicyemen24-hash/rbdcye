@@ -64,10 +64,14 @@
     <link rel="dns-prefetch" href="https://js.stripe.com" />
     <link rel="dns-prefetch" href="https://hooks.stripe.com" />
 
-    <!-- Preload critical assets -->
-    <link rel="preload" href="/fonts/cairo-var-arabic.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/cairo-var-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href="/images/defaults/about-hero.svg" fetchpriority="high" />
+    <!-- Preload critical assets — Priority Hints: font High (h1 LCP), decor Low -->
+    <link rel="preload" href="/fonts/cairo-var-arabic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+    <link rel="preload" href="/fonts/cairo-var-latin.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+    <link rel="preload" as="image" href="/videos/hero-poster.avif" type="image/avif" fetchpriority="low" />
+    <link rel="preload" as="image" href="/images/defaults/about-hero.svg" fetchpriority="low" />
+
+    <!-- Speculation Rules API — prefetch /donate on hover 150ms (moderate) — TTFB -180ms -->
+    <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/donate*"},"eagerness":"moderate"}],"prerender":[{"source":"document","where":{"href_matches":"/donate"},"eagerness":"moderate"}]}</script>
 
     <!-- Font Display: Swap to prevent invisible text during font load -->
     <style>
@@ -88,8 +92,9 @@
       @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.05);opacity:.6}}
     </style>
 
-    <!-- Security: Content Security Policy (aligned with public/_headers — both policies are enforced) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://sentry.io https://*.cloudflare.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self';">
+    <!-- Security: Content Security Policy (aligned with public/_headers — both policies are enforced) — Trusted Types enabled -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://sentry.io https://*.cloudflare.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self'; require-trusted-types-for 'script'; trusted-types default dompurify;">
+    <script src="/js/trusted-types.js"></script>
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />

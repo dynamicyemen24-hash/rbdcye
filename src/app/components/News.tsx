@@ -1,6 +1,5 @@
 // src/app/components/News.tsx
 
-import { motion, AnimatePresence } from "motion/react";
 import {
   Calendar,
   ArrowLeft,
@@ -20,6 +19,7 @@ import {
   ArrowRight,
   Lightbulb,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, useMemo, memo, useRef } from "react";
 
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
@@ -296,6 +296,7 @@ class SmartNewsService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async fetchFromSanity(): Promise<any[]> {
     try {
       const timeoutPromise = new Promise((_, reject) =>
@@ -310,7 +311,9 @@ class SmartNewsService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private mixWithFallback(sanityNews: any[]): NewsItem[] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const normalized = sanityNews.map((n: any) => ({
       id: n._id || `sanity-${Math.random()}`,
       title: n.title || "خبر جديد",
@@ -623,6 +626,7 @@ export const News = ({
 
       // ContentManager always returns data (static defaults guaranteed)
       if (dynamicNews.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const allItems = dynamicNews.map((n: any) => ({
           ...n,
           isFallback: source === "static",

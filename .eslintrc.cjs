@@ -48,11 +48,12 @@ module.exports = {
     },
   },
   rules: {
-    // TypeScript
-    '@typescript-eslint/no-unused-vars': 'off',
+    // TypeScript — world-class: warn on sloppy types but allow gradual migration
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'warn',
 
     // React
     'react/react-in-jsx-scope': 'off',
@@ -61,29 +62,33 @@ module.exports = {
     'react/no-unescaped-entities': 'off',
     'react/no-unknown-property': 'off',
 
-    // React Hooks
+    // React Hooks — world-class: catch missing deps
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'off',
-    'react-hooks/set-state-in-effect': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/set-state-in-effect': 'warn',
 
-    // Accessibility (balanced for interactive UI elements)
-    'jsx-a11y/click-events-have-key-events': 'off',
-    'jsx-a11y/no-static-element-interactions': 'off',
-    'jsx-a11y/interactive-supports-focus': 'off',
-    'jsx-a11y/label-has-associated-control': 'off',
-    'jsx-a11y/anchor-is-valid': 'off',
+    // Accessibility — re-enable critical rules, keep balanced
+    'jsx-a11y/click-events-have-key-events': 'warn',
+    'jsx-a11y/no-static-element-interactions': 'warn',
+    'jsx-a11y/interactive-supports-focus': 'warn',
+    'jsx-a11y/label-has-associated-control': 'warn',
+    'jsx-a11y/anchor-is-valid': 'warn',
+    'jsx-a11y/no-autofocus': 'warn',
 
-    // Import
-    'import/order': 'off',
+    // Import — enforce order for readability
+    'import/order': ['warn', { groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type'], 'newlines-between': 'always', alphabetize: { order: 'asc', caseInsensitive: true } }],
     'import/no-named-as-default': 'off',
     'import/no-unresolved': 'off',
+    'import/no-duplicates': 'warn',
 
-    // General
-    'no-console': 'off',
-    'prefer-const': 'warn',
+    // General — world-class discipline
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'prefer-const': 'error',
     'no-var': 'error',
     'no-debugger': 'error',
-    'no-alert': 'off',
+    'no-alert': 'warn',
+    'no-nested-ternary': 'warn',
+    'eqeqeq': ['error', 'always'],
   },
   ignorePatterns: [
     'dist/',
@@ -119,7 +124,7 @@ module.exports = {
       },
     },
     {
-      files: ['api/**/*.js', 'api/**/*.cjs', 'api/**/*.ts'],
+      files: ['api/**/*.js', 'api/**/*.cjs', 'api/**/*.ts', 'functions/**/*.js'],
       parserOptions: {
         project: null,
       },
@@ -129,6 +134,26 @@ module.exports = {
         __dirname: 'readonly',
         process: 'readonly',
         console: 'readonly',
+      },
+      rules: {
+        'no-console': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+    {
+      files: ['src/utils/**/*', 'src/main.tsx', 'src/app/App.tsx'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
+    {
+      files: ['src/__tests__/**/*', 'e2e/**/*', '**/*.test.*', '**/*.spec.*', 'scripts/**/*'],
+      parserOptions: { project: null },
+      rules: {
+        'no-console': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
       },
     },
   ],

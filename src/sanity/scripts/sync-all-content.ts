@@ -11,6 +11,7 @@ import {
   SEED_SUCCESS_STORIES,
   SEED_PARTNERS,
   SEED_PROJECTS,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   SEED_IMPACT,
   SEED_REPORTS,
   SEED_MEDIA,
@@ -77,6 +78,7 @@ async syncAll(): Promise<void> {
       const buffer = Buffer.from(imageBuffer);
 
       // Get filename from URL or use default
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const urlPath = new URL(imageUrl).pathname;
       const filename = docId ? `${docId}-${Date.now()}.jpg` : `image-${Date.now()}.jpg`;
 
@@ -320,6 +322,7 @@ async syncAll(): Promise<void> {
           }
 
           const imageRef = await this.uploadImage(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (item as any).image,
             item.title,
             `project-${item.id}`

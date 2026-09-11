@@ -1,5 +1,3 @@
-import React from "react";
-import { motion } from "motion/react";
 import {
   RefreshCw,
   Calendar,
@@ -8,6 +6,8 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from "lucide-react";
+import { motion } from "motion/react";
+import React from "react";
 
 export type DonationFrequency = "once" | "monthly" | "yearly";
 

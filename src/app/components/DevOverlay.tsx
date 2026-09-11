@@ -1,5 +1,3 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Cpu,
   HardDrive,
@@ -12,6 +10,8 @@ import {
   Terminal,
   ShieldCheck,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface NetworkMetric {
   name: string;
@@ -112,7 +112,7 @@ export function DevOverlay() {
   useEffect(() => {
     const interval = setInterval(() => {
       // Memory Usage (Supported in Chrome/Blink browsers)
-      const perfObj = window.performance as unknown as {
+      const perfObj = window.performance as any as {
         memory?: {
           usedJSHeapSize: number;
           totalJSHeapSize: number;
@@ -133,7 +133,7 @@ export function DevOverlay() {
       setScreenRes(`${window.innerWidth}x${window.innerHeight} (${window.devicePixelRatio}x DPR)`);
 
       // Network Connection Speed
-      const navConn = (navigator as unknown as { connection?: { effectiveType?: string } })
+      const navConn = (navigator as any as { connection?: { effectiveType?: string } })
         .connection;
       if (navConn?.effectiveType) {
         setConnectionType(navConn.effectiveType.toUpperCase());
@@ -295,6 +295,7 @@ Timestamp: ${new Date().toISOString()}
                 return (
                   <button
                     key={tab.id}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onClick={() => setActiveTab(tab.id as any)}
                     className={`
                       px-3 py-1.5 rounded-t-lg text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer

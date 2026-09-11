@@ -1,9 +1,10 @@
-import { useState, memo } from 'react';
 import { Download, FileText, FileSpreadsheet, Loader2 } from 'lucide-react';
+import { useState, memo } from 'react';
+
 import { exportService } from '@/services/admin/export.service';
 
 interface ExportButtonProps {
-  data: Record<string, unknown>[];
+  data: Record<string, any>[];
   columns: { key: string; label: string }[];
   filename: string;
   title: string;

@@ -2,6 +2,7 @@
 // خطاف تفاعلي لفحص وتعديل تباين العناوين والأزرار ديناميكياً لتلبية معيار WCAG 2.1 AAA
 
 import { useEffect, useRef } from "react";
+
 import { applyDynamicAAAContrast } from "@/shared/utils/wcagContrast";
 
 export interface DynamicContrastOptions {

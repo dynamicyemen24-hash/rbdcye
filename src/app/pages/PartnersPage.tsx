@@ -1,14 +1,14 @@
 // Partners Page - صفحة الشركاء
-import { motion } from "motion/react";
 import { Handshake, Users, Target, Heart, BarChart3, TrendingUp } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
-import { SEED_PARTNERS, SEED_IMPACT } from "@/content/website";
+import { SEED_PARTNERS } from "@/content/website";
+import { useImpactMetrics } from "@/sanity/hooks/useImpactMetrics";
 import { analyticsService } from "@/shared/services/analytics.service";
-import { contentManager } from "@/shared/services/content-manager";
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface Partner {
@@ -24,6 +24,7 @@ interface Partner {
 const PARTNER_TYPES = ["الكل", "شريك إستراتيجي", "جهة ممولة", "شريك تنفيذي", "شريك داعم"];
 
 function normalizePartners(): Partner[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return SEED_PARTNERS.map((p: any) => ({
     id: p.id,
     name: p.name,
@@ -38,7 +39,9 @@ function normalizePartners(): Partner[] {
 export default function PartnersPage() {
   const navigate = useNavigate();
   const [activeType, setActiveType] = useState("الكل");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [partners, setPartners] = useState<Partner[]>(normalizePartners());
+  const { data: impact } = useImpactMetrics();
 
   useSEO({
     title: "شركاؤنا - رحماء بينهم",
@@ -46,25 +49,11 @@ export default function PartnersPage() {
   });
 
   useEffect(() => {
-    let cancelled = false;
-    contentManager
-      .getImpact()
-      .then(() => {
-        if (!cancelled) {
-          try {
-            analyticsService.generateDonorReport();
-          } catch {
-            /* non-critical */
-          }
-          setPartners(normalizePartners());
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setPartners(normalizePartners());
-      });
-    return () => {
-      cancelled = true;
-    };
+    try {
+      analyticsService.generateDonorReport();
+    } catch {
+      /* non-critical */
+    }
   }, []);
 
   const filteredPartners =
@@ -82,14 +71,14 @@ export default function PartnersPage() {
         <StatsGrid
           stats={[
             { label: "شريك نشط", value: partners.length, icon: BarChart3, color: "green" },
-            { label: "إجمالي الشركاء", value: SEED_IMPACT.partners, icon: Users, color: "gold" },
+            { label: "إجمالي الشركاء", value: impact.totalPartners, icon: Users, color: "gold" },
             {
               label: "مستفيد",
-              value: SEED_IMPACT.beneficiaries.toLocaleString("ar-SA"),
+              value: impact.totalBeneficiaries.toLocaleString("ar-SA"),
               icon: TrendingUp,
               color: "blue",
             },
-            { label: "مشروع", value: SEED_IMPACT.projects, icon: Target, color: "purple" },
+            { label: "مشروع", value: impact.activeProjects, icon: Target, color: "purple" },
           ]}
           columns={4}
           variant="glass"
@@ -191,7 +180,7 @@ export default function PartnersPage() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">هل تريد أن تكون شريكنا؟</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">هل تريد أن تكون شريكنا؟</h2>
             <p className="text-white/80 text-lg mb-8">
               انضم إلى شبكة شركائنا وشاركنا رؤية بناء مجتمع مستدام
             </p>

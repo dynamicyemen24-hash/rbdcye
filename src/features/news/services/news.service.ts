@@ -5,8 +5,10 @@ import type { NewsItem, NewsQueryParams, PaginatedResponse, NewsCategory } from 
 
 const STORAGE_KEY = "rh_news_data";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const loadNews = () => dataService.getAll<any>(STORAGE_KEY);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToNewsItem = (item: any): NewsItem => ({
   id: item.id,
   title: item.title,
@@ -71,7 +73,9 @@ export const newsService = {
     const sortBy = params.sortBy || "createdAt";
     const sortOrder = params.sortOrder || "desc";
     all.sort((a, b) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const aVal = (a as any)[sortBy] || "";
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const bVal = (b as any)[sortBy] || "";
       if (typeof aVal === "number") return sortOrder === "desc" ? bVal - aVal : aVal - bVal;
       return sortOrder === "desc"
@@ -92,18 +96,21 @@ export const newsService = {
 
   async getFeaturedNews(): Promise<NewsItem[]> {
     return (await loadNews())
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .filter((i: any) => i.featured && i.status !== "DRAFT")
       .map(mapToNewsItem);
   },
 
   async getNewsBySlug(slug: string): Promise<NewsItem | null> {
     const found = (await loadNews()).find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (i: any) => i.slug === slug || i.title?.toLowerCase().replace(/\s+/g, "-") === slug
     );
     return found ? mapToNewsItem(found) : null;
   },
 
   async getNewsById(id: string): Promise<NewsItem | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const found = await dataService.getById<any>(STORAGE_KEY, id);
     return found ? mapToNewsItem(found) : null;
   },
@@ -121,10 +128,12 @@ export const newsService = {
       date: new Date().toLocaleDateString("ar-SA"),
       dateEn: new Date().toISOString().slice(0, 10),
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return mapToNewsItem(await dataService.create<any>(STORAGE_KEY, newItem));
   },
 
   async updateNews(id: string, updates: Partial<NewsItem>): Promise<NewsItem | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updated = await dataService.update<any>(STORAGE_KEY, id, updates);
     return updated ? mapToNewsItem(updated) : null;
   },
@@ -134,7 +143,9 @@ export const newsService = {
   },
 
   async incrementViews(id: string): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item = await dataService.getById<any>(STORAGE_KEY, id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (item) await dataService.update<any>(STORAGE_KEY, id, { views: (item.views || 0) + 1 });
   },
 
@@ -148,23 +159,31 @@ export const newsService = {
     const data = await loadNews();
     return {
       total: data.length,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       published: data.filter((n: any) => n.status === "PUBLISHED").length,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       draft: data.filter((n: any) => n.status === "DRAFT").length,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       featured: data.filter((n: any) => n.featured).length,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       totalViews: data.reduce((sum: number, n: any) => sum + (n.views || 0), 0),
     };
   },
 
   async toggleFeature(id: string): Promise<NewsItem | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item = await dataService.getById<any>(STORAGE_KEY, id);
     if (!item) return null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updated = await dataService.update<any>(STORAGE_KEY, id, { featured: !item.featured });
     return updated ? mapToNewsItem(updated) : null;
   },
 
   async toggleStatus(id: string): Promise<NewsItem | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item = await dataService.getById<any>(STORAGE_KEY, id);
     if (!item) return null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updated = await dataService.update<any>(STORAGE_KEY, id, {
       status: item.status === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
     });

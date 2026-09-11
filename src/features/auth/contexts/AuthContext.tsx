@@ -10,6 +10,7 @@ import {
 
 import { authService } from "../services/auth.service";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { User, AuthState, LoginCredentials } from "../types/auth";
 
 interface AuthContextType extends AuthState {
@@ -115,6 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!state.user) return false;
       if (state.user.role === "ADMIN") return true;
       return state.user.permissions.some(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (p: any) => p.resource === resource && p.actions.includes(action as any)
       );
     },

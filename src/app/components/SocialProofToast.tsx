@@ -1,6 +1,6 @@
-import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Heart, X, TrendingUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
 
 const MESSAGES = [
   { icon: Heart, text: 'شكراً لكل متبرع — أثركم في ميزان حسناتكم', color: 'text-red-500' },

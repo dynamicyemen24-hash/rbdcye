@@ -1,5 +1,4 @@
 // حاسبة الزكاة الشاملة — Zakat Calculator Page
-import { motion, AnimatePresence } from "motion/react";
 import {
   Calculator,
   Coins,
@@ -28,15 +27,16 @@ import {
   CircleDot,
   BookOpen,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useSEO } from "@/utils/seoAdvanced";
 import {
   scrollFadeUp,
   staggerContainer,
   viewportOnce,
 } from "@/utils/animations";
+import { useSEO } from "@/utils/seoAdvanced";
 
 // ═══════════════════════════════════════════════════════
 // الثوابت الشرعية — Zakat Constants
@@ -383,7 +383,7 @@ export default function ZakatCalculatorPage() {
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
       {/* ═══════ هيرو — Hero Section ═══════ */}
-      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-28 text-white sm:py-40">
+      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-20 text-white sm:py-40">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: "var(--pattern-rub-el-hizb)", backgroundSize: "200px 200px" }}
@@ -400,7 +400,7 @@ export default function ZakatCalculatorPage() {
 
             <motion.h1
               variants={scrollFadeUp}
-              className="text-3xl font-extrabold leading-[1.35] sm:text-5xl lg:text-6xl"
+              className="text-3xl font-extrabold leading-[1.35] sm:text-4xl lg:text-5xl"
             >
               حاسبة الزكاة <span className="text-[var(--brand-gold)]">الشاملة</span>
             </motion.h1>

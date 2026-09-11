@@ -1,5 +1,7 @@
-import { useEffect, useState, memo } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AlertTriangle, Bell, TrendingDown, Users, X } from 'lucide-react';
+import { useEffect, useState, memo } from 'react';
+
 import { realAnalyticsService } from '@/services/admin/real-analytics.service';
 
 interface Alert {

@@ -1,5 +1,5 @@
-import { useState, useRef, memo, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useState, useRef, memo, ReactNode } from 'react';
 
 interface TooltipProps {
   children: ReactNode;
@@ -51,6 +51,7 @@ export interface TooltipContentProps {
   side?: 'top' | 'bottom' | 'left' | 'right';
   align?: 'start' | 'center' | 'end';
   hidden?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -62,6 +63,7 @@ export const TooltipTrigger = memo(function TooltipTrigger({ children, ...props 
 });
 
 export const TooltipProvider = memo(function TooltipProvider({ children, delayDuration = 0 }: { children: React.ReactNode; delayDuration?: number }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [show, setShow] = useState(false);
   const timeoutRef = useRef<number>();
 
@@ -87,6 +89,7 @@ export const TooltipProvider = memo(function TooltipProvider({ children, delayDu
   );
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const TooltipContent = memo(function TooltipContent({ side = 'top', align = 'center', hidden, children, ...props }: TooltipContentProps) {
   return (
     <div

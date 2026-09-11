@@ -1,5 +1,5 @@
-import React from "react";
 import { Type, Sun, Moon, Coffee, Eye, RotateCcw, AlignJustify, Sparkles } from "lucide-react";
+import React from "react";
 
 export type FontSizeLevel = "normal" | "large" | "xlarge" | "xxlarge";
 export type ReaderThemeMode = "light" | "sepia" | "dark" | "contrast";

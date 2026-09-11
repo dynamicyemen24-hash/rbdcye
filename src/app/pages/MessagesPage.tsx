@@ -1,5 +1,3 @@
-import { motion } from "motion/react";
-import { useState } from "react";
 import {
   CheckCircle2,
   Clock3,
@@ -11,6 +9,8 @@ import {
   Send,
   ShieldCheck,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 import { contactApi } from "@/shared/services/api.service";
 import { useSEO } from "@/utils/seoAdvanced";
@@ -52,7 +52,7 @@ export default function MessagesPage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[var(--brand-gold)]">
             <MessageSquare className="h-4 w-4" /> مركز الرسائل والمتابعة
           </div>
-          <h1 className="mt-6 max-w-2xl text-3xl font-extrabold leading-[1.4] sm:text-5xl">
+          <h1 className="mt-6 max-w-2xl text-3xl font-extrabold leading-[1.4] sm:text-4xl">
             رسالتك تصل إلى الفريق <span className="text-[var(--brand-gold)]">باحترام ووضوح.</span>
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-7 text-white/65 sm:text-base">

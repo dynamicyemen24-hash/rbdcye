@@ -1,9 +1,9 @@
-import { memo } from 'react';
-import { motion } from 'motion/react';
 import {
   MapPin, Users, Target, Calendar, TrendingUp,
   CheckCircle2, Clock, DollarSign, ArrowLeft, Heart
 } from 'lucide-react';
+import { motion } from 'motion/react';
+import { memo } from 'react';
 
 interface ImpactOpportunity {
   id: string;

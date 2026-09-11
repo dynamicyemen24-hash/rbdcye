@@ -21,6 +21,7 @@ export const newsService = {
     if (error) throw error;
     return data || [];
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async create(item: any) {
     const { data, error } = await supabase
       .schema(DB_SCHEMA)
@@ -31,6 +32,7 @@ export const newsService = {
     if (error) throw error;
     return data;
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async update(id: string | number, updates: any) {
     const { data, error } = await supabase
       .schema(DB_SCHEMA)

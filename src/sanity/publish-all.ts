@@ -27,11 +27,14 @@ async function publishAll() {
         _type: d._type,
       });
       await client.delete(d._id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       published++;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.message?.includes("already exists")) {
         // Document already published, just delete draft
         await client.delete(d._id);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         skipped++;
       }
     }

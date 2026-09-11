@@ -8,6 +8,7 @@ const fallbackImages = [
 ];
 
 export function getSanityImageUrl(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   source: any,
   width: number = 800,
   height: number = 600,
@@ -31,6 +32,7 @@ export function getSanityImageUrl(
 }
 
 // Helper to process project data for display
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function processProjectData(project: any) {
   const category = project.category || "عام";
 

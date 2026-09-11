@@ -1,5 +1,3 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   X,
   Home,
@@ -29,6 +27,8 @@ import {
   FileCheck,
   BookOpen,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -166,6 +166,42 @@ export default memo(function MobileMenu({
   }, [isOpen]);
 
   useEffect(() => {
+    if (!isOpen) return;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      touchEndY = e.touches[0].clientY;
+      const diff = touchStartY - touchEndY;
+      if (diff > minSwipeDistance && isOpen) {
+        e.preventDefault();
+        onClose();
+      }
+    };
+
+    const onTouchEnd = () => {
+      touchEndY = 0;
+      touchStartY = 0;
+    };
+
+    const touchContainer = document.body;
+    touchContainer.addEventListener("touchstart", onTouchStart, { passive: true });
+    touchContainer.addEventListener("touchmove", onTouchMove, { passive: false });
+    touchContainer.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      touchContainer.removeEventListener("touchstart", onTouchStart);
+      touchContainer.removeEventListener("touchmove", onTouchMove);
+      touchContainer.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) onClose();
     };
@@ -254,6 +290,7 @@ export default memo(function MobileMenu({
               </div>
 
               <nav className="px-3 pt-4" aria-label="القائمة الرئيسية">
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {MOBILE_GROUPS.map((group, gi) => {
                   const isExpanded = expanded === group.id;
                   const hasActiveChild = group.children.some((c) => c.id === currentPage);
@@ -359,8 +396,8 @@ export default memo(function MobileMenu({
                 <div className="grid grid-cols-2 gap-2">
                   {QUICK_ACTIONS.map((item, i) => {
                     const Icon = item.icon;
-                    const isHighlight = "highlight" in item && Boolean((item as Record<string, unknown>).highlight);
-                    const color = "color" in item ? (item as Record<string, unknown>).color as string : undefined;
+                    const isHighlight = "highlight" in item && Boolean((item as Record<string, any>).highlight);
+                    const color = "color" in item ? (item as Record<string, any>).color as string : undefined;
                     return (
                       <motion.button
                         key={item.id}

@@ -19,7 +19,6 @@ import {
   testimonial,
   faq,
 } from "../schema";
-
 import { newsArticle } from "./documents/news";
 import { project } from "./documents/project";
 import { linkType } from "./shared/linkType";

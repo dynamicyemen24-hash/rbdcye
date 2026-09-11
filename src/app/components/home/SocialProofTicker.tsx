@@ -1,9 +1,9 @@
 // Social Proof Ticker - شريط إثباتات اجتماعية حية
 // يعرض نشاط المتبرعين والشهادات لبناء الثقة الفورية
 // ⚠️ جميع البيانات هنا محاكاة — لا توجد بيانات حقيقية لمستفيدين
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Heart, Quote, Star, TrendingUp } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useRef } from "react";
 
 // بيانات محاكاة فقط — أسماء عامة غير حقيقية
 const RECENT_DONORS = [

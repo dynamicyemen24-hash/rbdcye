@@ -2,8 +2,8 @@
 import { Heart, UserPlus, ShieldCheck, Receipt, FileBarChart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { Reveal } from "@/app/components/layout/Reveal";
 import { StarMedallion } from "@/app/components/decor/IslamicPattern";
+import { Reveal } from "@/app/components/layout/Reveal";
 
 const ASSURANCES = [
   { icon: ShieldCheck, label: "تبرعك مشفّر بالكامل" },

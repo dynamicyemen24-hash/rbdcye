@@ -5,6 +5,7 @@ import React from "react";
 
 interface MessageModalProps {
   isOpen: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   message: any;
   onClose: () => void;
   onReply: () => void;

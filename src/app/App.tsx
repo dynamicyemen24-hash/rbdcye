@@ -1,29 +1,33 @@
 // App Shell - Enterprise-grade with Performance Optimizations
+import { AnimatePresence, motion } from "motion/react";
 import { lazy, Suspense, useCallback, useState, useEffect, memo } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
 
-import { Footer } from "./components/Footer";
-import { SocialProof } from "./components/SocialProof";
-import { UrgencyBanner } from "./components/UrgencyBanner";
-import Navbar from "./components/Navbar";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/LoadingSkeleton";
+import { pageTransition } from "@/utils/animations";
+import { reportWebVitals } from "@/utils/performance";
+
+import { BackToTop } from "./components/BackToTop";
 import CookieConsent from "./components/CookieConsent";
+import { FixedDonateButton } from "./components/FixedDonateButton";
+import { Footer } from "./components/Footer";
+import { GlobalUtilityBar } from "./components/GlobalUtilityBar";
+import Navbar from "./components/Navbar";
 import { NewsTicker } from "./components/NewsTicker";
 import { PageProgress } from "./components/PageProgress";
 import { EnhancedInstallPrompt } from "./components/PWA/EnhancedInstallPrompt";
 import { StepScroll } from "./components/StepScroll";
 import { UpdateNotification } from "./components/UpdateNotification";
-import { PageSkeleton } from "@/components/LoadingSkeleton";
-import { GlobalUtilityBar } from "./components/GlobalUtilityBar";
+
+
 import { HeaderComponentsBar } from "./components/HeaderComponentsBar";
-import { FixedDonateButton } from "./components/FixedDonateButton";
 import { SocialProofToast } from "./components/SocialProofToast";
 import { ScrollProgress } from "./components/ScrollProgress";
-import { BackToTop } from "./components/BackToTop";
 import SearchOverlay from "./components/SearchOverlay";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { pageTransition } from "@/utils/animations";
-import { reportWebVitals } from "@/utils/performance";
+import { SocialProof } from "./components/SocialProof";
+import { UrgencyBanner } from "./components/UrgencyBanner";
+
 
 // Setup global error handling — log to console in dev, suppress in prod
 if (typeof window !== "undefined") {
@@ -173,8 +177,13 @@ const AppContent = memo(function AppContent() {
 
   const setCurrentPage = useCallback(
     (page: string) => {
-      navigate(`/${page === "home" ? "" : page}`, { replace: false });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const go = () => {
+        navigate(`/${page === "home" ? "" : page}`, { replace: false });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+      const doc = document as any as { startViewTransition?: (cb: () => void) => void };
+      if (doc.startViewTransition) doc.startViewTransition(go);
+      else go();
     },
     [navigate]
   );
@@ -214,7 +223,7 @@ const AppContent = memo(function AppContent() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isSearchOpen, setIsSearchOpen]);
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">

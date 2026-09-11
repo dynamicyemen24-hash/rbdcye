@@ -1,0 +1,146 @@
+/* ==========================================================================
+   READING COMFORT — مساحات وفراغات لراحة القراءة والتصفح
+   مخصص للعربية: عرض سطر مريح، هواء أبيض سخي، تدرج بصري هادئ
+   ========================================================================== */
+
+:root {
+  /* مقياس رشيق — أقل هواء 18%، أكثر تركيز */
+  --reading-prose-max: 66ch;
+  --reading-prose-wide: 74ch;
+  --reading-measure-narrow: 56ch;
+  --reading-line-height: 1.85;
+  --reading-line-height-lg: 1.92;
+  --reading-paragraph-gap: 0.85em;
+  --reading-heading-gap: 1.25em;
+  --reading-section-gap: clamp(2.75rem, 5.5vw, 5.5rem);
+  --reading-card-gap: clamp(1rem, 1.9vw, 1.45rem);
+  --reading-inline-pad: clamp(0.875rem, 3vw, 1.35rem);
+}
+
+/* ——— حاوية النص المقروء ——— */
+.prose {
+  max-width: var(--reading-prose-max);
+  margin-inline: auto;
+  line-height: var(--reading-line-height);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  color: var(--foreground);
+  text-wrap: pretty;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 2;
+  orphans: 3;
+  widows: 3;
+}
+
+.prose--wide { max-width: var(--reading-prose-wide); }
+.prose--narrow { max-width: var(--reading-measure-narrow); }
+.prose--center { text-align: center; text-wrap: balance; }
+
+.prose p {
+  max-width: var(--reading-prose-max);
+  line-height: var(--reading-line-height);
+  margin-block: 0 var(--reading-paragraph-gap);
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.prose p:last-child { margin-block-end: 0; }
+
+.prose h2 {
+  margin-block: var(--reading-heading-gap) 0.6em;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.prose h3 {
+  margin-block: 1.4em 0.5em;
+  line-height: 1.45;
+}
+
+.prose ul, .prose ol {
+  padding-inline-start: 1.4em;
+  margin-block: 1em;
+  line-height: var(--reading-line-height);
+}
+
+.prose li + li { margin-block-start: 0.55em; }
+
+.prose li::marker { color: var(--brand-gold); }
+
+.prose blockquote {
+  border-inline-start: 3px solid var(--brand-gold);
+  padding-inline-start: 1.2em;
+  margin-block: 1.5em;
+  color: var(--muted-foreground);
+  font-style: italic;
+  background: var(--brand-gold-pale);
+  border-radius: var(--radius-md);
+  padding-block: 0.8em;
+}
+
+/* ——— مساحات الأقسام — هواء أبيض سخي ——— */
+.section--comfortable {
+  padding-block: var(--reading-section-gap);
+  padding-inline: var(--reading-inline-pad);
+}
+
+.section--comfortable + .section--comfortable {
+  border-block-start: 1px solid var(--section-divider);
+}
+
+/* شبكة مريحة — فراغات أكبر على الديسكتوب */
+.grid--comfortable {
+  display: grid;
+  gap: var(--reading-card-gap);
+}
+
+@media (min-width: 768px) {
+  .grid--comfortable { gap: clamp(1.5rem, 3vw, 2.25rem); }
+}
+
+/* بطاقة مريحة — حشوة داخلية سخية */
+.card--comfortable {
+  padding: var(--card-padding);
+  border-radius: var(--radius-2xl);
+}
+
+@media (min-width: 768px) {
+  .card--comfortable { padding: var(--card-padding-lg); }
+}
+
+/* ——— تحسين القراءة على الشاشات الكبيرة ——— */
+@media (min-width: 1280px) {
+  .prose { font-size: 1.06rem; }
+}
+
+/* ——— وضع القراءة الليلي — تباين مريح للعين ——— */
+@media (prefers-color-scheme: dark) {
+  .prose p { color: var(--muted-foreground); }
+}
+
+/* ——— مساحات تفاعلية مريحة — أهداف لمس 44px ——— */
+.reading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-start: 1.5rem;
+}
+
+.reading-actions .btn-primary,
+.reading-actions .btn-secondary,
+.reading-actions .btn-gold {
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: 1.35rem;
+}
+
+/* ——— تحسين تركيز القارئ — تمييز الفقرة النشطة ——— */
+.prose p:focus-within {
+  outline: none;
+}
+
+/* ——— دعم الطباعة المريح ——— */
+@media print {
+  .prose { max-width: none; line-height: 1.8; }
+  .prose p { orphans: 3; widows: 3; }
+  .section--comfortable { padding-block: 1.5rem; break-inside: avoid; }
+}

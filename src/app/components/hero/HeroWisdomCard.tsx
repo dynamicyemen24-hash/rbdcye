@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
+
 import { TypographyFamily, FONT_OPTIONS, ISLAMIC_TEXTS } from "./types";
 
 export function HeroWisdomCard() {

@@ -9,6 +9,7 @@ interface AnomalyDetection {
   timestamp: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PredictionModel {
   metric: string;
   predict(steps: number): Promise<number[]>;
@@ -19,6 +20,7 @@ interface IntelligentInsight {
   type: "anomaly" | "trend" | "recommendation" | "alert";
   severity: "info" | "warning" | "error" | "critical";
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>;
   timestamp: number;
 }
@@ -73,6 +75,7 @@ class IntelligentMonitoring {
           max: baseline.mean + 2 * baseline.stdDev,
         },
         deviation: zScore,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         severity: deviation as any,
         timestamp: Date.now(),
       });

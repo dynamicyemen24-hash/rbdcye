@@ -33,12 +33,14 @@ export const linkType = defineType({
       title: "الرابط الداخلي",
       type: "string",
       description: "مثال: /about, /programs, /donate",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       hidden: ({ parent }) => (parent as any)?.linkType !== "internal",
     }),
     defineField({
       name: "externalUrl",
       title: "الرابط الخارجي",
       type: "url",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       hidden: ({ parent }) => (parent as any)?.linkType !== "external",
     }),
     defineField({

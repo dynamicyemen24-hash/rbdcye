@@ -19,6 +19,7 @@ const client = createClient({
 /**
  * Query with retry logic and timeout
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryWithRetry<T = any>(query: string, maxRetries: number = 3): Promise<T> {
   let lastError: Error | null = null;
 

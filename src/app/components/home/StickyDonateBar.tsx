@@ -1,8 +1,8 @@
 // Sticky Donate Bar - شريط التبرع اللاصق الذكي
 // يظهر بعد تمرير 40% من الصفحة (ذروة الاندماج) ويختفي على صفحة التبرع
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Heart, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SCROLL_THRESHOLD = 0.4;

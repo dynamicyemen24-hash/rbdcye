@@ -1,6 +1,7 @@
-import { useState, memo } from 'react';
-import { motion } from 'motion/react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Users, Heart, Droplets, GraduationCap, Home, TrendingUp, Calculator } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState, memo } from 'react';
 
 interface ImpactCategory {
   id: string;
@@ -38,7 +39,7 @@ export const CommunityImpactPage = memo(function CommunityImpactPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand-green)]">
             <Calculator className="h-8 w-8 text-white" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">حاسبة الأثر المجتمعي</h1>
+          <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">حاسبة الأثر المجتمعي</h1>
           <p className="mt-2 text-[var(--muted-foreground)]">اكتشف كيف يُحوّل تبرعك أثرًا حقيقيًا في حياة الآلاف</p>
         </motion.div>
 
@@ -55,7 +56,7 @@ export const CommunityImpactPage = memo(function CommunityImpactPage() {
         {/* Calculator */}
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {/* Input Side */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
             <h2 className="text-xl font-bold text-[var(--foreground)]">حساب الأثر</h2>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">{category.title} — {category.impact}</p>
 
@@ -79,7 +80,7 @@ export const CommunityImpactPage = memo(function CommunityImpactPage() {
           </div>
 
           {/* Result Side */}
-          <div className="rounded-2xl border-2 border-[var(--brand-green)]/30 bg-[var(--brand-green)]/5 p-6 sm:p-8">
+          <div className="rounded-2xl border-2 border-[var(--brand-green)]/30 bg-[var(--brand-green)]/5 p-5 sm:p-6">
             <h2 className="text-xl font-bold text-[var(--foreground)]">أثر تبرعك</h2>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">بمبلغ {amount.toLocaleString('ar-YE')} ر.ي يمكنك:</p>
 

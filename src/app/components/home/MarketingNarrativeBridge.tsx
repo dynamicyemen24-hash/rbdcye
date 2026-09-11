@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+
 import { useSEO } from "@/utils/seoAdvanced";
 
 interface MarketingNarrativeBridgeProps {

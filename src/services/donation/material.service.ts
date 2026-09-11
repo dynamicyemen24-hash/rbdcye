@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { MaterialDonation, MaterialItem } from './donation-types';
 
 export interface MaterialDonationRecord {

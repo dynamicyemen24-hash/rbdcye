@@ -152,6 +152,7 @@ export function useBatchOptimistic<T>(initialData: T[]) {
 
     setState((prev) => ({
       ...prev,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: [...prev.data, { ...item, id: tempId } as any],
       pending: new Set(prev.pending).add(tempId),
     }));
@@ -163,6 +164,7 @@ export function useBatchOptimistic<T>(initialData: T[]) {
           newPending.delete(tempId);
           return {
             ...prev,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data: prev.data.map((item) => ((item as any).id === tempId ? result : item)),
             pending: newPending,
           };
@@ -175,6 +177,7 @@ export function useBatchOptimistic<T>(initialData: T[]) {
           newErrors.set(tempId, error);
           return {
             ...prev,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data: prev.data.filter((item) => (item as any).id !== tempId),
             pending: new Set(prev.pending).delete(tempId) ? prev.pending : new Set(prev.pending),
             errors: newErrors,
@@ -186,10 +189,12 @@ export function useBatchOptimistic<T>(initialData: T[]) {
 
   const optimisticUpdate = useCallback(
     (id: string, updates: Partial<T>, operation: () => Promise<T>) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const previousItem = state.data.find((item) => (item as any).id === id);
 
       setState((prev) => ({
         ...prev,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: prev.data.map((item) => ((item as any).id === id ? { ...item, ...updates } : item)),
         pending: new Set(prev.pending).add(id),
       }));
@@ -201,6 +206,7 @@ export function useBatchOptimistic<T>(initialData: T[]) {
             newPending.delete(id);
             return {
               ...prev,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               data: prev.data.map((item) => ((item as any).id === id ? result : item)),
               pending: newPending,
             };
@@ -214,6 +220,7 @@ export function useBatchOptimistic<T>(initialData: T[]) {
             return {
               ...prev,
               data: prev.data.map((item) =>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (item as any).id === id ? previousItem || item : item
               ),
               pending: newPending,
@@ -228,10 +235,12 @@ export function useBatchOptimistic<T>(initialData: T[]) {
 
   const optimisticDelete = useCallback(
     (id: string, operation: () => Promise<void>) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const previousItem = state.data.find((item) => (item as any).id === id);
 
       setState((prev) => ({
         ...prev,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: prev.data.filter((item) => (item as any).id !== id),
         pending: new Set(prev.pending).add(id),
       }));

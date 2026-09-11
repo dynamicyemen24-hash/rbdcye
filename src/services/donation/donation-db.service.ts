@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+
 import type { DonationProject, InKindDonation, DonationPolicy } from './donation-types';
 
 export interface Donation {
@@ -17,7 +18,7 @@ export interface Donation {
   is_recurring: boolean;
   recurring_interval?: string;
   is_anonymous: boolean;
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, any>;
   created_at: string;
 }
 
@@ -52,7 +53,7 @@ class DonationDBService {
     return data || [];
   }
 
-  async getPolicy(key: string): Promise<unknown> {
+  async getPolicy(key: string): Promise<any> {
     const { data, error } = await supabase!
       .from('donation_policies')
       .select('value')

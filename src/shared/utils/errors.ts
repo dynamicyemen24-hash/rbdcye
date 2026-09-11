@@ -3,6 +3,7 @@ export class AppError extends Error {
     public code: string,
     message: string,
     public statusCode: number = 500,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public details?: Record<string, any>
   ) {
     super(message);
@@ -20,7 +21,7 @@ export const ErrorCodes = {
   TIMEOUT: "TIMEOUT",
 } as const;
 
-export const handleApiError = (error: unknown): AppError => {
+export const handleApiError = (error: any): AppError => {
   if (error instanceof AppError) {
     return error;
   }

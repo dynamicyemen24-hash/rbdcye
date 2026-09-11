@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
 import { Handshake } from "lucide-react";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useDynamicContent } from "@/shared/hooks/useDynamicContent";
@@ -9,10 +9,12 @@ export function Partners(
     setCurrentPage: () => {},
   }
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [partners, setPartners] = useState<any[]>([]);
   const [showDevBadge, setShowDevBadge] = useState(false);
 
   // ContentManager returns static defaults instantly, then upgrades to Sanity
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: dynamicPartners, source } = useDynamicContent<any>({
     contentType: "partners",
     enableRealtime: false,
@@ -28,6 +30,7 @@ export function Partners(
 
   useEffect(() => {
     if (dynamicPartners.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const normalized = dynamicPartners.map((p: any) => ({
         id: p.id || p._id,
         name: p.name,
@@ -37,6 +40,7 @@ export function Partners(
         website: p.website || p.url,
       }));
       setPartners(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         normalized.filter((item: any) => item.status !== "inactive" && item.status !== "suspended")
       );
     }

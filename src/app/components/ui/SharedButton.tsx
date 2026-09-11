@@ -1,6 +1,6 @@
 // Shared Button Component leveraging Design Tokens (4px Scale)
-import { forwardRef, ReactNode } from "react";
 import { motion, HTMLMotionProps } from "motion/react";
+import { forwardRef, ReactNode } from "react";
 
 export interface SharedButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
   variant?: "primary" | "secondary" | "gold" | "outline" | "ghost";

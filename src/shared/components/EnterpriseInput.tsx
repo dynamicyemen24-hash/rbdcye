@@ -124,7 +124,9 @@ export const EnterpriseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement
       clearable = false,
       onClear,
       mask,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       maskPlaceholder = "_",
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       autoComplete = "off",
       "aria-label": ariaLabel,
       "aria-describedby": ariaDescribedBy,
@@ -152,6 +154,7 @@ export const EnterpriseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement
     const [hasValue, setHasValue] = useState(false);
     const [showError, setShowError] = useState(false);
     const [shakeTrigger, setShakeTrigger] = useState(0);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const generatedId = useId();
@@ -198,6 +201,7 @@ export const EnterpriseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement
         inputRef.current?.focus();
         onClear?.();
         onChange?.("", e as any);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }
       onKeyDown?.(e as React.KeyboardEvent<HTMLInputElement>);
     }, [clearable, hasValue, onClear, onChange, onKeyDown]);
@@ -208,6 +212,7 @@ export const EnterpriseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement
       inputRef.current?.focus();
       onClear?.();
       onChange?.("", e as any);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }, [onClear, onChange]);
 
     const handleIconClick = useCallback((e: React.MouseEvent) => {

@@ -11,14 +11,17 @@ function sendToAnalytics(metric: Metric) {
       navigationType: metric.navigationType,
     });
 
+    const url = "/api/rum";
+    const blob = new Blob([body], { type: "application/json" });
     if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/analytics/web-vitals", body);
+      navigator.sendBeacon(url, blob);
     } else {
-      fetch("/api/analytics/web-vitals", {
-        body,
+      fetch(url, {
+        body: blob,
         method: "POST",
         keepalive: true,
-      });
+        headers: { "Content-Type": "application/json" },
+      }).catch(() => {});
     }
   }
 }

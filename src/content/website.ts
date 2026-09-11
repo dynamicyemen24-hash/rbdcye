@@ -1,6 +1,7 @@
 // Content Seed Data - صور خيرية ومحتوى تنموي
 // صور افتراضية محلية بهوية الحملة (زخارف إسلامية وثقافة يمنية)
 // يمكن استبدالها من لوحة التحكم عبر حقل "رابط الصورة"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PLACEHOLDER_BENEFICIARY = "/images/defaults/story-woman.svg";
 const PLACEHOLDER_AID = "/images/defaults/project-relief.svg";
 const PLACEHOLDER_EDUCATION = "/images/defaults/project-education.svg";

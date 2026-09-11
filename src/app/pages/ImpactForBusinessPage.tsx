@@ -1,13 +1,15 @@
 ﻿// Impact for Business — بوابة الشركات والجهات المانحة والمؤسسات
-import { motion } from 'motion/react';
 import {
   Building2, Gem, Star, Crown, Users, Heart, Phone, Mail, MapPin,
   CheckCircle2, TrendingUp, BarChart3, Shield, Handshake, Target,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Briefcase, ArrowLeft, Send, GraduationCap, Leaf, BarChart, RefreshCw,
   Search, Eye, PieChart, UserCheck, type LucideIcon,
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { PageHeader } from '@/app/components/PageHeader';
 import { StatsGrid } from '@/app/components/StatsGrid';
 import { useSEO } from '@/utils/seoAdvanced';
@@ -92,7 +94,7 @@ export default function ImpactForBusinessPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">رحلة الشراكة</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">رحلة الشراكة</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">سبع خطوات واضحة من أول حوار إلى تجديد الشراكة — بشفافية وأثر مُقاس</p>
           </motion.div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
@@ -117,7 +119,7 @@ export default function ImpactForBusinessPage() {
       <section className="py-16 sm:py-20 bg-[var(--card)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">برامج الشراكة</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">برامج الشراكة</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">حلول مرنة تناسب كل مؤسسة — من مسؤولية اجتماعية إلى شراكة استراتيجية</p>
           </motion.div>
           <div className="flex flex-wrap justify-center gap-2 mb-10">
@@ -153,7 +155,7 @@ export default function ImpactForBusinessPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">لوحة مؤشرات الشريك</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">لوحة مؤشرات الشريك</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">لوحة خاصة تُتابع أثر شراكتك لحظة بلحظة — بشفافية كاملة</p>
           </motion.div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -183,7 +185,7 @@ export default function ImpactForBusinessPage() {
       <section className="py-16 sm:py-20 bg-[var(--card)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">شرائح الشراكة</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">شرائح الشراكة</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">اختر الشريحة الأنسب لمؤسستك — مع مزايا تصاعدية</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -198,7 +200,7 @@ export default function ImpactForBusinessPage() {
                     </div>
                     <h3 className="text-xl font-bold text-[var(--foreground)]">{tier.name}</h3>
                   </div>
-                  <p className="text-3xl font-bold text-[var(--foreground)] mb-1">{tier.price}</p>
+                  <p className="text-2xl font-bold text-[var(--foreground)] mb-1">{tier.price}</p>
                   <p className="text-sm text-[var(--muted-foreground)] mb-6">{tier.currency}</p>
                   <ul className="space-y-3">
                     {tier.benefits.map((b, i) => (
@@ -219,7 +221,7 @@ export default function ImpactForBusinessPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">شركاء يتحدثون عن تجربتهم</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">شركاء يتحدثون عن تجربتهم</h2>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
             {SUCCESS_STORIES.map((story) => (
@@ -249,7 +251,7 @@ export default function ImpactForBusinessPage() {
       <section id="corporate-contact" className="py-16 sm:py-20 bg-[var(--card)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4">ابدأ شراكتك الآن</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold text-[var(--foreground)] mb-4">ابدأ شراكتك الآن</h2>
             <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">تواصل مع فريق الشراكات وسنُصمم لك مقترحاً خلال ٤٨ ساعة</p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-10 items-start">
@@ -302,7 +304,7 @@ export default function ImpactForBusinessPage() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <Shield className="w-16 h-16 mx-auto mb-6 opacity-90" />
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">معاً نبني أثراً مستداماً</h2>
+            <h2 className="text-3xl sm:text-3xl font-bold mb-4">معاً نبني أثراً مستداماً</h2>
             <p className="text-lg opacity-90 max-w-2xl mx-auto mb-8">كل شراكة مؤسسية هي خطوة نحو مستقبل أفضل. انضم لشركائنا اليوم.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button onClick={() => document.getElementById('corporate-contact')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-4 rounded-xl bg-white text-[var(--brand-green)] font-bold text-lg shadow-lg hover:shadow-xl transition-all">ابدأ شراكتك الآن</button>

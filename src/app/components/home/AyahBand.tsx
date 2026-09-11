@@ -1,8 +1,8 @@
 // Ayah Band - شريط الآية القرآنية
 // جسر روحي بين برهان الأرقام والذروة العاطفية للقصة
-import { Section } from "@/app/components/layout/Section";
-import { Reveal } from "@/app/components/layout/Reveal";
 import { IslamicDivider } from "@/app/components/decor/IslamicPattern";
+import { Reveal } from "@/app/components/layout/Reveal";
+import { Section } from "@/app/components/layout/Section";
 
 export function AyahBand() {
   return (

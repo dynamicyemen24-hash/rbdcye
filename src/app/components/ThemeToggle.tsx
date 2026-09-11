@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Sun, Moon, Laptop, Eye, Check, SunMedium, Contrast, Type, Minimize2, Maximize2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useRef, useEffect } from "react";
+
 import { useTheme, ThemeMode, DisplayMode } from "@/app/context/ThemeContext";
 
 interface ThemeToggleProps {

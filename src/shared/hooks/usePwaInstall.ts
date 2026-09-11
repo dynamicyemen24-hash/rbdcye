@@ -36,8 +36,10 @@ export function usePwaInstall() {
   useEffect(() => {
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (navigator as any).standalone === true;
     setIsStandalone(standalone);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream);
 
     const waiter: Waiter = (e) => setDeferred(e);

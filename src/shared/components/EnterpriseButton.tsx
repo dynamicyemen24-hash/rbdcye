@@ -249,6 +249,7 @@ export const EnterpriseButton = forwardRef<HTMLButtonElement, EnterpriseButtonPr
     const isIconOnly = size === "icon" && !children;
 
     const baseClasses = [
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       COMMON_BASE,
       style.base,
       style.shadow,

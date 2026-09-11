@@ -1,7 +1,7 @@
 // Site Loader - موجه الموقع الاحترافي مع الرسائل الترحيبية ومؤشر التقدم الذكي
 // Professional Site Loader with Welcome Messages and Smart Progress
-import { motion, AnimatePresence } from "motion/react";
 import { Heart, Sparkles, Shield, Zap, SkipForward } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback } from "react";
 
 interface SiteLoaderProps {

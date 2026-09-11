@@ -37,6 +37,7 @@ export interface ContentVersion {
   id: string;
   contentId: string;
   versionNo: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: Record<string, any>;
   changedBy: string;
   changedAt: string;

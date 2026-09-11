@@ -28,6 +28,7 @@ class ErrorTrackingService {
     this.persist();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   captureMessage(message: string, level: "info" | "warning" | "error" = "info") {
     // Message logged silently
   }

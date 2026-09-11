@@ -1,6 +1,6 @@
 // Install Prompt Component - تثبيت التطبيق وتنزيل كـ PWA لسطح المكتب والموبايل
-import { motion, AnimatePresence } from "motion/react";
 import { X, Download, Smartphone, Monitor } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, memo } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -24,6 +24,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
     }
 
     // Check if iOS
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     setIsIOS(isIOSDevice);
 

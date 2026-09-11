@@ -31,6 +31,7 @@ export default function NotificationsPanel({
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const loadNotifications = async () => {
     setLoading(true);
     try {

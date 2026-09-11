@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowLeft,
   BarChart3,
@@ -28,9 +27,12 @@ import {
   BookOpen,
   Target,
 } from "lucide-react";
-import { RohamaaHeart } from "@/app/components/ui/BrandIcons";
-import MobileMenu from "@/app/components/MobileMenu";
+import { AnimatePresence, motion } from "motion/react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
+
+import MobileMenu from "@/app/components/MobileMenu";
+import { RohamaaHeart } from "@/app/components/ui/BrandIcons";
+
 
 interface NavbarProps {
   currentPage: string;

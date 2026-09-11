@@ -25,6 +25,59 @@
 }
 
 /* ============================================================
+   1.5. TAJAWAL — ARABIC VARIABLE FONT (Saudi Quranic Script)
+   ============================================================ */
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("/fonts/tajawal-var-arabic.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  font-synthesis: none;
+  unicode-range:
+    U+0600-06FF,
+    U+0750-077F,
+    U+0870-089F,
+    U+08A0-08FF,
+    U+FB50-FDFF,
+    U+FE70-FEFF;
+}
+
+/* ============================================================
+   2. CAIRO — LATIN
+   ============================================================ */
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo-var-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  font-synthesis: none;
+  unicode-range:
+    U+0000-00FF,
+    U+0131,
+    U+0152-0153,
+    U+02BB-02BC,
+    U+02C6,
+    U+02DA,
+    U+02DC,
+    U+0304,
+    U+0308,
+    U+0329,
+    U+2000-206F,
+    U+20AC,
+    U+2122,
+    U+2191,
+    U+2193,
+    U+2212,
+    U+2215,
+    U+FEFF,
+    U+FFFD;
+}
+
+/* ============================================================
    2. CAIRO — LATIN
    ============================================================ */
 
@@ -127,6 +180,7 @@
 
 :root {
   --font-ar:
+    "Tajawal",
     "Cairo",
     "Segoe UI",
     Tahoma,
@@ -135,6 +189,7 @@
 
   --font-latin:
     "Plus Jakarta Sans",
+    "Tajawal",
     "Cairo",
     system-ui,
     sans-serif;
@@ -216,10 +271,57 @@ body {
    8. FONT UTILITIES
    ============================================================ */
 
-.font-cairo,
-.font-tajawal {
+.font-cairo {
   font-family: var(--font-ar);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+.font-tajawal {
+  font-family: "Tajawal", var(--font-ar);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Arabic text optimization — no letter-spacing preserves cursive joining */
+.arabic-text {
+  font-family: var(--font-ar);
+  font-optical-sizing: auto;
+  line-height: var(--leading-relaxed);
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+  letter-spacing: 0; /* Critical: preserves Arabic cursive joining */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced Latin text with font features */
+.latin-text {
+  font-family: var(--font-latin);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Font size fluid scaling with clamp */
+.text-fluid {
+  font-size: clamp(0.875rem, 1.5vw, 1.2rem);
+}
+
+/* Font weight utilities with optical size adjustment */
+.font-thin { font-weight: 100; font-optical-sizing: auto; }
+.font-extralight { font-weight: 200; font-optical-sizing: auto; }
+.font-light { font-weight: 300; font-optical-sizing: auto; }
+.font-normal { font-weight: 400; font-optical-sizing: auto; }
+.font-medium { font-weight: 500; font-optical-sizing: auto; }
+.font-semibold { font-weight: 600; font-optical-sizing: auto; }
+.font-bold { font-weight: 700; font-optical-sizing: auto; }
+.font-extrabold { font-weight: 800; font-optical-sizing: auto; }
+.font-black { font-weight: 900; font-optical-sizing: auto; }
 
 .font-jakarta {
   font-family: var(--font-latin);

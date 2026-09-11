@@ -14,22 +14,52 @@ const PAGES = [
   { name: "about", path: "/about" },
   { name: "programs", path: "/programs" },
   { name: "projects", path: "/projects" },
+  { name: "success", path: "/success" },
+  { name: "news", path: "/news" },
+  { name: "media", path: "/media" },
+  { name: "reports", path: "/reports" },
+  { name: "transparency", path: "/transparency" },
+  { name: "volunteer", path: "/volunteer" },
+  { name: "zakat", path: "/zakat" },
+  { name: "endowment", path: "/endowment" },
   { name: "donate", path: "/donate" },
   { name: "contact", path: "/contact" },
-  { name: "transparency", path: "/transparency" },
-  { name: "zakat", path: "/zakat" },
-  { name: "volunteer", path: "/volunteer" },
+  { name: "messages", path: "/messages" },
+  { name: "subscribe", path: "/subscribe" },
+  { name: "partners", path: "/partners" },
+  { name: "login", path: "/login" },
+  { name: "donor", path: "/donor" },
+  { name: "privacy-policy", path: "/privacy-policy" },
+  { name: "requests", path: "/requests" },
+  { name: "feedback", path: "/feedback" },
+  { name: "services", path: "/services" },
+  { name: "impact", path: "/impact" },
+  { name: "impact-center", path: "/impact-center" },
+  { name: "help", path: "/help" },
+  { name: "zakat-calculator", path: "/zakat-calculator" },
+  { name: "sadaqah-jariyah", path: "/sadaqah-jariyah" },
+  { name: "training", path: "/training" },
+  { name: "smart-advisor", path: "/smart-advisor" },
+  { name: "donor-passport", path: "/donor-passport" },
+  { name: "interactive-map", path: "/interactive-map" },
+  { name: "corporate", path: "/corporate" },
+  { name: "impact-for-business", path: "/impact-for-business" },
+  { name: "donor-journey", path: "/donor-journey" },
+  { name: "campaigns", path: "/campaigns" },
+  { name: "major-donors", path: "/major-donors" },
+  { name: "impact-engine", path: "/impact-engine" },
+  { name: "admin", path: "/admin" },
   { name: "not-found", path: "/this-page-does-not-exist" },
 ];
 
-test.describe("WCAG 2.1 AA — automated axe audit", () => {
+test.describe("WCAG 2.2 AAA — automated axe audit", () => {
   for (const page of PAGES) {
-    test(`${page.name} (${page.path}) has no WCAG 2.1 AA violations`, async ({ page: browser }) => {
+    test(`${page.name} (${page.path}) has no WCAG 2.2 AAA violations`, async ({ page: browser }) => {
       await browser.goto(page.path);
       await browser.waitForLoadState("networkidle");
 
       const results = await new AxeBuilder({ page: browser })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "wcag2aaa"])
         .analyze();
 
       const violations = results.violations.filter(
@@ -48,7 +78,7 @@ test.describe("WCAG 2.1 AA — automated axe audit", () => {
   }
 });
 
-test.describe("WCAG 2.1 AA — keyboard operability", () => {
+test.describe("WCAG 2.2 AAA — keyboard operability", () => {
   test("skip-to-content link is the first focusable element", async ({ page }) => {
     await page.goto("/");
     await page.keyboard.press("Tab");
@@ -77,7 +107,7 @@ test.describe("WCAG 2.1 AA — keyboard operability", () => {
   });
 });
 
-test.describe("WCAG 2.1 AA — media and language", () => {
+test.describe("WCAG 2.2 AAA — media and language", () => {
   test("document declares lang and dir correctly", async ({ page }) => {
     await page.goto("/");
     const lang = await page.evaluate(() => document.documentElement.lang);

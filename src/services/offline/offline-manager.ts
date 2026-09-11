@@ -7,7 +7,7 @@ const DB_VERSION = 1;
 interface OfflineRecord {
   id: string;
   store: string;
-  data: unknown;
+  data: any;
   timestamp: number;
   synced: boolean;
   action: 'create' | 'update' | 'delete';
@@ -135,7 +135,7 @@ class OfflineManager {
   }
 
   // Queue a mutation for sync
-  async queueMutation(store: string, action: 'create' | 'update' | 'delete', data: unknown): Promise<void> {
+  async queueMutation(store: string, action: 'create' | 'update' | 'delete', data: any): Promise<void> {
     const record: OfflineRecord = {
       id: `${store}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       store,
@@ -171,7 +171,7 @@ class OfflineManager {
         record.synced = true;
         await this.put('sync_queue', record);
       } catch (err) {
-        console.error('[Sync] Failed:', record.id, err);
+        if (import.meta.env.DEV) console.warn('[Sync] Failed:', record.id, err);
         // Will retry on next online event
       }
     }
@@ -184,6 +184,7 @@ class OfflineManager {
     switch (record.store) {
       case 'donations':
         if (record.action === 'create') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await donationDBService.createDonation(record.data as any);
         }
         break;
@@ -194,7 +195,7 @@ class OfflineManager {
   }
 
   // Cache with TTL
-  async cacheWithTTL(store: string, key: string, data: unknown, ttlMs: number): Promise<void> {
+  async cacheWithTTL(store: string, key: string, data: any, ttlMs: number): Promise<void> {
     await this.put(store, { id: key, data, cachedAt: Date.now(), ttl: ttlMs });
   }
 

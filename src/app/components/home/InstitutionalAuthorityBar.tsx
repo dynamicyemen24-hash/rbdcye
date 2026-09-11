@@ -1,7 +1,7 @@
 // Institutional Authority Bar - شريط المصداقية المؤسسية
 // يعرض الترخيص الرسمي، الشهادات، والاعتمادات بشكل راقي واحترافي
-import { motion } from "motion/react";
 import { BadgeCheck, ShieldCheck, Award, FileCheck, Building2, Globe } from "lucide-react";
+import { motion } from "motion/react";
 
 const AUTHORITY_ITEMS = [
   {

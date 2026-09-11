@@ -4,8 +4,10 @@
  */
 import type { StructureResolver } from "sanity/structure";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SINGLETONS = ["siteSettings", "dashboard"];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function singletonListItem(S: Parameters<StructureResolver>[0], typeName: string, title: string) {
   return S.listItem()
     .title(title)

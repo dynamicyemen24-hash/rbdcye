@@ -1,6 +1,6 @@
-import { useState, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { HelpCircle, ChevronDown, ChevronUp, Phone, MessageCircle, Search, BookOpen, Users, Heart, FileText } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, memo } from 'react';
 
 interface FAQ {
   question: string;
@@ -23,6 +23,7 @@ const FAQS: FAQ[] = [
 
 const CATEGORIES = ['الكل', 'طلبات', 'خدمات', 'تبرعات', 'تطوع', 'وقف', 'عام'];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CATEGORY_ICONS: Record<string, typeof HelpCircle> = {
   'طلبات': FileText, 'خدمات': BookOpen, 'تبرعات': Heart, 'تطوع': Users, 'وقف': BookOpen, 'عام': HelpCircle,
 };
@@ -46,7 +47,7 @@ export const HelpCenterPage = memo(function HelpCenterPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand-green)]">
             <HelpCircle className="h-8 w-8 text-white" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">مركز المساعدة</h1>
+          <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">مركز المساعدة</h1>
           <p className="mt-2 text-[var(--muted-foreground)]">ابحث عن إجابة سؤالك أو تواصل معنا مباشرة</p>
         </motion.div>
 

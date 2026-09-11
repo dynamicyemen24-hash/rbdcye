@@ -1,6 +1,6 @@
 // Reports Page - التقارير السنوية والإصدارات
-import { motion } from "motion/react";
 import { FileText, Download, Calendar, Search, FileBarChart, AlertCircle } from "lucide-react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -186,7 +186,7 @@ export default function ReportsPage() {
       </section>
 
       {/* Reports Grid */}
-      <section className="py-24 sm:py-32 bg-[var(--secondary)]">
+      <section className="py-16 sm:py-20 bg-[var(--secondary)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {filteredReports.map((report, i) => (

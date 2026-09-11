@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
+
 import IntroVideoPlayer from "@/app/components/IntroVideoPlayer";
 
 interface HeroVideoModalProps {

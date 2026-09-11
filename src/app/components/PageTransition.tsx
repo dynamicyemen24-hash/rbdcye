@@ -1,5 +1,5 @@
-import React from "react";
 import { motion, useReducedMotion, Variants } from "motion/react";
+import React from "react";
 
 interface PageTransitionProps {
   children: React.ReactNode;

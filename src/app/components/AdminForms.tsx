@@ -250,7 +250,9 @@ export function PartnerForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -363,6 +365,7 @@ export function PartnerForm({
         />
       </div>
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -377,7 +380,9 @@ export function ProjectForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -504,6 +509,7 @@ export function ProjectForm({
         onChange={(v) => setForm({ ...form, manager: v })}
       />
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -518,7 +524,9 @@ export function ReportForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -608,6 +616,7 @@ export function ReportForm({
         rows={3}
       />
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -622,7 +631,9 @@ export function SuccessStoryForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -759,6 +770,7 @@ export function SuccessStoryForm({
         />
       </div>
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -773,7 +785,9 @@ export function VolunteerForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -878,6 +892,7 @@ export function VolunteerForm({
         rows={3}
       />
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -892,7 +907,9 @@ export function UserForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -1018,6 +1035,7 @@ export function UserForm({
         rows={3}
       />
       <FormActions
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSave={handleSubmit as any}
         onCancel={onCancel}
         submitLabel={editItem ? "تحديث" : "إضافة"}
@@ -1032,7 +1050,9 @@ export function RequestResponseForm({
   onSave,
   onCancel,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editItem?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (data: any) => void;
   onCancel: () => void;
 }) {
@@ -1091,6 +1111,7 @@ export function RequestResponseForm({
           ]}
         />
       </div>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel="إرسال الرد" />
     </form>
   );

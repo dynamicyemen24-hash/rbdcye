@@ -125,6 +125,7 @@ if (typeof window !== "undefined") {
   // في المتصفح فقط
   try {
     envValidator.validate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // تجاهل في حال لم يتم استدعاء validate() بشكل صريح
   }

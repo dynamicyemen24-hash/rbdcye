@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Cookie, X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect } from "react";
 
 const COOKIE_CONSENT_KEY = "rh_cookie_consent";
 

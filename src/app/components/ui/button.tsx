@@ -1,5 +1,5 @@
-import { type ReactNode } from "react";
 import { motion } from "motion/react";
+import { type ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;

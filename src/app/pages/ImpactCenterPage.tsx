@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef, memo, useCallback } from "react";
-import { motion, useInView } from "motion/react";
 import {
   TrendingUp,
   TrendingDown,
@@ -18,10 +16,14 @@ import {
   Target,
   Award,
   Sparkles,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ArrowUpLeft,
   Eye,
   ChevronLeft,
 } from "lucide-react";
+import { motion, useInView } from "motion/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useState, useEffect, useRef, memo, useCallback } from "react";
 
 /* ─── Animated Counter Hook ─── */
 function useAnimatedCounter(target: number, duration = 2000, startOnView = true) {
@@ -147,7 +149,7 @@ const KPICard = memo(function KPICard({ kpi, index }: { kpi: (typeof KPI_DATA)[n
       <div className="relative flex items-start justify-between">
         <div>
           <p className="text-sm font-medium text-[var(--muted-foreground)]">{kpi.label}</p>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-[var(--foreground)]" style={{ fontVariantNumeric: "tabular-nums" }}>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--foreground)]" style={{ fontVariantNumeric: "tabular-nums" }}>
             {kpi.isDecimal ? count.toFixed(1) : count.toLocaleString("ar-SA")}
             <span className="text-lg text-[var(--muted-foreground)] mr-1">{kpi.suffix}</span>
           </p>
@@ -315,10 +317,10 @@ export default memo(function ImpactCenterPage() {
             <Eye className="h-10 w-10 text-white" />
           </motion.div>
 
-          <h1 className="relative text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
+          <h1 className="relative text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
             مركز الأثر
           </h1>
-          <p className="relative mx-auto mt-4 max-w-2xl text-lg sm:text-xl text-white/80 font-medium">
+          <p className="relative mx-auto mt-4 max-w-2xl text-lg sm:text-lg text-white/80 font-medium">
             حيث يتحول العدد إلى قصة
           </p>
           <div className="relative mt-6 flex items-center justify-center gap-3">
@@ -369,7 +371,7 @@ export default memo(function ImpactCenterPage() {
             </div>
           </motion.div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
             <div className="space-y-5">
               {CATEGORY_DATA.map((cat, i) => (
                 <CategoryBar key={cat.label} cat={cat} index={i} />
@@ -419,7 +421,7 @@ export default memo(function ImpactCenterPage() {
             </div>
           </motion.div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-emerald-500" />

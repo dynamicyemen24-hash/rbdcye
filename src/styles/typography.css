@@ -5,16 +5,16 @@
    ============================================================ */
 
 :root {
-  /* ── السلم النوعي السائل (Fluid Type Scale) ──
-     مبني على نسبة 1.2 مع حدّ أدنى/أقصى لكل مستوى */
-  --fs-display: clamp(1.9rem, 1.1rem + 3.6vw, 3rem); /* عناوين كبرى */
-  --fs-h1: clamp(1.7rem, 1.15rem + 2.6vw, 2.5rem); /* عنوان الصفحة */
-  --fs-h2: clamp(1.45rem, 1.2rem + 1.5vw, 1.95rem); /* ترويسة قسم */
-  --fs-h3: clamp(1.15rem, 1.05rem + 0.6vw, 1.35rem); /* عنوان فرعي */
-  --fs-lead: clamp(0.98rem, 0.94rem + 0.35vw, 1.12rem); /* فقرة قائدة */
-  --fs-body: 0.95rem; /* نص أساسي */
-  --fs-sm: 0.85rem; /* نص ثانوي */
-  --fs-xs: 0.75rem; /* حواشٍ وشارات */
+  /* ── السلم النوعي السائل — مصغّر 7% لقراءة أرشق على الجوال ──
+     نسبة 1.18 (أهدأ من 1.2) + حدود أضيق */
+  --fs-display: clamp(1.75rem, 1.05rem + 3.2vw, 2.75rem); /* عناوين كبرى */
+  --fs-h1: clamp(1.55rem, 1.1rem + 2.3vw, 2.25rem); /* عنوان الصفحة */
+  --fs-h2: clamp(1.32rem, 1.12rem + 1.3vw, 1.75rem); /* ترويسة قسم */
+  --fs-h3: clamp(1.05rem, 1rem + 0.5vw, 1.25rem); /* عنوان فرعي */
+  --fs-lead: clamp(0.92rem, 0.9rem + 0.28vw, 1.02rem); /* فقرة قائدة */
+  --fs-body: 0.875rem; /* نص أساسي — كان 0.95 */
+  --fs-sm: 0.8rem; /* نص ثانوي */
+  --fs-xs: 0.7rem; /* حواشٍ وشارات */
 
   /* ارتفاعات الأسطر المحسّنة للعربية */
   --lh-display: 1.35;
@@ -58,15 +58,27 @@
 }
 
 /* ── توازن أسطر العناوين (Progressive Enhancement) ──────── */
-h1,
-h2,
-h3 {
-  text-wrap: balance;
+@supports (text-wrap: balance) {
+  h1, h2, h3 { text-wrap: balance; }
+}
+@supports not (text-wrap: balance) {
+  h1, h2, h3 { max-width: 28em; margin-inline: auto; }
 }
 
-/* الفقرات القائدة: حشو أسطر أنيق */
+/* الفقرات القائدة: حشو أسطر أنيق + راحة قراءة */
+@supports (text-wrap: pretty) {
+  p { text-wrap: pretty; }
+}
 p {
-  text-wrap: pretty;
+  max-width: 68ch;
+  orphans: 3;
+  widows: 3;
+  hyphens: auto;
+  hanging-punctuation: first allow-end last;
+}
+/* حاوية نصية عامة — لمن لا يستخدم .prose */
+article p, section p {
+  line-height: var(--lh-body);
 }
 
 /* ملاحظة: لا تتبّع سالب للحروف العربية — يكسر الاتصال البصري.

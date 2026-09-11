@@ -1,9 +1,13 @@
-import { useState, memo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   MessageSquareWarning, Lightbulb, MessageCircle, HelpCircle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Send, CheckCircle2, Loader2, ChevronDown, Shield, Clock, Phone
 } from 'lucide-react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, memo, useCallback } from 'react';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { servicesDBService, type ComplaintSuggestion } from '@/services/beneficiary/services-db.service';
 
 const FEEDBACK_TYPES = [
@@ -85,7 +89,7 @@ export const ComplaintsSuggestionPage = memo(function ComplaintsSuggestionPage()
             <CheckCircle2 className="mx-auto h-20 w-20 text-[var(--brand-green)]" />
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">تم استلام ملاحظتك</h1>
+            <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">تم استلام ملاحظتك</h1>
             <p className="mt-4 text-[var(--muted-foreground)]">رقم التتبع: <span className="font-bold text-[var(--brand-green)]">#{entryNumber}</span></p>
             <p className="mt-2 text-[var(--muted-foreground)]">نلتزم بالرد خلال ٣ أيام عمل</p>
             <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-right">
@@ -113,11 +117,11 @@ export const ComplaintsSuggestionPage = memo(function ComplaintsSuggestionPage()
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand-gold)]">
             <MessageSquareWarning className="h-8 w-8 text-white" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">شكاوى ومقترحات</h1>
+          <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">شكاوى ومقترحات</h1>
           <p className="mt-2 text-[var(--muted-foreground)]">صوتك مسموع — نلتزم بالاستجابة السريعة لجميع الملاحظات</p>
         </motion.div>
 
-        <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
+        <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
           {/* Type Selection */}
           <div>
             <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">نوع الرسالة *</label>

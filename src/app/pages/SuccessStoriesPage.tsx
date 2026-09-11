@@ -1,10 +1,10 @@
 // الأثر والمعرفة - صفحة المعرفة والبحوث والأثر
-import { motion } from "motion/react";
 import {
   BookOpen,
   Quote,
   Users,
   BarChart3,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TrendingUp,
   Search,
   ArrowLeft,
@@ -16,6 +16,7 @@ import {
   Star,
   Download,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,6 +48,7 @@ interface KnowledgeItem {
 const CATEGORIES = ["الكل", "بحث", "تقرير", "دراسة", "تقييم"];
 
 function normalizeStories(): KnowledgeItem[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return SEED_SUCCESS_STORIES.map((s: any) => ({
     id: s.id,
     title: s.title,
@@ -323,7 +325,7 @@ export default function SuccessStoriesPage() {
                 </span>
               </div>
 
-              <h2 className="text-3xl font-bold text-[var(--foreground)] mb-6">
+              <h2 className="text-2xl font-bold text-[var(--foreground)] mb-6">
                 {selectedItem.title}
               </h2>
 
@@ -370,7 +372,7 @@ export default function SuccessStoriesPage() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">هل تريد الوصول إلى تقاريرنا؟</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">هل تريد الوصول إلى تقاريرنا؟</h2>
             <p className="text-white/80 text-lg mb-8">
               تحميل التقارير والأبحاث متاح مجاناً لدعم الشفافية والمعرفة المشتركة
             </p>

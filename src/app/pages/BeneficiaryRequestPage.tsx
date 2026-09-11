@@ -1,8 +1,9 @@
-import { useState, memo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   FileText, Send, CheckCircle2, Loader2, Shield, Clock, Heart
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, memo, useCallback } from 'react';
+
 import { servicesDBService } from '@/services/beneficiary/services-db.service';
 
 const GOVERNORATES = [
@@ -98,7 +99,7 @@ export const BeneficiaryRequestPage = memo(function BeneficiaryRequestPage() {
             <CheckCircle2 className="mx-auto h-20 w-20 text-[var(--brand-green)]" />
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">تم استلام طلبك بنجاح</h1>
+            <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">تم استلام طلبك بنجاح</h1>
             <p className="mt-4 text-[var(--muted-foreground)]">رقم الطلب: <span className="font-bold text-[var(--brand-green)]">#{requestNumber}</span></p>
             <p className="mt-2 text-[var(--muted-foreground)]">سنتواصل معك خلال ٢٤-٤٨ ساعة عبر رقم الهاتف المسجل</p>
             <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-right">
@@ -126,7 +127,7 @@ export const BeneficiaryRequestPage = memo(function BeneficiaryRequestPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand-green)]">
             <FileText className="h-8 w-8 text-white" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold text-[var(--foreground)]">طلب استفادة</h1>
+          <h1 className="mt-6 text-2xl font-bold text-[var(--foreground)]">طلب استفادة</h1>
           <p className="mt-2 text-[var(--muted-foreground)]">املأ النموذج أدناه وسنتواصل معك في أقرب وقت</p>
         </motion.div>
 
@@ -145,7 +146,7 @@ export const BeneficiaryRequestPage = memo(function BeneficiaryRequestPage() {
 
         {/* Form Content */}
         <AnimatePresence mode="wait">
-          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
+          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
             
             {/* Step 1: Personal Info */}
             {step === 1 && (

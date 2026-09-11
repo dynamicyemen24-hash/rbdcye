@@ -5,6 +5,7 @@ import { ComponentType, lazy, LazyExoticComponent } from "react";
  * to handle temporary network dropouts, container redeployments,
  * or stale chunk hashes after deployment builds.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function lazyWithRetry<T extends ComponentType<any>>(
   componentImport: () => Promise<{ default: T }>,
   retries = 5,

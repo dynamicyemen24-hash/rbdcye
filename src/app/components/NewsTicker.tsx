@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "motion/react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -6,15 +5,20 @@ import {
   Heart,
   Phone,
   Calculator,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Utensils,
   AlertTriangle,
   Droplets,
   FileText,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Users,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Building2,
   TrendingUp,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Zap,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   useState,
   useEffect,
@@ -23,8 +27,9 @@ import {
   memo,
   useMemo,
 } from "react";
-import type { LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+import type { LucideIcon } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────
    Types

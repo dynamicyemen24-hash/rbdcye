@@ -36,6 +36,7 @@ export function AdminAnalytics() {
         const donations = await dataService.getAll("rh_donations_data");
         const subscribers = await dataService.getAll("rh_subscriber_accounts");
         const volunteers = await dataService.getAll("rh_volunteers_data");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const requests = await dataService.getAll("rh_requests_data");
 
         // حساب الإحصائيات بناءً على البيانات الحقيقية
@@ -337,6 +338,7 @@ export function AdminAnalytics() {
 }
 
 // StatCard مساعد (نفس واحد من AdminDashboard)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function StatCard({ label, value, trend, icon: Icon, color }: any) {
   return (
     <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">

@@ -1,9 +1,10 @@
-import { useState, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { 
   Zap, Heart, Calculator, MapPin, BarChart3, 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   MessageCircle, Users, BookOpen, ArrowLeft 
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, memo } from 'react';
 
 const ACTIONS = [
   { id: 'donate', label: 'تبرع سريع', icon: Heart, color: 'bg-[var(--brand-gold)]', link: '/donate' },

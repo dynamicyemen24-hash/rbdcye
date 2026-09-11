@@ -12,7 +12,9 @@ interface CacheEntry<T> {
 
 const MAX_CACHE_SIZE = 100;
 const MAX_PENDING_SIZE = 50;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalCache = new Map<string, CacheEntry<any>>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pendingRequests = new Map<string, Promise<any>>();
 
 function evictLRU<K, V>(map: Map<K, V>, maxSize: number) {
@@ -20,6 +22,7 @@ function evictLRU<K, V>(map: Map<K, V>, maxSize: number) {
   let oldestKey: K | null = null;
   let oldestTime = Infinity;
   for (const [key, entry] of map) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const time = (entry as any).lastAccessed ?? (entry as any).timestamp ?? 0;
     if (time < oldestTime) {
       oldestTime = time;
@@ -107,6 +110,7 @@ export function useOptimizedFetch<T>(
           globalCache.set(key, { data: result, timestamp: Date.now(), lastAccessed: Date.now() });
         }
       })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((err: any) => {
         if (mountedRef.current) {
           setError(err?.message || "حدث خطأ");

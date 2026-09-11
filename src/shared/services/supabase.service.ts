@@ -43,6 +43,7 @@ const TABLE_NAMES = {
 type TableName = (typeof TABLE_NAMES)[keyof typeof TABLE_NAMES];
 
 // ---------- Cache System ----------
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const queryCache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL = 60 * 1000;
 
@@ -53,6 +54,7 @@ function getCache<T>(key: string): T | null {
   return null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function setCache(key: string, data: any) {
   if (queryCache.size > 200) {
     const firstKey = queryCache.keys().next().value;
@@ -70,6 +72,7 @@ function invalidateTableCache(table: string) {
 // ---------- Query Interfaces ----------
 interface QueryOptions {
   columns?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filters?: Record<string, any>;
   search?: { field: string; query: string };
   range?: { from: number; to: number };
@@ -90,6 +93,7 @@ class SupabaseTableService {
   }
 
   // جلب كل السجلات مع دعم البحث والترتيب والتصفح
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getAll<T = any>(options: QueryOptions = {}): Promise<{ data: T[]; count: number }> {
     if (!supabase) return { data: [], count: 0 };
 
@@ -147,6 +151,7 @@ class SupabaseTableService {
   }
 
   // جلب سجل واحد بالـ ID
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getById<T = any>(id: string | number): Promise<T | null> {
     if (!supabase) return null;
 
@@ -171,6 +176,7 @@ class SupabaseTableService {
   }
 
   // إنشاء سجل جديد
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async create<T = any>(item: Partial<T>): Promise<T | null> {
     if (!supabase) return null;
 
@@ -191,6 +197,7 @@ class SupabaseTableService {
   }
 
   // تحديث سجل
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async update<T = any>(id: string | number, updates: Partial<T>): Promise<T | null> {
     if (!supabase) return null;
 
@@ -227,6 +234,7 @@ class SupabaseTableService {
 
   // تغيير الحالة (تفعيل/تعطيل)
   async toggleStatus(id: string | number, field: string = "status"): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item = await this.getById<any>(id);
     if (!item) return false;
 
@@ -239,11 +247,13 @@ class SupabaseTableService {
     const idx = values.indexOf(item[field]);
     const newStatus = values[(idx + 1) % values.length];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = await this.update(id, { [field]: newStatus } as any);
     return result !== null;
   }
 
   // بحث متقدم في عدة حقول
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async search<T = any>(query: string, fields: string[], limit: number = 20): Promise<T[]> {
     if (!supabase) return [];
 
@@ -264,6 +274,7 @@ class SupabaseTableService {
   }
 
   // إحصاء عدد السجلات
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async count(filters?: Record<string, any>): Promise<number> {
     const result = await this.getAll({ filters, limit: 0 });
     return result.count;

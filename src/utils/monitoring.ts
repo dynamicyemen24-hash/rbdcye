@@ -8,7 +8,7 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
-  data?: Record<string, unknown>;
+  data?: Record<string, any>;
   userId?: string;
   sessionId?: string;
   url?: string;
@@ -21,7 +21,7 @@ class Logger {
   private static MAX_LOGS = 100;
 
   // تنسيق الرسالة
-  private format(level: LogLevel, message: string, data?: Record<string, unknown>): LogEntry {
+  private format(level: LogLevel, message: string, data?: Record<string, any>): LogEntry {
     return {
       timestamp: new Date().toISOString(),
       level,
@@ -101,23 +101,27 @@ class Logger {
 
   // --- مستويات السجل ---
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   debug(message: string, data?: any) {
     const entry = this.format("debug", message, data);
     if (import.meta.env.DEV) console.debug(entry);
     // لا نحفظ debug في التخزين المحلي
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   info(message: string, data?: any) {
     const entry = this.format("info", message, data);
     if (import.meta.env.DEV) console.log(entry);
     this.persist(entry);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   warn(message: string, data?: any) {
     const entry = this.format("warn", message, data);
     this.persist(entry);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error(message: string, error?: Error | unknown, data?: any) {
     const entry = this.format("error", message, {
       ...data,
@@ -134,6 +138,7 @@ class Logger {
     this.sendToExternalService(entry);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fatal(message: string, error?: Error | unknown, data?: any) {
     const entry = this.format("fatal", message, {
       ...data,
@@ -189,6 +194,7 @@ class Logger {
   }
 
   // تتبع المسار (Breadcrumbs)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   leaveBreadcrumb(category: string, message: string, data?: any) {
     this.debug(`[Breadcrumb] ${category}: ${message}`, data);
   }

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { X, Clock, AlertTriangle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
 
 interface UrgencyBannerProps {
   title: string;

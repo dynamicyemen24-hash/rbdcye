@@ -1,8 +1,11 @@
 @import "./fonts.css";
 @import "./site-loader.css";
 @import "./tailwind.css";
-@import "./theme.css";
-@import "./world-class-design-system.css";
+@import "./tokens.css";
+@import "./composition.css";
+@import "./browser-support.css";
+@import "./reading-comfort.css";
+@import "./interaction-performance.css";
 @import "./islamic-patterns.css";
 @import "./islamic-visual-identity.css";
 @import "./typography.css";
@@ -13,20 +16,25 @@
 @import "./mobile-safety.css";
 /* design-system.css — LEGACY DEPRECATED: merged into world-class-design-system.css (v3 Nebula) — removed to close 20k duplication fracture */
 @import "./components.css";
-@import "./launch-polish.css";
 
 /* ==========================================================================
-    PERFORMANCE: Content Visibility for below-fold sections
+    PERFORMANCE: Content Visibility + Containment — مع fallback للمتصفحات القديمة
     ========================================================================== */
-main section {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 600px;
+@supports (content-visibility: auto) {
+  main section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+    contain: layout style paint;
+  }
+  main section:first-child,
+  #hero,
+  #story {
+    content-visibility: visible;
+    contain: none;
+  }
 }
-
-main section:first-child,
-#hero,
-#story {
-  content-visibility: visible;
+@supports not (content-visibility: auto) {
+  main section { contain: none; }
 }
 
 /* ==========================================================================

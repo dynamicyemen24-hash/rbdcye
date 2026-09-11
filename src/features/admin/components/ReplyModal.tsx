@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 interface ReplyModalProps {
   isOpen: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   message: any;
   onClose: () => void;
   onSend: (reply: string) => Promise<void>;

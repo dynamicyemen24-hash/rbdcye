@@ -89,14 +89,18 @@ export const EnterpriseSelect = forwardRef<HTMLDivElement, EnterpriseSelectProps
       clearable = false,
       onChange,
       onBlur,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onFocus,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       "aria-label": ariaLabel,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       "aria-describedby": ariaDescribedBy,
       className = "",
       wrapperClassName = "",
       size = "md",
       fullWidth = true,
       name,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       id: providedId,
     },
     ref

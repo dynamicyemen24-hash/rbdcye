@@ -1,5 +1,4 @@
 // AdminLayout - هيكل لوحة التحكم الموحد
-import { motion } from "motion/react";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -10,6 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
 

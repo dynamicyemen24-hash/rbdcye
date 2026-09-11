@@ -94,6 +94,7 @@ export function EnterpriseTabs({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent, index: number) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const enabledTabs = tabs.filter((t) => !t.disabled);
       const currentEnabledIndex = enabledTabs.findIndex((t) => t.value === activeValue);
 

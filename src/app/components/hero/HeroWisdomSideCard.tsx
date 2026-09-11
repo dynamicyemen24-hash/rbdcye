@@ -1,6 +1,7 @@
 import { Sparkles, ChevronLeft, ChevronRight, Quote, Play, Film, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
+
 import { ISLAMIC_TEXTS } from "./types";
 
 interface HeroWisdomSideCardProps {

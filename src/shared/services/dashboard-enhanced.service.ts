@@ -50,14 +50,18 @@ export const dashboardEnhancedService = {
 
       return {
         totalBeneficiaries: projects.reduce(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (sum: number, p: any) => sum + (p.beneficiaries || 0),
           0
         ),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         activeProjects: projects.filter((p: any) => p.status === "active").length,
         totalPartners: partners.length,
         totalVolunteers: FALLBACK_DATA.volunteers.length,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         newMessages: FALLBACK_DATA.requests.filter((r: any) => r.status === "new").length,
         totalDonations: FALLBACK_DATA.donations.reduce(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (sum: number, d: any) => sum + (d.amount || 0),
           0
         ),

@@ -7,6 +7,7 @@
 import { contentManager, type ContentResult } from "./content-manager";
 
 // Legacy type for backward compatibility
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ImpactMetrics = {
   totalBeneficiaries?: number;
   activeProjects?: number;

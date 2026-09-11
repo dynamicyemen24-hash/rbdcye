@@ -1,9 +1,13 @@
-import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Utensils, Home, Droplets, Heart, Stethoscope, GraduationCap, AlertTriangle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Users, ChevronDown, ChevronUp, FileText, Send, CheckCircle2, Loader2, MapPin, X
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { servicesDBService, type ServiceCatalog, type ServiceApplication } from '@/services/beneficiary/services-db.service';
 
 const CATEGORY_ICONS: Record<string, typeof Utensils> = {
@@ -78,7 +82,7 @@ export const ServiceCatalogPage = memo(function ServiceCatalogPage() {
     <div className="min-h-screen bg-[var(--background)] py-24" dir="rtl">
       <div className="mx-auto max-w-7xl px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-          <h1 className="text-3xl font-bold text-[var(--foreground)]">الخدمات المتوفرة</h1>
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">الخدمات المتوفرة</h1>
           <p className="mt-2 text-[var(--muted-foreground)]">اختر الخدمة المناسبة وقدم طلبك مباشرة</p>
         </motion.div>
 

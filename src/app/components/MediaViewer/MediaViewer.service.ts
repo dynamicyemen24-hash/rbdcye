@@ -94,6 +94,7 @@ export class MediaViewerService {
   /**
    * تطبيع بيانات الوسائط
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private normalizeMediaData(mediaItems: any[], videoItems: any[]): MediaItem[] {
     const media: MediaItem[] = [];
 

@@ -1,4 +1,5 @@
 // useResponsive - نظام متكامل للتحكم في التجاوب
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useEffect, useCallback } from "react";
 
 type Breakpoint = "mobile" | "tablet" | "desktop" | "wide";

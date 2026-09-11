@@ -41,7 +41,7 @@ export default function DonorPortalPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[var(--brand-gold)]">
                 <UserRound className="h-4 w-4" /> مساحة المتبرع الشخصية
               </div>
-              <h1 className="mt-5 text-3xl font-extrabold sm:text-5xl">
+              <h1 className="mt-5 text-3xl font-extrabold sm:text-4xl">
                 تابع عطاؤك، <span className="text-[var(--brand-gold)]">واشهد أثره.</span>
               </h1>
               <p className="mt-4 max-w-xl text-sm leading-7 text-white/65">

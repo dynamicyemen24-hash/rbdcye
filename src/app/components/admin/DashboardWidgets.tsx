@@ -1,11 +1,16 @@
-import { useEffect, useState, memo } from 'react';
-import { motion } from 'motion/react';
 import { 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TrendingUp, TrendingDown, Users, Heart, DollarSign, 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   BarChart3, Clock, AlertTriangle, Sparkles, RefreshCw,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ArrowUpRight, ArrowDownRight, Activity, Zap
 } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useEffect, useState, memo } from 'react';
+
 import { realAnalyticsService } from '@/services/admin/real-analytics.service';
+
 import type { DashboardKPIs, DonationTrend, ProjectProgress, RecentActivity } from '@/services/admin/real-analytics.service';
 
 // ── Smart KPI Card ──

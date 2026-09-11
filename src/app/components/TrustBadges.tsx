@@ -1,5 +1,5 @@
-import { memo } from 'react';
 import { Shield, Award, CheckCircle2, FileText } from 'lucide-react';
+import { memo } from 'react';
 
 export const TrustBadges = memo(function TrustBadges() {
   return (

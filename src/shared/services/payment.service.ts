@@ -7,6 +7,7 @@ import { useState } from "react";
 // Stripe types are loaded dynamically from CDN
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Stripe: any; // Will be typed when Stripe SDK loads
   }
 }

@@ -4,7 +4,6 @@
  * يدعم: التكبير/التصغير، التدوير، القلب، الجر، اللمس، ملء الشاشة، وأوضاع العرض المختلفة
  */
 
-import { motion, AnimatePresence } from "motion/react";
 import {
   ZoomIn,
   ZoomOut,
@@ -23,6 +22,7 @@ import {
   ImageOff,
   Move,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 
 // ===== الأنواع =====

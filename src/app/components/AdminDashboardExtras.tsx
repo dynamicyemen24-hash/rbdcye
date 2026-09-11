@@ -29,14 +29,17 @@ export default function AdminDashboardExtras() {
           title="الزوار هذا الشهر"
           value="3,420"
           delta="+12%"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           sparkData={sampleSpark as any}
         />
         <StatCard
           title="التبرعات (ر.ي)"
           value="72,300"
           delta="+8%"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           sparkData={sampleSpark as any}
         />
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <StatCard title="المشاريع النشطة" value={24} delta="-1%" sparkData={sampleSpark as any} />
       </div>
 

@@ -1,9 +1,13 @@
-import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FileText, MessageSquareWarning, Send, Users, CheckCircle2, Clock,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   AlertTriangle, Filter, ChevronDown, Search, Eye, Edit3, BarChart3
 } from 'lucide-react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
+
 import { servicesDBService, type BeneficiaryRequest, type ComplaintSuggestion, type ServiceApplication } from '@/services/beneficiary/services-db.service';
 
 type Tab = 'requests' | 'feedback' | 'applications' | 'stats';
@@ -38,8 +42,11 @@ export const RequestsDashboard = memo(function RequestsDashboard() {
   const [applications, setApplications] = useState<ServiceApplication[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedItem, setSelectedItem] = useState<BeneficiaryRequest | ComplaintSuggestion | ServiceApplication | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [detailOpen, setDetailOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

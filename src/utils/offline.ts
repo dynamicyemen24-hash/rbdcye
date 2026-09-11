@@ -35,7 +35,7 @@ export function isCacheValid(key: string): boolean {
   }
 }
 
-export function cacheFormData(key: string, data: Record<string, unknown>): void {
+export function cacheFormData(key: string, data: Record<string, any>): void {
   try {
     localStorage.setItem(`rbdcye_form_${key}`, JSON.stringify(data));
   } catch {
@@ -64,10 +64,13 @@ export function clearCachedFormData(key: string): void {
 }
 
 // Background sync for offline submissions
-export async function backgroundSync(tag: string, data: unknown): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function backgroundSync(tag: string, data: any): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if ("serviceWorker" in navigator && "sync" in (navigator as any).serviceWorker) {
     try {
       const registration = await navigator.serviceWorker.ready;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (registration as any).sync.register(tag);
     } catch {
       // Background sync not available

@@ -1,6 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import {
+﻿import {
   Search,
   X,
   Loader2,
@@ -15,6 +13,9 @@ import {
   Tag,
   Heart,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+
 import { FallbackImage } from "@/app/components/FallbackImage";
 import { contentManager } from "@/shared/services/content-manager";
 
@@ -168,9 +169,13 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("all");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     projects: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     news: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     successStories: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     programs: any[];
   }>({
     projects: [],
@@ -199,7 +204,9 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   }, [isOpen]);
 
   // Merge Sanity & Fallback list without duplicates
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeResults = (sanityList: any[], fallbackList: any[]) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const map = new Map<string, any>();
     sanityList.forEach((item) => map.set(item._id || item.title, item));
     fallbackList.forEach((item) => {
@@ -284,6 +291,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   // Flatten active items for keyboard navigation
   const activeFlattenedItems = useMemo(() => {
     const list: Array<{
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       item: any;
       type: "project" | "news" | "successStory" | "program";
       targetPage: string;
@@ -314,6 +322,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   const totalResultsCount = activeFlattenedItems.length;
 
   const handleSelectItem = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (targetPage: string, _item?: any) => {
       if (setCurrentPage) {
         setCurrentPage(targetPage);
@@ -352,6 +361,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   }, [isOpen, totalResultsCount, focusedIndex, activeFlattenedItems, handleSelectItem, onClose]);
 
   // Helper to extract image URL safely
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getItemImage = (item: any) => {
     // ContentManager normalizes images into the 'image' field
     if (item.image) return item.image;

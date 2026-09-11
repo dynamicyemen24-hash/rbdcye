@@ -1,6 +1,6 @@
-import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
 
 export const BackToTop = memo(function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);

@@ -80,3 +80,32 @@
 .skip-link:focus {
   top: 0;
 }
+
+/* ——— WCAG 2.2 AAA — Forced Colors / High Contrast deep support ——— */
+@media (forced-colors: active) {
+  * { forced-color-adjust: auto; }
+  a { text-decoration: underline; }
+  button, input, select, textarea { border: 1px solid CanvasText; }
+  :focus-visible { outline: 3px solid Highlight; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --border: rgba(0,0,0,0.35); --muted-foreground: #2a2a2a; }
+  :focus-visible { outline-width: 4px; outline-offset: 3px; }
+  .card, .box { border-width: 2px; }
+  a { text-decoration-thickness: 0.12em; }
+}
+
+/* ——— WCAG 1.4.12 Text Spacing — line-height*1.5 resilience ——— */
+:where(p, li, blockquote, figcaption, dd) {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+/* Ensure no clipping when user overrides spacing via bookmarklet/extension */
+:where([style*="line-height"], [style*="letter-spacing"]) {
+  max-width: none;
+}
+/* Test helper: add .text-spacing to <html> to simulate WCAG spacing overrides */
+.text-spacing * { line-height: 1.5 !important; }
+.text-spacing p, .text-spacing li { letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+.text-spacing p { margin-block-end: 2em !important; }

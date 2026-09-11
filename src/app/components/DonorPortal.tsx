@@ -1,5 +1,4 @@
 // Professional Donor Portal Component - Enterprise Grade
-import { motion, AnimatePresence } from "motion/react";
 import {
   Heart,
   History,
@@ -25,6 +24,7 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, memo, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 

@@ -7,6 +7,7 @@ import {
   IslamicDivider,
   StarMedallion,
 } from "@/app/components/decor/IslamicPattern";
+
 import type { LucideIcon } from "lucide-react";
 
 export type SectionTone = "white" | "pale" | "cream" | "dark" | "gradient";

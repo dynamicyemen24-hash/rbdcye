@@ -1,6 +1,4 @@
 // Training Courses Page - صفحة الدورات التدريبية
-import { motion } from "motion/react";
-import { useState } from "react";
 import {
   GraduationCap,
   Clock,
@@ -11,19 +9,25 @@ import {
   CheckCircle,
   Loader2,
   Shield,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ChevronDown,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ChevronLeft,
   Target,
   Sparkles,
   Star,
   Building2,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FileText,
   Stethoscope,
   AlertTriangle,
   Users2,
   Calculator,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ArrowLeft,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 // ═══════════════════════════════════════════════════════
 // الدورات التدريبية
@@ -163,6 +167,7 @@ export default function TrainingPage() {
     honeypot: "",
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const activeCourse = COURSES.find((c) => c.id === selectedCourse);
 
   const handleChange = (
@@ -202,7 +207,7 @@ export default function TrainingPage() {
             >
               <CheckCircle className="w-14 h-14 text-[var(--brand-green)]" />
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               تم تسجيلك بنجاح!
             </h2>
             <p className="text-[var(--muted-foreground)] text-lg mb-4 leading-[2]">
@@ -249,7 +254,7 @@ export default function TrainingPage() {
       {/* ═══════════════════════════════════════════
           Hero Section
           ═══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-28 text-white sm:py-36">
+      <section className="relative overflow-hidden bg-[var(--brand-green-dark)] py-20 text-white sm:py-36">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -321,7 +326,7 @@ export default function TrainingPage() {
       {/* ═══════════════════════════════════════════
           الدورات التدريبية
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -334,7 +339,7 @@ export default function TrainingPage() {
               الدورات المتاحة
               <span className="h-px w-8 bg-[var(--brand-green)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               اختر الدورة التي تناسبك
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -609,7 +614,7 @@ export default function TrainingPage() {
       {/* ═══════════════════════════════════════════
           الجدول الزمني التقديري
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--secondary)] py-24 sm:py-32">
+      <section className="bg-[var(--secondary)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -622,7 +627,7 @@ export default function TrainingPage() {
               الجدول الزمني
               <span className="h-px w-8 bg-[var(--brand-gold)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               المواعيد القادمة للدورات
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -678,7 +683,7 @@ export default function TrainingPage() {
       {/* ═══════════════════════════════════════════
           شركاء التدريب
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--background)] py-24 sm:py-32">
+      <section className="bg-[var(--background)] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -691,7 +696,7 @@ export default function TrainingPage() {
               شركاؤنا في التدريب
               <span className="h-px w-8 bg-[var(--brand-green)]" />
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
               مؤسسات تدريبية معتمدة
             </h2>
             <p className="text-[var(--muted-foreground)] max-w-2xl mx-auto leading-[1.8]">
@@ -724,7 +729,7 @@ export default function TrainingPage() {
       {/* ═══════════════════════════════════════════
           مميزات التدريب
           ═══════════════════════════════════════════ */}
-      <section className="bg-[var(--brand-green-dark)] py-24 sm:py-32 text-white relative overflow-hidden">
+      <section className="bg-[var(--brand-green-dark)] py-16 sm:py-20 text-white relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -740,7 +745,7 @@ export default function TrainingPage() {
             className="text-center mb-16"
           >
             <Sparkles className="w-10 h-10 text-[var(--brand-gold)] mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-3xl font-bold mb-4">
               لماذا تدريبنا يختلف؟
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto leading-[1.8]">

@@ -5,6 +5,7 @@ type Action<T extends string, P = void> = P extends void ? { type: T } : { type:
 
 type Listener = () => void;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Slice<S, A extends Action<string, any>> {
   getState: () => S;
   dispatch: (action: A) => void;
@@ -12,13 +13,16 @@ interface Slice<S, A extends Action<string, any>> {
   useSelector: <R>(selector: (state: S) => R) => R;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function createSlice<S, A extends Action<string, any>>({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   name,
   initialState,
   reducers,
 }: {
   name: string;
   initialState: S;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reducers: Record<string, (state: S, action: any) => S>;
 }): Slice<S, A> {
   let state = initialState;
@@ -57,6 +61,7 @@ export function createSlice<S, A extends Action<string, any>>({
 }
 
 // Hook for using slices
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useSlice<S, A extends Action<string, any>>(slice: Slice<S, A>) {
   const state = slice.getState();
 

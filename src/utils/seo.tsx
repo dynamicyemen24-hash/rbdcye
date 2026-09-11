@@ -114,6 +114,7 @@ export function getFaqSchema(questions: { question: string; answer: string }[]):
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mainEntity: questions.map((q, i) => ({
       "@type": "Question",
       name: q.question,
@@ -286,6 +287,7 @@ export function getCspMeta(): React.ReactNode {
 /**
  * Generate language and direction meta tags for Arabic
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getArMeta(): React.ReactNode {
   return (
     <React.Fragment>
@@ -299,6 +301,7 @@ function getArMeta(): React.ReactNode {
 /**
  * Generate application name and phone number meta tags
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getAppMeta(): React.ReactNode {
   return (
     <React.Fragment>

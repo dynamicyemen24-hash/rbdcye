@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { motion } from "motion/react";
 import { Shield, Lock, CheckCircle2, UserCheck, Scale, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import { useSEO } from "@/utils/seoAdvanced";
 
 export default function PrivacyPolicyPage() {
@@ -38,7 +39,7 @@ export default function PrivacyPolicyPage() {
               <Shield className="w-3.5 h-3.5" />
               <span>الحوكمة والامتثال القانوني</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold font-alexandria text-[var(--foreground)]">
+            <h1 className="text-3xl sm:text-3xl font-extrabold font-alexandria text-[var(--foreground)]">
               السياسات والشروط والخصوصية
             </h1>
             <p className="text-[var(--muted-foreground)] text-sm sm:text-base font-cairo max-w-xl mx-auto leading-relaxed">

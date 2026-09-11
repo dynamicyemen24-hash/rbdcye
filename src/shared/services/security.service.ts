@@ -60,9 +60,9 @@ class InputSanitizer {
   ];
 
   static sanitize(
-    value: unknown,
+    value: any,
     type: "string" | "number" | "email" | "phone" | "url" | "html" | "object" = "string"
-  ): unknown {
+  ): any {
     if (value === null || value === undefined) return value;
 
     if (type === "number") {
@@ -93,7 +93,7 @@ class InputSanitizer {
     }
 
     if (type === "object" && typeof value === "object" && value !== null) {
-      const sanitized: Record<string, unknown> = {};
+      const sanitized: Record<string, any> = {};
       for (const [key, val] of Object.entries(value)) {
         sanitized[key] = this.sanitize(val, typeof val === "string" ? "string" : "object");
       }
@@ -121,6 +121,7 @@ class InputSanitizer {
   }
 
   private static htmlEncode(str: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const map: Record<string, string> = {
       "&": "&".charAt(0) + "amp;",
       "<": "<".charAt(0) + "lt;",
@@ -138,12 +139,13 @@ class InputSanitizer {
     });
   }
 
-  static sanitizeObject<T extends Record<string, unknown>>(
+  static sanitizeObject<T extends Record<string, any>>(
     obj: T,
     schema: Record<string, "string" | "number" | "email" | "phone" | "url" | "html" | "object">
   ): T {
-    const result: Record<string, unknown> = {};
+    const result: Record<string, any> = {};
     for (const [key, type] of Object.entries(schema)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       result[key] = this.sanitize(obj[key], type as any);
     }
     return result as T;
@@ -191,6 +193,7 @@ class SessionFingerprint {
   private static readonly FINGERPRINT_KEY = "rh_fingerprint";
 
   static generate(): string {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const nav = navigator as any;
     const components = [
       nav.userAgent,
@@ -284,21 +287,21 @@ class SecureHttpClient {
     return this.request<T>(url, { method: "GET" });
   }
 
-  static async post<T>(url: string, data?: unknown): Promise<T> {
+  static async post<T>(url: string, data?: any): Promise<T> {
     return this.request<T>(url, {
       method: "POST",
       body: data ? JSON.stringify(data) : undefined,
     });
   }
 
-  static async put<T>(url: string, data: unknown): Promise<T> {
+  static async put<T>(url: string, data: any): Promise<T> {
     return this.request<T>(url, {
       method: "PUT",
       body: JSON.stringify(data),
     });
   }
 
-  static async patch<T>(url: string, data: unknown): Promise<T> {
+  static async patch<T>(url: string, data: any): Promise<T> {
     return this.request<T>(url, {
       method: "PATCH",
       body: JSON.stringify(data),

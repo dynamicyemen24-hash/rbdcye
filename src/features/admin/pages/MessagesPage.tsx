@@ -1,5 +1,4 @@
 // MessagesPage - إدارة رسائل التواصل
-import { motion } from "motion/react";
 import {
   MessageSquare,
   RefreshCw,
@@ -8,9 +7,11 @@ import {
   Filter,
   Mail,
   Globe,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Monitor,
   MapPin,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 
 import { messagesQueries } from "@/lib/postgres";
@@ -26,7 +27,9 @@ interface Message {
   message: string;
   status: string;
   is_read: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   device_info?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   geo_location?: any;
   ip_address?: string;
   user_agent?: string;
@@ -44,6 +47,7 @@ export default function MessagesPage() {
     setLoading(true);
     try {
       const result = await messagesQueries.findAll(100, 0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const messagesWithMeta = (result.rows || []).map((msg: any) => ({
         ...msg,
         device_info: msg.device_info || {},
@@ -119,6 +123,7 @@ export default function MessagesPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getDeviceIcon = (deviceInfo: any) => {
     const device = deviceInfo?.device || "desktop";
     switch (device) {

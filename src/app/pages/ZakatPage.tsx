@@ -1,5 +1,3 @@
-import { motion } from "motion/react";
-import { useMemo, useState } from "react";
 import {
   AlertCircle,
   ArrowLeft,
@@ -16,6 +14,8 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useSEO } from "@/utils/seoAdvanced";
@@ -127,7 +127,7 @@ export default function ZakatPage() {
   const saveCalculation = () => {
     if (result === null) return;
     const existing = JSON.parse(localStorage.getItem("rh_zakat_history") || "[]") as Array<
-      Record<string, unknown>
+      Record<string, any>
     >;
     localStorage.setItem(
       "rh_zakat_history",
@@ -164,7 +164,7 @@ export default function ZakatPage() {
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[var(--brand-gold)]">
                 <Calculator className="h-4 w-4" /> أداة مساعدة مستقلة
               </div>
-              <h1 className="text-3xl font-extrabold leading-[1.35] sm:text-5xl">
+              <h1 className="text-3xl font-extrabold leading-[1.35] sm:text-4xl">
                 حاسبة الزكاة <span className="text-[var(--brand-gold)]">بوضوح وأمانة.</span>
               </h1>
               <p className="mt-5 max-w-xl text-sm leading-7 text-white/65 sm:text-base">

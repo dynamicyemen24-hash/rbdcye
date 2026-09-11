@@ -196,6 +196,7 @@ class SessionManager {
   }
 
   // تشفير الجلسة
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private encryptSession(session: any): string {
     try {
       return btoa(JSON.stringify(session));
@@ -205,6 +206,7 @@ class SessionManager {
   }
 
   // فك تشفير الجلسة
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private decryptSession(encrypted: string): any {
     try {
       return JSON.parse(atob(encrypted));
@@ -246,6 +248,7 @@ class PermissionManager {
     if (user.role === "ADMIN") return true;
 
     return user.permissions.some(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (p) => p.resource === resource && p.actions.includes(action as any)
     );
   }

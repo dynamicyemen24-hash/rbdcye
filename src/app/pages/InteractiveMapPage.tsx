@@ -1,6 +1,4 @@
 // صفحة خريطة الأثر التفاعلية — تتبع الأثر في كل محافظة يمنية
-import { useState, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Map,
   MapPin,
@@ -17,13 +15,16 @@ import {
   Target,
   Stethoscope,
 } from "lucide-react";
-import { useSEO } from "@/utils/seoAdvanced";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useMemo, useCallback } from "react";
+
 import {
   scrollFadeUp,
   staggerContainer,
   staggerItem,
   viewportOnce,
 } from "@/utils/animations";
+import { useSEO } from "@/utils/seoAdvanced";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // البيانات — المحافظات والمشاريع
@@ -1006,7 +1007,7 @@ export default function InteractiveMapPage() {
                           clientX: e.clientX,
                           clientY: e.clientY,
                           currentTarget: e.currentTarget,
-                        } as unknown as React.MouseEvent;
+                        } as any as React.MouseEvent;
                         handleGovHover(gov, synthetic);
                       }}
                       onMouseMove={(e) => {

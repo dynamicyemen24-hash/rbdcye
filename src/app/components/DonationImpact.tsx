@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { motion } from 'motion/react';
 import { Heart, Droplets, BookOpen, Home, Utensils } from 'lucide-react';
+import { motion } from 'motion/react';
+import { memo } from 'react';
 
 interface ImpactItem {
   amount: number;

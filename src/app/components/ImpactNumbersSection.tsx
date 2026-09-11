@@ -1,7 +1,8 @@
-import { memo } from 'react';
 import { motion } from 'motion/react';
-import { SectionHeader } from './ui/SectionHeader';
+import { memo } from 'react';
+
 import { AnimatedCounter } from './AnimatedCounter';
+import { SectionHeader } from './ui/SectionHeader';
 
 const NUMBERS = [
   { value: 15000, suffix: '+', label: 'مستفيد مباشر', color: 'text-[var(--brand-green)]' },

@@ -1,6 +1,7 @@
 // Assistant Widget - AI-Powered Information Assistant with Rule-Based Foundation
 // Can be upgraded to connect to any LLM API (OpenAI, HuggingFace, etc.) later
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useEffect, useRef } from 'react';
 
 /// --- قاعدة المعرفة الأساسية (يمكن توسيعها إلى DB أو اتصال AI) ---
@@ -55,6 +56,7 @@ export const AssistantWidget = () => {
   };
 
   // Simulate AI upgrade - can be replaced with real API call
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const simulateAIResponse = (userQuery: string) => {
     const lower = userQuery.toLowerCase();
     for (const [key, data] of Object.entries(KNOWLEDGE_BASE)) {

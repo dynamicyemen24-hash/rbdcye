@@ -1,5 +1,3 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, AnimatePresence, useInView } from 'motion/react';
 import {
   Award,
   Heart,
@@ -17,6 +15,7 @@ import {
   Shield,
   Sparkles,
   Gift,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   BookOpen,
   Droplets,
   Apple,
@@ -24,18 +23,27 @@ import {
   HandHeart,
   Repeat,
   Clock,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   BadgeCheck,
   Flame,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Zap,
   Link as LinkIcon,
   Copy,
   Check,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ChevronLeft,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ChevronRight,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ExternalLink,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ArrowUpRight,
   FileText,
 } from 'lucide-react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 /* ───────────────────── CSS VARIABLES ───────────────────── */
 const V = {

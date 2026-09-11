@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, memo } from 'react';
-import { motion, useInView } from 'motion/react';
 import { Users, Heart, Droplets, MapPin, Calendar, TrendingUp } from 'lucide-react';
+import { motion, useInView } from 'motion/react';
+import { useEffect, useRef, useState, memo } from 'react';
 
 interface Metric {
   icon: typeof Users;

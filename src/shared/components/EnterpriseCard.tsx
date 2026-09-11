@@ -133,6 +133,7 @@ export const EnterpriseCard = forwardRef<HTMLDivElement, EnterpriseCardProps>(
   ) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cardRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const prefersReducedMotion = usePrefersReducedMotion();

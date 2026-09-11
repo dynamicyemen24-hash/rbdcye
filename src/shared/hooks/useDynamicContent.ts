@@ -11,6 +11,7 @@ interface UseDynamicContentOptions<T> {
   refreshInterval?: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ContentBridgeContent<T> {
   data: T[];
   success: boolean;
@@ -31,6 +32,7 @@ export function useDynamicContent<T>({
 
   const loadContent = useCallback(async () => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result = await contentBridge.getContent<T>(contentType as any);
       if (!mountedRef.current) return;
       setData(result.data);

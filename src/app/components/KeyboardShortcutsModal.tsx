@@ -1,6 +1,7 @@
-import { useState, useMemo, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Keyboard, X, Search, Zap, Compass, Eye, ArrowRight, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useMemo, useEffect, useRef } from "react";
+
 import { ShortcutDefinition } from "@/hooks/useKeyboardShortcuts";
 
 interface KeyboardShortcutsModalProps {
@@ -180,6 +181,7 @@ export function KeyboardShortcutsModal({
                     key={cat.id}
                     role="tab"
                     aria-selected={isSelected}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onClick={() => setSelectedCategory(cat.id as any)}
                     className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)] ${
                       isSelected
