@@ -1,15 +1,11 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   X,
   Home,
-  Info,
   Heart,
-  FolderOpen,
-  Megaphone,
-  BarChart3,
-  Eye,
-  Phone,
+  ChevronDown,
+  HandHeart,
   Calculator,
   MessageCircle,
   MapPin,
@@ -17,9 +13,22 @@ import {
   Map,
   Clock,
   Search,
-  HandHeart,
   ArrowLeft,
-} from 'lucide-react';
+  ShieldCheck,
+  Target,
+  Gift,
+  GraduationCap,
+  Newspaper,
+  Award,
+  BarChart3,
+  Droplets,
+  Building2,
+  Lightbulb,
+  Sparkles,
+  Compass,
+  FileCheck,
+  BookOpen,
+} from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -28,52 +37,111 @@ interface MobileMenuProps {
   currentPage?: string;
 }
 
-const NAV_ITEMS = [
-  { id: 'home', label: 'الرئيسية', icon: Home },
-  { id: 'about', label: 'عن الحملة', icon: Info },
-  { id: 'programs', label: 'مجالات العمل', icon: FolderOpen },
-  { id: 'projects', label: 'المشاريع', icon: FolderOpen },
-  { id: 'donate', label: 'تبرع الآن', icon: Heart, highlight: true },
-  { id: 'media', label: 'المركز الإعلامي', icon: Megaphone },
-  { id: 'reports', label: 'التقارير', icon: BarChart3 },
-  { id: 'transparency', label: 'الشفافية', icon: Eye },
-  { id: 'contact', label: 'تواصل معنا', icon: Phone },
+type MobileChild = { id: string; label: string; icon: typeof Home; badge?: string };
+type MobileGroup = { id: string; label: string; icon: typeof Home; children: MobileChild[] };
+
+const MOBILE_GROUPS: MobileGroup[] = [
+  {
+    id: "about",
+    label: "عن المؤسسة",
+    icon: ShieldCheck,
+    children: [
+      { id: "about", label: "من نحن", icon: Heart },
+      { id: "transparency", label: "الحوكمة والشفافية", icon: BarChart3, badge: "٤٨٢" },
+      { id: "reports", label: "التقارير", icon: FileCheck },
+      { id: "partners", label: "شركاؤنا", icon: Building2 },
+      { id: "media", label: "المركز الإعلامي", icon: Newspaper },
+      { id: "news", label: "الأخبار", icon: Newspaper },
+    ],
+  },
+  {
+    id: "programs",
+    label: "برامجنا وأثرنا",
+    icon: Target,
+    children: [
+      { id: "programs", label: "مجالات العمل", icon: Compass },
+      { id: "projects", label: "المشاريع", icon: Droplets },
+      { id: "success", label: "قصص النجاح", icon: Award },
+      { id: "impact", label: "الأثر المجتمعي", icon: Target },
+      { id: "impact-center", label: "مركز الأثر", icon: BarChart3 },
+      { id: "impact-engine", label: "محرك الأثر", icon: Sparkles, badge: "جديد" },
+      { id: "interactive-map", label: "الخريطة التفاعلية", icon: Map },
+    ],
+  },
+  {
+    id: "giving",
+    label: "العطاء الذكي",
+    icon: Gift,
+    children: [
+      { id: "donate", label: "تبرع الآن", icon: HandHeart },
+      { id: "zakat-calculator", label: "حاسبة الزكاة", icon: Calculator, badge: "شرعي" },
+      { id: "zakat", label: "الزكاة", icon: BookOpen },
+      { id: "sadaqah-jariyah", label: "الصدقة الجارية", icon: Gift },
+      { id: "endowment", label: "الوقف", icon: Building2 },
+      { id: "campaigns", label: "الحملات", icon: Heart },
+      { id: "smart-advisor", label: "المستشار الذكي", icon: Lightbulb, badge: "ذكي" },
+    ],
+  },
+  {
+    id: "donors",
+    label: "للمتبرعين والشركاء",
+    icon: Users,
+    children: [
+      { id: "donor", label: "بوابة المتبرع", icon: Users },
+      { id: "donor-passport", label: "جواز المتبرع", icon: Award },
+      { id: "donor-journey", label: "رحلة المتبرع", icon: Compass },
+      { id: "major-donors", label: "كبار المتبرعين", icon: Building2 },
+      { id: "corporate", label: "الشركات", icon: Building2 },
+      { id: "impact-for-business", label: "الأثر للشركات", icon: BarChart3 },
+    ],
+  },
+  {
+    id: "community",
+    label: "خدمات المجتمع",
+    icon: GraduationCap,
+    children: [
+      { id: "requests", label: "طلب مستفيد", icon: Heart },
+      { id: "volunteer", label: "التطوع", icon: Users },
+      { id: "training", label: "التدريب والتمكين", icon: GraduationCap },
+      { id: "feedback", label: "الشكاوى والاقتراحات", icon: MessageCircle },
+      { id: "help", label: "مركز المساعدة", icon: MessageCircle },
+      { id: "services", label: "دليل الخدمات", icon: Compass },
+      { id: "contact", label: "تواصل معنا", icon: MessageCircle },
+    ],
+  },
 ];
 
 const QUICK_ACTIONS = [
-  { id: 'donate', label: 'تبرع سريع', icon: HandHeart, highlight: true },
-  { id: 'zakat', label: 'حاسبة الزكاة', icon: Calculator, color: 'text-blue-500' },
-  { id: 'whatsapp', label: 'تواصل واتساب', icon: MessageCircle, color: 'text-green-500' },
-  { id: 'map', label: 'الخريطة التفاعلية', icon: MapPin, color: 'text-purple-500' },
-];
+  { id: "donate", label: "تبرع سريع", icon: HandHeart, highlight: true },
+  { id: "zakat-calculator", label: "حاسبة الزكاة", icon: Calculator, color: "text-blue-500" },
+  { id: "smart-advisor", label: "المستشار الذكي", icon: Lightbulb, color: "text-amber-500" },
+  { id: "interactive-map", label: "الخريطة التفاعلية", icon: MapPin, color: "text-purple-500" },
+] as const;
 
 const IMPACT_STATS = [
-  { value: '١٥,٠٠٠+', label: 'مستفيد', icon: Users },
-  { value: '٨', label: 'محافظات', icon: Map },
-  { value: '١٢', label: 'سنة خدمة', icon: Clock },
-];
+  { value: "١٥,٠٠٠+", label: "مستفيد", icon: Users },
+  { value: "٨", label: "محافظات", icon: Map },
+  { value: "١١", label: "عاماً", icon: Clock },
+] as const;
 
 const itemVariants = {
-  hidden: { opacity: 0, x: 30 },
+  hidden: { opacity: 0, x: 24 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: {
-      delay: i * 0.04,
-      duration: 0.3,
-    },
+    transition: { delay: i * 0.03, duration: 0.28 },
   }),
-  exit: { opacity: 0, x: -20, transition: { duration: 0.15 } },
+  exit: { opacity: 0, x: -16, transition: { duration: 0.12 } },
 };
 
 export default memo(function MobileMenu({
   isOpen,
   onClose,
   onNavigate,
-  currentPage = 'home',
+  currentPage = "home",
 }: MobileMenuProps) {
   const searchRef = useRef<HTMLInputElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState<string | null>("giving");
 
   const navigate = useCallback(
     (page: string) => {
@@ -84,52 +152,48 @@ export default memo(function MobileMenu({
   );
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   useEffect(() => {
     if (isOpen && searchRef.current) {
-      const timer = setTimeout(() => searchRef.current?.focus(), 350);
-      return () => clearTimeout(timer);
+      const t = setTimeout(() => searchRef.current?.focus(), 320);
+      return () => clearTimeout(t);
     }
   }, [isOpen]);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) onClose();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[999] lg:hidden" dir="rtl">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[999] xl:hidden" dir="rtl">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="absolute inset-0 bg-[var(--brand-green-dark)]/60 backdrop-blur-md"
             onClick={onClose}
             aria-hidden="true"
           />
 
-          {/* Panel */}
           <motion.div
-            ref={menuRef}
-            initial={{ x: '100%' }}
+            initial={{ x: "100%" }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="absolute inset-y-0 right-0 w-full max-w-sm overflow-y-auto bg-[var(--card)] shadow-[-8px_0_40px_rgba(0,0,0,0.18)]"
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 28, stiffness: 300 }}
+            className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col overflow-hidden bg-[var(--card)] shadow-[-8px_0_40px_rgba(0,0,0,0.18)]"
           >
-            {/* Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--brand-green)]/8 bg-[var(--card)]/95 px-5 py-4 backdrop-blur-lg">
               <div className="flex items-center gap-3">
                 <img
@@ -138,164 +202,217 @@ export default memo(function MobileMenu({
                   className="h-9 w-9 shrink-0 rounded-xl object-contain shadow-[0_4px_12px_rgba(var(--brand-green-rgb),.12)]"
                 />
                 <div>
-                  <p className="text-sm font-extrabold text-[var(--brand-green)]">
-                    رحماء بينهم
-                  </p>
-                  <p className="text-[10px] font-medium text-[var(--brand-gold-dark)]">
-                    رحمة تُرى في العمل
-                  </p>
+                  <p className="text-sm font-extrabold text-[var(--brand-green)]">رحماء بينهم</p>
+                  <p className="text-[10px] font-medium text-[var(--brand-gold-dark)]">رحمة تُرى في العمل</p>
                 </div>
               </div>
               <motion.button
                 type="button"
                 onClick={onClose}
-                whileHover={{ rotate: 90 }}
-                whileTap={{ scale: 0.85 }}
+                whileTap={{ scale: 0.9 }}
                 aria-label="إغلاق القائمة"
-                className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)] transition-colors hover:bg-[var(--brand-green)] hover:text-[var(--primary-foreground)]"
+                className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
               >
                 <X className="h-5 w-5" />
               </motion.button>
             </div>
 
-            {/* Search Bar */}
-            <div className="px-5 pt-4 pb-2">
-              <div className="relative">
-                <Search
-                  className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]"
-                  aria-hidden="true"
-                />
-                <input
-                  ref={searchRef}
-                  type="search"
-                  placeholder="ابحث في الموقع..."
-                  aria-label="بحث في الموقع"
-                  className="h-11 w-full rounded-xl border border-[var(--brand-green)]/10 bg-[var(--background)] pr-10 pl-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:border-[var(--brand-green)]/30 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/10"
-                />
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-5 pt-4 pb-2">
+                <div className="relative">
+                  <Search
+                    className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]"
+                    aria-hidden="true"
+                  />
+                  <input
+                    ref={searchRef}
+                    type="search"
+                    placeholder="ابحث في الموقع..."
+                    aria-label="بحث في الموقع"
+                    className="h-11 w-full rounded-xl border border-[var(--brand-green)]/10 bg-[var(--background)] pr-10 pl-4 text-sm placeholder:text-[var(--muted-foreground)]/60 focus:border-[var(--brand-green)]/30 focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/10"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Navigation Links */}
-            <nav className="px-3 pt-2" aria-label="القائمة الرئيسية">
-              <ul className="grid gap-1">
-                {NAV_ITEMS.map(({ id, label, icon: Icon, highlight }, i) => {
-                  const active = currentPage === id;
+              <div className="px-3 pt-3">
+                <button
+                  type="button"
+                  onClick={() => navigate("home")}
+                  aria-current={currentPage === "home" ? "page" : undefined}
+                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition ${
+                    currentPage === "home"
+                      ? "bg-[var(--brand-green)] text-white shadow-md"
+                      : "bg-[var(--brand-gold)]/10 text-[var(--brand-gold-dark)] hover:bg-[var(--brand-gold)]/15"
+                  }`}
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/15">
+                    <Home className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  الرئيسية
+                  <ArrowLeft className="ms-auto h-4 w-4 opacity-40" aria-hidden="true" />
+                </button>
+              </div>
+
+              <nav className="px-3 pt-4" aria-label="القائمة الرئيسية">
+                {MOBILE_GROUPS.map((group, gi) => {
+                  const isExpanded = expanded === group.id;
+                  const hasActiveChild = group.children.some((c) => c.id === currentPage);
                   return (
-                    <motion.li
-                      key={id}
+                    <div
+                      key={group.id}
+                      className={`mb-2 overflow-hidden rounded-xl border transition ${
+                        hasActiveChild
+                          ? "border-[var(--brand-green)]/15 bg-[var(--brand-green-pale)]/40"
+                          : "border-[var(--border)] bg-[var(--card)]"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setExpanded(isExpanded ? null : group.id)}
+                        aria-expanded={isExpanded}
+                        aria-controls={`mobile-group-${group.id}`}
+                        className="flex w-full items-center gap-3 px-4 py-3 text-right"
+                      >
+                        <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--brand-green)]/10 text-[var(--brand-green)]">
+                          <group.icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <span className="flex-1 text-sm font-bold text-[var(--foreground)]">
+                          {group.label}
+                        </span>
+                        <span className="rounded-full bg-[var(--brand-gold)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--brand-gold-dark)]">
+                          {group.children.length}
+                        </span>
+                        <ChevronDown
+                          className={`h-4 w-4 text-[var(--muted-foreground)] transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            id={`mobile-group-${group.id}`}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden border-t border-[var(--border)]"
+                          >
+                            <ul className="grid gap-0.5 p-2">
+                              {group.children.map((child, ci) => {
+                                const active = currentPage === child.id;
+                                return (
+                                  <motion.li
+                                    key={child.id}
+                                    custom={ci}
+                                    variants={itemVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                  >
+                                    <button
+                                      type="button"
+                                      onClick={() => navigate(child.id)}
+                                      aria-current={active ? "page" : undefined}
+                                      className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-right text-[13px] font-medium transition ${
+                                        active
+                                          ? "bg-[var(--brand-green)] text-white"
+                                          : "text-[var(--foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"
+                                      }`}
+                                    >
+                                      <child.icon
+                                        className={`h-3.5 w-3.5 shrink-0 ${active ? "text-white" : "text-[var(--brand-green)]"}`}
+                                        aria-hidden="true"
+                                      />
+                                      <span className="flex-1">{child.label}</span>
+                                      {child.badge && (
+                                        <span
+                                          className={`rounded-full px-1.5 py-0.5 text-[10px] font-black ${
+                                            active
+                                              ? "bg-white/20 text-white"
+                                              : "bg-[var(--brand-gold)]/15 text-[var(--brand-gold-dark)]"
+                                          }`}
+                                        >
+                                          {child.badge}
+                                        </span>
+                                      )}
+                                      <ArrowLeft
+                                        className={`h-3 w-3 shrink-0 ${active ? "text-white/60" : "opacity-30"}`}
+                                        aria-hidden="true"
+                                      />
+                                    </button>
+                                  </motion.li>
+                                );
+                              })}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </nav>
+
+              <div className="px-5 pt-5 pb-2">
+                <h3 className="mb-3 text-xs font-extrabold uppercase tracking-wider text-[var(--muted-foreground)]">
+                  إجراءات سريعة
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {QUICK_ACTIONS.map((item, i) => {
+                    const Icon = item.icon;
+                    const isHighlight = "highlight" in item && Boolean((item as Record<string, unknown>).highlight);
+                    const color = "color" in item ? (item as Record<string, unknown>).color as string : undefined;
+                    return (
+                      <motion.button
+                        key={item.id}
+                        type="button"
+                        onClick={() => navigate(item.id)}
+                        custom={i}
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className={`flex items-center gap-2 rounded-xl px-3 py-3 text-xs font-bold transition ${
+                          isHighlight
+                            ? "col-span-2 justify-center bg-[var(--brand-gold)] text-[var(--brand-green-dark)] shadow-md"
+                            : "bg-[var(--brand-green-pale)] text-[var(--foreground)] hover:bg-[var(--brand-green)]/10"
+                        }`}
+                      >
+                        <Icon
+                          className={`h-4 w-4 ${isHighlight ? "text-[var(--brand-green-dark)]" : color || "text-[var(--brand-green)]"}`}
+                          aria-hidden="true"
+                        />
+                        <span>{item.label}</span>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mx-5 mt-4 mb-6 rounded-xl border border-[var(--brand-green)]/8 bg-[var(--brand-green-pale)]/50 p-4">
+                <h3 className="mb-3 text-center text-xs font-extrabold uppercase tracking-wider text-[var(--brand-green)]">
+                  أثرنا حتى الآن
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {IMPACT_STATS.map(({ value, label, icon: Icon }, i) => (
+                    <motion.div
+                      key={label}
                       custom={i}
                       variants={itemVariants}
                       initial="hidden"
                       animate="visible"
                       exit="exit"
+                      className="text-center"
                     >
-                      <button
-                        type="button"
-                        onClick={() => navigate(id)}
-                        aria-current={active ? 'page' : undefined}
-                        className={`flex w-full items-center gap-3.5 rounded-xl px-4 py-3 text-right text-sm font-bold transition-all duration-200 ${
-                          highlight
-                            ? 'bg-[var(--brand-gold)]/10 text-[var(--brand-gold-dark)] hover:bg-[var(--brand-gold)]/20'
-                            : active
-                              ? 'bg-[var(--brand-green)] text-[var(--primary-foreground)] shadow-md shadow-[var(--brand-green)]/15'
-                              : 'text-[var(--foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]'
-                        }`}
-                      >
-                        <span
-                          className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${
-                            highlight
-                              ? 'bg-[var(--brand-gold)]/15 text-[var(--brand-gold-dark)]'
-                              : active
-                                ? 'bg-[var(--primary-foreground)]/12 text-[var(--brand-gold)]'
-                                : 'bg-[var(--brand-green-pale)] text-[var(--brand-green)]'
-                          }`}
-                        >
-                          <Icon className="h-4 w-4" aria-hidden="true" />
-                        </span>
-                        <span className="flex-1">{label}</span>
-                        {highlight && (
-                          <span className="rounded-md bg-[var(--brand-gold)] px-2 py-0.5 text-[10px] font-extrabold text-[var(--brand-green-dark)]">
-                            مميز
-                          </span>
-                        )}
-                        {!highlight && (
-                          <ArrowLeft
-                            className="h-4 w-4 opacity-30"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </button>
-                    </motion.li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* Quick Actions */}
-            <div className="px-5 pt-5 pb-2">
-              <h3 className="mb-3 text-xs font-extrabold uppercase tracking-wider text-[var(--muted-foreground)]">
-                إجراءات سريعة
-              </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {QUICK_ACTIONS.map(({ id, label, icon: Icon, highlight, color }, i) => (
-                  <motion.button
-                    key={id}
-                    type="button"
-                    onClick={() => navigate(id)}
-                    custom={i + NAV_ITEMS.length}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className={`flex items-center gap-2.5 rounded-xl px-3.5 py-3 text-xs font-bold transition-all duration-200 ${
-                      highlight
-                        ? 'col-span-2 justify-center bg-[var(--brand-gold)] text-[var(--brand-green-dark)] shadow-[0_8px_20px_rgba(var(--brand-gold-rgb),.25)] hover:shadow-[0_12px_28px_rgba(var(--brand-gold-rgb),.35)]'
-                        : 'bg-[var(--brand-green-pale)] text-[var(--foreground)] hover:bg-[var(--brand-green)]/10'
-                    }`}
-                  >
-                    <Icon
-                      className={`h-4 w-4 ${highlight ? 'text-[var(--brand-green-dark)]' : color || 'text-[var(--brand-green)]'}`}
-                      aria-hidden="true"
-                    />
-                    <span>{label}</span>
-                  </motion.button>
-                ))}
+                      <Icon className="mx-auto mb-1 h-5 w-5 text-[var(--brand-green)]" aria-hidden="true" />
+                      <p className="text-sm font-extrabold text-[var(--brand-green)]">{value}</p>
+                      <p className="text-[10px] font-medium text-[var(--muted-foreground)]">{label}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Impact Stats */}
-            <div className="mx-5 mt-4 mb-6 rounded-xl border border-[var(--brand-green)]/8 bg-[var(--brand-green-pale)]/50 p-4">
-              <h3 className="mb-3 text-center text-xs font-extrabold uppercase tracking-wider text-[var(--brand-green)]">
-                أثرنا حتى الآن
-              </h3>
-              <div className="grid grid-cols-3 gap-3">
-                {IMPACT_STATS.map(({ value, label, icon: Icon }, i) => (
-                  <motion.div
-                    key={label}
-                    custom={i + NAV_ITEMS.length + QUICK_ACTIONS.length}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="text-center"
-                  >
-                    <Icon
-                      className="mx-auto mb-1.5 h-5 w-5 text-[var(--brand-green)]"
-                      aria-hidden="true"
-                    />
-                    <p className="text-base font-extrabold text-[var(--brand-green)]">
-                      {value}
-                    </p>
-                    <p className="text-[10px] font-medium text-[var(--muted-foreground)]">
-                      {label}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+              <div className="h-6" />
             </div>
-
-            {/* Bottom safe area */}
-            <div className="h-6" />
           </motion.div>
         </div>
       )}
