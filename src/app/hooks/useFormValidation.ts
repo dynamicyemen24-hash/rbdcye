@@ -40,6 +40,7 @@ export function useFormValidation<T extends Record<string, any>>({
 
   // Reset form when initialValues change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setValues(initialValues);
     setErrors({});
     setTouched({});

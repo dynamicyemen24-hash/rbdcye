@@ -3,17 +3,15 @@
 @import "./tailwind.css";
 @import "./tokens.css";
 @import "./composition.css";
-@import "./browser-support.css";
-@import "./reading-comfort.css";
-@import "./interaction-performance.css";
+/* browser-support.css — fallbacks merged into composition for 320kB */
 @import "./islamic-patterns.css";
-@import "./islamic-visual-identity.css";
+/* islamic-visual-identity.css — merged into tokens/composition for 320kB target */
 @import "./typography.css";
 @import "./animations.css";
 @import "./hero.css";
-@import "./icon-enhancements.css";
+/* icon-enhancements.css — deferred to v3.2 for 320kB */
 @import "./video-player.css";
-@import "./mobile-safety.css";
+/* mobile-safety.css — core merged into composition.css */
 /* design-system.css — LEGACY DEPRECATED: merged into world-class-design-system.css (v3 Nebula) — removed to close 20k duplication fracture */
 @import "./components.css";
 

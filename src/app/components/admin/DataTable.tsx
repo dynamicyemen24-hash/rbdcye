@@ -22,6 +22,7 @@ interface DataTableProps<T> {
   emptyMessage?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export function DataTable<T extends Record<string, any>>({
   data, columns, searchable = true, searchPlaceholder = 'بحث...', 
   pageSize = 25, onRowClick, emptyMessage = 'لا توجد بيانات'

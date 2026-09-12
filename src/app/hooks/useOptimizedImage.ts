@@ -64,6 +64,7 @@ export function useOptimizedImage({
     if (!imgRef) return;
 
     if (currentSrc !== placeholder) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setIsLoading(true);
       setIsError(false);
       setError(null);
@@ -74,6 +75,7 @@ export function useOptimizedImage({
     if (!imgRef || currentSrc === placeholder) return;
 
     if (imgRef.complete && imgRef.naturalWidth > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       handleLoad();
     }
   }, [imgRef, currentSrc, placeholder, handleLoad]);

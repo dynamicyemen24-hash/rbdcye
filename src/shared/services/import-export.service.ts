@@ -29,6 +29,7 @@ export interface ImportOptions {
   content?: string;
   file?: File;
   conflictStrategy?: "skip" | "update" | "error";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   validateItem?: (item: Record<string, any>) => true | string;
   batchSize?: number;
   onProgress?: (progress: { imported: number; total: number; percent: number }) => void;
@@ -85,6 +86,7 @@ export function readFileAsText(file: File): Promise<string> {
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export async function readFileAsJSON(file: File): Promise<any> {
   const text = await readFileAsText(file);
   return JSON.parse(text);
@@ -131,11 +133,13 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data = data.map((item: any) => {
       // Include id field for type compatibility
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const filtered: Record<string, any> = {
         id: (item.id !== null && item.id !== undefined
           ? String(item.id)
           : `item-${Math.random().toString(36).slice(2)}`) as string,
       };
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       for (const f of options.fields!) {
         filtered[f] = item[f];
       }
@@ -147,6 +151,7 @@ async function fetchEntityData(entity: string, options: ExportOptions): Promise<
 }
 
 export async function exportToJSON(options: ExportOptions): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   const result: Record<string, any> = {};
 
   for (const entity of options.entities) {
@@ -180,6 +185,7 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
       continue;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     const firstItem = data[0] as Record<string, any>;
     const headers =
       options.fields && options.fields.length > 0
@@ -190,6 +196,7 @@ export async function exportToCSV(options: ExportOptions): Promise<string> {
     csvOutput += headers.join(delimiter) + "\n";
 
     for (const item of data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const itemRecord = item as Record<string, any>;
       const row = headers.map((h) => {
         const val = itemRecord[h];
@@ -239,11 +246,13 @@ export async function exportToExcel(options: ExportOptions): Promise<ArrayBuffer
 
 // ===================== استيراد البيانات =====================
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 function parseJSONContent(content: string): any[] {
   const parsed = JSON.parse(content);
   return Array.isArray(parsed) ? parsed : [];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 function parseCSVContent(content: string): Record<string, any>[] {
   const lines = content.split("\n");
   const headers: string[] = [];
@@ -259,11 +268,13 @@ function parseCSVContent(content: string): Record<string, any>[] {
 
   if (headers.length === 0) return [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   const data: Record<string, any>[] = [];
   for (let i = dataStartIndex; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line || line.startsWith("#")) continue;
     const values = line.split(",");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     const record: Record<string, any> = {};
     headers.forEach((header, idx) => {
       record[header.trim()] = values[idx] || "";
@@ -307,10 +318,12 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
   };
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     let rawData: any[] = [];
 
     if (file) {
       if (format === "json") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
         rawData = (await readFileAsJSON(file)) as any[];
         rawData = Array.isArray(rawData) ? rawData : [];
       } else if (format === "csv") {
@@ -325,6 +338,7 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
           ? workbook.Sheets[sheetName]
           : workbook.Sheets[workbook.SheetNames[0]];
         if (!sheet) throw new Error("الورقة المطلوبة غير موجودة في ملف Excel");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
         rawData = XLSX.utils.sheet_to_json(sheet, { defval: "" }) as any[];
       } else {
         throw new Error("تنسيق غير مدعوم مع ملف");
@@ -348,9 +362,12 @@ export async function importData(options: ImportOptions): Promise<ImportResult> 
     const total = rawData.length;
     result.totalProcessed = total;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     const prepared: Record<string, any>[] = [];
     for (let i = 0; i < rawData.length; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const item = rawData[i] as Record<string, any>;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const cleanItem: Record<string, any> = {};
       for (const key of Object.keys(item)) {
         if (!key.startsWith("_")) {

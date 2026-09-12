@@ -232,6 +232,7 @@ export function Programs({ setCurrentPage }: ProgramsProps) {
         }
         return sector;
       });
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setSectors(merged);
     }
   }, [dynamicPrograms]);

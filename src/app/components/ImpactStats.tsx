@@ -32,6 +32,7 @@ function useCountUp(target: number, duration = 2200, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!start) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setCount(0);
       return;
     }
@@ -284,11 +285,13 @@ export function ImpactStats() {
 
   // Dev badge
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     if (import.meta.env?.DEV) setShowDevBadge(true);
   }, []);
 
   // Metrics + intersection observer — GROQ System of Record with 7d stale
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setMetrics({
       totalBeneficiaries: impactData.totalBeneficiaries,
       activeProjects: impactData.activeProjects,

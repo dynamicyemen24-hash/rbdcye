@@ -26,6 +26,7 @@ export function TextField({
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     if (required && !value.trim()) setError("هذا الحقل مطلوب");
     else if (type === "email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
       setError("بريد إلكتروني غير صحيح");

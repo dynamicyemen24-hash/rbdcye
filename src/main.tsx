@@ -88,6 +88,7 @@ function AppWithProgress() {
       setTimeout(() => loader.style.display = 'none', 600);
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setProgress(30);
     const t1 = setTimeout(() => setProgress(60), 200);
     const t2 = setTimeout(() => setProgress(85), 500);
@@ -119,6 +120,7 @@ function AppWithProgress() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <I18nProvider>

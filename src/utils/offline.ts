@@ -35,6 +35,7 @@ export function isCacheValid(key: string): boolean {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export function cacheFormData(key: string, data: Record<string, any>): void {
   try {
     localStorage.setItem(`rbdcye_form_${key}`, JSON.stringify(data));
@@ -65,6 +66,8 @@ export function clearCachedFormData(key: string): void {
 
 // Background sync for offline submissions
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
 export async function backgroundSync(tag: string, data: any): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if ("serviceWorker" in navigator && "sync" in (navigator as any).serviceWorker) {

@@ -206,6 +206,7 @@ class Logger {
 
     // Console output in development
     if (import.meta.env.DEV) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
       const styles = {
         debug: "color: #6b7280",
         info: "color: #3b82f6",
@@ -213,7 +214,7 @@ class Logger {
         error: "color: #ef4444",
       };
 
-      console.log(`%c[${entry.level.toUpperCase()}] ${message}`, styles[level], context || {});
+      // console.log(`%c[${entry.level.toUpperCase()}] ${message}`, styles[level], context || {});
       // Log metrics with styling
       // Log metrics
     }

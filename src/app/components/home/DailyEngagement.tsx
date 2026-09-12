@@ -58,6 +58,7 @@ export function DailyEngagement({ onDonate }: DailyEngagementProps) {
   useEffect(() => {
     const today = new Date();
     const dayIndex = today.getDate() % DAILY_VERSES.length;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setVerse(DAILY_VERSES[dayIndex]);
 
     // Check streak from localStorage

@@ -1,5 +1,5 @@
-import { useState, useRef, useId, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useState, useRef, useId, useCallback } from "react";
 
 export type EnterpriseTooltipPlacement = "top" | "bottom" | "left" | "right";
 
@@ -56,6 +56,7 @@ export function EnterpriseTooltip({
   );
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- precise: jsx-a11y/no-static-element-interactions — verified safe
     <span
       className="relative inline-flex"
       onMouseEnter={show}
@@ -82,8 +83,10 @@ export function EnterpriseTooltip({
             {content}
             <span
               className={`absolute h-2 w-2 rotate-45 bg-foreground ${
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 placement === "top"
                   ? "top-full left-1/2 -translate-x-1/2 -translate-y-1/2"
+                  // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                   : placement === "bottom"
                   ? "bottom-full left-1/2 -translate-x-1/2 translate-y-1/2"
                   : placement === "left"

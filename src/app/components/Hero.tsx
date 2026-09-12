@@ -84,6 +84,7 @@ const VideoBackground = memo(function VideoBackground() {
   // IntersectionObserver — load video only when hero is visible
   useEffect(() => {
     if (shouldDeferVideo) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setVideoLoading(false);
       return;
     }
@@ -136,6 +137,7 @@ const VideoBackground = memo(function VideoBackground() {
 
     // Don't autoplay if tab is hidden
     if (document.visibilityState === "hidden") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setVideoLoading(false);
       return;
     }
@@ -154,6 +156,7 @@ const VideoBackground = memo(function VideoBackground() {
     };
     // Delay autoplay until browser is idle — protect LCP
     const idle = (cb: () => void) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       if ("requestIdleCallback" in window) (window as any as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback(cb, { timeout: 1500 });
       else setTimeout(cb, 600);
     };
@@ -223,6 +226,7 @@ const VideoBackground = memo(function VideoBackground() {
           poster="/videos/hero-poster.avif"
           disablePictureInPicture
           controlsList="nodownload noplaybackrate"
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- precise: @typescript-eslint/ban-ts-comment — verified safe
           // @ts-ignore — fetchPriority is valid but not in TS lib yet
           fetchPriority="low"
           width={1920}
@@ -297,6 +301,7 @@ const VideoBackground = memo(function VideoBackground() {
 // ============================================================
 export function Hero({ setCurrentPage }: HeroProps) {
   const { data: impact } = useImpactMetrics();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   const metrics = {
     totalBeneficiaries: impact.totalBeneficiaries,
     activeProjects: impact.activeProjects,

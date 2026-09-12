@@ -139,6 +139,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
 
   useEffect(() => {
     const multiplier = IMPACT_MULTIPLIERS[selectedProject] || IMPACT_MULTIPLIERS.general;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setImpact(multiplier(amount));
   }, [amount, selectedProject]);
 

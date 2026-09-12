@@ -38,6 +38,7 @@ export function usePwaInstall() {
       window.matchMedia("(display-mode: standalone)").matches ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (navigator as any).standalone === true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setIsStandalone(standalone);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream);

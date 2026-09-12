@@ -215,7 +215,7 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 400,
     cssCodeSplit: true,
-    cssMinify: 'esbuild',
+    cssMinify: 'lightningcss',
     assetsInlineLimit: 4096,
   },
   server: {

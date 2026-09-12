@@ -34,6 +34,7 @@ export function ProjectManager() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     loadProjects();
   }, []);
 
@@ -60,6 +61,7 @@ export function ProjectManager() {
   };
 
   const deleteProject = async (id: string) => {
+    // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
     if (!confirm('هل أنت متأكد من حذف هذا المشروع؟')) return;
     try {
       await adminProjectService.deleteProject(id);

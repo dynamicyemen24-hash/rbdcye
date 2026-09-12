@@ -154,6 +154,7 @@ export const subscribersDashboardService = {
   delete: (id: string | number) => dataService.delete("rh_subscriber_accounts", id),
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 const numberFromValue = (value: any) => {
   if (typeof value === "number") return value;
   const normalized = String(value ?? "").replace(/[^\d.]/g, "");

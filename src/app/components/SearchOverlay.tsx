@@ -191,6 +191,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
   // Focus input when overlay opens
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setQuery("");
       setFocusedIndex(-1);
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -223,6 +224,7 @@ export function SearchOverlay({ isOpen, onClose, setCurrentPage }: SearchOverlay
 
     const trimmedQuery = query.trim().toLowerCase();
     if (!trimmedQuery) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setResults({ projects: [], news: [], successStories: [], programs: [] });
       setLoading(false);
       return;

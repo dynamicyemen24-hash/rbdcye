@@ -178,6 +178,7 @@ export function useDataLoader<T>(
       mounted = false;
       abortController.abort();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   }, dependencies);
 
   return { data, loading, error, refetch };

@@ -106,7 +106,9 @@ export function getOptimalAAAColor(
   const bgRgb = parseColorToRGB(bgColorStr) || { r: 255, g: 255, b: 255, a: 1 };
   const lum = getRelativeLuminance(bgRgb);
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
   const ratioWithDark = getContrastRatio(bgRgb, parseColorToRGB(darkColorHex)!);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
   const ratioWithLight = getContrastRatio(bgRgb, parseColorToRGB(lightColorHex)!);
 
   const isDarkBg = lum < 0.35; // Luminance threshold for dark surfaces
@@ -116,6 +118,7 @@ export function getOptimalAAAColor(
       textColor: ratioWithLight >= 7.0 ? lightColorHex : goldAccentHex,
       contrastRatio: Math.max(
         ratioWithLight,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
         getContrastRatio(bgRgb, parseColorToRGB(goldAccentHex)!)
       ),
       isDarkBg: true,

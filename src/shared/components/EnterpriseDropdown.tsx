@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, useCallback, useId } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { MoreVertical, LucideIcon } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useRef, useEffect, useCallback, useId } from "react";
 
 export interface EnterpriseDropdownItem {
   id: string;

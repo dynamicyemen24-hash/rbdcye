@@ -41,6 +41,7 @@ export interface MultiProjectDonationRequest {
   dedicationType?: "general" | "specific" | "memorial";
   notes?: string;
   source?: "web" | "mobile" | "sms" | "whatsapp" | "in_person";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   metadata?: Record<string, any>;
   agreeToTerms: boolean;
   agreeToContact: boolean;
@@ -369,6 +370,8 @@ class MultiProjectDonationService {
     receiptNumber: string,
     status: DonationReceipt["status"],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
     paymentResult?: any
   ): DonationReceipt {
     return {

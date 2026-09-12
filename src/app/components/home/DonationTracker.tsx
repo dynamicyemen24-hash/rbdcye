@@ -82,6 +82,7 @@ export function DonationTracker({ onDonate }: DonationTrackerProps) {
                 {/* Step indicator */}
                 <div
                   className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
+                    // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                     step.status === "completed"
                       ? "bg-[var(--brand-green)] text-white"
                       : step.status === "current"
@@ -97,6 +98,7 @@ export function DonationTracker({ onDonate }: DonationTrackerProps) {
                   <div className="flex items-center gap-2 mb-1">
                     <h4
                       className={`font-bold text-sm ${
+                        // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                         step.status === "completed"
                           ? "text-[var(--brand-green)]"
                           : step.status === "current"

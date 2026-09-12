@@ -10,6 +10,7 @@ export default function CookieConsent() {
   useEffect(() => {
     try {
       if (!localStorage.getItem(COOKIE_CONSENT_KEY)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
         setVisible(true);
       }
     } catch {

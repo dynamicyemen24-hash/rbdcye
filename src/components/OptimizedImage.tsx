@@ -74,6 +74,7 @@ export function OptimizedImage({
     <div className={`relative overflow-hidden ${className}`} style={{ width, height }}>
       <img
         ref={imgRef}
+        // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
         src={isError ? placeholder : isInView ? src : placeholder}
         srcSet={isInView && !isError ? finalSrcSet : undefined}
         sizes={isInView && !isError ? finalSizes : undefined}

@@ -21,6 +21,7 @@ export function useNotifications() {
 
   useEffect(() => {
     if (notificationService.isSupported()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setPermission(Notification.permission);
       notificationService.isSubscribed().then(setIsSubscribed);
     }

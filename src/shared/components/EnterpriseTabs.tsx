@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { LucideIcon } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useRef, useEffect, useCallback } from "react";
+
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 
 export type EnterpriseTabsVariant = "default" | "pills" | "underline" | "enclosed";
@@ -75,10 +76,12 @@ export function EnterpriseTabs({
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setActiveValue(value);
   }, [value]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setActiveValue(value);
   }, [value]);
 
@@ -93,6 +96,7 @@ export function EnterpriseTabs({
   );
 
   const handleKeyDown = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
     (e: React.KeyboardEvent, index: number) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const enabledTabs = tabs.filter((t) => !t.disabled);

@@ -1,4 +1,12 @@
 import { describe, it, expect } from "vitest";
+
+import { validateFieldValue } from "@/app/hooks/useFormValidation";
+import {
+  AppError,
+  ErrorCodes,
+  handleApiError,
+  getUserFriendlyMessage,
+} from "@/shared/utils/errors";
 import {
   validateEmail,
   validatePhone,
@@ -8,13 +16,6 @@ import {
   sanitizeHtml,
   validateUrl,
 } from "@/shared/utils/validation";
-import {
-  AppError,
-  ErrorCodes,
-  handleApiError,
-  getUserFriendlyMessage,
-} from "@/shared/utils/errors";
-import { validateFieldValue } from "@/app/hooks/useFormValidation";
 
 describe("ErrorBoundary Edge Cases", () => {
   it("should have getDerivedStateFromError static method that returns hasError: true", () => {

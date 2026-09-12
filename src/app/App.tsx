@@ -13,19 +13,17 @@ import CookieConsent from "./components/CookieConsent";
 import { FixedDonateButton } from "./components/FixedDonateButton";
 import { Footer } from "./components/Footer";
 import { GlobalUtilityBar } from "./components/GlobalUtilityBar";
+import { HeaderComponentsBar } from "./components/HeaderComponentsBar";
 import Navbar from "./components/Navbar";
 import { NewsTicker } from "./components/NewsTicker";
 import { PageProgress } from "./components/PageProgress";
 import { EnhancedInstallPrompt } from "./components/PWA/EnhancedInstallPrompt";
-import { StepScroll } from "./components/StepScroll";
-import { UpdateNotification } from "./components/UpdateNotification";
-
-
-import { HeaderComponentsBar } from "./components/HeaderComponentsBar";
-import { SocialProofToast } from "./components/SocialProofToast";
 import { ScrollProgress } from "./components/ScrollProgress";
 import SearchOverlay from "./components/SearchOverlay";
 import { SocialProof } from "./components/SocialProof";
+import { SocialProofToast } from "./components/SocialProofToast";
+import { StepScroll } from "./components/StepScroll";
+import { UpdateNotification } from "./components/UpdateNotification";
 import { UrgencyBanner } from "./components/UrgencyBanner";
 
 
@@ -181,6 +179,7 @@ const AppContent = memo(function AppContent() {
         navigate(`/${page === "home" ? "" : page}`, { replace: false });
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const doc = document as any as { startViewTransition?: (cb: () => void) => void };
       if (doc.startViewTransition) doc.startViewTransition(go);
       else go();

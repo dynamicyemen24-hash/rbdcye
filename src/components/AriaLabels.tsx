@@ -309,6 +309,7 @@ export function useAnnounce() {
 
   React.useEffect(() => {
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
       for (const timer of timersRef.current) {
         window.clearTimeout(timer);
       }

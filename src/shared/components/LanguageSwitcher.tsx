@@ -1,6 +1,7 @@
 import { Globe } from "lucide-react";
-import { useI18n } from "@/shared/i18n";
+
 import { EnterpriseTooltip } from "@/shared/components";
+import { useI18n } from "@/shared/i18n";
 
 export interface LanguageSwitcherProps {
   className?: string;

@@ -60,6 +60,7 @@ export function PhoneInput({
     // تعيين الدولة الافتراضية
     const defaultCountryData = countries.find((c) => c.code === defaultCountry);
     if (defaultCountryData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setSelectedCountry(defaultCountryData);
     }
 

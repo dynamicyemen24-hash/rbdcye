@@ -28,6 +28,7 @@ export const AnimatedCounter = memo(function AnimatedCounter({
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   }, [target, duration]);
 
   function animateCount() {

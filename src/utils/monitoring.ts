@@ -8,6 +8,7 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   data?: Record<string, any>;
   userId?: string;
   sessionId?: string;
@@ -21,6 +22,7 @@ class Logger {
   private static MAX_LOGS = 100;
 
   // تنسيق الرسالة
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   private format(level: LogLevel, message: string, data?: Record<string, any>): LogEntry {
     return {
       timestamp: new Date().toISOString(),

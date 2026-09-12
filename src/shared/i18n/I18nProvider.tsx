@@ -36,12 +36,15 @@ function buildTranslator(
 ): (key: TranslationKey<Dictionary>, vars?: Record<string, string | number>) => string {
   return (key, vars) => {
     const dict = dictionaries[locale] ?? ar;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     const fallback = ar as any as Record<string, any>;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     const value = resolvePath(dict as any as Record<string, any>, key);
     const fallbackValue = resolvePath(fallback, key as string);
 
     const template =
+      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
       typeof value === "string"
         ? value
         : typeof fallbackValue === "string"
@@ -79,6 +82,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       hasMounted.current = true;
       const persisted = getPersistedLocale();
       if (persisted !== locale) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
         setLocaleState(persisted);
         syncDocumentLocale(persisted);
         return;

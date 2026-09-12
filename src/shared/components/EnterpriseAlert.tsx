@@ -1,5 +1,3 @@
-import { useState, forwardRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
   AlertCircle,
   CheckCircle2,
@@ -8,6 +6,8 @@ import {
   X,
   LucideIcon,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, forwardRef } from "react";
 
 export type EnterpriseAlertVariant = "info" | "success" | "warning" | "danger" | "neutral";
 

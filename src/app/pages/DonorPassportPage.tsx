@@ -704,6 +704,7 @@ const TimelineSection: React.FC = () => {
                 padding: '6px 16px',
                 borderRadius: 'var(--radius-full)',
                 border: `1.5px solid ${isActive ? (catInfo?.color || 'var(--c-gold-400)') : 'var(--c-border)'}`,
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 background: isActive ? (catInfo ? `${catInfo.color}20` : 'rgba(245,158,11,0.15)') : 'transparent',
                 color: isActive ? (catInfo?.color || 'var(--c-gold-400)') : 'var(--c-text-muted)',
                 fontFamily: 'var(--font-body)',

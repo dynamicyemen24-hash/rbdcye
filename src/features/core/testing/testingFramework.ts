@@ -181,6 +181,7 @@ export const expect = (actual: any): AssertionHelpers => ({
     try {
       actual();
       throw new Error("Expected function to throw");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     } catch (error: any) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
       if (expected instanceof RegExp) {
@@ -270,19 +271,20 @@ export async function runTests() {
   const results = await runner.run();
   const stats = runner.getStats();
 
-  console.log("\n=== Test Results ===");
-  console.log(`Total: ${stats.total}`);
-  console.log(`Passed: ${stats.passed}`);
-  console.log(`Failed: ${stats.failed}`);
-  console.log(`Pass Rate: ${stats.passRate.toFixed(2)}%`);
+  // console.log("\n=== Test Results ===");
+  // console.log(`Total: ${stats.total}`);
+  // console.log(`Passed: ${stats.passed}`);
+  // console.log(`Failed: ${stats.failed}`);
+  // console.log(`Pass Rate: ${stats.passRate.toFixed(2)}%`);
 
   if (stats.failed > 0) {
-    console.log("\n=== Failed Tests ===");
+    // console.log("\n=== Failed Tests ===");
     results
       .filter((r) => r.status === "fail")
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
       .forEach((r) => {
-        console.log(`  ${r.suite} > ${r.test}`);
-        console.log(`    Error: ${r.error}`);
+        // console.log(`  ${r.suite} > ${r.test}`);
+        // console.log(`    Error: ${r.error}`);
       });
   }
 

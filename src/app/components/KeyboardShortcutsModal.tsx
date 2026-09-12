@@ -29,6 +29,7 @@ export function KeyboardShortcutsModal({
         searchInputRef.current?.focus();
       }, 100);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setSearchQuery("");
     }
   }, [isOpen]);

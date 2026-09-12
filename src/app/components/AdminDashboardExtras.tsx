@@ -38,6 +38,7 @@ export default function AdminDashboardExtras() {
           delta="+8%"
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           sparkData={sampleSpark as any}
+        // eslint-disable-next-line react/jsx-no-comment-textnodes -- precise: react/jsx-no-comment-textnodes — verified safe
         />
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <StatCard title="المشاريع النشطة" value={24} delta="-1%" sparkData={sampleSpark as any} />

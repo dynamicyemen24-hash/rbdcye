@@ -87,6 +87,7 @@ function clearAllCache(): void {
 // ─── Sanity Fetch with Timeout + Retry ──────────────────────
 async function sanityFetch<T>(
   query: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   params?: Record<string, any>
 ): Promise<T[] | null> {
   try {

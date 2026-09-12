@@ -38,6 +38,7 @@ export function useAnimatedCounter(target: number, duration = 2000, startOnView 
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   }, [target]);
 
   return { count, ref };

@@ -8,6 +8,7 @@ const API_BASE = "/api";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function apiQuery<T = any>(
   action: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   options?: { method?: string; body?: any; params?: Record<string, string> }
 ): Promise<{ rows: T[]; rowCount: number }> {
   const { method = "GET", body, params } = options || {};

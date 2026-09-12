@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
 import { LucideIcon } from "lucide-react";
+import { forwardRef } from "react";
 
 export type EnterpriseBadgeVariant =
   | "default"

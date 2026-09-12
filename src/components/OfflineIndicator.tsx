@@ -23,6 +23,7 @@ export function OfflineIndicator() {
 
     // Check on mount
     if (!navigator.onLine) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setShowIndicator(true);
     }
 

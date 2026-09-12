@@ -31,6 +31,7 @@ export function EnhancedInstallPrompt() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setIsInstalled(true);
       return;
     }
@@ -59,6 +60,7 @@ export function EnhancedInstallPrompt() {
     const handleOnline = () => setIsOffline(false);
     window.addEventListener("offline", handleOffline);
     window.addEventListener("online", handleOnline);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setIsOffline(!navigator.onLine);
     return () => {
       window.removeEventListener("offline", handleOffline);
@@ -90,6 +92,7 @@ export function EnhancedInstallPrompt() {
   }, []);
 
   const handleDragEnd = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
     (_: any, info: PanInfo) => {
       if (info.offset.y > 100) handleDismiss();
     },

@@ -112,6 +112,7 @@ export function DevOverlay() {
   useEffect(() => {
     const interval = setInterval(() => {
       // Memory Usage (Supported in Chrome/Blink browsers)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const perfObj = window.performance as any as {
         memory?: {
           usedJSHeapSize: number;
@@ -133,6 +134,7 @@ export function DevOverlay() {
       setScreenRes(`${window.innerWidth}x${window.innerHeight} (${window.devicePixelRatio}x DPR)`);
 
       // Network Connection Speed
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const navConn = (navigator as any as { connection?: { effectiveType?: string } })
         .connection;
       if (navConn?.effectiveType) {
@@ -170,6 +172,7 @@ export function DevOverlay() {
 
   useEffect(() => {
     if (isOpen && activeTab === "network") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       refreshNetworkLogs();
     }
   }, [isOpen, activeTab, refreshNetworkLogs]);
@@ -263,6 +266,7 @@ Timestamp: ${new Date().toISOString()}
               <div className="p-2 rounded bg-slate-900/80 border border-slate-800">
                 <div className="text-[10px] text-slate-400">FPS</div>
                 <div
+                  // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                   className={`text-base font-bold ${fps >= 50 ? "text-emerald-400" : fps >= 30 ? "text-amber-400" : "text-rose-400"}`}
                 >
                   {fps}

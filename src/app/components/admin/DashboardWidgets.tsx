@@ -186,6 +186,7 @@ export function DashboardWidgets() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     loadData();
     const interval = setInterval(loadData, 60000); // Refresh every minute
     return () => clearInterval(interval);

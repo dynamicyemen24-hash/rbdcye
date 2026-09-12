@@ -199,6 +199,7 @@ export function useConfirm() {
         <div className="text-center mb-5">
           <div
             className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3 ${
+              // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
               state.variant === "danger"
                 ? "bg-red-50"
                 : state.variant === "warning"
@@ -208,6 +209,7 @@ export function useConfirm() {
           >
             <AlertTriangle
               className={`w-6 h-6 ${
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 state.variant === "danger"
                   ? "text-red-500"
                   : state.variant === "warning"
@@ -227,6 +229,7 @@ export function useConfirm() {
           <button
             onClick={state.onConfirm}
             className={`flex-1 py-2.5 rounded-lg text-white transition-colors ${
+              // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
               state.variant === "danger"
                 ? "bg-red-500 hover:bg-red-600"
                 : state.variant === "warning"

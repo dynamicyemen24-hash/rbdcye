@@ -31,6 +31,7 @@ export const EnterpriseSkeleton = forwardRef<HTMLDivElement, EnterpriseSkeletonP
     ref
   ) => {
     const animationClass =
+      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
       animation === "pulse"
         ? "animate-pulse bg-muted"
         : animation === "shimmer"
@@ -53,6 +54,7 @@ export const EnterpriseSkeleton = forwardRef<HTMLDivElement, EnterpriseSkeletonP
               key={i}
               className={baseClasses}
               style={{
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 width: i === lines - 1 ? "70%" : typeof width === "number" ? `${width}px` : width || "100%",
                 height: typeof height === "number" ? `${height}px` : height || "1em",
               }}

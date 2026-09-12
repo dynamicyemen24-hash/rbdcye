@@ -19,6 +19,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
   useEffect(() => {
     // Check if already installed as PWA
     if (window.matchMedia("(display-mode: standalone)").matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setIsStandalone(true);
       return;
     }
@@ -63,6 +64,7 @@ export const InstallPrompt = memo(function InstallPrompt() {
       setDeferredPrompt(null);
     } else {
       // Fallback instruction for browser
+      // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
       alert(
         'لتثبيت التطبيق على جهازك، استخدم خيار "إضافة إلى الشاشة الرئيسية" أو "تثبيت التطبيق" من قائمة المتصفح.'
       );
@@ -154,6 +156,7 @@ export function usePWA() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);

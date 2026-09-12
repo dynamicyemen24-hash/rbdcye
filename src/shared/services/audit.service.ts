@@ -169,9 +169,11 @@ class AuditService {
       filtered = filtered.filter((e) => e.resource === options.resource);
     }
     if (options.startDate) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       filtered = filtered.filter((e) => e.timestamp >= options.startDate!);
     }
     if (options.endDate) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       filtered = filtered.filter((e) => e.timestamp <= options.endDate!);
     }
 

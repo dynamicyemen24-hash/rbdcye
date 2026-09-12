@@ -14,6 +14,7 @@ export function ProgressBar({
   showPercent = true,
 }: ProgressBarProps) {
   const pct = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
+  // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
   const height = size === "sm" ? 6 : size === "lg" ? 12 : 8;
   const gradientId = useId();
 

@@ -62,6 +62,7 @@ export default function MessagesPage() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     fetchMessages();
   }, []);
 
@@ -75,6 +76,7 @@ export default function MessagesPage() {
   };
 
   const deleteMessage = async (id: number) => {
+    // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
     if (!confirm("هل أنت متأكد من حذف هذه الرسالة؟")) return;
     try {
       const token = localStorage.getItem("rbdcye_admin_token") || "";

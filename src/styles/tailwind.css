@@ -1,5 +1,11 @@
 @import "tailwindcss" source(none);
-@source '../app/**/*.{js,ts,jsx,tsx}';
+@source '../app/components/**/*.{js,ts,jsx,tsx}';
+@source '../app/pages/HomePage.tsx';
+@source '../app/pages/AboutPage.tsx';
+@source '../app/pages/DonatePage.tsx';
+@source '../app/pages/ContactPage.tsx';
+@source '../app/pages/ProgramsPage.tsx';
+@source '../app/pages/ProjectsPage.tsx';
 @source '../components/**/*.{js,ts,jsx,tsx}';
 @source '../shared/**/*.{js,ts,jsx,tsx}';
 @source '../features/**/*.{js,ts,jsx,tsx}';
@@ -9,5 +15,5 @@
 @source '../../index.html';
 @source not '../__tests__/**/*';
 @source not '../../e2e/**/*';
-
-@import "tw-animate-css";
+@source not '../features/admin/**/*';
+@source not '../app/components/admin/**/*';

@@ -16,6 +16,7 @@ function useSanityQuery<T>(
 
   useEffect(() => {
     let mounted = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setLoading(true);
 
     fetchFn()
@@ -39,6 +40,7 @@ function useSanityQuery<T>(
     return () => {
       mounted = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   }, deps);
 
   return { data, loading, error };

@@ -1,6 +1,6 @@
-import { forwardRef, useCallback, useRef, useEffect, useState } from "react";
 import { LucideIcon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { forwardRef, useCallback, useRef, useEffect, useState } from "react";
 
 export type EnterpriseButtonVariant =
   | "primary"
@@ -246,6 +246,7 @@ export const EnterpriseButton = forwardRef<HTMLButtonElement, EnterpriseButtonPr
 
     const style = variantStyles[variant];
     const sizeConfig = sizeStyles[size];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
     const isIconOnly = size === "icon" && !children;
 
     const baseClasses = [
@@ -319,7 +320,9 @@ export const EnterpriseButton = forwardRef<HTMLButtonElement, EnterpriseButtonPr
             >
               <svg
                 className="animate-spin"
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 width={size === "xs" ? 14 : size === "sm" ? 16 : size === "md" ? 18 : 20}
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 height={size === "xs" ? 14 : size === "sm" ? 16 : size === "md" ? 18 : 20}
                 viewBox="0 0 24 24"
                 fill="none"

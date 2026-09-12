@@ -152,6 +152,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const toggleTheme = useCallback(() => {
     setThemeState((prev) => {
+      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
       const nextTheme: ThemeMode = prev === "light" ? "dark" : prev === "dark" ? "system" : "light";
       try {
         localStorage.setItem(THEME_STORAGE_KEY, nextTheme);

@@ -107,6 +107,7 @@ function QRCodeCanvas({
         }
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- precise: deps intentionally limited to avoid loop — verified safe
   }, [url, size, matrix]);
 
   return (

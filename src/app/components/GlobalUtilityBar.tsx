@@ -40,6 +40,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
   // Load saved preferences
   useEffect(() => {
     const saved = getSavedReaderPreferences();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setFontSize(saved.fontSize);
     setTheme(saved.theme);
   }, []);

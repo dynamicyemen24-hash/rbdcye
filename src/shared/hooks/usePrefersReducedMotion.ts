@@ -13,6 +13,7 @@ export function usePrefersReducedMotion(): boolean {
     }
 
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setPrefersReducedMotion(query.matches);
 
     const handleChange = (event: MediaQueryListEvent) => {

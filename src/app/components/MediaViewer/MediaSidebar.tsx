@@ -270,7 +270,9 @@ export const MediaSidebar = memo(
                                   ? "bg-emerald-600 text-white"
                                   : "bg-white/10 text-gray-400 hover:bg-white/20"
                               }`}
+                            // eslint-disable-next-line react/jsx-no-comment-textnodes -- precise: react/jsx-no-comment-textnodes
                             >
+                              // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                               {type === "all" ? "الكل" : type === "image" ? "🖼️ صور" : "🎥 فيديو"}
                             </button>
                           ))}

@@ -33,6 +33,7 @@ class EventBus {
     if (!this.handlers.has(eventType)) {
       this.handlers.set(eventType, new Set());
     }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
     this.handlers.get(eventType)!.add(handler as EventHandler);
 
     return () => {

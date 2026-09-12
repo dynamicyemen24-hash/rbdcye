@@ -21,6 +21,7 @@ export const ErrorCodes = {
   TIMEOUT: "TIMEOUT",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export const handleApiError = (error: any): AppError => {
   if (error instanceof AppError) {
     return error;

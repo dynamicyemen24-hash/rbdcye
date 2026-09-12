@@ -73,6 +73,7 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({
 
   useEffect(() => {
     if (article) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setLikesCount(article.likes || 124);
       setIsLiked(false);
       const pref = getSavedReaderPreferences();
@@ -110,6 +111,7 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({
         .catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href);
+      // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
       alert("تم نسخ رابط المقال بنجاح!");
     }
   };

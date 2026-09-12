@@ -83,6 +83,7 @@ export function useOptimizedFetch<T>(
 
     if (pendingRequests.has(key)) {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
         const result = await pendingRequests.get(key)!;
         if (mountedRef.current) setData(result as T);
       } catch {
@@ -126,6 +127,7 @@ export function useOptimizedFetch<T>(
 
   useEffect(() => {
     mountedRef.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     if (immediate) fetchData();
 
     return () => {

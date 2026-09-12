@@ -290,8 +290,7 @@ export default memo(function MobileMenu({
               </div>
 
               <nav className="px-3 pt-4" aria-label="القائمة الرئيسية">
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                {MOBILE_GROUPS.map((group, gi) => {
+                {MOBILE_GROUPS.map((group, _gi) => {
                   const isExpanded = expanded === group.id;
                   const hasActiveChild = group.children.some((c) => c.id === currentPage);
                   return (

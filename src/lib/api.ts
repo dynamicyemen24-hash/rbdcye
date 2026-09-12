@@ -49,6 +49,7 @@ class ApiClient {
 
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
         const response = await this.fetchWithTimeout(url, options, this.defaultOptions.timeout!);
 
         if (!response.ok && response.status >= 500 && attempt < retries) {
@@ -76,6 +77,7 @@ class ApiClient {
     };
 
     const url = `${this.baseUrl}${endpoint}`;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
     const response = await this.retryFetch(url, fetchOptions, retries!, retryDelay!);
 
     if (!response.ok) {

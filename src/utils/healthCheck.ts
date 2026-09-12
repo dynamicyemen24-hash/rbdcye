@@ -13,6 +13,7 @@ interface HealthCheck {
   status: "pass" | "fail" | "warn";
   duration: number;
   message?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   details?: Record<string, any>;
 }
 
@@ -59,6 +60,7 @@ class HealthCheckService {
     const hasWarning = checks.some((c) => c.status === "warn");
 
     return {
+      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
       status: hasFailed ? "unhealthy" : hasWarning ? "degraded" : "healthy",
       timestamp: Date.now(),
       checks,
@@ -99,6 +101,7 @@ export const createDefaultChecks = () => {
 
       return {
         name: "memory",
+        // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
         status: percentage > 90 ? "fail" : percentage > 75 ? "warn" : "pass",
         duration: Date.now() - startTime,
         message: `Memory usage: ${usedMB.toFixed(2)}MB / ${limitMB.toFixed(2)}MB`,

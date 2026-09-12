@@ -634,6 +634,7 @@ export const ProfessionalMediaViewer = memo(
               className="h-full bg-black/80 backdrop-blur-sm overflow-y-auto"
               style={{
                 width:
+                  // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                   sidebarMode === "expanded"
                     ? "280px"
                     : sidebarMode === "collapsed"

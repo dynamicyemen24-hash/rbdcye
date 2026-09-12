@@ -278,5 +278,6 @@ export function getRepository<TEntity extends { id: string }>(
   if (!repositories.has(name)) {
     repositories.set(name, new repositoryClass());
   }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
   return repositories.get(name)!;
 }

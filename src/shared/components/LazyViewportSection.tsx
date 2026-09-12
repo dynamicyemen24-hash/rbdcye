@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, ReactNode } from "react";
 import { motion } from "motion/react";
+import React, { useRef, useState, useEffect, ReactNode } from "react";
 
 interface LazyViewportSectionProps {
   children: ReactNode;
@@ -26,6 +26,7 @@ export function LazyViewportSection({
     if (!element) return;
 
     if (!("IntersectionObserver" in window)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setIsVisible(true);
       return;
     }

@@ -117,6 +117,7 @@ export async function retry<T>(fn: () => Promise<T>, options: RetryOptions = {})
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
   throw lastError!;
 }
 
@@ -165,6 +166,7 @@ export class RequestDeduplicator<T> {
 
   async dedupe(key: string, fn: () => Promise<T>): Promise<T> {
     if (this.pending.has(key)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       return this.pending.get(key)!;
     }
 

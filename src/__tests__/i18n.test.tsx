@@ -1,6 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { render, screen, fireEvent } from "@testing-library/react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { I18nProvider, useI18n } from "@/shared/i18n";
 import { LOCALE_STORAGE_KEY } from "@/shared/i18n/types";
 

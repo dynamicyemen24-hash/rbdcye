@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
 import { motion } from "motion/react";
+import React, { ReactNode } from "react";
 
 interface ScrollFadeInProps {
   children: ReactNode;

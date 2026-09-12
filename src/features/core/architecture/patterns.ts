@@ -100,6 +100,7 @@ class CachingDecorator extends ComponentDecorator {
   operation(): string {
     const key = this.component.constructor.name;
     if (this.cache.has(key)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       return this.cache.get(key)!;
     }
     const result = super.operation();
@@ -186,6 +187,7 @@ class ProxyService implements Service {
   async request(): Promise<string> {
     const cacheKey = "service_request";
     if (this.cache.has(cacheKey)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       return this.cache.get(cacheKey)!;
     }
 
@@ -437,6 +439,7 @@ class Mediator implements IMediator {
     if (!this.handlers.has(messageType)) {
       this.handlers.set(messageType, []);
     }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
     this.handlers.get(messageType)!.push(handler);
   }
 

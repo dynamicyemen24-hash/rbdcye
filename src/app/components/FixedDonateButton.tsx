@@ -278,8 +278,10 @@ export const FixedDonateButton = memo(function FixedDonateButton() {
                       {recurring === 'monthly'
                         ? `تبرعك الشهري = ${(Math.round(finalAmount || 0) * 12).toLocaleString('ar-YE')} ر.ي سنوياً من الأثر`
                         : `أثرك الفوري: ${
+                            // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                             Math.round(finalAmount || 0) >= 25000
                               ? 'حفر بئر مياه'
+                              // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                               : Math.round(finalAmount || 0) >= 10000
                                 ? 'كفالة يتيم لشهر'
                                 : Math.round(finalAmount || 0) >= 5000

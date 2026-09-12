@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useCallback, useRef, type ReactElement } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { X, LucideIcon } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Fragment, useEffect, useCallback, useRef, type ReactElement } from "react";
 import { createPortal } from "react-dom";
 
 export type EnterpriseModalSize = "sm" | "md" | "lg" | "xl" | "full";

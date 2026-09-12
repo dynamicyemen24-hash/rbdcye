@@ -1,12 +1,13 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+
+import { EnterpriseAccordion } from "@/shared/components/EnterpriseAccordion";
+import { EnterpriseAlert } from "@/shared/components/EnterpriseAlert";
+import { EnterpriseBadge } from "@/shared/components/EnterpriseBadge";
 import { EnterpriseButton } from "@/shared/components/EnterpriseButton";
 import { EnterpriseCard, EnterpriseCardHeader, EnterpriseCardFooter } from "@/shared/components/EnterpriseCard";
 import { EnterpriseInput } from "@/shared/components/EnterpriseInput";
-import { EnterpriseBadge } from "@/shared/components/EnterpriseBadge";
-import { EnterpriseAlert } from "@/shared/components/EnterpriseAlert";
 import { EnterpriseSkeleton, EnterpriseSpinner, EnterpriseProgress } from "@/shared/components/EnterpriseSkeleton";
-import { EnterpriseAccordion } from "@/shared/components/EnterpriseAccordion";
 import { EnterpriseTabs } from "@/shared/components/EnterpriseTabs";
 
 describe("EnterpriseButton", () => {

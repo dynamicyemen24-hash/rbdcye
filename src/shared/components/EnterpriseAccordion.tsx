@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { LucideIcon, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useRef, useEffect } from "react";
+
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 
 export type EnterpriseAccordionVariant = "default" | "bordered" | "separated" | "elevated";
@@ -74,6 +75,7 @@ export function EnterpriseAccordion({
   headerClassName = "",
   contentClassName = "",
   "aria-label": ariaLabel,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
   animated = true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lazy = false,
@@ -89,6 +91,7 @@ export function EnterpriseAccordion({
 
   useEffect(() => {
     if (value !== undefined) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
       setOpenValues(Array.isArray(value) ? value : [value]);
     }
   }, [value]);

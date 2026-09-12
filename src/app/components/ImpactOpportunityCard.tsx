@@ -340,6 +340,7 @@ export const ImpactOpportunityCard = memo(function ImpactOpportunityCard({
                 <div className="flex items-center gap-1.5">
                   {PHASE_ICONS[phase.status]}
                   <span className={`text-xs ${
+                    // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                     phase.status === 'completed'
                       ? 'text-emerald-500'
                       : phase.status === 'active'

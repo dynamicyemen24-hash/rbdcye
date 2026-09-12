@@ -221,6 +221,7 @@ export const ImageViewer = memo(
         }
       } else {
         await navigator.clipboard.writeText(media.url);
+        // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
         alert("تم نسخ الرابط إلى الحافظة");
       }
     }, [media]);
@@ -613,6 +614,7 @@ export const ImageViewer = memo(
 
     // تطبيق السمة (theme) على الخلفية
     const bgClass =
+      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
       theme === "light" ? "bg-white/95" : theme === "charity" ? "bg-charity/95" : "bg-black/95";
 
     return (

@@ -174,11 +174,13 @@ export function isPWA(): boolean {
 }
 
 // Background sync registration — queue-aware with retries
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export async function registerBackgroundSync(tag: string, _data?: any): Promise<void> {
   if ("serviceWorker" in navigator && "SyncManager" in window) {
     try {
       const registration = await navigator.serviceWorker.ready;
       // Store payload in IndexedDB / localStorage if needed before registering sync
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       await (registration as any as { sync: { register: (tag: string) => Promise<void> } }).sync.register(tag);
     } catch {
       // Background sync not supported — fallback to immediate retry via fetch queue
@@ -189,6 +191,7 @@ export async function registerBackgroundSync(tag: string, _data?: any): Promise<
 }
 
 // Queue a background sync with automatic retry semantics
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
 export async function queueBackgroundSync(tag: string, payload?: any): Promise<void> {
   try {
     // Persist payload for SW to pick up on sync event

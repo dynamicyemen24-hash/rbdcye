@@ -49,6 +49,6 @@ if (import.meta.env.DEV) {
   if (!status.configured) {
     // Sanity configuration incomplete
   } else {
-    console.log(`[Sanity] Configuration ready - Project: ${status.projectId}`);
+    // console.log(`[Sanity] Configuration ready - Project: ${status.projectId}`);
   }
 }

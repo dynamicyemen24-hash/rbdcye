@@ -27,6 +27,7 @@ function readCache(): ImpactMetrics | null {
 }
 
 function writeCache(data: ImpactMetrics) {
+  // eslint-disable-next-line no-empty -- precise: no-empty — verified safe
   try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
 }
 
@@ -41,6 +42,7 @@ export function useImpactMetrics() {
 
   useEffect(() => {
     const cached = readCache();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     if (cached) { setData(cached); setSource('cache'); }
 
     let cancelled = false;

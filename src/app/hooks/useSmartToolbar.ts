@@ -97,6 +97,7 @@ export function useSmartToolbar() {
 
   // Check if we should show behavior tip
   const shouldShowBehaviorTip = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
     return getTopActions.length >= 2 && preferences.usageStats[getTopActions[0]]! > 3;
   }, [getTopActions, preferences.usageStats]);
 

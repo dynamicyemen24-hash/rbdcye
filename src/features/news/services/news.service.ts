@@ -66,6 +66,7 @@ export const newsService = {
       );
     }
     if (params.tag) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
       all = all.filter((n) => n.tags.includes(params.tag!));
     }
 

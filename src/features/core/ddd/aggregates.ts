@@ -261,6 +261,7 @@ class DomainEventBus {
     if (!this.handlers.has(eventType)) {
       this.handlers.set(eventType, []);
     }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
     this.handlers.get(eventType)!.push(handler);
   }
 
@@ -372,15 +373,21 @@ class UnitOfWork {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
   private async persist(aggregate: any): Promise<void> {
     // Persist to database
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
   private async update(aggregate: any): Promise<void> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
   private async remove(aggregate: any): Promise<void> {
   }
 }

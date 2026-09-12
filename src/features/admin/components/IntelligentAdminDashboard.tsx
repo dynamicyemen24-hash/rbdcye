@@ -105,6 +105,7 @@ const AIInsightsPanel = () => {
           >
             <div
               className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 insight.type === "opportunity"
                   ? "bg-green-100 text-green-600"
                   : insight.type === "alert"
@@ -120,6 +121,7 @@ const AIInsightsPanel = () => {
                 <h4 className="font-semibold text-gray-800">{insight.title}</h4>
                 <span
                   className={`text-xs font-medium px-2 py-1 rounded-full ${
+                    // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                     insight.confidence >= 90
                       ? "bg-green-100 text-green-700"
                       : insight.confidence >= 80

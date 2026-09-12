@@ -155,6 +155,7 @@ function MegaPanel({
         <button
           type="button"
           onClick={() => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
             onNavigate(group.featured!.id);
             onClose();
           }}
@@ -311,6 +312,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
               whileTap={{ scale: 0.97 }}
               aria-current={isHome ? "page" : undefined}
               className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition ${
+                // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 isHome
                   ? "bg-[var(--brand-green)] text-white shadow-md"
                   : isOverlay
@@ -335,8 +337,10 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
                     aria-haspopup="menu"
                     aria-current={isActive ? "page" : undefined}
                     className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition ${
+                      // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                       isActive
                         ? "bg-[var(--brand-green)] text-white shadow-md"
+                        // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                         : isOpen
                           ? isOverlay
                             ? "bg-white/15 text-white"

@@ -24,6 +24,7 @@ export function HeroWisdomCard() {
     try {
       const savedFont = localStorage.getItem("rbdcye_reading_font") as TypographyFamily;
       if (savedFont && FONT_OPTIONS.some((f) => f.id === savedFont)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
         setSelectedFont(savedFont);
       }
       const savedSize = localStorage.getItem("rbdcye_reading_size");

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import { validateEmail, validatePhone, formatCurrency } from "@/shared/utils/validation";
 
 describe("Zakat Calculator Business Logic", () => {

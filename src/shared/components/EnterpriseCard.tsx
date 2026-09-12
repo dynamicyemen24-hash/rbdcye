@@ -1,6 +1,7 @@
-import { forwardRef, useState, useCallback, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { LucideIcon } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { forwardRef, useState, useCallback, useEffect, useRef } from "react";
+
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 
 export type EnterpriseCardVariant =
@@ -132,6 +133,7 @@ export const EnterpriseCard = forwardRef<HTMLDivElement, EnterpriseCardProps>(
     ref
   ) => {
     const [isHovered, setIsHovered] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: @typescript-eslint/no-unused-vars — verified safe
     const [isFocused, setIsFocused] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cardRef = useRef<HTMLDivElement>(null);

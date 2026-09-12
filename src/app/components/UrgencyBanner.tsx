@@ -16,6 +16,7 @@ export function UrgencyBanner({ title, message, ctaText, ctaLink, type = 'urgent
 
   useEffect(() => {
     if (dismissKey && localStorage.getItem(`dismissed_${dismissKey}`)) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
     setIsVisible(true);
   }, [dismissKey]);
 

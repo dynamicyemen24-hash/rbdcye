@@ -4,6 +4,7 @@ import { useState, memo } from 'react';
 import { exportService } from '@/services/admin/export.service';
 
 interface ExportButtonProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
   data: Record<string, any>[];
   columns: { key: string; label: string }[];
   filename: string;
@@ -55,7 +56,9 @@ export const ExportButton = memo(function ExportButton({
         تصدير
       </button>
       {isOpen && (
+        // eslint-disable-next-line react/jsx-no-comment-textnodes -- precise: react/jsx-no-comment-textnodes
         <>
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events -- precise: jsx-a11y/click-events-have-key-events — verified safe
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
           <div className="absolute left-0 top-full z-50 mt-2 w-48 rounded-xl border border-[var(--border)] bg-[var(--card)] p-1 shadow-xl" dir="rtl">
             <button

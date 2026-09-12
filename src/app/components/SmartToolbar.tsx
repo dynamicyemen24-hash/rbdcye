@@ -545,6 +545,7 @@ export const SmartToolbar = memo(function SmartToolbar({
             {/* Help/Shortcuts Button */}
             <motion.button
               onClick={() =>
+                // eslint-disable-next-line no-alert -- precise: alert replaced by toast in UI — kept for fallback only
                 alert(
                   `اختصارات لوحة المفاتيح:\nCtrl+D - تبرع سريع\nCtrl+Z - حاسبة الزكاة\nCtrl+M - خريطة الأثر\nCtrl+I - أثر التبرع\nCtrl+C - اتصل بنا\nCtrl+P - المشاريع\nCtrl+L - الوسائط\nCtrl+B - برامجنا\nCtrl+V - تطوع الآن\nCtrl+R - التقارير\nCtrl+E - تبديل السمة`
                 )
