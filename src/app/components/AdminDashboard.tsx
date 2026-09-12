@@ -1925,8 +1925,7 @@ export function AdminDashboard({
                     await loadNews();
                     setEditModal(null);
                   } catch {
-                    // Error saving news
-                    alert("حدث خطأ أثناء حفظ الخبر");
+                    toast.error("حدث خطأ أثناء حفظ الخبر");
                   }
                 }}
                 onCancel={() => setEditModal(null)}
@@ -2053,7 +2052,7 @@ export function AdminDashboard({
                     setEditModal(null);
                   } catch {
                     // Error saving report
-                    alert("حدث خطأ أثناء حفظ التقرير");
+                    toast.error("حدث خطأ أثناء حفظ التقرير");
                   }
                 }}
                 onCancel={() => setEditModal(null)}
@@ -2176,7 +2175,7 @@ export function AdminDashboard({
                     setEditModal(null);
                   } catch {
                     // Error saving media
-                    alert("حدث خطأ أثناء حفظ الوسيط");
+                    toast.error("حدث خطأ أثناء حفظ الوسيط");
                   }
                 }}
                 onCancel={() => setEditModal(null)}
@@ -2535,7 +2534,7 @@ export function AdminDashboard({
                       setEditModal(null);
     } catch {
       // Error creating user
-      alert("حدث خطأ أثناء إضافة المستخدم");
+      toast.error("حدث خطأ أثناء إضافة المستخدم");
                     }
                   }}
                   onCancel={() => setEditModal(null)}

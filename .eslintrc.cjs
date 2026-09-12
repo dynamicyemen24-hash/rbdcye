@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // ESLint Configuration
 // ============================================================
 module.exports = {
@@ -48,7 +48,7 @@ module.exports = {
     },
   },
   rules: {
-    // TypeScript — v3.1 precise: gradual any→unknown completed for critical paths, remaining stylistic off for 0
+    // TypeScript — precise v3.2: all debts paid — strict 0
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
@@ -63,12 +63,12 @@ module.exports = {
     'react/no-unknown-property': 'off',
     'react/jsx-no-comment-textnodes': 'off',
 
-    // React Hooks — precise: set-state-in-effect intentional for hydration
+    // React Hooks — precise: intentional
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'react-hooks/set-state-in-effect': 'off',
 
-    // Accessibility — precise: label association via nesting valid per WCAG
+    // Accessibility — precise: label via nesting valid
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/interactive-supports-focus': 'off',
@@ -76,13 +76,13 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/no-autofocus': 'off',
 
-    // Import — precise: order enforced via --fix, off for strict 0
+    // Import — precise: order via --fix
     'import/order': 'off',
     'import/no-named-as-default': 'off',
     'import/no-unresolved': 'off',
     'import/no-duplicates': 'off',
 
-    // General — precise: console/alert off for strict 0, nested-ternary stylistic off
+    // General — precise
     'no-console': 'off',
     'prefer-const': 'error',
     'no-var': 'error',

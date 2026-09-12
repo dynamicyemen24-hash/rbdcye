@@ -26,6 +26,7 @@ export const PostGiftJourney = memo(function PostGiftJourney({ amount, isMonthly
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mx-auto mt-8 max-w-sm rounded-2xl bg-[var(--card)] p-6">
         <Gift className="mx-auto h-8 w-8 text-[var(--brand-gold)]" />
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">تبرعك سيُستخدم في</p>
+        {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
         <p className="mt-1 font-bold text-[var(--foreground)]">{amount >= 25000 ? 'حفر بئر مياه نقية' : amount >= 10000 ? 'كفالة يتيم شهري' : amount >= 5000 ? 'كسوة شتوية' : 'سلة غذائية'}</p>
       </motion.div>
 

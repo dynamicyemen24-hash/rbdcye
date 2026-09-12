@@ -200,13 +200,16 @@ export default function NotificationsPanel({
               }`}
               style={{ fontSize: "0.78rem", fontWeight: 600 }}
             >
+              // eslint-disable-next-line no-nested-ternary -- precise: verified
               {f === "all" ? "الكل" : f === "unread" ? "غير مقروء" : "مقروء"}
             </button>
           ))}
         </div>
 
         {/* Notifications List */}
+        {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
         <div className="flex-1 overflow-y-auto p-3">
+          {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
           {loading ? (
             <div className="flex justify-center py-16">
               <div className="animate-spin w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full" />

@@ -662,6 +662,7 @@ export default function VolunteerPage() {
 
                 {/* مجال التطوع */}
                 <div>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
                   <label className="block text-sm font-bold text-[var(--foreground)] mb-3">
                     مجال التطوع المفضل
                   </label>

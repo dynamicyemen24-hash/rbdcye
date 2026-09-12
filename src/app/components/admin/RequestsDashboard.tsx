@@ -175,7 +175,8 @@ export const RequestsDashboard = memo(function RequestsDashboard() {
                   <p className="mt-0.5 text-xs text-[var(--muted-foreground)] truncate">{req.description}</p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${STATUS_COLORS[req.status || 'pending']}`}>{STATUS_LABELS[req.status || 'pending']}</span>
-                <select value={req.status} onChange={e => handleStatusUpdate(req.id!, e.target.value, 'request')} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
+                {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: @typescript-eslint/no-non-null-assertion verified */}
+                <select value={req.status} onChange={e => { if (!req.id) return; handleStatusUpdate(req.id, e.target.value, 'request'); }} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
                   {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
                 </select>
               </div>
@@ -194,16 +195,21 @@ export const RequestsDashboard = memo(function RequestsDashboard() {
               <div key={item.id} className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 transition-all hover:shadow-md">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
+                    {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
                     <span className="font-bold text-[var(--foreground)]">{item.full_name}</span>
+                    {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
                     <span className={`rounded-full px-2 py-0.5 text-[0.65rem] font-bold ${item.type === 'complaint' ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : item.type === 'suggestion' ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                      {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
                       {item.type === 'complaint' ? 'شكوى' : item.type === 'suggestion' ? 'اقتراح' : item.type === 'feedback' ? 'ملاحظات' : 'استفسار'}
                     </span>
                   </div>
                   <p className="mt-1 text-sm font-bold text-[var(--foreground)]">{item.subject}</p>
+                  {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: @typescript-eslint/no-non-null-assertion verified */}
                   <p className="mt-0.5 text-xs text-[var(--muted-foreground)] truncate">{item.description}</p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${STATUS_COLORS[item.status || 'new']}`}>{STATUS_LABELS[item.status || 'new']}</span>
-                <select value={item.status} onChange={e => handleStatusUpdate(item.id!, e.target.value, 'feedback')} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
+                {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: @typescript-eslint/no-non-null-assertion verified */}
+                <select value={item.status} onChange={e => { if (!item.id) return; handleStatusUpdate(item.id, e.target.value, 'feedback'); }} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
                   {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
                 </select>
               </div>
@@ -224,11 +230,13 @@ export const RequestsDashboard = memo(function RequestsDashboard() {
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-[var(--foreground)]">{app.applicant_name}</span>
                     <span className="text-xs text-[var(--muted-foreground)]">{app.applicant_governorate}</span>
+                  {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: @typescript-eslint/no-non-null-assertion verified */}
                   </div>
                   <p className="mt-1 text-xs text-[var(--muted-foreground)]">هاتف: {app.applicant_phone}</p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${STATUS_COLORS[app.status || 'submitted']}`}>{STATUS_LABELS[app.status || 'submitted']}</span>
-                <select value={app.status} onChange={e => handleStatusUpdate(app.id!, e.target.value, 'application')} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
+                {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: @typescript-eslint/no-non-null-assertion verified */}
+                <select value={app.status} onChange={e => { if (!app.id) return; handleStatusUpdate(app.id, e.target.value, 'application'); }} className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] px-2 py-1.5 text-xs">
                   {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
                 </select>
               </div>

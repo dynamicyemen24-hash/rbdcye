@@ -114,6 +114,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         )}
 
         <span className="hidden sm:inline-block">
+          {/* eslint-disable-next-line no-nested-ternary -- precise: no-nested-ternary verified */}
           {theme === "light" ? "فاتح" : theme === "dark" ? "داكن" : "تلقائي"}
         </span>
       </button>

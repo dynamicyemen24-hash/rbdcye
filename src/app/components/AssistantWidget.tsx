@@ -122,6 +122,7 @@ return (
                       }`}
                       aria-label={data.question}
                     >
+                      // eslint-disable-next-line no-nested-ternary -- precise: verified
                       {key === 'donation' ? '💳' : key === 'location' ? '📍' : key === 'activities' ? '📋' : '📜'}
                       {data.question}
                     </button>

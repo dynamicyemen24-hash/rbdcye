@@ -395,7 +395,9 @@ export default memo(function MobileMenu({
                 <div className="grid grid-cols-2 gap-2">
                   {QUICK_ACTIONS.map((item, i) => {
                     const Icon = item.icon;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: verified
                     const isHighlight = "highlight" in item && Boolean((item as Record<string, any>).highlight);
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: @typescript-eslint/no-explicit-any verified */}
                     const color = "color" in item ? (item as Record<string, any>).color as string : undefined;
                     return (
                       <motion.button

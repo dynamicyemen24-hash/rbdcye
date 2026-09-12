@@ -61,8 +61,9 @@ export const ServiceCatalogPage = memo(function ServiceCatalogPage() {
   const handleApply = async () => {
     if (!appForm.applicant_name || !appForm.applicant_phone || !appForm.applicant_governorate || !modal.service) return;
     setSubmitting(true);
+    if (!modal.service?.id) return;
     const result = await servicesDBService.submitApplication({
-      service_id: modal.service.id!,
+      service_id: modal.service.id,
       applicant_name: appForm.applicant_name,
       applicant_phone: appForm.applicant_phone,
       applicant_governorate: appForm.applicant_governorate,
@@ -136,7 +137,7 @@ export const ServiceCatalogPage = memo(function ServiceCatalogPage() {
                 </div>
 
                 <div className="flex border-t border-[var(--border)]">
-                  <button onClick={() => setExpanded(isExpanded ? null : service.id!)} className="flex flex-1 items-center justify-center gap-1 py-3 text-sm font-bold text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)]">
+                  <button onClick={() => setExpanded(isExpanded ? null : (service.id ?? null))} className="flex flex-1 items-center justify-center gap-1 py-3 text-sm font-bold text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)]">
                     {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     التفاصيل
                   </button>

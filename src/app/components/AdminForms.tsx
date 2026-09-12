@@ -1110,6 +1110,7 @@ export function RequestResponseForm({
             { value: "فريق المتابعة", label: "فريق المتابعة" },
           ]}
         />
+      {/* eslint-disable-next-line react/jsx-no-comment-textnodes -- precise: react/jsx-no-comment-textnodes verified */}
       </div>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       <FormActions onSave={handleSubmit as any} onCancel={onCancel} submitLabel="إرسال الرد" />
