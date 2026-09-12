@@ -3,11 +3,11 @@
  */
 
 export const seoConfig = {
-  // ????? ????? ?????
+  // الصورة الافتراضية
   imageFallback: "/images/defaults/project-default.svg",
-  ogImage: "/og-image.png",
+  ogImage: "/og-image.svg",
 
-  // ????? meta tags
+  // توليد meta tags
   generateMeta: (
     data: {
       title?: string;
@@ -16,15 +16,15 @@ export const seoConfig = {
       url?: string;
     } = {}
   ) => ({
-    title: data.title || "Rahmaa Baynahum",
+    title: data.title || "رحماء بينهم للإغاثة والتنمية",
     description:
       data.description ||
-      "?????? ?????????? ???????? ?????? ?? ????? ????? ??????? ???????? ??????",
-    image: data.image || "/og-image.png",
+      "الموقع الإلكتروني الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
+    image: data.image || "/og-image.svg",
     url: data.url || "https://rbdcye.org",
   }),
 
-  // ????? ???????? JSON-LD
+  // توليد بيانات JSON-LD
   generateSchema: (
     data: {
       name?: string;
@@ -33,39 +33,41 @@ export const seoConfig = {
   ) => ({
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: data.name || "Rahmaa Baynahum",
+    name: data.name || "رحماء بينهم للإغاثة والتنمية",
     url: data.url || "https://rbdcye.org",
-    logo: "/logo.png",
+    logo: "/logo.svg",
     sameAs: [
       "https://facebook.com/rbdcye",
       "https://twitter.com/rbdcye",
-      "https://youtube.com/rbdcye",
+      "https://youtube.com/@rbdcye",
+      "https://instagram.com/rbdcye",
     ],
   }),
 };
 
 /**
- * ????? Schema ???????? ???????
+ * توليد Schema للمؤسسة
  */
 export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "NGO",
-    name: "????? ?????",
-    alternateName: "rbdcye Foundation",
+    name: "رحماء بينهم للإغاثة والتنمية",
+    alternateName: "Rohamaa Baynahum Foundation",
     url: "https://rbdcye.org",
-    logo: "https://rbdcye.org/favicon.svg",
-    description: "????? ??????? ?????? ???? ??? ????? ?????? ??????? ?????? ??????? ?????????",
+    logo: "https://rbdcye.org/logo.svg",
+    description: "مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ بالجمهورية اليمنية، تهدف إلى تقديم الإغاثة العاجلة والحلول التنموية المستدامة.",
     address: {
       "@type": "PostalAddress",
       addressCountry: "YE",
+      addressLocality: "صنعاء",
     },
-    sameAs: ["https://facebook.com/rbdcye", "https://twitter.com/rbdcye"],
+    sameAs: ["https://facebook.com/rbdcye", "https://twitter.com/rbdcye", "https://instagram.com/rbdcye"],
   };
 }
 
 /**
- * ????? Schema ????????
+ * توليد Schema للمقالات
  */
 export function generateArticleSchema(data: {
   title: string;
@@ -80,12 +82,12 @@ export function generateArticleSchema(data: {
     "@type": "Article",
     headline: data.title,
     description: data.description,
-    image: data.image || "/og-image.png",
+    image: data.image || "/og-image.svg",
     datePublished: data.datePublished,
     dateModified: data.dateModified || data.datePublished,
     author: {
       "@type": "Organization",
-      name: "????? ????? ?????",
+      name: "حملة رحماء بينهم",
     },
   };
 }

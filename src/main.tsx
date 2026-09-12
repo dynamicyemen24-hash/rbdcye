@@ -16,6 +16,7 @@ import { AuthProvider } from "@/features/auth/contexts/AuthContext";
 import { initializeCoreServices } from "@/features/core";
 import { I18nProvider } from "@/shared/i18n";
 import { initPerformancePrefetch, preloadCriticalAssets } from "@/utils/performance";
+import { cleanupUpdateCheck } from "@/utils/pwa";
 import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
 
 import { ToastProvider } from "./app/components/Toast";
@@ -23,7 +24,7 @@ import "./styles/index.css";
 
 // ============================================================
 // CRITICAL: All initialization is NON-BLOCKING
-// ?????? ???? ????? ??? ?????? ?? ???
+// تهيئة غير متزامنة لضمان تحميل فوري للصفحة
 // ============================================================
 
 // Initialize in background after DOM is ready

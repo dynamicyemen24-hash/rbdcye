@@ -2,12 +2,15 @@
 // أنماط SVG متجهة دقيقة قابلة للتلوين عبر currentColor
 import { useId } from "react";
 
-export type PatternVariant = "khatam" | "zellij" | "arabesque";
+export type PatternVariant = "khatam" | "zellij" | "arabesque" | "mashrabiya" | "girih" | "moroccan";
 
 const TILE_SIZE: Record<PatternVariant, { w: number; h: number }> = {
   khatam: { w: 96, h: 96 },
   zellij: { w: 64, h: 64 },
   arabesque: { w: 120, h: 60 },
+  mashrabiya: { w: 80, h: 80 },
+  girih: { w: 100, h: 100 },
+  moroccan: { w: 88, h: 88 },
 };
 
 function TileContent({ variant }: { variant: PatternVariant }) {
@@ -16,7 +19,7 @@ function TileContent({ variant }: { variant: PatternVariant }) {
       <g fill="none" stroke="currentColor" strokeWidth="1">
         <rect x="27" y="27" width="42" height="42" />
         <rect x="27" y="27" width="42" height="42" transform="rotate(45 48 48)" />
-        <circle cx="48" cy="48" r="2.5" />
+        <circle cx="48" cy="48" r="2.5" fill="currentColor" stroke="none" opacity="0.6" />
         <path d="M0 -6 L6 0 L0 6 L-6 0 Z" />
         <path d="M96 -6 L102 0 L96 6 L90 0 Z" />
         <path d="M0 90 L6 96 L0 102 L-6 96 Z" />
@@ -30,6 +33,39 @@ function TileContent({ variant }: { variant: PatternVariant }) {
         <path d="M32 0 L64 32 L32 64 L0 32 Z" />
         <path d="M0 0 L64 64 M64 0 L0 64" />
         <circle cx="32" cy="32" r="2" fill="currentColor" stroke="none" opacity="0.6" />
+      </g>
+    );
+  }
+  if (variant === "mashrabiya") {
+    return (
+      <g fill="none" stroke="currentColor" strokeWidth="1">
+        <rect x="15" y="15" width="50" height="50" rx="3" />
+        <circle cx="40" cy="40" r="16" />
+        <path d="M40 0 L40 80 M0 40 L80 40" strokeWidth="0.75" />
+        <circle cx="40" cy="40" r="3" fill="currentColor" stroke="none" opacity="0.8" />
+        <circle cx="0" cy="0" r="2" fill="currentColor" stroke="none" />
+        <circle cx="80" cy="0" r="2" fill="currentColor" stroke="none" />
+        <circle cx="0" cy="80" r="2" fill="currentColor" stroke="none" />
+        <circle cx="80" cy="80" r="2" fill="currentColor" stroke="none" />
+      </g>
+    );
+  }
+  if (variant === "girih") {
+    return (
+      <g fill="none" stroke="currentColor" strokeWidth="0.85">
+        <path d="M50 0 L61 17 L81 10 L71 29 L90 38 L71 47 L81 66 L61 59 L50 76 L39 59 L19 66 L29 47 L10 38 L29 29 L19 10 L39 17 Z" />
+        <circle cx="50" cy="38" r="3.5" fill="currentColor" stroke="none" opacity="0.5" />
+        <path d="M0 0 L100 100 M100 0 L0 100" strokeWidth="0.5" strokeDasharray="3 3" />
+      </g>
+    );
+  }
+  if (variant === "moroccan") {
+    return (
+      <g fill="none" stroke="currentColor" strokeWidth="0.9">
+        <polygon points="44,12 52,24 66,24 56,34 60,48 44,40 28,48 32,34 22,24 36,24" />
+        <rect x="20" y="20" width="48" height="48" rx="2" />
+        <rect x="20" y="20" width="48" height="48" rx="2" transform="rotate(45 44 44)" />
+        <circle cx="44" cy="44" r="2" fill="currentColor" stroke="none" />
       </g>
     );
   }

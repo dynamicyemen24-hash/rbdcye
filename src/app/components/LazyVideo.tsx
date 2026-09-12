@@ -11,7 +11,7 @@ interface LazyVideoProps {
 }
 
 /**
- * ???? ????? ?????? ?????? ????? ??? ???????
+ * مشغل فيديو خفيف مع تحميل كسول عند الظهور
  */
 export function LazyVideo({
   src,
@@ -26,7 +26,7 @@ export function LazyVideo({
   const [isInView, setIsInView] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // ?????? ???? ??????? ?? viewport
+  // تحميل الفيديو عند الظهور
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
@@ -36,7 +36,7 @@ export function LazyVideo({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsInView(true);
-            // ????? ??????? ??? ??????
+            // تحميل الفيديو عند الظهور
             if ("requestIdleCallback" in window) {
               requestIdleCallback(() => {
                 videoElement.load();
@@ -86,10 +86,10 @@ export function LazyVideo({
       >
         <source src={src} type="video/mp4" />
         <source src={src.replace(".mp4", ".webm")} type="video/webm" />
-        {/* ?? ???? ??? ??? ??????? ??? ???? */}
-        <img src={poster} alt="????? ?????? ????????" className="w-full h-full object-cover" />
+        {/* صورة الغلاف قبل بدء تشغيل الفيديو */}
+        <img src={poster} alt="غلاف الفيديو التعريفي للمؤسسة" className="w-full h-full object-cover" />
         {/* Track for accessibility */}
-        <track kind="captions" src="" label="Arabic" />
+        <track kind="captions" src="" label="العربية" />
       </video>
     </div>
   );

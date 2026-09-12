@@ -92,16 +92,16 @@ export function Partners(
             className="inline-block mb-3 text-[var(--brand-green)] border border-[var(--brand-green)]/30 bg-[var(--brand-green-pale)] px-4 py-1 rounded-full"
             style={{ fontSize: "0.8rem", fontWeight: 600 }}
           >
-            ????? ??????
+            شركاء النجاح
           </span>
           <h2 className="text-[var(--foreground)]">
-            ??????? ?? <span className="text-[var(--brand-green)]">????? ????????</span>
+            شركاؤنا في <span className="text-[var(--brand-green)]">صناعة الأثر والتنمية</span>
           </h2>
           <p
             className="text-[var(--muted-foreground)] mt-2 max-w-xl mx-auto"
             style={{ fontSize: "0.9rem", lineHeight: "1.7" }}
           >
-            ???? ?? ????? ??????????? ??????? ????? ?????? ??? ???? ?????
+            نعتز بشراكاتنا الاستراتيجية مع مختلف الجهات لتعظيم أثر المشاريع الإنسانية
           </p>
         </motion.div>
 

@@ -105,8 +105,8 @@
   /* ══════════════════════════════════════════════════════════════
      2. FONT STACKS
      ══════════════════════════════════════════════════════════════ */
-  --font-ar: "Tajawal", "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
-  --font-latin: "Plus Jakarta Sans", "Tajawal", "Cairo", system-ui, sans-serif;
+  --font-ar: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-latin: "Plus Jakarta Sans", "Cairo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-code: "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
 
   /* ══════════════════════════════════════════════════════════════

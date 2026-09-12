@@ -6,6 +6,7 @@ import {
   IslamicPattern,
   IslamicDivider,
   StarMedallion,
+  type PatternVariant,
 } from "@/app/components/decor/IslamicPattern";
 
 import type { LucideIcon } from "lucide-react";
@@ -43,7 +44,7 @@ const TONE_STYLES: Record<SectionTone, { style: React.CSSProperties; className?:
 interface SectionProps {
   tone?: SectionTone;
   /** زخرفة خلفية اختيارية تغطي القسم */
-  pattern?: "khatam" | "zellij" | "arabesque" | false;
+  pattern?: PatternVariant | false;
   /** شريط ذهبي علوي/سفلي للأقسام الداكنة */
   goldBands?: boolean;
   id?: string;

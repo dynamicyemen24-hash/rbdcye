@@ -36,6 +36,16 @@ export function getConnectionQuality(): "excellent" | "good" | "slow" | "offline
   return "slow";
 }
 
+let updateCheckInterval: NodeJS.Timeout | null = null;
+
+// Return cleanup function for the update check interval
+export function cleanupUpdateCheck(): void {
+  if (updateCheckInterval) {
+    clearInterval(updateCheckInterval);
+    updateCheckInterval = null;
+  }
+}
+
 // Register service worker with advanced caching strategies + robust update detection
 export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | null> {
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
@@ -105,29 +115,19 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
         // Note: caller may decide to reload; we broadcast rather than force reload
       });
 
-      let updateCheckInterval: NodeJS.Timeout | null = null;
-
-// Check for updates every 60 minutes when tab is visible
-updateCheckInterval = setInterval(
-  () => {
-    if (document.visibilityState === "visible") {
-      try {
-        void registration.update();
-      } catch {
-        // Update check failed — will retry next interval
-      }
-    }
-  },
-  60 * 60 * 1000,
-);
-
-// Return cleanup function for the update check interval
-export function cleanupUpdateCheck(): void {
-  if (updateCheckInterval) {
-    clearInterval(updateCheckInterval);
-    updateCheckInterval = null;
-  }
-}
+      // Check for updates every 60 minutes when tab is visible
+      updateCheckInterval = setInterval(
+        () => {
+          if (document.visibilityState === "visible") {
+            try {
+              void registration.update();
+            } catch {
+              // Update check failed — will retry next interval
+            }
+          }
+        },
+        60 * 60 * 1000,
+      );
 
       return registration;
     } catch {

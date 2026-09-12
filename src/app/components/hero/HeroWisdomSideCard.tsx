@@ -24,7 +24,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
   return (
     <aside
       className="w-full flex flex-col gap-4"
-      aria-label="??? ?? ????? ?????? ???????? ??????? ???????? ????????"
+      aria-label="قبس من القرآن الكريم والحديث الشريف"
     >
       {/* 1. Pure Quranic & Hadith Card */}
       <motion.div
@@ -48,7 +48,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-white/15">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/15 border border-amber-300/30 text-[#E6C875] text-xs font-black font-cairo shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-[#E6C875]" aria-hidden="true" />
-              <span>{current.type === "ayah" ? "??? ????? ????" : "??? ???? ????"}</span>
+              <span>{current.type === "ayah" ? "آية قرآنية كريمة" : "حديث نبوي شريف"}</span>
             </div>
 
             <span className="text-emerald-100/90 text-xs font-extrabold font-cairo bg-white/10 px-3 py-1 rounded-lg border border-white/15 backdrop-blur-md">
@@ -68,7 +68,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
                 className="space-y-3"
               >
                 <p className="font-amiri text-xl sm:text-2xl text-amber-50 leading-[2.2] font-extrabold text-center drop-shadow-md">
-                  � {current.arabic} �
+                  � « {current.arabic} » �
                 </p>
                 {current.meaning && (
                   <p className="text-xs sm:text-sm text-emerald-100/90 font-cairo leading-relaxed text-center font-medium max-w-xl mx-auto">
@@ -82,12 +82,12 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           {/* Navigation & Clean Action Footer */}
           <div className="pt-3 border-t border-white/15 flex items-center justify-between gap-3">
             {/* Prev/Next Verse Controls */}
-            <div className="flex items-center gap-1.5" aria-label="?????? ??? ?????? ????????">
+            <div className="flex items-center gap-1.5" aria-label="التنقل بين الآيات والأحاديث">
               <button
                 onClick={prevVerse}
                 className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-md"
-                title="??????"
-                aria-label="???? ??????"
+                title="السابق"
+                aria-label="النص السابق"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -97,8 +97,8 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
               <button
                 onClick={nextVerse}
                 className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-md"
-                title="??????"
-                aria-label="???? ??????"
+                title="التالي"
+                aria-label="النص التالي"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -107,11 +107,11 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
             {/* Dignified CTA */}
             <button
               onClick={() => setCurrentPage("donate")}
-              aria-label="??? ??????? ????????? ????????? ???????"
+              aria-label="ساهم بالتبرع للمشاريع التنموية"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C69E5A] hover:bg-[#B38B47] text-slate-950 text-xs font-black font-cairo shadow-md transition-all cursor-pointer"
             >
               <Heart className="w-3.5 h-3.5 fill-slate-950" />
-              <span>??? ??????? ?????????</span>
+              <span>تبرع الآن للمشاريع</span>
             </button>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
           className="relative rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-[#0F4C3A] text-white border border-emerald-500/20 hover:border-amber-400/50 shadow-md cursor-pointer overflow-hidden group transition-all"
           role="button"
           tabIndex={0}
-          aria-label="?????? ?????? ???????? ????????? ???????? ?????? ????? ?????"
+          aria-label="قبس من القرآن الكريم والحديث الشريف"
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -162,17 +162,17 @@ export function HeroWisdomSideCard({ setCurrentPage, onOpenVideo }: HeroWisdomSi
                 <div className="flex items-center gap-2">
                   <Film className="w-3.5 h-3.5 text-[#E6C875]" />
                   <span className="font-extrabold text-sm sm:text-base font-cairo text-white group-hover:text-amber-200 transition-colors">
-                    ?????? ???????? ????????
+                    الفيلم التعريفي والوثائقي
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-300 font-cairo mt-0.5">
-                  ???? ??????? ???????? ?????? ??????? ????? ?????
+                  شاهد مسيرة العطاء والأثر الميداني على أرض الواقع
                 </p>
               </div>
             </div>
 
             <div className="inline-flex items-center gap-1 text-xs font-bold font-cairo text-amber-300 group-hover:-translate-x-1 transition-transform shrink-0">
-              <span>??? ???????</span>
+              <span>شاهد الفيلم</span>
               <ChevronLeft className="w-4 h-4" />
             </div>
           </div>
