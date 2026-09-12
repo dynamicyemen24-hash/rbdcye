@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import compression from 'vite-plugin-compression';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 export default defineConfig({
   resolve: {
@@ -15,6 +16,16 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     react(),
+    ViteImageOptimizer({
+      test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
+      includePublic: true,
+      logStats: true,
+      png: { quality: 80 },
+      jpeg: { quality: 80 },
+      jpg: { quality: 80 },
+      webp: { quality: 80 },
+      avif: { quality: 60 },
+    }),
     compression({ algorithm: 'gzip', ext: '.gz', deleteOriginFile: false, threshold: 1024, verbose: false }),
     compression({ algorithm: 'brotliCompress', ext: '.br', deleteOriginFile: false, threshold: 1024, verbose: false }),
     VitePWA({
