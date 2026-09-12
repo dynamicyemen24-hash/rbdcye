@@ -5,9 +5,9 @@ pages_build_output_dir = "dist"
 [observability]
 enabled = true
 
-[[analytics_engine_datasets]]
-binding = "ANALYTICS"
-dataset = "web_vitals"
+# [[analytics_engine_datasets]] — معطّل مؤقتاً حتى تفعيله من Dashboard
+# binding = "ANALYTICS"
+# dataset = "web_vitals"
 
 # ============================================================
 # Cloudflare Pages Configuration
