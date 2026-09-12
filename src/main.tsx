@@ -55,6 +55,10 @@ if (typeof window !== "undefined") {
       .catch((err) => {
         if (import.meta.env.DEV) console.error("[OfflineManager]", err);
       });
+    // Register PWA update check cleanup for page unload
+    window.addEventListener("beforeunload", () => {
+      cleanupUpdateCheck();
+    });
   });
 
   if ("serviceWorker" in navigator && import.meta.env.PROD) {

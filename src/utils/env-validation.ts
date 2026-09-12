@@ -77,10 +77,11 @@ class EnvValidator {
       // Environment setup warnings exist but are non-critical
     }
 
-    if (errors.length > 0) {
-      console.error("❌ أخطاء في متغيرات البيئة:");
-      errors.forEach((err) => console.error(`  - ${err}`));
-
+if (errors.length > 0) {
+      if (import.meta.env.DEV) {
+        console.error("❌ أخطاء في متغيرات البيئة:");
+        errors.forEach((err) => console.error(`  - ${err}`));
+      }
       throw new Error("فشل التحقق من متغيرات البيئة:\n" + errors.join("\n"));
     }
 

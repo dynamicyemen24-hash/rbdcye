@@ -105,19 +105,29 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
         // Note: caller may decide to reload; we broadcast rather than force reload
       });
 
-      // Check for updates every 60 minutes when tab is visible
-      setInterval(
-        () => {
-          if (document.visibilityState === "visible") {
-            try {
-              void registration.update();
-            } catch {
-              // Update check failed — will retry next interval
-            }
-          }
-        },
-        60 * 60 * 1000,
-      );
+      let updateCheckInterval: NodeJS.Timeout | null = null;
+
+// Check for updates every 60 minutes when tab is visible
+updateCheckInterval = setInterval(
+  () => {
+    if (document.visibilityState === "visible") {
+      try {
+        void registration.update();
+      } catch {
+        // Update check failed — will retry next interval
+      }
+    }
+  },
+  60 * 60 * 1000,
+);
+
+// Return cleanup function for the update check interval
+export function cleanupUpdateCheck(): void {
+  if (updateCheckInterval) {
+    clearInterval(updateCheckInterval);
+    updateCheckInterval = null;
+  }
+}
 
       return registration;
     } catch {

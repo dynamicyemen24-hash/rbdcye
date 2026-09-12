@@ -372,7 +372,7 @@ export default function DonatePage() {
           setSelectedProject("general");
         }
       } catch (err) {
-        console.error('Failed to load projects:', err);
+        if (import.meta.env.DEV) console.error('Failed to load projects:', err);
       } finally {
         setProjectsLoading(false);
       }
@@ -652,7 +652,7 @@ export default function DonatePage() {
           });
         }
       } catch (dbError) {
-        console.error("DB save failed:", dbError);
+        if (import.meta.env.DEV) console.error("DB save failed:", dbError);
         // Continue with success UI even if DB fails
       }
 

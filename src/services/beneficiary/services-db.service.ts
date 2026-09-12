@@ -93,7 +93,7 @@ class ServicesDBService {
       if (error) throw error;
       return { success: true, id: data.id, request_number: data.request_number };
     } catch (err) {
-      console.error('[ServicesDB] Submit request failed:', err);
+      if (import.meta.env.DEV) console.error('[ServicesDB] Submit request failed:', err);
       return { success: false };
     }
   }
@@ -155,7 +155,7 @@ class ServicesDBService {
       if (error) throw error;
       return { success: true, id: data.id, entry_number: data.entry_number };
     } catch (err) {
-      console.error('[ServicesDB] Submit feedback failed:', err);
+      if (import.meta.env.DEV) console.error('[ServicesDB] Submit feedback failed:', err);
       return { success: false };
     }
   }
@@ -230,7 +230,7 @@ class ServicesDBService {
       if (error) throw error;
       return { success: true, id: data.id };
     } catch (err) {
-      console.error('[ServicesDB] Submit application failed:', err);
+      if (import.meta.env.DEV) console.error('[ServicesDB] Submit application failed:', err);
       return { success: false };
     }
   }

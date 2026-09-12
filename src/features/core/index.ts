@@ -33,13 +33,7 @@ export async function initializeCoreServices(): Promise<void> {
     // Initialize monitoring
     if (CORE_CONFIG.environment === "production") {
       // Production monitoring setup
-      window.addEventListener("unhandledrejection", (event) => {
-        console.error("[Core] Unhandled rejection:", event.reason);
-      });
-
-      window.addEventListener("error", (event) => {
-        console.error("[Core] Global error:", event.error);
-      });
+      // Global error handling is managed by ErrorBoundary and main.tsx setupGlobalErrorHandler()
     }
 
     // Performance monitoring

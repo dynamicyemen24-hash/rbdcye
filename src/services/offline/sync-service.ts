@@ -38,7 +38,7 @@ class SyncService {
       await this.syncProjects();
       await this.syncPolicies();
     } catch (err) {
-      console.error('[SyncService]', err);
+      if (import.meta.env.DEV) console.error('[SyncService]', err);
     }
   }
 
@@ -53,7 +53,7 @@ class SyncService {
         timestamp: Date.now(),
       });
     } catch (err) {
-      console.error('[Sync] Projects failed:', err);
+      if (import.meta.env.DEV) console.error('[Sync] Projects failed:', err);
     }
   }
 
@@ -64,7 +64,7 @@ class SyncService {
         await offlineManager.put('policies', { id: policy.key, ...policy });
       }
     } catch (err) {
-      console.error('[Sync] Policies failed:', err);
+      if (import.meta.env.DEV) console.error('[Sync] Policies failed:', err);
     }
   }
 }

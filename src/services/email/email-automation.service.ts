@@ -189,7 +189,7 @@ class EmailAutomationService {
       });
       return true;
     } catch (err) {
-      console.error('[Email] Queue failed:', err);
+      if (import.meta.env.DEV) console.error('[Email] Queue failed:', err);
       return false;
     }
   }

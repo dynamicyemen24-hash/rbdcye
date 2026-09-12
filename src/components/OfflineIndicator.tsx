@@ -7,10 +7,12 @@ export function OfflineIndicator() {
   const [showIndicator, setShowIndicator] = useState(false);
 
   useEffect(() => {
+    let hideTimeout: NodeJS.Timeout | undefined;
+
     const handleOnline = () => {
       setIsOnline(true);
       setShowIndicator(true);
-      setTimeout(() => setShowIndicator(false), 3000);
+      hideTimeout = setTimeout(() => setShowIndicator(false), 3000);
     };
 
     const handleOffline = () => {
@@ -30,6 +32,7 @@ export function OfflineIndicator() {
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
+      if (hideTimeout) clearTimeout(hideTimeout);
     };
   }, []);
 

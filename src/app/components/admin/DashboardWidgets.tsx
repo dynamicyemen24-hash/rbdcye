@@ -179,7 +179,7 @@ export function DashboardWidgets() {
       setInsights(i);
       setLastRefresh(new Date());
     } catch (err) {
-      console.error('[Dashboard]', err);
+      if (import.meta.env.DEV) console.error('[Dashboard]', err);
     } finally {
       setLoading(false);
     }

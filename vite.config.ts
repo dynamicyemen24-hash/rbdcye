@@ -26,7 +26,6 @@ export default defineConfig({
       webp: { quality: 80 },
       avif: { quality: 60 },
     }),
-    compression({ algorithm: 'gzip', ext: '.gz', deleteOriginFile: false, threshold: 1024, verbose: false }),
     compression({ algorithm: 'brotliCompress', ext: '.br', deleteOriginFile: false, threshold: 1024, verbose: false }),
     VitePWA({
       registerType: 'autoUpdate',
@@ -191,10 +190,7 @@ export default defineConfig({
           if (/[\\/]node_modules[\\/](embla-carousel-react|embla-carousel)[\\/]/.test(id)) {
             return 'vendor-carousel';
           }
-          // Maps
-          if (/[\\/]node_modules[\\/](leaflet)[\\/]/.test(id)) {
-            return 'vendor-map';
-          }
+          // Maps (Leaflet — use dynamic import if maps are added: import('leaflet'))
           // Date utilities
           if (/[\\/]node_modules[\\/](date-fns)[\\/]/.test(id)) {
             return 'vendor-date';
@@ -261,7 +257,16 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'recharts'],
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'framer-motion',
+      'recharts',
+      'lucide-react',
+      'date-fns',
+      'embla-carousel-react',
+    ],
     exclude: ['@supabase/supabase-js'],
   },
   preview: {

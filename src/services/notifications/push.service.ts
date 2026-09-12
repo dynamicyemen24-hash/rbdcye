@@ -25,7 +25,7 @@ class PushNotificationService {
       await this.saveSubscription(subscription);
       return subscription;
     } catch (err) {
-      console.error('[Push] Subscribe failed:', err);
+      if (import.meta.env.DEV) console.error('[Push] Subscribe failed:', err);
       return null;
     }
   }
@@ -39,7 +39,7 @@ class PushNotificationService {
         await this.removeSubscription();
       }
     } catch (err) {
-      console.error('[Push] Unsubscribe failed:', err);
+      if (import.meta.env.DEV) console.error('[Push] Unsubscribe failed:', err);
     }
   }
 

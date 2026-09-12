@@ -718,7 +718,7 @@ sync
     // console.log("✅ تمت المزامنة بنجاح");
     process.exit(0);
   })
-  .catch((error) => {
-    console.error("❌ فشلت المزامنة:", error);
+.catch((error) => {
+    if (import.meta.env.DEV) console.error("❌ فشلت المزامنة:", error);
     process.exit(1);
-  });
+});

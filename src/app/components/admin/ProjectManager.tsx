@@ -27,7 +27,7 @@ export function ProjectManager() {
       const data = await adminProjectService.getAllProjects();
       setProjects(data);
     } catch (err) {
-      console.error('Failed to load projects:', err);
+      if (import.meta.env.DEV) console.error('Failed to load projects:', err);
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ export function ProjectManager() {
         p.id === id ? { ...p, is_active: !currentStatus } : p
       ));
     } catch (err) {
-      console.error('Toggle failed:', err);
+      if (import.meta.env.DEV) console.error('Toggle failed:', err);
     }
   };
 
@@ -56,7 +56,7 @@ export function ProjectManager() {
         p.id === id ? { ...p, is_featured: !currentStatus } : p
       ));
     } catch (err) {
-      console.error('Toggle featured failed:', err);
+      if (import.meta.env.DEV) console.error('Toggle featured failed:', err);
     }
   };
 
@@ -67,7 +67,7 @@ export function ProjectManager() {
       await adminProjectService.deleteProject(id);
       setProjects(prev => prev.filter(p => p.id !== id));
     } catch (err) {
-      console.error('Delete failed:', err);
+      if (import.meta.env.DEV) console.error('Delete failed:', err);
     }
   };
 

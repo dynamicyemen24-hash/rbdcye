@@ -17,14 +17,17 @@
 
 /* ==========================================================================
     PERFORMANCE: Content Visibility + Containment — مع fallback للمتصفحات القديمة
+    — applies only to sections with sufficient content to benefit
     ========================================================================== */
 @supports (content-visibility: auto) {
-  main section {
+  main > section:first-of-type,
+  main > section:nth-of-type(3),
+  main > section:nth-of-type(4) {
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
     contain: layout style paint;
   }
-  main section:first-child,
+  main > section:first-child,
   #hero,
   #story {
     content-visibility: visible;
