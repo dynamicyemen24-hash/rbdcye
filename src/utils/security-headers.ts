@@ -1,7 +1,7 @@
 // Security meta tags and CSP headers — aligned with index.html + _headers (enterprise-grade)
 const ALLOWED_CSP = [
   "default-src 'self'",
-  "script-src 'self' https://challenges.cloudflare.com",
+  "script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https: https://cdn.sanity.io",
   "font-src 'self' data: https://fonts.gstatic.com",
@@ -14,6 +14,7 @@ const ALLOWED_CSP = [
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
+  "trusted-types default dompurify",
 ].join("; ");
 
 export function setSecurityHeaders(): void {
