@@ -27,20 +27,14 @@ import {
   AlertTriangle,
   UserCheck,
   DollarSign,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Heart,
   Activity,
 } from "lucide-react";
 import { useState, useEffect, useCallback, ReactNode } from "react";
 
 import SettingsPage from "@/features/admin/pages/SettingsPage";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { realAnalyticsService } from '@/services/admin/real-analytics.service';
 import {
   newsDashboardService as newsService,
   storiesDashboardService as storiesService,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  projectsDashboardService as projectsService,
   reportsDashboardService as reportsService,
   mediaDashboardService as mediaService,
   partnersDashboardService as partnersService,
@@ -51,14 +45,10 @@ import {
   usersDashboardService as usersService,
   dashboardService,
 } from "@/shared/services/dashboard.service";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { postgresService } from "@/shared/services/postgres.service";
 
 import { ProjectManager } from "./admin/ProjectManager";
 import { RequestsDashboard } from './admin/RequestsDashboard';
 import { AdminAnalytics } from "./AdminAnalytics";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import AdminDashboardExtras from "./AdminDashboardExtras";
 import NotificationsPanel from "./NotificationsPanel";
 import { useToast, useConfirm } from "./Toast";
 import { DashboardWidgets } from '../components/admin/DashboardWidgets';

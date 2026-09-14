@@ -3,7 +3,10 @@ import { authApi } from "../api/auth.api";
 import type { User, LoginCredentials, TokenPayload } from "../types/auth";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-const DEMO_AUTH_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_DEMO_AUTH === "true";
+// SECURITY: Demo/dummy auth is strictly DEV-ONLY — never reachable in production builds.
+// Vite statically replaces import.meta.env.DEV at build time (false in prod), so no
+// configuration value can ever re-enable this path after deployment.
+const DEMO_AUTH_ENABLED = import.meta.env.DEV;
 
 // Secured session management with encryption
 const SESSION_KEY = "rh_session_encrypted";
@@ -284,13 +287,8 @@ export const authService = {
       }
       return newToken;
     } catch {
-      // If refresh fails, extend current session
-      const user = session.user();
-      if (user) {
-        const newToken = generateSecureToken(user);
-        session.setSession(newToken, user, true);
-        return newToken;
-      }
+      // Security: NEVER self-issue tokens — invalid session must be terminated
+      await this.logout();
       return null;
     }
   },
