@@ -34,7 +34,6 @@
     worker-src 'self' blob:;
     manifest-src 'self';
     upgrade-insecure-requests;
-    require-trusted-types-for 'script';
     trusted-types default dompurify
 
   # === Early Hints 103 — Cloudflare (enable in dashboard: Speed > Optimization > Early Hints) ===

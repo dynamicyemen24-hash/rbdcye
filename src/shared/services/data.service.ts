@@ -568,11 +568,41 @@ class DataService {
     }
   }
 
+  // ========== OFFLINE-FIRST HELPERS ==========
+  private entityToStore(entity: string): string | null {
+    const map: Record<string, string> = {
+      rh_news_data: "news", rh_stories_data: "stories", rh_partners_data: "partners",
+      rh_projects_data: "projects", rh_reports_data: "reports", rh_media_data: "media",
+      rh_donations_data: "donations", rh_requests_data: "requests", rh_volunteers_data: "volunteers",
+    };
+    return map[entity] || null;
+  }
+
+  private async readFromOfflineManager<T>(entity: string): Promise<T[] | null> {
+    const store = this.entityToStore(entity);
+    if (!store || typeof window === "undefined") return null;
+    try {
+      const { offlineManager } = await import("@/services/offline/offline-manager");
+      const items = await offlineManager.getAll<T>(store);
+      return Array.isArray(items) && items.length > 0 ? items : null;
+    } catch { return null; }
+  }
+
+  private async writeToOfflineManager<T>(entity: string, items: T[]): Promise<void> {
+    const store = this.entityToStore(entity);
+    if (!store || typeof window === "undefined") return;
+    try {
+      const { offlineManager } = await import("@/services/offline/offline-manager");
+      await offlineManager.putMany(store, items as unknown as { id: string }[]);
+    } catch { /* non-critical */ }
+  }
+
   // ========== PUBLIC API ==========
 
   /**
    * Get all items for an entity.
-   * Strategy: Cache → Postgres (Neon) → Supabase → HTTP API → LocalStorage → Seed data
+   * Strategy: Memory Cache → IndexedDB (offlineManager) → Postgres (Neon) → Supabase → HTTP API → LocalStorage → Seed data
+   * Offline-first: returns IndexedDB immediately when offline, merges when online.
    */
   async getAll<T extends { id: string | number }>(
     entity: string,
@@ -580,7 +610,7 @@ class DataService {
   ): Promise<T[]> {
     const cacheKey = `getAll:${entity}`;
 
-    // 1. Check cache (with stale-while-revalidate)
+    // 1. Check memory cache (with stale-while-revalidate)
     if (!forceRefresh) {
       const cached = getCached<T[]>(cacheKey);
       if (cached) {
@@ -589,6 +619,14 @@ class DataService {
         }
         return cached.data;
       }
+    }
+
+    // 1b. Offline-first: if offline, return IndexedDB / localStorage immediately
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      const offlineItems = await this.readFromOfflineManager<T>(entity);
+      if (offlineItems) { setCache(cacheKey, offlineItems); return offlineItems; }
+      const storedOffline = this.getStored<T>(entity);
+      if (storedOffline && storedOffline.length > 0) { setCache(cacheKey, storedOffline); return storedOffline; }
     }
 
     // 2. Get local stored data
@@ -600,6 +638,7 @@ class DataService {
       if (Array.isArray(items) && items.length > 0) {
         const merged = stored ? mergeLatestById(items, stored) : items;
         this.setLocal(entity, merged);
+        await this.writeToOfflineManager(entity, merged);
         setCache(cacheKey, merged);
         return merged;
       }
@@ -613,6 +652,7 @@ class DataService {
       if (Array.isArray(items) && items.length > 0) {
         const merged = stored ? mergeLatestById(items, stored) : items;
         this.setLocal(entity, merged);
+        await this.writeToOfflineManager(entity, merged);
         setCache(cacheKey, merged);
         return merged;
       }
@@ -632,6 +672,7 @@ class DataService {
       if (Array.isArray(items) && items.length > 0) {
         const merged = stored ? mergeLatestById(items as T[], stored) : (items as T[]);
         this.setLocal(entity, merged);
+        await this.writeToOfflineManager(entity, merged);
         setCache(cacheKey, merged);
         return merged;
       }
@@ -639,7 +680,9 @@ class DataService {
       // API failed, continue to fallback
     }
 
-    // 6. Fallback: stored data or seed data
+    // 6. Fallback: IndexedDB → stored data or seed data
+    const offlineFallback = await this.readFromOfflineManager<T>(entity);
+    if (offlineFallback) { setCache(cacheKey, offlineFallback); return offlineFallback; }
     const result = stored || this.getLocal<T>(entity);
     setCache(cacheKey, result);
     return result;
@@ -794,6 +837,25 @@ class DataService {
       // Fall through to local
     }
 
+    // Offline-first: queue for sync when offline
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      try {
+        const { offlineManager } = await import("@/services/offline/offline-manager");
+        const now = new Date().toISOString();
+        const newItem = {
+          ...sanitizedItem,
+          id: sanitizedItem.id || String(Date.now()),
+          createdAt: sanitizedItem.createdAt || now,
+          updatedAt: now,
+        } as T;
+        const store = this.entityToStore(entity);
+        if (store) await offlineManager.queueMutation(store, "create", newItem);
+        const all = this.getLocal<T>(entity);
+        this.setLocal(entity, [newItem, ...all]);
+        return newItem;
+      } catch { /* fall through */ }
+    }
+
     // Local fallback
     const all = this.getLocal<T>(entity);
     const now = new Date().toISOString();
@@ -804,6 +866,7 @@ class DataService {
       updatedAt: now,
     } as T;
     this.setLocal(entity, [newItem, ...all]);
+    await this.writeToOfflineManager(entity, [newItem, ...all]);
     return newItem;
   }
 
@@ -883,12 +946,30 @@ class DataService {
       // Fall through to local
     }
 
+    // Offline-first: queue update when offline
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      try {
+        const { offlineManager } = await import("@/services/offline/offline-manager");
+        const all = this.getLocal<T>(entity);
+        const idx = all.findIndex((item) => String(item.id) === String(id));
+        if (idx === -1) return null;
+        const merged = { ...all[idx], ...sanitizedUpdates, updatedAt: new Date().toISOString() } as T;
+        const store = this.entityToStore(entity);
+        if (store) await offlineManager.queueMutation(store, "update", merged);
+        all[idx] = merged;
+        this.setLocal(entity, all);
+        if (store) await offlineManager.put(store, merged);
+        return merged;
+      } catch { /* fall through */ }
+    }
+
     // Local fallback
     const all = this.getLocal<T>(entity);
     const idx = all.findIndex((item) => String(item.id) === String(id));
     if (idx === -1) return null;
     all[idx] = { ...all[idx], ...sanitizedUpdates, updatedAt: new Date().toISOString() } as T;
     this.setLocal(entity, all);
+    await this.writeToOfflineManager(entity, all);
     return all[idx];
   }
 
@@ -941,12 +1022,32 @@ class DataService {
       // Fall through
     }
 
+    // Offline-first: queue delete when offline
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      try {
+        const { offlineManager } = await import("@/services/offline/offline-manager");
+        const store = this.entityToStore(entity);
+        if (store) await offlineManager.queueMutation(store, "delete", { id });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const all = this.getLocal<any>(entity);
+        const filtered = all.filter((item) => String(item.id) !== String(id));
+        this.setLocal(entity, filtered);
+        if (store) await offlineManager.delete(store, String(id));
+        return filtered.length !== all.length;
+      } catch { /* fall through */ }
+    }
+
     // Local fallback
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const all = this.getLocal<any>(entity);
     const filtered = all.filter((item) => String(item.id) !== String(id));
     if (filtered.length === all.length) return false;
     this.setLocal(entity, filtered);
+    await this.writeToOfflineManager(entity, filtered);
+    const store2 = this.entityToStore(entity);
+    if (store2) {
+      try { const { offlineManager } = await import("@/services/offline/offline-manager"); await offlineManager.delete(store2, String(id)); } catch { /* ignore */ }
+    }
     return true;
   }
 

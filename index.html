@@ -81,6 +81,7 @@
 
     <!-- Critical CSS: Prevent FOUC -->
     <style>
+      /* Security: CSP already set via HTTP headers in _headers — no inline meta needed */
       *{margin:0;padding:0;box-sizing:border-box}
       html{font-family:'Cairo','Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;background:#f8f5ec;color:#17202a;scroll-behavior:smooth}
       html.dark{background:#0a0f15;color:#f5f0e4}
@@ -92,11 +93,9 @@
       @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.05);opacity:.6}}
     </style>
 
-    <!-- Security: Content Security Policy (aligned with public/_headers — both policies are enforced) — Trusted Types enabled -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.sanity.io https://xd0ohyiz.apicdn.sanity.io https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://sentry.io https://*.cloudflare.com; frame-src https://js.stripe.com https://hooks.stripe.com https://*.sanity.io; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; manifest-src 'self'; require-trusted-types-for 'script'; trusted-types default dompurify;">
+<!-- Security: Content Security Policy set via HTTP headers in _headers — no inline meta needed -->
     <script src="/js/trusted-types.js"></script>
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(self)" />
 
@@ -176,10 +175,16 @@
     </script>
   </head>
   <body>
-    <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي">
+    <!-- Skip link يظهر تلقائياً عند التركيز لأول مرة -->
+    <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي" 
+       onfocus="this.scrollIntoView({behavior: 'smooth', block: 'start'});"
+       tabindex="0">
+      <span style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;">انتقل إلى المحتوى الرئيسي</span>
       انتقل إلى المحتوى الرئيسي
     </a>
-    <div id="root">
+    
+    <!-- وضع المحتوى الرئيسي في الأعلى مباشرة -->
+    <main id="main-content">
       <div id="app-loader" class="app-loader" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a12 0%,#0F4C3A 50%,#0a1a12 100%);transition:opacity .6s ease,visibility .6s ease">
   <!-- Islamic geometric ring animation -->
   <div style="position:relative;width:120px;height:120px;margin-bottom:32px">

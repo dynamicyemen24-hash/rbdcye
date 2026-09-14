@@ -27,6 +27,7 @@ export interface ProjectAllocation {
 
 export interface MultiProjectDonationRequest {
   donorId?: string;
+  idempotencyKey?: string;
   donorName: string;
   donorEmail: string;
   donorPhone?: string;
@@ -50,6 +51,7 @@ export interface MultiProjectDonationRequest {
 export interface DonationReceipt {
   id: string;
   transactionId: string;
+  idempotencyKey?: string;
   donorName: string;
   donorEmail: string;
   totalAmount: number;
@@ -290,6 +292,54 @@ class MultiProjectDonationService {
       );
     }
 
+    // Idempotency key: same request + same key = one financial operation
+    // prevents duplicate donations on refresh, retry, network timeout, SW resend
+    // generates deterministic key based on donor email + amount + currency + projects
+    const idempotencyKey =
+      request.idempotencyKey ||
+      (() => {
+        const raw = `${request.donorEmail?.toLowerCase() || "anonymous"}|${request.totalAmount}|${request.currency}|${request.allocations
+          .map((a) => `${a.projectId}:${a.amount}`)
+          .sort()
+          .join("|")}`;
+        try {
+          // btoa-safe: encode UTF-8 via encodeURIComponent
+          return (
+            "idem_" +
+            btoa(unescape(encodeURIComponent(raw)))
+              .replace(/[+/=]/g, "")
+              .substring(0, 32)
+          );
+        } catch {
+          let hash = 0;
+          for (let i = 0; i < raw.length; i++) hash = ((hash << 5) - hash + raw.charCodeAt(i)) | 0;
+          return "idem_" + Math.abs(hash).toString(36);
+        }
+      })();
+
+    // Check if donation with this idempotency key already exists in local receipts
+    const existingReceipt = this.receipts.find(
+      (r) => r.idempotencyKey === idempotencyKey && r.status !== "failed"
+    );
+    if (existingReceipt) {
+      // Return existing receipt - donation already processed
+      return existingReceipt;
+    }
+    // Persistent check across refresh: localStorage idempotency map (survives reload)
+    try {
+      const persisted = localStorage.getItem(`rh_idem_${idempotencyKey}`);
+      if (persisted) {
+        const parsed: DonationReceipt = JSON.parse(persisted);
+        if (parsed && parsed.status !== "failed") {
+          // Repopulate memory cache for future dedup
+          this.receipts.push(parsed);
+          return parsed;
+        }
+      }
+    } catch {
+      // localStorage unavailable - continue
+    }
+
     const transactionId = generateTransactionId();
     const receiptNumber = generateReceiptNumber();
 
@@ -311,6 +361,7 @@ class MultiProjectDonationService {
         metadata: {
           transactionId,
           receiptNumber,
+          idempotencyKey,
           isMultiProject: true,
           projectCount: request.allocations.length,
           allocations: request.allocations.map((a) => ({
@@ -320,8 +371,8 @@ class MultiProjectDonationService {
         },
       });
     } catch (error) {
-      // Save failed donation locally
-      const failedReceipt = this.createReceipt(request, transactionId, receiptNumber, "failed");
+      // Save failed donation locally - keep idempotencyKey so retry can succeed (failed receipts excluded from dedup)
+      const failedReceipt = this.createReceipt(request, transactionId, receiptNumber, "failed", undefined, idempotencyKey);
       this.receipts.push(failedReceipt);
       throw error;
     }
@@ -332,16 +383,23 @@ class MultiProjectDonationService {
       transactionId,
       receiptNumber,
       paymentResult.status === "completed" ? "completed" : "pending",
-      paymentResult
+      paymentResult,
+      idempotencyKey
     );
 
     this.receipts.push(receipt);
+    // Persist idempotency mapping across refresh (survives reload / retry)
+    try {
+      localStorage.setItem(`rh_idem_${idempotencyKey}`, JSON.stringify(receipt));
+    } catch {
+      // Quota exceeded - non-critical
+    }
 
     // Save to database
     try {
       await this.saveDonationToDatabase(receipt, request);
     } catch {
-      // Failed to save donation
+      // Failed to save donation - receipt still returned to caller, sync will retry via background sync
     }
 
     // Audit log
@@ -372,11 +430,13 @@ class MultiProjectDonationService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any for PortableText
     // eslint-disable-next-line @typescript-eslint/no-unused-vars -- precise: unused var kept for API shape
-    paymentResult?: any
+    paymentResult?: any,
+    idempotencyKey?: string
   ): DonationReceipt {
     return {
       id: `don_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
       transactionId,
+      idempotencyKey: idempotencyKey || request.idempotencyKey,
       donorName: request.isAnonymous ? "متبرع كريم" : request.donorName,
       donorEmail: request.donorEmail,
       totalAmount: request.totalAmount,

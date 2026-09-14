@@ -23,6 +23,7 @@ import SearchOverlay from "./components/SearchOverlay";
 import { SocialProof } from "./components/SocialProof";
 import { SocialProofToast } from "./components/SocialProofToast";
 import { StepScroll } from "./components/StepScroll";
+import OfflineIndicator from "./components/PWA/OfflineIndicator";
 import { UpdateNotification } from "./components/UpdateNotification";
 import { UrgencyBanner } from "./components/UrgencyBanner";
 
@@ -234,6 +235,7 @@ const AppContent = memo(function AppContent() {
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <NewsTicker />
       <UpdateNotification />
+      <OfflineIndicator />
       <PageProgress />
       <EnhancedInstallPrompt />
 

@@ -571,6 +571,10 @@ export default function DonatePage() {
       return;
     }
     setIsSubmitting(true);
+    // Generate idempotency key to prevent duplicate donations on refresh/retry
+    // Ensures: same donation request + same idempotency key = one financial operation
+    const idempotencyKey = `donation_${donorInfo.email?.toLowerCase() || 'anonymous'}_${actualAmount}_${selectedCurrency}_${selectedProject}`;
+    
     try {
       const selectedProjectData = displayProjects.find((p) => p.id === selectedProject);
       const paymentType = recurringOption === "once" ? "once" : recurringOption;
@@ -578,6 +582,7 @@ export default function DonatePage() {
         donorName: donorInfo.name || "متبرع",
         donorEmail: donorInfo.email,
         donorPhone: donorInfo.phone,
+        idempotencyKey: idempotencyKey,  // prevents duplicate donations on refresh/retry
         allocations:
           selectedProjectData && selectedProject !== "general"
             ? [
@@ -617,8 +622,11 @@ export default function DonatePage() {
         /* non-critical */
       }
 
-      // Save to real database
-      try {
+      // Save to real database - legacy direct insert (processDonation already saved via multiProject service)
+      // Guarded by idempotency: skip if this donation was already persisted (prevents duplicate on refresh/retry)
+      const alreadyPersisted = (() => { try { return !!localStorage.getItem(`rh_idem_${idempotencyKey}`); } catch { return false; } })();
+      if (!alreadyPersisted) {
+        try {
         const donation = await donationDBService.createDonation({
           donor_name: donorInfo.name || undefined,
           donor_email: donorInfo.email,
@@ -655,6 +663,7 @@ export default function DonatePage() {
         if (import.meta.env.DEV) console.error("DB save failed:", dbError);
         // Continue with success UI even if DB fails
       }
+      } // end if (!alreadyPersisted) guard - idempotent skip
 
       setIsSuccess(true);
     } catch {

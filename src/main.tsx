@@ -1,22 +1,13 @@
 /* eslint-disable no-inner-declarations */
-import { StrictMode, lazy, Suspense, useState, useEffect } from "react";
+import { StrictMode, lazy } from "react";
 import { createRoot } from "react-dom/client";
 
-declare global {
-  interface Window {
-    __loaderStop?: () => void;
-  }
-}
-
-import AdvancedProgressBar, { ScrollProgressIndicator } from "@/components/AdvancedProgressBar";
-import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
-import { HeroSkeleton } from "@/components/LoadingSkeleton";
-import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
-import { initializeCoreServices } from "@/features/core";
 import { I18nProvider } from "@/shared/i18n";
+import { initializeCoreServices } from "@/features/core";
+import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
 import { initPerformancePrefetch, preloadCriticalAssets } from "@/utils/performance";
-import { cleanupUpdateCheck } from "@/utils/pwa";
+import { cleanupUpdateCheck, registerServiceWorker } from "@/utils/pwa";
 import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
 
 import { ToastProvider } from "./app/components/Toast";
@@ -56,84 +47,40 @@ if (typeof window !== "undefined") {
       .catch((err) => {
         if (import.meta.env.DEV) console.error("[OfflineManager]", err);
       });
-    // Register PWA update check cleanup for page unload
+    // World-class PWA registration (Workbox + periodicSync + update detection)
+    if (import.meta.env.PROD) {
+      registerServiceWorker().catch(() => { /* silent — app works offline-less */ });
+    }
     window.addEventListener("beforeunload", () => {
       cleanupUpdateCheck();
     });
   });
-
-  if ("serviceWorker" in navigator && import.meta.env.PROD) {
-    window.addEventListener(
-      "load",
-      () => {
-        navigator.serviceWorker.register("/sw.js").catch((err) => {
-      if (import.meta.env.DEV) console.error("[SW Registration]", err);
-    });
-      },
-      { passive: true, once: true }
-    );
-  }
 }
 
-// Lazy load App for better initial performance
+// ============================================================
+// Main App - instant render without blocking loader
+// HTML already has #main-content structure, React hydrates on top
+// ============================================================
 const App = lazy(() => import("./app/App"));
 
+// Render immediately - the HTML already has #main-content structure
+// React will hydrate on top of the existing DOM
 // ============================================================
-// Main App - instant render
-// ============================================================
-function AppWithProgress() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const loader = document.getElementById('app-loader');
-    if (loader) {
-      if (typeof window.__loaderStop === 'function') window.__loaderStop();
-      loader.style.opacity = '0';
-      setTimeout(() => loader.style.display = 'none', 600);
-    }
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: setState in effect is intentional for initial data hydration
-    setProgress(30);
-    const t1 = setTimeout(() => setProgress(60), 200);
-    const t2 = setTimeout(() => setProgress(85), 500);
-    const t3 = setTimeout(() => {
-      setProgress(100);
-      setIsLoaded(true);
-    }, 800);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, []);
-
+function AppRoot() {
   return (
-    <>
-      <AdvancedProgressBar
-        percentage={progress}
-        message=""
-        isComplete={isLoaded}
-        isReady={isLoaded}
-      />
-      <ScrollProgressIndicator />
-      <OfflineIndicator />
-      <Suspense fallback={<HeroSkeleton />}>
-        <App />
-      </Suspense>
-    </>
+    <StrictMode>
+      <I18nProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ToastProvider>
+      </I18nProvider>
+    </StrictMode>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <I18nProvider>
-      <ToastProvider>
-        <AuthProvider>
-          <AppWithProgress />
-        </AuthProvider>
-      </ToastProvider>
-    </I18nProvider>
-  </StrictMode>
+  <AppRoot />
 );
