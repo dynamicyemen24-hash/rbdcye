@@ -7,6 +7,11 @@ import compression from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 export default defineConfig({
+  // Eliminate DEV-only code from production bundles (tree-shaking enforcer)
+  define: {
+    'import.meta.env.DEV': 'false',
+    'import.meta.env.PROD': 'true',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

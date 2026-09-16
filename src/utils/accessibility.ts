@@ -1,9 +1,12 @@
-// Accessibility utilities
+// Accessibility utilities — focus management, ARIA helpers, reduced-motion guard.
+// Media-query decisions live in src/utils/media.ts; this file only consumes them.
 
-// Trap focus within a container (for modals)
+import { prefersReducedMotionSync } from './media';
+
+// Trap focus within a container (for modals).
 export function trapFocus(container: HTMLElement) {
   const focusableElements = container.querySelectorAll<HTMLElement>(
-    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
   );
 
   const firstElement = focusableElements[0];
@@ -31,7 +34,7 @@ export function trapFocus(container: HTMLElement) {
   return () => container.removeEventListener('keydown', handleKeyDown);
 }
 
-// Announce to screen readers
+// Announce to screen readers.
 export function announce(message: string, priority: 'polite' | 'assertive' = 'polite') {
   const el = document.createElement('div');
   el.setAttribute('role', 'status');
@@ -43,25 +46,22 @@ export function announce(message: string, priority: 'polite' | 'assertive' = 'po
   setTimeout(() => el.remove(), 1000);
 }
 
-// Generate unique ID for ARIA relationships
+// Generate unique ID for ARIA relationships.
 let idCounter = 0;
 export function generateId(prefix = 'rbdcye') {
   return `${prefix}-${++idCounter}`;
 }
 
-// Check if user prefers reduced motion
-export function prefersReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+// Check if user prefers reduced motion (SSR-safe, consumed inside effects/handlers only).
+export { prefersReducedMotionSync };
 
-// Check if user is on mobile
+// Check if user is on mobile.
 export function isMobile(): boolean {
   if (typeof window === 'undefined') return false;
   return window.innerWidth < 768;
 }
 
-// Manage focus restoration after modal close
+// Manage focus restoration after modal close.
 export function manageFocusRestore() {
   let previouslyFocused: HTMLElement | null = null;
 

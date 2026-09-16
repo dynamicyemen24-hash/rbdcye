@@ -25,6 +25,18 @@
     <meta name="msapplication-TileColor" content="#0F4C3A" />
     <meta name="msapplication-TileImage" content="/icons/pwa-512x512.png" />
 
+    <!-- CRITICAL CSS INLINE — First Paint < 1s (above-the-fold) -->
+    <style>
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+      body{font-family:"Cairo",system-ui,-apple-system,sans-serif;background:#f8f7f4;color:#1a1a1a;line-height:1.95;direction:rtl;overflow-x:hidden}
+      .app-loader{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a12 0%,#0F4C3A 50%,#0a1a12 100%)}
+      .skip-link{position:absolute;top:-100px;right:1rem;z-index:100000;padding:.75rem 1.5rem;background:#0F4C3A;color:#fff;border-radius:0 0 .5rem .5rem;font-weight:700;text-decoration:none;transition:top .2s}
+      .skip-link:focus{top:0}
+      @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.05);opacity:.6}}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    </style>
     <!-- SEO Meta -->
     <title>رحماء بينهم للإغاثة والتنمية | rbdcye.org</title>
     <meta name="description" content="الحملة الرسمية لـ رحماء بينهم للإغاثة والتنمية باليمن (ترخيص رسمي ٤٨٢). عمل إنساني وتنموي مستدام يحفظ الكرامة ويبني المستقبل." />

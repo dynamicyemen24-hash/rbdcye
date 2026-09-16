@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
 
-export type ThemeMode = "light" | "dark" | "system";
-export type DisplayMode = "default" | "sepia" | "contrast";
+import { usePrefersReducedMotion, useSystemColorScheme } from '@/utils/media';
+
+export type ThemeMode = 'light' | 'dark' | 'system';
+export type DisplayMode = 'default' | 'sepia' | 'contrast';
 
 interface ThemeContextType {
   theme: ThemeMode;
@@ -56,41 +58,31 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return Number.isFinite(parsed) ? Math.max(FONT_SIZE_MIN, Math.min(FONT_SIZE_MAX, parsed)) : DEFAULT_FONT_SIZE;
   });
 
+  // SSR-safe system reduced-motion detection — delegated to src/utils/media.ts.
+  // The OS preference seeds the initial state; the user may override it via
+  // toggleReducedMotion, and the override is persisted to localStorage.
+  const systemReducedMotion = usePrefersReducedMotion();
   const [reducedMotion, setReducedMotionState] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saved = localStorage.getItem(REDUCED_MOTION_STORAGE_KEY);
+    if (saved === "true") return true;
+    if (saved === "false") return false;
+    return systemReducedMotion;
   });
 
-  const [isSystemDark, setIsSystemDark] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
-  // Listen to system preference changes
+  // Re-sync with the OS preference when the user hasn't chosen an override.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const saved = localStorage.getItem(REDUCED_MOTION_STORAGE_KEY);
+    if (saved === null) {
+      setReducedMotionState(systemReducedMotion);
+    }
+  }, [systemReducedMotion]);
 
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsSystemDark(e.matches);
-    };
+  // SSR-safe system-color-scheme detection — delegated to src/utils/media.ts.
+  const isSystemDark = useSystemColorScheme();
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
-  // Listen to reduced motion preference changes
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setReducedMotionState(e.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  // useSystemColorScheme / usePrefersReducedMotion already subscribe to the
+  // change events inside media.ts and manage their own lifecycle.
 
   const isDark = theme === "dark" || (theme === "system" && isSystemDark);
 

@@ -55,6 +55,7 @@ tmp/
 *.tgz
 
 # Stray artifacts
+temp-clean*.mjs
 check_errors.js
 get_runtime_errors.cjs
 repo.json
@@ -65,11 +66,29 @@ wrangler-4.118.0.tgz
 .vercel
 lint-output.txt
 
+# Tooling scratch output (never commit)
+*-output.txt
+*-output.json
+*-out.txt
+*-final.txt
+*-current.json
+*-full.json
+*-results.json
+build.log
+build-clean.txt
+audit_output.txt
+tscheck.txt
+typecheck-out.txt
+lint.txt
+vercel-deploy.log
+checks-done.txt
+eslint-results.json
+
 # Playwright
 playwright-report/
 test-results/
 playwright/.auth/
 
 # Local public assets (generated)
-# public/js/ is intentionally tracked — do not ignore
 
+# public/js/ is intentionally tracked - do not ignore

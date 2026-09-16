@@ -112,6 +112,12 @@ module.exports = {
       },
     },
     {
+      files: ['*.mjs'],
+      parserOptions: {
+        project: null,
+      },
+    },
+    {
       files: ['public/sw.js'],
       parserOptions: {
         project: null,
