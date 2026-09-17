@@ -124,12 +124,11 @@ export class PerformanceMonitor {
         let clsValue = 0;
         const entries = list.getEntries();
         for (const entry of entries) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          if ((entry as any).hadRecentInput) continue;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const value = (entry as any).value;
-          if (typeof value === "number") {
-            clsValue += value;
+          // LayoutShift entries carry hadRecentInput/value per W3C Layout Instability API
+          const shift = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+          if (shift.hadRecentInput) continue;
+          if (typeof shift.value === "number") {
+            clsValue += shift.value;
           }
         }
         this.metrics.set("CLS", {

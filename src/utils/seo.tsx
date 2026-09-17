@@ -1,4 +1,5 @@
 import React from "react";
+import { SITE_URL, getSiteHost } from "./seoAdvanced";
 
 /**
  * SEO Props for generating meta tags and structured data
@@ -30,7 +31,7 @@ export function getOrganizationSchema(): React.ReactNode {
     "@type": "NGO",
     name: "رحماء بينهم",
     alternateName: "rbdcye Foundation",
-    url: "https://rbdcye.org",
+    url: SITE_URL,
     description:
       "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج الإغاثة والتعليم والصحة والمياه",
     foundingDate: "2009",
@@ -45,7 +46,7 @@ export function getOrganizationSchema(): React.ReactNode {
       "https://linkedin.com/company/rbdcye",
       "https://youtube.com/@rbdcye",
     ],
-    email: "info@rbdcye.org",
+    email: `info@${getSiteHost()}`,
     vatID: "YE123456789",
   };
   return <script type="application/ld+json">{JSON.stringify(schema, null, 2)}</script>;
@@ -62,7 +63,7 @@ export function getBreadcrumbSchema(items: { label: string; href?: string }[]): 
       "@type": "ListItem",
       position: index + 1,
       name: item.label,
-      ...(item.href ? { item: `https://rbdcye.org${item.href}` } : {}),
+      ...(item.href ? { item: `${SITE_URL}${item.href}` } : {}),
     })),
   };
   return <script type="application/ld+json">{JSON.stringify(schema, null, 2)}</script>;
@@ -163,7 +164,7 @@ export function getHowToSchema({
 export function generateSeoMeta({
   title = "رحماء بينهم | rbdcye",
   description = "منظمة إنسانية تنموية رائدة في اليمن، تعمل على تخفيف معاناة الأسرة اليمنية وتحقيق التنمية المستدامة عبر برامج متكاملة في الإغاثة والتعليم والتنمية المجتمعية.",
-  ogImage = "https://rbdcye.org/og-image.png",
+  ogImage = `${SITE_URL}/og-image.png`,
   ogTitle,
   ogDescription,
   twitterCard = "summary_large_image",
@@ -212,7 +213,7 @@ export function generateSeoMeta({
   meta.push(<meta property="og:image" content={ogImage} key="ogimage" />);
   meta.push(<meta property="og:image:width" content="1200" key="ogiw" />);
   meta.push(<meta property="og:image:height" content="630" key="ogih" />);
-  meta.push(<meta property="og:url" content={canonicalUrl || "https://rbdcye.org"} key="ogurl" />);
+  meta.push(<meta property="og:url" content={canonicalUrl || SITE_URL} key="ogurl" />);
 
   // Twitter Card
   meta.push(<meta name="twitter:card" content={twitterCard} key="twcard" />);
@@ -324,12 +325,12 @@ export function getHomeSeoProps({
   schema: React.ReactNode;
 } {
   const head = generateSeoMeta({
-    title: "رحماء بينهم - الموقع الرسمي",
+    title: "رحماء среди - الموقع الرسمي",
     description:
       "الموقع الرسمي لحملة رحماء بينهم للإغاثة والتنمية باليمن. نعمل على تخفيف معاناة الأسر اليمنية عبر برامج الإغاثة العاجلة، التعليم، المياه والصحة.",
-    ogImage: "https://rbdcye.org/og-image.png",
+    ogImage: `${SITE_URL}/og-image.png`,
     type: "website",
-    canonicalUrl: "https://rbdcye.org",
+    canonicalUrl: SITE_URL,
     extraMeta,
   });
 
@@ -360,7 +361,7 @@ export function getPageSeoProps({
   const head = generateSeoMeta({
     title,
     description,
-    ogImage: ogImage || "https://rbdcye.org/og-image.png",
+    ogImage: ogImage || `${SITE_URL}/og-image.png`,
     type,
     canonicalUrl: undefined,
     extraMeta,

@@ -141,8 +141,8 @@ class SEOManager {
 
 // Twitter Card specific
     this.setMeta("twitter:card", "summary_large_image");
-    this.setMeta("twitter:site", "@rbdcye");
-    this.setMeta("twitter:creator", "@rbdcye");
+    this.setMeta("twitter:site", isAdminSubdomain ? "@admin_rbdcye" : "@rbdcye");
+    this.setMeta("twitter:creator", isAdminSubdomain ? "@admin_rbdcye" : "@rbdcye");
     this.setMeta("twitter:title", data.title);
     this.setMeta("twitter:description", data.description);
     if (data.image) this.setMeta("twitter:image", data.image);
@@ -152,7 +152,7 @@ class SEOManager {
     this.setMeta("og:title", data.title);
     this.setMeta("og:description", data.description);
     this.setMeta("og:type", data.type || "website");
-    this.setMeta("og:url", data.url || "https://rbdcye.org");
+    this.setMeta("og:url", data.url || SITE_URL);
     this.setMeta("og:locale", "ar_AR");
     this.setMeta("og:locale:alternate", "en_US");
     if (data.image) {
@@ -202,14 +202,16 @@ class SEOManager {
   }
 
   private getOrganizationSchema(): OrganizationSchema {
+    const baseUrl = SITE_URL;
+    const host = getSiteHost(baseUrl);
     return {
       "@context": "https://schema.org",
       "@type": "Organization",
       name: "رحماء بينهم",
       description: "الموقع الإلكتروني التعريفي الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن",
-      url: "https://rbdcye.org",
-      logo: "https://rbdcye.org/logo.png",
-      email: "info@rbdcye.org",
+      url: baseUrl,
+      logo: `${baseUrl}/logo.png`,
+      email: `info@${host}`,
       telephone: "+967-780-777-007",
       address: {
         "@type": "PostalAddress",
@@ -230,12 +232,12 @@ class SEOManager {
       "@type": "WebSite",
       name: "رحماء بينهم",
       description: "الموقع الإلكتروني التعريفي الرسمي لـ رحماء بينهم للإغاثة والتنمية باليمن",
-      url: "https://rbdcye.org",
+      url: SITE_URL,
       potentialAction: {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
-          urlTemplate: "https://rbdcye.org/search?q={search_term_string}",
+          urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
         },
         "query-input": "required name=search_term_string",
       },
@@ -260,7 +262,7 @@ class SEOManager {
         name: "رحماء بينهم",
         logo: {
           "@type": "ImageObject",
-          url: "https://rbdcye.org/logo.png",
+          url: `${SITE_URL}/logo.png`,
         },
       },
     };
@@ -304,7 +306,22 @@ export function useSEO(data: SEOData) {
   }, [data]);
 }
 
-// Constants
-export const SITE_URL = "https://rbdcye.org";
-export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
+// Constants - use environment variable or default
+const siteUrl = import.meta.env.VITE_APP_URL || "https://rbdcye.org";
+export const SITE_URL = siteUrl;
+export const DEFAULT_IMAGE = `${siteUrl}/og-image.png`;
 export const ORGANIZATION_NAME = "رحماء بينهم";
+
+// Safe hostname extraction with fallback (avoids throwing on relative URLs)
+export function getSiteHost(url: string = SITE_URL, fallback = "rbdcye.org"): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return fallback;
+  }
+}
+
+// Admin subdomain detection
+export const isAdminSubdomain = typeof window !== "undefined"
+  ? window.location.hostname === "admin.rbdcye.org"
+  : false;

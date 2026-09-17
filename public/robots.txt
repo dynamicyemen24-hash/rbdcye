@@ -7,8 +7,10 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /donor/
+Disallow: /donor-passport
 Disallow: /login
 Disallow: /auth/
+Disallow: /messages
 Disallow: /_next/
 Disallow: /__next/
 

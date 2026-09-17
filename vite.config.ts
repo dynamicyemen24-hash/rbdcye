@@ -133,7 +133,7 @@ export default defineConfig({
     minify: 'esbuild',
     target: ['es2022', 'chrome80', 'firefox78', 'safari14', 'edge80'],
     modulePreload: { polyfill: true },
-    reportCompressedSize: false,
+    reportCompressedSize: true,
     rollupOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',

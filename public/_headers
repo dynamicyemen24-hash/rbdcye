@@ -1,4 +1,4 @@
-﻿# ============================================================================
+# ============================================================================
 # Security Headers for rbdcye.org - Cloudflare Pages
 # Rating: 10/10 - Enterprise-Grade Security
 # ============================================================================
@@ -103,6 +103,7 @@
   Cache-Control: no-cache, no-store, must-revalidate
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
+  X-Robots-Tag: noindex, nofollow
   Referrer-Policy: strict-origin-when-cross-origin
 
 /api/stripe/*

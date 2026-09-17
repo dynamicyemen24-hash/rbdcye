@@ -13,10 +13,18 @@ export function useNews(params: NewsQueryParams = {}) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        `${API_BASE_URL}${API_ENDPOINTS.NEWS.LIST}?${new URLSearchParams(params as any)}`
+      const searchParams = new URLSearchParams(
+        Object.entries(params).reduce(
+          (acc, [key, value]) => {
+            if (value !== undefined && value !== null) {
+              acc[key] = String(value);
+            }
+            return acc;
+          },
+          {} as Record<string, string>
+        )
       );
+      const res = await fetch(`${API_BASE_URL}${API_ENDPOINTS.NEWS.LIST}?${searchParams}`);
       if (!res.ok) throw new Error("Failed to fetch news");
       const json: PaginatedResponse<NewsItem> = await res.json();
       setData(json);

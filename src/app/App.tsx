@@ -191,12 +191,14 @@ const AppContent = memo(function AppContent() {
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "NonprofitOrganization",
-    name: "حملة رحماء بينهم",
-    alternateName: "Rohamaa Baynahum",
+    name: "مؤسسة رحماء بينهم للإغاثة والتنمية",
+    alternateName: "رحماء بينهم",
+    legalName: "مؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
     url: "https://rbdcye.org",
     logo: "https://rbdcye.org/logo.svg",
-    description: "حملة إغاثية وتنموية يمنية تأسست عام 2014",
+    description: "مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ باليمن — إغاثة، تعليم، مياه، تنمية مستدامة",
     foundingDate: "2014",
+    areaServed: { "@type": "Country", name: "اليمن" },
     address: {
       "@type": "PostalAddress",
       addressCountry: "YE",
@@ -206,8 +208,14 @@ const AppContent = memo(function AppContent() {
       "@type": "ContactPoint",
       telephone: "+967-780-777-007",
       contactType: "customer service",
+      email: "info@rbdcye.org",
     },
-    sameAs: [],
+    sameAs: [
+      "https://facebook.com/rbdcye",
+      "https://twitter.com/rbdcye",
+      "https://youtube.com/@rbdcye",
+      "https://instagram.com/rbdcye",
+    ],
   };
 
   // Keyboard shortcut: Ctrl+K for search

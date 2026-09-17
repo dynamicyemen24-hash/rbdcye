@@ -8,6 +8,7 @@ export const corsConfig = {
   allowedOrigins: [
     'https://rbdcye.org',
     'https://www.rbdcye.org',
+    'https://admin.rbdcye.org',
     'http://localhost:5173',
     'http://localhost:5174',
   ],

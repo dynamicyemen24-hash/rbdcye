@@ -22,8 +22,8 @@ import "./styles/index.css";
 if (typeof window !== "undefined") {
   const scheduleInit = (cb: () => void) => {
     if ("requestIdleCallback" in window) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).requestIdleCallback(() => cb(), { timeout: 2000 });
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- precise: requestIdleCallback accepts options with timeout
+      (window as { requestIdleCallback: (cb: () => void, opts?: { timeout?: number }) => void }).requestIdleCallback(() => cb(), { timeout: 2000 });
     } else {
       setTimeout(cb, 100);
     }

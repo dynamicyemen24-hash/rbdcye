@@ -237,6 +237,12 @@ export function preloadCriticalAssets() {
   preconnect('https://js.stripe.com');
   preconnect('https://cdn.sanity.io');
   preconnect('https://xd0ohyiz.apicdn.sanity.io');
+  preconnect('https://*.supabase.co');
+
+  // Preload favicon/manifest with automatic priority for faster repeat visits
+  preloadResource('/favicon.ico', 'image', { fetchPriority: 'auto' });
+  preloadResource('/manifest.json', 'manifest', { fetchPriority: 'auto' });
+  preloadResource('/sw.js', 'script', { fetchPriority: 'low' });
 }
 
 // Prefetch pages based on connection quality — saves data on slow/offline
@@ -295,8 +301,14 @@ export function initPerformancePrefetch() {
     try {
       // No-op if already preloaded — guarded inside preloadCriticalAssets
       preloadCriticalAssets();
-      // Prefetch high-value routes only on good connections
-      prefetchPages(['/donate', '/about', '/sectors', '/news']);
+      // Use connection-aware prefetch strategy
+      const strategy = getPrefetchStrategy();
+      if (strategy === 'prefetch-all') {
+        prefetchPages(['/donate', '/about', '/sectors', '/news', '/programs', '/projects', '/success']);
+      } else if (strategy === 'prefetch-critical') {
+        prefetchPages(['/donate', '/about']);
+      }
+      // 'no-prefetch' — skip prefetch on slow connections
     } catch {
       // Silently ignore prefetch failures — non-critical
     }

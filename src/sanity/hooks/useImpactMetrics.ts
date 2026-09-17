@@ -47,13 +47,15 @@ export function useImpactMetrics() {
 
     let cancelled = false;
     // GROQ via defineQuery — System of Record
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    sanityClient.fetch(IMPACT_METRICS_QUERY, {}, { perspective: 'published' } as any)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((res: any) => {
+    sanityClient.fetch<ImpactMetrics>(
+      IMPACT_METRICS_QUERY,
+      {},
+      { perspective: 'published' }
+    )
+      .then((res: ImpactMetrics) => {
         if (cancelled || !res) return;
         const next: ImpactMetrics = {
-          totalBeneficiaries: res.totalBeneficiaries ?? res.totalBeneficiaries ?? SEED_IMPACT.beneficiaries,
+          totalBeneficiaries: res.totalBeneficiaries ?? SEED_IMPACT.beneficiaries,
           activeProjects: res.activeProjects ?? SEED_IMPACT.projects,
           totalPartners: res.totalPartners ?? SEED_IMPACT.partners,
           totalVolunteers: res.totalVolunteers ?? SEED_IMPACT.volunteers,

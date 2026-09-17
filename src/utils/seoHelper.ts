@@ -1,3 +1,5 @@
+import { SITE_URL } from "./seoAdvanced";
+
 /**
  * SEO Helper Utilities
  */
@@ -21,7 +23,7 @@ export const seoConfig = {
       data.description ||
       "الموقع الإلكتروني الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
     image: data.image || "/og-image.svg",
-    url: data.url || "https://rbdcye.org",
+    url: data.url || SITE_URL,
   }),
 
   // توليد بيانات JSON-LD
@@ -34,7 +36,7 @@ export const seoConfig = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: data.name || "رحماء بينهم للإغاثة والتنمية",
-    url: data.url || "https://rbdcye.org",
+    url: data.url || SITE_URL,
     logo: "/logo.svg",
     sameAs: [
       "https://facebook.com/rbdcye",
@@ -45,24 +47,25 @@ export const seoConfig = {
   }),
 };
 
-/**
- * توليد Schema للمؤسسة
- */
 export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "NGO",
     name: "رحماء بينهم للإغاثة والتنمية",
     alternateName: "Rohamaa Baynahum Foundation",
-    url: "https://rbdcye.org",
-    logo: "https://rbdcye.org/logo.svg",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.svg`,
     description: "مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ بالجمهورية اليمنية، تهدف إلى تقديم الإغاثة العاجلة والحلول التنموية المستدامة.",
     address: {
       "@type": "PostalAddress",
       addressCountry: "YE",
       addressLocality: "صنعاء",
     },
-    sameAs: ["https://facebook.com/rbdcye", "https://twitter.com/rbdcye", "https://instagram.com/rbdcye"],
+    sameAs: [
+      "https://facebook.com/rbdcye",
+      "https://twitter.com/rbdcye",
+      "https://instagram.com/rbdcye",
+    ],
   };
 }
 

@@ -49,12 +49,12 @@
 - **الاختبار:** `src/__tests__/i18n.test.tsx` — 4 اختبارات لاختيار اللغة والثبات وتزامن `document`.
 
 ## 4. جودة الكود والتحسينات المكتملة (Quality & Debt Resolution)
-- **Linting:** `pnpm lint` — ESLint بدون أخطاء أو تحذيرات
+- **Linting:** `pnpm lint` — ESLint بدون أخطاء أو تحذيرات (0 exit code)
 - **TypeScript:** `pnpm typecheck` — TypeScript بدون أخطاء
-- **اختبارات الوحدة:** `pnpm test` — 91 اختبار ناجح (React Testing Library + Vitest)
+- **اختبارات الوحدة:** `pnpm test` — 107 اختبار ناجح عبر 8 ملفات (React Testing Library + Vitest)
 - **اختبارات E2E:** `pnpm test:e2e` — Playwright (Chromium/Firefox/WebKit/Mobile) لـ `e2e/` + تدقيق `WCAG 2.1 AA` آلي بـ `@axe-core/playwright` على 10 صفحات، شغّل `pnpm test:e2e:install` أولاً لتثبيت المتصفحات
-- **البناء:** `pnpm build` — بناء ناجح وبدون تحذير Circular chunk، مع ضغط gzip و brotli
-- **تقسيم الحزم:** `vite.config.ts` — manualChunks دقيق (react/supabase/sanity/motion/icons/charts/... ) بدون تكرار
+- **البناء:** `pnpm build` — بناء ناجح وبدون تحذير Circular chunk، مع ضغط gzip و brotli، وتوفير 55% في حجم الصور المحسنة (440kB savings)
+- **تقسيم الحزم:** `vite.config.ts` — manualChunks دقيق (react/supabase/sanity/motion/icons/charts/... ) بدون تكرار، مع تفعيل `reportCompressedSize: true`
 - **تنظيف console.log:** تم إزالة جميع console.log/warn/error من الكود الإنتاجي (App, AdminDashboard, services, hooks)
 - **إزالة الكود المُهدوم:** حذف الدالة `query()` المُهدومة من `src/lib/postgres.ts`
 - **تبسيط ملفات Sanity CLI:** `seed.ts` و `test-integration.ts` تم تبسيطها
@@ -94,7 +94,7 @@
 ## 7. جودة الكود والتحسينات المكتملة (Quality & Debt Resolution)
 - **Linting:** `pnpm lint` — ESLint بدون أخطاء أو تحذيرات
 - **TypeScript:** `pnpm typecheck` — TypeScript بدون أخطاء
-- **اختبارات:** `pnpm test` — 67 اختبار ناجح (12+12+13+30)
+- **اختبارات:** `pnpm test` — 107 اختبار ناجح (100% نجاح)
 - **البناء:** `pnpm build` — بناء ناجح مع ضغط gzip و brotli
 - **تنظيف console.log:** تم إزالة جميع console.log/warn/error من الكود الإنتاجي (App, AdminDashboard, services, hooks, core)
 - **إزالة الكود المُهدوم:** حذف الدالة `query()` المُهدومة من `src/lib/postgres.ts`
