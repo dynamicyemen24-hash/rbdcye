@@ -2,6 +2,7 @@
 @import "./site-loader.css";
 @import "./tailwind.css";
 @import "./tokens.css";
+@import "./accessibility.css";
 @import "./composition.css";
 /* browser-support.css — fallbacks merged into composition for 320kB */
 @import "./islamic-patterns.css";

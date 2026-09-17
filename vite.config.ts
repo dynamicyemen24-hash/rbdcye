@@ -127,14 +127,24 @@ export default defineConfig({
     }),
   ],
 
-  build: {
+build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'esbuild',
+    minify: 'terser',
     target: ['es2022', 'chrome80', 'firefox78', 'safari14', 'edge80'],
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.warn', 'console.error'],
+      },
+      format: {
+        comments: false,
+      },
+    },
     modulePreload: { polyfill: true },
     reportCompressedSize: true,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',

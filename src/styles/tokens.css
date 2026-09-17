@@ -614,12 +614,53 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Brand Colors — مؤسسة رحماء بينهم */
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-green-pale: var(--brand-green-pale);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-light: var(--brand-gold-light);
+  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-gold-pale: var(--brand-gold-pale);
+  --color-brand-parchment: var(--brand-parchment);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-ink-light: var(--brand-ink-light);
+
+  /* Semantic Feedback States */
+  --color-success: var(--success);
+  --color-success-dark: var(--success-dark);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+
+  /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
+  --radius-btn: var(--radius-btn);
+  --radius-card: var(--radius-card);
+
+  /* Elevation & Glow Shadows */
+  --shadow-glow: var(--shadow-glow);
+  --shadow-glow-gold: var(--shadow-glow-gold);
+  --shadow-glow-strong: var(--shadow-glow-strong);
+  --shadow-glow-gold-strong: var(--shadow-glow-gold-strong);
+
+  /* Motion & Easing */
+  --ease-out-expo: var(--ease-out-expo);
+  --ease-out-quart: var(--ease-out-quart);
+  --ease-smooth: var(--ease-smooth);
+  --ease-spring: var(--ease-spring);
+
+  /* Sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
