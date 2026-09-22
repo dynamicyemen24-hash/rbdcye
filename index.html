@@ -19,7 +19,10 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/icons/pwa-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icons/pwa-512x512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <!-- crossorigin=use-credentials: the manifest fetch must carry cookies
+         (cf_clearance) so Cloudflare's bot challenge lets it through (200)
+         instead of answering 403 to a credentialless subrequest. -->
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
     <link rel="mask-icon" href="/icons/pwa-512x512-maskable.svg" color="#0F4C3A" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="msapplication-TileColor" content="#0F4C3A" />
@@ -83,8 +86,6 @@
     <!-- Preload critical assets — Priority Hints: font High (h1 LCP), decor Low -->
     <link rel="preload" href="/fonts/cairo-var-arabic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
     <link rel="preload" href="/fonts/cairo-var-latin.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
-    <link rel="preload" as="image" href="/videos/hero-poster.avif" type="image/avif" fetchpriority="low" />
-    <link rel="preload" as="image" href="/images/defaults/about-hero.svg" fetchpriority="low" />
 
     <!-- Speculation Rules API — prefetch /donate on hover 150ms (moderate) — TTFB -180ms -->
     <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/donate*"},"eagerness":"moderate"}],"prerender":[{"source":"document","where":{"href_matches":"/donate"},"eagerness":"moderate"}]}</script>
@@ -109,17 +110,25 @@
       @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.05);opacity:.6}}
     </style>
 
-<!-- Security: Content Security Policy set via HTTP headers in _headers — no inline meta needed -->
-    <script src="/js/trusted-types.js"></script>
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(self)" />
+    <!-- Dark mode theme color -->
+    <meta name="theme-color" content="#0a1a12" media="(prefers-color-scheme: dark)" />
+    <!-- Prevent iOS auto-detection of phone/address/email -->
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <!-- Geographic targeting — Yemen -->
+    <meta name="geo.region" content="YE" />
+    <meta name="geo.country" content="Yemen" />
+    <meta name="geo.placename" content="Sana'a, Yemen" />
+    <!-- Sitemap discovery for crawlers -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <!-- JSON-LD Structured Data: Organization -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "NGO",
+        "@type": "NonprofitOrganization",
         "@id": "https://rbdcye.org/#organization",
         "name": "مؤسسة رحماء بينهم للإغاثة والتنمية",
         "alternateName": "رحماء بينهم",
@@ -165,8 +174,8 @@
         "@type": "WebSite",
         "@id": "https://rbdcye.org/#website",
         "url": "https://rbdcye.org",
-        "name": "حملة رحماء بينهم للإغاثة والتنمية",
-        "description": "الموقع الإلكتروني التعريفي الرسمي لحملة رحماء بينهم للإغاثة والتنمية باليمن",
+        "name": "مؤسسة رحماء بينهم للإغاثة والتنمية",
+        "description": "الموقع الإلكتروني التعريفي الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن — ترخيص رسمي ٤٨٢",
         "publisher": { "@id": "https://rbdcye.org/#organization" },
         "inLanguage": "ar",
         "potentialAction": {
@@ -198,16 +207,16 @@
   </head>
   <body>
     <!-- Skip link يظهر تلقائياً عند التركيز لأول مرة -->
-    <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي" 
+    <a href="#main-content" class="skip-link" aria-label="انتقل إلى المحتوى الرئيسي"
        onfocus="this.scrollIntoView({behavior: 'smooth', block: 'start'});"
        tabindex="0">
       <span style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;">انتقل إلى المحتوى الرئيسي</span>
       انتقل إلى المحتوى الرئيسي
     </a>
-    
-    <!-- وضع المحتوى الرئيسي في الأعلى مباشرة -->
-    <main id="main-content">
-      <div id="app-loader" class="app-loader" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a12 0%,#0F4C3A 50%,#0a1a12 100%);transition:opacity .6s ease,visibility .6s ease">
+
+    <!-- React Root — مطلوب لـ React.createRoot -->
+    <div id="root"></div>
+    <div id="app-loader" class="app-loader" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a1a12 0%,#0F4C3A 50%,#0a1a12 100%);transition:opacity .25s ease,visibility .25s ease">
   <!-- Islamic geometric ring animation -->
   <div style="position:relative;width:120px;height:120px;margin-bottom:32px">
     <div style="position:absolute;inset:0;border:2px solid rgba(198,158,90,.2);border-radius:50%;animation:pulse-ring 2s ease-in-out infinite"></div>
@@ -224,7 +233,6 @@
     <div id="loader-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#C69E5A,#F8F5EC,#C69E5A);border-radius:2px;transition:width .4s ease"></div>
   </div>
   </div>
-</div>
 <script src="/js/loader.js"></script>
     <noscript>
       <div style="text-align:center;padding:2rem;font-family:sans-serif">

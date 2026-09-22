@@ -8,7 +8,6 @@ import {
   Heart,
   Landmark,
   MessageCircle,
-  MoveUpLeft,
   ShieldCheck,
   Users,
   Utensils,
@@ -691,18 +690,6 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
           </div>
         </div>
       </section>
-
-      {/* زر العودة لأعلى الصفحة */}
-      <motion.button
-        type="button"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="العودة لأعلى الصفحة"
-        whileHover={{ y: -3, scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-5 left-5 z-40 grid h-11 w-11 place-items-center rounded-full border border-[var(--brand-green)]/15 bg-[var(--card)]/90 text-[var(--brand-green)] shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-[var(--brand-green)] hover:text-white focus-visible:ring-2 focus-visible:ring-[var(--brand-green)] focus-visible:ring-offset-2 outline-none cursor-pointer"
-      >
-        <MoveUpLeft className="h-4 w-4" aria-hidden="true" />
-      </motion.button>
     </div>
   );
 }

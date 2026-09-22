@@ -435,20 +435,22 @@ export default function CampaignsPage() {
             <div className="space-y-6 p-5 sm:p-6">
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="camp-title" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     عنوان الحملة *
                   </label>
                   <input
+                    id="camp-title"
                     type="text"
                     placeholder="مثال: كسوة_الشتاء — حملتي"
                     className="w-full rounded-xl border border-[var(--border)] bg-[var(--input-background)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--brand-green)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20"
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="camp-project" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     اختيار المشروع *
                   </label>
                   <select
+                    id="camp-project"
                     value={selectedProject}
                     onChange={(e) => setSelectedProject(e.target.value)}
                     className="w-full rounded-xl border border-[var(--border)] bg-[var(--input-background)] px-4 py-3 text-sm text-[var(--foreground)] focus:border-[var(--brand-green)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20"
@@ -464,10 +466,11 @@ export default function CampaignsPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                <label htmlFor="camp-desc" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                   وصف الحملة *
                 </label>
                 <textarea
+                  id="camp-desc"
                   rows={3}
                   placeholder="اكتب وصفاً مختصراً لحملتك وللأثر المتوقع..."
                   className="w-full rounded-xl border border-[var(--border)] bg-[var(--input-background)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--brand-green)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20"
@@ -476,20 +479,22 @@ export default function CampaignsPage() {
 
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="camp-goal" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     الهدف المالي (ر.ي) *
                   </label>
                   <input
+                    id="camp-goal"
                     type="number"
                     placeholder="50000"
                     className="w-full rounded-xl border border-[var(--border)] bg-[var(--input-background)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--brand-green)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20"
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="camp-duration" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     مدة الحملة (أيام) *
                   </label>
                   <input
+                    id="camp-duration"
                     type="number"
                     placeholder="30"
                     className="w-full rounded-xl border border-[var(--border)] bg-[var(--input-background)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--brand-green)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/20"
@@ -520,13 +525,13 @@ export default function CampaignsPage() {
                 </button>
                 <div className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
                   <span>أو شارك عبر:</span>
-                  <button className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
+                  <button aria-label="مشاركة عبر واتساب" className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
                     <MessageCircle className="h-4 w-4" />
                   </button>
-                  <button className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
+                  <button aria-label="مشاركة عبر تويتر" className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
                     <Twitter className="h-4 w-4" />
                   </button>
-                  <button className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
+                  <button aria-label="مشاركة عبر فيسبوك" className="rounded-lg bg-[var(--brand-green-pale)] p-2 text-[var(--brand-green)] transition hover:bg-[var(--brand-green)] hover:text-white">
                     <Facebook className="h-4 w-4" />
                   </button>
                 </div>

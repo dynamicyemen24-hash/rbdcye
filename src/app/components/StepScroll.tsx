@@ -25,7 +25,7 @@ export function StepScroll() {
     <div className="fixed right-4 md:right-6 bottom-24 z-40 flex flex-col items-center gap-2">
       {/* Section Progress Bar */}
       <div className="hidden md:flex flex-col items-center gap-1">
-        <span className="text-[0.55rem] text-white/40 font-medium tracking-wider">
+        <span className="text-[0.55rem] text-white/85 font-medium tracking-wider bg-black/60 rounded-full px-1.5 py-0.5">
           {currentSectionIndex + 1}/{totalSections}
         </span>
         <div className="w-1 h-20 rounded-full bg-white/10 overflow-hidden">

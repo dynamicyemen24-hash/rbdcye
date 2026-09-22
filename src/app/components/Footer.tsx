@@ -254,7 +254,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
               </div>
             </div>
             <div className="flex items-center gap-1.5" title="Mastercard - مدعوم">
-              <div className="w-8 h-5 rounded bg-[var(--brand-gold)] flex items-center justify-center text-[0.5rem] text-[var(--primary-foreground)] font-bold">
+              <div className="w-8 h-5 rounded bg-[var(--brand-gold)] flex items-center justify-center text-[0.5rem] text-black font-bold">
                 MC
               </div>
             </div>

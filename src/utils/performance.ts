@@ -225,67 +225,34 @@ function preconnect(href: string): void {
   document.head.appendChild(link);
 }
 
-// Preload critical assets — connection-aware, font-optimized
+// Preload critical assets — connection-aware, font-optimized.
+// NOTE: only resources consumed within seconds of load may be preloaded.
+// Preloading sw.js / manifest.json / favicon.ico triggers
+// "preloaded but not used" warnings and wastes early-connection budget.
 export function preloadCriticalAssets() {
   if (typeof window === 'undefined') return;
 
   // Always preload brand logo with high priority (LCP candidate)
   preloadResource('/logo.svg', 'image', { fetchPriority: 'high' });
 
-  // Preconnect to critical third-party domains for faster API calls
-  // NOTE: wildcard domains cannot be preloaded — use preconnect to origin instead
+  // Preconnect to critical third-party origins for faster API calls.
+  // NOTE: preconnect requires an exact origin — wildcards are invalid.
   preconnect('https://js.stripe.com');
   preconnect('https://cdn.sanity.io');
   preconnect('https://xd0ohyiz.apicdn.sanity.io');
-  preconnect('https://*.supabase.co');
-
-  // Preload favicon/manifest with automatic priority for faster repeat visits
-  preloadResource('/favicon.ico', 'image', { fetchPriority: 'auto' });
-  preloadResource('/manifest.json', 'manifest', { fetchPriority: 'auto' });
-  preloadResource('/sw.js', 'script', { fetchPriority: 'low' });
+  try {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+    if (supabaseUrl) preconnect(new URL(supabaseUrl).origin);
+  } catch {
+    // Env missing or malformed — skip Supabase preconnect
+  }
 }
 
-// Prefetch pages based on connection quality — saves data on slow/offline
-export function prefetchPages(routes: string[]) {
-  if (typeof document === 'undefined' || typeof navigator === 'undefined') return;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
-  const conn = (navigator as any as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
-  // Respect Save-Data and slow connections — skip prefetch
-  if (conn?.saveData) return;
-  if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') return;
-  if (!navigator.onLine) return;
-
-  routes.forEach((href) => {
-    if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return;
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = href;
-    // Hint low priority prefetch
-    (link as HTMLLinkElement & { fetchPriority?: string }).fetchPriority = 'low';
-    document.head.appendChild(link);
-  });
-}
-
-// Prefetch images based on connection — lazy network-aware
-export function prefetchCriticalImages(srcs: string[]) {
-  if (typeof document === 'undefined' || typeof navigator === 'undefined') return;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
-  const conn = (navigator as any as { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
-  if (conn?.saveData) return;
-  if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') return;
-  if (!navigator.onLine) return;
-
-  srcs.forEach((src) => {
-    if (document.querySelector(`link[rel="prefetch"][href="${src}"]`)) return;
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = src;
-    link.as = 'image';
-    document.head.appendChild(link);
-  });
-}
-
-// Auto-init: preload critical + prefetch key routes when idle & connection allows
+// Auto-init: preload critical + prefetch key route MODULES when idle & connection allows.
+// NOTE: we prefetch route JS chunks (dynamic imports), never HTML documents.
+// Fetching route documents (e.g. /about) downloads a full duplicate index.html,
+// wastes bandwidth, 404s on edge caches without SPA fallback, and pollutes the
+// console — while doing nothing for SPA navigation speed.
 export function initPerformancePrefetch() {
   if (typeof window === 'undefined') return;
   const idle = (cb: () => void) => {
@@ -303,12 +270,16 @@ export function initPerformancePrefetch() {
       preloadCriticalAssets();
       // Use connection-aware prefetch strategy
       const strategy = getPrefetchStrategy();
-      if (strategy === 'prefetch-all') {
-        prefetchPages(['/donate', '/about', '/sectors', '/news', '/programs', '/projects', '/success']);
-      } else if (strategy === 'prefetch-critical') {
-        prefetchPages(['/donate', '/about']);
-      }
       // 'no-prefetch' — skip prefetch on slow connections
+      if (strategy === 'no-prefetch') return;
+      const routes = strategy === 'prefetch-all'
+        ? ['donate', 'about', 'news', 'programs', 'projects', 'success']
+        : ['donate', 'about'];
+      void import('@/utils/prefetch').then(({ prefetchRoute }) => {
+        routes.forEach((r) => prefetchRoute(r));
+      }).catch(() => {
+        // Module prefetch failed (offline?) — safe to ignore
+      });
     } catch {
       // Silently ignore prefetch failures — non-critical
     }

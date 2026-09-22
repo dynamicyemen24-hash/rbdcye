@@ -32,6 +32,7 @@ import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 import MobileMenu from "@/app/components/MobileMenu";
 import { RohamaaHeart } from "@/app/components/ui/BrandIcons";
+import { isSystemDarkSync } from "@/utils/media";
 
 
 interface NavbarProps {
@@ -217,12 +218,14 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
   const [isScrolled, setIsScrolled] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
+  // True only after the user explicitly toggles the theme — gates persistence
+  // so the OS-following default is never frozen into storage by accident.
+  const explicitThemeChoice = useRef(false);
+  // Render-phase initializer reads only localStorage (sync, pure).
+  // OS theme is resolved in the mount effect below via the centralized helper.
   const [isDark, setIsDark] = useState(() => {
     try {
-      const saved = localStorage.getItem("rh_theme");
-      if (saved === "dark") return true;
-      if (saved === "light") return false;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+      return localStorage.getItem("rh_theme") === "dark";
     } catch {
       return false;
     }
@@ -232,12 +235,44 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
     const root = document.documentElement;
     if (isDark) root.classList.add("dark");
     else root.classList.remove("dark");
+    if (!explicitThemeChoice.current) return;
     try {
       localStorage.setItem("rh_theme", isDark ? "dark" : "light");
     } catch {
       /* ignore */
     }
   }, [isDark]);
+
+  // Resolve the OS theme on mount when the user has no saved preference,
+  // and follow OS changes. Runs in an effect — never during render.
+  useEffect(() => {
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem("rh_theme");
+    } catch {
+      saved = null;
+    }
+    if (saved === "dark" || saved === "light") return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- precise: intentional OS-theme hydration after mount
+    setIsDark(isSystemDarkSync());
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = (e: MediaQueryListEvent) => {
+      let current: string | null = null;
+      try {
+        current = localStorage.getItem("rh_theme");
+      } catch {
+        current = null;
+      }
+      if (current !== "dark" && current !== "light") setIsDark(e.matches);
+    };
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    }
+    mq.addListener(onChange);
+    return () => mq.removeListener(onChange);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 28);
@@ -285,7 +320,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 lg:top-9 ${
           isOverlay
             ? "bg-gradient-to-b from-[var(--brand-green-dark)]/80 to-transparent"
-            : "border-b border-[var(--brand-green)]/8 bg-[var(--card)]/90 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_10px_35px_rgba(var(--brand-green-rgb),.08)] backdrop-blur-xl"
+            : "border-b border-[var(--brand-green)]/8 bg-[var(--card)] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_10px_35px_rgba(var(--brand-green-rgb),.08)] backdrop-blur-xl"
         }`}
         dir="rtl"
       >
@@ -317,7 +352,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
                   ? "bg-[var(--brand-green)] text-white shadow-md"
                   : isOverlay
                     ? "text-white/85 hover:bg-white/10 hover:text-white"
-                    : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"
+                    : "text-[var(--foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"
               }`}
             >
               <Home className="h-3.5 w-3.5" aria-hidden="true" />
@@ -347,7 +382,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
                             : "bg-[var(--brand-green-pale)] text-[var(--brand-green)]"
                           : isOverlay
                             ? "text-white/85 hover:bg-white/10 hover:text-white"
-                            : "text-[var(--muted-foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"
+                            : "text-[var(--foreground)] hover:bg-[var(--brand-green-pale)] hover:text-[var(--brand-green)]"
                     }`}
                   >
                     <group.icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -372,7 +407,10 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
           <div className="flex items-center gap-1.5">
             <button
               type="button"
-              onClick={() => setIsDark((d) => !d)}
+              onClick={() => {
+                explicitThemeChoice.current = true;
+                setIsDark((d) => !d);
+              }}
               aria-label={isDark ? "التبديل إلى الوضع النهاري" : "التبديل إلى الوضع الليلي"}
               className={`grid h-10 w-10 place-items-center rounded-xl transition ${
                 isOverlay

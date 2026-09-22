@@ -1,14 +1,15 @@
 /* eslint-disable no-inner-declarations */
-import { StrictMode, lazy } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 
 import { AuthProvider } from "@/features/auth/contexts/AuthContext";
 import { I18nProvider } from "@/shared/i18n";
 import { initializeCoreServices } from "@/features/core";
-import { setupGlobalErrorHandler } from "@/components/ErrorBoundary";
+import { ErrorBoundary, setupGlobalErrorHandler } from "@/components/ErrorBoundary";
 import { initPerformancePrefetch, preloadCriticalAssets } from "@/utils/performance";
 import { cleanupUpdateCheck, registerServiceWorker } from "@/utils/pwa";
 import { setSecurityHeaders, cleanDangerousElements } from "@/utils/security-headers";
+import { ensureRootElement, installChunkErrorRecovery, enforceAppVersion } from "@/utils/resilience";
 
 import { ToastProvider } from "./app/components/Toast";
 import "./styles/index.css";
@@ -17,6 +18,17 @@ import "./styles/index.css";
 // CRITICAL: All initialization is NON-BLOCKING
 // تهيئة غير متزامنة لضمان تحميل فوري للصفحة
 // ============================================================
+
+// ============================================================
+// SELF-HEALING BOOT — runs before anything else can fail
+// - Recovers from stale-chunk load errors (auto hard-reload, loop-guarded)
+// - Enforces newly deployed versions (version.json check + SW takeover)
+// ============================================================
+if (typeof window !== "undefined") {
+  installChunkErrorRecovery();
+  ensureRootElement("root");
+  enforceAppVersion();
+}
 
 // Initialize in background after DOM is ready
 if (typeof window !== "undefined") {
@@ -72,7 +84,15 @@ function AppRoot() {
       <I18nProvider>
         <ToastProvider>
           <AuthProvider>
-            <App />
+            {/* Shell-level boundary: a provider/boot crash can never blank the
+                page — users get an accessible recovery UI with reload. */}
+            <ErrorBoundary boundaryName="app-shell" allowReload>
+              {/* fallback=null: the boot splash (#app-loader) already covers
+                  the lazy-shell gap and hides on rbdcye:app-ready */}
+              <Suspense fallback={null}>
+                <App />
+              </Suspense>
+            </ErrorBoundary>
           </AuthProvider>
         </ToastProvider>
       </I18nProvider>
@@ -80,7 +100,7 @@ function AppRoot() {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above
-createRoot(document.getElementById("root")!).render(
-  <AppRoot />
-);
+const rootEl = ensureRootElement("root");
+if (rootEl) {
+  createRoot(rootEl).render(<AppRoot />);
+}

@@ -79,24 +79,19 @@ const { state, dispatch } = useSlice(userSlice);
 
 ### Token Management
 ```typescript
-import { tokenManager } from '@/utils/security';
+import { AuthProvider } from '@/features/auth/contexts/AuthContext';
 
-// فحص انتهاء الصلاحية
-if (tokenManager.isExpiringSoon()) {
-  await refreshToken();
-}
-
-// الحصول على Token
-const token = tokenManager.getAccessToken();
+// المصادقة والتوكن تُدار عبر AuthContext — لا توكنات مكشوفة في الكود
 ```
 
 ### Input Sanitization
 ```typescript
-import { InputSanitizer } from '@/utils/security';
+import { sanitizeHtml, sanitizeInput, escapeHtml } from '@/shared/utils/security';
 
-// تنظيف المدخلات
-const cleanHTML = InputSanitizer.sanitizeHTML(userInput);
-const cleanXSS = InputSanitizer.sanitizeXSS(userInput);
+// تنظيف HTML (يسمح بالوسوم الآمنة فقط)
+const cleanHTML = sanitizeHtml(userInput);
+// تنظيف مدخلات النماذج
+const clean = sanitizeInput(userInput);
 ```
 
 ## 📊 Monitoring APIs

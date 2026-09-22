@@ -155,7 +155,63 @@
   ::view-transition-group(hero) { animation-duration: 0.4s; }
 }
 
-/* ——— 4. Text Spacing Support (WCAG 1.4.12) ——— */
+/* ——— 5. Section Dividers & Visual Hierarchy ——— */
+
+/* Section divider — horizontal rule with consistent rhythm */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--section-gap) 0;
+}
+
+/* Section divider — subtle */
+.section-divider--subtle {
+  border-top: 1px solid var(--muted-foreground);
+  opacity: 0.3;
+}
+
+/* Section divider — gold accent */
+.section-divider--accent {
+  border-top: 1px solid var(--accent);
+  margin: calc(var(--section-gap) - 0.5px) 0;
+}
+
+/* Visual section with background highlight */
+.section-visual {
+  padding: var(--section-gap-lg) 0;
+  border-top: 1px solid var(--section-divider);
+  border-bottom: 1px solid var(--section-divider);
+  margin: calc(var(--section-gap-lg) * -1) 0;
+}
+
+/* Section header — h2 with visual separator */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-relaxed);
+  margin-bottom: var(--section-gap);
+}
+.section-header::before {
+  content: "";
+  flex: 0 0 var(--spacing-relaxed);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+/* Section with card grid */
+.section-cards {
+  display: grid;
+  gap: var(--card-gap);
+  margin-top: -1 * calc(var(--section-gap) * 0.5);
+}
+
+/* Page separator — full width visual break */
+.page-separator {
+  height: 1px;
+  background: var(--muted-foreground);
+  opacity: 0.15;
+  margin: calc(var(--section-gap) * 0.5) 0;
+}
 @media screen {
   /* ضمان عدم كسر التخطيط عند زيادة تباعد النص */
   * { overflow-wrap: break-word; }

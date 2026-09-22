@@ -657,7 +657,7 @@ class DataService {
         return merged;
       }
     } catch {
-      // Supabase failed, continue to next fallback
+      // Supabase failed (or not configured due to invalid URL) - continue to next fallback
     }
 
     // 5. Try HTTP API
@@ -684,8 +684,10 @@ class DataService {
     const offlineFallback = await this.readFromOfflineManager<T>(entity);
     if (offlineFallback) { setCache(cacheKey, offlineFallback); return offlineFallback; }
     const result = stored || this.getLocal<T>(entity);
-    setCache(cacheKey, result);
-    return result;
+    // Ensure we return T[] not T[] | null
+    const safeResult = result === null ? [] : result;
+    setCache(cacheKey, safeResult);
+    return safeResult;
   }
 
   /**

@@ -427,7 +427,7 @@ export const NewsTicker = memo(function NewsTicker() {
             <span className="text-[0.6rem] text-white/60 whitespace-nowrap">
               {liveDonation.name} — {liveDonation.amount}
             </span>
-            <span className="text-[0.55rem] text-white/40">
+            <span className="text-[0.55rem] text-white/80">
               ({liveDonation.time})
             </span>
           </div>
@@ -496,7 +496,7 @@ export const NewsTicker = memo(function NewsTicker() {
                 <button
                   key={action.label}
                   onClick={() => navigate(action.link)}
-                  className="flex items-center gap-1 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.06] px-2 py-1 transition-all duration-200"
+                  className="flex min-h-6 items-center gap-1 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.06] px-2 py-1 transition-all duration-200"
                   title={action.label}
                   aria-label={action.label}
                 >
@@ -522,25 +522,25 @@ export const NewsTicker = memo(function NewsTicker() {
               {currentIndex + 1}/{itemCount}
             </span>
 
-            {/* Nav arrows */}
+            {/* Nav arrows — 24px minimum targets (WCAG 2.2 target-size) */}
             <div className="hidden items-center gap-0.5 sm:flex">
               <button
                 onClick={goNext}
-                className="flex h-5 w-5 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+                className="flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="الخبر التالي"
               >
                 <ChevronRight className="h-3.5 w-3.5" />
               </button>
               <button
                 onClick={goPrev}
-                className="flex h-5 w-5 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+                className="flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="الخبر السابق"
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
               </button>
             </div>
 
-            {/* Dots */}
+            {/* Dots — 24px hit area with a small visual indicator inside */}
             <div
               className="flex items-center gap-1"
               role="tablist"
@@ -553,22 +553,27 @@ export const NewsTicker = memo(function NewsTicker() {
                   role="tab"
                   aria-selected={idx === currentIndex}
                   aria-label={`الخبر ${idx + 1}: ${item.badge}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    idx === currentIndex
-                      ? "w-4 bg-white shadow-[0_0_4px_rgba(255,255,255,0.3)]"
-                      : "w-1.5 bg-white/30 hover:bg-white/50"
-                  }`}
-                />
+                  className="flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full transition-colors hover:bg-white/10"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === currentIndex
+                        ? "w-4 bg-white shadow-[0_0_4px_rgba(255,255,255,0.3)]"
+                        : "w-1.5 bg-white/30"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
             {/* Separator */}
             <span className="h-4 w-px bg-white/15" />
 
-            {/* Close */}
+            {/* Close — 24px minimum target */}
             <button
               onClick={handleDismiss}
-              className="flex h-5 w-5 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+              className="flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
               title="إغلاق الشريط"
               aria-label="إغلاق الشريط الإخباري"
             >

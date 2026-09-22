@@ -59,4 +59,4 @@ User-agent: Baiduspider
 Disallow: /
 
 User-agent: YandexBot
-Disallow: /
+Allow: /

@@ -4,7 +4,10 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const hasSupabaseConfig = Boolean(supabaseUrl && supabaseAnonKey);
+// Validate that Supabase URL is a real domain (not a placeholder)
+const IS_VALID_SUPABASE_URL = supabaseUrl && supabaseUrl.includes("supabase.co");
+
+export const hasSupabaseConfig = Boolean(supabaseUrl && supabaseAnonKey && IS_VALID_SUPABASE_URL);
 
 export const supabase: SupabaseClient | null = hasSupabaseConfig
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- precise: non-null asserted after explicit null check above

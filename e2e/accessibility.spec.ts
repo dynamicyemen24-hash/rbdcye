@@ -90,6 +90,13 @@ test.describe("WCAG 2.2 AAA — keyboard operability", () => {
 
   test("donate page is fully keyboard operable — no focus traps", async ({ page }) => {
     await page.goto("/donate");
+    // The App shell is lazy-loaded (does not block window load), so wait for
+    // React to mount before snapshotting focusables — otherwise this races.
+    await page.waitForFunction(
+      () => document.querySelectorAll("#root button:not([disabled])").length > 5,
+      null,
+      { timeout: 15000 }
+    );
     const focusableCount = await page.evaluate(() => {
       const els = document.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'

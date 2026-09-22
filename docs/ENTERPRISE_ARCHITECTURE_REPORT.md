@@ -39,8 +39,6 @@ src/features/core/
 │   └── patterns.ts          # 15+ Design Patterns
 ├── intelligence/            # الذكاء الاصطناعي
 │   └── aiMonitoring.ts      # Anomaly Detection + Predictions
-├── security/                # الأمان المتقدم
-│   └── advancedSecurity.ts  # Crypto + CSP + Audit + Token Management
 └── ddd/                     # Domain-Driven Design
     └── aggregates.ts        # Aggregates + Entities + Value Objects
 ```

@@ -37,6 +37,40 @@ type StoreName =
   | "forms"
   | "app_cache";
 
+/**
+ * Decide whether an IndexedDB open failure justifies wiping and recreating
+ * the database. Only corruption / version-mismatch signals qualify —
+ * transient errors (blocked, unavailable, quota) must never delete user data.
+ */
+export function shouldResetDatabase(error: unknown): boolean {
+  if (typeof DOMException !== "undefined" && error instanceof DOMException) {
+    return error.name === "VersionError" || error.name === "UnknownError";
+  }
+  if (error instanceof Error) {
+    if (/corrupt/i.test(error.message)) return true;
+    return /versionerror|unknownerror/i.test(error.name);
+  }
+  return false;
+}
+
+/** Best-effort database wipe — always resolves, never throws. */
+function deleteDatabase(name: string): Promise<void> {
+  return new Promise((resolve) => {
+    try {
+      if (typeof indexedDB === "undefined") {
+        resolve();
+        return;
+      }
+      const req = indexedDB.deleteDatabase(name);
+      req.onsuccess = () => resolve();
+      req.onerror = () => resolve();
+      req.onblocked = () => resolve();
+    } catch {
+      resolve();
+    }
+  });
+}
+
 class OfflineManager {
   private db: IDBDatabase | null = null;
   private isOnline = typeof navigator !== "undefined" ? navigator.onLine : true;
@@ -47,10 +81,14 @@ class OfflineManager {
 
   async init(): Promise<void> {
     if (this.initPromise) return this.initPromise;
-    this.initPromise = new Promise((resolve, reject) => {
+    this.initPromise = this.openWithRecovery();
+    return this.initPromise;
+  }
+
+  private openDatabase(): Promise<void> {
+    return new Promise((resolve, reject) => {
       if (typeof indexedDB === "undefined") {
-        this.setupOnlineListener();
-        resolve();
+        reject(new Error("indexeddb-unavailable"));
         return;
       }
       const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -110,10 +148,37 @@ class OfflineManager {
         void this.processSyncQueue();
         resolve();
       };
-      request.onerror = () => reject(request.error);
-      request.onblocked = () => resolve(); // don't hang app
+      // Treat blocked as failure so recovery can retry instead of hanging the app
+      request.onerror = () => reject(request.error ?? new Error("indexeddb-open-failed"));
+      request.onblocked = () => reject(new Error("indexeddb-blocked"));
     });
-    return this.initPromise;
+  }
+
+  // Open with one-shot self-healing: a corrupted/version-mismatched database is
+  // wiped and recreated instead of permanently disabling offline features.
+  // Never rejects — the app always stays usable, offline-less at worst.
+  private async openWithRecovery(): Promise<void> {
+    try {
+      await this.openDatabase();
+      return;
+    } catch (first) {
+      if (!shouldResetDatabase(first)) {
+        this.db = null;
+        this.setupOnlineListener();
+        return;
+      }
+    }
+    try {
+      await deleteDatabase(DB_NAME);
+    } catch {
+      // best-effort — retry open regardless
+    }
+    try {
+      await this.openDatabase();
+    } catch {
+      this.db = null;
+      this.setupOnlineListener();
+    }
   }
 
   private setupBroadcast(): void {
@@ -270,9 +335,12 @@ class OfflineManager {
       const unsynced = await new Promise<OfflineRecord[]>((resolve, reject) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const tx = this.db!.transaction("sync_queue", "readonly");
-        const index = tx.objectStore("sync_queue").index("by_synced");
-        const req = index.getAll(IDBKeyRange.only(false));
-        req.onsuccess = () => resolve((req.result as OfflineRecord[]) || []);
+        const store = tx.objectStore("sync_queue");
+        const req = store.getAll();
+        req.onsuccess = () => {
+          const all = (req.result as OfflineRecord[]) || [];
+          resolve(all.filter((r) => !r.synced));
+        };
         req.onerror = () => reject(req.error);
       });
       for (const record of unsynced) {

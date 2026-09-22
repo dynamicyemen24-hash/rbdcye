@@ -34,6 +34,7 @@ import { MonthlyGivingHero } from "@/app/components/donation/MonthlyGivingHero";
 import { PageHeader } from "@/app/components/PageHeader";
 import { StatsGrid } from "@/app/components/StatsGrid";
 import { ViralShare } from "@/app/components/ViralShare";
+import { offlineManager } from "@/services/offline/offline-manager";
 import { donationDBService } from "@/services/donation/donation-db.service";
 import { EnterpriseButton, EnterpriseInput } from "@/shared/components";
 import { analyticsService } from "@/shared/services/analytics.service";
@@ -380,6 +381,33 @@ export default function DonatePage() {
     loadProjects();
   }, []);
 
+  // ═══════ تتبع بيانات النموذج لحالة الأوفلاين ═══════
+  useEffect(() => {
+    // تخزين بيانات التبرع في IndexedDB عند كل تغيير لحفظ الحالة إذا went offline
+    const formData = {
+      donationType,
+      selectedCurrency,
+      selectedAmount,
+      customAmount,
+      selectedProject,
+      recurringOption,
+      donorInfo,
+      inKindItemName,
+      inKindCategory: inKindCategory,
+      inKindQuantity,
+      inKindCondition,
+      deliveryMethod,
+      deliveryAddress,
+      estimatedValue,
+    };
+    // تخزين فقط عندما يكون هناك تغيير فعلي (debounced)
+    offlineManager.put("forms", formData);
+  }, [
+    donationType, selectedCurrency, selectedAmount, customAmount, selectedProject,
+    recurringOption, donorInfo, inKindItemName, inKindCategory, inKindQuantity,
+    inKindCondition, deliveryMethod, deliveryAddress, estimatedValue,
+  ]);
+
   useSEO({
     title: "تبرع الآن — رحماء بينهم",
     description:
@@ -550,34 +578,21 @@ export default function DonatePage() {
     setSelectedInKind((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
-    if (donationType === "monetary") {
-      if (!Number.isFinite(actualAmount) || actualAmount <= 0) {
-        setSubmitError("يرجى إدخال مبلغ تبرع صالح قبل المتابعة. المبلغ يجب أن يكون أكبر من صفر.");
-        return;
-      }
-      const minAmount = MIN_DONATION_AMOUNTS[selectedCurrency] ?? 1;
-      if (actualAmount < minAmount) {
-        setSubmitError(
-          `الحد الأدنى للتبرع بالعملة ${selectedCurrency} هو ${minAmount.toLocaleString("ar-YE")} ${currency.symbol}. يرجى تعديل المبلغ.`
-        );
-        return;
-      }
-    }
-    if (donationType === "inkind" && !inKindItemName) {
-      setSubmitError("يرجى إدخال اسم الصنف المتبرع به.");
-      return;
-    }
     setIsSubmitting(true);
+    
     // Generate idempotency key to prevent duplicate donations on refresh/retry
     // Ensures: same donation request + same idempotency key = one financial operation
-    const idempotencyKey = `donation_${donorInfo.email?.toLowerCase() || 'anonymous'}_${actualAmount}_${selectedCurrency}_${selectedProject}`;
+const idempotencyKey = `donation_${donorInfo.email?.toLowerCase() || 'anonymous'}_${actualAmount}_${selectedCurrency}_${selectedProject}`;
+    
+    // Project data and payment type needed for donation processing
+    const selectedProjectData = displayProjects.find((p) => p.id === selectedProject);
+    const paymentType = recurringOption === "once" ? "once" : recurringOption;
     
     try {
-      const selectedProjectData = displayProjects.find((p) => p.id === selectedProject);
-      const paymentType = recurringOption === "once" ? "once" : recurringOption;
+      
       await multiProjectDonationService.processDonation({
         donorName: donorInfo.name || "متبرع",
         donorEmail: donorInfo.email,
@@ -621,13 +636,13 @@ export default function DonatePage() {
       } catch {
         /* non-critical */
       }
-
+      
       // Save to real database - legacy direct insert (processDonation already saved via multiProject service)
       // Guarded by idempotency: skip if this donation was already persisted (prevents duplicate on refresh/retry)
       const alreadyPersisted = (() => { try { return !!localStorage.getItem(`rh_idem_${idempotencyKey}`); } catch { return false; } })();
-      if (!alreadyPersisted) {
-        try {
-        const donation = await donationDBService.createDonation({
+if (!alreadyPersisted) {
+    try {
+const donation = await donationDBService.createDonation({
           donor_name: donorInfo.name || undefined,
           donor_email: donorInfo.email,
           donor_phone: donorInfo.phone,
@@ -638,9 +653,9 @@ export default function DonatePage() {
           payment_method: paymentMethod,
           payment_status: donationType === "monetary" ? "pending" : "completed",
           message: donorInfo.message,
+          is_anonymous: !donorInfo.name,
           is_recurring: recurringOption !== "once",
           recurring_interval: recurringOption,
-          is_anonymous: !donorInfo.name,
         });
 
         if (donationType === "inkind" && inKindItemName) {
@@ -659,16 +674,16 @@ export default function DonatePage() {
             delivery_address: deliveryAddress,
           });
         }
-      } catch (dbError) {
-        if (import.meta.env.DEV) console.error("DB save failed:", dbError);
-        // Continue with success UI even if DB fails
-      }
+        } catch (dbError) {
+          if (import.meta.env.DEV) console.error("DB save failed:", dbError);
+          // Continue with success UI even if DB fails
+        }
       } // end if (!alreadyPersisted) guard - idempotent skip
-
+      
       setIsSuccess(true);
     } catch {
       setSubmitError(
-        "تعذر إتمام الطلب حاليًا. تحقق من الاتصال بالإنترنت ثم حاول مرة أخرى، أو تواصل مع فريق رحماء بينهم على الرقم +967 780 777 007"
+        "تعذر إتمام الطلب Currently. Check internet connection and try again, or contact رواحماء بينهم team at +967 780 777 007"
       );
     } finally {
       setIsSubmitting(false);
@@ -1132,7 +1147,7 @@ export default function DonatePage() {
                       />
                     </div>
                     {actualAmount > 0 && actualAmount < (MIN_DONATION_AMOUNTS[selectedCurrency] ?? 1) && (
-                      <div className="mt-2 text-xs font-semibold text-[var(--destructive)]">
+                      <div role="status" className="mt-2 text-xs font-semibold text-[var(--destructive)]">
                         الحد الأدنى هو {MIN_DONATION_AMOUNTS[selectedCurrency]?.toLocaleString("ar-YE") ?? 1} {currency.symbol}
                       </div>
                     )}

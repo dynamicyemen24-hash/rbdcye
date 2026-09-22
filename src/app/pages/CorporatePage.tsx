@@ -359,11 +359,11 @@ export default function CorporatePage() {
 
               <div className="space-y-6">
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-employees" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     عدد الموظفين المشاركين
                   </label>
                   <input
+                    id="corp-employees"
                     type="number"
                     min={1}
                     max={10000}
@@ -377,6 +377,7 @@ export default function CorporatePage() {
                     max={2000}
                     value={employeeCount}
                     onChange={(e) => setEmployeeCount(parseInt(e.target.value))}
+                    aria-label="عدد الموظفين المشاركين (منزلق)"
                     className="w-full mt-3 accent-[var(--brand-green)]"
                   />
                   <div className="flex justify-between text-xs text-[var(--muted-foreground)] mt-1">
@@ -387,11 +388,11 @@ export default function CorporatePage() {
 
                 {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-contrib" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     المساهمة الشهرية لكل موظف (ر.ي)
                   </label>
                   <input
+                    id="corp-contrib"
                     type="number"
                     min={100}
                     step={500}
@@ -406,6 +407,7 @@ export default function CorporatePage() {
                     step={500}
                     value={monthlyContribution}
                     onChange={(e) => setMonthlyContribution(parseInt(e.target.value))}
+                    aria-label="المساهمة الشهرية لكل موظف (منزلق)"
                     className="w-full mt-3 accent-[var(--brand-green)]"
                   />
                   <div className="flex justify-between text-xs text-[var(--muted-foreground)] mt-1">
@@ -704,13 +706,13 @@ export default function CorporatePage() {
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-company" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     اسم الشركة *
                   </label>
                   <div className="relative">
                     <Building2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)]" />
                     <input
+                      id="corp-company"
                       type="text"
                       required
                       placeholder="أدخل اسم الشركة"
@@ -721,13 +723,13 @@ export default function CorporatePage() {
                 </div>
 
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-contact" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     اسم شخص التواصل *
                   </label>
                   <div className="relative">
                     <Users className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)]" />
                     <input
+                      id="corp-contact"
                       type="text"
                       required
                       placeholder="الاسم الكامل"
@@ -738,13 +740,13 @@ export default function CorporatePage() {
                 </div>
 
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-phone" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     رقم الهاتف *
                   </label>
                   <div className="relative">
                     <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)]" />
                     <input
+                      id="corp-phone"
                       type="tel"
                       required
                       placeholder="+٩٦٧ ..."
@@ -755,13 +757,13 @@ export default function CorporatePage() {
                 </div>
 
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                  <label htmlFor="corp-email" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                     البريد الإلكتروني *
                   </label>
                   <div className="relative">
                     <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)]" />
                     <input
+                      id="corp-email"
                       type="email"
                       required
                       placeholder="email@company.com"
@@ -773,13 +775,13 @@ export default function CorporatePage() {
               </div>
 
               <div>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                <label htmlFor="corp-tier" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                   الاهتمام بالشراكة *
                 </label>
                 <div className="relative">
                   <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted-foreground)] pointer-events-none" />
                   <select
+                    id="corp-tier"
                     required
                     className="w-full pr-4 pl-10 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] appearance-none focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/50 focus:border-[var(--brand-green)] transition-all"
                   >
@@ -794,11 +796,11 @@ export default function CorporatePage() {
               </div>
 
               <div>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                <label className="block text-sm font-semibold text-[var(--foreground)] mb-2">
+                <label htmlFor="corp-message" className="block text-sm font-semibold text-[var(--foreground)] mb-2">
                   رسالتك
                 </label>
                 <textarea
+                  id="corp-message"
                   rows={4}
                   placeholder="اكتب رسالتك هنا... أخبرنا عن اهتمامات شركتك وأهدافها من الشراكة"
                   className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-green)]/50 focus:border-[var(--brand-green)] transition-all resize-none"

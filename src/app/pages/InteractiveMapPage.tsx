@@ -563,7 +563,7 @@ function GovernorateCard({
           <h3 className="text-lg font-extrabold text-[var(--foreground)]">
             {gov.name}
           </h3>
-          <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
+          <p className="mt-0.5 text-xs font-medium text-[var(--foreground)]">
             {gov.keyProject}
           </p>
         </div>
@@ -574,7 +574,7 @@ function GovernorateCard({
           <p className="text-xl font-extrabold text-[var(--brand-green)]">
             {gov.projectCount}
           </p>
-          <p className="mt-0.5 text-[10px] text-[var(--muted-foreground)]">
+          <p className="mt-0.5 text-[10px] font-bold text-[var(--foreground)]">
             مشروع
           </p>
         </div>
@@ -582,7 +582,7 @@ function GovernorateCard({
           <p className="text-xl font-extrabold text-[var(--foreground)]">
             {gov.totalBeneficiaries.toLocaleString("ar-YE")}
           </p>
-          <p className="mt-0.5 text-[10px] text-[var(--muted-foreground)]">
+          <p className="mt-0.5 text-[10px] font-bold text-[var(--foreground)]">
             مستفيد
           </p>
         </div>
@@ -607,7 +607,7 @@ function GovernorateCard({
         })}
         {gov.projects.length > 3 && (
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--muted)]">
-            <span className="text-[10px] font-bold text-[var(--muted-foreground)]">
+            <span className="text-[10px] font-bold text-[var(--foreground)]">
               +{gov.projects.length - 3}
             </span>
           </div>
@@ -771,18 +771,21 @@ export default function InteractiveMapPage() {
               value: totalBeneficiaries.toLocaleString("ar-YE"),
               label: "إجمالي المستفيدين",
               color: "var(--brand-gold)",
+              textColor: "#8a6d2f",
             },
             {
               icon: MapPin,
               value: `${totalGovernorateCount} / ٨`,
               label: "المحافظات المشمولة",
               color: "var(--brand-green)",
+              textColor: "var(--brand-green)",
             },
             {
               icon: TrendingUp,
               value: `${coveragePercent}%`,
               label: "نسبة التغطية",
               color: "var(--brand-gold)",
+              textColor: "#8a6d2f",
             },
           ].map((stat, idx) => (
             <div
@@ -796,9 +799,10 @@ export default function InteractiveMapPage() {
                 <stat.icon className="h-5 w-5" style={{ color: stat.color }} />
               </div>
               <div>
+                {/* Value uses the AA-safe text tone; icon keeps brand hue */}
                 <p
                   className="text-xl font-extrabold"
-                  style={{ color: stat.color }}
+                  style={{ color: stat.textColor }}
                 >
                   {stat.value}
                 </p>

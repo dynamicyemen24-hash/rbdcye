@@ -310,6 +310,7 @@ export function QuickDonation({ onClose, embedded = false }: QuickDonationProps)
             type="number"
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
+            aria-label="مبلغ التبرع"
             className="w-full p-4 border-2 border-gray-200 rounded-lg text-lg focus:border-[var(--brand-green)]"
             placeholder="أو أدخل مبلغ آخر"
             min="1"

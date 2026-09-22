@@ -51,17 +51,17 @@ function useAnimatedCounter(target: number, duration = 2000, startOnView = true)
 
 /* ─── Flow Chain Data ─── */
 const FLOW_NODES = [
-  { id: "donor", label: "المتبرع", icon: Users, color: "#059669", desc: "منبع العطاء" },
-  { id: "donations", label: "التبرعات", icon: Wallet, color: "#10b981", desc: "تير العطاء" },
-  { id: "campaigns", label: "الحملات", icon: Flag, color: "#14b8a6", desc: "رافعة الأثر" },
-  { id: "projects", label: "المشاريع", icon: Building2, color: "#0891b2", desc: "آلة التحول" },
-  { id: "beneficiaries", label: "المستفيدون", icon: UserCheck, color: "#0284c7", desc: "وت果 الأثر" },
-  { id: "execution", label: "التنفيذ", icon: CheckCircle, color: "#2563eb", desc: "قلب العمل" },
-  { id: "data", label: "البيانات", icon: Database, color: "#4f46e5", desc: "الether الرقمي" },
-  { id: "evidence", label: "الأدلة", icon: FileText, color: "#7c3aed", desc: "بصمة الحقيقة" },
-  { id: "results", label: "النتائج", icon: BarChart3, color: "#9333ea", desc: "面对 النجاح" },
-  { id: "reports", label: "التقارير", icon: FileBarChart, color: "#a855f7", desc: "صوت الشفافية" },
-  { id: "impact", label: "الأثر", icon: Star, color: "#d97706", desc: "نجم المُستدام" },
+  { id: "donor", label: "المتبرع", icon: Users, color: "#065f46", desc: "منبع العطاء" },
+  { id: "donations", label: "التبرعات", icon: Wallet, color: "#047857", desc: "تير العطاء" },
+  { id: "campaigns", label: "الحملات", icon: Flag, color: "#0f766e", desc: "رافعة الأثر" },
+  { id: "projects", label: "المشاريع", icon: Building2, color: "#0e7490", desc: "آلة التحول" },
+  { id: "beneficiaries", label: "المستفيدون", icon: UserCheck, color: "#0369a1", desc: "وت果 الأثر" },
+  { id: "execution", label: "التنفيذ", icon: CheckCircle, color: "#1d4ed8", desc: "قلب العمل" },
+  { id: "data", label: "البيانات", icon: Database, color: "#4338ca", desc: "الether الرقمي" },
+  { id: "evidence", label: "الأدلة", icon: FileText, color: "#6d28d9", desc: "بصمة الحقيقة" },
+  { id: "results", label: "النتائج", icon: BarChart3, color: "#7e22ce", desc: "面对 النجاح" },
+  { id: "reports", label: "التقارير", icon: FileBarChart, color: "#7e22ce", desc: "صوت الشفافية" },
+  { id: "impact", label: "الأثر", icon: Star, color: "#b45309", desc: "نجم المُستدام" },
 ];
 
 /* ─── Donor Journey Data ─── */
@@ -73,7 +73,7 @@ const DONOR_JOURNEY = [
     whatHappens: "يتصفح المشاريع، يقرأ القصص، يفهم السياق",
     output: "فهم عميق للمشكلة",
     icon: Eye,
-    color: "#059669",
+    color: "#065f46",
     gradient: "from-emerald-500/20 to-emerald-600/5",
   },
   {
@@ -83,7 +83,7 @@ const DONOR_JOURNEY = [
     whatHappens: "يحدد المجال والأولوية والمبلغ",
     output: "مشروع محدد",
     icon: Target,
-    color: "#10b981",
+    color: "#047857",
     gradient: "from-emerald-400/20 to-emerald-500/5",
   },
   {
@@ -93,7 +93,7 @@ const DONOR_JOURNEY = [
     whatHappens: "الدفع الآمن، الإيصال الفوري",
     output: "إثبات تبرع",
     icon: HandHeart,
-    color: "#14b8a6",
+    color: "#0f766e",
     gradient: "from-teal-500/20 to-teal-600/5",
   },
   {
@@ -103,7 +103,7 @@ const DONOR_JOURNEY = [
     whatHappens: "إيصال + رقم مرجعي + ملخص",
     output: "ثقة وإثبات",
     icon: CheckCircle,
-    color: "#0891b2",
+    color: "#0e7490",
     gradient: "from-cyan-500/20 to-cyan-600/5",
   },
   {
@@ -113,7 +113,7 @@ const DONOR_JOURNEY = [
     whatHappens: "إشعارات، تحديثات شهرية",
     output: "اتصال مستمر",
     icon: Bell,
-    color: "#0284c7",
+    color: "#0369a1",
     gradient: "from-sky-500/20 to-sky-600/5",
   },
   {
@@ -123,7 +123,7 @@ const DONOR_JOURNEY = [
     whatHappens: "صور، فيديو، تقارير، إحصائيات",
     output: "أثر ملموس",
     icon: Sparkles,
-    color: "#2563eb",
+    color: "#1d4ed8",
     gradient: "from-blue-500/20 to-blue-600/5",
   },
   {
@@ -133,7 +133,7 @@ const DONOR_JOURNEY = [
     whatHappens: "توصيات مخصصة، مشاريع مشابهة",
     output: "علاقة طويلة الأمد",
     icon: Repeat,
-    color: "#4f46e5",
+    color: "#4338ca",
     gradient: "from-indigo-500/20 to-indigo-600/5",
   },
   {
@@ -143,19 +143,19 @@ const DONOR_JOURNEY = [
     whatHappens: "برنامج كبار المانحين، مجلس استشاري",
     output: "شريك في الرؤية",
     icon: Award,
-    color: "#7c3aed",
+    color: "#6d28d9",
     gradient: "from-violet-500/20 to-violet-600/5",
   },
 ];
 
 /* ─── Live Data Counters ─── */
 const LIVE_COUNTERS = [
-  { label: "المتبرعون النشطون", value: 2340, icon: Users, color: "#059669" },
-  { label: "التبرعات اليوم", value: 47, icon: Wallet, color: "#10b981" },
-  { label: "المشاريع الجارية", value: 12, icon: Building2, color: "#0891b2" },
-  { label: "المستفيدون هذا الشهر", value: 850, icon: UserCheck, color: "#2563eb" },
-  { label: "التقارير المُصدَرة", value: 36, icon: FileBarChart, color: "#7c3aed" },
-  { label: "نقاط الأثر", value: 94, icon: Star, color: "#d97706" },
+  { label: "المتبرعون النشطون", value: 2340, icon: Users, color: "#065f46" },
+  { label: "التبرعات اليوم", value: 47, icon: Wallet, color: "#047857" },
+  { label: "المشاريع الجارية", value: 12, icon: Building2, color: "#0e7490" },
+  { label: "المستفيدون هذا الشهر", value: 850, icon: UserCheck, color: "#1d4ed8" },
+  { label: "التقارير المُصدَرة", value: 36, icon: FileBarChart, color: "#6d28d9" },
+  { label: "نقاط الأثر", value: 94, icon: Star, color: "#b45309" },
 ];
 
 /* ─── Impact Report Preview ─── */
@@ -346,7 +346,7 @@ const JourneyCard = memo(function JourneyCard({
 
         {/* What happens */}
         <div className="mb-3 rounded-xl bg-[var(--muted)]/60 p-3">
-          <p className="mb-1 text-xs font-bold text-[var(--muted-foreground)]">ماذا يحدث</p>
+          <p className="mb-1 text-xs font-bold text-[var(--foreground)]">ماذا يحدث</p>
           <p className="text-sm font-medium text-[var(--foreground)]">{item.whatHappens}</p>
         </div>
 
@@ -357,10 +357,8 @@ const JourneyCard = memo(function JourneyCard({
         >
           <Sparkles className="h-4 w-4 shrink-0" style={{ color: item.color }} />
           <div>
-            <p className="text-xs font-bold text-[var(--muted-foreground)]">المخرج</p>
-            <p className="text-sm font-bold" style={{ color: item.color }}>
-              {item.output}
-            </p>
+            <p className="text-xs font-bold text-[var(--foreground)]">المخرج</p>
+            <p className="text-sm font-bold text-[var(--foreground)]">{item.output}</p>
           </div>
         </div>
       </div>

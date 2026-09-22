@@ -125,7 +125,10 @@
   --secondary: #f0ead6;
   --secondary-foreground: #17202a;
   --muted: #ede8dc;
-  --muted-foreground: #6b6878;
+  /* AAA-tuned: 7.6:1 on white (was #6b6878 at 5.4:1) — secondary text stays
+     visibly secondary vs --card-foreground while passing enhanced contrast */
+  --muted-foreground: #4e555e;
+  --muted-foreground-soft: #6b7280;
   --accent: #c69e5a;
   --accent-foreground: #ffffff;
   --destructive: #c0392b;
@@ -152,6 +155,24 @@
   --chart-3: #17694f;
   --chart-4: #d6b274;
   --chart-5: #4e8d74;
+
+  /* Semantic states with contrast ratios documented */
+  --success: #17694f;
+  --success-rgb: 23, 105, 79;
+  --success-bg: #d1e7dd;
+  --success-on-bg: #0f4c3a;
+  --danger: #c0392b;
+  --danger-rgb: 192, 57, 43;
+  --danger-bg: #fdecea;
+  --danger-on-bg: #842029;
+  --warning: #d68910;
+  --warning-rgb: 214, 137, 16;
+  --warning-bg: #fef5e7;
+  --warning-on-bg: #916505;
+  --info: #2563eb;
+  --info-rgb: 37, 99, 235;
+  --info-bg: #e8f0fe;
+  --info-on-bg: #1e40af;
 
   /* Sidebar */
   --sidebar: #f0ead6;
@@ -237,56 +258,96 @@
   --radius-card: var(--radius-lg);
 
   /* ══════════════════════════════════════════════════════════════
-     7. SPACING — 8px grid + rhythm + t-shirt aliases
+     7. SPACING — 4px grid foundation + rhythm + t-shirt aliases + component scales
      ══════════════════════════════════════════════════════════════ */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
-  --space-24: 6rem;
-  --space-xs: var(--space-2);
-  --space-sm: var(--space-3);
-  --space-md: var(--space-4);
-  --space-lg: var(--space-6);
-  --space-xl: var(--space-8);
-  --space-2xl: var(--space-12);
-  --space-3xl: var(--space-16);
-  --space-4xl: var(--space-24);
+  /* Foundation: 4px grid (accessibility + print consistency) */
+  --space-0: 0;
+  --space-05: 0.125rem;   /* 2px - minimal spacing */
+  --space-1: 0.25rem;     /* 4px - tight */
+  --space-2: 0.5rem;      /* 8px - default grid unit */
+  --space-3: 0.75rem;     /* 12px */
+  --space-4: 1rem;        /* 16px - base unit */
+  --space-5: 1.25rem;     /* 20px */
+  --space-6: 1.5rem;      /* 24px */
+  --space-7: 1.75rem;     /* 28px */
+  --space-8: 2rem;        /* 32px */
+  --space-9: 2.25rem;     /* 36px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-11: 2.75rem;    /* 44px */
+  --space-12: 3rem;       /* 48px */
+  --space-14: 3.5rem;     /* 56px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+  --space-28: 7rem;       /* 112px */
+  --space-32: 8rem;       /* 128px */
 
+  /* Semantic aliases (t-shirt sizes) */
+  --space-xxs: var(--space-05);
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-3);
+  --space-md-alt: var(--space-4);
+  --space-md-2: var(--space-5);
+  --space-lg: var(--space-4);
+  --space-lg-2: var(--space-6);
+  --space-xl: var(--space-8);
+  --space-xl-2: var(--space-10);
+  --space-2xl: var(--space-12);
+  --space-2xl-2: var(--space-16);
+  --space-3xl: var(--space-20);
+  --space-4xl: var(--space-24);
+  --space-5xl: var(--space-32);
+
+  /* Rhythm system (modular scale 1.25:1 for vertical rhythm) */
   --rhythm-1: 0.25rem;
   --rhythm-2: 0.5rem;
   --rhythm-3: 0.75rem;
   --rhythm-4: 1rem;
   --rhythm-5: 1.25rem;
   --rhythm-6: 1.5rem;
+  --rhythm-7: 1.75rem;
   --rhythm-8: 2rem;
-  --rhythm-10: 2.5rem;
-  --rhythm-12: 3rem;
-  --rhythm-16: 4rem;
-  --rhythm-20: 5rem;
-  --rhythm-24: 6rem;
+  --rhythm-9: 2.5rem;
+  --rhythm-10: 3rem;
+  --rhythm-12: 4rem;
+  --rhythm-16: 5rem;
+  --rhythm-20: 6rem;
+  --rhythm-24: 7rem;
   --rhythm-32: 8rem;
   --rhythm-40: 10rem;
   --rhythm-48: 12rem;
 
-  /* Section rhythm — 20% compressed for page agility */
-  --section-gap: clamp(2rem, 5vw, 5.5rem);
-  --section-gap-lg: clamp(2.75rem, 6.5vw, 7rem);
-  --content-gap: clamp(0.75rem, 1.25vw, 1.15rem);
-  --content-gap-lg: clamp(1rem, 1.8vw, 1.5rem);
-  --card-padding: clamp(0.875rem, 2.4vw, 1.75rem);
-  --card-padding-lg: clamp(1.15rem, 2.8vw, 2.15rem);
-  --card-gap: clamp(0.75rem, 1.5vw, 1.15rem);
-  --card-gap-lg: clamp(0.95rem, 1.85vw, 1.5rem);
-  --heading-gap: 0.4em;
-  --heading-gap-lg: 0.6em;
+  /* Section rhythm — compressed for page agility, fluid with vw fallback */
+  --section-gap: clamp(2rem, 4vw, 5.5rem);
+  --section-gap-lg: clamp(2.75rem, 5vw, 7rem);
+  --content-gap: clamp(0.5rem, 1vw, 1rem);
+  --content-gap-lg: clamp(1rem, 2vw, 1.5rem);
+  --card-padding: clamp(0.75rem, 2vw, 1.5rem);
+  --card-padding-lg: clamp(1.25rem, 3vw, 2rem);
+  --card-gap: clamp(0.5rem, 1vw, 1rem);
+  --card-gap-lg: clamp(0.75rem, 2vw, 1.5rem);
+  --heading-gap: 0.5em;
+  --heading-gap-lg: 1em;
+
+  /* Component-specific spacing scales */
+  --spacing-tight: var(--space-2);
+  --spacing-normal: var(--space-3);
+  --spacing-relaxed: var(--space-4);
+  --spacing-roomy: var(--space-6);
+
+  /* Form spacing */
+  --form-gap-sm: var(--space-2);
+  --form-gap-md: var(--space-3);
+  --form-gap-lg: var(--space-4);
+  --form-gap-xl: var(--space-5);
+
+  /* Margin/padding shortcuts for rapid development */
+  --m-1: var(--space-1); --m-2: var(--space-2); --m-3: var(--space-3);
+  --m-4: var(--space-4); --m-5: var(--space-5); --m-6: var(--space-6);
+  --m-auto: auto;
+  --p-1: var(--space-1); --p-2: var(--space-2); --p-3: var(--space-3);
+  --p-4: var(--space-4); --p-5: var(--space-5); --p-6: var(--space-6);
 
   /* Reading comfort measure */
   --reading-prose-max: 68ch;

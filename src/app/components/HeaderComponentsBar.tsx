@@ -32,7 +32,8 @@ export const HeaderComponentsBar = memo(function HeaderComponentsBar({
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-[11px] font-black tracking-tight text-white">رحماء بينهم</span>
           <span className="h-3 w-px bg-white/20" aria-hidden="true" />
-          <span className="hidden xl:inline text-[10px] font-bold tracking-[0.14em] text-[var(--brand-gold-light)]">
+          {/* Decorative latin transliteration — lightened to pass AAA on dark bar */}
+          <span aria-hidden="true" className="hidden xl:inline text-[10px] font-bold tracking-[0.14em] text-[#ead9ab]">
             RAHMAA BAYNAHUM
           </span>
           <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-bold text-white/90">

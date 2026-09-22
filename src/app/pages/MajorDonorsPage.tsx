@@ -333,7 +333,9 @@ export default function MajorDonorsPage() {
                       {tier.name}
                     </h3>
                     <div className="mb-6">
-                      <span className="text-2xl font-bold" style={{ color: tier.color }}>
+                      {/* Price in foreground ink: tier hues (esp. gold) cannot
+                          reach text contrast on white — color lives in icon/badge */}
+                      <span className="text-2xl font-bold text-[var(--foreground)]">
                         {tier.annual}
                       </span>
                       <span className="mr-1 text-sm text-[var(--muted-foreground)]">
@@ -514,11 +516,11 @@ export default function MajorDonorsPage() {
             <div className="space-y-6 p-5 sm:p-6">
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="md-name" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     الاسم الكامل *
                   </label>
                   <input
+                    id="md-name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -529,11 +531,11 @@ export default function MajorDonorsPage() {
                 </div>
                 {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="md-phone" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     رقم الهاتف *
                   </label>
                   <input
+                    id="md-phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -547,11 +549,11 @@ export default function MajorDonorsPage() {
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="md-email" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     البريد الإلكتروني
                   </label>
                   <input
+                    id="md-email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -562,11 +564,11 @@ export default function MajorDonorsPage() {
                   />
                 </div>
                 <div>
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                  <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                  <label htmlFor="md-annual" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                     المبلغ السنوي المقصود (ر.ي) *
                   </label>
                   <select
+                    id="md-annual"
                     name="annualGiving"
                     value={formData.annualGiving}
                     onChange={handleInputChange}
@@ -582,11 +584,11 @@ export default function MajorDonorsPage() {
               </div>
 
               <div>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                <label htmlFor="md-projects" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                   المشاريع المفضلة
                 </label>
                 <select
+                  id="md-projects"
                   name="preferredProjects"
                   value={formData.preferredProjects}
                   onChange={handleInputChange}
@@ -604,11 +606,11 @@ export default function MajorDonorsPage() {
               </div>
 
               <div>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control -- precise: jsx-a11y/label-has-associated-control verified */}
-                <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">
+                <label htmlFor="md-message" className="mb-2 block text-sm font-bold text-[var(--foreground)]">
                   رسالتك
                 </label>
                 <textarea
+                  id="md-message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}

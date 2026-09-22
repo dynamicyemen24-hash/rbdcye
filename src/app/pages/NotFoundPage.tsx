@@ -54,14 +54,14 @@ export default function NotFoundPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link to="/">
+            <Link to="/" className="inline-flex">
               <button className="inline-flex items-center gap-2 bg-[var(--brand-green)] text-white px-8 py-3 rounded-xl font-bold hover:bg-[var(--brand-green-light)] transition-colors shadow-lg shadow-[var(--brand-green)]/25">
                 <Home className="w-5 h-5" />
                 العودة للرئيسية
               </button>
             </Link>
 
-            <Link to="/contact">
+            <Link to="/contact" className="inline-flex">
               <button className="inline-flex items-center gap-2 border-2 border-[var(--border)] text-[var(--foreground)] px-8 py-3 rounded-xl font-bold hover:bg-[var(--secondary)] transition-colors">
                 تواصل معنا
                 <ArrowRight className="w-5 h-5" />

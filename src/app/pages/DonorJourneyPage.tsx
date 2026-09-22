@@ -726,6 +726,9 @@ function TimelineNav() {
           style={{
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '24px',
+            minWidth: '24px',
             gap: '8px',
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
@@ -828,14 +831,14 @@ function HeroSection() {
           gap: '8px',
           padding: '8px 20px',
           borderRadius: 'var(--radius-xl)',
-          background: 'rgba(5,150,105,0.1)',
-          border: '1px solid rgba(5,150,105,0.2)',
+          background: '#ffffff',
+          border: '1px solid rgba(5,150,105,0.25)',
           marginBottom: '32px',
           zIndex: 1,
         }}
       >
-        <Sparkles size={16} color="var(--color-primary)" />
-        <span style={{ color: 'var(--color-primary)', fontSize: '14px', fontWeight: 600 }}>٨ مراحل متكاملة</span>
+        <Sparkles size={16} color="#047857" />
+        <span style={{ color: '#065f46', fontSize: '14px', fontWeight: 700 }}>٨ مراحل متكاملة</span>
       </motion.div>
 
       {/* Main Title */}

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/LoadingSkeleton";
 import { pageTransition } from "@/utils/animations";
+import { prefersReducedMotionSync } from "@/utils/media";
 import { reportWebVitals } from "@/utils/performance";
 
 import { BackToTop } from "./components/BackToTop";
@@ -176,13 +177,15 @@ const AppContent = memo(function AppContent() {
 
   const setCurrentPage = useCallback(
     (page: string) => {
+      // Respect users who prefer reduced motion: skip the transition entirely
+      const reduced = prefersReducedMotionSync();
       const go = () => {
         navigate(`/${page === "home" ? "" : page}`, { replace: false });
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- precise: any retained for Sanity PortableText dynamic — typed via unknown in v3.2
       const doc = document as any as { startViewTransition?: (cb: () => void) => void };
-      if (doc.startViewTransition) doc.startViewTransition(go);
+      if (!reduced && doc.startViewTransition) doc.startViewTransition(go);
       else go();
     },
     [navigate]
@@ -232,6 +235,26 @@ const AppContent = memo(function AppContent() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isSearchOpen, setIsSearchOpen]);
+
+  // Signal first paint — the boot splash (index.html #app-loader) hides instantly.
+  // Double rAF fires after the browser has painted this shell.
+  useEffect(() => {
+    let cancelled = false;
+    const notify = () => {
+      if (cancelled) return;
+      window.dispatchEvent(new CustomEvent("rbdcye:app-ready"));
+    };
+    if (typeof requestAnimationFrame === "function") {
+      const raf = requestAnimationFrame(() => {
+        requestAnimationFrame(notify);
+      });
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(raf);
+      };
+    }
+    notify();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--background)]" dir="rtl">
@@ -581,7 +604,7 @@ const AppContent = memo(function AppContent() {
       <SocialProof />
       <UrgencyBanner
         title="حملة كسوة الشتاء ٢٠٢٦"
-        message="نسعى لتوفيركسوات شتوية لأكثر من ٢,٠٠٠ أسرة محتاجة"
+        message="نسعى لتوفير كسوات شتوية لأكثر من ٢,٠٠٠ أسرة محتاجة"
         ctaText="تبرع الآن"
         ctaLink="/donate"
         type="urgent"

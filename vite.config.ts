@@ -1,16 +1,24 @@
 import { defineConfig } from 'vite';
 import * as path from 'path';
+import * as fs from 'node:fs';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import compression from 'vite-plugin-compression';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
+// Build identity — baked into the bundle AND written to dist/version.json.
+// The running app compares both values to detect a newer deploy and force-update.
+const APP_VERSION = process.env.npm_package_version ?? '2.2.0';
+const APP_BUILD_TIME = new Date().toISOString();
+
 export default defineConfig({
   // Eliminate DEV-only code from production bundles (tree-shaking enforcer)
   define: {
     'import.meta.env.DEV': 'false',
     'import.meta.env.PROD': 'true',
+    '__APP_VERSION__': JSON.stringify(APP_VERSION),
+    '__APP_BUILD_TIME__': JSON.stringify(APP_BUILD_TIME),
   },
   resolve: {
     alias: {
@@ -21,6 +29,21 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     react(),
+    // Writes dist/version.json on every build — the update-enforcement source of truth
+    {
+      name: 'app-version-file',
+      closeBundle() {
+        try {
+          fs.mkdirSync('dist', { recursive: true });
+          fs.writeFileSync(
+            path.join('dist', 'version.json'),
+            JSON.stringify({ version: APP_VERSION, buildTime: APP_BUILD_TIME }),
+          );
+        } catch {
+          // Version file is best-effort — the app skips enforcement when absent
+        }
+      },
+    },
     ViteImageOptimizer({
       test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
       includePublic: true,
@@ -35,6 +58,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon-32x32.png', 'favicon-16x16.png', 'robots.txt', 'offline.html', 'sitemap.xml', 'manifest.json'],
+      srcDir: 'src',
+      filename: 'sw.ts',
       manifest: {
         name: 'رحماء بينهم',
         short_name: 'رحماء بينهم',
@@ -49,20 +74,35 @@ export default defineConfig({
         dir: 'rtl',
         prefer_related_applications: false,
         categories: ['charity', 'donation', 'social', 'lifestyle'],
+        icons: [
+          { src: '/icons/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
         shortcuts: [
           { name: 'تبرع سريع', url: '/donate', description: 'تبرع الآن وسريعاً', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
           { name: 'آخر الأخبار', url: '/news', description: 'تصفح آخر الأخبار', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
           { name: 'حاسبة الزكاة', url: '/zakat', description: 'احسب زكاتك بدقة', icons: [{ src: '/icons/pwa-192x192.png', sizes: '192x192' }] },
         ],
-        screenshots: [
-          { src: '/og-image.png', sizes: '1280x720', type: 'image/png', form_factor: 'wide', label: 'صفحة رئيسية' },
-        ],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2,woff,ttf,json,xml}'],
-        globIgnores: ['**/videos/**', '**/maps/**', '**/analytics/**'],
+        // Dedup guard: vite-plugin-pwa auto-injects manifest icons (shortcuts/icons)
+        // and includeAssets into the precache list. Anything the plugin injects
+        // MUST be excluded from the glob, otherwise the same URL lands in the
+        // precache twice with different revisions and the new Service Worker
+        // fails to install (add-to-cache-list-conflicting-entries) forever.
+        globIgnores: [
+          '**/videos/**', '**/maps/**', '**/analytics/**',
+          '**/favicon-16x16.png', '**/favicon-32x32.png', '**/favicon.svg',
+          '**/icons/**',
+          '**/manifest.json', '**/manifest.webmanifest',
+          '**/offline.html', '**/robots.txt', '**/sitemap.xml',
+        ],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         cleanupOutdatedCaches: true,
+        navigateFallback: '/offline.html',
+        navigateFallbackDenylist: [/\/api\//, /\/v\d\/data\//],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
@@ -121,8 +161,6 @@ export default defineConfig({
         ],
         skipWaiting: true,
         clientsClaim: true,
-        navigateFallback: '/offline.html',
-        navigateFallbackDenylist: [/\/api\//, /\/v\d\/data\//],
       },
     }),
   ],
@@ -276,7 +314,7 @@ build: {
       'react',
       'react-dom',
       'react-router-dom',
-      'framer-motion',
+      'motion',
       'recharts',
       'lucide-react',
       'date-fns',

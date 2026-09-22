@@ -17,8 +17,17 @@ test.describe("Donation flow", () => {
     await expect(email).toHaveValue("donor@example.com");
   });
 
-  test("submit with empty amount shows validation feedback", async ({ page }) => {
+  test("submit with invalid custom amount shows validation feedback", async ({ page }) => {
     await page.goto("/donate");
+    // Email + phone are natively required: the browser blocks submit before
+    // React validation otherwise. Fill them so OUR amount validation runs.
+    await page.getByLabel(/البريد الإلكتروني/).first().fill("donor@example.com");
+    await page.getByLabel(/رقم الهاتف/).first().fill("7770000000");
+    // A preset amount is pre-selected by design, so drive the reachable
+    // invalid state explicitly: custom amount of zero.
+    const customAmount = page.getByLabel(/مبلغ مخصص/);
+    await customAmount.scrollIntoViewIfNeeded();
+    await customAmount.fill("0");
     const submit = page.getByRole("button", { name: /تأكيد التبرع/ });
     await submit.scrollIntoViewIfNeeded();
     await submit.click();
