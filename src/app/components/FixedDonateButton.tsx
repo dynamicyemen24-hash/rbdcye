@@ -152,7 +152,7 @@ export const FixedDonateButton = memo(function FixedDonateButton() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-6 left-6 z-50 md:bottom-8 md:left-8"
+            className="fixed bottom-[var(--dock-bottom)] left-[var(--dock-left)] z-50"
             dir="rtl"
           >
             <button
@@ -186,7 +186,7 @@ export const FixedDonateButton = memo(function FixedDonateButton() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 left-6 z-50 w-96 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl md:left-8"
+            className="fixed bottom-[var(--dock-bottom-2)] left-[var(--dock-left)] z-50 w-96 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl"
             dir="rtl"
           >
             <div className="flex items-center justify-between">

@@ -126,9 +126,9 @@
   "edge_side_panel": { "preferred_width": 400 },
   "screenshots": [
     {
-      "src": "/og-image.svg",
+      "src": "/og-image.png",
       "sizes": "1200x630",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "form_factor": "wide",
       "label": "رحماء بينهم — الصفحة الرئيسية"
     },

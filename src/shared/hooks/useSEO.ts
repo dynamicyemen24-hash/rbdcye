@@ -1,49 +1,25 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-
-export interface SEOOptions {
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  image?: string;
-  url?: string;
-  type?: "website" | "article" | "organization";
-  publishedTime?: string;
-  modifiedTime?: string;
-  author?: { name: string; url?: string } | string;
-  section?: string;
-  tags?: string[];
-  noindex?: boolean;
-  canonicalUrl?: string;
-  jsonLd?: object;
-}
-
 export interface RouteSEOConfig {
   title: string;
   description: string;
   keywords?: string[];
   image?: string;
+  noindex?: boolean;
 }
-
-export const DEFAULT_SITE_TITLE =
-  "حملة رحماء بينهم | الموقع الإلكتروني التعريفي الرسمي للإغاثة والتنمية باليمن";
-export const DEFAULT_SITE_DESCRIPTION =
-  "الموقع الإلكتروني التعريفي الرسمي لحملة رحماء بينهم للإغاثة والتنمية باليمن - استعراض الرؤية، الأهداف، الأثر التنموي، وأرفع معايير الحوكمة والشفافية.";
-export const DEFAULT_OG_IMAGE = "https://rbdcye.org/og-image.png";
-export const SITE_URL = "https://rbdcye.org";
 
 export const ROUTE_SEO_MAP: Record<string, RouteSEOConfig> = {
   "/": {
-    title: "حملة رحماء بينهم | الموقع الإلكتروني التعريفي الرسمي للإغاثة والتنمية باليمن",
+    title: "رحماء بينهم للإغاثة والتنمية | Rohamaa Foundation",
     description:
-      "الموقع الإلكتروني التعريفي الرسمي لحملة رحماء بينهم للإغاثة والتنمية باليمن - استعراض الرؤية، الأهداف، الأثر التنموي، وأرفع معايير الحوكمة والشفافية.",
+      "الموقع الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن (ترخيص رسمي ٤٨٢). عمل إنساني وتنموي مستدام يحفظ الكرامة ويبني المستقبل.",
     keywords: [
       "رحماء بينهم",
-      "حملة رحماء بينهم",
-      "موقع تعريفي",
+      "مؤسسة رحماء بينهم",
+      "إغاثة اليمن",
+      "تنمية اليمن",
       "عمل خيري",
-      "تنمية مستدامة",
       "اليمن",
+      "Rohamaa Foundation",
+      "Yemen charity",
     ],
   },
   "/about": {
@@ -144,46 +120,75 @@ export const ROUTE_SEO_MAP: Record<string, RouteSEOConfig> = {
     title: "لوحة التحكم الإدارية | رحماء بينهم",
     description: "إدارة العمليات الميدانية، طلبات المساعدة، المشاريع، والتقارير المباشرة.",
     keywords: ["لوحة التحكم", "الإدارة", "إدارة العمليات"],
+    noindex: true,
+  },
+  "/training": {
+    title: "التدريب والتأهيل | رحماء بينهم",
+    description:
+      "برامج تدريبية وتأهيلية معتمدة لبناء القدرات وتمكين الأفراد والفئات المستهدفة في المجتمعات اليمنية.",
+    keywords: ["تدريب", "تأهيل", "ورش عمل", "بناء القدرات"],
+  },
+  "/smart-advisor": {
+    title: "المستشار الذكي لاختيار مسار العطاء | رحماء بينهم",
+    description:
+      "أداة ذكية ترشدك إلى أفضل مسار عطاء يناسب اهتمامك وميزانيتك ويحقق أعظم أثر ممكن للمستفيدين.",
+    keywords: ["مستشار ذكي", "اختيار التبرع", "أفضل مسار تبرع"],
+  },
+  "/services": {
+    title: "دليل خدماتنا | رحماء بينهم",
+    description:
+      "كتالوج شامل للخدمات الإنسانية والتنموية التي تقدمها مؤسسة رحماء بينهم: إغاثة، تعليم، مياه، صحة، وتمكين اقتصادي.",
+    keywords: ["خدمات", "خدمات إنسانية", "خدمات تنموية"],
+  },
+  "/requests": {
+    title: "طلب المساعدة | رحماء بينهم",
+    description:
+      "قدّم طلبك للحصول على المساعدة الإنسانية من مؤسسة رحماء بينهم — نموذج مبسّط يمكّن الأسر المحتاجة من تقديم طلباتها بسهولة.",
+    keywords: ["طلب مساعدة", "مساعدة عاجلة", "إغاثة الأسر"],
+  },
+  "/feedback": {
+    title: "الشكاوى والاقتراحات | رحماء بينهم",
+    description:
+      "شاركنا شكاواك واقتراحاتك لتحسين خدماتنا — نظام شفاف للمتابعة والرد يعكس التزامنا بالحوكمة والجودة.",
+    keywords: ["شكاوى", "اقتراحات", "الجودة", "حوكمة"],
+  },
+  "/impact": {
+    title: "الأثر المجتمعي | رحماء بينهم",
+    description:
+      "مؤشرات ونتائج الأثر المجتمعي لبرامج مؤسسة رحماء بينهم على المجتمعات المستفيدة في المحافظات اليمنية.",
+    keywords: ["أثر مجتمعي", "نتائج برامج", "تنمية المجتمع"],
+  },
+  "/impact-center": {
+    title: "مركز الأثر | رحماء بينهم",
+    description:
+      "منصة قياس الأثر تعرض بيانات ومؤشرات الأداء للأعمال الإنسانية والتنموية بشفافية ودقة.",
+    keywords: ["قياس الأثر", "مؤشرات الأداء", "شفافية"],
+  },
+  "/impact-engine": {
+    title: "محرك الأثر | رحماء بينهم",
+    description:
+      "منهجية متقدمة لقياس الأثر الاجتماعي وتتبع التحول المجتمعي من المدخلات إلى النتائج المستدامة.",
+    keywords: ["الأثر الاجتماعي", "التحول المجتمعي", "قياس النتائج"],
+  },
+  "/help": {
+    title: "مركز المساعدة والأسئلة الشائعة | رحماء بينهم",
+    description:
+      "إجابات عن الأسئلة الشائعة وطرق التواصل والدعم لموقع رحماء بينهم — للمتبرعين والمتطوعين والمستفيدين.",
+    keywords: ["مساعدة", "أسئلة شائعة", "دعم"],
+  },
+  "/donor-journey": {
+    title: "رحلة المتبرع | رحماء بينهم",
+    description:
+      "تابع رحلة عطائك من لحظة التبرع حتى وصول الأثر إلى المستفيدين — شفافية كاملة في كل خطوة.",
+    keywords: ["رحلة المتبرع", "شفافية التبرعات", "تتبع الأثر"],
+  },
+  "/donor-passport": {
+    title: "جواز المتبرع | رحماء بينهم",
+    description: "مساحة شخصية توثّق رحلة العطاء وتحوّلها إلى أثر ملموس.",
+    keywords: ["جواز المتبرع", "سجل العطاء"],
+    noindex: true,
   },
 };
-
-/**
- * Safely sets meta or link tags in document head
- */
-function setMetaTag(attributeName: "name" | "property", attributeValue: string, content: string) {
-  if (typeof document === "undefined") return;
-  const selector = `meta[${attributeName}="${attributeValue}"]`;
-  let element = document.querySelector(selector) as HTMLMetaElement | null;
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attributeName, attributeValue);
-    document.head.appendChild(element);
-  }
-  element.setAttribute("content", content);
-}
-
-function setCanonicalLink(url: string) {
-  if (typeof document === "undefined") return;
-  let element = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-  if (!element) {
-    element = document.createElement("link");
-    element.setAttribute("rel", "canonical");
-    document.head.appendChild(element);
-  }
-  element.setAttribute("href", url);
-}
-
-function injectJsonLd(id: string, schema: object) {
-  if (typeof document === "undefined") return;
-  const existing = document.getElementById(id);
-  if (existing) existing.remove();
-
-  const script = document.createElement("script");
-  script.id = id;
-  script.type = "application/ld+json";
-  script.textContent = JSON.stringify(schema);
-  document.head.appendChild(script);
-}
 
 /**
  * Gets route default SEO configuration based on current pathname
@@ -208,106 +213,6 @@ export function getRouteSEOConfig(pathname: string): RouteSEOConfig {
     description:
       "عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها. نرجو استخدام القائمة للوصول إلى الأقسام الرئيسية.",
     keywords: ["رحماء بينهم", "404", "غير موجودة"],
+    noindex: true,
   };
 }
-
-/**
- * Custom hook useSEO
- * Dynamically updates document title, meta tags, OpenGraph, Twitter cards, and structured JSON-LD
- * based on the current active route and optional custom parameters.
- */
-export function useSEO(options?: SEOOptions) {
-  let locationPathname = "/";
-
-  try {
-    const location = useLocation();
-    locationPathname = location.pathname;
-  } catch {
-    // Fallback if rendered outside react-router-dom context
-    if (typeof window !== "undefined") {
-      locationPathname = window.location.pathname;
-    }
-  }
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    const routeDefaults = getRouteSEOConfig(locationPathname);
-
-    // Resolved title and description
-    const title = options?.title || routeDefaults.title || DEFAULT_SITE_TITLE;
-    const description =
-      options?.description || routeDefaults.description || DEFAULT_SITE_DESCRIPTION;
-    const keywords = options?.keywords ||
-      routeDefaults.keywords || ["رحماء بينهم", "عمل خيري", "إغاثة"];
-    const image = options?.image || routeDefaults.image || DEFAULT_OG_IMAGE;
-    const currentUrl =
-      options?.url ||
-      options?.canonicalUrl ||
-      (typeof window !== "undefined" ? window.location.href : `${SITE_URL}${locationPathname}`);
-    const pageType = options?.type || "website";
-
-    // Update document title
-    document.title = title;
-
-    // Update primary meta tags
-    setMetaTag("name", "description", description);
-    setMetaTag("name", "keywords", keywords.join(", "));
-    setMetaTag(
-      "name",
-      "robots",
-      options?.noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"
-    );
-
-    // Update Open Graph tags
-    setMetaTag("property", "og:title", title);
-    setMetaTag("property", "og:description", description);
-    setMetaTag("property", "og:type", pageType);
-    setMetaTag("property", "og:url", currentUrl);
-    setMetaTag("property", "og:image", image);
-    setMetaTag("property", "og:site_name", "حملة رحماء بينهم");
-
-    // Update Twitter Card tags
-    setMetaTag("name", "twitter:card", "summary_large_image");
-    setMetaTag("name", "twitter:title", title);
-    setMetaTag("name", "twitter:description", description);
-    setMetaTag("name", "twitter:image", image);
-
-    // Article meta if applicable
-    if (pageType === "article") {
-      if (options?.publishedTime)
-        setMetaTag("property", "article:published_time", options.publishedTime);
-      if (options?.modifiedTime)
-        setMetaTag("property", "article:modified_time", options.modifiedTime);
-      const authorName =
-        typeof options?.author === "object" ? options.author.name : options?.author;
-      if (authorName) setMetaTag("property", "article:author", authorName);
-      if (options?.section) setMetaTag("property", "article:section", options.section);
-    }
-
-    // Set canonical link
-    setCanonicalLink(currentUrl);
-
-    // Optional JSON-LD Structured Data
-    if (options?.jsonLd) {
-      injectJsonLd("schema-custom-jsonld", options.jsonLd);
-    }
-  }, [
-    locationPathname,
-    options?.title,
-    options?.description,
-    options?.image,
-    options?.url,
-    options?.canonicalUrl,
-    options?.type,
-    options?.noindex,
-    options?.keywords,
-    options?.publishedTime,
-    options?.modifiedTime,
-    options?.author,
-    options?.section,
-    options?.jsonLd,
-  ]);
-}
-
-export default useSEO;

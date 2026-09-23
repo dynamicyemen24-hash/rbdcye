@@ -318,17 +318,39 @@
   --rhythm-40: 10rem;
   --rhythm-48: 12rem;
 
-  /* Section rhythm — compressed for page agility, fluid with vw fallback */
-  --section-gap: clamp(2rem, 4vw, 5.5rem);
-  --section-gap-lg: clamp(2.75rem, 5vw, 7rem);
-  --content-gap: clamp(0.5rem, 1vw, 1rem);
-  --content-gap-lg: clamp(1rem, 2vw, 1.5rem);
-  --card-padding: clamp(0.75rem, 2vw, 1.5rem);
-  --card-padding-lg: clamp(1.25rem, 3vw, 2rem);
-  --card-gap: clamp(0.5rem, 1vw, 1rem);
-  --card-gap-lg: clamp(0.75rem, 2vw, 1.5rem);
-  --heading-gap: 0.5em;
-  --heading-gap-lg: 1em;
+  /* Section rhythm — v3.3: تنفيس بصري (Visual Comfort) بنفس المنحنى السائل
+     زيادة ~18% لإزالة التزاحم بين الأقسام دون إفراغ الصفحة */
+  --section-gap: clamp(2.5rem, 5vw, 6.5rem);
+  --section-gap-lg: clamp(3.25rem, 6vw, 8rem);
+  --content-gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  --content-gap-lg: clamp(1.25rem, 2.4vw, 1.875rem);
+  --card-padding: clamp(1.125rem, 2.4vw, 1.875rem);
+  --card-padding-lg: clamp(1.5rem, 3.2vw, 2.25rem);
+  --card-gap: clamp(0.875rem, 1.8vw, 1.5rem);
+  --card-gap-lg: clamp(1.125rem, 2.4vw, 1.75rem);
+  --heading-gap: 0.6em;
+  --heading-gap-lg: 1.15em;
+
+  /* ══════════════════════════════════════════════════════════════
+     HEADER METRICS — مصدر وحيد لارتفاعات الأشرطة العلوية الثابتة
+     يُستخدم في Navbar + HeaderComponentsBar + NewsTicker + الهيرو
+     بهدف منع أي تداخل أو تغطية للمحتوى
+     ══════════════════════════════════════════════════════════════ */
+  --header-topbar-h: 2.25rem; /* 36px — شريط الأدوات الاستراتيجية (lg+) */
+  --header-main-h: 4.25rem; /* 68px — الشريط الرئيسي (Navbar) */
+  --header-offset: var(--header-main-h); /* التعويض الفعلي على الجوال */
+  --ticker-h: 3rem; /* 48px — الشريط الإخباري الملتصق */
+
+  /* ══════════════════════════════════════════════════════════════
+     FLOATING DOCK — خانات الأزرار العائمة
+     كل عنصر عائم له خانة مستقلة (لا تراكم ولا تداخل بين الأزرار)
+     ══════════════════════════════════════════════════════════════ */
+  --dock-left: clamp(0.875rem, 1.8vw, 1.5rem);
+  --dock-right: clamp(0.875rem, 1.8vw, 1.5rem);
+  --dock-bottom: clamp(1rem, 2vw, 1.5rem); /* خانة 1 — القاعدة */
+  --dock-bottom-2: calc(var(--dock-bottom) + 4rem); /* خانة 2 */
+  --dock-bottom-3: calc(var(--dock-bottom) + 8rem); /* خانة 3 */
+  --dock-bottom-4: calc(var(--dock-bottom) + 12rem); /* خانة 4 */
 
   /* Component-specific spacing scales */
   --spacing-tight: var(--space-2);
@@ -643,6 +665,17 @@
   --ring: #22c55e;
   --brand-green-pale: #1a2e1a;
   --brand-gold-pale: #2e2a1a;
+}
+
+/* ==========================================================================
+   HEADER OFFSET — lg+ يجمع شريط الأدوات مع الشريط الرئيسي
+   (تعويض واحد موحّد لكل مكوّنات الصفحة — لا أرقام صلبة متناثرة)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  :root {
+    --header-offset: calc(var(--header-topbar-h) + var(--header-main-h));
+    --ticker-h: 3.25rem;
+  }
 }
 
 /* ==========================================================================

@@ -23,14 +23,14 @@ export const HeaderComponentsBar = memo(function HeaderComponentsBar({
 }: HeaderComponentsBarProps) {
   return (
     <div
-      className="hidden lg:block fixed top-0 inset-x-0 z-50 w-full border-b border-[var(--brand-green)]/10 bg-[var(--brand-green-dark)] text-white"
+      className="fixed inset-x-0 top-0 z-50 hidden w-full border-b border-[var(--brand-green)]/10 bg-[var(--brand-green-dark)] text-white lg:block"
       dir="rtl"
       role="navigation"
       aria-label="شريط الأدوات الاستراتيجية"
     >
-      <div className="mx-auto flex h-9 max-w-[1600px] items-center justify-between gap-6 px-6 lg:px-10">
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="text-[11px] font-black tracking-tight text-white">رحماء بينهم</span>
+      <div className="shell flex h-[var(--header-topbar-h)] items-center justify-between gap-4 xl:gap-8">
+        <div className="flex shrink-0 items-center gap-3">
+          <span className="whitespace-nowrap text-[11px] font-bold text-white">رحماء بينهم</span>
           <span className="h-3 w-px bg-white/20" aria-hidden="true" />
           {/* Decorative latin transliteration — lightened to pass AAA on dark bar */}
           <span aria-hidden="true" className="hidden xl:inline text-[10px] font-bold tracking-[0.14em] text-[#ead9ab]">
@@ -42,8 +42,8 @@ export const HeaderComponentsBar = memo(function HeaderComponentsBar({
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <span className="hidden xl:inline text-[10px] font-bold tracking-wider text-white/50">أدوات استراتيجية:</span>
+        <div className="flex items-center gap-1.5 xl:gap-2">
+          <span className="hidden whitespace-nowrap text-[10px] font-semibold text-white/50 xl:inline">أدوات استراتيجية:</span>
           {STRATEGIC_TOOLS.map((tool) => (
             <motion.button
               key={tool.id}
@@ -51,13 +51,13 @@ export const HeaderComponentsBar = memo(function HeaderComponentsBar({
               onClick={() => onNavigate(tool.id)}
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-sm transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-gold)]"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-gold)]"
               aria-label={tool.label}
             >
               <tool.icon className="h-3.5 w-3.5 text-[var(--brand-gold-light)]" aria-hidden="true" />
               {tool.label}
               {"badge" in tool && tool.badge && (
-                <span className="rounded-full bg-[var(--brand-gold)] px-1.5 py-0.5 text-[9px] font-black leading-none text-[var(--brand-green-dark)]">
+                <span className="hidden rounded-full bg-[var(--brand-gold)] px-1.5 py-0.5 text-[9px] font-bold leading-none text-[var(--brand-green-dark)] xl:inline-block">
                   {(tool as { badge: string }).badge}
                 </span>
               )}
@@ -65,14 +65,14 @@ export const HeaderComponentsBar = memo(function HeaderComponentsBar({
           ))}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="hidden xl:inline text-[10px] text-white/60">٨ محافظات • ١٥,٠٠٠+ مستفيد</span>
+        <div className="flex shrink-0 items-center gap-2">
+          <span className="hidden whitespace-nowrap text-[10px] text-white/60 xl:inline">٨ محافظات • ١٥,٠٠٠+ مستفيد</span>
           <motion.button
             type="button"
             onClick={() => onNavigate("donate")}
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center rounded-full bg-[var(--brand-gold)] px-4 py-1.5 text-[11px] font-black text-[var(--brand-green-dark)] shadow-sm hover:bg-[var(--brand-gold-light)] transition-colors"
+            className="inline-flex items-center whitespace-nowrap rounded-full bg-[var(--brand-gold)] px-4 py-1.5 text-[11px] font-bold text-[var(--brand-green-dark)] shadow-sm transition-colors hover:bg-[var(--brand-gold-light)]"
           >
             تبرع الآن
           </motion.button>

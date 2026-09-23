@@ -41,9 +41,9 @@
       @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
     </style>
     <!-- SEO Meta -->
-    <title>رحماء بينهم للإغاثة والتنمية | rbdcye.org</title>
+    <title>رحماء بينهم للإغاثة والتنمية | Rohamaa Foundation</title>
     <meta name="description" content="الموقع الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية باليمن (ترخيص رسمي ٤٨٢). عمل إنساني وتنموي مستدام يحفظ الكرامة ويبني المستقبل." />
-    <meta name="keywords" content="رحماء بينهم, مؤسسة رحماء بينهم, إغاثة اليمن, تنمية اليمن, كفالة أيتام, مشاريع مياه, زكاة, تبرع, rbdcye" />
+    <meta name="keywords" content="رحماء بينهم, مؤسسة رحماء بينهم, إغاثة اليمن, تنمية اليمن, كفالة أيتام, مشاريع مياه, زكاة, تبرع, rbdcye, Rohamaa Foundation, Yemen charity, relief Yemen, donate Yemen, orphan sponsorship" />
     <meta name="author" content="مؤسسة رحماء بينهم للإغاثة والتنمية" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="rating" content="general" />
@@ -56,7 +56,7 @@
     <meta property="og:site_name" content="رحماء بينهم" />
     <meta property="og:title" content="رحماء بينهم للإغاثة والتنمية باليمن | أثرٌ يحفظ الكرامة ويبني المستقبل" />
     <meta property="og:description" content="مؤسسة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ تعمل في مجالات الإغاثة والتعليم والمياه والتنمية المستدامة باليمن." />
-    <meta property="og:image" content="https://rbdcye.org/og-image.svg" />
+    <meta property="og:image" content="https://rbdcye.org/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="رحماء بينهم للإغاثة والتنمية" />
@@ -67,7 +67,7 @@
     <meta name="twitter:site" content="@rbdcye" />
     <meta name="twitter:title" content="رحماء بينهم للإغاثة والتنمية باليمن | أثرٌ يحفظ الكرامة ويبني المستقبل" />
     <meta name="twitter:description" content="حملة إنسانية تنموية مستقلة مرخصة برقم ٤٨٢ تعمل في مجالات الإغاثة والتعليم والتنمية المستدامة." />
-    <meta name="twitter:image" content="https://rbdcye.org/og-image.svg" />
+    <meta name="twitter:image" content="https://rbdcye.org/og-image.png" />
     <meta name="twitter:image:alt" content="رحماء بينهم للإغاثة والتنمية" />
 
     <!-- Preconnect for external services — record-level: early connection -->
@@ -125,13 +125,13 @@
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <!-- JSON-LD Structured Data: Organization -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="schema-organization">
       {
         "@context": "https://schema.org",
         "@type": "NonprofitOrganization",
         "@id": "https://rbdcye.org/#organization",
         "name": "مؤسسة رحماء بينهم للإغاثة والتنمية",
-        "alternateName": "رحماء بينهم",
+        "alternateName": ["رحماء بينهم", "Rohamaa Foundation", "RBDCYE"],
         "legalName": "مؤسسة رحماء بينهم للإغاثة والتنمية باليمن",
         "url": "https://rbdcye.org",
         "logo": {
@@ -156,7 +156,7 @@
           "telephone": "+967-780-777-007",
           "contactType": "customer service",
           "email": "info@rbdcye.org",
-          "availableLanguage": ["Arabic"]
+          "availableLanguage": ["Arabic", "English"]
         },
         "sameAs": [
           "https://facebook.com/rbdcye",
@@ -168,7 +168,7 @@
     </script>
 
     <!-- JSON-LD Structured Data: WebSite -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="schema-website">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -189,21 +189,7 @@
       }
     </script>
 
-    <!-- JSON-LD Structured Data: BreadcrumbList -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "@id": "https://rbdcye.org/#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://rbdcye.org/" },
-          { "@type": "ListItem", "position": 2, "name": "برامجنا", "item": "https://rbdcye.org/programs" },
-          { "@type": "ListItem", "position": 3, "name": "مشاريعنا", "item": "https://rbdcye.org/projects" },
-          { "@type": "ListItem", "position": 4, "name": "تبرع الآن", "item": "https://rbdcye.org/donate" },
-          { "@type": "ListItem", "position": 5, "name": "تواصل معنا", "item": "https://rbdcye.org/contact" }
-        ]
-      }
-    </script>
+    <!-- BreadcrumbList: injected dynamically per-route by src/utils/seoAdvanced.ts (matches canonical) -->
   </head>
   <body>
     <!-- Skip link يظهر تلقائياً عند التركيز لأول مرة -->

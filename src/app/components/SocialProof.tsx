@@ -34,7 +34,7 @@ export function SocialProof() {
   const item = PROOF_ITEMS[currentIndex];
 
   return (
-    <div className="fixed bottom-24 left-4 z-40 hidden lg:block">
+    <div className="fixed bottom-[var(--dock-bottom-4)] left-[var(--dock-left)] z-40 hidden lg:block">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}

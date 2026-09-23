@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
-  <rect width="400" height="300" fill="url(#bg)"/>
-  <rect x="120" y="80" width="160" height="140" rx="8" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
-  <path d="M160 80 L160 120 M200 80 L200 120 M240 80 L240 120" stroke="#C69E5A" stroke-width="2" opacity=".6"/>
-  <circle cx="200" cy="150" r="20" fill="#C69E5A" opacity=".3"/>
-  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">الدعوة</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#0f4c3a"/><stop offset="1" stop-color="#17694f"/></linearGradient></defs><path fill="url(#bg)" d="M0 0H400V300H0z"/><rect width="160" height="140" x="120" y="80" fill="none" stroke="#c69e5a" stroke-width="3" opacity=".5" rx="8"/><path stroke="#c69e5a" stroke-width="2" d="M160 80 L160 120 M200 80 L200 120 M240 80 L240 120" opacity=".6"/><circle cx="200" cy="150" r="20" fill="#c69e5a" opacity=".3"/><text x="200" y="280" fill="#c69e5a" font-family="Cairo,sans-serif" font-size="14" opacity=".8" text-anchor="middle">الدعوة</text></svg>

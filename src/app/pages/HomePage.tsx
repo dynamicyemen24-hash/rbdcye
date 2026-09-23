@@ -186,7 +186,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
     type: "website",
     url: "https://rbdcye.org",
     keywords: ["رحماء بينهم", "مؤسسة رحماء بينهم", "إغاثة اليمن", "تنمية اليمن", "كفالة أيتام", "مشاريع مياه", "زكاة", "تبرع"],
-    image: "https://rbdcye.org/og-image.svg",
+    image: "https://rbdcye.org/og-image.png",
     author: { name: "مؤسسة رحماء بينهم", url: "https://rbdcye.org/about" },
   });
 
@@ -209,7 +209,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         id="hero"
         aria-labelledby="home-hero-heading"
         aria-label="رحماء بينهم — معاً نصنع التنمية ونحفظ الكرامة الإنسانية"
-        className="relative overflow-hidden bg-[var(--brand-green-dark)] min-h-[86vh] lg:min-h-[92vh] flex items-center py-20 sm:py-28 lg:py-32 text-white hero-section"
+        className="hero-section relative flex items-center overflow-hidden bg-[var(--brand-green-dark)] text-white"
         style={{ contentVisibility: "visible", contain: "layout style" } as React.CSSProperties}
       >
         {/* زخارف إسلامية خفيفة جداً — تجميلية ومتناسقة */}
@@ -219,9 +219,9 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-emerald-900/30 blur-[120px] will-change-transform pointer-events-none" aria-hidden="true" />
         <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[var(--brand-gold)]/[0.04] blur-[100px] will-change-transform pointer-events-none" aria-hidden="true" />
 
-        <div className="relative mx-auto w-full max-w-[1600px] px-6 text-center sm:px-10 lg:px-16">
-          <motion.div initial="initial" animate="visible" variants={staggerContainer} className="mx-auto max-w-5xl">
-            <motion.div variants={scrollFadeUp} className="mb-10 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 text-xs font-bold tracking-wide text-white/90 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.15)]">
+        <div className="shell relative text-center">
+          <motion.div initial="initial" animate="visible" variants={staggerContainer} className="mx-auto max-w-[68rem]">
+            <motion.div variants={scrollFadeUp} className="hero-eyebrow mb-8 border border-white/15 bg-white/[0.08] text-white/90 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.15)]">
               <span className="grid h-5 w-5 place-items-center rounded-full bg-[var(--brand-gold)] text-[var(--brand-green-dark)]">
                 <BadgeCheck className="h-3 w-3" />
               </span>
@@ -233,7 +233,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             <motion.h1
               id="home-hero-heading"
               variants={scrollFadeUp}
-              className="text-[2.2rem] font-black leading-[1.25] tracking-tight sm:text-6xl lg:text-[4.5rem] lg:leading-[1.15] text-balance font-cairo"
+              className="hero-title text-balance font-cairo"
             >
               عطاءٌ يحفظ الكرامة ويبني{" "}
               <span className="text-gradient-gold">المستقبل الواعد</span>
@@ -241,12 +241,12 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
               لأهلنا وإخواننا في اليمن.
             </motion.h1>
 
-            <motion.p variants={scrollFadeUp} className="mx-auto mt-8 max-w-4xl text-base leading-[2.1] text-white/80 sm:text-lg lg:text-xl lg:leading-[2] font-cairo">
+            <motion.p variants={scrollFadeUp} className="hero-lead mt-7 text-white/85 font-cairo">
               مؤسسة «رحماء بينهم للإغاثة والتنمية» — هيئة إنسانية تنموية مستقلة تعمل على تلبية الاحتياجات
               الإغاثية العاجلة وتشييد المشاريع التنموية المستدامة في قطاعات المياه والتعليم والصحة والغذاء.
             </motion.p>
 
-            <motion.div variants={scrollFadeUp} className="mt-10 flex flex-wrap justify-center gap-4">
+            <motion.div variants={scrollFadeUp} className="mt-9 flex flex-wrap justify-center gap-4 sm:gap-5">
               <EnterpriseButton
                 variant="gold"
                 size="lg"
@@ -268,12 +268,12 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
                 تعرّف على المؤسسة
               </EnterpriseButton>
             </motion.div>
-            <motion.p variants={scrollFadeUp} className="mt-4 text-xs font-medium tracking-wide text-white/70 flex items-center justify-center gap-1.5">
+            <motion.p variants={scrollFadeUp} className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-white/75">
               <CheckCircle2 className="w-3.5 h-3.5 text-[var(--brand-gold)]" />
               <span>١٠٠٪ من تبرعاتكم تصل مباشرة لمستحقيها وفق أعلى معايير الشفافية والمسؤولية</span>
             </motion.p>
 
-            <motion.div variants={scrollFadeUp} className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6 lg:gap-8">
+            <motion.div variants={scrollFadeUp} className="mt-14 grid grid-cols-2 gap-4 sm:mt-20 sm:grid-cols-4 sm:gap-6 lg:gap-8">
               <MetricCard icon={Heart} label="عائلات مستفيدة" value="+٢٥,٠٠٠" variant="green" />
               <MetricCard icon={Target} label="مشاريع منجزة" value="+١٨٠" variant="gold" />
               <MetricCard icon={Globe} label="محافظات مغطاة" value="١٢ محافظة" variant="green" />
@@ -286,7 +286,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           شارات الثقة والعداد الحي
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--secondary)] py-10 sm:py-12 border-b border-[var(--border)] relative">
+      <section className="bg-[var(--secondary)] py-12 sm:py-14 border-b border-[var(--border)] relative">
         <div className="absolute inset-0 pattern-khatam-light opacity-50 pointer-events-none" />
         <div className="mx-auto max-w-4xl px-4 relative z-10">
           <TrustBadges />
@@ -299,7 +299,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           لوحة قياس الأثر التنموي
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--background)] py-16 sm:py-24 relative">
+      <section className="bg-[var(--background)] py-20 sm:py-28 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ImpactDashboard />
         </div>
@@ -308,7 +308,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           قصة الأثر + الشفافية المالية
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--background)] py-16 sm:py-24 border-t border-[var(--border)] relative">
+      <section className="bg-[var(--background)] py-20 sm:py-28 border-t border-[var(--border)] relative">
         <div className="absolute inset-0 pattern-mashrabiya-light opacity-30 pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
@@ -335,7 +335,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           حساب الأثر العاطفي والاجتماعي
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--secondary)] py-16 sm:py-24 pattern-arabesque-light relative border-y border-[var(--border)]">
+      <section className="bg-[var(--secondary)] py-20 sm:py-28 pattern-arabesque-light relative border-y border-[var(--border)]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 relative z-10">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
             <SectionLabel>الأثر المستدام</SectionLabel>
@@ -363,7 +363,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           المنطلقات والمبادئ الحاكمة
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--background)] py-16 sm:py-24 relative">
+      <section className="bg-[var(--background)] py-20 sm:py-28 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
             <SectionLabel>قيمنا الراسخة</SectionLabel>
@@ -412,7 +412,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           قيم المؤسسة التفصيلية
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--secondary)] py-16 sm:py-24 pattern-zellij-light relative border-y border-[var(--border)]">
+      <section className="bg-[var(--secondary)] py-20 sm:py-28 pattern-zellij-light relative border-y border-[var(--border)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
             <SectionLabel>ركائز المؤسسة</SectionLabel>
@@ -424,7 +424,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             </p>
           </motion.div>
 
-          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value) => (
               <motion.div key={value.title} variants={scrollFadeUp} whileHover={hoverLift.whileHover} className="rounded-2xl border border-[var(--brand-green)]/10 bg-[var(--card)] p-6 transition hover:shadow-xl hover:border-[var(--brand-gold)]/40 islamic-corner-accents">
                 <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
@@ -441,7 +441,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           القطاعات والبرامج التنموية
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--background)] py-16 sm:py-24 relative">
+      <section className="bg-[var(--background)] py-20 sm:py-28 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
             <SectionLabel>القطاعات التنموية</SectionLabel>
@@ -515,7 +515,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           آراء وشهادات المستفيدين
           ----------------------------------------------------------- */}
-      <section className="py-16 sm:py-24 bg-[var(--secondary)] border-t border-[var(--border)] relative">
+      <section className="py-20 sm:py-28 bg-[var(--secondary)] border-t border-[var(--border)] relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
             <SectionLabel>أصداء الميدان</SectionLabel>
@@ -574,7 +574,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           دعوة للمساهمة والعطاء
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--brand-green)] py-20 text-white sm:py-28 relative overflow-hidden">
+      <section className="bg-[var(--brand-green)] py-24 text-white sm:py-32 relative overflow-hidden">
         <div className="absolute inset-0 pattern-khatam-white opacity-10 pointer-events-none" />
         <div className="mx-auto max-w-3xl px-5 text-center sm:px-8 relative z-10">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
@@ -615,7 +615,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           معلومات التواصل والمقر الرسمي
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--background)] py-16 sm:py-24 relative">
+      <section className="bg-[var(--background)] py-20 sm:py-28 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp}>
             <SectionLabel>تواصل معنا</SectionLabel>
@@ -651,7 +651,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             </EnterpriseButton>
           </motion.div>
 
-          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-10 grid gap-6 sm:grid-cols-2">
+          <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={staggerContainer} className="mt-10 grid gap-8 sm:grid-cols-2">
             <motion.div variants={scrollFadeUp} className="flex items-center gap-4 rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
               <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--brand-green-pale)] text-[var(--brand-green)]">
                 <Landmark className="h-6 w-6" aria-hidden="true" />
@@ -677,7 +677,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* -----------------------------------------------------------
           المشاركة ونشر الخير
           ----------------------------------------------------------- */}
-      <section className="bg-[var(--secondary)] py-16 sm:py-24 border-t border-[var(--border)] relative">
+      <section className="bg-[var(--secondary)] py-20 sm:py-28 border-t border-[var(--border)] relative">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <motion.div initial="initial" whileInView="visible" viewport={viewportOnce} variants={scrollFadeUp} className="text-center">
             <SectionLabel>شارك الأجر</SectionLabel>

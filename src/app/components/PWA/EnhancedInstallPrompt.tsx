@@ -105,7 +105,7 @@ export function EnhancedInstallPrompt() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full text-white text-sm font-bold flex items-center gap-2 shadow-lg"
+        className="fixed top-[calc(var(--header-offset)+1rem)] left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full text-white text-sm font-bold flex items-center gap-2 shadow-lg"
         style={{ backgroundColor: "var(--brand-gold)" }}
       >
         <WifiOff className="w-4 h-4" />
@@ -116,7 +116,7 @@ export function EnhancedInstallPrompt() {
 
   if (isInstalled) {
     return (
-      <div className="fixed bottom-6 left-4 z-40">
+      <div className="fixed bottom-[var(--dock-bottom-4)] left-[var(--dock-left)] z-40">
         <div
           className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
           style={{ backgroundColor: "var(--brand-green-pale)", color: "var(--brand-green)" }}

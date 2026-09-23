@@ -18,6 +18,7 @@ import { HeaderComponentsBar } from "./components/HeaderComponentsBar";
 import Navbar from "./components/Navbar";
 import { NewsTicker } from "./components/NewsTicker";
 import { PageProgress } from "./components/PageProgress";
+import { RouteSEO } from "./components/RouteSEO";
 import { EnhancedInstallPrompt } from "./components/PWA/EnhancedInstallPrompt";
 import { ScrollProgress } from "./components/ScrollProgress";
 import SearchOverlay from "./components/SearchOverlay";
@@ -163,6 +164,7 @@ const PageWrapper = memo(function PageWrapper({ children }: { children: React.Re
       exit="exit"
       transition={pageTransition}
     >
+      <RouteSEO />
       <Suspense fallback={<PageSkeleton />}>{children}</Suspense>
     </motion.div>
   );

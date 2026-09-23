@@ -27,7 +27,7 @@ export function PageHeader({
 
   return (
     <section
-      className="relative overflow-hidden bg-[var(--background)] py-14 sm:py-20 bg-gradient-to-b from-[rgba(var(--brand-green-rgb),0.06)] to-white"
+      className="relative overflow-hidden bg-[var(--background)] bg-gradient-to-b from-[rgba(var(--brand-green-rgb),0.06)] to-white pb-14 pt-[calc(var(--header-offset)+2.5rem)] sm:pb-20 sm:pt-[calc(var(--header-offset)+3.5rem)]"
       aria-labelledby="page-header-title"
     >
       {/* Decorative background elements */}

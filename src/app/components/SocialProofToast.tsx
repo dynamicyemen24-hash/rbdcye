@@ -46,7 +46,7 @@ export const SocialProofToast = memo(function SocialProofToast() {
           initial={{ opacity: 0, x: -50, y: 0 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          className="fixed bottom-6 left-6 z-40 md:bottom-20 md:left-8"
+          className="fixed bottom-[var(--dock-bottom-3)] left-[var(--dock-left)] z-40"
           dir="rtl"
         >
           <div className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-3 shadow-xl backdrop-blur-md">

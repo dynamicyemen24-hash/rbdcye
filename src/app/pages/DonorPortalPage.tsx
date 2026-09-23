@@ -30,6 +30,7 @@ export default function DonorPortalPage() {
   useSEO({
     title: "بوابة المتبرع | رحماء بينهم",
     description: "مساحة شخصية لمتابعة التبرعات والإيصالات والأثر والتفضيلات.",
+    noindex: true,
   });
 
   return (

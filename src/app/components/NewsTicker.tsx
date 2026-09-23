@@ -367,7 +367,7 @@ export const NewsTicker = memo(function NewsTicker() {
           mass: 0.8,
         }}
         dir="rtl"
-        className="sticky top-[72px] lg:top-[108px] z-40 w-full border-b border-white/10 select-none backdrop-blur-sm supports-[backdrop-filter]:bg-[var(--brand-green-dark)]/95"
+        className="sticky top-[var(--header-main-h)] lg:top-[var(--header-offset)] z-40 w-full border-b border-white/10 select-none backdrop-blur-sm supports-[backdrop-filter]:bg-[var(--brand-green-dark)]/95"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={handleTouchStart}
@@ -402,7 +402,7 @@ export const NewsTicker = memo(function NewsTicker() {
         <div className="absolute inset-y-0 right-0 w-12 z-[1] pointer-events-none bg-gradient-to-l from-black/15 to-transparent" />
 
         {/* ── Main content row ── */}
-        <div className="relative z-[2] mx-auto flex h-12 max-w-7xl items-center gap-2 px-3 sm:h-13 sm:gap-3 sm:px-5">
+        <div className="shell relative z-[2] flex h-[var(--ticker-h)] items-center gap-2 sm:gap-3">
           {/* ── 1. Live Activity Indicator ── */}
           <div className="hidden md:flex shrink-0 items-center gap-2 border-l border-white/15 pl-3">
             <span className="relative flex h-2 w-2">

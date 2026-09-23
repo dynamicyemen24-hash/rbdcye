@@ -117,7 +117,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ addToast, removeToast, success, error, warning, info }}>
       {children}
       <div
-        className="fixed bottom-4 left-4 z-[9999] flex flex-col gap-2"
+        className="fixed right-[var(--dock-right)] bottom-[var(--dock-bottom-3)] z-[9999] flex flex-col gap-2"
         style={{ direction: "rtl" }}
       >
         {toasts.map((toast) => (

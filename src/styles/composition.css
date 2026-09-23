@@ -217,6 +217,27 @@
   * { overflow-wrap: break-word; }
 }
 
+/* ——— 6. Shell — حاوية موحّدة للهوامش الجانبية
+   تُستخدم في الأشرطة العلوية + الهيرو + الأقسام لضمان استواء الحواف
+   (بديل مُعاير عن تكرار max-w-[1600px] px-4 sm:px-6 lg:px-8) ——— */
+.shell {
+  inline-size: 100%;
+  max-inline-size: var(--container-shell, 1600px);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+.shell--tight { --container-shell: 1280px; }
+.shell--prose { --container-shell: 960px; }
+
+/* ——— 7. Header Clearance — تعويض الأشرطة العلوية الثابتة
+   أي عنصر يبدأ بحشوة علوية أقل من ارتفاع الأشرطة (pt-16/20/24 < 104px على lg)
+   يُعطى تعويضاً موحّداً حتى لا يختفي محتواه تحت الشريط الثابت (v3.3) ——— */
+main .pt-16,
+main .pt-20,
+main .pt-24 {
+  padding-block-start: calc(var(--header-offset, 0px) + 1.75rem);
+}
+
 /* ——— 5. Forced Colors & High Contrast ——— */
 @media (forced-colors: active) {
   .box, .cluster, .with-sidebar, .cover { border-color: CanvasText; }

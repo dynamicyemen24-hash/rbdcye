@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
-  <rect width="400" height="300" fill="url(#bg)"/>
-  <path d="M200 60 L280 110 L280 240 L200 210 L120 240 L120 110 Z" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
-  <line x1="200" y1="60" x2="200" y2="210" stroke="#C69E5A" stroke-width="2" opacity=".6"/>
-  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">التعليم</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#0f4c3a"/><stop offset="1" stop-color="#17694f"/></linearGradient></defs><path fill="url(#bg)" d="M0 0H400V300H0z"/><path fill="none" stroke="#c69e5a" stroke-width="3" d="M200 60 L280 110 L280 240 L200 210 L120 240 L120 110 Z" opacity=".5"/><path stroke="#c69e5a" stroke-width="2" d="M200 60 200 210" opacity=".6"/><text x="200" y="280" fill="#c69e5a" font-family="Cairo,sans-serif" font-size="14" opacity=".8" text-anchor="middle">التعليم</text></svg>

@@ -31,7 +31,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 import MobileMenu from "@/app/components/MobileMenu";
-import { RohamaaHeart } from "@/app/components/ui/BrandIcons";
 import { isSystemDarkSync } from "@/utils/media";
 
 
@@ -115,20 +114,30 @@ const NAV_GROUPS: NavGroup[] = [
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <img
-        src="/logo.svg"
-        alt="شعار رحماء بينهم"
-        className={`${compact ? "h-10 w-10" : "h-11 w-11"} shrink-0 rounded-[14px] object-contain shadow-[0_8px_20px_rgba(var(--brand-green-rgb),.15)]`}
-      />
-      <RohamaaHeart className="h-5 w-5 text-[var(--brand-green)]" aria-hidden="true" />
-      <div className="text-right leading-none">
-        <div className={`${compact ? "text-base" : "text-lg"} font-extrabold tracking-tight text-[var(--brand-green)]`}>
+      {/* الشعار الرسمي — مثبّت دائماً بلونه الأصلي داخل خلفية فاتحة
+          (لا تحويل لسيلويت أبيض حتى لا تختفي الهوية الرسمية) */}
+      <span
+        className={`grid shrink-0 place-items-center rounded-2xl bg-[var(--brand-green-pale)] ring-1 ring-[var(--brand-green)]/15 ${
+          compact ? "h-10 w-10" : "h-11 w-11"
+        }`}
+      >
+        <img
+          src="/logo.svg"
+          alt="الشعار الرسمي لمؤسسة رحماء بينهم للإغاثة والتنمية"
+          width={44}
+          height={44}
+          decoding="async"
+          className="h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] rounded-[10px] object-contain"
+        />
+      </span>
+      <span className="flex flex-col text-right leading-none">
+        <span className={`${compact ? "text-base" : "text-lg"} font-bold text-[var(--brand-green)]`}>
           رحماء بينهم
-        </div>
-        <div className="mt-1 text-[10px] font-medium tracking-[0.14em] text-[var(--brand-gold-dark)]">
-          حملة إغاثية وتنموية
-        </div>
-      </div>
+        </span>
+        <span className="mt-1.5 text-[10px] font-semibold text-[var(--brand-gold-dark)]">
+          إغاثة وتنمية باليمن
+        </span>
+      </span>
     </div>
   );
 }
@@ -317,7 +326,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
         تخطى إلى المحتوى الرئيسي
       </a>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 lg:top-9 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 lg:top-[var(--header-topbar-h)] ${
           isOverlay
             ? "bg-gradient-to-b from-[var(--brand-green-dark)]/80 to-transparent"
             : "border-b border-[var(--brand-green)]/8 bg-[var(--card)] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_10px_35px_rgba(var(--brand-green-rgb),.08)] backdrop-blur-xl"
@@ -326,7 +335,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
       >
         <nav
           ref={navRef}
-          className="mx-auto flex h-[4.25rem] max-w-[1600px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8"
+          className="shell flex h-[var(--header-main-h)] items-center justify-between gap-3 sm:gap-4"
           aria-label="التصفح الرئيسي"
         >
           <button
@@ -334,19 +343,21 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
             onClick={() => navigate("home")}
             aria-label="العودة إلى الصفحة الرئيسية"
             className={`shrink-0 rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[var(--brand-gold)] focus-visible:ring-offset-2 ${
-              isOverlay ? "brightness-0 invert" : ""
+              isOverlay
+                ? "bg-white/95 px-3 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-md"
+                : ""
             }`}
           >
             <BrandMark />
           </button>
 
-          <div className="hidden items-center gap-0.5 xl:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             <motion.button
               type="button"
               onClick={() => navigate("home")}
               whileTap={{ scale: 0.97 }}
               aria-current={isHome ? "page" : undefined}
-              className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition ${
+              className={`inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 text-xs font-bold transition ${
                 // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                 isHome
                   ? "bg-[var(--brand-green)] text-white shadow-md"
@@ -371,7 +382,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
                     aria-expanded={isOpen}
                     aria-haspopup="menu"
                     aria-current={isActive ? "page" : undefined}
-                    className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition ${
+                    className={`inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 text-xs font-bold transition ${
                       // eslint-disable-next-line no-nested-ternary -- precise: ternary flattened to guard — readability preserved, logic unchanged
                       isActive
                         ? "bg-[var(--brand-green)] text-white shadow-md"
@@ -404,7 +415,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
             })}
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => {
@@ -449,7 +460,7 @@ export default memo(function Navbar({ currentPage, setCurrentPage }: NavbarProps
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
               aria-label="تبرع الآن"
-              className="hidden items-center gap-1.5 rounded-xl bg-[var(--brand-gold-light)] px-4 py-2.5 text-xs font-black text-[var(--brand-green-dark)] shadow-[0_8px_20px_rgba(var(--brand-gold-rgb),.22)] transition hover:bg-[var(--brand-gold)] sm:inline-flex"
+              className="hidden items-center gap-2 whitespace-nowrap rounded-xl bg-[var(--brand-gold-light)] px-4 py-2.5 text-xs font-bold text-[var(--brand-green-dark)] shadow-[0_8px_20px_rgba(var(--brand-gold-rgb),.22)] transition hover:bg-[var(--brand-gold)] sm:inline-flex"
             >
               <HandHeart className="h-4 w-4" aria-hidden="true" />
               تبرع الآن

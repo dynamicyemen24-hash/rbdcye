@@ -115,7 +115,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
   return (
     <>
       {/* Floating trigger FAB */}
-      <div className="fixed left-3 bottom-5 z-50 flex flex-col items-center gap-2" dir="rtl">
+      <div className="fixed left-[var(--dock-left)] bottom-[var(--dock-bottom-2)] z-50 flex flex-col items-center gap-2" dir="rtl">
         {/* Scroll-to-top (appears after 400px scroll) */}
         <AnimatePresence>
           {showScrollTop && (
@@ -170,7 +170,7 @@ export function GlobalUtilityBar({ onSearchOpen }: GlobalUtilityBarProps) {
               transition={{ type: "spring", stiffness: 320, damping: 28 }}
               role="navigation"
               aria-label="شريط الأدوات الاستراتيجي"
-              className="fixed left-3 bottom-20 z-50 w-72 bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden"
+              className="fixed left-[var(--dock-left)] bottom-[var(--dock-bottom-3)] z-50 w-72 bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden"
               dir="rtl"
             >
               {/* Header */}

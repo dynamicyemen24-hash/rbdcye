@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F4C3A"/><stop offset="1" stop-color="#17694F"/></linearGradient></defs>
-  <rect width="400" height="300" fill="url(#bg)"/>
-  <circle cx="200" cy="120" r="40" fill="none" stroke="#C69E5A" stroke-width="3" opacity=".5"/>
-  <circle cx="200" cy="120" r="20" fill="#C69E5A" opacity=".3"/>
-  <path d="M200 160 Q150 200 100 250 M200 160 Q250 200 300 250 M140 180 Q170 210 140 240 M260 180 Q230 210 260 240" stroke="#C69E5A" stroke-width="2" opacity=".6" fill="none"/>
-  <text x="200" y="280" text-anchor="middle" fill="#C69E5A" font-size="14" font-family="Cairo,sans-serif" opacity=".8">التمكين</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#0f4c3a"/><stop offset="1" stop-color="#17694f"/></linearGradient></defs><path fill="url(#bg)" d="M0 0H400V300H0z"/><circle cx="200" cy="120" r="40" fill="none" stroke="#c69e5a" stroke-width="3" opacity=".5"/><circle cx="200" cy="120" r="20" fill="#c69e5a" opacity=".3"/><path fill="none" stroke="#c69e5a" stroke-width="2" d="M200 160 Q150 200 100 250 M200 160 Q250 200 300 250 M140 180 Q170 210 140 240 M260 180 Q230 210 260 240" opacity=".6"/><text x="200" y="280" fill="#c69e5a" font-family="Cairo,sans-serif" font-size="14" opacity=".8" text-anchor="middle">التمكين</text></svg>
