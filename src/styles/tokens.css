@@ -113,6 +113,8 @@
      3. CORE PALETTE — Premium Humanitarian Design System
      ══════════════════════════════════════════════════════════════ */
   --background: #f8f5ec;
+  --surface-page: #f8f5ec;
+  --surface-page-rgb: 248, 245, 236;
   --foreground: #17202a;
   --foreground-rgb: 23, 32, 42;
   --primary-foreground-rgb: 255, 255, 255;
@@ -282,18 +284,18 @@
   --space-28: 7rem;       /* 112px */
   --space-32: 8rem;       /* 128px */
 
-  /* Semantic aliases (t-shirt sizes) */
+  /* Semantic aliases (t-shirt sizes) — expanded for calmer reading rhythm */
   --space-xxs: var(--space-05);
   --space-xs: var(--space-1);
   --space-sm: var(--space-2);
-  --space-md: var(--space-3);
-  --space-md-alt: var(--space-4);
-  --space-md-2: var(--space-5);
-  --space-lg: var(--space-4);
-  --space-lg-2: var(--space-6);
-  --space-xl: var(--space-8);
-  --space-xl-2: var(--space-10);
-  --space-2xl: var(--space-12);
+  --space-md: var(--space-4);
+  --space-md-alt: var(--space-5);
+  --space-md-2: var(--space-6);
+  --space-lg: var(--space-6);
+  --space-lg-2: var(--space-8);
+  --space-xl: var(--space-10);
+  --space-xl-2: var(--space-12);
+  --space-2xl: var(--space-14);
   --space-2xl-2: var(--space-16);
   --space-3xl: var(--space-20);
   --space-4xl: var(--space-24);
@@ -318,18 +320,17 @@
   --rhythm-40: 10rem;
   --rhythm-48: 12rem;
 
-  /* Section rhythm — v3.3: تنفيس بصري (Visual Comfort) بنفس المنحنى السائل
-     زيادة ~18% لإزالة التزاحم بين الأقسام دون إفراغ الصفحة */
-  --section-gap: clamp(2.5rem, 5vw, 6.5rem);
-  --section-gap-lg: clamp(3.25rem, 6vw, 8rem);
-  --content-gap: clamp(0.75rem, 1.4vw, 1.25rem);
-  --content-gap-lg: clamp(1.25rem, 2.4vw, 1.875rem);
-  --card-padding: clamp(1.125rem, 2.4vw, 1.875rem);
-  --card-padding-lg: clamp(1.5rem, 3.2vw, 2.25rem);
-  --card-gap: clamp(0.875rem, 1.8vw, 1.5rem);
-  --card-gap-lg: clamp(1.125rem, 2.4vw, 1.75rem);
-  --heading-gap: 0.6em;
-  --heading-gap-lg: 1.15em;
+  /* Section rhythm — generous breathing room, especially between major sections */
+  --section-gap: clamp(3.5rem, 7vw, 8.5rem);
+  --section-gap-lg: clamp(4.5rem, 8vw, 10rem);
+  --content-gap: clamp(1rem, 2vw, 1.75rem);
+  --content-gap-lg: clamp(1.5rem, 3vw, 2.5rem);
+  --card-padding: clamp(1.375rem, 3vw, 2.25rem);
+  --card-padding-lg: clamp(1.75rem, 4vw, 3rem);
+  --card-gap: clamp(1.125rem, 2.5vw, 2rem);
+  --card-gap-lg: clamp(1.5rem, 3vw, 2.5rem);
+  --heading-gap: 0.8em;
+  --heading-gap-lg: 1.3em;
 
   /* ══════════════════════════════════════════════════════════════
      HEADER METRICS — مصدر وحيد لارتفاعات الأشرطة العلوية الثابتة
@@ -371,17 +372,17 @@
   --p-1: var(--space-1); --p-2: var(--space-2); --p-3: var(--space-3);
   --p-4: var(--space-4); --p-5: var(--space-5); --p-6: var(--space-6);
 
-  /* Reading comfort measure */
-  --reading-prose-max: 68ch;
-  --reading-prose-wide: 74ch;
-  --reading-measure-narrow: 56ch;
-  --reading-line-height: 1.85;
-  --reading-line-height-lg: 1.92;
-  --reading-paragraph-gap: 0.85em;
-  --reading-heading-gap: 1.25em;
-  --reading-section-gap: clamp(2.75rem, 5.5vw, 5.5rem);
-  --reading-card-gap: clamp(1rem, 1.9vw, 1.45rem);
-  --reading-inline-pad: clamp(0.875rem, 3vw, 1.35rem);
+  /* Reading comfort measure — generous line length without excessive tracking */
+  --reading-prose-max: 64ch;
+  --reading-prose-wide: 72ch;
+  --reading-measure-narrow: 58ch;
+  --reading-line-height: 2.05;
+  --reading-line-height-lg: 2.08;
+  --reading-paragraph-gap: 1.05em;
+  --reading-heading-gap: 1.4em;
+  --reading-section-gap: var(--section-gap);
+  --reading-card-gap: var(--card-gap);
+  --reading-inline-pad: clamp(1.25rem, 4.5vw, 5rem);
 
   /* ══════════════════════════════════════════════════════════════
      8. LAYOUT — Container widths
@@ -509,6 +510,8 @@
 .dark {
   --background: 213 30% 5%;
   --background-hex: #0a0f15;
+  --surface-page: #0a0f15;
+  --surface-page-rgb: 10, 15, 21;
   --foreground: 40 30% 92%;
   --foreground-rgb: 245, 240, 228;
   --foreground-hex: #f5f0e4;

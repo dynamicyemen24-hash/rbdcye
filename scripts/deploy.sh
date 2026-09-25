@@ -6,7 +6,7 @@
 
 set -e
 
-echo "=== NexWebSite Deployment ==="
+echo "=== Rohamaa Foundation Deployment ==="
 echo ""
 
 # 1. Typecheck
@@ -20,7 +20,7 @@ echo "✅ TypeScript: 0 errors"
 
 # 2. Lint
 echo "[2/6] Running ESLint..."
-npx eslint src --ext ts,tsx --max-warnings 0 2>/dev/null || true
+npx eslint src --ext ts,tsx --max-warnings 0
 echo "✅ Lint check done"
 
 # 3. Tests

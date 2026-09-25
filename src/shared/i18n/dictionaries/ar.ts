@@ -66,6 +66,7 @@ const arDefinition = {
       twitterAria: "تويتر",
       instagramAria: "انستغرام",
       whatsappAria: "واتساب",
+      youtubeAria: "يوتيوب",
     },
     subscribe: {
       title: "اشترك في نشرتنا البريدية",
@@ -77,7 +78,7 @@ const arDefinition = {
       error: "حدث خطأ، حاول مرة أخرى",
     },
     contact: {
-      phone: "+967 777 777 777",
+      phone: "+967 780 777 007",
       email: "info@rbdcye.org",
       whatsappCta: "مراسلتنا على واتساب",
       emailHeading: "البريد الإلكتروني",

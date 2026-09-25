@@ -96,7 +96,7 @@ npx sanity@latest deploy
 
 **3. إعداد متغيرات البيئة على Vercel:**
 ```
-DATABASE_URL=postgresql://neondb_owner:npg_S2vFTAquDK1g@...
+DATABASE_URL=YOUR_DATABASE_URL
 VITE_SANITY_PROJECT_ID=your-project-id  
 VITE_SANITY_DATASET=production
 ```

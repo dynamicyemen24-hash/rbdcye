@@ -67,6 +67,7 @@ export const en = {
       twitterAria: "Twitter",
       instagramAria: "Instagram",
       whatsappAria: "WhatsApp",
+      youtubeAria: "YouTube",
     },
     subscribe: {
       title: "Subscribe to Our Newsletter",
@@ -78,7 +79,7 @@ export const en = {
       error: "Something went wrong, please try again",
     },
     contact: {
-      phone: "+967 777 777 777",
+      phone: "+967 780 777 007",
       email: "info@rbdcye.org",
       whatsappCta: "Chat with us on WhatsApp",
       emailHeading: "Email",

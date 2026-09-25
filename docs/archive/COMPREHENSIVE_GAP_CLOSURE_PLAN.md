@@ -116,8 +116,8 @@
 ### خطوات تنفيذ Migration على Neon:
 
 ```bash
-# 1. الاتصال بـ Neon
-psql "postgresql://neondb_owner:npg_S2vFTAquDK1g@ep-long-sun-ahskrojf-pooler.c-3.us-east-1.aws.neon.tech/Rohamaa_DB_ERP"
+# 1. الاتصال بـ Neon (استخدم متغيراً محلياً، ولا تضع الرابط في Git)
+psql "$DATABASE_URL"
 
 # 2. تنفيذ الملف
 \i scripts/migrations/01_create_tables.sql

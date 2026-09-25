@@ -7,7 +7,7 @@
 
 set -e
 
-echo "=== NexWebSite Environment Setup ==="
+echo "=== Rohamaa Foundation Environment Setup ==="
 echo ""
 echo "This script sets secrets for Cloudflare Pages deployment."
 echo "Make sure you have wrangler installed and authenticated."

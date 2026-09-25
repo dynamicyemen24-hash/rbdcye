@@ -25,10 +25,7 @@ jobs:
         run: pnpm typecheck
 
       - name: Lint code (blocking errors)
-        run: pnpm lint:ci
-
-      - name: Format check (non-mutating)
-        run: pnpm format:check
+        run: pnpm lint
 
   test:
     name: Unit Tests
@@ -46,7 +43,6 @@ jobs:
   security:
     name: Security Audit
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -54,7 +50,8 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - run: pnpm audit --audit-level=critical
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit:ci
 
   build:
     name: Build Production

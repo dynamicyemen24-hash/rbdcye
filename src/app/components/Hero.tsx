@@ -226,9 +226,6 @@ const VideoBackground = memo(function VideoBackground() {
           poster="/videos/hero-poster.avif"
           disablePictureInPicture
           controlsList="nodownload noplaybackrate"
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- precise: @typescript-eslint/ban-ts-comment — verified safe
-          // @ts-ignore — fetchPriority is valid but not in TS lib yet
-          fetchPriority="low"
           width={1920}
           height={1080}
           className={`w-full h-full object-cover transition-opacity duration-700 ${videoLoading ? "opacity-0" : "opacity-100"}`}

@@ -49,7 +49,7 @@ module.exports = {
   },
   rules: {
     // TypeScript — precise v3.2: all debts paid — strict 0
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'warn',
@@ -112,7 +112,7 @@ module.exports = {
       },
     },
     {
-      files: ['*.mjs'],
+      files: ['*.mjs', 'vitest.config.ts'],
       parserOptions: {
         project: null,
       },
