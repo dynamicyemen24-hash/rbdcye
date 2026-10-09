@@ -10,7 +10,7 @@
   --section-space: clamp(3rem, 7vw, 6.5rem);
   --surface-radius: clamp(0.75rem, 1.5vw, 1.25rem);
   --control-min-size: 2.75rem;
-  --focus-outline: 3px solid var(--brand-gold, #C69E5A);
+  --focus-outline: 3px solid var(--brand-gold);
   --focus-offset: 3px;
 }
 
@@ -142,7 +142,7 @@ textarea {
     inline-size: calc(100% - 2 * var(--layout-gutter));
   }
 
-  :where(.grid-auto, .grid, .cards-grid) {
+  :where(.grid-auto, .cards-grid, .project-grid, .news-grid, .sector-grid) {
     grid-template-columns: minmax(0, 1fr);
   }
 
