@@ -1,0 +1,222 @@
+/* ==========================================================================
+   QUALITY LAYER — مؤسسة رحماء بينهم
+   هدفها: توحيد الإيقاع البصري، تحسين القراءة العربية، وسلامة العرض على الهاتف.
+   طبقة إضافية محافظة: لا تستبدل مكونات التطبيق ولا تغيّر منطق الأعمال.
+   ========================================================================== */
+
+:root {
+  --rh-content-max: 76rem;
+  --rh-reading-max: 68ch;
+  --rh-gutter: clamp(1rem, 3.2vw, 2.25rem);
+  --rh-section-space: clamp(3rem, 6vw, 6rem);
+  --rh-card-radius: clamp(0.875rem, 1.3vw, 1.25rem);
+  --rh-control-height: 2.875rem;
+  --rh-focus-ring: 0 0 0 3px color-mix(in srgb, var(--brand-gold, #C69E5A) 34%, transparent);
+  --rh-border-soft: color-mix(in srgb, var(--border, #d8e1dc) 78%, transparent);
+}
+
+/* قراءة عربية أكثر هدوءاً واتساقاً */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-block-start: var(--header-offset, 6rem);
+}
+
+body {
+  min-width: 320px;
+  font-kerning: normal;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:where(p, li, dd, blockquote) {
+  line-height: 1.9;
+  overflow-wrap: break-word;
+}
+
+:where(input, textarea, select, button) {
+  font: inherit;
+}
+
+:where(img, video, canvas, svg) {
+  max-inline-size: 100%;
+}
+
+img, video {
+  block-size: auto;
+}
+
+:where(a, button, input, textarea, select, summary, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, textarea, select, summary, [role="button"]):focus-visible {
+  outline: 2px solid var(--brand-gold, #C69E5A);
+  outline-offset: 3px;
+  box-shadow: var(--rh-focus-ring);
+}
+
+/* حاويات ومساحات متوازنة دون فرض عرض على التخطيطات المتخصصة */
+:where(.container, .container-fluid, .section-container, .content-container) {
+  min-inline-size: 0;
+}
+
+main > section,
+main > .section {
+  scroll-margin-block-start: var(--header-offset, 6rem);
+}
+
+main > section + section {
+  margin-block-start: 0;
+}
+
+:where(.section-heading, .section-header, .section-title-wrap) {
+  margin-block-end: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+:where(.section-heading p, .section-header p, .section-title-wrap p) {
+  max-inline-size: var(--rh-reading-max);
+  margin-inline: auto;
+}
+
+/* البطاقات: حدود هادئة وظلال غير ثقيلة، مع احترام المكوّنات القائمة */
+:where(.card, .content-card, .program-card, .project-card, .impact-card, .stat-card) {
+  min-inline-size: 0;
+  border-radius: var(--rh-card-radius);
+  border-color: var(--rh-border-soft);
+}
+
+:where(.card, .content-card, .program-card, .project-card, .impact-card, .stat-card) p {
+  max-inline-size: 65ch;
+}
+
+:where(.grid, [class*="grid-cols-"]) > * {
+  min-inline-size: 0;
+}
+
+:where(button, .button, [role="button"], input[type="button"], input[type="submit"]) {
+  min-block-size: 2.75rem;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+  max-inline-size: 100%;
+  border-radius: max(0.625rem, var(--radius, 0.625rem));
+}
+
+textarea {
+  min-block-size: 7rem;
+  resize: vertical;
+}
+
+:where(table) {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+:where(pre, code) {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+:where(iframe, embed, object) {
+  max-inline-size: 100%;
+}
+
+/* RTL/LTR resilience: keep long identifiers, URLs, and mixed numerals from
+   stretching the layout beyond the viewport. */
+:where([dir="ltr"], code, pre, .tabular-nums, .font-mono) {
+  unicode-bidi: plaintext;
+}
+
+:where(.overflow-x-auto, .table-responsive, [data-overflow="horizontal"]) {
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Touch-friendly mobile rhythm */
+@media (max-width: 640px) {
+  :root {
+    --rh-gutter: 1rem;
+    --rh-section-space: 2.75rem;
+  }
+
+  body {
+    font-size: max(16px, 1rem);
+  }
+
+  :where(h1) {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    line-height: 1.42;
+  }
+
+  :where(h2) {
+    font-size: clamp(1.4rem, 5.4vw, 2rem);
+    line-height: 1.5;
+  }
+
+  :where(.container, .section-container, .content-container) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  :where(.grid, [class*="grid-cols-"]) {
+    min-inline-size: 0;
+  }
+
+  :where(.card, .content-card, .program-card, .project-card, .impact-card, .stat-card) {
+    border-radius: 1rem;
+  }
+
+  :where(button, .button, [role="button"], input[type="button"], input[type="submit"]) {
+    max-inline-size: 100%;
+    white-space: normal;
+  }
+
+  :where(.hero, #hero) {
+    overflow: clip;
+  }
+
+  :where(.hero img, #hero img, .hero video, #hero video) {
+    object-fit: cover;
+  }
+
+  :where(.table-responsive, .overflow-x-auto) table {
+    min-inline-size: 36rem;
+  }
+}
+
+/* Large screens: prevent excessively wide reading lines */
+@media (min-width: 1440px) {
+  :where(.container, .section-container, .content-container) {
+    margin-inline: auto;
+  }
+}
+
+/* Respect user motion preferences throughout the site */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* No color-only focus indication in high-contrast modes */
+@media (forced-colors: active) {
+  :where(a, button, input, textarea, select, summary, [role="button"]):focus-visible {
+    outline: 2px solid Highlight;
+    box-shadow: none;
+  }
+}

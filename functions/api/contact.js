@@ -8,29 +8,36 @@
 import { createQuery } from './database.js';
 
 function allowedOrigins(env) {
-  return (
-    env?.CORS_ORIGIN?.split(',') || [
-      'http://localhost:5173',
-      'https://rbdcye.org',
-      'https://www.rbdcye.org',
-      'https://rbdcye.pages.dev',
-    ]
-  );
+  const configured = env?.CORS_ORIGIN;
+  return (configured
+    ? configured.split(',').map((origin) => origin.trim()).filter(Boolean)
+    : [
+        'http://localhost:5173',
+        'https://rbdcye.org',
+        'https://www.rbdcye.org',
+        'https://rbdcye.pages.dev',
+      ]);
 }
 
 function corsHeaders(req, env) {
   const origin = req.headers.get('Origin');
   const list = allowedOrigins(env);
-  const allowOrigin = origin && list.includes(origin) ? origin : list[0];
-  return {
-    'Access-Control-Allow-Origin': allowOrigin,
+  const headers = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-CSRF-Token',
-    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
   };
+  // Do not grant CORS access to untrusted origins. Same-origin requests do
+  // not need Access-Control-Allow-Origin; approved cross-origin requests do.
+  if (origin && list.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+    headers['Access-Control-Allow-Credentials'] = 'true';
+  }
+  return headers;
 }
 
 function escapeHtmlEntities(str) {
@@ -42,15 +49,11 @@ function escapeHtmlEntities(str) {
     .replace(/'/g, '&#039;');
 }
 
-export async function onRequestOptions() {
+export async function onRequestOptions(context) {
+  const { request, env } = context;
   return new Response(null, {
     status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, X-CSRF-Token',
-      'Access-Control-Max-Age': '86400',
-    },
+    headers: corsHeaders(request, env),
   });
 }
 
@@ -59,7 +62,21 @@ export async function onRequestPost(context) {
   const headers = corsHeaders(request, env);
 
   try {
+    const contentType = request.headers.get('Content-Type') || '';
+    if (!contentType.toLowerCase().includes('application/json')) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'نوع المحتوى غير مدعوم' }),
+        { status: 415, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
+      );
+    }
+
     const body = await request.json();
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'صيغة الطلب غير صحيحة' }),
+        { status: 400, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
+      );
+    }
     const { name, email, phone, subject, message } = body;
 
     const safeName = String(name || '').trim().slice(0, 100);
@@ -68,7 +85,7 @@ export async function onRequestPost(context) {
     const safeSubject = String(subject || '').trim().slice(0, 200);
     const safeMessage = String(message || '').trim().slice(0, 5000);
 
-    // Block XSS patterns
+    // Block active markup patterns; HTML output is escaped independently below.
     const dangerousPatterns = [
       /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
       /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
@@ -80,19 +97,19 @@ export async function onRequestPost(context) {
     if (!safeName || !safeEmail || !safeSubject || !safeMessage) {
       return new Response(
         JSON.stringify({ success: false, error: 'جميع الحقول الأساسية مطلوبة' }),
-        { status: 400, headers }
+        { status: 400, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
       );
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmail)) {
       return new Response(
         JSON.stringify({ success: false, error: 'البريد الإلكتروني غير صحيح' }),
-        { status: 400, headers }
+        { status: 400, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
       );
     }
     if (!isSafe(safeName) || !isSafe(safeSubject) || !isSafe(safeMessage)) {
       return new Response(
         JSON.stringify({ success: false, error: 'يحتوي الإدخال على محتوى غير آمن' }),
-        { status: 400, headers }
+        { status: 400, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
       );
     }
 
@@ -124,7 +141,7 @@ export async function onRequestPost(context) {
               <p><strong>البريد:</strong> ${escapeHtmlEntities(safeEmail)}</p>
               ${safePhone ? `<p><strong>الهاتف:</strong> ${escapeHtmlEntities(safePhone)}</p>` : ''}
               <p><strong>الموضوع:</strong> ${escapeHtmlEntities(safeSubject)}</p>
-              <p style="white-space:pre-wrap; line-height:1.8;"><strong>الرسالة:</strong><br/>${escapeHtmlEntities(safeMessage)}</p>
+              <p style="white-space:pre-wrap; line-height:1.8;"><strong>الرسالة:</strong><br/> ${escapeHtmlEntities(safeMessage)}</p>
             </div>`,
           }),
         });
@@ -141,13 +158,13 @@ export async function onRequestPost(context) {
         success: true,
         message: 'تم إرسال رسالتك بنجاح، سيتواصل معك فريقنا قريباً إن شاء الله',
       }),
-      { status: 200, headers }
+      { status: 200, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
     );
   } catch (error) {
     console.error('Contact API Error:', error);
     return new Response(
       JSON.stringify({ success: false, error: 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.' }),
-      { status: 500, headers }
+      { status: 500, headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8' } }
     );
   }
 }
