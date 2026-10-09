@@ -10,11 +10,11 @@
 @import "./animations.css";
 @import "./hero.css";
 /* icon-enhancements.css — deferred to v3.2 for 320kB */
-@import "./design-refinement.css";
 @import "./video-player.css";
 /* mobile-safety.css — core merged into composition.css */
 /* design-system.css — LEGACY DEPRECATED: merged into world-class-design-system.css (v3 Nebula) — removed to close 20k duplication fracture */
 @import "./components.css";
+@import "./design-refinement.css";
 
 /* ==========================================================================
     PERFORMANCE: Content Visibility + Containment — مع fallback للمتصفحات القديمة
