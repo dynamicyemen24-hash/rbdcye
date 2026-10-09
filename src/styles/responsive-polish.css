@@ -1,0 +1,131 @@
+/* ==========================================================================
+   RESPONSIVE POLISH — RTL-safe layout guardrails
+   Additive layer: fixes common spacing/overflow fractures without replacing
+   the existing design tokens or component styles.
+   ========================================================================== */
+
+:root {
+  --layout-gutter: clamp(1rem, 3.2vw, 2.5rem);
+  --layout-content-max: 80rem;
+  --layout-section-space: clamp(3rem, 6vw, 6rem);
+  --layout-card-gap: clamp(1rem, 2.4vw, 1.75rem);
+}
+
+/* Predictable sizing prevents padding from creating accidental overflow. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 5rem;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  max-inline-size: 100%;
+}
+
+img,
+video {
+  block-size: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  max-inline-size: 100%;
+}
+
+:where(main, header, footer, nav, section, article, aside) {
+  min-inline-size: 0;
+}
+
+:where(main section) {
+  scroll-margin-block-start: 5rem;
+}
+
+/* Consistent page gutters for common container patterns; no fixed widths. */
+:where(.container, .container-fluid, .page-container, .section-container) {
+  inline-size: min(100% - 2 * var(--layout-gutter), var(--layout-content-max));
+  margin-inline: auto;
+}
+
+/* Keep grid/flex children from forcing the viewport wider than the screen. */
+:where(.grid-auto, .grid, .cluster, .switcher, .with-sidebar) > * {
+  min-inline-size: 0;
+}
+
+:where(.grid-auto, .grid) {
+  gap: var(--layout-card-gap);
+}
+
+:where(.frame, .media-frame, .image-wrapper) {
+  min-inline-size: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+:where(.frame, .media-frame, .image-wrapper) > :is(img, video, picture) {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* Comfortable tap targets and visible keyboard focus. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--ring, #287d68);
+  outline-offset: 3px;
+}
+
+:where(button, [role="button"]) {
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --layout-gutter: 1rem;
+    --layout-section-space: clamp(2.5rem, 10vw, 4rem);
+    --layout-card-gap: 1rem;
+  }
+
+  :where(.container, .container-fluid, .page-container, .section-container) {
+    inline-size: calc(100% - 2 * var(--layout-gutter));
+  }
+
+  :where(.reel) {
+    max-inline-size: 100%;
+  }
+
+  :where(table) {
+    max-inline-size: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
