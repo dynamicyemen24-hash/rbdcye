@@ -11,7 +11,7 @@
   --rf-radius-control: 0.75rem;
   --rf-shadow-card:  0 12px 34px rgb(16 46 34 / 7%);
   --rf-shadow-hover: 0 18px 44px rgb(16 46 34 / 12%);
-  --rf-focus-ring:  0 0 0 3px rgb(var(--brand-gold-rgb, 197 157 71) / 25%);
+  --rf-focus-ring:  0 0 0 3px rgb(197 157 71 / 25%);
   --rf-section-space: clamp(3.25rem, 6vw, 6rem);
   --rf-inline-space: clamp(1rem, 3.2vw, 2rem);
   -webkit-text-size-adjust: 100%;
