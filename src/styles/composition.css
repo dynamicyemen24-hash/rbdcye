@@ -364,3 +364,179 @@ main .pt-24 {
   .site-footer { border: 2px solid CanvasText; }
   .site-footer__pattern { display: none; }
 }
+
+
+/* ==========================================================================
+   Institutional design hardening — responsive rhythm, Arabic readability,
+   safe touch targets and resilient overflow. Keep this layer token-driven.
+   ========================================================================== */
+:root {
+  --layout-gutter: clamp(1rem, 4vw, 3.5rem);
+  --reading-measure: 68ch;
+  --section-space: clamp(3rem, 7vw, 6.5rem);
+  --card-radius: clamp(0.875rem, 1.5vw, 1.25rem);
+  --focus-ring: 0 0 0 3px var(--surface-page, #fff), 0 0 0 5px var(--brand-accent, #C69E5A);
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+html {
+  scroll-padding-block-start: calc(var(--header-offset, 5rem) + 1rem);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-width: 320px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:where(h1, h2, h3, h4) {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:where(p, li, blockquote) {
+  text-wrap: pretty;
+}
+
+:where(button, input, select, textarea) {
+  font: inherit;
+}
+
+:where(button, [role="button"], a, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--brand-accent, #C69E5A);
+  outline-offset: 3px;
+}
+
+:where(button, [role="button"], input[type="checkbox"], input[type="radio"], summary) {
+  touch-action: manipulation;
+}
+
+:where(img, video, canvas, svg) {
+  max-inline-size: 100%;
+}
+
+img, video {
+  block-size: auto;
+}
+
+.app-page {
+  overflow-x: clip;
+}
+
+.app-page :where(section) {
+  scroll-margin-block-start: calc(var(--header-offset, 5rem) + 1rem);
+}
+
+.app-page :where(h1) {
+  font-size: clamp(2rem, 4.8vw, 4rem);
+  line-height: 1.2;
+  letter-spacing: normal;
+}
+
+.app-page :where(h2) {
+  font-size: clamp(1.55rem, 3.2vw, 2.6rem);
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.app-page :where(h3) {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.45;
+}
+
+.app-page :where(p, li) {
+  line-height: 1.8;
+}
+
+.app-page :where(a, button) {
+  text-underline-offset: 0.2em;
+}
+
+.app-page :where(.grid) {
+  min-width: 0;
+}
+
+.app-page :where(.rounded-xl, .rounded-2xl, .rounded-3xl, .card, [class*="Card"]) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.app-page :where(input, select, textarea) {
+  max-width: 100%;
+  min-height: 2.75rem;
+}
+
+.app-page :where(button, [role="button"]) {
+  min-height: 2.75rem;
+}
+
+@media (max-width: 639px) {
+  .shell {
+    padding-inline: 1rem;
+  }
+
+  .app-page .container {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  .app-page section.py-12,
+  .app-page section.py-16,
+  .app-page section.py-20,
+  .app-page section.py-24 {
+    padding-block: clamp(2.75rem, 11vw, 4rem);
+  }
+
+  .app-page .grid-cols-2,
+  .app-page .grid-cols-3,
+  .app-page .grid-cols-4,
+  .app-page .grid-cols-5,
+  .app-page .grid-cols-6 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-page :where(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .app-page :where(input, select, textarea) {
+    font-size: 16px;
+  }
+
+  .site-footer__inner {
+    width: min(100% - 2rem, 80rem);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 899px) {
+  .app-page :where(.grid-cols-4, .grid-cols-5, .grid-cols-6) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(button, a, input, select, textarea, summary):focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+@supports not (overflow: clip) {
+  .app-page { overflow-x: hidden; }
+}
