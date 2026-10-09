@@ -1,0 +1,175 @@
+/* Quality foundation — responsive rhythm, readable Arabic, and resilient controls.
+   Keep this layer small and semantic; component-specific styling stays with components. */
+
+:root {
+  --layout-gutter: clamp(1rem, 4vw, 2.5rem);
+  --content-measure: 72rem;
+  --section-space: clamp(3.25rem, 7vw, 6.5rem);
+  --surface-radius: clamp(1rem, 2vw, 1.5rem);
+  --control-min-height: 2.75rem;
+}
+
+html {
+  min-width: 320px;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  touch-action: manipulation;
+}
+
+:where(button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])) {
+  scroll-margin-block: 6rem;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="hidden"]), select, textarea) {
+  max-width: 100%;
+  min-width: 0;
+}
+
+:where(textarea) {
+  resize: vertical;
+}
+
+:where(button, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: rgba(15, 76, 58, 0.12);
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--ring, var(--brand-green, #0f4c3a));
+  outline-offset: 3px;
+}
+
+:where(.section-container, .container, main > section > .mx-auto) {
+  min-width: 0;
+}
+
+:where(.section-container) {
+  padding-inline: var(--layout-gutter);
+}
+
+:where(main section) {
+  scroll-margin-top: 5.5rem;
+}
+
+:where(h1, h2, h3, h4) {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:where(p, li, dd) {
+  text-wrap: pretty;
+}
+
+:where(.rounded-2xl, .rounded-3xl, .rounded-xl) {
+  background-clip: padding-box;
+}
+
+:where(.grid, .flex) > * {
+  min-width: 0;
+}
+
+:where(table) {
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --layout-gutter: 1rem;
+    --section-space: 3.25rem;
+  }
+
+  body {
+    line-height: 1.8;
+  }
+
+  main section {
+    padding-block: clamp(2.25rem, 8vw, 3.5rem);
+  }
+
+  :where(.section-container) {
+    padding-inline: var(--layout-gutter);
+  }
+
+  :where(button, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]) {
+    min-height: var(--control-min-height);
+  }
+
+  :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="hidden"]), select, textarea) {
+    font-size: 16px;
+  }
+
+  :where(.text-4xl, .text-5xl, .text-6xl, .text-7xl) {
+    overflow-wrap: anywhere;
+  }
+
+  :where(.fixed, .sticky) {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  :where(video, iframe) {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root {
+    --layout-gutter: clamp(1.25rem, 3vw, 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(button, a, input, select, textarea):focus-visible {
+    outline: 2px solid Highlight;
+  }
+}

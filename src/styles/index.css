@@ -5,7 +5,7 @@
 @import "./composition.css";
 /* browser-support.css — fallbacks merged into composition for 320kB */
 @import "./islamic-patterns.css";
-/* islamic-visual-identity.css — merged into tokens/composition for 320kB target */
+/* islamic-visual-identity.css — merged into tokens/composition for 320kB */
 @import "./typography.css";
 @import "./animations.css";
 @import "./hero.css";
@@ -14,6 +14,7 @@
 /* mobile-safety.css — core merged into composition.css */
 /* design-system.css — LEGACY DEPRECATED: merged into world-class-design-system.css (v3 Nebula) — removed to close 20k duplication fracture */
 @import "./components.css";
+@import "./quality-foundation.css";
 
 /* ==========================================================================
     PERFORMANCE: Content Visibility + Containment — مع fallback للمتصفحات القديمة
