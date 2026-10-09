@@ -1,0 +1,276 @@
+/* ==========================================================================
+   DESIGN REFINEMENT LAYER — Rohamaa Foundation
+   A restrained, RTL-first polish pass: rhythm, readability, mobile resilience.
+   Intentionally additive; component behavior and brand identity stay intact.
+   ========================================================================== */
+
+:root {
+  --rf-content-max:  min(100% - 2.5rem, 78rem);
+  --rf-reading-max:  68ch;
+  --rf-radius-card:  1.125rem;
+  --rf-radius-control: 0.75rem;
+  --rf-shadow-card:  0 12px 34px rgb(16 46 34 / 7%);
+  --rf-shadow-hover: 0 18px 44px rgb(16 46 34 / 12%);
+  --rf-focus-ring:  0 0 0 3px rgb(var(--brand-gold-rgb, 197 157 71) / 25%);
+  --rf-section-space: clamp(3.25rem, 6vw, 6rem);
+  --rf-inline-space: clamp(1rem, 3.2vw, 2rem);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html {
+  scroll-padding-top: var(--header-offset, 6rem);
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: clip;
+  color: var(--foreground);
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+#root {
+  min-height: 100%;
+  isolation: isolate;
+}
+
+main {
+  min-width: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  max-width: 24ch;
+  line-height: 1.42;
+  font-weight: 650;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+h1 { line-height: 1.32; }
+h2 { line-height: 1.42; }
+h3, h4 { line-height: 1.5; }
+
+p, li, dd {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+p:last-child { margin-block-end: 0; }
+
+img, video, canvas, iframe, svg {
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, [role="button"], a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled), [role="button"]:not([aria-disabled="true"]) {
+  touch-action: manipulation;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])) {
+  scroll-margin-block: 6rem;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--brand-gold, #c49a45);
+  outline-offset: 3px;
+  box-shadow: var(--rf-focus-ring);
+}
+
+:where(input, select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--rf-radius-control);
+}
+
+:where(input, select, textarea):disabled,
+:where(button):disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+::placeholder {
+  color: color-mix(in srgb, currentColor 52%, transparent);
+  opacity: 1;
+}
+
+:where(.container, .site-container, .section-container, .content-container) {
+  width: var(--rf-content-max);
+  margin-inline: auto;
+}
+
+:where(section, .section) {
+  scroll-margin-top: var(--header-offset, 6rem);
+}
+
+:where(.card, [class*="__card"], .enterprise-card) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:where(.card, .enterprise-card, .stat-card, .impact-card) {
+  border-radius: var(--rf-radius-card);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.card, .enterprise-card, .stat-card, .impact-card, [class*="project-card"]) {
+    transition:
+      transform 220ms cubic-bezier(.2, .7, .2, 1),
+      box-shadow 220ms ease,
+      border-color 220ms ease;
+  }
+
+  :where(.card, .enterprise-card, .stat-card, .impact-card, [class*="project-card"]):hover {
+    box-shadow: var(--rf-shadow-card);
+  }
+}
+
+:where(.btn, .button, button[class*="primary"], a[class*="primary"]) {
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+:where(.btn, .button, button, [role="button"]) svg {
+  flex: 0 0 auto;
+}
+
+:where(.badge, [class*="badge"]) {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+:where(table) {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:where(th, td) {
+  overflow-wrap: anywhere;
+}
+
+:where(pre, code) {
+  overflow-wrap: anywhere;
+}
+
+:where(pre) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+:where(.site-footer, footer) a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+:where(.site-footer, footer) a:hover {
+  text-decoration-line: underline;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --rf-content-max: calc(100% - 2rem);
+    --rf-section-space: clamp(2.75rem, 10vw, 4rem);
+    --rf-inline-space: 1rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  main section:not(.hero-section):not(#hero) {
+    scroll-margin-top: 5rem;
+  }
+
+  :where(.container, .site-container, .section-container, .content-container) {
+    width: var(--rf-content-max);
+    max-width: 100%;
+  }
+
+  :where(.grid, [class*="grid-cols-"]) {
+    min-width: 0;
+  }
+
+  :where(.grid > *, [class*="grid-cols-"] > *) {
+    min-width: 0;
+  }
+
+  :where(.btn, .button, button[class*="primary"], a[class*="primary"]) {
+    max-width: 100%;
+  }
+
+  :where(input, select, textarea) {
+    font-size: 16px;
+  }
+
+  :where(.site-footer, footer) {
+    overflow-wrap: anywhere;
+  }
+
+  :where(.site-footer, footer) :where(.grid) {
+    row-gap: 1.75rem;
+  }
+
+  :where(.hero-title) {
+    font-size: clamp(2rem, 8vw, 3.15rem);
+    line-height: 1.38;
+  }
+
+  :where(.hero-lead) {
+    line-height: 1.9;
+  }
+
+  :where(.hero-eyebrow) {
+    padding: 0.6rem 0.9rem;
+    border-radius: 1rem;
+    font-size: 0.78rem;
+  }
+
+  /* Mobile-friendly horizontal lists without page-level overflow. */
+  :where(.reel, .horizontal-scroll, [data-horizontal-scroll]) {
+    max-width: 100%;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+  }
+
+  :where(.reel, .horizontal-scroll, [data-horizontal-scroll]) > * {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 380px) {
+  :root { --rf-content-max: calc(100% - 1.5rem); }
+
+  :where(.hero-title) {
+    font-size: clamp(1.85rem, 8.6vw, 2.35rem);
+  }
+
+  :where(.site-footer, footer) {
+    padding-inline: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid Highlight;
+    box-shadow: none;
+  }
+}
