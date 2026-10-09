@@ -459,8 +459,7 @@ export function Hero({ setCurrentPage }: HeroProps) {
                 className="text-white/85 mb-8 max-w-[68ch] text-pretty"
                 style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.9 }}
               >
-                لا نكتفي بتخفيف المعاناة — نبني قدرات المجتمع ليُطعم نفسه. إغاثة عاجلة، تعليم يُعلي
-                الهمم، وتنمية تصنع كوادر يمنية قادرة على إعادة بناء وطنهم.
+                نعمل على إيصال المساعدة إلى مستحقيها بكرامة، ودعم الأسر في احتياجاتها الأساسية، وفتح فرص للتعليم والتمكين والتنمية المستدامة. نؤمن بأن الأثر الحقيقي يجمع بين الاستجابة للاحتياج اليوم، وبناء فرص أفضل للغد.
               </motion.p>
 
               {/* CTA buttons — 44px targets, focus-visible, GPU accelerated */}
