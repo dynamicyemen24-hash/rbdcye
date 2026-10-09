@@ -6,6 +6,16 @@ on:
   pull_request:
     branches: [main, develop]
 
+# Cancel superseded runs on the same branch/PR to reduce queue time and waste.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Least-privilege default; artifact actions require actions: write/read.
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   validate:
     name: Validate & Lint
@@ -92,8 +102,8 @@ jobs:
   deploy:
     name: Deploy to Cloudflare Pages
     runs-on: ubuntu-latest
-    needs: [validate, test, build, lighthouse]
-    if: github.ref == 'refs/heads/main'
+    needs: [validate, test, security, build, lighthouse]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
