@@ -1,0 +1,207 @@
+/* ==========================================================================
+   QUALITY FOUNDATION — responsive polish and visual-rhythm safeguards
+   مؤسسة رحماء بينهم | RTL-first, progressive enhancement, no component lock-in
+   ========================================================================== */
+
+:root {
+  --layout-gutter: clamp(1rem, 3.2vw, 2.75rem);
+  --content-max: 76rem;
+  --reading-max: 68ch;
+  --section-space: clamp(3rem, 7vw, 6.5rem);
+  --surface-radius: clamp(0.75rem, 1.5vw, 1.25rem);
+  --control-min-size: 2.75rem;
+  --focus-outline: 3px solid var(--brand-gold, #C69E5A);
+  --focus-offset: 3px;
+}
+
+html {
+  scroll-padding-block-start: 6rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-inline-size: 320px;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+img, picture, video, canvas, svg {
+  max-inline-size: 100%;
+}
+
+img, video {
+  block-size: auto;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, [role="button"], a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, [role="button"], input, select, textarea, a) {
+  scroll-margin-block: 6rem;
+}
+
+:where(button, [role="button"], input, select, textarea):focus-visible,
+a:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-offset);
+}
+
+:where(button, [role="button"], input, select, textarea) {
+  max-inline-size: 100%;
+}
+
+:where(button, [role="button"]) {
+  min-block-size: var(--control-min-size);
+}
+
+:where(p, li, dd, blockquote) {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: none;
+}
+
+:where(h1, h2, h3, h4) {
+  line-height: 1.45;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:where(p, li, figcaption) {
+  text-wrap: pretty;
+}
+
+:where(main, section, article, aside, header, footer) {
+  min-inline-size: 0;
+}
+
+:where(main > section, #main-content > section) {
+  scroll-margin-block-start: 6rem;
+}
+
+/* Keep common page containers aligned without assuming a particular framework. */
+:where(.container, .page-container, .content-container, .section-container) {
+  inline-size: min(100% - 2 * var(--layout-gutter), var(--content-max));
+  margin-inline: auto;
+}
+
+/* Consistent card geometry and subtle surfaces; preserve each component's own color. */
+:where(.card, .enterprise-card, .project-card, .news-card, .sector-card) {
+  min-inline-size: 0;
+  border-radius: var(--surface-radius);
+  overflow-wrap: anywhere;
+}
+
+:where(.card, .enterprise-card, .project-card, .news-card, .sector-card) img {
+  max-inline-size: 100%;
+}
+
+/* Avoid accidental horizontal overflow from long URLs, tables, and code. */
+:where(pre, table, .table-container, .overflow-x-auto) {
+  max-inline-size: 100%;
+}
+
+pre, .overflow-x-auto, .table-container {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+:where(input, select, textarea) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --layout-gutter: 1rem;
+    --section-space: clamp(2.5rem, 9vw, 4rem);
+  }
+
+  body {
+    font-size: max(1rem, 16px);
+  }
+
+  :where(main > section, #main-content > section, .section, .section-visual) {
+    padding-block: var(--section-space);
+  }
+
+  :where(.container, .page-container, .content-container, .section-container) {
+    inline-size: calc(100% - 2 * var(--layout-gutter));
+  }
+
+  :where(.grid-auto, .grid, .cards-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.cluster, .button-group, .actions-row) {
+    gap: 0.75rem;
+  }
+
+  :where(.cluster > button, .button-group > button, .actions-row > button) {
+    max-inline-size: 100%;
+  }
+
+  :where(input, select, textarea) {
+    font-size: 16px;
+  }
+
+  :where(.hero, #hero) {
+    overflow: clip;
+  }
+
+  :where(.hero h1, #hero h1) {
+    font-size: clamp(2rem, 8.5vw, 3.25rem);
+    line-height: 1.4;
+  }
+
+  :where(.hero p, #hero p) {
+    max-inline-size: 38ch;
+  }
+}
+
+@media (max-width: 380px) {
+  :root { --layout-gutter: 0.875rem; }
+
+  :where(.hero h1, #hero h1) {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
+
+  :where(.cluster, .button-group, .actions-row) {
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.card, .enterprise-card, .project-card, .news-card, .sector-card) {
+    border: 1px solid CanvasText;
+  }
+
+  :where(button, [role="button"], input, select, textarea):focus-visible,
+  a:focus-visible {
+    outline-color: Highlight;
+  }
+}
