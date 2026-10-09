@@ -1,0 +1,218 @@
+/* ==========================================================================
+   QUALITY FOUNDATION — durable cross-site visual and responsive guardrails
+   Arabic-first / RTL-safe / progressive enhancement. Keep component-specific
+   decisions in their owning stylesheets; this file owns global invariants.
+   ========================================================================== */
+
+:root {
+  --quality-space-1: 0.25rem;
+  --quality-space-2: 0.5rem;
+  --quality-space-3: 0.75rem;
+  --quality-space-4: 1rem;
+  --quality-space-5: 1.25rem;
+  --quality-space-6: 1.5rem;
+  --quality-space-8: 2rem;
+  --quality-space-10: 2.5rem;
+  --quality-space-12: 3rem;
+  --quality-space-16: 4rem;
+  --quality-page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --quality-content-max: 80rem;
+  --quality-reading-max: 72ch;
+  --quality-radius-sm: 0.5rem;
+  --quality-radius-md: 0.875rem;
+  --quality-radius-lg: 1.25rem;
+  --quality-radius-xl: 1.75rem;
+  --quality-border: color-mix(in srgb, currentColor 12%, transparent);
+  --quality-focus: #1769aa;
+  --quality-body-leading: 1.8;
+  --quality-heading-leading: 1.35;
+  --quality-section-space: clamp(2.75rem, 6vw, 5.5rem);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-padding-top: 6rem;
+  hanging-punctuation: first last;
+  overflow-wrap: break-word;
+}
+
+body {
+  min-width: 320px;
+  max-width: 100%;
+  margin: 0;
+  line-height: var(--quality-body-leading);
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+
+img, picture, video, canvas, svg {
+  max-width: 100%;
+}
+
+img, video {
+  height: auto;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, [role="button"], input[type="button"], input[type="submit"], input[type="reset"] {
+  touch-action: manipulation;
+}
+
+button:not(:disabled), [role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  max-width: 22ch;
+  margin-block: 0 0.65em;
+  line-height: var(--quality-heading-leading);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+:where(p, li, dd, blockquote) {
+  text-wrap: pretty;
+}
+
+p {
+  margin-block: 0 1em;
+}
+
+:where(main, section, article, aside, nav, header, footer, div) {
+  min-width: 0;
+}
+
+:where(input, select, textarea) {
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--quality-focus);
+  outline-offset: 3px;
+}
+
+:where(a, button, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(table) {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:where(pre, code, kbd, samp) {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+}
+
+:where(.container, .site-container, .content-container, .page-container) {
+  width: min(100% - (2 * var(--quality-page-gutter)), var(--quality-content-max));
+  margin-inline: auto;
+}
+
+:where(.prose, .reading-content, .article-content) {
+  max-width: var(--quality-reading-max);
+  line-height: 1.9;
+}
+
+:where(section[id], main [id]) {
+  scroll-margin-top: 6rem;
+}
+
+:where(.grid, [class*="grid-cols-"]) > * {
+  min-width: 0;
+}
+
+:where(.card, [class*="Card"], [class*="card"]) {
+  overflow-wrap: anywhere;
+}
+
+:where(input, select, textarea, button) {
+  accent-color: var(--brand-green, #0f4c3a);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --quality-page-gutter: 1rem;
+    --quality-section-space: clamp(2.25rem, 9vw, 3.5rem);
+  }
+
+  body {
+    font-size: max(16px, 1rem);
+  }
+
+  :where(h1) {
+    font-size: clamp(1.8rem, 7vw, 2.75rem);
+    line-height: 1.3;
+  }
+
+  :where(h2) {
+    font-size: clamp(1.45rem, 5.2vw, 2.1rem);
+  }
+
+  :where(input, select, textarea) {
+    font-size: 16px;
+  }
+
+  :where(button, [role="button"], a.button, .btn) {
+    min-height: 44px;
+  }
+
+  :where(img, video, iframe, table) {
+    max-width: 100%;
+  }
+
+  :where(.overflow-x-auto, .table-responsive, [data-scroll-x]) {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 359px) {
+  :root {
+    --quality-page-gutter: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary):focus-visible {
+    outline: 2px solid CanvasText;
+  }
+}
