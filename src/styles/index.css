@@ -16,6 +16,12 @@
 @import "./components.css";
 
 /* ==========================================================================
+   QUALITY FOUNDATION — last in cascade by design.
+   This layer sets cross-site invariants only; feature styling remains local.
+   ========================================================================== */
+@import "./quality-foundation.css";
+
+/* ==========================================================================
     PERFORMANCE: Content Visibility + Containment — مع fallback للمتصفحات القديمة
     ========================================================================== */
 @supports (content-visibility: auto) {
