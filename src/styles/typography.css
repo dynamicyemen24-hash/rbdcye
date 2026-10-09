@@ -22,9 +22,9 @@
   --lh-body: 2.08;
 
   /* أوزان نصوص رشيقة — لا نستخدم 900 في العناوين العربية */
-  --fw-display: 700;
-  --fw-heading: 700;
-  --fw-subheading: 600;
+  --fw-display: 650;
+  --fw-heading: 600;
+  --fw-subheading: 550;
   --fw-emphasis: 600;
 }
 
