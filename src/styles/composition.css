@@ -202,7 +202,7 @@
 .section-cards {
   display: grid;
   gap: var(--card-gap);
-  margin-top: -1 * calc(var(--section-gap) * 0.5);
+  margin-top: calc(var(--section-gap) * -0.5);
 }
 
 /* Page separator — generous visual break with a subtle geometric center */
