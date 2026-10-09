@@ -1,0 +1,182 @@
+/* ==========================================================================
+   QUALITY FOUNDATION — responsive rhythm, readable Arabic and safe surfaces
+   This layer complements existing component styles; it avoids component-specific
+   assumptions so page teams can adopt the system incrementally.
+   ========================================================================== */
+
+:root {
+  --layout-gutter: clamp(1rem, 3.2vw, 2.25rem);
+  --content-measure: 72rem;
+  --reading-measure: 68ch;
+  --section-space: clamp(2.75rem, 6vw, 5.5rem);
+  --surface-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  --control-min-block-size: 2.75rem;
+}
+
+html {
+  max-inline-size: 100%;
+  scroll-padding-block-start: 6rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-inline-size: 320px;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+  max-inline-size: 100%;
+}
+
+img,
+video {
+  block-size: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  touch-action: manipulation;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="hidden"]),
+select,
+textarea) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="hidden"]), select) {
+  min-block-size: var(--control-min-block-size);
+}
+
+:where(textarea) {
+  min-block-size: 7rem;
+  resize: vertical;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])) {
+  scroll-margin-block: 1rem;
+}
+
+:where(a, button, input, select, textarea, summary, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, select, textarea, summary, [role="button"]):focus-visible {
+  outline: 3px solid var(--ring, var(--brand-gold, #c69e5a));
+  outline-offset: 3px;
+}
+
+:where(table) {
+  max-inline-size: 100%;
+  border-collapse: collapse;
+}
+
+:where(pre, code) {
+  overflow-wrap: anywhere;
+}
+
+:where(.prose, article, [data-reading-width]) {
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+:where(.prose, article, [data-reading-width]) :where(h1, h2, h3, h4) {
+  line-height: 1.45;
+  text-wrap: balance;
+  overflow-wrap: normal;
+}
+
+:where(.prose, article, [data-reading-width]) :where(ul, ol) {
+  padding-inline-start: 1.35em;
+  padding-inline-end: 0;
+}
+
+:where(.prose, article, [data-reading-width]) :where(li + li) {
+  margin-block-start: 0.35em;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --layout-gutter: 1rem;
+    --section-space: 2.75rem;
+    --control-min-block-size: 2.875rem;
+  }
+
+  body {
+    line-height: 1.85;
+  }
+
+  :where(h1) {
+    line-height: 1.4;
+    max-inline-size: 100%;
+  }
+
+  :where(p) {
+    overflow-wrap: anywhere;
+  }
+
+  :where(table) {
+    display: block;
+    inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  :where(input, select, textarea) {
+    font-size: max(16px, 1em);
+  }
+
+  :where(.reel) {
+    scroll-snap-type: inline proximity;
+    padding-inline: 0.125rem;
+  }
+
+  :where(.reel > *) {
+    scroll-snap-align: start;
+  }
+}
+
+@media (min-width: 641px) {
+  :where([data-layout-gutter]) {
+    padding-inline: var(--layout-gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [role="button"]):focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
