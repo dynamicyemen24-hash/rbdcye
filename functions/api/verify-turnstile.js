@@ -7,7 +7,7 @@ function allowedOrigins(env) {
   const configured = env?.CORS_ORIGIN;
   return (configured
     ? configured.split(',').map((origin) => origin.trim()).filter(Boolean)
-    : ['https://rbdcye.org', 'https://www.rbdcye.org', 'http://localhost:5173']);
+    : ['https://rbdcye.org', 'https://www.rbdcye.org', 'https://rbdcye.pages.dev', 'http://localhost:5173', 'http://localhost:5174']);
 }
 
 function corsHeaders(request, env) {
