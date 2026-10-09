@@ -66,3 +66,6 @@
   ::view-transition-old(root),
   ::view-transition-new(root) { animation-duration: 0.01ms !important; }
 }
+
+/* Final responsive/readability corrections — keep after component styles. */
+@import "./quality-layer.css";
