@@ -433,13 +433,13 @@ img, video {
 .app-page :where(h1) {
   font-size: clamp(2rem, 4.8vw, 4rem);
   line-height: 1.2;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 
 .app-page :where(h2) {
   font-size: clamp(1.55rem, 3.2vw, 2.6rem);
   line-height: 1.3;
-  letter-spacing: -0.015em;
+  letter-spacing: normal;
 }
 
 .app-page :where(h3) {
